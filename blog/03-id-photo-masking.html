@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="개인정보 처리방침의 필수 항목과 작성 방법을 알기 쉽게 설명합니다." />
-  <meta property="og:title" content="개인정보 처리방침 어떻게 만드나요? — BrowserKit" />
-  <meta property="og:description" content="개인정보 처리방침의 필수 항목과 작성 방법을 알기 쉽게 설명합니다." />
+  <meta name="description" content="신분증 사진을 전송하기 전 꼭 마스킹해야 하는 이유와 올바른 마스킹 방법을 안내합니다." />
+  <meta property="og:title" content="신분증 사진 보낼 때 꼭 마스킹해야 하는 이유 — BrowserKit" />
+  <meta property="og:description" content="신분증 사진을 전송하기 전 꼭 마스킹해야 하는 이유와 올바른 마스킹 방법을 안내합니다." />
   <meta property="og:type" content="article" />
-  <title>개인정보 처리방침 어떻게 만드나요? — BrowserKit</title>
+  <title>신분증 사진 보낼 때 꼭 마스킹해야 하는 이유 — BrowserKit</title>
   <link rel="stylesheet" href="../css/style.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -21,13 +21,14 @@
     .post-body h2 { font-size:20px; font-weight:700; margin:40px 0 16px; color:var(--text); }
     .post-body h3 { font-size:16px; font-weight:600; margin:28px 0 12px; color:var(--point-hover); }
     .post-body p { font-size:15px; color:var(--subtext); line-height:1.9; margin-bottom:16px; }
-    .post-body ul { padding-left:20px; margin-bottom:16px; }
+    .post-body ul, .post-body ol { padding-left:20px; margin-bottom:16px; }
     .post-body li { font-size:15px; color:var(--subtext); line-height:1.9; margin-bottom:6px; }
     .post-highlight { background:var(--card); border-left:3px solid var(--point); border-radius:8px; padding:16px 20px; margin:24px 0; font-size:15px; color:var(--text); line-height:1.8; }
     .post-warn { background:rgba(239,68,68,0.08); border-left:3px solid #EF4444; border-radius:8px; padding:16px 20px; margin:24px 0; font-size:15px; color:var(--text); line-height:1.8; }
-    .checklist { list-style:none; padding:0; margin:16px 0; }
-    .checklist li { display:flex; align-items:flex-start; gap:10px; font-size:15px; color:var(--subtext); line-height:1.8; margin-bottom:10px; padding:12px 16px; background:var(--card); border-radius:10px; border:1px solid var(--border); }
-    .checklist li::before { content:'✓'; color:var(--success); font-weight:700; flex-shrink:0; margin-top:2px; }
+    .post-table { width:100%; border-collapse:collapse; margin:20px 0; font-size:14px; }
+    .post-table th { background:var(--card); padding:12px 16px; text-align:left; font-weight:600; border:1px solid var(--border); color:var(--text); }
+    .post-table td { padding:11px 16px; border:1px solid var(--border); color:var(--subtext); line-height:1.7; }
+    .post-table tr:hover td { background:rgba(108,99,255,0.04); }
     .post-nav { display:flex; justify-content:space-between; margin-top:60px; padding-top:24px; border-top:1px solid var(--border); gap:12px; }
     .post-nav a { font-size:14px; color:var(--subtext); } .post-nav a:hover { color:var(--text); }
     .cta-box { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:28px; text-align:center; margin:48px 0 0; }
@@ -41,50 +42,58 @@
 <body>
   <header class="header">
     <div class="container">
-      <a href="../../index.html" class="header-brand"><span class="header-brand-icon">🧰</span><span class="header-brand-text">BrowserKit</span></a>
-      <a href="../../index.html" class="header-back">← BrowserKit 홈으로</a>
+      <a href="../index.html" class="header-brand"><span class="header-brand-icon">🧰</span><span class="header-brand-text">BrowserKit</span></a>
+      <a href="../index.html" class="header-back">← BrowserKit 홈으로</a>
     </div>
   </header>
   <div class="post-wrap">
     <a href="index.html" class="back-link">← 블로그 목록</a>
-    <span class="post-tag">법률</span>
-    <h1 class="post-title">개인정보 처리방침 어떻게 만드나요?</h1>
+    <span class="post-tag">실용</span>
+    <h1 class="post-title">신분증 사진 보낼 때 꼭 마스킹해야 하는 이유</h1>
     <div class="post-date">2026년 6월 10일</div>
     <div class="post-body">
-      <p>웹사이트나 앱을 운영하거나 고객의 개인정보를 수집하는 서비스를 운영한다면 개인정보 처리방침을 반드시 작성해 공개해야 합니다.</p>
-      <h2>개인정보 처리방침이란?</h2>
-      <p>개인정보 처리방침은 사업자가 이용자의 개인정보를 어떻게 수집·이용·보관·파기하는지 알리는 공식 문서입니다. 개인정보보호법에 따라 개인정보를 처리하는 모든 사업자는 이를 공개할 의무가 있습니다.</p>
-      <div class="post-warn">⚠️ 개인정보 처리방침을 공개하지 않으면 과태료 최대 1천만 원이 부과될 수 있습니다. 또한 Google AdSense 등 광고 서비스 이용을 위해서도 처리방침이 필수입니다.</div>
-      <h2>필수 포함 항목</h2>
-      <ul class="checklist">
-        <li>수집하는 개인정보 항목</li>
-        <li>개인정보 수집·이용 목적</li>
-        <li>개인정보 보유·이용 기간</li>
-        <li>개인정보 제3자 제공 여부 및 내용</li>
-        <li>개인정보 처리 위탁 여부 및 내용</li>
-        <li>이용자 권리 및 행사 방법</li>
-        <li>개인정보 파기 절차 및 방법</li>
-        <li>개인정보 안전성 확보 조치</li>
-        <li>개인정보 보호책임자 정보</li>
-        <li>처리방침 변경 시 공지 방법</li>
-      </ul>
-      <h2>작성 시 주의사항</h2>
-      <h3>1. 실제 운영 방식과 일치해야 합니다</h3>
-      <p>처리방침에 "수집하지 않는다"고 써놓고 실제로는 수집하면 법 위반입니다.</p>
-      <h3>2. 쉽고 명확하게 작성해야 합니다</h3>
-      <p>일반인이 쉽게 이해할 수 있는 언어로 작성해야 합니다.</p>
-      <h3>3. 변경 시 즉시 공지해야 합니다</h3>
-      <p>처리방침 내용이 변경되면 웹사이트나 앱을 통해 즉시 공지해야 합니다.</p>
-      <h2>개인정보 처리방침 작성 도우미</h2>
+      <p>요즘은 비대면 본인인증이 일상화되면서 신분증 사진을 카카오톡, 이메일 등으로 전송하는 일이 많아졌습니다. 그런데 신분증 사진을 그냥 보내는 것이 얼마나 위험한지 알고 계신가요?</p>
+      <div class="post-warn">⚠️ 신분증 원본 사진 한 장에는 이름, 주민번호, 주소, 사진까지 모든 개인정보가 담겨 있습니다. 이것이 유출되면 명의도용, 금융사기 등 심각한 피해로 이어질 수 있습니다.</div>
+      <h2>신분증에 담긴 개인정보</h2>
       <ul>
-        <li><strong>개인정보보호 포털:</strong> privacy.go.kr → 처리방침 작성 도우미</li>
-        <li><strong>개인정보 처리방침 표준 양식:</strong> 개인정보보호위원회 제공</li>
+        <li>성명</li>
+        <li>주민등록번호 (생년월일 + 성별 + 지역코드 + 고유번호)</li>
+        <li>주소</li>
+        <li>발급일자</li>
+        <li>증명사진</li>
       </ul>
-      <div class="post-highlight">💡 MaskPrivacy는 서버리스 서비스로 사용자 데이터를 수집·저장하지 않습니다. Google AdSense 광고를 통해 쿠키와 광고 식별자가 수집될 수 있어 처리방침에 이를 명시했습니다.</div>
+      <p>운전면허증의 경우 면허번호, 적성검사 기간 등의 정보도 추가됩니다.</p>
+      <h2>신분증 사진 전송이 위험한 이유</h2>
+      <h3>1. 메신저 서버에 저장됩니다</h3>
+      <p>카카오톡, 문자 등으로 전송한 이미지는 서버에 일정 기간 저장됩니다. 해당 서비스가 해킹되거나 계정이 도용되면 신분증 사진이 그대로 노출될 수 있습니다.</p>
+      <h3>2. 수신자 기기에도 저장됩니다</h3>
+      <p>전송받은 사람의 기기에 사진이 저장됩니다. 수신자가 개인정보를 안전하게 관리하지 않으면 제3자에게 유출될 수 있습니다.</p>
+      <h3>3. 스크린샷으로 쉽게 복사됩니다</h3>
+      <p>한 번 전송된 사진은 스크린샷이나 다운로드로 쉽게 복사·재배포될 수 있습니다.</p>
+      <h2>어떤 부분을 마스킹해야 할까?</h2>
+      <table class="post-table">
+        <thead><tr><th>상황</th><th>마스킹 권장 항목</th></tr></thead>
+        <tbody>
+          <tr><td>일반 본인확인</td><td>주민번호 뒷자리 6자리</td></tr>
+          <tr><td>금융기관 제출</td><td>기관 요구 항목 외 전부</td></tr>
+          <tr><td>온라인 전송</td><td>주민번호 뒷자리 + 주소</td></tr>
+          <tr><td>SNS 공유 시</td><td>주민번호 전체 + 주소 + 사진</td></tr>
+        </tbody>
+      </table>
+      <h2>올바른 마스킹 방법</h2>
+      <ol>
+        <li>신분증 사진을 MaskPrivacy에 업로드합니다.</li>
+        <li>주민번호가 자동으로 탐지되면 마스킹 방식을 선택합니다.</li>
+        <li>주소 등 추가 정보는 수동 드래그로 직접 가립니다.</li>
+        <li>마스킹된 이미지를 다운로드해 전송합니다.</li>
+      </ol>
+      <div class="post-highlight">💡 MaskPrivacy는 모든 처리가 브라우저 내에서만 이루어집니다. 신분증 사진이 외부 서버로 전송되지 않으므로 마스킹 과정 자체도 안전합니다.</div>
+      <h2>법적으로도 마스킹이 권장됩니다</h2>
+      <p>개인정보보호법은 개인정보를 수집할 때 목적에 필요한 최소한의 정보만 수집하도록 규정하고 있습니다. 본인확인에 주민번호 전체가 필요하지 않다면 뒷자리를 마스킹한 상태로 제공하는 것이 법적으로도 올바른 방식입니다.</p>
     </div>
     <div class="cta-box">
-      <p>개인정보 보호, 처리방침 작성부터 마스킹까지.<br />MaskPrivacy로 이미지 속 개인정보를 안전하게 처리하세요.</p>
-      <a href="../index.html" class="cta-btn">🔒 무료로 마스킹 시작하기</a>
+      <p>신분증 사진, 전송 전에 마스킹하셨나요?<br />MaskPrivacy로 30초 안에 안전하게 처리할 수 있습니다.</p>
+      <a href="../maskprivacy/index.html" class="cta-btn">🔒 무료로 마스킹 시작하기</a>
     </div>
     <div class="coupang-banner coupang-banner-pc">
       <p class="coupang-notice">이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</p>
@@ -97,8 +106,8 @@
       <script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"320","height":"50","tsource":""});</script>
     </div>
     <div class="post-nav">
-      <a href="11-kakao-id-photo.html">← 이전 글: 카카오톡으로 신분증 보내도 될까?</a>
-      <a href="13-masking-tool-compare.html">다음 글: 무료 개인정보 마스킹 툴 비교 →</a>
+      <a href="02-rrn-leak-danger.html">← 이전 글: 주민번호 유출되면 어떻게 되나요?</a>
+      <a href="04-resume-privacy.html">다음 글: 이력서 개인정보, 어디까지 써야 할까? →</a>
     </div>
   </div>
   <footer class="footer"><div class="container"><p class="footer-copy">© 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p><nav class="footer-nav"><a href="../privacy.html">개인정보 처리방침</a><a href="../terms.html">이용약관</a><a href="../about.html">서비스 소개</a><a href="index.html">블로그</a></nav></div></footer>
