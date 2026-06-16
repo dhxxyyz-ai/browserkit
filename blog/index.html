@@ -29,6 +29,9 @@
     .blog-ad-wrap { max-width:728px; margin:20px auto 48px; text-align:center; overflow:hidden; }
     .blog-ad-notice { font-size:11px; color:var(--subtext); margin-bottom:10px; line-height:1.6; }
     .blog-ad-mo { display:none; }
+    .adfit-wrap { text-align:center; margin:24px 0; }
+    .adfit-mo { display:none; }
+    @media (max-width:640px) { .adfit-pc { display:none; } .adfit-mo { display:block; } }
     @media (max-width:768px) { .blog-grid { grid-template-columns:1fr; } .blog-hero h1 { font-size:24px; } .blog-ad-wrap { max-width:100%; } .blog-ad-pc { display:none; } .blog-ad-mo { display:block; } }
     @media (min-width:769px) and (max-width:1024px) { .blog-grid { grid-template-columns:repeat(2,1fr); } }
   </style>
@@ -139,6 +142,14 @@
       </div>
 
       <div class="blog-section-title">🛠️ 도구 활용 가이드</div>
+      <div class="adfit-wrap adfit-pc">
+        <ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-Dfncm24OGOmHKE7V" data-ad-width="728" data-ad-height="90"></ins>
+        <script type="text/javascript" src="//t1.kakaocdn.net/kas/static/ba.min.js" async></script>
+      </div>
+      <div class="adfit-wrap adfit-mo">
+        <ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-jVI6hdgtW0LyffyR" data-ad-width="320" data-ad-height="50"></ins>
+        <script type="text/javascript" src="//t1.kakaocdn.net/kas/static/ba.min.js" async></script>
+      </div>
       <div class="blog-grid">
 
         <a href="06-image-masking-guide.html" class="blog-card">
