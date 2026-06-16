@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="FitImage의 모든 기능을 단계별로 설명하는 공식 사용 가이드입니다. 크기 조정, 형식 변환, 용량 압축까지 쉽게 따라할 수 있습니다." />
+  <meta property="og:title" content="FitImage 사용법 완전 가이드 — BrowserKit" />
+  <meta property="og:description" content="FitImage의 모든 기능을 단계별로 설명하는 공식 사용 가이드입니다." />
+  <meta property="og:type" content="article" />
+  <title>FitImage 사용법 완전 가이드 — BrowserKit</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    .header { padding:24px 0 16px; border-bottom:1px solid var(--border); }
+    .header .container { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; }
+    .header-brand { display:flex; align-items:center; gap:10px; text-decoration:none; }
+    .header-brand-icon { font-size:24px; }
+    .header-brand-text { font-size:20px; font-weight:700; font-family:'Inter',sans-serif; background:linear-gradient(135deg,var(--point),var(--point-hover)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+    .header-back { font-size:13px; color:var(--subtext); display:flex; align-items:center; gap:6px; text-decoration:none; }
+    .header-back:hover { color:var(--text); }
+    .post-wrap { max-width:720px; margin:0 auto; padding:48px 24px 80px; }
+    .post-tag { display:inline-block; font-size:12px; color:var(--point-hover); background:rgba(108,99,255,0.15); padding:3px 12px; border-radius:999px; margin-bottom:16px; }
+    .post-title { font-size:28px; font-weight:700; line-height:1.4; margin-bottom:12px; }
+    .post-date { color:var(--subtext); font-size:13px; margin-bottom:40px; padding-bottom:24px; border-bottom:1px solid var(--border); }
+    .post-body h2 { font-size:20px; font-weight:700; margin:40px 0 16px; color:var(--text); }
+    .post-body h3 { font-size:16px; font-weight:600; margin:28px 0 12px; color:var(--point-hover); }
+    .post-body p { font-size:15px; color:var(--subtext); line-height:1.9; margin-bottom:16px; }
+    .post-highlight { background:var(--card); border-left:3px solid var(--point); border-radius:8px; padding:16px 20px; margin:24px 0; font-size:15px; color:var(--text); line-height:1.8; }
+    .feature-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:20px 0; }
+    .feature-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px; }
+    .feature-card:hover { border-color:var(--point); }
+    .feature-icon { font-size:24px; margin-bottom:10px; }
+    .feature-title { font-size:14px; font-weight:600; color:var(--text); margin-bottom:6px; }
+    .feature-desc { font-size:13px; color:var(--subtext); line-height:1.7; }
+    .step-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px 24px; margin:16px 0; display:flex; gap:16px; align-items:flex-start; }
+    .step-num { min-width:36px; height:36px; background:linear-gradient(135deg,var(--point),var(--point-hover)); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:700; color:white; flex-shrink:0; font-family:'Inter',sans-serif; }
+    .step-content h3 { font-size:15px; font-weight:600; margin-bottom:6px; color:var(--text); }
+    .step-content p { font-size:14px; color:var(--subtext); line-height:1.7; margin:0; }
+    .post-table { width:100%; border-collapse:collapse; margin:20px 0; font-size:14px; }
+    .post-table th { background:var(--card); padding:12px 16px; text-align:left; font-weight:600; border:1px solid var(--border); color:var(--text); }
+    .post-table td { padding:11px 16px; border:1px solid var(--border); color:var(--subtext); line-height:1.7; }
+    .post-table tr:hover td { background:rgba(108,99,255,0.04); }
+    .post-nav { display:flex; justify-content:space-between; margin-top:60px; padding-top:24px; border-top:1px solid var(--border); gap:12px; }
+    .post-nav a { font-size:14px; color:var(--subtext); }
+    .post-nav a:hover { color:var(--text); }
+    .cta-box { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:28px; text-align:center; margin:48px 0 0; }
+    .cta-box p { font-size:15px; color:var(--subtext); margin-bottom:16px; }
+    .cta-btn { display:inline-block; background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border-radius:10px; padding:12px 28px; font-size:14px; font-weight:600; text-decoration:none; }
+    .cta-btn:hover { transform:translateY(-2px); box-shadow:0 8px 24px var(--glow); color:white; }
+    .back-link { display:inline-flex; align-items:center; gap:6px; color:var(--subtext); font-size:14px; margin-bottom:32px; text-decoration:none; }
+    .back-link:hover { color:var(--text); }
+    @media (max-width:640px) { .feature-grid { grid-template-columns:1fr; } }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="container">
+      <a href="../index.html" class="header-brand"><span class="header-brand-icon">🧰</span><span class="header-brand-text">BrowserKit</span></a>
+      <a href="../index.html" class="header-back">← BrowserKit 홈으로</a>
+    </div>
+  </header>
+
+  <div class="post-wrap">
+    <a href="index.html" class="back-link">← 블로그 목록</a>
+    <span class="post-tag">가이드</span>
+    <h1 class="post-title">FitImage 사용법 완전 가이드</h1>
+    <div class="post-date">2026년 6월 16일</div>
+
+    <div class="post-body">
+      <p>FitImage는 이미지 크기 조정, 형식 변환, 용량 압축을 브라우저에서 바로 처리해주는 무료 온라인 도구입니다. 설치 없이 바로 사용할 수 있으며, 모든 처리가 브라우저 내에서만 이루어져 이미지 파일이 외부 서버로 전송되지 않습니다.</p>
+
+      <h2>주요 기능</h2>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <div class="feature-icon">📐</div>
+          <div class="feature-title">크기 조정</div>
+          <div class="feature-desc">가로/세로 px를 직접 입력하거나 단축 버튼으로 빠르게 조정합니다. 비율 유지 옵션을 지원합니다.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🔄</div>
+          <div class="feature-title">형식 변환</div>
+          <div class="feature-desc">PNG, JPG, WEBP 중 원하는 형식으로 변환합니다. 투명 배경은 JPG/WEBP 변환 시 자동으로 흰색으로 채워집니다.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">📦</div>
+          <div class="feature-title">용량 압축</div>
+          <div class="feature-desc">품질 슬라이더로 파일 크기를 줄입니다. 압축 전후 용량과 감소율을 실시간으로 확인할 수 있습니다.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🖥️</div>
+          <div class="feature-title">완전 로컬 처리</div>
+          <div class="feature-desc">이미지가 서버로 전송되지 않아 민감한 사진도 안심하고 처리할 수 있습니다.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">👁️</div>
+          <div class="feature-title">실시간 미리보기</div>
+          <div class="feature-desc">원본과 결과를 나란히 비교하며 해상도와 예상 파일 크기를 바로 확인할 수 있습니다.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">📥</div>
+          <div class="feature-title">즉시 다운로드</div>
+          <div class="feature-desc">처리 완료된 이미지를 바로 다운로드할 수 있습니다. 탭별로 파일명이 자동 생성됩니다.</div>
+        </div>
+      </div>
+
+      <h2>기본 사용법</h2>
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <h3>이미지 업로드</h3>
+          <p>업로드 영역에 이미지를 드래그하거나 클릭해서 파일을 선택합니다. PNG, JPG, WEBP, GIF 형식을 지원합니다.</p>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <h3>기능 탭 선택</h3>
+          <p>📐 크기 조정 / 🔄 형식 변환 / 📦 용량 압축 중 원하는 기능 탭을 선택합니다. 탭을 전환하면 해당 옵션 영역이 나타납니다.</p>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <h3>옵션 설정</h3>
+          <p>크기 조정은 목표 px 또는 단축 버튼으로, 형식 변환은 출력 형식 선택으로, 용량 압축은 품질 슬라이더로 각각 설정합니다.</p>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <h3>미리보기 확인</h3>
+          <p>원본과 결과를 나란히 비교하며 해상도와 예상 파일 크기를 확인합니다. 옵션을 바꿀 때마다 결과가 즉시 갱신됩니다.</p>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">5</div>
+        <div class="step-content">
+          <h3>이미지 다운로드</h3>
+          <p>다운로드 버튼을 클릭하면 처리된 이미지가 저장됩니다. 파일명은 탭에 따라 자동 생성됩니다 (예: fitimage_800x450.png, fitimage_converted.jpg, fitimage_compressed.webp).</p>
+        </div>
+      </div>
+
+      <h2>📐 크기 조정 상세 안내</h2>
+      <p>가로/세로 px 입력 필드에 원하는 크기를 입력합니다. 비율 유지 체크박스를 선택하면 가로를 입력할 때 세로가 자동으로 계산됩니다. 자주 쓰는 크기는 단축 버튼으로 빠르게 설정할 수 있습니다.</p>
+      <table class="post-table">
+        <thead><tr><th>단축 버튼</th><th>설명</th></tr></thead>
+        <tbody>
+          <tr><td>50%</td><td>원본 크기의 절반으로 축소</td></tr>
+          <tr><td>75%</td><td>원본 크기의 75%로 축소</td></tr>
+          <tr><td>1280px</td><td>가로 1280px (Full HD 기준)</td></tr>
+          <tr><td>800px</td><td>가로 800px (블로그/SNS 이미지 기준)</td></tr>
+          <tr><td>640px</td><td>가로 640px (모바일 최적화)</td></tr>
+        </tbody>
+      </table>
+
+      <h2>🔄 형식 변환 상세 안내</h2>
+      <p>PNG, JPG, WEBP 중 원하는 출력 형식을 선택합니다. 용도에 따라 적합한 형식이 다릅니다.</p>
+      <table class="post-table">
+        <thead><tr><th>형식</th><th>특징</th><th>권장 용도</th></tr></thead>
+        <tbody>
+          <tr><td>PNG</td><td>투명 배경 지원 / 무손실</td><td>로고, 아이콘, 스크린샷</td></tr>
+          <tr><td>JPG</td><td>파일 크기 작음 / 배경 흰색 변환</td><td>사진, 일반 이미지</td></tr>
+          <tr><td>WEBP</td><td>최신 형식 / 고압축 고화질</td><td>웹 최적화 이미지</td></tr>
+        </tbody>
+      </table>
+
+      <h2>📦 용량 압축 상세 안내</h2>
+      <p>품질 슬라이더(1~100%)로 출력 품질을 조정합니다. 수치가 낮을수록 파일 크기는 작아지지만 화질이 저하됩니다. 결과 영역에서 압축 전후 용량과 감소율을 실시간으로 확인할 수 있습니다.</p>
+      <table class="post-table">
+        <thead><tr><th>단축 버튼</th><th>품질</th><th>설명</th></tr></thead>
+        <tbody>
+          <tr><td>고화질</td><td>90%</td><td>화질 손실 최소화, 파일 크기 소폭 감소</td></tr>
+          <tr><td>표준</td><td>75%</td><td>화질과 용량의 균형 (일반적으로 권장)</td></tr>
+          <tr><td>최소</td><td>50%</td><td>파일 크기 최대 감소, 화질 저하 있음</td></tr>
+        </tbody>
+      </table>
+
+      <div class="post-highlight">💡 PNG는 무손실 형식이라 품질 슬라이더가 적용되지 않습니다. 용량을 줄이고 싶다면 형식 변환 탭에서 JPG 또는 WEBP로 변환한 뒤 압축하세요. GIF 파일은 업로드 시 첫 번째 프레임만 처리되므로 애니메이션이 손실됩니다. JPG/WEBP 변환 시 투명 배경은 자동으로 흰색으로 채워집니다.</div>
+    </div>
+
+    <div class="cta-box">
+      <p>지금 바로 FitImage를 사용해보세요.<br />설치도, 회원가입도, 비용도 없습니다.</p>
+      <a href="../image-tools/index.html" class="cta-btn">🖼️ 무료로 이미지 변환 시작하기</a>
+    </div>
+
+    <div class="coupang-banner coupang-banner-pc">
+      <p class="coupang-notice">이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</p>
+      <script src="https://ads-partners.coupang.com/g.js"></script>
+      <script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"668","height":"100","tsource":""});</script>
+    </div>
+    <div class="coupang-banner coupang-banner-mo">
+      <p class="coupang-notice">이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</p>
+      <script src="https://ads-partners.coupang.com/g.js"></script>
+      <script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"320","height":"50","tsource":""});</script>
+    </div>
+
+    <div class="post-nav">
+      <a href="16-maskpdf-howto.html">← 이전 글: MaskPDF 사용법 완전 가이드</a>
+      <span></span>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+      <p class="footer-copy">© 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p>
+      <nav class="footer-nav">
+        <a href="../privacy.html">개인정보 처리방침</a>
+        <a href="../terms.html">이용약관</a>
+        <a href="../about.html">서비스 소개</a>
+        <a href="index.html">블로그</a>
+      </nav>
+    </div>
+  </footer>
+</body>
+</html>
