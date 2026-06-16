@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="여러 PDF를 하나로 합치거나 특정 페이지만 추출하는 무료 온라인 도구. 파일이 서버로 전송되지 않습니다." />
+  <meta property="og:title" content="PDFMerge — PDF 합치기 / 페이지 추출 도구" />
+  <meta property="og:description" content="여러 PDF를 하나로 합치거나 특정 페이지만 추출하는 무료 온라인 도구. 파일이 서버로 전송되지 않습니다." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://browserkit.pages.dev/pdf-merge/" />
+  <meta property="og:locale" content="ko_KR" />
+  <title>PDFMerge — PDF 합치기 / 페이지 추출 도구</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg:          #0F0F13;
+      --card:        #1A1A24;
+      --point:       #6C63FF;
+      --point-hover: #A78BFA;
+      --text:        #F0F0F5;
+      --subtext:     #8B8B9E;
+      --success:     #34D399;
+      --danger:      #F87171;
+      --border:      rgba(108, 99, 255, 0.3);
+      --glow:        rgba(108, 99, 255, 0.5);
+      --radius:      16px;
+    }
+    * { margin:0; padding:0; box-sizing:border-box; transition:all 0.2s ease; }
+    body { background-color:var(--bg); color:var(--text); font-family:'Pretendard','Inter',sans-serif; font-size:16px; line-height:1.6; min-height:100vh; }
+    a { color:var(--point-hover); text-decoration:none; }
+    a:hover { color:var(--text); }
+    .container { max-width:960px; margin:0 auto; padding:0 24px; }
+    .header { padding:24px 0 16px; border-bottom:1px solid var(--border); }
+    .header .container { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; }
+    .logo { display:flex; align-items:center; gap:10px; text-decoration:none; }
+    .logo-icon { font-size:24px; }
+    .logo-text { font-size:20px; font-weight:700; font-family:'Inter',sans-serif; background:linear-gradient(135deg,var(--point),var(--point-hover)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+    .back-link { font-size:13px; color:var(--subtext); display:flex; align-items:center; gap:6px; }
+    .back-link:hover { color:var(--text); }
+    .hero { text-align:center; padding:40px 0 32px; }
+    .hero-icon { font-size:48px; margin-bottom:16px; }
+    .hero h1 { font-size:32px; font-weight:700; margin-bottom:12px; background:linear-gradient(135deg,var(--point),var(--point-hover)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+    .hero p { color:var(--subtext); font-size:15px; margin-bottom:20px; }
+    .badges { display:flex; justify-content:center; gap:10px; flex-wrap:wrap; }
+    .badge { background:var(--card); border:1px solid var(--border); border-radius:999px; padding:5px 16px; font-size:13px; color:var(--subtext); }
+    .upload-zone { background:var(--card); border:2px dashed var(--border); border-radius:var(--radius); padding:48px 40px; text-align:center; cursor:pointer; margin:0 0 16px; }
+    .upload-zone:hover, .upload-zone.drag-over { border-color:var(--point); box-shadow:0 0 24px var(--glow); background:rgba(108,99,255,0.05); }
+    .upload-icon { font-size:48px; margin-bottom:16px; }
+    .upload-title { font-size:18px; font-weight:600; margin-bottom:8px; }
+    .upload-sub { color:var(--subtext); font-size:14px; margin-bottom:12px; }
+    .upload-safe { color:var(--success); font-size:13px; }
+    .file-list-wrap { display:none; margin:0 0 20px; }
+    .file-list-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; }
+    .file-list-title { font-size:15px; font-weight:600; }
+    .btn-add-more { background:var(--card); border:1px solid var(--border); color:var(--subtext); border-radius:8px; padding:6px 14px; font-size:13px; cursor:pointer; font-family:'Pretendard',sans-serif; }
+    .btn-add-more:hover { border-color:var(--point); color:var(--text); }
+    .file-list { display:flex; flex-direction:column; gap:10px; }
+    .file-card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:14px 16px; display:flex; align-items:center; gap:14px; cursor:grab; }
+    .file-card:hover { border-color:var(--point); }
+    .file-card.dragging { opacity:0.4; }
+    .file-card.drag-target { border-color:var(--point); background:rgba(108,99,255,0.08); }
+    .file-thumb { width:48px; height:60px; background:var(--bg); border-radius:6px; overflow:hidden; flex-shrink:0; display:flex; align-items:center; justify-content:center; font-size:20px; border:1px solid var(--border); }
+    .file-info { flex:1; min-width:0; }
+    .file-name { font-size:14px; font-weight:600; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .file-meta { font-size:12px; color:var(--subtext); margin-top:2px; font-family:'Inter',sans-serif; }
+    .file-range-wrap { display:flex; align-items:center; gap:8px; margin-top:6px; }
+    .file-range-label { font-size:12px; color:var(--subtext); white-space:nowrap; }
+    .file-range-input { background:var(--bg); border:1px solid var(--border); color:var(--text); border-radius:6px; padding:4px 8px; font-size:12px; width:110px; font-family:'Inter',sans-serif; }
+    .file-range-input:focus { outline:none; border-color:var(--point); }
+    .file-drag-handle { color:var(--subtext); font-size:18px; cursor:grab; flex-shrink:0; padding:0 4px; user-select:none; }
+    .btn-file-remove { background:none; border:none; color:var(--subtext); font-size:18px; cursor:pointer; flex-shrink:0; padding:0 4px; line-height:1; }
+    .btn-file-remove:hover { color:var(--danger); transform:none; }
+    .notice { margin:0 0 20px; padding:12px 16px; background:rgba(108,99,255,0.07); border:1px solid var(--border); border-radius:10px; font-size:13px; color:var(--subtext); line-height:1.7; }
+    .progress-wrap { margin:32px 0; text-align:center; display:none; }
+    .progress-label { color:var(--subtext); font-size:14px; margin-bottom:10px; }
+    .progress-bar { background:var(--card); border-radius:999px; height:6px; overflow:hidden; }
+    .progress-fill { height:100%; width:0%; background:linear-gradient(90deg,var(--point),var(--point-hover)); border-radius:999px; transition:width 0.3s ease; }
+    .action-wrap { display:none; justify-content:center; gap:12px; margin:8px 0 48px; flex-wrap:wrap; }
+    .btn-merge { background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border:none; border-radius:12px; padding:14px 32px; font-size:15px; font-weight:600; cursor:pointer; font-family:'Pretendard',sans-serif; }
+    .btn-merge:hover { transform:translateY(-2px); box-shadow:0 8px 24px var(--glow); }
+    .btn-merge:disabled { opacity:0.5; cursor:default; transform:none; box-shadow:none; }
+    .btn-reset { background:var(--card); color:var(--subtext); border:1px solid var(--border); border-radius:12px; padding:14px 24px; font-size:15px; cursor:pointer; font-family:'Pretendard',sans-serif; }
+    .btn-reset:hover { transform:translateY(-2px); color:var(--text); border-color:var(--point); }
+    .coupang-banner { margin:0 auto 48px; text-align:center; overflow:hidden; }
+    .coupang-notice { font-size:11px; color:var(--subtext); margin-bottom:10px; line-height:1.6; }
+    .coupang-banner-mo { display:none; }
+    .adfit-wrap { text-align:center; margin:24px 0; }
+    .adfit-mo { display:none; }
+    .footer { border-top:1px solid var(--border); padding:32px 0; text-align:center; }
+    .footer-copy { color:var(--subtext); font-size:13px; margin-bottom:12px; }
+    .footer-nav { display:flex; justify-content:center; gap:20px; flex-wrap:wrap; }
+    .footer-nav a { color:var(--subtext); font-size:13px; }
+    .footer-nav a:hover { color:var(--text); }
+    @media (max-width:640px) {
+      .upload-zone { padding:40px 20px; }
+      .hero h1 { font-size:24px; }
+      .file-range-wrap { flex-wrap:wrap; }
+      .coupang-banner-pc { display:none; }
+      .coupang-banner-mo { display:block; }
+      .adfit-pc { display:none; }
+      .adfit-mo { display:block; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="header">
+    <div class="container">
+      <a href="../index.html" class="logo">
+        <span class="logo-icon">🧰</span>
+        <span class="logo-text">BrowserKit</span>
+      </a>
+      <a href="../index.html" class="back-link">← BrowserKit 홈으로</a>
+    </div>
+  </header>
+
+  <main>
+    <div class="container">
+
+      <div class="hero">
+        <div class="hero-icon">📦</div>
+        <h1>PDFMerge</h1>
+        <p>여러 PDF를 하나로 합치거나 특정 페이지만 추출하는 무료 도구</p>
+        <div class="badges">
+          <span class="badge">🔒 완전 로컬 처리</span>
+          <span class="badge">⚡ 무료 사용</span>
+          <span class="badge">🛡️ 서버 전송 없음</span>
+          <span class="badge">📦 설치 불필요</span>
+        </div>
+      </div>
+
+      <div class="adfit-wrap adfit-pc">
+        <ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-Dfncm24OGOmHKE7V" data-ad-width="728" data-ad-height="90"></ins>
+        <script type="text/javascript" src="//t1.kakaocdn.net/kas/static/ba.min.js" async></script>
+      </div>
+      <div class="adfit-wrap adfit-mo">
+        <ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-jVI6hdgtW0LyffyR" data-ad-width="320" data-ad-height="50"></ins>
+        <script type="text/javascript" src="//t1.kakaocdn.net/kas/static/ba.min.js" async></script>
+      </div>
+
+      <div class="upload-zone" id="uploadZone">
+        <input type="file" id="fileInput" accept=".pdf" multiple hidden />
+        <div class="upload-icon">📄</div>
+        <p class="upload-title">PDF 파일을 드래그하여 놓으세요</p>
+        <p class="upload-sub">또는 클릭하여 파일 선택 (여러 파일 동시 선택 가능)</p>
+        <p class="upload-safe">✓ 파일이 서버로 전송되지 않습니다</p>
+      </div>
+
+      <p class="notice">
+        💡 파일을 업로드한 뒤 순서를 드래그로 조정하고, 페이지 범위를 입력하세요 (예: <strong>1-3, 5</strong>). 비워두면 전체 페이지가 포함됩니다.<br />
+        ⚠️ 대용량 PDF 또는 페이지 수가 많을 경우 처리 시간이 길어질 수 있습니다.
+      </p>
+
+      <div class="file-list-wrap" id="fileListWrap">
+        <div class="file-list-header">
+          <span class="file-list-title" id="fileListTitle">파일 0개</span>
+          <button class="btn-add-more" id="btnAddMore">+ 파일 추가</button>
+        </div>
+        <div class="file-list" id="fileList"></div>
+      </div>
+
+      <div class="progress-wrap" id="progressWrap">
+        <div class="progress-label" id="progressLabel">처리 중...</div>
+        <div class="progress-bar">
+          <div class="progress-fill" id="progressFill"></div>
+        </div>
+      </div>
+
+      <div class="action-wrap" id="actionWrap">
+        <button class="btn-merge" id="mergeBtn">⬇ PDF 합치기 및 다운로드</button>
+        <button class="btn-reset" id="resetBtn">↺ 처음부터</button>
+      </div>
+
+      <div class="coupang-banner coupang-banner-pc">
+        <p class="coupang-notice">이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</p>
+        <script src="https://ads-partners.coupang.com/g.js"></script>
+        <script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"728","height":"120","tsource":""});</script>
+      </div>
+      <div class="coupang-banner coupang-banner-mo">
+        <p class="coupang-notice">이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</p>
+        <script src="https://ads-partners.coupang.com/g.js"></script>
+        <script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"320","height":"50","tsource":""});</script>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p class="footer-copy">© 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p>
+      <nav class="footer-nav">
+        <a href="../privacy.html">개인정보 처리방침</a>
+        <a href="../terms.html">이용약관</a>
+        <a href="../about.html">서비스 소개</a>
+        <a href="../blog/index.html">블로그</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+  <script>
+  const pdfjsLib = window['pdfjs-dist/build/pdf'];
+  pdfjsLib.GlobalWorkerOptions.workerSrc =
+    'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+  const uploadZone    = document.getElementById('uploadZone');
+  const fileInput     = document.getElementById('fileInput');
+  const fileListWrap  = document.getElementById('fileListWrap');
+  const fileListTitle = document.getElementById('fileListTitle');
+  const fileListEl    = document.getElementById('fileList');
+  const btnAddMore    = document.getElementById('btnAddMore');
+  const progressWrap  = document.getElementById('progressWrap');
+  const progressFill  = document.getElementById('progressFill');
+  const progressLabel = document.getElementById('progressLabel');
+  const actionWrap    = document.getElementById('actionWrap');
+  const mergeBtn      = document.getElementById('mergeBtn');
+  const resetBtn      = document.getElementById('resetBtn');
+
+  let fileItems  = [];
+  let dragSrcIdx = null;
+
+  uploadZone.addEventListener('click', () => fileInput.click());
+  uploadZone.addEventListener('dragover', (e) => { e.preventDefault(); uploadZone.classList.add('drag-over'); });
+  uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('drag-over'));
+  uploadZone.addEventListener('drop', (e) => {
+    e.preventDefault(); uploadZone.classList.remove('drag-over');
+    const files = [...e.dataTransfer.files].filter(f => f.type === 'application/pdf');
+    if (files.length) addFiles(files);
+  });
+  fileInput.addEventListener('change', (e) => {
+    if (e.target.files.length) addFiles([...e.target.files]);
+    fileInput.value = '';
+  });
+  btnAddMore.addEventListener('click', () => fileInput.click());
+
+  async function addFiles(files) {
+    uploadZone.style.display = 'none';
+    showProgress(0, '파일 불러오는 중...');
+    progressWrap.style.display = 'block';
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+      showProgress(Math.floor((i / files.length) * 80), file.name + ' 불러오는 중...');
+      try {
+        const ab = await file.arrayBuffer();
+        const pdfDoc   = await pdfjsLib.getDocument({ data: ab }).promise;
+        const numPages = pdfDoc.numPages;
+        const thumbCanvas = await renderThumb(pdfDoc, 1);
+        fileItems.push({ file, pdfDoc, numPages, thumbCanvas, range: '' });
+      } catch(e) { console.error(file.name + ' 로드 실패:', e); }
+    }
+    showProgress(100, '완료!');
+    setTimeout(() => {
+      progressWrap.style.display = 'none';
+      renderFileList();
+      fileListWrap.style.display = 'block';
+      actionWrap.style.display   = 'flex';
+    }, 300);
+  }
+
+  async function renderThumb(pdfDoc, pageNum) {
+    const page = await pdfDoc.getPage(pageNum);
+    const viewport = page.getViewport({ scale: 0.3 });
+    const canvas = document.createElement('canvas');
+    canvas.width = viewport.width; canvas.height = viewport.height;
+    await page.render({ canvasContext: canvas.getContext('2d'), viewport }).promise;
+    return canvas;
+  }
+
+  function renderFileList() {
+    fileListEl.innerHTML = '';
+    fileListTitle.textContent = '파일 ' + fileItems.length + '개';
+    fileItems.forEach((item, idx) => {
+      const card = document.createElement('div');
+      card.className = 'file-card';
+      card.draggable = true;
+      card.dataset.idx = idx;
+
+      const thumb = document.createElement('div');
+      thumb.className = 'file-thumb';
+      if (item.thumbCanvas) {
+        const img = document.createElement('img');
+        img.src = item.thumbCanvas.toDataURL();
+        img.style.cssText = 'width:100%;height:100%;object-fit:cover;border-radius:4px;';
+        thumb.appendChild(img);
+      } else { thumb.textContent = '📄'; }
+
+      const info = document.createElement('div');
+      info.className = 'file-info';
+      const rangeInput = document.createElement('input');
+      rangeInput.className = 'file-range-input';
+      rangeInput.type = 'text';
+      rangeInput.placeholder = '예: 1-3, 5';
+      rangeInput.value = item.range;
+      rangeInput.dataset.idx = idx;
+      rangeInput.addEventListener('change', (e) => {
+        fileItems[parseInt(e.target.dataset.idx)].range = e.target.value.trim();
+      });
+      info.innerHTML =
+        '<div class="file-name">' + item.file.name + '</div>' +
+        '<div class="file-meta">' + item.numPages + '페이지 · ' + formatBytes(item.file.size) + '</div>';
+      const rangeWrap = document.createElement('div');
+      rangeWrap.className = 'file-range-wrap';
+      rangeWrap.innerHTML = '<span class="file-range-label">페이지 범위:</span>';
+      rangeWrap.appendChild(rangeInput);
+      info.appendChild(rangeWrap);
+
+      const handle = document.createElement('div');
+      handle.className = 'file-drag-handle';
+      handle.textContent = '⠿';
+
+      const removeBtn = document.createElement('button');
+      removeBtn.className = 'btn-file-remove';
+      removeBtn.textContent = '✕';
+      removeBtn.addEventListener('click', () => {
+        fileItems.splice(idx, 1);
+        renderFileList();
+        if (fileItems.length === 0) {
+          fileListWrap.style.display = 'none';
+          actionWrap.style.display   = 'none';
+          uploadZone.style.display   = 'block';
+        }
+      });
+
+      card.appendChild(thumb);
+      card.appendChild(info);
+      card.appendChild(handle);
+      card.appendChild(removeBtn);
+
+      card.addEventListener('dragstart', () => { dragSrcIdx = idx; card.classList.add('dragging'); });
+      card.addEventListener('dragend', () => {
+        dragSrcIdx = null; card.classList.remove('dragging');
+        document.querySelectorAll('.file-card').forEach(c => c.classList.remove('drag-target'));
+      });
+      card.addEventListener('dragover', (e) => { e.preventDefault(); card.classList.add('drag-target'); });
+      card.addEventListener('dragleave', () => card.classList.remove('drag-target'));
+      card.addEventListener('drop', (e) => {
+        e.preventDefault();
+        if (dragSrcIdx === null || dragSrcIdx === idx) return;
+        const moved = fileItems.splice(dragSrcIdx, 1)[0];
+        fileItems.splice(idx, 0, moved);
+        renderFileList();
+      });
+
+      fileListEl.appendChild(card);
+    });
+  }
+
+  function parseRange(rangeStr, numPages) {
+    if (!rangeStr.trim()) return Array.from({ length: numPages }, (_, i) => i + 1);
+    const pages = new Set();
+    rangeStr.split(',').forEach(part => {
+      part = part.trim();
+      if (part.includes('-')) {
+        const [s, e] = part.split('-').map(Number);
+        for (let p = Math.max(1, s); p <= Math.min(numPages, e); p++) pages.add(p);
+      } else {
+        const p = Number(part);
+        if (p >= 1 && p <= numPages) pages.add(p);
+      }
+    });
+    return [...pages].sort((a, b) => a - b);
+  }
+
+  mergeBtn.addEventListener('click', async () => {
+    if (!fileItems.length) return;
+    mergeBtn.disabled = true;
+    mergeBtn.textContent = '⏳ PDF 생성 중...';
+    showProgress(0, '페이지 렌더링 중...');
+    progressWrap.style.display = 'block';
+    try {
+      const { jsPDF } = window.jspdf;
+      let pdf = null;
+      let totalRendered = 0;
+      const totalPageCount = fileItems.reduce((sum, item) =>
+        sum + parseRange(item.range, item.numPages).length, 0);
+
+      for (let fi = 0; fi < fileItems.length; fi++) {
+        const item  = fileItems[fi];
+        const pages = parseRange(item.range, item.numPages);
+        for (let pi = 0; pi < pages.length; pi++) {
+          const pageNum = pages[pi];
+          showProgress(Math.floor((totalRendered / totalPageCount) * 90),
+            item.file.name + ' — ' + pageNum + '페이지 처리 중...');
+          const page = await item.pdfDoc.getPage(pageNum);
+          const viewport = page.getViewport({ scale: 2.0 });
+          const canvas = document.createElement('canvas');
+          canvas.width = viewport.width; canvas.height = viewport.height;
+          await page.render({ canvasContext: canvas.getContext('2d'), viewport }).promise;
+          const w = canvas.width / 2;
+          const h = canvas.height / 2;
+          const orient = w > h ? 'l' : 'p';
+          if (!pdf) {
+            pdf = new jsPDF({ orientation: orient, unit: 'px', format: [w, h] });
+          } else {
+            pdf.addPage([w, h], orient);
+          }
+          pdf.addImage(canvas.toDataURL('image/jpeg', 0.92), 'JPEG', 0, 0, w, h);
+          totalRendered++;
+        }
+      }
+      showProgress(100, '다운로드 준비 중...');
+      await new Promise(r => setTimeout(r, 300));
+      pdf.save('pdfmerge_result.pdf');
+    } catch(err) {
+      console.error('PDF 생성 오류:', err);
+      alert('PDF 생성 중 오류가 발생했습니다. 파일을 확인해주세요.');
+    }
+    progressWrap.style.display = 'none';
+    mergeBtn.disabled = false;
+    mergeBtn.textContent = '⬇ PDF 합치기 및 다운로드';
+  });
+
+  resetBtn.addEventListener('click', () => {
+    fileItems = [];
+    fileListEl.innerHTML = '';
+    fileListWrap.style.display = 'none';
+    actionWrap.style.display   = 'none';
+    progressWrap.style.display = 'none';
+    uploadZone.style.display   = 'block';
+    fileInput.value = '';
+  });
+
+  function showProgress(percent, label) {
+    progressFill.style.width  = percent + '%';
+    progressLabel.textContent = label;
+  }
+
+  function formatBytes(bytes) {
+    if (bytes < 1024)          return bytes + ' B';
+    if (bytes < 1024 * 1024)   return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
+  }
+  </script>
+
+</body>
+</html>
