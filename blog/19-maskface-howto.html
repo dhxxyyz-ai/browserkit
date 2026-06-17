@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="PDFMerge의 모든 기능을 단계별로 설명하는 공식 사용 가이드입니다. 여러 PDF 합치기, 페이지 범위 추출, 순서 변경까지 쉽게 따라할 수 있습니다." />
-  <meta property="og:title" content="PDFMerge 사용법 완전 가이드 — BrowserKit" />
-  <meta property="og:description" content="PDFMerge의 모든 기능을 단계별로 설명하는 공식 사용 가이드입니다." />
+  <meta name="description" content="MaskFace의 모든 기능을 단계별로 설명하는 공식 사용 가이드입니다. 얼굴 자동 탐지, 모자이크 처리, 수동 드래그 마스킹까지 쉽게 따라할 수 있습니다." />
+  <meta property="og:title" content="MaskFace 사용법 완전 가이드 — BrowserKit" />
+  <meta property="og:description" content="MaskFace의 모든 기능을 단계별로 설명하는 공식 사용 가이드입니다." />
   <meta property="og:type" content="article" />
-  <title>PDFMerge 사용법 완전 가이드 — BrowserKit</title>
+  <title>MaskFace 사용법 완전 가이드 — BrowserKit</title>
   <link rel="stylesheet" href="../css/style.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -77,43 +77,43 @@
   <div class="post-wrap">
     <a href="index.html" class="back-link">← 블로그 목록</a>
     <span class="post-tag">가이드</span>
-    <h1 class="post-title">PDFMerge 사용법 완전 가이드</h1>
-    <div class="post-date">2026년 6월 16일</div>
+    <h1 class="post-title">MaskFace 사용법 완전 가이드</h1>
+    <div class="post-date">2026년 6월 17일</div>
 
     <div class="post-body">
-      <p>PDFMerge는 여러 PDF를 하나로 합치거나 특정 페이지만 추출하는 무료 온라인 도구입니다. 설치 없이 바로 사용할 수 있으며, 모든 처리가 브라우저 내에서만 이루어져 PDF 파일이 외부 서버로 전송되지 않습니다.</p>
+      <p>MaskFace는 이미지 속 얼굴을 AI가 자동으로 감지해 모자이크 또는 검정 박스로 처리하는 무료 온라인 도구입니다. 설치 없이 바로 사용할 수 있으며, 모든 처리가 브라우저 내에서만 이루어져 이미지가 외부 서버로 전송되지 않습니다.</p>
 
       <h2>주요 기능</h2>
       <div class="feature-grid">
         <div class="feature-card">
-          <div class="feature-icon">&#x1F4C4;</div>
-          <div class="feature-title">다중 PDF 업로드</div>
-          <div class="feature-desc">여러 PDF 파일을 한 번에 업로드합니다. 드래그앤드롭과 파일 선택 모두 지원합니다.</div>
+          <div class="feature-icon">&#x1F916;</div>
+          <div class="feature-title">얼굴 자동 탐지</div>
+          <div class="feature-desc">AI 모델이 이미지 속 얼굴을 자동으로 감지합니다. 여러 명의 얼굴도 한 번에 처리됩니다.</div>
         </div>
         <div class="feature-card">
-          <div class="feature-icon">&#x1F5BC;&#xFE0F;</div>
-          <div class="feature-title">썸네일 미리보기</div>
-          <div class="feature-desc">각 파일의 첫 페이지를 썸네일로 렌더링해 파일을 시각적으로 확인할 수 있습니다.</div>
+          <div class="feature-icon">&#x1F532;</div>
+          <div class="feature-title">모자이크 처리</div>
+          <div class="feature-desc">탐지된 얼굴 영역을 픽셀화(pixelate)해 알아볼 수 없게 처리합니다.</div>
         </div>
         <div class="feature-card">
-          <div class="feature-icon">&#x2195;&#xFE0F;</div>
-          <div class="feature-title">드래그로 순서 변경</div>
-          <div class="feature-desc">파일 카드를 드래그해 합쳐질 순서를 자유롭게 조정합니다.</div>
+          <div class="feature-icon">&#x2B1B;</div>
+          <div class="feature-title">검정 박스 처리</div>
+          <div class="feature-desc">얼굴 영역을 검정 박스로 완전히 가립니다.</div>
         </div>
         <div class="feature-card">
-          <div class="feature-icon">&#x1F4D1;</div>
-          <div class="feature-title">페이지 범위 선택</div>
-          <div class="feature-desc">파일별로 포함할 페이지를 지정할 수 있습니다. (예: 1-3, 5) 비워두면 전체 페이지가 포함됩니다.</div>
+          <div class="feature-icon">&#x1F39A;&#xFE0F;</div>
+          <div class="feature-title">모자이크 강도 조절</div>
+          <div class="feature-desc">슬라이더로 모자이크 블록 크기를 4px~32px로 세밀하게 조절할 수 있습니다.</div>
         </div>
         <div class="feature-card">
-          <div class="feature-icon">&#x2795;</div>
-          <div class="feature-title">파일 추가 / 삭제</div>
-          <div class="feature-desc">업로드 후에도 파일을 추가하거나 개별 삭제할 수 있습니다.</div>
+          <div class="feature-icon">&#x270D;&#xFE0F;</div>
+          <div class="feature-title">수동 드래그 마스킹</div>
+          <div class="feature-desc">자동 탐지가 어려운 얼굴은 결과 이미지 위에서 직접 드래그해 추가 마스킹할 수 있습니다.</div>
         </div>
         <div class="feature-card">
           <div class="feature-icon">&#x1F4E5;</div>
-          <div class="feature-title">PDF 다운로드</div>
-          <div class="feature-desc">처리 완료된 파일을 즉시 pdfmerge_result.pdf로 다운로드합니다.</div>
+          <div class="feature-title">PNG 다운로드</div>
+          <div class="feature-desc">처리 완료된 이미지를 즉시 maskface_result.png로 다운로드합니다.</div>
         </div>
       </div>
 
@@ -121,70 +121,66 @@
       <div class="step-card">
         <div class="step-num">1</div>
         <div class="step-content">
-          <h3>PDF 파일 업로드</h3>
-          <p>업로드 영역에 PDF 파일을 드래그하거나 클릭해서 파일을 선택합니다. 여러 파일을 동시에 선택할 수 있습니다.</p>
+          <h3>모델 로딩 대기</h3>
+          <p>페이지 접속 시 AI 모델이 자동으로 로딩됩니다. 약 5~10초 소요되며, <strong>얼굴 인식 모델 준비 완료</strong> 메시지가 표시되면 업로드가 활성화됩니다.</p>
         </div>
       </div>
       <div class="step-card">
         <div class="step-num">2</div>
         <div class="step-content">
-          <h3>파일 목록 확인</h3>
-          <p>업로드된 파일이 카드 형태로 표시됩니다. 각 카드에는 파일명, 페이지 수, 파일 크기, 첫 페이지 썸네일이 표시됩니다. <strong>+ 파일 추가</strong> 버튼으로 파일을 더 추가할 수 있습니다.</p>
+          <h3>이미지 업로드</h3>
+          <p>업로드 영역에 이미지를 드래그하거나 클릭해서 파일을 선택합니다. JPG, PNG, WEBP 형식을 지원합니다.</p>
         </div>
       </div>
       <div class="step-card">
         <div class="step-num">3</div>
         <div class="step-content">
-          <h3>순서 조정 및 페이지 범위 입력</h3>
-          <p>카드를 드래그해 합쳐질 순서를 조정합니다. 특정 페이지만 포함하려면 페이지 범위 입력 필드에 범위를 입력합니다. (예: <strong>1-3, 5</strong> &rarr; 1, 2, 3, 5페이지만 포함)</p>
+          <h3>얼굴 자동 탐지</h3>
+          <p>이미지가 업로드되면 AI 모델이 자동으로 얼굴을 탐지하고 결과 영역에 탐지된 얼굴 수를 표시합니다.</p>
         </div>
       </div>
       <div class="step-card">
         <div class="step-num">4</div>
         <div class="step-content">
-          <h3>PDF 합치기 및 다운로드</h3>
-          <p><strong>PDF 합치기 및 다운로드</strong> 버튼을 클릭합니다. 페이지 수에 따라 처리 시간이 달라지며 진행 상황이 Progress Bar로 표시됩니다. 완료되면 <code>pdfmerge_result.pdf</code>가 자동으로 다운로드됩니다.</p>
+          <h3>마스킹 옵션 선택</h3>
+          <p><strong>모자이크</strong> 또는 <strong>검정 박스</strong> 중 원하는 방식을 선택하고, 모자이크 강도 슬라이더로 블록 크기를 조정합니다. 옵션 변경 시 결과 이미지가 실시간으로 업데이트됩니다.</p>
         </div>
       </div>
       <div class="step-card">
         <div class="step-num">5</div>
         <div class="step-content">
-          <h3>처음부터 다시</h3>
-          <p><strong>처음부터</strong> 버튼으로 초기화하고 새로운 작업을 시작할 수 있습니다.</p>
+          <h3>수동 보완 및 다운로드</h3>
+          <p>자동 탐지가 누락된 얼굴이 있다면 결과 이미지 위에서 드래그해 수동으로 추가 마스킹합니다. 완료되면 <strong>PNG 다운로드</strong> 버튼을 클릭해 <code>maskface_result.png</code>로 저장합니다.</p>
         </div>
       </div>
 
-      <h2>페이지 범위 입력 방법</h2>
-      <p>페이지 범위 필드를 비워두면 해당 파일의 전체 페이지가 포함됩니다. 아래와 같이 다양한 방식으로 입력할 수 있습니다.</p>
+      <h2>자동 탐지가 어려운 경우</h2>
+      <p>AI 모델은 정면 얼굴 위주로 학습되어 다음 상황에서는 탐지가 되지 않거나 정확도가 낮아질 수 있습니다. 이 경우 수동 드래그 마스킹으로 보완하세요.</p>
       <table class="post-table">
-        <thead><tr><th>입력 예시</th><th>결과</th></tr></thead>
+        <thead><tr><th>상황</th><th>설명</th></tr></thead>
         <tbody>
-          <tr><td>비워둠</td><td>전체 페이지 포함</td></tr>
-          <tr><td>1-3</td><td>1, 2, 3페이지</td></tr>
-          <tr><td>1, 3, 5</td><td>1, 3, 5페이지</td></tr>
-          <tr><td>1-3, 5</td><td>1, 2, 3, 5페이지</td></tr>
-          <tr><td>2-4, 7-9</td><td>2, 3, 4, 7, 8, 9페이지</td></tr>
+          <tr><td>옆면 / 반측면 얼굴</td><td>AI 모델은 정면 얼굴 위주로 학습되어 옆얼굴 탐지가 제한적입니다.</td></tr>
+          <tr><td>마스크 착용</td><td>마스크로 얼굴이 가려진 경우 탐지율이 낮아질 수 있습니다.</td></tr>
+          <tr><td>매우 작은 얼굴</td><td>이미지 내 얼굴이 너무 작으면 탐지되지 않을 수 있습니다.</td></tr>
+          <tr><td>강한 역광</td><td>얼굴 윤곽이 불분명한 경우 탐지가 어려울 수 있습니다.</td></tr>
         </tbody>
       </table>
 
-      <h2>다른 PDF 도구와의 비교</h2>
+      <h2>마스킹 방식 비교</h2>
       <table class="post-table">
-        <thead><tr><th>항목</th><th>PDFMerge</th><th>MaskPDF</th></tr></thead>
+        <thead><tr><th>방식</th><th>특징</th><th>추천 상황</th></tr></thead>
         <tbody>
-          <tr><td>주요 기능</td><td>여러 PDF 합치기 / 페이지 추출</td><td>PDF 속 개인정보 마스킹</td></tr>
-          <tr><td>업로드 파일 수</td><td>여러 개 동시 업로드</td><td>1개</td></tr>
-          <tr><td>출력 형식</td><td>합쳐진 PDF</td><td>마스킹된 PDF</td></tr>
-          <tr><td>처리 시간</td><td>파일 수·페이지 수에 따라 다름</td><td>페이지 수에 따라 다름</td></tr>
-          <tr><td>서버 전송</td><td>없음 (완전 로컬 처리)</td><td>없음 (완전 로컬 처리)</td></tr>
+          <tr><td>모자이크</td><td>픽셀화 처리, 일부 윤곽 유지</td><td>자연스러운 편집이 필요할 때</td></tr>
+          <tr><td>검정 박스</td><td>완전 가림, 얼굴 정보 제로</td><td>보안이 중요할 때</td></tr>
         </tbody>
       </table>
 
-      <div class="post-highlight">&#x1F4A1; 대용량 PDF 또는 파일 수가 많을 경우 브라우저 메모리 부족이 발생할 수 있습니다. 파일 5개 이하, 총 페이지 수 50페이지 이하를 권장합니다. 처리 중 다른 탭을 여러 개 열면 속도가 느려질 수 있습니다.</div>
+      <div class="post-highlight">&#x1F4A1; MaskFace는 얼굴 인식 모델 로딩에 약 5~10초가 소요됩니다. 로딩 중에는 이미지 업로드가 비활성화되며, <strong>얼굴 인식 모델 준비 완료</strong> 메시지가 표시된 후 이미지를 업로드해 주세요. 모든 처리는 브라우저 내에서만 이루어지며 이미지가 외부 서버로 전송되지 않습니다.</div>
     </div>
 
     <div class="cta-box">
-      <p>지금 바로 PDFMerge를 사용해보세요.<br />설치도, 회원가입도, 비용도 없습니다.</p>
-      <a href="../pdf-merge/index.html" class="cta-btn">&#x1F4E6; 무료로 PDF 합치기 시작하기</a>
+      <p>지금 바로 MaskFace를 사용해보세요.<br />설치도, 회원가입도, 비용도 없습니다.</p>
+      <a href="../mask-face/index.html" class="cta-btn">&#x1F464; 무료로 얼굴 마스킹 시작하기</a>
     </div>
 
     <div class="adfit-wrap adfit-pc">
@@ -206,8 +202,8 @@
     </div>
 
     <div class="post-nav">
-      <a href="17-fitimage-howto.html">← 이전 글: FitImage 사용법 완전 가이드</a>
-      <a href="19-maskface-howto.html">다음 글: MaskFace 사용법 완전 가이드 →</a>
+      <a href="18-pdfmerge-howto.html">← 이전 글: PDFMerge 사용법 완전 가이드</a>
+      <span></span>
     </div>
   </div>
 
