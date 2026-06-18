@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="MaskFace의 모든 기능을 단계별로 설명하는 공식 사용 가이드입니다. 얼굴 자동 탐지, 모자이크 처리, 수동 드래그 마스킹까지 쉽게 따라할 수 있습니다." />
-  <meta property="og:title" content="MaskFace 사용법 완전 가이드 — BrowserKit" />
-  <meta property="og:description" content="MaskFace의 모든 기능을 단계별로 설명하는 공식 사용 가이드입니다." />
+  <meta name="description" content="TextTools의 모든 기능을 단계별로 설명하는 공식 사용 가이드입니다. 글자수 세기, 공백 정리, 대소문자 변환, 중복 제거까지 쉽게 따라할 수 있습니다." />
+  <meta property="og:title" content="TextTools 사용법 완전 가이드 — BrowserKit" />
+  <meta property="og:description" content="TextTools의 모든 기능을 단계별로 설명하는 공식 사용 가이드입니다." />
   <meta property="og:type" content="article" />
-  <title>MaskFace 사용법 완전 가이드 — BrowserKit</title>
+  <title>TextTools 사용법 완전 가이드 — BrowserKit</title>
   <link rel="stylesheet" href="../css/style.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -26,6 +26,7 @@
     .post-title { font-size:28px; font-weight:700; line-height:1.4; margin-bottom:12px; }
     .post-date { color:var(--subtext); font-size:13px; margin-bottom:40px; padding-bottom:24px; border-bottom:1px solid var(--border); }
     .post-body h2 { font-size:20px; font-weight:700; margin:40px 0 16px; color:var(--text); }
+    .post-body h3 { font-size:16px; font-weight:600; margin:28px 0 12px; color:var(--point-hover); }
     .post-body p { font-size:15px; color:var(--subtext); line-height:1.9; margin-bottom:16px; }
     .post-highlight { background:var(--card); border-left:3px solid var(--point); border-radius:8px; padding:16px 20px; margin:24px 0; font-size:15px; color:var(--text); line-height:1.8; }
     .feature-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:20px 0; }
@@ -41,6 +42,7 @@
     .post-table { width:100%; border-collapse:collapse; margin:20px 0; font-size:14px; }
     .post-table th { background:var(--card); padding:12px 16px; text-align:left; font-weight:600; border:1px solid var(--border); color:var(--text); }
     .post-table td { padding:11px 16px; border:1px solid var(--border); color:var(--subtext); line-height:1.7; }
+    .post-table td code { background:var(--bg); border-radius:4px; padding:1px 6px; font-size:13px; color:var(--point-hover); }
     .post-table tr:hover td { background:rgba(108,99,255,0.04); }
     .post-nav { display:flex; justify-content:space-between; margin-top:60px; padding-top:24px; border-top:1px solid var(--border); gap:12px; }
     .post-nav a { font-size:14px; color:var(--subtext); }
@@ -77,43 +79,33 @@
   <div class="post-wrap">
     <a href="index.html" class="back-link">← 블로그 목록</a>
     <span class="post-tag">가이드</span>
-    <h1 class="post-title">MaskFace 사용법 완전 가이드</h1>
-    <div class="post-date">2026년 6월 17일</div>
+    <h1 class="post-title">TextTools 사용법 완전 가이드</h1>
+    <div class="post-date">2026년 6월 18일</div>
 
     <div class="post-body">
-      <p>MaskFace는 이미지 속 얼굴을 AI가 자동으로 감지해 모자이크 또는 검정 박스로 처리하는 무료 온라인 도구입니다. 설치 없이 바로 사용할 수 있으며, 모든 처리가 브라우저 내에서만 이루어져 이미지가 외부 서버로 전송되지 않습니다.</p>
+      <p>TextTools는 글자수 세기, 공백 정리, 대소문자 변환, 중복 제거까지 텍스트 작업을 브라우저에서 바로 처리하는 무료 도구입니다. 설치 없이 바로 사용할 수 있으며, 모든 처리가 브라우저 내에서만 이루어져 입력한 텍스트가 외부 서버로 전송되지 않습니다.</p>
 
-      <h2>주요 기능</h2>
+      <h2>주요 기능 (탭 4개)</h2>
       <div class="feature-grid">
         <div class="feature-card">
-          <div class="feature-icon">&#x1F916;</div>
-          <div class="feature-title">얼굴 자동 탐지</div>
-          <div class="feature-desc">AI 모델이 이미지 속 얼굴을 자동으로 감지합니다. 여러 명의 얼굴도 한 번에 처리됩니다.</div>
+          <div class="feature-icon">&#x1F4CA;</div>
+          <div class="feature-title">글자수 세기</div>
+          <div class="feature-desc">전체 글자, 공백 제외, 단어 수, 줄 수, UTF-8 바이트, 문장 수를 실시간으로 표시합니다.</div>
         </div>
         <div class="feature-card">
-          <div class="feature-icon">&#x1F532;</div>
-          <div class="feature-title">모자이크 처리</div>
-          <div class="feature-desc">탐지된 얼굴 영역을 픽셀화(pixelate)해 알아볼 수 없게 처리합니다.</div>
+          <div class="feature-icon">&#x1F9F9;</div>
+          <div class="feature-title">공백/줄바꿈 정리</div>
+          <div class="feature-desc">연속 공백·줄바꿈 단일화, 앞뒤 공백 제거, 각 줄 공백 제거, 전체 제거 6가지 방식을 지원합니다.</div>
         </div>
         <div class="feature-card">
-          <div class="feature-icon">&#x2B1B;</div>
-          <div class="feature-title">검정 박스 처리</div>
-          <div class="feature-desc">얼굴 영역을 검정 박스로 완전히 가립니다.</div>
+          <div class="feature-icon">&#x1F524;</div>
+          <div class="feature-title">대소문자 변환</div>
+          <div class="feature-desc">UPPER, lower, Capitalize, camelCase, snake_case, kebab-case, PascalCase 7가지로 변환합니다.</div>
         </div>
         <div class="feature-card">
-          <div class="feature-icon">&#x1F39A;&#xFE0F;</div>
-          <div class="feature-title">모자이크 강도 조절</div>
-          <div class="feature-desc">슬라이더로 모자이크 블록 크기를 4px~32px로 세밀하게 조절할 수 있습니다.</div>
-        </div>
-        <div class="feature-card">
-          <div class="feature-icon">&#x270D;&#xFE0F;</div>
-          <div class="feature-title">수동 드래그 마스킹</div>
-          <div class="feature-desc">자동 탐지가 어려운 얼굴은 결과 이미지 위에서 직접 드래그해 추가 마스킹할 수 있습니다.</div>
-        </div>
-        <div class="feature-card">
-          <div class="feature-icon">&#x1F4E5;</div>
-          <div class="feature-title">PNG 다운로드</div>
-          <div class="feature-desc">처리 완료된 이미지를 즉시 maskface_result.png로 다운로드합니다.</div>
+          <div class="feature-icon">&#x274C;</div>
+          <div class="feature-title">중복 제거</div>
+          <div class="feature-desc">중복 줄, 빈 줄, 또는 둘 다 제거합니다. 제거된 줄 수도 함께 표시됩니다.</div>
         </div>
       </div>
 
@@ -121,66 +113,87 @@
       <div class="step-card">
         <div class="step-num">1</div>
         <div class="step-content">
-          <h3>모델 로딩 대기</h3>
-          <p>페이지 접속 시 AI 모델이 자동으로 로딩됩니다. 약 5~10초 소요되며, <strong>얼굴 인식 모델 준비 완료</strong> 메시지가 표시되면 업로드가 활성화됩니다.</p>
+          <h3>탭 선택</h3>
+          <p>화면 상단의 탭 버튼 중 원하는 기능을 선택합니다. 글자수 세기, 공백/줄바꿈 정리, 대소문자 변환, 중복 제거 4가지를 제공합니다.</p>
         </div>
       </div>
       <div class="step-card">
         <div class="step-num">2</div>
         <div class="step-content">
-          <h3>이미지 업로드</h3>
-          <p>업로드 영역에 이미지를 드래그하거나 클릭해서 파일을 선택합니다. JPG, PNG, WEBP 형식을 지원합니다.</p>
+          <h3>텍스트 입력 또는 붙여넣기</h3>
+          <p>왼쪽 입력 영역에 텍스트를 직접 입력하거나 붙여넣습니다. 글자수 세기 탭은 입력 즉시 결과가 실시간으로 갱신됩니다.</p>
         </div>
       </div>
       <div class="step-card">
         <div class="step-num">3</div>
         <div class="step-content">
-          <h3>얼굴 자동 탐지</h3>
-          <p>이미지가 업로드되면 AI 모델이 자동으로 얼굴을 탐지하고 결과 영역에 탐지된 얼굴 수를 표시합니다.</p>
-        </div>
-      </div>
-      <div class="step-card">
-        <div class="step-num">4</div>
-        <div class="step-content">
-          <h3>마스킹 옵션 선택</h3>
-          <p><strong>모자이크</strong> 또는 <strong>검정 박스</strong> 중 원하는 방식을 선택하고, 모자이크 강도 슬라이더로 블록 크기를 조정합니다. 옵션 변경 시 결과 이미지가 실시간으로 업데이트됩니다.</p>
-        </div>
-      </div>
-      <div class="step-card">
-        <div class="step-num">5</div>
-        <div class="step-content">
-          <h3>수동 보완 및 다운로드</h3>
-          <p>자동 탐지가 누락된 얼굴이 있다면 결과 이미지 위에서 드래그해 수동으로 추가 마스킹합니다. 완료되면 <strong>PNG 다운로드</strong> 버튼을 클릭해 <code>maskface_result.png</code>로 저장합니다.</p>
+          <h3>방식 선택 및 결과 복사</h3>
+          <p>정리·변환·제거 탭에서는 원하는 방식 버튼을 클릭하면 오른쪽에 결과가 표시됩니다. <strong>📋 결과 복사</strong> 버튼으로 클립보드에 복사하거나, <strong>⇄ 결과→입력</strong> 버튼으로 결과를 다시 입력 영역에 가져올 수 있습니다.</p>
         </div>
       </div>
 
-      <h2>자동 탐지가 어려운 경우</h2>
-      <p>AI 모델은 정면 얼굴 위주로 학습되어 다음 상황에서는 탐지가 되지 않거나 정확도가 낮아질 수 있습니다. 이 경우 수동 드래그 마스킹으로 보완하세요.</p>
+      <h2>탭별 상세 가이드</h2>
+
+      <h3>📊 글자수 세기</h3>
+      <p>텍스트를 입력하면 6개 항목을 실시간으로 분석합니다. 블로그 글, 유튜브 설명란, SNS 게시물 작성 시 글자 수 제한을 확인하는 데 유용합니다.</p>
       <table class="post-table">
-        <thead><tr><th>상황</th><th>설명</th></tr></thead>
+        <thead><tr><th>항목</th><th>설명</th></tr></thead>
         <tbody>
-          <tr><td>옆면 / 반측면 얼굴</td><td>AI 모델은 정면 얼굴 위주로 학습되어 옆얼굴 탐지가 제한적입니다.</td></tr>
-          <tr><td>마스크 착용</td><td>마스크로 얼굴이 가려진 경우 탐지율이 낮아질 수 있습니다.</td></tr>
-          <tr><td>매우 작은 얼굴</td><td>이미지 내 얼굴이 너무 작으면 탐지되지 않을 수 있습니다.</td></tr>
-          <tr><td>강한 역광</td><td>얼굴 윤곽이 불분명한 경우 탐지가 어려울 수 있습니다.</td></tr>
+          <tr><td>전체 글자</td><td>공백 포함 전체 문자 수</td></tr>
+          <tr><td>공백 제외</td><td>공백·탭·줄바꿈을 제외한 순수 문자 수</td></tr>
+          <tr><td>단어 수</td><td>공백으로 구분된 단어 수</td></tr>
+          <tr><td>줄 수</td><td>줄바꿈 기준 줄 수</td></tr>
+          <tr><td>바이트 (UTF-8)</td><td>한글 3바이트, 영문 1바이트 기준 용량</td></tr>
+          <tr><td>문장 수</td><td><code>.</code> <code>!</code> <code>?</code> <code>。</code> 기준 문장 수</td></tr>
         </tbody>
       </table>
 
-      <h2>마스킹 방식 비교</h2>
+      <h3>🧹 공백/줄바꿈 정리</h3>
+      <p>복사한 텍스트에 불필요한 공백이나 빈 줄이 많을 때 한 번에 정리할 수 있습니다.</p>
       <table class="post-table">
-        <thead><tr><th>방식</th><th>특징</th><th>추천 상황</th></tr></thead>
+        <thead><tr><th>버튼</th><th>동작</th></tr></thead>
         <tbody>
-          <tr><td>모자이크</td><td>픽셀화 처리, 일부 윤곽 유지</td><td>자연스러운 편집이 필요할 때</td></tr>
-          <tr><td>검정 박스</td><td>완전 가림, 얼굴 정보 제로</td><td>보안이 중요할 때</td></tr>
+          <tr><td>연속 공백 → 단일</td><td>여러 개의 공백을 하나로 줄임</td></tr>
+          <tr><td>연속 줄바꿈 → 단일</td><td>여러 개의 빈 줄을 하나로 줄임</td></tr>
+          <tr><td>앞뒤 공백 제거 (trim)</td><td>텍스트 전체의 앞뒤 공백 제거</td></tr>
+          <tr><td>각 줄 앞뒤 공백 제거</td><td>줄마다 앞뒤 공백 개별 제거</td></tr>
+          <tr><td>모든 공백 제거</td><td>스페이스 전체 삭제</td></tr>
+          <tr><td>모든 줄바꿈 제거</td><td>줄바꿈 전체 삭제, 한 줄로 합침</td></tr>
         </tbody>
       </table>
 
-      <div class="post-highlight">&#x1F4A1; MaskFace는 얼굴 인식 모델 로딩에 약 5~10초가 소요됩니다. 로딩 중에는 이미지 업로드가 비활성화되며, <strong>얼굴 인식 모델 준비 완료</strong> 메시지가 표시된 후 이미지를 업로드해 주세요. 모든 처리는 브라우저 내에서만 이루어지며 이미지가 외부 서버로 전송되지 않습니다.</div>
+      <h3>🔤 대소문자 변환</h3>
+      <p>개발 작업에서 변수명 형식을 바꿀 때나 영문 텍스트의 대소문자를 일괄 변경할 때 유용합니다.</p>
+      <table class="post-table">
+        <thead><tr><th>방식</th><th>입력 예시</th><th>결과</th></tr></thead>
+        <tbody>
+          <tr><td>UPPER</td><td>hello world</td><td>HELLO WORLD</td></tr>
+          <tr><td>lower</td><td>Hello World</td><td>hello world</td></tr>
+          <tr><td>Capitalize</td><td>hello world</td><td>Hello World</td></tr>
+          <tr><td>camelCase</td><td>hello world</td><td>helloWorld</td></tr>
+          <tr><td>snake_case</td><td>hello world</td><td>hello_world</td></tr>
+          <tr><td>kebab-case</td><td>hello world</td><td>hello-world</td></tr>
+          <tr><td>PascalCase</td><td>hello world</td><td>HelloWorld</td></tr>
+        </tbody>
+      </table>
+
+      <h3>❌ 중복 제거</h3>
+      <p>키워드 목록, 주소 목록 등에서 중복된 항목을 빠르게 제거할 수 있습니다.</p>
+      <table class="post-table">
+        <thead><tr><th>버튼</th><th>동작</th></tr></thead>
+        <tbody>
+          <tr><td>중복 줄 제거</td><td>동일한 내용의 줄을 하나만 남김 (순서 유지)</td></tr>
+          <tr><td>빈 줄 제거</td><td>내용이 없는 줄을 모두 삭제</td></tr>
+          <tr><td>중복+빈 줄 모두 제거</td><td>두 가지를 동시에 적용</td></tr>
+        </tbody>
+      </table>
+
+      <div class="post-highlight">&#x1F4A1; TextTools는 모든 처리가 브라우저 내에서만 이루어집니다. 입력한 텍스트가 외부 서버로 전송되지 않아 개인정보나 기밀 문서도 안전하게 처리할 수 있습니다. 설치나 회원가입 없이 바로 사용할 수 있습니다.</div>
     </div>
 
     <div class="cta-box">
-      <p>지금 바로 MaskFace를 사용해보세요.<br />설치도, 회원가입도, 비용도 없습니다.</p>
-      <a href="../mask-face/index.html" class="cta-btn">&#x1F464; 무료로 얼굴 마스킹 시작하기</a>
+      <p>지금 바로 TextTools를 사용해보세요.<br />설치도, 회원가입도, 비용도 없습니다.</p>
+      <a href="../text-tools/index.html" class="cta-btn">&#x2328;&#xFE0F; 무료로 텍스트 변환 시작하기</a>
     </div>
 
     <div class="adfit-wrap adfit-pc">
@@ -202,8 +215,8 @@
     </div>
 
     <div class="post-nav">
-      <a href="18-pdfmerge-howto.html">← 이전 글: PDFMerge 사용법 완전 가이드</a>
-      <a href="20-texttools-howto.html">다음 글: TextTools 사용법 완전 가이드 →</a>
+      <a href="19-maskface-howto.html">← 이전 글: MaskFace 사용법 완전 가이드</a>
+      <span></span>
     </div>
   </div>
 
