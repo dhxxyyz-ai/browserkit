@@ -215,7 +215,7 @@
   const PAT_RRN     = /\d{6}-[1-4]\d{6}/g;
   const PAT_PHONE   = /(\+82-?|0)\d{1,2}-?\d{3,4}-?\d{4}/g;
   const PAT_EMAIL   = /[\w.+-]+@[\w-]+\.[\w.]+/g;
-  const PAT_ACCOUNT = /\d{2,6}-\d{2,6}-\d{2,7}(-\d{2,3})?/g;
+  const PAT_ACCOUNT = /\d{3,6}-\d{2,6}-\d{6,7}(-\d{2,3})?/g;
 
   // ── 마스킹 함수 ──
   function maskText(text){
