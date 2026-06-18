@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="이미지에 텍스트 또는 이미지 워터마크를 추가하는 무료 온라인 도구. 투명도, 위치, 크기를 자유롭게 조절하세요. 서버 전송 없이 브라우저에서 바로 처리합니다." />
+  <meta property="og:title" content="WatermarkImage — 워터마크 추가 도구" />
+  <meta property="og:description" content="이미지에 텍스트 또는 이미지 워터마크를 추가하는 무료 온라인 도구." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://browserkit.pages.dev/watermark-image/" />
+  <title>WatermarkImage — 워터마크 추가 도구</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+  <script type="text/javascript" src="//t1.kakaocdn.net/kas/static/ba.min.js" async></script>
+  <style>
+    .header{padding:24px 0 16px;border-bottom:1px solid var(--border);}
+    .header .container{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;}
+    .header-brand{display:flex;align-items:center;gap:10px;text-decoration:none;}
+    .header-brand-icon{font-size:24px;}
+    .header-brand-text{font-size:20px;font-weight:700;font-family:'Inter',sans-serif;background:linear-gradient(135deg,var(--point),var(--point-hover));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+    .header-back{font-size:13px;color:var(--subtext);text-decoration:none;}
+    .header-back:hover{color:var(--text);}
+    .hero{text-align:center;padding:40px 0 32px;}
+    .hero-icon{font-size:48px;margin-bottom:16px;}
+    .hero-title{font-size:32px;font-weight:700;margin-bottom:12px;background:linear-gradient(135deg,var(--point),var(--point-hover));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+    .hero-desc{color:var(--subtext);font-size:15px;margin-bottom:20px;}
+    .hero-badges{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;}
+    .hero-badge{background:var(--card);border:1px solid var(--border);border-radius:999px;padding:5px 16px;font-size:13px;color:var(--subtext);}
+    /* 탭 */
+    .tab-wrap{display:flex;gap:8px;margin-bottom:24px;flex-wrap:wrap;}
+    .tab-btn{background:var(--card);color:var(--subtext);border:1px solid var(--border);border-radius:10px;padding:10px 24px;font-size:14px;font-weight:600;cursor:pointer;font-family:'Pretendard',sans-serif;}
+    .tab-btn:hover{border-color:var(--point);color:var(--text);}
+    .tab-btn.active{background:linear-gradient(135deg,var(--point),var(--point-hover));color:white;border-color:transparent;}
+    /* 업로드 존 */
+    .upload-zone{background:var(--card);border:2px dashed var(--border);border-radius:var(--radius);padding:48px 40px;text-align:center;cursor:pointer;margin-bottom:16px;}
+    .upload-zone:hover,.upload-zone.drag-over{border-color:var(--point);box-shadow:0 0 24px var(--glow);}
+    .upload-icon{font-size:44px;margin-bottom:16px;}
+    .upload-title{font-size:17px;font-weight:600;margin-bottom:8px;}
+    .upload-sub{color:var(--subtext);font-size:13px;}
+    .upload-safe{color:var(--success);font-size:13px;margin-top:8px;}
+    /* 옵션 패널 */
+    .option-panel{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:20px;}
+    .option-panel-title{font-size:14px;font-weight:600;color:var(--subtext);margin-bottom:16px;}
+    .option-row{display:flex;align-items:center;gap:12px;margin-bottom:14px;flex-wrap:wrap;}
+    .option-label{font-size:13px;color:var(--subtext);min-width:64px;}
+    .option-input{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:8px 12px;font-size:14px;color:var(--text);font-family:'Pretendard',sans-serif;flex:1;min-width:0;}
+    .option-input:focus{outline:none;border-color:var(--point);}
+    .option-input[type=range]{padding:0;height:6px;accent-color:var(--point);cursor:pointer;}
+    .option-value{font-size:14px;font-weight:600;color:var(--point-hover);min-width:36px;font-family:'Inter',sans-serif;}
+    /* 색상 프리셋 */
+    .color-presets{display:flex;gap:8px;flex-wrap:wrap;}
+    .color-preset{width:28px;height:28px;border-radius:6px;cursor:pointer;border:2px solid transparent;}
+    .color-preset:hover,.color-preset.active{border-color:var(--point-hover);transform:scale(1.1);}
+    .color-input-wrap{display:flex;align-items:center;gap:8px;}
+    .color-swatch{width:32px;height:32px;border-radius:8px;border:1px solid var(--border);cursor:pointer;overflow:hidden;}
+    .color-swatch input[type=color]{width:200%;height:200%;transform:translate(-25%,-25%);border:none;cursor:pointer;padding:0;}
+    /* 위치 그리드 */
+    .pos-grid{display:grid;grid-template-columns:repeat(3,36px);gap:6px;}
+    .pos-btn{width:36px;height:36px;background:var(--bg);border:1px solid var(--border);border-radius:8px;cursor:pointer;font-size:10px;color:var(--subtext);display:flex;align-items:center;justify-content:center;}
+    .pos-btn:hover,.pos-btn.active{background:rgba(108,99,255,0.2);border-color:var(--point);color:var(--text);}
+    /* 워터마크 이미지 업로드 */
+    .wm-img-zone{background:var(--bg);border:1px dashed var(--border);border-radius:10px;padding:20px;text-align:center;cursor:pointer;font-size:13px;color:var(--subtext);}
+    .wm-img-zone:hover{border-color:var(--point);}
+    .wm-img-preview{max-width:100%;max-height:80px;border-radius:8px;margin-top:8px;display:none;}
+    /* 미리보기 */
+    .preview-wrap{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:20px;}
+    .preview-box{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;display:flex;flex-direction:column;}
+    .preview-label{font-size:12px;color:var(--subtext);font-weight:600;padding:12px 16px 8px;}
+    .preview-canvas-wrap{flex:1;display:flex;align-items:center;justify-content:center;padding:12px;min-height:200px;background:repeating-conic-gradient(#1e1e2a 0% 25%,#26263a 0% 50%) 0 0/16px 16px;}
+    .preview-canvas-wrap canvas{max-width:100%;max-height:280px;object-fit:contain;border-radius:4px;}
+    .preview-info{font-size:12px;color:var(--subtext);padding:8px 16px 12px;font-family:'Inter',sans-serif;}
+    /* 버튼 */
+    .action-wrap{display:flex;justify-content:center;gap:12px;margin-bottom:48px;flex-wrap:wrap;}
+    .btn-primary{background:linear-gradient(135deg,var(--point),var(--point-hover));color:white;border:none;border-radius:12px;padding:14px 32px;font-size:15px;font-weight:600;cursor:pointer;font-family:'Pretendard',sans-serif;}
+    .btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 24px var(--glow);}
+    .btn-primary:disabled{opacity:0.4;cursor:default;transform:none;box-shadow:none;}
+    .btn-sub{background:var(--card);color:var(--subtext);border:1px solid var(--border);border-radius:12px;padding:14px 24px;font-size:15px;cursor:pointer;font-family:'Pretendard',sans-serif;}
+    .btn-sub:hover{transform:translateY(-2px);color:var(--text);border-color:var(--point);}
+    /* 포맷 선택 */
+    .format-row{display:flex;gap:8px;flex-wrap:wrap;}
+    .fmt-btn{background:var(--bg);color:var(--subtext);border:1px solid var(--border);border-radius:8px;padding:7px 16px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Pretendard',sans-serif;}
+    .fmt-btn:hover{border-color:var(--point);color:var(--text);}
+    .fmt-btn.active{background:rgba(108,99,255,0.15);border-color:var(--point);color:var(--point-hover);}
+    /* 배너 */
+    .coupang-banner{margin:0 auto 48px;text-align:center;overflow:hidden;}
+    .coupang-notice{font-size:11px;color:var(--subtext);margin-bottom:10px;line-height:1.6;}
+    .coupang-banner-mo{display:none;}
+    .adfit-wrap{text-align:center;margin:24px 0;}.adfit-pc{display:block;}.adfit-mo{display:none;}
+    .footer{border-top:1px solid var(--border);padding:32px 0;text-align:center;}
+    .footer-copy{color:var(--subtext);font-size:13px;margin-bottom:12px;}
+    .footer-nav{display:flex;justify-content:center;gap:20px;flex-wrap:wrap;}
+    .footer-nav a{color:var(--subtext);font-size:13px;}.footer-nav a:hover{color:var(--text);}
+    @media(max-width:640px){
+      .preview-wrap{grid-template-columns:1fr;}
+      .hero-title{font-size:24px;}
+      .coupang-banner-pc{display:none;}.coupang-banner-mo{display:block;}
+      .adfit-pc{display:none;}.adfit-mo{display:block;}
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="container">
+      <a href="../index.html" class="header-brand"><span class="header-brand-icon">&#x1F9F0;</span><span class="header-brand-text">BrowserKit</span></a>
+      <a href="../index.html" class="header-back">← BrowserKit 홈으로</a>
+    </div>
+  </header>
+
+  <main><div class="container">
+    <div class="hero">
+      <div class="hero-icon">&#x1F3F7;&#xFE0F;</div>
+      <h1 class="hero-title">WatermarkImage</h1>
+      <p class="hero-desc">텍스트 또는 이미지 워터마크를 원본 이미지에 자유롭게 합성하는 무료 도구</p>
+      <div class="hero-badges">
+        <span class="hero-badge">&#x26A1; 무료 사용</span>
+        <span class="hero-badge">&#x1F512; 서버 전송 없음</span>
+        <span class="hero-badge">&#x1F4E6; 설치 불필요</span>
+      </div>
+    </div>
+
+    <div class="adfit-wrap adfit-pc"><ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-Dfncm24OGOmHKE7V" data-ad-width="728" data-ad-height="90"></ins></div>
+    <div class="adfit-wrap adfit-mo"><ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-jVI6hdgtW0LyffyR" data-ad-width="320" data-ad-height="50"></ins></div>
+
+    <!-- 원본 이미지 업로드 -->
+    <div class="upload-zone" id="uploadZone">
+      <div class="upload-icon">&#x1F5BC;&#xFE0F;</div>
+      <div class="upload-title">원본 이미지를 업로드하세요</div>
+      <div class="upload-sub">클릭하거나 파일을 여기로 드래그하세요 (JPG, PNG, WEBP)</div>
+      <div class="upload-safe">&#x1F512; 파일이 서버로 전송되지 않습니다</div>
+      <input type="file" id="fileInput" accept="image/*" style="display:none" />
+    </div>
+
+    <!-- 워터마크 타입 탭 -->
+    <div class="tab-wrap" id="tabWrap" style="display:none;">
+      <button class="tab-btn active" data-tab="text">&#x1F524; 텍스트 워터마크</button>
+      <button class="tab-btn" data-tab="image">&#x1F5BC;&#xFE0F; 이미지 워터마크</button>
+    </div>
+
+    <!-- 텍스트 워터마크 옵션 -->
+    <div class="option-panel" id="panel-text" style="display:none;">
+      <div class="option-panel-title">텍스트 워터마크 설정</div>
+      <div class="option-row">
+        <span class="option-label">텍스트</span>
+        <input class="option-input" type="text" id="wmText" placeholder="© 2026 BrowserKit" value="© BrowserKit" />
+      </div>
+      <div class="option-row">
+        <span class="option-label">크기</span>
+        <input class="option-input" type="range" id="textSize" min="10" max="120" value="36" />
+        <span class="option-value" id="textSizeVal">36px</span>
+      </div>
+      <div class="option-row">
+        <span class="option-label">색상</span>
+        <div class="color-presets">
+          <div class="color-preset active" style="background:#ffffff;" data-color="#ffffff" title="흰색"></div>
+          <div class="color-preset" style="background:#000000;" data-color="#000000" title="검정"></div>
+          <div class="color-preset" style="background:#ff0000;" data-color="#ff0000" title="빨강"></div>
+          <div class="color-preset" style="background:#ffff00;" data-color="#ffff00" title="노랑"></div>
+          <div class="color-preset" style="background:#6C63FF;" data-color="#6C63FF" title="보라"></div>
+          <div class="color-swatch" title="직접 선택">
+            <input type="color" id="textColor" value="#ffffff" />
+          </div>
+        </div>
+      </div>
+      <div class="option-row">
+        <span class="option-label">투명도</span>
+        <input class="option-input" type="range" id="textOpacity" min="5" max="100" value="70" />
+        <span class="option-value" id="textOpacityVal">70%</span>
+      </div>
+      <div class="option-row" style="align-items:flex-start;">
+        <span class="option-label" style="padding-top:8px;">위치</span>
+        <div class="pos-grid" id="posGrid">
+          <button class="pos-btn" data-pos="tl">↖</button>
+          <button class="pos-btn" data-pos="tc">↑</button>
+          <button class="pos-btn" data-pos="tr">↗</button>
+          <button class="pos-btn" data-pos="ml">←</button>
+          <button class="pos-btn" data-pos="mc">✦</button>
+          <button class="pos-btn" data-pos="mr">→</button>
+          <button class="pos-btn" data-pos="bl">↙</button>
+          <button class="pos-btn" data-pos="bc">↓</button>
+          <button class="pos-btn active" data-pos="br">↘</button>
+        </div>
+        <div style="margin-left:16px;">
+          <label style="display:flex;align-items:center;gap:8px;font-size:13px;color:var(--subtext);cursor:pointer;">
+            <input type="checkbox" id="tileMode" style="accent-color:var(--point);cursor:pointer;" />
+            타일 반복 배치
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <!-- 이미지 워터마크 옵션 -->
+    <div class="option-panel" id="panel-image" style="display:none;">
+      <div class="option-panel-title">이미지 워터마크 설정</div>
+      <div class="option-row" style="flex-direction:column;align-items:flex-start;">
+        <span class="option-label" style="margin-bottom:8px;">워터마크 이미지</span>
+        <div class="wm-img-zone" id="wmImgZone">
+          &#x1F4CE; 클릭하여 워터마크 이미지 선택 (PNG 권장, 투명 배경 지원)
+          <img id="wmImgPreview" class="wm-img-preview" alt="워터마크 미리보기" />
+          <input type="file" id="wmImgInput" accept="image/*" style="display:none" />
+        </div>
+      </div>
+      <div class="option-row">
+        <span class="option-label">크기</span>
+        <input class="option-input" type="range" id="imgSize" min="5" max="80" value="20" />
+        <span class="option-value" id="imgSizeVal">20%</span>
+      </div>
+      <div class="option-row">
+        <span class="option-label">투명도</span>
+        <input class="option-input" type="range" id="imgOpacity" min="5" max="100" value="80" />
+        <span class="option-value" id="imgOpacityVal">80%</span>
+      </div>
+      <div class="option-row" style="align-items:flex-start;">
+        <span class="option-label" style="padding-top:8px;">위치</span>
+        <div class="pos-grid" id="posGridImg">
+          <button class="pos-btn" data-pos="tl">↖</button>
+          <button class="pos-btn" data-pos="tc">↑</button>
+          <button class="pos-btn" data-pos="tr">↗</button>
+          <button class="pos-btn" data-pos="ml">←</button>
+          <button class="pos-btn" data-pos="mc">✦</button>
+          <button class="pos-btn" data-pos="mr">→</button>
+          <button class="pos-btn" data-pos="bl">↙</button>
+          <button class="pos-btn" data-pos="bc">↓</button>
+          <button class="pos-btn active" data-pos="br">↘</button>
+        </div>
+        <div style="margin-left:16px;">
+          <label style="display:flex;align-items:center;gap:8px;font-size:13px;color:var(--subtext);cursor:pointer;">
+            <input type="checkbox" id="tileModeImg" style="accent-color:var(--point);cursor:pointer;" />
+            타일 반복 배치
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <!-- 출력 형식 -->
+    <div class="option-panel" id="outputPanel" style="display:none;">
+      <div class="option-panel-title">출력 형식</div>
+      <div class="format-row">
+        <button class="fmt-btn active" data-fmt="png">PNG <small>투명 배경 지원</small></button>
+        <button class="fmt-btn" data-fmt="jpg">JPG <small>파일 크기 작음</small></button>
+        <button class="fmt-btn" data-fmt="webp">WEBP <small>고압축 고화질</small></button>
+      </div>
+    </div>
+
+    <!-- 미리보기 -->
+    <div class="preview-wrap" id="previewWrap" style="display:none;">
+      <div class="preview-box">
+        <div class="preview-label">원본</div>
+        <div class="preview-canvas-wrap"><canvas id="originalCanvas"></canvas></div>
+        <div class="preview-info" id="originalInfo"></div>
+      </div>
+      <div class="preview-box">
+        <div class="preview-label">결과</div>
+        <div class="preview-canvas-wrap"><canvas id="resultCanvas"></canvas></div>
+        <div class="preview-info" id="resultInfo"></div>
+      </div>
+    </div>
+
+    <!-- 버튼 -->
+    <div class="action-wrap" id="actionWrap" style="display:none;">
+      <button class="btn-primary" id="applyBtn">&#x2728; 워터마크 적용 미리보기</button>
+      <button class="btn-primary" id="downloadBtn" style="display:none;">&#x2B07; 이미지 다운로드</button>
+      <button class="btn-sub" id="resetBtn">↺ 처음부터</button>
+    </div>
+
+    <div class="coupang-banner coupang-banner-pc"><p class="coupang-notice">이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</p><script src="https://ads-partners.coupang.com/g.js"></script><script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"728","height":"120","tsource":""});</script></div>
+    <div class="coupang-banner coupang-banner-mo"><p class="coupang-notice">이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</p><script src="https://ads-partners.coupang.com/g.js"></script><script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"320","height":"50","tsource":""});</script></div>
+  </div></main>
+
+  <footer class="footer"><div class="container"><p class="footer-copy">© 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p><nav class="footer-nav"><a href="../privacy.html">개인정보 처리방침</a><a href="../terms.html">이용약관</a><a href="../about.html">서비스 소개</a><a href="../blog/index.html">블로그</a></nav></div></footer>
+
+  <script>
+  // ── 상태 ──
+  let originalImg = null, originalFile = null;
+  let wmImg = null;
+  let currentTab = 'text';
+  let currentPos = 'br', currentPosImg = 'br';
+  let currentFmt = 'png';
+  let currentColor = '#ffffff';
+  let applied = false;
+
+  // ── 유틸 ──
+  function formatBytes(b){if(b<1024)return b+'B';if(b<1048576)return(b/1024).toFixed(1)+'KB';return(b/1048576).toFixed(2)+'MB';}
+  function getPos(pos, cw, ch, ew, eh, margin){
+    const m = margin;
+    const map = {
+      tl:[m, m], tc:[cw/2-ew/2, m], tr:[cw-ew-m, m],
+      ml:[m, ch/2-eh/2], mc:[cw/2-ew/2, ch/2-eh/2], mr:[cw-ew-m, ch/2-eh/2],
+      bl:[m, ch-eh-m], bc:[cw/2-ew/2, ch-eh-m], br:[cw-ew-m, ch-eh-m]
+    };
+    return map[pos] || map['br'];
+  }
+
+  // ── 원본 이미지 업로드 ──
+  const uploadZone = document.getElementById('uploadZone');
+  const fileInput = document.getElementById('fileInput');
+  uploadZone.addEventListener('click', ()=> fileInput.click());
+  uploadZone.addEventListener('dragover', e=>{e.preventDefault();uploadZone.classList.add('drag-over');});
+  uploadZone.addEventListener('dragleave', ()=> uploadZone.classList.remove('drag-over'));
+  uploadZone.addEventListener('drop', e=>{e.preventDefault();uploadZone.classList.remove('drag-over');if(e.dataTransfer.files[0]) loadImage(e.dataTransfer.files[0]);});
+  fileInput.addEventListener('change', ()=>{ if(fileInput.files[0]) loadImage(fileInput.files[0]); });
+
+  function loadImage(file){
+    originalFile = file;
+    const reader = new FileReader();
+    reader.onload = e=>{
+      const img = new Image();
+      img.onload = ()=>{
+        originalImg = img;
+        // 원본 캔버스
+        const oc = document.getElementById('originalCanvas');
+        oc.width = img.width; oc.height = img.height;
+        oc.getContext('2d').drawImage(img, 0, 0);
+        document.getElementById('originalInfo').textContent = img.width+'×'+img.height+' / '+formatBytes(file.size);
+        // UI 표시
+        document.getElementById('tabWrap').style.display = 'flex';
+        showTab(currentTab);
+        document.getElementById('outputPanel').style.display = 'block';
+        document.getElementById('previewWrap').style.display = 'grid';
+        document.getElementById('actionWrap').style.display = 'flex';
+        document.getElementById('downloadBtn').style.display = 'none';
+        applied = false;
+        // 결과 캔버스 초기화 (원본 복사)
+        const rc = document.getElementById('resultCanvas');
+        rc.width = img.width; rc.height = img.height;
+        rc.getContext('2d').drawImage(img, 0, 0);
+        document.getElementById('resultInfo').textContent = '워터마크 적용 미리보기 버튼을 눌러주세요.';
+      };
+      img.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  }
+
+  // ── 탭 전환 ──
+  function showTab(tab){
+    currentTab = tab;
+    document.querySelectorAll('.tab-btn').forEach(b=>b.classList.toggle('active', b.dataset.tab===tab));
+    document.getElementById('panel-text').style.display = tab==='text' ? 'block' : 'none';
+    document.getElementById('panel-image').style.display = tab==='image' ? 'block' : 'none';
+  }
+  document.querySelectorAll('.tab-btn').forEach(b=>b.addEventListener('click',()=>showTab(b.dataset.tab)));
+
+  // ── 슬라이더 ──
+  document.getElementById('textSize').addEventListener('input',function(){document.getElementById('textSizeVal').textContent=this.value+'px';});
+  document.getElementById('textOpacity').addEventListener('input',function(){document.getElementById('textOpacityVal').textContent=this.value+'%';});
+  document.getElementById('imgSize').addEventListener('input',function(){document.getElementById('imgSizeVal').textContent=this.value+'%';});
+  document.getElementById('imgOpacity').addEventListener('input',function(){document.getElementById('imgOpacityVal').textContent=this.value+'%';});
+
+  // ── 색상 프리셋 ──
+  document.querySelectorAll('.color-preset').forEach(p=>{
+    p.addEventListener('click',()=>{
+      document.querySelectorAll('.color-preset').forEach(x=>x.classList.remove('active'));
+      p.classList.add('active');
+      currentColor = p.dataset.color;
+      document.getElementById('textColor').value = currentColor;
+    });
+  });
+  document.getElementById('textColor').addEventListener('input',function(){
+    currentColor = this.value;
+    document.querySelectorAll('.color-preset').forEach(x=>x.classList.remove('active'));
+  });
+
+  // ── 위치 그리드 (텍스트) ──
+  document.querySelectorAll('#posGrid .pos-btn').forEach(b=>{
+    b.addEventListener('click',()=>{
+      document.querySelectorAll('#posGrid .pos-btn').forEach(x=>x.classList.remove('active'));
+      b.classList.add('active');
+      currentPos = b.dataset.pos;
+    });
+  });
+  // ── 위치 그리드 (이미지) ──
+  document.querySelectorAll('#posGridImg .pos-btn').forEach(b=>{
+    b.addEventListener('click',()=>{
+      document.querySelectorAll('#posGridImg .pos-btn').forEach(x=>x.classList.remove('active'));
+      b.classList.add('active');
+      currentPosImg = b.dataset.pos;
+    });
+  });
+
+  // ── 출력 형식 ──
+  document.querySelectorAll('.fmt-btn').forEach(b=>{
+    b.addEventListener('click',()=>{
+      document.querySelectorAll('.fmt-btn').forEach(x=>x.classList.remove('active'));
+      b.classList.add('active');
+      currentFmt = b.dataset.fmt;
+    });
+  });
+
+  // ── 워터마크 이미지 업로드 ──
+  const wmImgZone = document.getElementById('wmImgZone');
+  const wmImgInput = document.getElementById('wmImgInput');
+  wmImgZone.addEventListener('click', ()=> wmImgInput.click());
+  wmImgInput.addEventListener('change',()=>{
+    if(!wmImgInput.files[0]) return;
+    const reader = new FileReader();
+    reader.onload = e=>{
+      const img = new Image();
+      img.onload = ()=>{
+        wmImg = img;
+        const preview = document.getElementById('wmImgPreview');
+        preview.src = e.target.result;
+        preview.style.display = 'block';
+      };
+      img.src = e.target.result;
+    };
+    reader.readAsDataURL(wmImgInput.files[0]);
+  });
+
+  // ── 워터마크 적용 ──
+  function applyWatermark(){
+    if(!originalImg) return;
+    const rc = document.getElementById('resultCanvas');
+    rc.width = originalImg.width;
+    rc.height = originalImg.height;
+    const ctx = rc.getContext('2d');
+    ctx.drawImage(originalImg, 0, 0);
+
+    const cw = rc.width, ch = rc.height;
+    const margin = Math.round(Math.max(cw, ch) * 0.02);
+
+    if(currentTab === 'text'){
+      const text = document.getElementById('wmText').value || '© BrowserKit';
+      const size = parseInt(document.getElementById('textSize').value);
+      const opacity = parseInt(document.getElementById('textOpacity').value) / 100;
+      const tile = document.getElementById('tileMode').checked;
+      ctx.globalAlpha = opacity;
+      ctx.fillStyle = currentColor;
+      ctx.font = `bold ${size}px Pretendard, sans-serif`;
+      ctx.textBaseline = 'top';
+      const metrics = ctx.measureText(text);
+      const tw = metrics.width, th = size * 1.2;
+      if(tile){
+        const gapX = tw * 1.5 + 20, gapY = th * 2.5;
+        for(let y = -gapY; y < ch + gapY; y += gapY){
+          for(let x = -gapX; x < cw + gapX; x += gapX){
+            ctx.save();
+            ctx.translate(x + gapX/2, y + gapY/2);
+            ctx.rotate(-Math.PI/6);
+            ctx.fillText(text, -tw/2, -th/2);
+            ctx.restore();
+          }
+        }
+      } else {
+        const [px, py] = getPos(currentPos, cw, ch, tw, th, margin);
+        ctx.fillText(text, px, py);
+      }
+      ctx.globalAlpha = 1;
+    } else {
+      if(!wmImg){ alert('워터마크 이미지를 먼저 선택해주세요.'); return; }
+      const sizePct = parseInt(document.getElementById('imgSize').value) / 100;
+      const opacity = parseInt(document.getElementById('imgOpacity').value) / 100;
+      const tile = document.getElementById('tileModeImg').checked;
+      const wmW = Math.round(cw * sizePct);
+      const wmH = Math.round(wmW * wmImg.height / wmImg.width);
+      ctx.globalAlpha = opacity;
+      if(tile){
+        const gapX = wmW * 1.5 + 10, gapY = wmH * 2 + 10;
+        for(let y = 0; y < ch; y += gapY){
+          for(let x = 0; x < cw; x += gapX){
+            ctx.drawImage(wmImg, x, y, wmW, wmH);
+          }
+        }
+      } else {
+        const [px, py] = getPos(currentPosImg, cw, ch, wmW, wmH, margin);
+        ctx.drawImage(wmImg, px, py, wmW, wmH);
+      }
+      ctx.globalAlpha = 1;
+    }
+
+    // 결과 정보
+    const mimeMap = {png:'image/png', jpg:'image/jpeg', webp:'image/webp'};
+    const mime = mimeMap[currentFmt];
+    const quality = currentFmt === 'png' ? undefined : 0.92;
+    const dataUrl = quality !== undefined ? rc.toDataURL(mime, quality) : rc.toDataURL(mime);
+    const bytes = Math.round((dataUrl.length - dataUrl.indexOf(',') - 1) * 0.75);
+    document.getElementById('resultInfo').textContent = cw+'×'+ch+' / '+formatBytes(bytes);
+    document.getElementById('downloadBtn').style.display = '';
+    applied = true;
+  }
+
+  document.getElementById('applyBtn').addEventListener('click', applyWatermark);
+
+  // ── 다운로드 ──
+  document.getElementById('downloadBtn').addEventListener('click',()=>{
+    if(!applied) return;
+    const rc = document.getElementById('resultCanvas');
+    const mimeMap = {png:'image/png', jpg:'image/jpeg', webp:'image/webp'};
+    const extMap = {png:'png', jpg:'jpg', webp:'webp'};
+    const mime = mimeMap[currentFmt];
+    const quality = currentFmt === 'png' ? undefined : 0.92;
+    rc.toBlob(blob=>{
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'watermark_result.'+extMap[currentFmt];
+      a.click();
+      URL.revokeObjectURL(a.href);
+    }, mime, quality);
+  });
+
+  // ── 초기화 ──
+  document.getElementById('resetBtn').addEventListener('click',()=>{
+    originalImg = null; originalFile = null; wmImg = null; applied = false;
+    fileInput.value = ''; wmImgInput.value = '';
+    document.getElementById('wmImgPreview').style.display = 'none';
+    document.getElementById('tabWrap').style.display = 'none';
+    document.getElementById('panel-text').style.display = 'none';
+    document.getElementById('panel-image').style.display = 'none';
+    document.getElementById('outputPanel').style.display = 'none';
+    document.getElementById('previewWrap').style.display = 'none';
+    document.getElementById('actionWrap').style.display = 'none';
+    document.getElementById('downloadBtn').style.display = 'none';
+    document.getElementById('wmText').value = '© BrowserKit';
+    document.getElementById('textSize').value = 36; document.getElementById('textSizeVal').textContent = '36px';
+    document.getElementById('textOpacity').value = 70; document.getElementById('textOpacityVal').textContent = '70%';
+    document.getElementById('imgSize').value = 20; document.getElementById('imgSizeVal').textContent = '20%';
+    document.getElementById('imgOpacity').value = 80; document.getElementById('imgOpacityVal').textContent = '80%';
+    document.getElementById('tileMode').checked = false;
+    document.getElementById('tileModeImg').checked = false;
+    currentPos = 'br'; currentPosImg = 'br'; currentFmt = 'png'; currentColor = '#ffffff';
+    document.querySelectorAll('#posGrid .pos-btn').forEach(b=>b.classList.toggle('active', b.dataset.pos==='br'));
+    document.querySelectorAll('#posGridImg .pos-btn').forEach(b=>b.classList.toggle('active', b.dataset.pos==='br'));
+    document.querySelectorAll('.fmt-btn').forEach(b=>b.classList.toggle('active', b.dataset.fmt==='png'));
+    document.querySelectorAll('.color-preset').forEach(b=>b.classList.toggle('active', b.dataset.color==='#ffffff'));
+    document.getElementById('textColor').value = '#ffffff';
+    const oc = document.getElementById('originalCanvas');
+    const rc = document.getElementById('resultCanvas');
+    oc.width = 0; oc.height = 0; rc.width = 0; rc.height = 0;
+    document.getElementById('originalInfo').textContent = '';
+    document.getElementById('resultInfo').textContent = '';
+    currentTab = 'text';
+  });
+  </script>
+</body>
+</html>
