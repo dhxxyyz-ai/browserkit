@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="URL, 텍스트, 연락처를 QR 코드로 생성하는 무료 온라인 도구. 크기와 색상을 설정하고 PNG로 다운로드하세요. 서버 전송 없이 브라우저에서 바로 처리합니다." />
+  <meta property="og:title" content="QRCode — QR 코드 생성기" />
+  <meta property="og:description" content="URL, 텍스트, 연락처를 QR 코드로 생성하는 무료 온라인 도구. PNG로 바로 다운로드하세요." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://browserkit.pages.dev/qr-code/" />
+  <title>QRCode — QR 코드 생성기</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <script type="text/javascript" src="//t1.kakaocdn.net/kas/static/ba.min.js" async></script>
+  <style>
+    .header { padding:24px 0 16px; border-bottom:1px solid var(--border); }
+    .header .container { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; }
+    .header-brand { display:flex; align-items:center; gap:10px; text-decoration:none; }
+    .header-brand-icon { font-size:24px; }
+    .header-brand-text { font-size:20px; font-weight:700; font-family:'Inter',sans-serif; background:linear-gradient(135deg,var(--point),var(--point-hover)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+    .header-back { font-size:13px; color:var(--subtext); text-decoration:none; }
+    .header-back:hover { color:var(--text); }
+
+    .hero { text-align:center; padding:40px 0 32px; }
+    .hero-icon { font-size:48px; margin-bottom:16px; }
+    .hero-title { font-size:32px; font-weight:700; margin-bottom:12px; background:linear-gradient(135deg,var(--point),var(--point-hover)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+    .hero-desc { color:var(--subtext); font-size:15px; margin-bottom:20px; }
+    .hero-badges { display:flex; justify-content:center; gap:10px; flex-wrap:wrap; }
+    .hero-badge { background:var(--card); border:1px solid var(--border); border-radius:999px; padding:5px 16px; font-size:13px; color:var(--subtext); }
+
+    /* 탭 */
+    .tab-wrap { display:flex; gap:8px; margin-bottom:20px; flex-wrap:wrap; }
+    .tab-btn { background:var(--card); color:var(--subtext); border:1px solid var(--border); border-radius:10px; padding:10px 24px; font-size:14px; font-weight:600; cursor:pointer; font-family:'Pretendard',sans-serif; transition:all 0.2s; }
+    .tab-btn:hover { border-color:var(--point); color:var(--text); }
+    .tab-btn.active { background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border-color:transparent; }
+
+    /* 레이아웃 */
+    .work-area { display:grid; grid-template-columns:1fr 320px; gap:24px; margin-bottom:48px; align-items:start; }
+
+    /* 입력 패널 */
+    .input-panel { display:flex; flex-direction:column; gap:16px; }
+    .input-section { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:24px; }
+    .input-label { font-size:13px; font-weight:600; color:var(--subtext); margin-bottom:10px; display:block; }
+    .input-field { background:var(--bg); border:1px solid var(--border); border-radius:10px; padding:12px 16px; font-size:14px; color:var(--text); font-family:'Pretendard',sans-serif; width:100%; transition:border-color 0.2s; }
+    .input-field:focus { outline:none; border-color:var(--point); }
+    .input-field::placeholder { color:var(--subtext); }
+    .input-field.textarea { resize:vertical; min-height:100px; line-height:1.6; }
+
+    /* 연락처 필드 */
+    .contact-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+    .contact-field-wrap { display:flex; flex-direction:column; gap:6px; }
+    .contact-field-label { font-size:12px; color:var(--subtext); }
+
+    /* 옵션 패널 */
+    .option-section { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:24px; }
+    .option-title { font-size:13px; font-weight:600; color:var(--subtext); margin-bottom:16px; }
+    .option-row { display:flex; align-items:center; gap:12px; margin-bottom:14px; flex-wrap:wrap; }
+    .option-row:last-child { margin-bottom:0; }
+    .option-label { font-size:13px; color:var(--subtext); min-width:56px; }
+
+    /* 크기 버튼 */
+    .size-btns { display:flex; gap:8px; }
+    .size-btn { background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:6px 16px; font-size:13px; color:var(--subtext); cursor:pointer; font-family:'Pretendard',sans-serif; transition:all 0.2s; }
+    .size-btn:hover { border-color:var(--point); color:var(--text); }
+    .size-btn.active { background:rgba(108,99,255,0.15); border-color:var(--point); color:var(--point-hover); font-weight:600; }
+
+    /* 색상 */
+    .color-wrap { display:flex; align-items:center; gap:10px; }
+    .color-swatch { width:36px; height:36px; border-radius:8px; border:1px solid var(--border); cursor:pointer; overflow:hidden; flex-shrink:0; }
+    .color-swatch input[type=color] { width:200%; height:200%; transform:translate(-25%,-25%); border:none; cursor:pointer; padding:0; }
+    .color-hex { font-size:13px; color:var(--subtext); font-family:'Inter',sans-serif; }
+
+    /* QR 미리보기 패널 */
+    .preview-panel { display:flex; flex-direction:column; gap:16px; position:sticky; top:24px; }
+    .preview-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:24px; text-align:center; }
+    .preview-label { font-size:13px; font-weight:600; color:var(--subtext); margin-bottom:16px; }
+    .qr-wrap { display:flex; align-items:center; justify-content:center; min-height:220px; }
+    #qr-container { display:flex; align-items:center; justify-content:center; }
+    #qr-container canvas, #qr-container img { border-radius:8px; max-width:100%; }
+    .qr-empty { color:var(--subtext); font-size:14px; }
+
+    .qr-info { font-size:12px; color:var(--subtext); margin-top:12px; font-family:'Inter',sans-serif; }
+
+    /* 다운로드/초기화 버튼 */
+    .btn-primary { background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border:none; border-radius:12px; padding:13px 28px; font-size:15px; font-weight:600; cursor:pointer; font-family:'Pretendard',sans-serif; width:100%; transition:all 0.2s; }
+    .btn-primary:hover { transform:translateY(-2px); box-shadow:0 8px 24px var(--glow); }
+    .btn-primary:disabled { opacity:0.4; cursor:default; transform:none; box-shadow:none; }
+    .btn-sub { background:var(--card); color:var(--subtext); border:1px solid var(--border); border-radius:12px; padding:10px 20px; font-size:14px; cursor:pointer; font-family:'Pretendard',sans-serif; width:100%; transition:all 0.2s; }
+    .btn-sub:hover { color:var(--text); border-color:var(--point); }
+
+    /* 토스트 */
+    .toast { position:fixed; bottom:32px; left:50%; transform:translateX(-50%) translateY(80px); background:var(--success); color:#fff; border-radius:999px; padding:10px 24px; font-size:14px; font-weight:600; opacity:0; pointer-events:none; z-index:999; transition:all 0.3s ease; }
+    .toast.show { transform:translateX(-50%) translateY(0); opacity:1; }
+
+    /* 배너 */
+    .coupang-banner { margin:0 auto 48px; text-align:center; overflow:hidden; }
+    .coupang-notice { font-size:11px; color:var(--subtext); margin-bottom:10px; line-height:1.6; }
+    .coupang-banner-mo { display:none; }
+    .adfit-wrap { text-align:center; margin:24px 0; }
+    .adfit-pc { display:block; }
+    .adfit-mo { display:none; }
+    .footer { border-top:1px solid var(--border); padding:32px 0; text-align:center; }
+    .footer-copy { color:var(--subtext); font-size:13px; margin-bottom:12px; }
+    .footer-nav { display:flex; justify-content:center; gap:20px; flex-wrap:wrap; }
+    .footer-nav a { color:var(--subtext); font-size:13px; text-decoration:none; }
+    .footer-nav a:hover { color:var(--text); }
+
+    @media (max-width:768px) {
+      .work-area { grid-template-columns:1fr; }
+      .preview-panel { position:static; }
+      .hero-title { font-size:24px; }
+      .contact-grid { grid-template-columns:1fr; }
+      .adfit-pc { display:none; }
+      .adfit-mo { display:block; }
+      .coupang-banner-pc { display:none; }
+      .coupang-banner-mo { display:block; }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="container">
+      <a href="../index.html" class="header-brand">
+        <span class="header-brand-icon">&#x1F9F0;</span>
+        <span class="header-brand-text">BrowserKit</span>
+      </a>
+      <a href="../index.html" class="header-back">← BrowserKit 홈으로</a>
+    </div>
+  </header>
+
+  <main><div class="container">
+    <div class="hero">
+      <div class="hero-icon">&#x1F4F1;</div>
+      <h1 class="hero-title">QRCode</h1>
+      <p class="hero-desc">URL, 텍스트, 연락처를 QR 코드로 생성하고 PNG로 다운로드하세요</p>
+      <div class="hero-badges">
+        <span class="hero-badge">&#x26A1; 무료 사용</span>
+        <span class="hero-badge">&#x1F512; 서버 전송 없음</span>
+        <span class="hero-badge">&#x1F4E6; 설치 불필요</span>
+      </div>
+    </div>
+
+    <div class="adfit-wrap adfit-pc"><ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-Dfncm24OGOmHKE7V" data-ad-width="728" data-ad-height="90"></ins></div>
+    <div class="adfit-wrap adfit-mo"><ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-jVI6hdgtW0LyffyR" data-ad-width="320" data-ad-height="50"></ins></div>
+
+    <!-- 탭 -->
+    <div class="tab-wrap">
+      <button class="tab-btn active" data-tab="url">&#x1F310; URL</button>
+      <button class="tab-btn" data-tab="text">&#x1F4DD; 텍스트</button>
+      <button class="tab-btn" data-tab="contact">&#x1F464; 연락처</button>
+    </div>
+
+    <div class="work-area">
+      <!-- 왼쪽: 입력 패널 -->
+      <div class="input-panel">
+
+        <!-- URL 탭 -->
+        <div class="input-section" id="tab-url">
+          <label class="input-label">URL 입력</label>
+          <input class="input-field" type="text" id="input-url" placeholder="https://browserkit.pages.dev" />
+        </div>
+
+        <!-- 텍스트 탭 -->
+        <div class="input-section" id="tab-text" style="display:none;">
+          <label class="input-label">텍스트 입력</label>
+          <textarea class="input-field textarea" id="input-text" placeholder="QR 코드에 담을 텍스트를 입력하세요"></textarea>
+        </div>
+
+        <!-- 연락처 탭 -->
+        <div class="input-section" id="tab-contact" style="display:none;">
+          <label class="input-label">연락처 정보 입력 (vCard 형식으로 자동 변환)</label>
+          <div class="contact-grid">
+            <div class="contact-field-wrap">
+              <span class="contact-field-label">이름 *</span>
+              <input class="input-field" type="text" id="contact-name" placeholder="홍길동" />
+            </div>
+            <div class="contact-field-wrap">
+              <span class="contact-field-label">전화번호</span>
+              <input class="input-field" type="text" id="contact-phone" placeholder="010-1234-5678" />
+            </div>
+            <div class="contact-field-wrap">
+              <span class="contact-field-label">이메일</span>
+              <input class="input-field" type="text" id="contact-email" placeholder="hong@example.com" />
+            </div>
+            <div class="contact-field-wrap">
+              <span class="contact-field-label">소속/회사</span>
+              <input class="input-field" type="text" id="contact-org" placeholder="BrowserKit" />
+            </div>
+            <div class="contact-field-wrap" style="grid-column:span 2;">
+              <span class="contact-field-label">웹사이트</span>
+              <input class="input-field" type="text" id="contact-url" placeholder="https://browserkit.pages.dev" />
+            </div>
+          </div>
+        </div>
+
+        <!-- 옵션 -->
+        <div class="option-section">
+          <div class="option-title">QR 코드 옵션</div>
+
+          <div class="option-row">
+            <span class="option-label">크기</span>
+            <div class="size-btns">
+              <button class="size-btn" data-size="128">128px</button>
+              <button class="size-btn active" data-size="256">256px</button>
+              <button class="size-btn" data-size="512">512px</button>
+            </div>
+          </div>
+
+          <div class="option-row">
+            <span class="option-label">전경색</span>
+            <div class="color-wrap">
+              <div class="color-swatch"><input type="color" id="color-dark" value="#000000" /></div>
+              <span class="color-hex" id="color-dark-hex">#000000</span>
+            </div>
+          </div>
+
+          <div class="option-row">
+            <span class="option-label">배경색</span>
+            <div class="color-wrap">
+              <div class="color-swatch"><input type="color" id="color-light" value="#ffffff" /></div>
+              <span class="color-hex" id="color-light-hex">#ffffff</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 오른쪽: 미리보기 패널 -->
+      <div class="preview-panel">
+        <div class="preview-card">
+          <div class="preview-label">QR 코드 미리보기</div>
+          <div class="qr-wrap">
+            <div id="qr-container">
+              <span class="qr-empty">내용을 입력하면<br />QR 코드가 생성됩니다</span>
+            </div>
+          </div>
+          <div class="qr-info" id="qr-info"></div>
+        </div>
+        <button class="btn-primary" id="download-btn" disabled>&#x2B07; PNG 다운로드</button>
+        <button class="btn-sub" id="reset-btn">↺ 초기화</button>
+      </div>
+    </div>
+
+    <div class="coupang-banner coupang-banner-pc">
+      <p class="coupang-notice">이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</p>
+      <script src="https://ads-partners.coupang.com/g.js"></script>
+      <script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"728","height":"120","tsource":""});</script>
+    </div>
+    <div class="coupang-banner coupang-banner-mo">
+      <p class="coupang-notice">이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</p>
+      <script src="https://ads-partners.coupang.com/g.js"></script>
+      <script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"320","height":"50","tsource":""});</script>
+    </div>
+  </div></main>
+
+  <footer class="footer">
+    <div class="container">
+      <p class="footer-copy">© 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p>
+      <nav class="footer-nav">
+        <a href="../privacy.html">개인정보 처리방침</a>
+        <a href="../terms.html">이용약관</a>
+        <a href="../about.html">서비스 소개</a>
+        <a href="../blog/index.html">블로그</a>
+      </nav>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast">✓ 다운로드가 시작되었습니다</div>
+
+  <script>
+  // ── 상태 ──
+  let currentTab = 'url';
+  let currentSize = 256;
+  let qrGenerated = false;
+  let generateTimer = null;
+
+  // ── 탭 전환 ──
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      currentTab = btn.dataset.tab;
+      ['url','text','contact'].forEach(t => {
+        document.getElementById('tab-' + t).style.display = t === currentTab ? 'block' : 'none';
+      });
+      scheduleGenerate();
+    });
+  });
+
+  // ── 크기 버튼 ──
+  document.querySelectorAll('.size-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      currentSize = parseInt(btn.dataset.size);
+      scheduleGenerate();
+    });
+  });
+
+  // ── 색상 ──
+  document.getElementById('color-dark').addEventListener('input', function() {
+    document.getElementById('color-dark-hex').textContent = this.value;
+    scheduleGenerate();
+  });
+  document.getElementById('color-light').addEventListener('input', function() {
+    document.getElementById('color-light-hex').textContent = this.value;
+    scheduleGenerate();
+  });
+
+  // ── 입력 이벤트 ──
+  ['input-url','input-text','contact-name','contact-phone','contact-email','contact-org','contact-url'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.addEventListener('input', () => scheduleGenerate());
+  });
+
+  // URL 입력 시 https:// 자동 처리
+  document.getElementById('input-url').addEventListener('blur', function() {
+    const v = this.value.trim();
+    if (v && !v.match(/^https?:\/\//i) && !v.startsWith('//')) {
+      this.value = 'https://' + v;
+    }
+    scheduleGenerate();
+  });
+
+  // ── 콘텐츠 빌더 ──
+  function getContent() {
+    if (currentTab === 'url') {
+      return document.getElementById('input-url').value.trim();
+    } else if (currentTab === 'text') {
+      return document.getElementById('input-text').value.trim();
+    } else {
+      // vCard 조립
+      const name  = document.getElementById('contact-name').value.trim();
+      const phone = document.getElementById('contact-phone').value.trim();
+      const email = document.getElementById('contact-email').value.trim();
+      const org   = document.getElementById('contact-org').value.trim();
+      const url   = document.getElementById('contact-url').value.trim();
+      if (!name) return '';
+      let vcard = 'BEGIN:VCARD\nVERSION:3.0\n';
+      vcard += 'FN:' + name + '\n';
+      vcard += 'N:' + name + ';;;;\n';
+      if (phone) vcard += 'TEL:' + phone + '\n';
+      if (email) vcard += 'EMAIL:' + email + '\n';
+      if (org)   vcard += 'ORG:' + org + '\n';
+      if (url)   vcard += 'URL:' + url + '\n';
+      vcard += 'END:VCARD';
+      return vcard;
+    }
+  }
+
+  // ── QR 생성 (디바운스) ──
+  function scheduleGenerate() {
+    clearTimeout(generateTimer);
+    generateTimer = setTimeout(generateQR, 200);
+  }
+
+  function generateQR() {
+    const content = getContent();
+    const container = document.getElementById('qr-container');
+
+    if (!content) {
+      container.innerHTML = '<span class="qr-empty">내용을 입력하면<br />QR 코드가 생성됩니다</span>';
+      document.getElementById('qr-info').textContent = '';
+      document.getElementById('download-btn').disabled = true;
+      qrGenerated = false;
+      return;
+    }
+
+    // 기존 QR 제거 후 재생성
+    container.innerHTML = '';
+    try {
+      new QRCode(container, {
+        text: content,
+        width: currentSize,
+        height: currentSize,
+        colorDark: document.getElementById('color-dark').value,
+        colorLight: document.getElementById('color-light').value,
+        correctLevel: QRCode.CorrectLevel.M
+      });
+      document.getElementById('qr-info').textContent =
+        currentSize + ' × ' + currentSize + 'px • ' + content.length + '자';
+      document.getElementById('download-btn').disabled = false;
+      qrGenerated = true;
+    } catch(e) {
+      container.innerHTML = '<span class="qr-empty" style="color:#F87171;">생성 오류: 내용을 확인해주세요</span>';
+      document.getElementById('download-btn').disabled = true;
+      qrGenerated = false;
+    }
+  }
+
+  // ── PNG 다운로드 ──
+  document.getElementById('download-btn').addEventListener('click', () => {
+    if (!qrGenerated) return;
+    const canvas = document.querySelector('#qr-container canvas');
+    if (!canvas) return;
+    canvas.toBlob(blob => {
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'qrcode_result.png';
+      a.click();
+      URL.revokeObjectURL(a.href);
+      showToast('✓ 다운로드가 시작되었습니다');
+    }, 'image/png');
+  });
+
+  // ── 초기화 ──
+  document.getElementById('reset-btn').addEventListener('click', () => {
+    document.getElementById('input-url').value = '';
+    document.getElementById('input-text').value = '';
+    ['contact-name','contact-phone','contact-email','contact-org','contact-url'].forEach(id => {
+      document.getElementById(id).value = '';
+    });
+    // 탭 초기화
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelector('[data-tab="url"]').classList.add('active');
+    currentTab = 'url';
+    ['url','text','contact'].forEach(t => {
+      document.getElementById('tab-' + t).style.display = t === 'url' ? 'block' : 'none';
+    });
+    // 크기 초기화
+    document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
+    document.querySelector('[data-size="256"]').classList.add('active');
+    currentSize = 256;
+    // 색상 초기화
+    document.getElementById('color-dark').value = '#000000';
+    document.getElementById('color-light').value = '#ffffff';
+    document.getElementById('color-dark-hex').textContent = '#000000';
+    document.getElementById('color-light-hex').textContent = '#ffffff';
+    // QR 초기화
+    document.getElementById('qr-container').innerHTML = '<span class="qr-empty">내용을 입력하면<br />QR 코드가 생성됩니다</span>';
+    document.getElementById('qr-info').textContent = '';
+    document.getElementById('download-btn').disabled = true;
+    qrGenerated = false;
+  });
+
+  // ── 토스트 ──
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2000);
+  }
+
+  // ── 초기 placeholder URL 생성 시도 안 함 (빈 상태) ──
+  </script>
+</body>
+</html>
