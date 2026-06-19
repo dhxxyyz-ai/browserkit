@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="WatermarkImage의 모든 기능을 단계별로 설명하는 공식 사용 가이드입니다. 텍스트·이미지 워터마크 추가, 투명도·위치·타일 배치 설정 방법을 알아보세요." />
-  <meta property="og:title" content="WatermarkImage 사용법 완전 가이드 — BrowserKit" />
-  <meta property="og:description" content="이미지에 텍스트 또는 이미지 워터마크를 추가하는 WatermarkImage 공식 가이드입니다." />
+  <meta name="description" content="ColorPicker의 모든 기능을 단계별로 설명하는 공식 사용 가이드입니다. 이미지에서 색상을 추출하고 HEX, RGB, HSL 코드를 복사하는 방법을 알아보세요." />
+  <meta property="og:title" content="ColorPicker 사용법 완전 가이드 — BrowserKit" />
+  <meta property="og:description" content="이미지에서 색상을 추출하고 HEX, RGB, HSL 코드를 복사하는 ColorPicker 공식 가이드입니다." />
   <meta property="og:type" content="article" />
-  <title>WatermarkImage 사용법 완전 가이드 — BrowserKit</title>
+  <title>ColorPicker 사용법 완전 가이드 — BrowserKit</title>
   <link rel="stylesheet" href="../css/style.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
@@ -38,15 +38,20 @@
     .step-num { min-width:36px; height:36px; background:linear-gradient(135deg,var(--point),var(--point-hover)); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:700; color:white; flex-shrink:0; font-family:'Inter',sans-serif; }
     .step-content h3 { font-size:15px; font-weight:600; margin-bottom:6px; color:var(--text); }
     .step-content p { font-size:14px; color:var(--subtext); line-height:1.7; margin:0; }
+    .color-demo { display:flex; gap:10px; flex-wrap:wrap; margin:16px 0; }
+    .color-chip { display:flex; flex-direction:column; align-items:center; gap:6px; }
+    .color-chip-swatch { width:48px; height:48px; border-radius:10px; border:1px solid rgba(255,255,255,0.1); }
+    .color-chip-label { font-size:11px; color:var(--subtext); font-family:'Inter',sans-serif; }
     .post-table { width:100%; border-collapse:collapse; margin:20px 0; font-size:14px; }
     .post-table th { background:var(--card); padding:12px 16px; text-align:left; font-weight:600; border:1px solid var(--border); color:var(--text); }
     .post-table td { padding:11px 16px; border:1px solid var(--border); color:var(--subtext); line-height:1.7; }
+    .post-table td code { background:var(--bg); border-radius:4px; padding:1px 6px; font-size:13px; color:var(--point-hover); }
     .post-table tr:hover td { background:rgba(108,99,255,0.04); }
-    .pos-demo { display:inline-grid; grid-template-columns:repeat(3,32px); gap:4px; vertical-align:middle; }
-    .pos-cell { width:32px; height:32px; background:var(--bg); border:1px solid var(--border); border-radius:6px; display:flex; align-items:center; justify-content:center; font-size:11px; color:var(--subtext); }
-    .pos-cell.active { background:rgba(108,99,255,0.2); border-color:var(--point); color:var(--point-hover); font-weight:700; }
+    .format-example { background:var(--card); border:1px solid var(--border); border-radius:10px; padding:16px 20px; margin:12px 0; }
+    .format-example-title { font-size:12px; font-weight:600; color:var(--subtext); margin-bottom:8px; }
+    .format-example-value { font-size:15px; color:var(--text); font-family:'Inter',sans-serif; font-weight:600; }
     .post-nav { display:flex; justify-content:space-between; margin-top:60px; padding-top:24px; border-top:1px solid var(--border); gap:12px; }
-    .post-nav a { font-size:14px; color:var(--subtext); }
+    .post-nav a { font-size:14px; color:var(--subtext); text-decoration:none; }
     .post-nav a:hover { color:var(--text); }
     .cta-box { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:28px; text-align:center; margin:48px 0 0; }
     .cta-box p { font-size:15px; color:var(--subtext); margin-bottom:16px; }
@@ -80,33 +85,33 @@
   <div class="post-wrap">
     <a href="index.html" class="back-link">← 블로그 목록</a>
     <span class="post-tag">가이드</span>
-    <h1 class="post-title">WatermarkImage 사용법 완전 가이드</h1>
+    <h1 class="post-title">ColorPicker 사용법 완전 가이드</h1>
     <div class="post-date">2026년 6월 19일</div>
 
     <div class="post-body">
-      <p>WatermarkImage는 이미지에 텍스트 또는 이미지 워터마크를 자유롭게 합성하는 무료 온라인 도구입니다. 설치 없이 브라우저에서 바로 사용할 수 있으며, 모든 처리가 브라우저 내에서만 이루어져 원본 이미지가 외부 서버로 전송되지 않습니다.</p>
+      <p>ColorPicker는 이미지를 클릭해 색상을 추출하는 무료 온라인 도구입니다. 마우스를 올리면 8배 확대경이 표시되어 픽셀 단위로 정확하게 색상을 집을 수 있으며, 추출한 색상을 HEX, RGB, HSL 형식으로 즉시 복사할 수 있습니다. 모든 처리가 브라우저 내에서만 이루어지므로 이미지가 외부 서버로 전송되지 않습니다.</p>
 
       <h2>주요 기능</h2>
       <div class="feature-grid">
         <div class="feature-card">
-          <div class="feature-icon">&#x1F524;</div>
-          <div class="feature-title">텍스트 워터마크</div>
-          <div class="feature-desc">원하는 문구를 입력하고 크기, 색상, 투명도를 자유롭게 조절합니다. 색상 프리셋 5종과 직접 선택 기능을 지원합니다.</div>
-        </div>
-        <div class="feature-card">
-          <div class="feature-icon">&#x1F5BC;&#xFE0F;</div>
-          <div class="feature-title">이미지 워터마크</div>
-          <div class="feature-desc">로고나 서명 이미지를 별도 업로드해 합성합니다. PNG 투명 배경을 지원하므로 로고 삽입에 최적입니다.</div>
-        </div>
-        <div class="feature-card">
-          <div class="feature-icon">&#x1F4CD;</div>
-          <div class="feature-title">9방향 위치 선택</div>
-          <div class="feature-desc">상단·중앙·하단 × 좌·중·우 9개 방향 버튼으로 워터마크 위치를 직관적으로 지정합니다.</div>
+          <div class="feature-icon">&#x1F50D;</div>
+          <div class="feature-title">8배 확대경</div>
+          <div class="feature-desc">마우스 커서 주변 영역을 8배로 확대해 보여줍니다. 픽셀 단위의 정확한 색상 선택이 가능합니다.</div>
         </div>
         <div class="feature-card">
           <div class="feature-icon">&#x1F4CB;</div>
-          <div class="feature-title">타일 반복 배치</div>
-          <div class="feature-desc">워터마크를 이미지 전체에 반복 배치합니다. 무단 도용 방지에 효과적입니다.</div>
+          <div class="feature-title">3가지 형식 복사</div>
+          <div class="feature-desc">HEX, RGB, HSL 형식을 각각 클립보드에 한 번에 복사합니다. 개발, 디자인 툴에 바로 붙여넣을 수 있습니다.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F3A8;</div>
+          <div class="feature-title">팔레트 저장</div>
+          <div class="feature-desc">클릭할 때마다 색상이 팔레트에 자동 저장됩니다. 중복 색상은 자동으로 제거되며, 팔레트 전체를 텍스트로 내보낼 수 있습니다.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x2728;</div>
+          <div class="feature-title">대표 색상 자동 추출</div>
+          <div class="feature-desc">버튼 하나로 이미지의 대표 색상을 자동으로 분석해 최대 10가지 색상을 추출합니다.</div>
         </div>
       </div>
 
@@ -114,103 +119,95 @@
       <div class="step-card">
         <div class="step-num">1</div>
         <div class="step-content">
-          <h3>원본 이미지 업로드</h3>
-          <p>업로드 영역을 클릭하거나 이미지를 드래그해 원본 이미지를 불러옵니다. JPG, PNG, WEBP 형식을 지원합니다.</p>
+          <h3>이미지 업로드</h3>
+          <p>업로드 영역을 클릭하거나 이미지를 드래그해 불러옵니다. JPG, PNG, WEBP 형식을 지원합니다.</p>
         </div>
       </div>
       <div class="step-card">
         <div class="step-num">2</div>
         <div class="step-content">
-          <h3>워터마크 타입 선택</h3>
-          <p><strong>🔤 텍스트 워터마크</strong> 또는 <strong>🖼️ 이미지 워터마크</strong> 탭을 선택합니다.</p>
+          <h3>마우스를 올려 색상 미리보기</h3>
+          <p>이미지 위에 마우스를 올리면 8배 확대경이 나타납니다. 원하는 위치로 이동하면 현재 색상이 우측 패널에 실시간으로 표시됩니다.</p>
         </div>
       </div>
       <div class="step-card">
         <div class="step-num">3</div>
         <div class="step-content">
-          <h3>옵션 설정</h3>
-          <p>텍스트 내용(또는 워터마크 이미지), 크기, 색상, 투명도, 위치를 원하는 대로 조절합니다.</p>
+          <h3>클릭해 색상 저장</h3>
+          <p>원하는 색상 위를 클릭합니다. 색상이 우측 팔레트에 자동으로 저장되고 토스트 메시지로 확인됩니다.</p>
         </div>
       </div>
       <div class="step-card">
         <div class="step-num">4</div>
         <div class="step-content">
-          <h3>미리보기 및 다운로드</h3>
-          <p><strong>✨ 워터마크 적용 미리보기</strong> 버튼으로 결과를 확인한 뒤, <strong>⬇ 이미지 다운로드</strong>로 저장합니다. PNG / JPG / WEBP 출력 형식을 선택할 수 있습니다.</p>
+          <h3>코드 복사</h3>
+          <p>우측 패널에서 원하는 형식(HEX / RGB / HSL) 옆의 <strong>복사</strong> 버튼을 클릭합니다. 클립보드에 바로 복사됩니다.</p>
         </div>
       </div>
 
-      <h2>텍스트 워터마크 옵션 상세</h2>
+      <h2>색상 코드 형식 가이드</h2>
+      <p>ColorPicker는 동일한 색상을 3가지 형식으로 동시에 제공합니다. 사용하는 툴에 맞는 형식을 선택하세요.</p>
 
-      <h3>크기 슬라이더</h3>
-      <p>10px부터 120px까지 조절할 수 있습니다. 이미지 해상도에 따라 적절한 크기를 선택하세요. 일반적으로 이미지 짧은 변의 3~5% 수준이 자연스럽습니다.</p>
+      <div class="format-example">
+        <div class="format-example-title">HEX</div>
+        <div class="format-example-value">#6C63FF</div>
+      </div>
+      <div class="format-example">
+        <div class="format-example-title">RGB</div>
+        <div class="format-example-value">rgb(108, 99, 255)</div>
+      </div>
+      <div class="format-example">
+        <div class="format-example-title">HSL</div>
+        <div class="format-example-value">hsl(243, 100%, 70%)</div>
+      </div>
 
-      <h3>색상 선택</h3>
       <table class="post-table">
-        <thead><tr><th>색상</th><th>권장 용도</th></tr></thead>
+        <thead><tr><th>형식</th><th>주로 사용하는 곳</th><th>특징</th></tr></thead>
         <tbody>
-          <tr><td>흰색 (#ffffff)</td><td>어두운 배경 이미지 (기본값)</td></tr>
-          <tr><td>검정 (#000000)</td><td>밝은 배경 이미지</td></tr>
-          <tr><td>빨강 (#ff0000)</td><td>강조, 경고 목적</td></tr>
-          <tr><td>노랑 (#ffff00)</td><td>어두운 배경에서 가시성 높음</td></tr>
-          <tr><td>보라 (#6C63FF)</td><td>BrowserKit 브랜드 색상</td></tr>
-          <tr><td>직접 선택</td><td>브랜드 컬러에 맞게 자유롭게 설정</td></tr>
+          <tr><td><code>HEX</code></td><td>HTML, CSS, Figma, Sketch</td><td>가장 범용적인 형식. 웹 개발의 표준</td></tr>
+          <tr><td><code>RGB</code></td><td>CSS, Photoshop, Illustrator</td><td>빨강·초록·파랑 채널을 0~255로 표현</td></tr>
+          <tr><td><code>HSL</code></td><td>CSS, 색상 조화 작업</td><td>색상·채도·밝기로 표현. 색 조합에 직관적</td></tr>
         </tbody>
       </table>
 
-      <h3>투명도 슬라이더</h3>
-      <p>5%~100%까지 조절합니다. 너무 진하면 이미지를 가리고, 너무 옅으면 워터마크가 눈에 띄지 않습니다. 일반적으로 50~70%가 적당합니다.</p>
+      <h2>팔레트 기능 활용</h2>
 
-      <h3>9방향 위치 그리드</h3>
-      <p>아래 9개 위치 중 하나를 선택합니다. 기본값은 우하단(↘)입니다.</p>
-      <table class="post-table">
-        <thead><tr><th>위치</th><th>버튼</th><th>권장 상황</th></tr></thead>
-        <tbody>
-          <tr><td>좌상단</td><td>↖</td><td>문서형 이미지</td></tr>
-          <tr><td>상단 중앙</td><td>↑</td><td>가로형 배너</td></tr>
-          <tr><td>우상단</td><td>↗</td><td>사진 구석 처리</td></tr>
-          <tr><td>중앙 좌</td><td>←</td><td>세로형 이미지</td></tr>
-          <tr><td>정중앙</td><td>✦</td><td>강한 도용 방지</td></tr>
-          <tr><td>우하단</td><td>↘</td><td>일반적인 저작권 표기 (기본값)</td></tr>
-          <tr><td>타일 반복</td><td>체크박스</td><td>전면 워터마크, 도용 방지 강화</td></tr>
-        </tbody>
-      </table>
+      <h3>색상 저장 및 재선택</h3>
+      <p>이미지를 클릭할 때마다 해당 색상이 팔레트에 자동으로 추가됩니다. 동일한 색상은 중복 저장되지 않습니다. 팔레트의 색상 칩을 클릭하면 해당 색상이 우측 패널에 다시 표시되어 코드를 복사할 수 있습니다.</p>
 
-      <h2>이미지 워터마크 팁</h2>
+      <h3>팔레트 내보내기</h3>
+      <p><strong>내보내기</strong> 버튼을 클릭하면 저장된 모든 색상이 아래 형식으로 클립보드에 복사됩니다. 노션, 메모장, 스프레드시트에 바로 붙여넣을 수 있습니다.</p>
+      <div class="format-example">
+        <div class="format-example-title">내보내기 형식 (예시)</div>
+        <div class="format-example-value" style="font-size:13px;line-height:1.9;">
+          #6C63FF &nbsp; | &nbsp; rgb(108,99,255) &nbsp; | &nbsp; hsl(243, 100%, 70%)<br />
+          #34D399 &nbsp; | &nbsp; rgb(52,211,153) &nbsp; | &nbsp; hsl(158, 62%, 52%)<br />
+          #F87171 &nbsp; | &nbsp; rgb(248,113,113) &nbsp; | &nbsp; hsl(0, 91%, 71%)
+        </div>
+      </div>
 
-      <h3>PNG 투명 배경 사용 권장</h3>
-      <p>로고나 서명 이미지는 투명 배경 PNG로 준비하면 원본 이미지와 자연스럽게 합성됩니다. 흰색 배경 이미지를 사용하면 흰 사각형이 함께 보일 수 있습니다.</p>
+      <h2>대표 색상 자동 추출</h2>
+      <p>이미지 전체의 색을 일일이 클릭하지 않아도 됩니다. <strong>✨ 대표 색상 자동 추출</strong> 버튼을 클릭하면 이미지를 5×5 격자로 분석해 구역별 평균 색상을 계산하고 유사한 색상을 병합한 뒤 최대 10가지 대표 색상을 한 번에 보여줍니다.</p>
 
-      <h3>크기 설정</h3>
-      <p>크기 슬라이더는 원본 이미지 가로 폭 대비 비율(%)로 설정합니다. 5~20% 범위가 일반적으로 자연스럽습니다. 로고가 너무 크면 이미지를 가리므로 미리보기로 확인하며 조절하세요.</p>
-
-      <h2>출력 형식 선택</h2>
-      <table class="post-table">
-        <thead><tr><th>형식</th><th>특징</th><th>추천 상황</th></tr></thead>
-        <tbody>
-          <tr><td>PNG</td><td>무손실, 투명 배경 유지</td><td>원본 품질 유지가 중요할 때</td></tr>
-          <tr><td>JPG</td><td>파일 크기 작음, 투명 배경 → 흰색 변환</td><td>파일 용량을 줄여야 할 때</td></tr>
-          <tr><td>WEBP</td><td>고압축 고화질, 최신 형식</td><td>웹 게시용, 빠른 로딩이 필요할 때</td></tr>
-        </tbody>
-      </table>
+      <p>추출된 색상 칩을 클릭하면 해당 색상이 팔레트에 저장되고 코드가 표시됩니다. 브랜드 색상 분석, 사진의 주요 컬러 파악, 디자인 레퍼런스 정리에 활용하기 좋습니다.</p>
 
       <h2>활용 예시</h2>
 
-      <h3>사진 저작권 표기</h3>
-      <p>텍스트 워터마크에 <code>© 2026 홍길동</code>을 입력하고 투명도 60%, 우하단 위치로 설정하면 사진에 저작권 표기를 자연스럽게 넣을 수 있습니다.</p>
+      <h3>웹 개발 — 디자인 시안에서 색상 추출</h3>
+      <p>디자이너에게 받은 시안 이미지를 업로드하고 주요 색상을 클릭합니다. HEX 코드를 복사해 CSS에 바로 붙여넣으면 색상 값을 직접 입력하는 번거로움이 사라집니다.</p>
 
-      <h3>상품 이미지 브랜딩</h3>
-      <p>PNG 로고 파일을 이미지 워터마크로 업로드하고 크기 15%, 우하단 위치로 설정하면 상품 사진에 브랜드 로고를 빠르게 삽입할 수 있습니다.</p>
+      <h3>브랜드 가이드 작성</h3>
+      <p>회사 로고 이미지를 업로드하고 대표 색상 자동 추출을 실행합니다. 추출된 색상을 팔레트에 저장한 뒤 내보내기로 색상 코드 목록을 만들 수 있습니다.</p>
 
-      <h3>무단 도용 방지</h3>
-      <p>타일 반복 배치 체크박스를 켜면 워터마크가 이미지 전체에 반복 배치됩니다. 텍스트를 반투명하게 설정하면 이미지를 크게 방해하지 않으면서도 도용을 억제할 수 있습니다.</p>
+      <h3>사진 기반 색상 팔레트 제작</h3>
+      <p>마음에 드는 사진을 업로드하고 주요 색상 5~6가지를 클릭해 저장합니다. 팔레트를 내보내면 해당 사진의 무드를 담은 색상 세트를 완성할 수 있습니다. 인테리어, 패션, SNS 피드 색감 기획에 활용할 수 있습니다.</p>
 
-      <div class="post-highlight">💡 WatermarkImage는 모든 처리가 브라우저 내에서만 이루어집니다. 원본 이미지와 워터마크 이미지가 외부 서버로 전송되지 않아 기밀 이미지도 안전하게 처리할 수 있습니다. 설치나 회원가입 없이 바로 사용할 수 있습니다.</div>
+      <div class="post-highlight">💡 ColorPicker는 모든 처리가 브라우저 내에서만 이루어집니다. 업로드한 이미지가 외부 서버로 전송되지 않아 저작권이 있는 이미지나 내부 디자인 시안도 안전하게 분석할 수 있습니다.</div>
     </div>
 
     <div class="cta-box">
-      <p>지금 바로 WatermarkImage를 사용해보세요.<br />설치도, 회원가입도, 비용도 없습니다.</p>
-      <a href="../watermark-image/index.html" class="cta-btn">&#x1F3F7;&#xFE0F; 무료로 워터마크 추가 시작하기</a>
+      <p>지금 바로 ColorPicker를 사용해보세요.<br />설치도, 회원가입도, 비용도 없습니다.</p>
+      <a href="../color-picker/index.html" class="cta-btn">&#x1F3A8; 무료로 색상 추출 시작하기</a>
     </div>
 
     <div class="adfit-wrap adfit-pc">
@@ -232,8 +229,8 @@
     </div>
 
     <div class="post-nav">
-      <a href="21-maskdoc-howto.html">← 이전 글: MaskDoc 사용법 완전 가이드</a>
-      <a href="23-colorpicker-howto.html">다음 글: ColorPicker 사용법 완전 가이드 →</a>
+      <a href="22-watermarkimage-howto.html">← 이전 글: WatermarkImage 사용법 완전 가이드</a>
+      <span></span>
     </div>
   </div>
 
