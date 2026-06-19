@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="JSONFormat의 모든 기능을 단계별로 설명하는 공식 사용 가이드입니다. JSON 정렬, 압축, 유효성 검사, 오류 위치 표시 방법을 알아보세요." />
+  <meta property="og:title" content="JSONFormat 사용법 완전 가이드 — BrowserKit" />
+  <meta property="og:description" content="JSON 정렬, 압축, 유효성 검사를 브라우저에서 바로 처리하는 JSONFormat 공식 가이드입니다." />
+  <meta property="og:type" content="article" />
+  <title>JSONFormat 사용법 완전 가이드 — BrowserKit</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+  <script type="text/javascript" src="//t1.kakaocdn.net/kas/static/ba.min.js" async></script>
+  <style>
+    .header { padding:24px 0 16px; border-bottom:1px solid var(--border); }
+    .header .container { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; }
+    .header-brand { display:flex; align-items:center; gap:10px; text-decoration:none; }
+    .header-brand-icon { font-size:24px; }
+    .header-brand-text { font-size:20px; font-weight:700; font-family:'Inter',sans-serif; background:linear-gradient(135deg,var(--point),var(--point-hover)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+    .header-back { font-size:13px; color:var(--subtext); text-decoration:none; }
+    .header-back:hover { color:var(--text); }
+    .post-wrap { max-width:720px; margin:0 auto; padding:48px 24px 80px; }
+    .post-tag { display:inline-block; font-size:12px; color:var(--point-hover); background:rgba(108,99,255,0.15); padding:3px 12px; border-radius:999px; margin-bottom:16px; }
+    .post-title { font-size:28px; font-weight:700; line-height:1.4; margin-bottom:12px; }
+    .post-date { color:var(--subtext); font-size:13px; margin-bottom:40px; padding-bottom:24px; border-bottom:1px solid var(--border); }
+    .post-body h2 { font-size:20px; font-weight:700; margin:40px 0 16px; color:var(--text); }
+    .post-body h3 { font-size:16px; font-weight:600; margin:28px 0 12px; color:var(--point-hover); }
+    .post-body p { font-size:15px; color:var(--subtext); line-height:1.9; margin-bottom:16px; }
+    .post-highlight { background:var(--card); border-left:3px solid var(--point); border-radius:8px; padding:16px 20px; margin:24px 0; font-size:15px; color:var(--text); line-height:1.8; }
+    .feature-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:20px 0; }
+    .feature-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px; }
+    .feature-card:hover { border-color:var(--point); }
+    .feature-icon { font-size:24px; margin-bottom:10px; }
+    .feature-title { font-size:14px; font-weight:600; color:var(--text); margin-bottom:6px; }
+    .feature-desc { font-size:13px; color:var(--subtext); line-height:1.7; }
+    .step-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px 24px; margin:16px 0; display:flex; gap:16px; align-items:flex-start; }
+    .step-num { min-width:36px; height:36px; background:linear-gradient(135deg,var(--point),var(--point-hover)); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:700; color:white; flex-shrink:0; font-family:'Inter',sans-serif; }
+    .step-content h3 { font-size:15px; font-weight:600; margin-bottom:6px; color:var(--text); }
+    .step-content p { font-size:14px; color:var(--subtext); line-height:1.7; margin:0; }
+    .code-block { background:#0a0a12; border:1px solid var(--border); border-radius:10px; padding:16px 20px; margin:16px 0; font-family:'Fira Code','JetBrains Mono',monospace; font-size:13px; line-height:1.8; overflow-x:auto; }
+    .json-key { color:#b794f4; }
+    .json-string { color:#68d391; }
+    .json-number { color:#63b3ed; }
+    .json-boolean { color:#f6ad55; }
+    .json-null { color:#fc8181; }
+    .json-bracket { color:#e2e8f0; }
+    .status-demo { display:inline-flex; align-items:center; gap:6px; font-size:13px; font-weight:600; padding:5px 14px; border-radius:999px; margin:4px; }
+    .status-valid { color:#34D399; background:rgba(52,211,153,0.1); border:1px solid #34D399; }
+    .status-error { color:#F87171; background:rgba(248,113,113,0.1); border:1px solid #F87171; }
+    .post-table { width:100%; border-collapse:collapse; margin:20px 0; font-size:14px; }
+    .post-table th { background:var(--card); padding:12px 16px; text-align:left; font-weight:600; border:1px solid var(--border); color:var(--text); }
+    .post-table td { padding:11px 16px; border:1px solid var(--border); color:var(--subtext); line-height:1.7; }
+    .post-table td code { background:var(--bg); border-radius:4px; padding:1px 6px; font-size:13px; color:var(--point-hover); font-family:'Fira Code',monospace; }
+    .post-table tr:hover td { background:rgba(108,99,255,0.04); }
+    .post-nav { display:flex; justify-content:space-between; margin-top:60px; padding-top:24px; border-top:1px solid var(--border); gap:12px; }
+    .post-nav a { font-size:14px; color:var(--subtext); text-decoration:none; }
+    .post-nav a:hover { color:var(--text); }
+    .cta-box { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:28px; text-align:center; margin:48px 0 0; }
+    .cta-box p { font-size:15px; color:var(--subtext); margin-bottom:16px; }
+    .cta-btn { display:inline-block; background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border-radius:10px; padding:12px 28px; font-size:14px; font-weight:600; text-decoration:none; }
+    .cta-btn:hover { transform:translateY(-2px); box-shadow:0 8px 24px var(--glow); color:white; }
+    .adfit-wrap { text-align:center; margin:24px 0; }
+    .adfit-pc { display:block; }
+    .adfit-mo { display:none; }
+    .back-link { display:inline-flex; align-items:center; gap:6px; color:var(--subtext); font-size:14px; margin-bottom:32px; text-decoration:none; }
+    .back-link:hover { color:var(--text); }
+    .coupang-banner { margin:0 auto 48px; text-align:center; overflow:hidden; }
+    .coupang-notice { font-size:11px; color:var(--subtext); margin-bottom:10px; line-height:1.6; }
+    .coupang-banner-mo { display:none; }
+    @media (max-width:640px) {
+      .feature-grid { grid-template-columns:1fr; }
+      .adfit-pc { display:none; }
+      .adfit-mo { display:block; }
+      .coupang-banner-pc { display:none; }
+      .coupang-banner-mo { display:block; }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="container">
+      <a href="../index.html" class="header-brand"><span class="header-brand-icon">&#x1F9F0;</span><span class="header-brand-text">BrowserKit</span></a>
+      <a href="../index.html" class="header-back">← BrowserKit 홈으로</a>
+    </div>
+  </header>
+
+  <div class="post-wrap">
+    <a href="index.html" class="back-link">← 블로그 목록</a>
+    <span class="post-tag">가이드</span>
+    <h1 class="post-title">JSONFormat 사용법 완전 가이드</h1>
+    <div class="post-date">2026년 6월 19일</div>
+
+    <div class="post-body">
+      <p>JSONFormat은 JSON 데이터를 정렬하고, 압축하고, 유효성을 검사하는 무료 온라인 도구입니다. 설치나 회원가입 없이 브라우저에서 바로 사용할 수 있으며, 모든 처리가 브라우저 내에서만 이루어져 입력한 JSON이 외부 서버로 전송되지 않습니다. 개발자가 API 응답을 분석하거나 설정 파일을 다룰 때 유용하게 활용할 수 있습니다.</p>
+
+      <h2>주요 기능</h2>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <div class="feature-icon">&#x2728;</div>
+          <div class="feature-title">JSON 정렬 (Pretty Print)</div>
+          <div class="feature-desc">압축된 JSON을 들여쓰기 2칸 또는 4칸으로 보기 좋게 펼쳐줍니다. 구문 강조 색상으로 키, 값, 타입을 구분해 읽기 쉽습니다.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F5DC;&#xFE0F;</div>
+          <div class="feature-title">JSON 압축 (Minify)</div>
+          <div class="feature-desc">불필요한 공백과 줄바꿈을 모두 제거해 JSON을 한 줄로 압축합니다. API 요청 본문 작성이나 용량 최소화에 활용하세요.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x2705;</div>
+          <div class="feature-title">실시간 유효성 검사</div>
+          <div class="feature-desc">입력하는 즉시 JSON 문법 오류를 감지합니다. 오류가 있으면 행과 열 위치를 표시해 빠르게 수정할 수 있습니다.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F3A8;</div>
+          <div class="feature-title">구문 강조</div>
+          <div class="feature-desc">키(보라색), 문자열(초록), 숫자(파랑), boolean(주황), null(빨강)으로 타입별 색상을 구분해 JSON 구조를 직관적으로 파악할 수 있습니다.</div>
+        </div>
+      </div>
+
+      <h2>기본 사용법</h2>
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <h3>JSON 입력</h3>
+          <p>왼쪽 입력창에 JSON을 붙여넣습니다. 입력하는 즉시 유효성 검사가 실행되어 상단에 ✅ 유효 또는 ❌ 오류 상태가 표시됩니다.</p>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <h3>정렬 또는 압축</h3>
+          <p><strong>✨ 정렬 (2칸)</strong> 또는 <strong>✨ 정렬 (4칸)</strong> 버튼으로 들여쓰기를 적용하거나, <strong>🗜️ 압축</strong> 버튼으로 공백을 제거합니다.</p>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <h3>결과 복사</h3>
+          <p>오른쪽 결과창 상단의 <strong>복사</strong> 버튼을 클릭하면 결과 JSON이 클립보드에 복사됩니다.</p>
+        </div>
+      </div>
+
+      <h2>유효성 검사 상태 표시</h2>
+      <p>입력창에 JSON을 입력하면 300ms 후 자동으로 유효성 검사가 실행됩니다.</p>
+      <div>
+        <span class="status-demo status-valid">✅ 유효한 JSON</span>
+        <span class="status-demo status-error">❌ JSON 오류</span>
+      </div>
+      <p style="margin-top:16px;">오류가 감지되면 입력창 테두리가 빨간색으로 변하고, 오류 위치(행·열)와 오류 메시지가 표시됩니다. 이 정보를 참고해 JSON을 수정하면 됩니다.</p>
+
+      <h2>정렬 vs 압축 비교</h2>
+      <h3>정렬 전 (압축된 상태)</h3>
+      <div class="code-block">{"name":"BrowserKit","tools":["JSONFormat","QRCode"],"free":true}</div>
+
+      <h3>정렬 후 (들여쓰기 2칸)</h3>
+      <div class="code-block"><span class="json-bracket">{</span>
+  <span class="json-key">"name"</span>: <span class="json-string">"BrowserKit"</span>,
+  <span class="json-key">"tools"</span>: <span class="json-bracket">[</span>
+    <span class="json-string">"JSONFormat"</span>,
+    <span class="json-string">"QRCode"</span>
+  <span class="json-bracket">]</span>,
+  <span class="json-key">"free"</span>: <span class="json-boolean">true</span>
+<span class="json-bracket">}</span></div>
+
+      <h2>구문 강조 색상 가이드</h2>
+      <table class="post-table">
+        <thead><tr><th>타입</th><th>색상</th><th>예시</th></tr></thead>
+        <tbody>
+          <tr><td>키 (Key)</td><td>보라색</td><td><code>"name"</code>, <code>"version"</code></td></tr>
+          <tr><td>문자열 (String)</td><td>초록색</td><td><code>"BrowserKit"</code>, <code>"https://..."</code></td></tr>
+          <tr><td>숫자 (Number)</td><td>파란색</td><td><code>42</code>, <code>3.14</code>, <code>-1</code></td></tr>
+          <tr><td>불리언 (Boolean)</td><td>주황색</td><td><code>true</code>, <code>false</code></td></tr>
+          <tr><td>null</td><td>빨간색</td><td><code>null</code></td></tr>
+          <tr><td>괄호 (Bracket)</td><td>흰색</td><td><code>{</code>, <code>}</code>, <code>[</code>, <code>]</code></td></tr>
+        </tbody>
+      </table>
+
+      <h2>들여쓰기 2칸 vs 4칸</h2>
+      <table class="post-table">
+        <thead><tr><th>옵션</th><th>권장 상황</th></tr></thead>
+        <tbody>
+          <tr><td>2칸 들여쓰기</td><td>JavaScript, Node.js, 웹 개발 표준. 화면 공간을 효율적으로 사용</td></tr>
+          <tr><td>4칸 들여쓰기</td><td>Python, Java 등 4칸을 표준으로 사용하는 환경. 가독성이 더 높음</td></tr>
+        </tbody>
+      </table>
+
+      <h2>자주 발생하는 JSON 오류</h2>
+      <table class="post-table">
+        <thead><tr><th>오류 유형</th><th>잘못된 예</th><th>올바른 예</th></tr></thead>
+        <tbody>
+          <tr><td>작은따옴표 사용</td><td><code>{'key': 'value'}</code></td><td><code>{"key": "value"}</code></td></tr>
+          <tr><td>마지막 쉼표 (Trailing comma)</td><td><code>{"a": 1, "b": 2,}</code></td><td><code>{"a": 1, "b": 2}</code></td></tr>
+          <tr><td>따옴표 없는 키</td><td><code>{key: "value"}</code></td><td><code>{"key": "value"}</code></td></tr>
+          <tr><td>주석 포함</td><td><code>{"a": 1 // 주석}</code></td><td><code>{"a": 1}</code></td></tr>
+          <tr><td>undefined 값</td><td><code>{"a": undefined}</code></td><td><code>{"a": null}</code></td></tr>
+        </tbody>
+      </table>
+
+      <h2>활용 예시</h2>
+
+      <h3>API 응답 분석</h3>
+      <p>REST API나 GraphQL 응답을 개발자 도구에서 복사한 뒤 JSONFormat에 붙여넣고 정렬하면 중첩된 데이터 구조를 한눈에 파악할 수 있습니다.</p>
+
+      <h3>설정 파일 검증</h3>
+      <p><code>package.json</code>, <code>tsconfig.json</code>, <code>appsettings.json</code> 등 JSON 형식의 설정 파일을 붙여넣어 문법 오류를 빠르게 찾을 수 있습니다. 특히 직접 편집 후 오류가 발생했을 때 유용합니다.</p>
+
+      <h3>API 요청 본문 최소화</h3>
+      <p>테스트용으로 정렬된 JSON을 작성한 뒤 압축 버튼으로 한 줄로 만들어 curl 명령어나 Postman에 바로 붙여넣을 수 있습니다.</p>
+
+      <h3>샘플 JSON으로 빠른 테스트</h3>
+      <p><strong>📋 샘플 불러오기</strong> 버튼을 클릭하면 BrowserKit 서비스 데이터 형태의 샘플 JSON이 자동으로 로드됩니다. 도구의 동작 방식을 빠르게 확인할 수 있습니다.</p>
+
+      <div class="post-highlight">💡 JSONFormat은 모든 처리가 브라우저 내에서만 이루어집니다. 입력한 JSON이 외부 서버로 전송되지 않으므로, API 키가 포함된 응답이나 내부 시스템 설정 파일도 안전하게 분석할 수 있습니다.</div>
+    </div>
+
+    <div class="cta-box">
+      <p>지금 바로 JSONFormat을 사용해보세요.<br />설치도, 회원가입도, 비용도 없습니다.</p>
+      <a href="../json-format/index.html" class="cta-btn">&#x1F4E6; 무료로 JSON 정렬 시작하기</a>
+    </div>
+
+    <div class="adfit-wrap adfit-pc">
+      <ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-Dfncm24OGOmHKE7V" data-ad-width="728" data-ad-height="90"></ins>
+    </div>
+    <div class="adfit-wrap adfit-mo">
+      <ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-jVI6hdgtW0LyffyR" data-ad-width="320" data-ad-height="50"></ins>
+    </div>
+
+    <div class="coupang-banner coupang-banner-pc">
+      <p class="coupang-notice">이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</p>
+      <script src="https://ads-partners.coupang.com/g.js"></script>
+      <script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"668","height":"100","tsource":""});</script>
+    </div>
+    <div class="coupang-banner coupang-banner-mo">
+      <p class="coupang-notice">이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</p>
+      <script src="https://ads-partners.coupang.com/g.js"></script>
+      <script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"320","height":"50","tsource":""});</script>
+    </div>
+
+    <div class="post-nav">
+      <a href="24-qrcode-howto.html">← 이전 글: QRCode 사용법 완전 가이드</a>
+      <span></span>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+      <p class="footer-copy">© 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p>
+      <nav class="footer-nav">
+        <a href="../privacy.html">개인정보 처리방침</a>
+        <a href="../terms.html">이용약관</a>
+        <a href="../about.html">서비스 소개</a>
+        <a href="index.html">블로그</a>
+      </nav>
+    </div>
+  </footer>
+</body>
+</html>
