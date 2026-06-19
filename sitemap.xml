@@ -109,6 +109,12 @@
     <changefreq>weekly</changefreq>
     <priority>0.90</priority>
   </url>
+  <url>
+    <loc>https://browserkit.pages.dev/password-gen/</loc>
+    <lastmod>2026-06-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+  </url>
 
   <!-- BrowserKit 블로그 -->
   <url>

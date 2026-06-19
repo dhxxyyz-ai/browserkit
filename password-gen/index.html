@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="안전한 난수로 비밀번호를 생성하는 무료 온라인 도구. 길이, 대소문자, 숫자, 특수문자 조합을 설정하고 강도를 확인하세요. 서버 전송 없이 브라우저에서 바로 처리합니다." />
+  <meta property="og:title" content="PasswordGen — 비밀번호 생성기" />
+  <meta property="og:description" content="안전한 난수로 비밀번호를 생성하는 무료 온라인 도구. 조합과 길이를 설정하고 강도를 확인하세요." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://browserkit.pages.dev/password-gen/" />
+  <title>PasswordGen — 비밀번호 생성기</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+  <script type="text/javascript" src="//t1.kakaocdn.net/kas/static/ba.min.js" async></script>
+  <style>
+    .header { padding:24px 0 16px; border-bottom:1px solid var(--border); }
+    .header .container { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; }
+    .header-brand { display:flex; align-items:center; gap:10px; text-decoration:none; }
+    .header-brand-icon { font-size:24px; }
+    .header-brand-text { font-size:20px; font-weight:700; font-family:'Inter',sans-serif; background:linear-gradient(135deg,var(--point),var(--point-hover)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+    .header-back { font-size:13px; color:var(--subtext); text-decoration:none; }
+    .header-back:hover { color:var(--text); }
+
+    .hero { text-align:center; padding:40px 0 32px; }
+    .hero-icon { font-size:48px; margin-bottom:16px; }
+    .hero-title { font-size:32px; font-weight:700; margin-bottom:12px; background:linear-gradient(135deg,var(--point),var(--point-hover)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+    .hero-desc { color:var(--subtext); font-size:15px; margin-bottom:20px; }
+    .hero-badges { display:flex; justify-content:center; gap:10px; flex-wrap:wrap; }
+    .hero-badge { background:var(--card); border:1px solid var(--border); border-radius:999px; padding:5px 16px; font-size:13px; color:var(--subtext); }
+
+    /* 설정 패널 */
+    .setting-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:24px; margin-bottom:20px; }
+    .setting-row { display:flex; align-items:center; gap:16px; margin-bottom:20px; flex-wrap:wrap; }
+    .setting-row:last-child { margin-bottom:0; }
+    .setting-label { font-size:14px; font-weight:600; color:var(--text); min-width:80px; flex-shrink:0; }
+
+    /* 슬라이더 */
+    .slider-wrap { display:flex; align-items:center; gap:12px; flex:1; }
+    .range-slider { flex:1; -webkit-appearance:none; height:6px; border-radius:3px; background:var(--border); outline:none; }
+    .range-slider::-webkit-slider-thumb { -webkit-appearance:none; width:18px; height:18px; border-radius:50%; background:var(--point); cursor:pointer; box-shadow:0 0 0 3px rgba(108,99,255,0.2); }
+    .range-slider::-moz-range-thumb { width:18px; height:18px; border-radius:50%; background:var(--point); cursor:pointer; border:none; }
+    .slider-val { font-size:16px; font-weight:700; color:var(--point-hover); font-family:'Inter',sans-serif; min-width:32px; text-align:center; }
+
+    /* 체크박스 옵션 */
+    .check-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:10px; flex:1; }
+    .check-item { display:flex; align-items:center; gap:10px; background:var(--bg); border:1px solid var(--border); border-radius:10px; padding:10px 14px; cursor:pointer; transition:all 0.2s; }
+    .check-item:hover { border-color:var(--point); }
+    .check-item.active { border-color:var(--point); background:rgba(108,99,255,0.08); }
+    .check-item input[type=checkbox] { display:none; }
+    .check-box { width:18px; height:18px; border:2px solid var(--border); border-radius:5px; flex-shrink:0; display:flex; align-items:center; justify-content:center; transition:all 0.2s; }
+    .check-item.active .check-box { background:var(--point); border-color:var(--point); }
+    .check-box-tick { color:white; font-size:11px; display:none; }
+    .check-item.active .check-box-tick { display:block; }
+    .check-text { font-size:13px; color:var(--subtext); }
+    .check-item.active .check-text { color:var(--text); font-weight:600; }
+    .check-chars { font-size:11px; color:var(--subtext); font-family:'Inter',monospace; }
+
+    /* 제외 문자 */
+    .exclude-input { background:var(--bg); border:1px solid var(--border); border-radius:10px; padding:10px 14px; font-size:14px; color:var(--text); font-family:'Fira Code','JetBrains Mono',monospace; flex:1; outline:none; transition:border-color 0.2s; }
+    .exclude-input:focus { border-color:var(--point); }
+    .exclude-input::placeholder { color:var(--subtext); font-family:'Pretendard',sans-serif; }
+
+    /* 생성 개수 */
+    .count-btns { display:flex; gap:6px; flex-wrap:wrap; }
+    .count-btn { background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:7px 14px; font-size:13px; color:var(--subtext); cursor:pointer; font-family:'Pretendard',sans-serif; transition:all 0.2s; }
+    .count-btn:hover { border-color:var(--point); color:var(--text); }
+    .count-btn.active { background:rgba(108,99,255,0.15); border-color:var(--point); color:var(--point-hover); font-weight:600; }
+
+    /* 강도 바 */
+    .strength-wrap { margin-bottom:20px; }
+    .strength-label { font-size:13px; color:var(--subtext); margin-bottom:8px; display:flex; align-items:center; justify-content:space-between; }
+    .strength-text { font-weight:600; }
+    .strength-bar { height:8px; border-radius:4px; background:var(--border); overflow:hidden; }
+    .strength-fill { height:100%; border-radius:4px; transition:width 0.3s, background 0.3s; width:0%; }
+
+    /* 생성 버튼 */
+    .btn-generate { background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border:none; border-radius:12px; padding:14px 32px; font-size:16px; font-weight:700; cursor:pointer; font-family:'Pretendard',sans-serif; width:100%; margin-bottom:20px; transition:all 0.2s; }
+    .btn-generate:hover { transform:translateY(-2px); box-shadow:0 8px 24px var(--glow); }
+    .btn-generate:active { transform:translateY(0); }
+
+    /* 경고 */
+    .warn-box { background:rgba(248,113,113,0.08); border:1px solid rgba(248,113,113,0.3); border-radius:10px; padding:12px 16px; font-size:13px; color:#F87171; margin-bottom:16px; display:none; }
+    .warn-box.show { display:block; }
+
+    /* 결과 목록 */
+    .result-list { display:flex; flex-direction:column; gap:10px; margin-bottom:48px; }
+    .result-item { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:16px 20px; display:flex; align-items:center; justify-content:space-between; gap:12px; }
+    .result-pw { font-family:'Fira Code','JetBrains Mono',monospace; font-size:15px; color:var(--text); word-break:break-all; flex:1; letter-spacing:0.5px; }
+    .result-copy { background:rgba(108,99,255,0.12); border:1px solid var(--border); border-radius:8px; padding:6px 14px; font-size:12px; color:var(--point-hover); cursor:pointer; white-space:nowrap; font-family:'Pretendard',sans-serif; transition:all 0.2s; flex-shrink:0; }
+    .result-copy:hover { background:rgba(108,99,255,0.25); }
+    .result-copy.copied { background:rgba(52,211,153,0.12); color:var(--success); border-color:var(--success); }
+    .result-empty { text-align:center; padding:40px; color:var(--subtext); font-size:14px; }
+
+    /* 전체 복사 */
+    .btn-copy-all { background:var(--card); border:1px solid var(--border); border-radius:10px; padding:11px 20px; font-size:14px; color:var(--subtext); cursor:pointer; font-family:'Pretendard',sans-serif; width:100%; margin-bottom:48px; transition:all 0.2s; }
+    .btn-copy-all:hover { color:var(--text); border-color:var(--point); }
+    .btn-copy-all.copied { color:var(--success); border-color:var(--success); }
+
+    /* 토스트 */
+    .toast { position:fixed; bottom:32px; left:50%; transform:translateX(-50%) translateY(80px); background:var(--success); color:#fff; border-radius:999px; padding:10px 24px; font-size:14px; font-weight:600; opacity:0; pointer-events:none; z-index:999; transition:all 0.3s ease; }
+    .toast.show { transform:translateX(-50%) translateY(0); opacity:1; }
+
+    /* 배너 */
+    .coupang-banner { margin:0 auto 48px; text-align:center; overflow:hidden; }
+    .coupang-notice { font-size:11px; color:var(--subtext); margin-bottom:10px; line-height:1.6; }
+    .coupang-banner-mo { display:none; }
+    .adfit-wrap { text-align:center; margin:24px 0; }
+    .adfit-pc { display:block; }
+    .adfit-mo { display:none; }
+    .footer { border-top:1px solid var(--border); padding:32px 0; text-align:center; }
+    .footer-copy { color:var(--subtext); font-size:13px; margin-bottom:12px; }
+    .footer-nav { display:flex; justify-content:center; gap:20px; flex-wrap:wrap; }
+    .footer-nav a { color:var(--subtext); font-size:13px; text-decoration:none; }
+    .footer-nav a:hover { color:var(--text); }
+
+    @media (max-width:640px) {
+      .check-grid { grid-template-columns:1fr 1fr; }
+      .hero-title { font-size:24px; }
+      .adfit-pc { display:none; }
+      .adfit-mo { display:block; }
+      .coupang-banner-pc { display:none; }
+      .coupang-banner-mo { display:block; }
+      .setting-row { flex-direction:column; align-items:stretch; }
+      .setting-label { min-width:unset; }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="container">
+      <a href="../index.html" class="header-brand">
+        <span class="header-brand-icon">&#x1F9F0;</span>
+        <span class="header-brand-text">BrowserKit</span>
+      </a>
+      <a href="../index.html" class="header-back">← BrowserKit 홈으로</a>
+    </div>
+  </header>
+
+  <main><div class="container">
+    <div class="hero">
+      <div class="hero-icon">&#x1F510;</div>
+      <h1 class="hero-title">PasswordGen</h1>
+      <p class="hero-desc">안전한 난수로 강력한 비밀번호를 생성하세요. 조합과 길이를 자유롭게 설정하세요</p>
+      <div class="hero-badges">
+        <span class="hero-badge">&#x26A1; 무료 사용</span>
+        <span class="hero-badge">&#x1F512; 서버 전송 없음</span>
+        <span class="hero-badge">&#x1F6E1;&#xFE0F; Crypto API 사용</span>
+      </div>
+    </div>
+
+    <div class="adfit-wrap adfit-pc"><ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-Dfncm24OGOmHKE7V" data-ad-width="728" data-ad-height="90"></ins></div>
+    <div class="adfit-wrap adfit-mo"><ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-jVI6hdgtW0LyffyR" data-ad-width="320" data-ad-height="50"></ins></div>
+
+    <!-- 설정 패널 -->
+    <div class="setting-card">
+
+      <!-- 길이 -->
+      <div class="setting-row">
+        <span class="setting-label">&#x1F4CF; 길이</span>
+        <div class="slider-wrap">
+          <input type="range" class="range-slider" id="lengthSlider" min="4" max="64" value="16" />
+          <span class="slider-val" id="lengthVal">16</span>
+          <span style="font-size:13px;color:var(--subtext);">자</span>
+        </div>
+      </div>
+
+      <!-- 조합 -->
+      <div class="setting-row">
+        <span class="setting-label">&#x1F524; 조합</span>
+        <div class="check-grid">
+          <label class="check-item active" id="chk-upper">
+            <input type="checkbox" checked />
+            <div class="check-box"><span class="check-box-tick">✓</span></div>
+            <div>
+              <div class="check-text">대문자</div>
+              <div class="check-chars">A–Z</div>
+            </div>
+          </label>
+          <label class="check-item active" id="chk-lower">
+            <input type="checkbox" checked />
+            <div class="check-box"><span class="check-box-tick">✓</span></div>
+            <div>
+              <div class="check-text">소문자</div>
+              <div class="check-chars">a–z</div>
+            </div>
+          </label>
+          <label class="check-item active" id="chk-number">
+            <input type="checkbox" checked />
+            <div class="check-box"><span class="check-box-tick">✓</span></div>
+            <div>
+              <div class="check-text">숫자</div>
+              <div class="check-chars">0–9</div>
+            </div>
+          </label>
+          <label class="check-item active" id="chk-symbol">
+            <input type="checkbox" checked />
+            <div class="check-box"><span class="check-box-tick">✓</span></div>
+            <div>
+              <div class="check-text">특수문자</div>
+              <div class="check-chars">!@#$%^&*</div>
+            </div>
+          </label>
+        </div>
+      </div>
+
+      <!-- 제외 문자 -->
+      <div class="setting-row">
+        <span class="setting-label">&#x274C; 제외</span>
+        <input type="text" class="exclude-input" id="excludeInput" placeholder="혼동되는 문자 제외 (예: 0Ol1iI)" />
+      </div>
+
+      <!-- 생성 개수 -->
+      <div class="setting-row">
+        <span class="setting-label">&#x1F522; 개수</span>
+        <div class="count-btns">
+          <button class="count-btn" data-count="1">1개</button>
+          <button class="count-btn active" data-count="5">5개</button>
+          <button class="count-btn" data-count="10">10개</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 강도 -->
+    <div class="strength-wrap">
+      <div class="strength-label">
+        <span>비밀번호 강도</span>
+        <span class="strength-text" id="strengthText" style="color:var(--subtext);">—</span>
+      </div>
+      <div class="strength-bar">
+        <div class="strength-fill" id="strengthFill"></div>
+      </div>
+    </div>
+
+    <!-- 경고 -->
+    <div class="warn-box" id="warnBox">⚠️ 최소 한 가지 이상의 문자 조합을 선택해주세요.</div>
+
+    <!-- 생성 버튼 -->
+    <button class="btn-generate" id="generateBtn">&#x1F511; 비밀번호 생성</button>
+
+    <!-- 결과 -->
+    <div class="result-list" id="resultList">
+      <div class="result-empty">위 옵션을 설정하고 <strong>비밀번호 생성</strong> 버튼을 눌러주세요.</div>
+    </div>
+
+    <!-- 전체 복사 -->
+    <button class="btn-copy-all" id="copyAllBtn" style="display:none;">&#x1F4CB; 전체 복사</button>
+
+    <div class="coupang-banner coupang-banner-pc">
+      <p class="coupang-notice">이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</p>
+      <script src="https://ads-partners.coupang.com/g.js"></script>
+      <script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"728","height":"120","tsource":""});</script>
+    </div>
+    <div class="coupang-banner coupang-banner-mo">
+      <p class="coupang-notice">이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</p>
+      <script src="https://ads-partners.coupang.com/g.js"></script>
+      <script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"320","height":"50","tsource":""});</script>
+    </div>
+  </div></main>
+
+  <footer class="footer">
+    <div class="container">
+      <p class="footer-copy">© 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p>
+      <nav class="footer-nav">
+        <a href="../privacy.html">개인정보 처리방침</a>
+        <a href="../terms.html">이용약관</a>
+        <a href="../about.html">서비스 소개</a>
+        <a href="../blog/index.html">블로그</a>
+      </nav>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+  // ── 상태 ──
+  let currentCount = 5;
+  let passwords = [];
+
+  const UPPER   = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  const LOWER   = 'abcdefghijklmnopqrstuvwxyz';
+  const NUMBERS = '0123456789';
+  const SYMBOLS = '!@#$%^&*()_+-=[]{}|;:,.<>?';
+
+  // ── 체크박스 토글 ──
+  ['upper','lower','number','symbol'].forEach(key => {
+    const el = document.getElementById('chk-' + key);
+    el.addEventListener('click', () => {
+      const cb = el.querySelector('input');
+      cb.checked = !cb.checked;
+      el.classList.toggle('active', cb.checked);
+      updateStrength();
+    });
+  });
+
+  // ── 슬라이더 ──
+  const slider = document.getElementById('lengthSlider');
+  slider.addEventListener('input', () => {
+    document.getElementById('lengthVal').textContent = slider.value;
+    updateStrength();
+  });
+
+  // ── 개수 버튼 ──
+  document.querySelectorAll('.count-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.count-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      currentCount = parseInt(btn.dataset.count);
+    });
+  });
+
+  // ── 강도 계산 ──
+  function getPool() {
+    const exclude = document.getElementById('excludeInput').value;
+    let pool = '';
+    if (document.getElementById('chk-upper').classList.contains('active'))
+      pool += UPPER.split('').filter(c => !exclude.includes(c)).join('');
+    if (document.getElementById('chk-lower').classList.contains('active'))
+      pool += LOWER.split('').filter(c => !exclude.includes(c)).join('');
+    if (document.getElementById('chk-number').classList.contains('active'))
+      pool += NUMBERS.split('').filter(c => !exclude.includes(c)).join('');
+    if (document.getElementById('chk-symbol').classList.contains('active'))
+      pool += SYMBOLS.split('').filter(c => !exclude.includes(c)).join('');
+    return pool;
+  }
+
+  function calcStrength(pool, length) {
+    if (!pool || pool.length === 0) return { score: 0, label: '—', color: 'var(--subtext)', width: '0%' };
+    // 엔트로피 = log2(풀 크기) × 길이
+    const entropy = Math.log2(pool.length) * parseInt(length);
+    if (entropy < 28)      return { score: 1, label: '매우 약함', color: '#F87171', width: '20%' };
+    else if (entropy < 40) return { score: 2, label: '약함',      color: '#FB923C', width: '40%' };
+    else if (entropy < 60) return { score: 3, label: '보통',      color: '#FBBF24', width: '60%' };
+    else if (entropy < 80) return { score: 4, label: '강함',      color: '#34D399', width: '80%' };
+    else                   return { score: 5, label: '매우 강함', color: '#6C63FF', width: '100%' };
+  }
+
+  function updateStrength() {
+    const pool = getPool();
+    const length = slider.value;
+    const s = calcStrength(pool, length);
+    document.getElementById('strengthText').textContent = s.label;
+    document.getElementById('strengthText').style.color = s.color;
+    const fill = document.getElementById('strengthFill');
+    fill.style.width = s.width;
+    fill.style.background = s.color;
+  }
+  updateStrength();
+
+  // ── 안전한 난수 ──
+  function secureRandom(max) {
+    const arr = new Uint32Array(1);
+    let rand;
+    // 편향 제거 (rejection sampling)
+    const limit = Math.floor(0xFFFFFFFF / max) * max;
+    do { crypto.getRandomValues(arr); rand = arr[0]; } while (rand >= limit);
+    return rand % max;
+  }
+
+  // ── 비밀번호 생성 ──
+  function generatePassword(pool, length) {
+    const activeTypes = [];
+    if (document.getElementById('chk-upper').classList.contains('active'))  activeTypes.push(UPPER);
+    if (document.getElementById('chk-lower').classList.contains('active'))  activeTypes.push(LOWER);
+    if (document.getElementById('chk-number').classList.contains('active')) activeTypes.push(NUMBERS);
+    if (document.getElementById('chk-symbol').classList.contains('active')) activeTypes.push(SYMBOLS);
+
+    const exclude = document.getElementById('excludeInput').value;
+
+    // 각 타입에서 최소 1자 보장
+    let chars = activeTypes.map(t => {
+      const filtered = t.split('').filter(c => !exclude.includes(c) && pool.includes(c));
+      if (filtered.length === 0) return '';
+      return filtered[secureRandom(filtered.length)];
+    }).filter(Boolean);
+
+    // 나머지 길이 랜덤 채우기
+    for (let i = chars.length; i < length; i++) {
+      chars.push(pool[secureRandom(pool.length)]);
+    }
+
+    // Fisher-Yates 셔플
+    for (let i = chars.length - 1; i > 0; i--) {
+      const j = secureRandom(i + 1);
+      [chars[i], chars[j]] = [chars[j], chars[i]];
+    }
+
+    return chars.join('');
+  }
+
+  // ── 생성 버튼 ──
+  document.getElementById('generateBtn').addEventListener('click', () => {
+    const pool = getPool();
+    const warn = document.getElementById('warnBox');
+
+    if (!pool || pool.length === 0) {
+      warn.classList.add('show');
+      return;
+    }
+    warn.classList.remove('show');
+
+    const length = parseInt(slider.value);
+    passwords = [];
+    for (let i = 0; i < currentCount; i++) {
+      passwords.push(generatePassword(pool, length));
+    }
+    renderResults();
+    updateStrength();
+  });
+
+  // ── 결과 렌더링 ──
+  function renderResults() {
+    const list = document.getElementById('resultList');
+    const copyAll = document.getElementById('copyAllBtn');
+
+    if (passwords.length === 0) {
+      list.innerHTML = '<div class="result-empty">위 옵션을 설정하고 <strong>비밀번호 생성</strong> 버튼을 눌러주세요.</div>';
+      copyAll.style.display = 'none';
+      return;
+    }
+
+    list.innerHTML = passwords.map((pw, i) => `
+      <div class="result-item">
+        <span class="result-pw" id="pw-${i}">${pw}</span>
+        <button class="result-copy" data-index="${i}">복사</button>
+      </div>
+    `).join('');
+
+    list.querySelectorAll('.result-copy').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const pw = passwords[+btn.dataset.index];
+        navigator.clipboard.writeText(pw).then(() => {
+          btn.textContent = '✓ 복사됨';
+          btn.classList.add('copied');
+          setTimeout(() => { btn.textContent = '복사'; btn.classList.remove('copied'); }, 1500);
+          showToast('✓ 클립보드에 복사되었습니다');
+        });
+      });
+    });
+
+    copyAll.style.display = 'block';
+  }
+
+  // ── 전체 복사 ──
+  document.getElementById('copyAllBtn').addEventListener('click', () => {
+    if (passwords.length === 0) return;
+    navigator.clipboard.writeText(passwords.join('\n')).then(() => {
+      const btn = document.getElementById('copyAllBtn');
+      btn.textContent = '✓ 전체 복사됨';
+      btn.classList.add('copied');
+      setTimeout(() => { btn.textContent = '📋 전체 복사'; btn.classList.remove('copied'); }, 1500);
+      showToast('✓ 전체 비밀번호가 복사되었습니다');
+    });
+  });
+
+  // ── 토스트 ──
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2000);
+  }
+
+  // ── 제외 문자 변경 시 강도 갱신 ──
+  document.getElementById('excludeInput').addEventListener('input', updateStrength);
+  </script>
+</body>
+</html>
