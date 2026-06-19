@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="이미지에서 색상을 추출하는 무료 온라인 도구. 클릭 한 번으로 HEX, RGB, HSL 코드를 복사하세요. 서버 전송 없이 브라우저에서 바로 처리합니다." />
+  <meta property="og:title" content="ColorPicker — 이미지 색상 추출 도구" />
+  <meta property="og:description" content="이미지에서 색상을 추출하는 무료 온라인 도구. HEX, RGB, HSL 코드를 클릭 한 번으로 복사하세요." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://browserkit.pages.dev/color-picker/" />
+  <title>ColorPicker — 이미지 색상 추출 도구</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+  <script type="text/javascript" src="//t1.kakaocdn.net/kas/static/ba.min.js" async></script>
+  <style>
+    .header{padding:24px 0 16px;border-bottom:1px solid var(--border);}
+    .header .container{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;}
+    .header-brand{display:flex;align-items:center;gap:10px;text-decoration:none;}
+    .header-brand-icon{font-size:24px;}
+    .header-brand-text{font-size:20px;font-weight:700;font-family:'Inter',sans-serif;background:linear-gradient(135deg,var(--point),var(--point-hover));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+    .header-back{font-size:13px;color:var(--subtext);text-decoration:none;}
+    .header-back:hover{color:var(--text);}
+    .hero{text-align:center;padding:40px 0 32px;}
+    .hero-icon{font-size:48px;margin-bottom:16px;}
+    .hero-title{font-size:32px;font-weight:700;margin-bottom:12px;background:linear-gradient(135deg,var(--point),var(--point-hover));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+    .hero-desc{color:var(--subtext);font-size:15px;margin-bottom:20px;}
+    .hero-badges{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;}
+    .hero-badge{background:var(--card);border:1px solid var(--border);border-radius:999px;padding:5px 16px;font-size:13px;color:var(--subtext);}
+
+    /* 업로드 */
+    .upload-zone{background:var(--card);border:2px dashed var(--border);border-radius:var(--radius);padding:48px 40px;text-align:center;cursor:pointer;margin-bottom:24px;}
+    .upload-zone:hover,.upload-zone.drag-over{border-color:var(--point);box-shadow:0 0 24px var(--glow);}
+    .upload-icon{font-size:44px;margin-bottom:16px;}
+    .upload-title{font-size:17px;font-weight:600;margin-bottom:8px;}
+    .upload-sub{color:var(--subtext);font-size:13px;}
+    .upload-safe{color:var(--success);font-size:13px;margin-top:8px;}
+
+    /* 작업 영역 */
+    .work-area{display:grid;grid-template-columns:1fr 340px;gap:24px;margin-bottom:24px;align-items:start;}
+    .canvas-wrap{position:relative;background:repeating-conic-gradient(#1e1e2a 0% 25%,#26263a 0% 50%) 0 0/16px 16px;border-radius:var(--radius);overflow:hidden;cursor:crosshair;}
+    .canvas-wrap canvas{display:block;max-width:100%;height:auto;}
+    .canvas-wrap .magnifier{position:absolute;pointer-events:none;width:120px;height:120px;border-radius:50%;border:3px solid var(--point);box-shadow:0 4px 20px rgba(0,0,0,0.5);overflow:hidden;display:none;}
+    .canvas-wrap .magnifier canvas{position:absolute;top:0;left:0;}
+    .magnifier-crosshair{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:2px;height:20px;background:rgba(255,255,255,0.8);pointer-events:none;}
+    .magnifier-crosshair::after{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:20px;height:2px;background:rgba(255,255,255,0.8);}
+
+    /* 사이드바 */
+    .sidebar{display:flex;flex-direction:column;gap:16px;}
+
+    /* 현재 색상 */
+    .current-color-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;}
+    .current-color-preview{height:80px;background:#6C63FF;transition:background 0.1s;}
+    .current-color-body{padding:16px;}
+    .current-color-label{font-size:12px;color:var(--subtext);margin-bottom:8px;font-weight:600;}
+    .color-format-row{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);}
+    .color-format-row:last-child{border-bottom:none;}
+    .color-format-name{font-size:12px;color:var(--subtext);min-width:36px;font-weight:600;}
+    .color-format-value{font-size:13px;color:var(--text);font-family:'Inter',sans-serif;flex:1;margin:0 8px;}
+    .copy-btn{background:rgba(108,99,255,0.15);border:1px solid var(--border);border-radius:6px;padding:4px 10px;font-size:11px;color:var(--point-hover);cursor:pointer;white-space:nowrap;font-family:'Pretendard',sans-serif;}
+    .copy-btn:hover{background:rgba(108,99,255,0.3);}
+    .copy-btn.copied{background:rgba(52,211,153,0.15);color:var(--success);border-color:var(--success);}
+
+    /* 팔레트 */
+    .palette-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px;}
+    .palette-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
+    .palette-title{font-size:14px;font-weight:600;color:var(--text);}
+    .palette-actions{display:flex;gap:8px;}
+    .palette-btn{background:transparent;border:1px solid var(--border);border-radius:6px;padding:4px 10px;font-size:12px;color:var(--subtext);cursor:pointer;font-family:'Pretendard',sans-serif;}
+    .palette-btn:hover{color:var(--text);border-color:var(--point);}
+    .palette-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;}
+    .palette-swatch{aspect-ratio:1;border-radius:8px;cursor:pointer;border:2px solid transparent;position:relative;}
+    .palette-swatch:hover{transform:scale(1.1);border-color:white;}
+    .palette-swatch.selected{border-color:var(--point-hover);}
+    .palette-swatch .swatch-tooltip{position:absolute;bottom:calc(100% + 6px);left:50%;transform:translateX(-50%);background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:4px 8px;font-size:11px;color:var(--text);white-space:nowrap;font-family:'Inter',sans-serif;pointer-events:none;opacity:0;z-index:10;}
+    .palette-swatch:hover .swatch-tooltip{opacity:1;}
+    .palette-empty{grid-column:span 6;text-align:center;padding:24px;color:var(--subtext);font-size:13px;}
+
+    /* 추출 팔레트 */
+    .extract-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px;}
+    .extract-title{font-size:14px;font-weight:600;color:var(--text);margin-bottom:12px;}
+    .extract-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;}
+    .extract-swatch{border-radius:8px;aspect-ratio:1;cursor:pointer;border:2px solid transparent;}
+    .extract-swatch:hover{transform:scale(1.05);border-color:white;}
+
+    /* 하단 버튼 */
+    .action-wrap{display:flex;justify-content:center;gap:12px;margin-bottom:48px;flex-wrap:wrap;}
+    .btn-primary{background:linear-gradient(135deg,var(--point),var(--point-hover));color:white;border:none;border-radius:12px;padding:13px 28px;font-size:15px;font-weight:600;cursor:pointer;font-family:'Pretendard',sans-serif;}
+    .btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 24px var(--glow);}
+    .btn-primary:disabled{opacity:0.4;cursor:default;transform:none;box-shadow:none;}
+    .btn-sub{background:var(--card);color:var(--subtext);border:1px solid var(--border);border-radius:12px;padding:13px 22px;font-size:15px;cursor:pointer;font-family:'Pretendard',sans-serif;}
+    .btn-sub:hover{transform:translateY(-2px);color:var(--text);border-color:var(--point);}
+
+    /* 토스트 */
+    .toast{position:fixed;bottom:32px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--success);color:#fff;border-radius:999px;padding:10px 24px;font-size:14px;font-weight:600;opacity:0;pointer-events:none;z-index:999;transition:all 0.3s ease;}
+    .toast.show{transform:translateX(-50%) translateY(0);opacity:1;}
+
+    /* 배너 */
+    .coupang-banner{margin:0 auto 48px;text-align:center;overflow:hidden;}
+    .coupang-notice{font-size:11px;color:var(--subtext);margin-bottom:10px;line-height:1.6;}
+    .coupang-banner-mo{display:none;}
+    .adfit-wrap{text-align:center;margin:24px 0;}.adfit-pc{display:block;}.adfit-mo{display:none;}
+    .footer{border-top:1px solid var(--border);padding:32px 0;text-align:center;}
+    .footer-copy{color:var(--subtext);font-size:13px;margin-bottom:12px;}
+    .footer-nav{display:flex;justify-content:center;gap:20px;flex-wrap:wrap;}
+    .footer-nav a{color:var(--subtext);font-size:13px;text-decoration:none;}.footer-nav a:hover{color:var(--text);}
+
+    @media(max-width:768px){
+      .work-area{grid-template-columns:1fr;}
+      .hero-title{font-size:24px;}
+      .adfit-pc{display:none;}.adfit-mo{display:block;}
+      .coupang-banner-pc{display:none;}.coupang-banner-mo{display:block;}
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="container">
+      <a href="../index.html" class="header-brand"><span class="header-brand-icon">&#x1F9F0;</span><span class="header-brand-text">BrowserKit</span></a>
+      <a href="../index.html" class="header-back">← BrowserKit 홈으로</a>
+    </div>
+  </header>
+
+  <main><div class="container">
+    <div class="hero">
+      <div class="hero-icon">&#x1F3A8;</div>
+      <h1 class="hero-title">ColorPicker</h1>
+      <p class="hero-desc">이미지를 클릭해 색상을 추출하고 HEX, RGB, HSL 코드를 바로 복사하세요</p>
+      <div class="hero-badges">
+        <span class="hero-badge">&#x26A1; 무료 사용</span>
+        <span class="hero-badge">&#x1F512; 서버 전송 없음</span>
+        <span class="hero-badge">&#x1F4E6; 설치 불필요</span>
+      </div>
+    </div>
+
+    <div class="adfit-wrap adfit-pc"><ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-Dfncm24OGOmHKE7V" data-ad-width="728" data-ad-height="90"></ins></div>
+    <div class="adfit-wrap adfit-mo"><ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-jVI6hdgtW0LyffyR" data-ad-width="320" data-ad-height="50"></ins></div>
+
+    <!-- 업로드 존 -->
+    <div class="upload-zone" id="uploadZone">
+      <div class="upload-icon">&#x1F5BC;&#xFE0F;</div>
+      <div class="upload-title">이미지를 업로드하세요</div>
+      <div class="upload-sub">클릭하거나 파일을 여기로 드래그하세요 (JPG, PNG, WEBP)</div>
+      <div class="upload-safe">&#x1F512; 파일이 서버로 전송되지 않습니다</div>
+      <input type="file" id="fileInput" accept="image/*" style="display:none" />
+    </div>
+
+    <!-- 작업 영역 -->
+    <div class="work-area" id="workArea" style="display:none;">
+      <!-- 캔버스 -->
+      <div class="canvas-wrap" id="canvasWrap">
+        <canvas id="mainCanvas"></canvas>
+        <div class="magnifier" id="magnifier">
+          <canvas id="magnifierCanvas" width="120" height="120"></canvas>
+          <div class="magnifier-crosshair"></div>
+        </div>
+      </div>
+
+      <!-- 사이드바 -->
+      <div class="sidebar">
+        <!-- 현재 색상 -->
+        <div class="current-color-card">
+          <div class="current-color-preview" id="colorPreview"></div>
+          <div class="current-color-body">
+            <div class="current-color-label">현재 선택 색상</div>
+            <div class="color-format-row">
+              <span class="color-format-name">HEX</span>
+              <span class="color-format-value" id="hexValue">#6C63FF</span>
+              <button class="copy-btn" data-format="hex">복사</button>
+            </div>
+            <div class="color-format-row">
+              <span class="color-format-name">RGB</span>
+              <span class="color-format-value" id="rgbValue">rgb(108, 99, 255)</span>
+              <button class="copy-btn" data-format="rgb">복사</button>
+            </div>
+            <div class="color-format-row">
+              <span class="color-format-name">HSL</span>
+              <span class="color-format-value" id="hslValue">hsl(243, 100%, 70%)</span>
+              <button class="copy-btn" data-format="hsl">복사</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 저장된 팔레트 -->
+        <div class="palette-card">
+          <div class="palette-header">
+            <span class="palette-title">&#x1F4CB; 저장된 색상</span>
+            <div class="palette-actions">
+              <button class="palette-btn" id="exportBtn">내보내기</button>
+              <button class="palette-btn" id="clearPaletteBtn">초기화</button>
+            </div>
+          </div>
+          <div class="palette-grid" id="paletteGrid">
+            <div class="palette-empty">이미지를 클릭하면<br />색상이 여기 저장됩니다</div>
+          </div>
+        </div>
+
+        <!-- 대표 색상 추출 -->
+        <div class="extract-card" id="extractCard" style="display:none;">
+          <div class="extract-title">&#x2728; 이미지 대표 색상</div>
+          <div class="extract-grid" id="extractGrid"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 버튼 -->
+    <div class="action-wrap" id="actionWrap" style="display:none;">
+      <button class="btn-primary" id="extractBtn">&#x2728; 대표 색상 자동 추출</button>
+      <button class="btn-sub" id="resetBtn">↺ 처음부터</button>
+    </div>
+
+    <div class="coupang-banner coupang-banner-pc"><p class="coupang-notice">이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</p><script src="https://ads-partners.coupang.com/g.js"></script><script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"728","height":"120","tsource":""});</script></div>
+    <div class="coupang-banner coupang-banner-mo"><p class="coupang-notice">이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</p><script src="https://ads-partners.coupang.com/g.js"></script><script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"320","height":"50","tsource":""});</script></div>
+  </div></main>
+
+  <footer class="footer"><div class="container"><p class="footer-copy">© 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p><nav class="footer-nav"><a href="../privacy.html">개인정보 처리방침</a><a href="../terms.html">이용약관</a><a href="../about.html">서비스 소개</a><a href="../blog/index.html">블로그</a></nav></div></footer>
+
+  <div class="toast" id="toast">✓ 클립보드에 복사되었습니다</div>
+
+  <script>
+  // ── 상태 ──
+  let img = null;
+  let palette = []; // 저장된 색상 배열 {hex,rgb,hsl}
+  let currentColor = {r:108,g:99,b:255};
+  let scale = 1; // canvas 표시 배율
+  const MAG_SIZE = 120, MAG_ZOOM = 8, MAG_SAMPLE = MAG_SIZE / MAG_ZOOM;
+
+  // ── 유틸 ──
+  function showToast(msg){
+    const t=document.getElementById('toast');
+    t.textContent=msg;
+    t.classList.add('show');
+    setTimeout(()=>t.classList.remove('show'),2000);
+  }
+  function rgbToHex(r,g,b){return'#'+[r,g,b].map(v=>v.toString(16).padStart(2,'0')).join('');}
+  function rgbToHsl(r,g,b){
+    r/=255;g/=255;b/=255;
+    const max=Math.max(r,g,b),min=Math.min(r,g,b);
+    let h,s,l=(max+min)/2;
+    if(max===min){h=s=0;}
+    else{
+      const d=max-min;
+      s=l>0.5?d/(2-max-min):d/(max+min);
+      switch(max){case r:h=(g-b)/d+(g<b?6:0);break;case g:h=(b-r)/d+2;break;case b:h=(r-g)/d+4;break;}
+      h/=6;
+    }
+    return`hsl(${Math.round(h*360)}, ${Math.round(s*100)}%, ${Math.round(l*100)}%)`;
+  }
+  function setCurrentColor(r,g,b){
+    currentColor={r,g,b};
+    const hex=rgbToHex(r,g,b);
+    const rgb=`rgb(${r}, ${g}, ${b})`;
+    const hsl=rgbToHsl(r,g,b);
+    document.getElementById('colorPreview').style.background=hex;
+    document.getElementById('hexValue').textContent=hex;
+    document.getElementById('rgbValue').textContent=rgb;
+    document.getElementById('hslValue').textContent=hsl;
+    // 복사 버튼 data 업데이트
+    document.querySelectorAll('.copy-btn').forEach(btn=>{
+      btn.dataset.hex=hex; btn.dataset.rgb=rgb; btn.dataset.hsl=hsl;
+    });
+  }
+
+  // ── 업로드 ──
+  const uploadZone=document.getElementById('uploadZone');
+  const fileInput=document.getElementById('fileInput');
+  uploadZone.addEventListener('click',()=>fileInput.click());
+  uploadZone.addEventListener('dragover',e=>{e.preventDefault();uploadZone.classList.add('drag-over');});
+  uploadZone.addEventListener('dragleave',()=>uploadZone.classList.remove('drag-over'));
+  uploadZone.addEventListener('drop',e=>{e.preventDefault();uploadZone.classList.remove('drag-over');if(e.dataTransfer.files[0])loadImage(e.dataTransfer.files[0]);});
+  fileInput.addEventListener('change',()=>{if(fileInput.files[0])loadImage(fileInput.files[0]);});
+
+  function loadImage(file){
+    const reader=new FileReader();
+    reader.onload=e=>{
+      const image=new Image();
+      image.onload=()=>{
+        img=image;
+        const canvas=document.getElementById('mainCanvas');
+        const wrap=document.getElementById('canvasWrap');
+        // 최대 너비 맞추기
+        const maxW=wrap.clientWidth||600;
+        scale=Math.min(1,maxW/image.width);
+        canvas.width=Math.round(image.width*scale);
+        canvas.height=Math.round(image.height*scale);
+        canvas.getContext('2d').drawImage(image,0,0,canvas.width,canvas.height);
+        uploadZone.style.display='none';
+        document.getElementById('workArea').style.display='grid';
+        document.getElementById('actionWrap').style.display='flex';
+        // 초기 색상: 중앙 픽셀
+        pickColorAt(Math.floor(canvas.width/2),Math.floor(canvas.height/2));
+      };
+      image.src=e.target.result;
+    };
+    reader.readAsDataURL(file);
+  }
+
+  // ── 색상 피킹 ──
+  function pickColorAt(cx,cy){
+    const canvas=document.getElementById('mainCanvas');
+    const ctx=canvas.getContext('2d');
+    const d=ctx.getImageData(Math.round(cx),Math.round(cy),1,1).data;
+    setCurrentColor(d[0],d[1],d[2]);
+  }
+
+  // ── 확대경 ──
+  const canvasWrap=document.getElementById('canvasWrap');
+  const magnifier=document.getElementById('magnifier');
+  const magCtx=document.getElementById('magnifierCanvas').getContext('2d');
+
+  function getCanvasPos(e){
+    const rect=document.getElementById('mainCanvas').getBoundingClientRect();
+    const clientX=e.touches?e.touches[0].clientX:e.clientX;
+    const clientY=e.touches?e.touches[0].clientY:e.clientY;
+    return{
+      x:(clientX-rect.left)*(document.getElementById('mainCanvas').width/rect.width),
+      y:(clientY-rect.top)*(document.getElementById('mainCanvas').height/rect.height),
+      px:clientX-canvasWrap.getBoundingClientRect().left,
+      py:clientY-canvasWrap.getBoundingClientRect().top
+    };
+  }
+
+  function updateMagnifier(e){
+    if(!img)return;
+    const{x,y,px,py}=getCanvasPos(e);
+    const canvas=document.getElementById('mainCanvas');
+    const ctx=canvas.getContext('2d');
+
+    // 색상 업데이트
+    const cx=Math.max(0,Math.min(Math.round(x),canvas.width-1));
+    const cy=Math.max(0,Math.min(Math.round(y),canvas.height-1));
+    const d=ctx.getImageData(cx,cy,1,1).data;
+    setCurrentColor(d[0],d[1],d[2]);
+
+    // 확대경 위치
+    const mw=MAG_SIZE,mh=MAG_SIZE;
+    let left=px+20,top=py-mh/2;
+    if(left+mw>canvasWrap.clientWidth)left=px-mw-20;
+    if(top<0)top=0;
+    magnifier.style.left=left+'px';
+    magnifier.style.top=top+'px';
+    magnifier.style.display='block';
+
+    // 확대경 내용 그리기
+    const sx=Math.max(0,x-MAG_SAMPLE/2);
+    const sy=Math.max(0,y-MAG_SAMPLE/2);
+    magCtx.clearRect(0,0,MAG_SIZE,MAG_SIZE);
+    magCtx.imageSmoothingEnabled=false;
+    magCtx.drawImage(canvas,sx,sy,MAG_SAMPLE,MAG_SAMPLE,0,0,MAG_SIZE,MAG_SIZE);
+  }
+
+  canvasWrap.addEventListener('mousemove',e=>{if(img)updateMagnifier(e);});
+  canvasWrap.addEventListener('mouseleave',()=>{magnifier.style.display='none';});
+  canvasWrap.addEventListener('click',e=>{
+    if(!img)return;
+    const{x,y}=getCanvasPos(e);
+    const canvas=document.getElementById('mainCanvas');
+    const ctx=canvas.getContext('2d');
+    const cx=Math.max(0,Math.min(Math.round(x),canvas.width-1));
+    const cy=Math.max(0,Math.min(Math.round(y),canvas.height-1));
+    const d=ctx.getImageData(cx,cy,1,1).data;
+    const r=d[0],g=d[1],b=d[2];
+    setCurrentColor(r,g,b);
+    addToPalette(r,g,b);
+    showToast('✓ 색상이 팔레트에 저장되었습니다');
+  });
+
+  // ── 팔레트 ──
+  function addToPalette(r,g,b){
+    const hex=rgbToHex(r,g,b);
+    if(palette.find(c=>c.hex===hex))return; // 중복 제거
+    palette.push({hex,rgb:`rgb(${r},${g},${b})`,hsl:rgbToHsl(r,g,b)});
+    renderPalette();
+  }
+
+  function renderPalette(){
+    const grid=document.getElementById('paletteGrid');
+    if(palette.length===0){
+      grid.innerHTML='<div class="palette-empty">이미지를 클릭하면<br />색상이 여기 저장됩니다</div>';
+      return;
+    }
+    grid.innerHTML=palette.map((c,i)=>`
+      <div class="palette-swatch" style="background:${c.hex}" data-index="${i}" title="${c.hex}">
+        <span class="swatch-tooltip">${c.hex}</span>
+      </div>`).join('');
+    grid.querySelectorAll('.palette-swatch').forEach(sw=>{
+      sw.addEventListener('click',()=>{
+        const c=palette[+sw.dataset.index];
+        const [r,g,b]=c.hex.match(/\w\w/g).map(x=>parseInt(x,16));
+        setCurrentColor(r,g,b);
+        grid.querySelectorAll('.palette-swatch').forEach(s=>s.classList.remove('selected'));
+        sw.classList.add('selected');
+      });
+    });
+  }
+
+  // 팔레트 초기화
+  document.getElementById('clearPaletteBtn').addEventListener('click',()=>{
+    palette=[];
+    renderPalette();
+    document.getElementById('extractCard').style.display='none';
+    document.getElementById('extractGrid').innerHTML='';
+  });
+
+  // 팔레트 내보내기 (텍스트 복사)
+  document.getElementById('exportBtn').addEventListener('click',()=>{
+    if(palette.length===0){showToast('저장된 색상이 없습니다');return;}
+    const text=palette.map(c=>`${c.hex}  |  ${c.rgb}  |  ${c.hsl}`).join('\n');
+    navigator.clipboard.writeText(text).then(()=>showToast('✓ 팔레트가 클립보드에 복사되었습니다'));
+  });
+
+  // ── 복사 버튼 ──
+  document.querySelectorAll('.copy-btn').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      const fmt=btn.dataset.format;
+      const val=document.getElementById(fmt+'Value').textContent;
+      navigator.clipboard.writeText(val).then(()=>{
+        btn.textContent='✓ 복사됨';
+        btn.classList.add('copied');
+        setTimeout(()=>{btn.textContent='복사';btn.classList.remove('copied');},1500);
+      });
+    });
+  });
+
+  // ── 대표 색상 자동 추출 ──
+  document.getElementById('extractBtn').addEventListener('click',()=>{
+    if(!img)return;
+    const canvas=document.getElementById('mainCanvas');
+    const ctx=canvas.getContext('2d');
+    const w=canvas.width,h=canvas.height;
+
+    // 5×5 격자로 샘플링 후 k-means 없이 단순 구획 대표색
+    const ROWS=5,COLS=5;
+    const colors=[];
+    for(let r=0;r<ROWS;r++){
+      for(let c=0;c<COLS;c++){
+        const sx=Math.floor(c*w/COLS),sy=Math.floor(r*h/ROWS);
+        const sw=Math.floor(w/COLS),sh=Math.floor(h/ROWS);
+        const data=ctx.getImageData(sx,sy,sw,sh).data;
+        let rSum=0,gSum=0,bSum=0,count=0;
+        for(let i=0;i<data.length;i+=4){
+          if(data[i+3]<128)continue; // 투명 무시
+          rSum+=data[i];gSum+=data[i+1];bSum+=data[i+2];count++;
+        }
+        if(count>0)colors.push([Math.round(rSum/count),Math.round(gSum/count),Math.round(bSum/count)]);
+      }
+    }
+
+    // 유사 색상 병합 (거리 50 이하)
+    const merged=[];
+    colors.forEach(c=>{
+      const found=merged.find(m=>Math.abs(m[0]-c[0])+Math.abs(m[1]-c[1])+Math.abs(m[2]-c[2])<60);
+      if(!found)merged.push(c);
+    });
+
+    // 상위 10개
+    const top=merged.slice(0,10);
+    const grid=document.getElementById('extractGrid');
+    grid.innerHTML=top.map(([r,g,b])=>{
+      const hex=rgbToHex(r,g,b);
+      return`<div class="extract-swatch" style="background:${hex}" title="${hex}" data-r="${r}" data-g="${g}" data-b="${b}"></div>`;
+    }).join('');
+
+    grid.querySelectorAll('.extract-swatch').forEach(sw=>{
+      sw.addEventListener('click',()=>{
+        const r=+sw.dataset.r,g=+sw.dataset.g,b=+sw.dataset.b;
+        setCurrentColor(r,g,b);
+        addToPalette(r,g,b);
+        showToast('✓ 색상이 팔레트에 저장되었습니다');
+      });
+    });
+
+    document.getElementById('extractCard').style.display='block';
+    showToast('✓ 대표 색상 추출 완료');
+  });
+
+  // ── 초기화 ──
+  document.getElementById('resetBtn').addEventListener('click',()=>{
+    img=null; palette=[];
+    fileInput.value='';
+    const canvas=document.getElementById('mainCanvas');
+    canvas.width=0;canvas.height=0;
+    uploadZone.style.display='block';
+    document.getElementById('workArea').style.display='none';
+    document.getElementById('actionWrap').style.display='none';
+    document.getElementById('extractCard').style.display='none';
+    document.getElementById('extractGrid').innerHTML='';
+    renderPalette();
+    setCurrentColor(108,99,255);
+  });
+
+  // 초기 색상 세팅
+  setCurrentColor(108,99,255);
+  </script>
+</body>
+</html>
