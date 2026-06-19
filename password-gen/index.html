@@ -85,9 +85,9 @@
 
     /* 결과 목록 */
     .result-list { display:flex; flex-direction:column; gap:10px; margin-bottom:48px; }
-    .result-item { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:16px 20px; display:flex; align-items:center; justify-content:space-between; gap:12px; }
-    .result-pw { font-family:'Fira Code','JetBrains Mono',monospace; font-size:15px; color:var(--text); word-break:break-all; flex:1; letter-spacing:0.5px; }
-    .result-copy { background:rgba(108,99,255,0.12); border:1px solid var(--border); border-radius:8px; padding:6px 14px; font-size:12px; color:var(--point-hover); cursor:pointer; white-space:nowrap; font-family:'Pretendard',sans-serif; transition:all 0.2s; flex-shrink:0; }
+    .result-item { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:16px 20px; display:flex; align-items:center; justify-content:space-between; gap:16px; min-height:56px; }
+    .result-pw { font-family:'Fira Code','JetBrains Mono',monospace; font-size:14px; color:var(--text); word-break:break-all; flex:1; letter-spacing:0.5px; line-height:1.6; min-width:0; }
+    .result-copy { background:rgba(108,99,255,0.12); border:1px solid var(--border); border-radius:8px; padding:7px 16px; font-size:12px; color:var(--point-hover); cursor:pointer; white-space:nowrap; font-family:'Pretendard',sans-serif; transition:all 0.2s; flex-shrink:0; min-width:56px; text-align:center; }
     .result-copy:hover { background:rgba(108,99,255,0.25); }
     .result-copy.copied { background:rgba(52,211,153,0.12); color:var(--success); border-color:var(--success); }
     .result-empty { text-align:center; padding:40px; color:var(--subtext); font-size:14px; }
@@ -359,23 +359,40 @@
 
   // ── 비밀번호 생성 ──
   function generatePassword(pool, length) {
-    const activeTypes = [];
-    if (document.getElementById('chk-upper').classList.contains('active'))  activeTypes.push(UPPER);
-    if (document.getElementById('chk-lower').classList.contains('active'))  activeTypes.push(LOWER);
-    if (document.getElementById('chk-number').classList.contains('active')) activeTypes.push(NUMBERS);
-    if (document.getElementById('chk-symbol').classList.contains('active')) activeTypes.push(SYMBOLS);
-
     const exclude = document.getElementById('excludeInput').value;
 
-    // 각 타입에서 최소 1자 보장
-    let chars = activeTypes.map(t => {
-      const filtered = t.split('').filter(c => !exclude.includes(c) && pool.includes(c));
-      if (filtered.length === 0) return '';
-      return filtered[secureRandom(filtered.length)];
-    }).filter(Boolean);
+    // 각 활성 타입별 필터링된 풀
+    const typePools = [];
+    if (document.getElementById('chk-upper').classList.contains('active')) {
+      const p = UPPER.split('').filter(c => !exclude.includes(c));
+      if (p.length > 0) typePools.push(p);
+    }
+    if (document.getElementById('chk-lower').classList.contains('active')) {
+      const p = LOWER.split('').filter(c => !exclude.includes(c));
+      if (p.length > 0) typePools.push(p);
+    }
+    if (document.getElementById('chk-number').classList.contains('active')) {
+      const p = NUMBERS.split('').filter(c => !exclude.includes(c));
+      if (p.length > 0) typePools.push(p);
+    }
+    if (document.getElementById('chk-symbol').classList.contains('active')) {
+      const p = SYMBOLS.split('').filter(c => !exclude.includes(c));
+      if (p.length > 0) typePools.push(p);
+    }
 
-    // 나머지 길이 랜덤 채우기
-    for (let i = chars.length; i < length; i++) {
+    // 길이가 타입 수보다 작으면 각 타입에서 최소 1자 보장 없이 풀에서 랜덤 추출
+    let chars = [];
+
+    if (length >= typePools.length) {
+      // 각 타입에서 최소 1자 보장
+      for (const tp of typePools) {
+        chars.push(tp[secureRandom(tp.length)]);
+      }
+    }
+
+    // 나머지 (length - 이미 뽑은 수) 만큼 전체 풀에서 랜덤 채우기
+    const remaining = length - chars.length;
+    for (let i = 0; i < remaining; i++) {
       chars.push(pool[secureRandom(pool.length)]);
     }
 
