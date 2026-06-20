@@ -133,7 +133,7 @@
         <span class="header-brand-icon">&#x1F9F0;</span>
         <span class="header-brand-text">BrowserKit</span>
       </a>
-      <a href="../index.html" class="header-back">← BrowserKit 홈으로</a>
+      <a href="../index.html" class="header-back">&#x2190; BrowserKit 홈으로</a>
     </div>
   </header>
 
@@ -154,7 +154,6 @@
 
     <!-- 설정 패널 -->
     <div class="setting-card">
-
       <!-- 길이 -->
       <div class="setting-row">
         <span class="setting-label">&#x1F4CF; 길이</span>
@@ -164,52 +163,37 @@
           <span style="font-size:13px;color:var(--subtext);">자</span>
         </div>
       </div>
-
       <!-- 조합 -->
       <div class="setting-row">
         <span class="setting-label">&#x1F524; 조합</span>
         <div class="check-grid">
           <label class="check-item active" id="chk-upper">
             <input type="checkbox" checked />
-            <div class="check-box"><span class="check-box-tick">✓</span></div>
-            <div>
-              <div class="check-text">대문자</div>
-              <div class="check-chars">A–Z</div>
-            </div>
+            <div class="check-box"><span class="check-box-tick">&#x2713;</span></div>
+            <div><div class="check-text">대문자</div><div class="check-chars">A&#x2013;Z</div></div>
           </label>
           <label class="check-item active" id="chk-lower">
             <input type="checkbox" checked />
-            <div class="check-box"><span class="check-box-tick">✓</span></div>
-            <div>
-              <div class="check-text">소문자</div>
-              <div class="check-chars">a–z</div>
-            </div>
+            <div class="check-box"><span class="check-box-tick">&#x2713;</span></div>
+            <div><div class="check-text">소문자</div><div class="check-chars">a&#x2013;z</div></div>
           </label>
           <label class="check-item active" id="chk-number">
             <input type="checkbox" checked />
-            <div class="check-box"><span class="check-box-tick">✓</span></div>
-            <div>
-              <div class="check-text">숫자</div>
-              <div class="check-chars">0–9</div>
-            </div>
+            <div class="check-box"><span class="check-box-tick">&#x2713;</span></div>
+            <div><div class="check-text">숫자</div><div class="check-chars">0&#x2013;9</div></div>
           </label>
           <label class="check-item active" id="chk-symbol">
             <input type="checkbox" checked />
-            <div class="check-box"><span class="check-box-tick">✓</span></div>
-            <div>
-              <div class="check-text">특수문자</div>
-              <div class="check-chars">!@#$%^&*</div>
-            </div>
+            <div class="check-box"><span class="check-box-tick">&#x2713;</span></div>
+            <div><div class="check-text">특수문자</div><div class="check-chars">!@#$%^&amp;*</div></div>
           </label>
         </div>
       </div>
-
       <!-- 제외 문자 -->
       <div class="setting-row">
         <span class="setting-label">&#x274C; 제외</span>
         <input type="text" class="exclude-input" id="excludeInput" placeholder="혼동되는 문자 제외 (예: 0Ol1iI)" />
       </div>
-
       <!-- 생성 개수 -->
       <div class="setting-row">
         <span class="setting-label">&#x1F522; 개수</span>
@@ -225,15 +209,13 @@
     <div class="strength-wrap">
       <div class="strength-label">
         <span>비밀번호 강도</span>
-        <span class="strength-text" id="strengthText" style="color:var(--subtext);">—</span>
+        <span class="strength-text" id="strengthText" style="color:var(--subtext);">&#x2014;</span>
       </div>
-      <div class="strength-bar">
-        <div class="strength-fill" id="strengthFill"></div>
-      </div>
+      <div class="strength-bar"><div class="strength-fill" id="strengthFill"></div></div>
     </div>
 
     <!-- 경고 -->
-    <div class="warn-box" id="warnBox">⚠️ 최소 한 가지 이상의 문자 조합을 선택해주세요.</div>
+    <div class="warn-box" id="warnBox">&#x26A0;&#xFE0F; 최소 한 가지 이상의 문자 조합을 선택해주세요.</div>
 
     <!-- 생성 버튼 -->
     <button class="btn-generate" id="generateBtn">&#x1F511; 비밀번호 생성</button>
@@ -260,7 +242,7 @@
 
   <footer class="footer">
     <div class="container">
-      <p class="footer-copy">© 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p>
+      <p class="footer-copy">&#xa9; 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p>
       <nav class="footer-nav">
         <a href="../privacy.html">개인정보 처리방침</a>
         <a href="../terms.html">이용약관</a>
@@ -273,212 +255,202 @@
   <div class="toast" id="toast"></div>
 
   <script>
-  // ── 상태 ──
-  let currentCount = 5;
-  let passwords = [];
+  var currentCount = 5;
+  var passwords = [];
 
-  const UPPER   = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-  const LOWER   = 'abcdefghijklmnopqrstuvwxyz';
-  const NUMBERS = '0123456789';
-  const SYMBOLS = '!@#$%^&*()_+-=[]{}|;:,.<>?';
+  var UPPER   = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  var LOWER   = 'abcdefghijklmnopqrstuvwxyz';
+  var NUMBERS = '0123456789';
+  var SYMBOLS = '!@#$%^&*()_+-=[]{}|;:,.<>?';
 
-  // ── 체크박스 토글 ──
-  ['upper','lower','number','symbol'].forEach(key => {
-    const el = document.getElementById('chk-' + key);
-    el.addEventListener('click', () => {
-      const cb = el.querySelector('input');
+  // 체크박스 토글
+  ['upper','lower','number','symbol'].forEach(function(key) {
+    var el = document.getElementById('chk-' + key);
+    el.addEventListener('click', function() {
+      var cb = el.querySelector('input');
       cb.checked = !cb.checked;
       el.classList.toggle('active', cb.checked);
       updateStrength();
     });
   });
 
-  // ── 슬라이더 ──
-  const slider = document.getElementById('lengthSlider');
-  slider.addEventListener('input', () => {
+  // 슬라이더
+  var slider = document.getElementById('lengthSlider');
+  slider.addEventListener('input', function() {
     document.getElementById('lengthVal').textContent = slider.value;
     updateStrength();
   });
 
-  // ── 개수 버튼 ──
-  document.querySelectorAll('.count-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      document.querySelectorAll('.count-btn').forEach(b => b.classList.remove('active'));
+  // 개수 버튼
+  document.querySelectorAll('.count-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.count-btn').forEach(function(b) { b.classList.remove('active'); });
       btn.classList.add('active');
-      currentCount = parseInt(btn.dataset.count);
+      currentCount = parseInt(btn.dataset.count, 10);
     });
   });
 
-  // ── 강도 계산 ──
+  // 전체 풀 빌드
   function getPool() {
-    const exclude = document.getElementById('excludeInput').value;
-    let pool = '';
+    var exclude = document.getElementById('excludeInput').value;
+    var pool = '';
     if (document.getElementById('chk-upper').classList.contains('active'))
-      pool += UPPER.split('').filter(c => !exclude.includes(c)).join('');
+      pool += UPPER.split('').filter(function(c) { return exclude.indexOf(c) < 0; }).join('');
     if (document.getElementById('chk-lower').classList.contains('active'))
-      pool += LOWER.split('').filter(c => !exclude.includes(c)).join('');
+      pool += LOWER.split('').filter(function(c) { return exclude.indexOf(c) < 0; }).join('');
     if (document.getElementById('chk-number').classList.contains('active'))
-      pool += NUMBERS.split('').filter(c => !exclude.includes(c)).join('');
+      pool += NUMBERS.split('').filter(function(c) { return exclude.indexOf(c) < 0; }).join('');
     if (document.getElementById('chk-symbol').classList.contains('active'))
-      pool += SYMBOLS.split('').filter(c => !exclude.includes(c)).join('');
+      pool += SYMBOLS.split('').filter(function(c) { return exclude.indexOf(c) < 0; }).join('');
     return pool;
   }
 
-  function calcStrength(pool, length) {
-    if (!pool || pool.length === 0) return { score: 0, label: '—', color: 'var(--subtext)', width: '0%' };
-    // 엔트로피 = log2(풀 크기) × 길이
-    const entropy = Math.log2(pool.length) * parseInt(length);
-    if (entropy < 28)      return { score: 1, label: '매우 약함', color: '#F87171', width: '20%' };
-    else if (entropy < 40) return { score: 2, label: '약함',      color: '#FB923C', width: '40%' };
-    else if (entropy < 60) return { score: 3, label: '보통',      color: '#FBBF24', width: '60%' };
-    else if (entropy < 80) return { score: 4, label: '강함',      color: '#34D399', width: '80%' };
-    else                   return { score: 5, label: '매우 강함', color: '#6C63FF', width: '100%' };
+  // 강도 계산
+  function calcStrength(pool, len) {
+    if (!pool || pool.length === 0) return { label: '\u2014', color: 'var(--subtext)', width: '0%' };
+    var entropy = Math.log2(pool.length) * len;
+    if (entropy < 28)      return { label: '\ub9e4\uc6b0 \uc57d\ud568', color: '#F87171', width: '20%' };
+    else if (entropy < 40) return { label: '\uc57d\ud568',      color: '#FB923C', width: '40%' };
+    else if (entropy < 60) return { label: '\ubcf4\ud1b5',      color: '#FBBF24', width: '60%' };
+    else if (entropy < 80) return { label: '\uac15\ud568',      color: '#34D399', width: '80%' };
+    else                   return { label: '\ub9e4\uc6b0 \uac15\ud568', color: '#6C63FF', width: '100%' };
   }
 
   function updateStrength() {
-    const pool = getPool();
-    const length = slider.value;
-    const s = calcStrength(pool, length);
-    document.getElementById('strengthText').textContent = s.label;
-    document.getElementById('strengthText').style.color = s.color;
-    const fill = document.getElementById('strengthFill');
+    var pool = getPool();
+    var len = parseInt(slider.value, 10);
+    var s = calcStrength(pool, len);
+    var st = document.getElementById('strengthText');
+    st.textContent = s.label;
+    st.style.color = s.color;
+    var fill = document.getElementById('strengthFill');
     fill.style.width = s.width;
     fill.style.background = s.color;
   }
   updateStrength();
 
-  // ── 안전한 난수 ──
+  // 안전한 난수: 0 이상 max 미만 정수
+  // Uint32 범위 = 0 ~ 4294967295 (2^32 - 1)
+  // 편향 제거: 2^32 % max 만큼 버림
   function secureRandom(max) {
-    const arr = new Uint32Array(1);
-    let rand;
-    // 편향 제거 (rejection sampling)
-    const limit = Math.floor(0xFFFFFFFF / max) * max;
-    do { crypto.getRandomValues(arr); rand = arr[0]; } while (rand >= limit);
-    return rand % max;
+    var limit = (0x100000000 - (0x100000000 % max)) >>> 0;
+    var arr = new Uint32Array(1);
+    do { crypto.getRandomValues(arr); } while (arr[0] >= limit);
+    return arr[0] % max;
   }
 
-  // ── 비밀번호 생성 ──
-  function generatePassword(pool, length) {
-    const exclude = document.getElementById('excludeInput').value;
+  // 비밀번호 생성: 항상 정확히 len 글자
+  function generatePassword(pool, len) {
+    // len은 호출 전에 parseInt된 숫자. 혹시 모르니 한 번 더 변환
+    var n = Math.floor(+len);
+    var exclude = document.getElementById('excludeInput').value;
 
-    // 각 활성 타입별 필터링된 풀
-    const typePools = [];
+    // 각 활성 타입별 풀
+    var typePools = [];
     if (document.getElementById('chk-upper').classList.contains('active')) {
-      const p = UPPER.split('').filter(c => !exclude.includes(c));
+      var p = UPPER.split('').filter(function(c) { return exclude.indexOf(c) < 0; });
       if (p.length > 0) typePools.push(p);
     }
     if (document.getElementById('chk-lower').classList.contains('active')) {
-      const p = LOWER.split('').filter(c => !exclude.includes(c));
+      var p = LOWER.split('').filter(function(c) { return exclude.indexOf(c) < 0; });
       if (p.length > 0) typePools.push(p);
     }
     if (document.getElementById('chk-number').classList.contains('active')) {
-      const p = NUMBERS.split('').filter(c => !exclude.includes(c));
+      var p = NUMBERS.split('').filter(function(c) { return exclude.indexOf(c) < 0; });
       if (p.length > 0) typePools.push(p);
     }
     if (document.getElementById('chk-symbol').classList.contains('active')) {
-      const p = SYMBOLS.split('').filter(c => !exclude.includes(c));
+      var p = SYMBOLS.split('').filter(function(c) { return exclude.indexOf(c) < 0; });
       if (p.length > 0) typePools.push(p);
     }
 
-    // 길이가 타입 수보다 작으면 각 타입에서 최소 1자 보장 없이 풀에서 랜덤 추출
-    let chars = [];
+    var chars = [];
 
-    if (length >= typePools.length) {
-      // 각 타입에서 최소 1자 보장
-      for (const tp of typePools) {
-        chars.push(tp[secureRandom(tp.length)]);
+    // n이 타입 수 이상일 때만 각 타입에서 최소 1자 보장
+    if (n >= typePools.length) {
+      for (var i = 0; i < typePools.length; i++) {
+        chars.push(typePools[i][secureRandom(typePools[i].length)]);
       }
     }
 
-    // 나머지 (length - 이미 뽑은 수) 만큼 전체 풀에서 랜덤 채우기
-    const remaining = length - chars.length;
-    for (let i = 0; i < remaining; i++) {
+    // 정확히 (n - 이미 담은 수)만큼 전체 풀에서 채우기
+    var remaining = n - chars.length;
+    for (var i = 0; i < remaining; i++) {
       chars.push(pool[secureRandom(pool.length)]);
     }
 
     // Fisher-Yates 셔플
-    for (let i = chars.length - 1; i > 0; i--) {
-      const j = secureRandom(i + 1);
-      [chars[i], chars[j]] = [chars[j], chars[i]];
+    for (var i = chars.length - 1; i > 0; i--) {
+      var j = secureRandom(i + 1);
+      var tmp = chars[i]; chars[i] = chars[j]; chars[j] = tmp;
     }
 
     return chars.join('');
   }
 
-  // ── 생성 버튼 ──
-  document.getElementById('generateBtn').addEventListener('click', () => {
-    const pool = getPool();
-    const warn = document.getElementById('warnBox');
-
-    if (!pool || pool.length === 0) {
-      warn.classList.add('show');
-      return;
-    }
+  // 생성 버튼
+  document.getElementById('generateBtn').addEventListener('click', function() {
+    var pool = getPool();
+    var warn = document.getElementById('warnBox');
+    if (!pool || pool.length === 0) { warn.classList.add('show'); return; }
     warn.classList.remove('show');
 
-    const length = parseInt(slider.value);
+    var len = parseInt(slider.value, 10); // 반드시 정수로 변환
     passwords = [];
-    for (let i = 0; i < currentCount; i++) {
-      passwords.push(generatePassword(pool, length));
+    for (var i = 0; i < currentCount; i++) {
+      passwords.push(generatePassword(pool, len));
     }
     renderResults();
     updateStrength();
   });
 
-  // ── 결과 렌더링 ──
+  // 결과 렌더링
   function renderResults() {
-    const list = document.getElementById('resultList');
-    const copyAll = document.getElementById('copyAllBtn');
-
+    var list = document.getElementById('resultList');
+    var copyAll = document.getElementById('copyAllBtn');
     if (passwords.length === 0) {
-      list.innerHTML = '<div class="result-empty">위 옵션을 설정하고 <strong>비밀번호 생성</strong> 버튼을 눌러주세요.</div>';
+      list.innerHTML = '<div class="result-empty">\uc704 \uc635\uc158\uc744 \uc124\uc815\ud558\uace0 <strong>\ube44\ubc00\ubc88\ud638 \uc0dd\uc131</strong> \ubc84\ud2bc\uc744 \ub208\ub7ec\uc8fc\uc138\uc694.</div>';
       copyAll.style.display = 'none';
       return;
     }
-
-    list.innerHTML = passwords.map((pw, i) => `
-      <div class="result-item">
-        <span class="result-pw" id="pw-${i}">${pw}</span>
-        <button class="result-copy" data-index="${i}">복사</button>
-      </div>
-    `).join('');
-
-    list.querySelectorAll('.result-copy').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const pw = passwords[+btn.dataset.index];
-        navigator.clipboard.writeText(pw).then(() => {
-          btn.textContent = '✓ 복사됨';
+    list.innerHTML = passwords.map(function(pw, i) {
+      return '<div class="result-item"><span class="result-pw">' + pw + '</span><button class="result-copy" data-index="' + i + '">\ubcf5\uc0ac</button></div>';
+    }).join('');
+    list.querySelectorAll('.result-copy').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var pw = passwords[+btn.dataset.index];
+        navigator.clipboard.writeText(pw).then(function() {
+          btn.textContent = '\u2713 \ubcf5\uc0ac\ub428';
           btn.classList.add('copied');
-          setTimeout(() => { btn.textContent = '복사'; btn.classList.remove('copied'); }, 1500);
-          showToast('✓ 클립보드에 복사되었습니다');
+          setTimeout(function() { btn.textContent = '\ubcf5\uc0ac'; btn.classList.remove('copied'); }, 1500);
+          showToast('\u2713 \ud074\ub9bd\ubcf4\ub4dc\uc5d0 \ubcf5\uc0ac\ub418\uc5c8\uc2b5\ub2c8\ub2e4');
         });
       });
     });
-
     copyAll.style.display = 'block';
   }
 
-  // ── 전체 복사 ──
-  document.getElementById('copyAllBtn').addEventListener('click', () => {
+  // 전체 복사
+  document.getElementById('copyAllBtn').addEventListener('click', function() {
     if (passwords.length === 0) return;
-    navigator.clipboard.writeText(passwords.join('\n')).then(() => {
-      const btn = document.getElementById('copyAllBtn');
-      btn.textContent = '✓ 전체 복사됨';
+    navigator.clipboard.writeText(passwords.join('\n')).then(function() {
+      var btn = document.getElementById('copyAllBtn');
+      btn.textContent = '\u2713 \uc804\uccb4 \ubcf5\uc0ac\ub428';
       btn.classList.add('copied');
-      setTimeout(() => { btn.textContent = '📋 전체 복사'; btn.classList.remove('copied'); }, 1500);
-      showToast('✓ 전체 비밀번호가 복사되었습니다');
+      setTimeout(function() { btn.textContent = '\ud83d\udccb \uc804\uccb4 \ubcf5\uc0ac'; btn.classList.remove('copied'); }, 1500);
+      showToast('\u2713 \uc804\uccb4 \ube44\ubc00\ubc88\ud638\uac00 \ubcf5\uc0ac\ub418\uc5c8\uc2b5\ub2c8\ub2e4');
     });
   });
 
-  // ── 토스트 ──
+  // 토스트
   function showToast(msg) {
-    const t = document.getElementById('toast');
+    var t = document.getElementById('toast');
     t.textContent = msg;
     t.classList.add('show');
-    setTimeout(() => t.classList.remove('show'), 2000);
+    setTimeout(function() { t.classList.remove('show'); }, 2000);
   }
 
-  // ── 제외 문자 변경 시 강도 갱신 ──
+  // 제외 문자 변경 시 강도 갱신
   document.getElementById('excludeInput').addEventListener('input', updateStrength);
   </script>
 </body>
