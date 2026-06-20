@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Base64Tool의 모든 기능을 단계별로 설명하는 공식 사용 가이드입니다. 텍스트와 이미지를 Base64로 인코딩하거나 디코딩하는 방법을 알아보세요." />
+  <meta property="og:title" content="Base64Tool 사용법 완전 가이드 — BrowserKit" />
+  <meta property="og:description" content="텍스트와 이미지를 Base64로 인코딩/디코딩하는 Base64Tool 공식 가이드입니다." />
+  <meta property="og:type" content="article" />
+  <title>Base64Tool 사용법 완전 가이드 — BrowserKit</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+  <script type="text/javascript" src="//t1.kakaocdn.net/kas/static/ba.min.js" async></script>
+  <style>
+    .header { padding:24px 0 16px; border-bottom:1px solid var(--border); }
+    .header .container { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; }
+    .header-brand { display:flex; align-items:center; gap:10px; text-decoration:none; }
+    .header-brand-icon { font-size:24px; }
+    .header-brand-text { font-size:20px; font-weight:700; font-family:'Inter',sans-serif; background:linear-gradient(135deg,var(--point),var(--point-hover)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+    .header-back { font-size:13px; color:var(--subtext); text-decoration:none; }
+    .header-back:hover { color:var(--text); }
+    .post-wrap { max-width:720px; margin:0 auto; padding:48px 24px 80px; }
+    .post-tag { display:inline-block; font-size:12px; color:var(--point-hover); background:rgba(108,99,255,0.15); padding:3px 12px; border-radius:999px; margin-bottom:16px; }
+    .post-title { font-size:28px; font-weight:700; line-height:1.4; margin-bottom:12px; }
+    .post-date { color:var(--subtext); font-size:13px; margin-bottom:40px; padding-bottom:24px; border-bottom:1px solid var(--border); }
+    .post-body h2 { font-size:20px; font-weight:700; margin:40px 0 16px; color:var(--text); }
+    .post-body h3 { font-size:16px; font-weight:600; margin:28px 0 12px; color:var(--point-hover); }
+    .post-body p { font-size:15px; color:var(--subtext); line-height:1.9; margin-bottom:16px; }
+    .post-highlight { background:var(--card); border-left:3px solid var(--point); border-radius:8px; padding:16px 20px; margin:24px 0; font-size:15px; color:var(--text); line-height:1.8; }
+    .feature-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:20px 0; }
+    .feature-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px; }
+    .feature-card:hover { border-color:var(--point); }
+    .feature-icon { font-size:24px; margin-bottom:10px; }
+    .feature-title { font-size:14px; font-weight:600; color:var(--text); margin-bottom:6px; }
+    .feature-desc { font-size:13px; color:var(--subtext); line-height:1.7; }
+    .step-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px 24px; margin:16px 0; display:flex; gap:16px; align-items:flex-start; }
+    .step-num { min-width:36px; height:36px; background:linear-gradient(135deg,var(--point),var(--point-hover)); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:700; color:white; flex-shrink:0; font-family:'Inter',sans-serif; }
+    .step-content h3 { font-size:15px; font-weight:600; margin-bottom:6px; color:var(--text); }
+    .step-content p { font-size:14px; color:var(--subtext); line-height:1.7; margin:0; }
+    .code-block { background:#0a0a12; border:1px solid var(--border); border-radius:10px; padding:16px 20px; margin:14px 0; font-family:'Fira Code','JetBrains Mono',monospace; font-size:13px; line-height:1.8; overflow-x:auto; }
+    .code-b64 { color:#68d391; word-break:break-all; white-space:pre-wrap; }
+    .code-label { font-size:11px; font-weight:600; color:var(--subtext); margin-bottom:8px; }
+    .post-table { width:100%; border-collapse:collapse; margin:20px 0; font-size:14px; }
+    .post-table th { background:var(--card); padding:12px 16px; text-align:left; font-weight:600; border:1px solid var(--border); color:var(--text); }
+    .post-table td { padding:11px 16px; border:1px solid var(--border); color:var(--subtext); line-height:1.7; }
+    .post-table td code { background:var(--bg); border-radius:4px; padding:1px 6px; font-size:12px; color:var(--point-hover); font-family:'Fira Code',monospace; }
+    .post-table tr:hover td { background:rgba(108,99,255,0.04); }
+    .tab-demo { display:flex; gap:8px; margin:16px 0; flex-wrap:wrap; }
+    .tab-demo-btn { background:var(--card); border:1px solid var(--border); border-radius:10px; padding:8px 20px; font-size:13px; font-weight:600; color:var(--subtext); }
+    .tab-demo-btn.active { background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border-color:transparent; }
+    .use-case-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:20px 0; }
+    .use-case-card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:18px; }
+    .use-case-icon { font-size:24px; margin-bottom:8px; }
+    .use-case-title { font-size:13px; font-weight:600; color:var(--text); margin-bottom:6px; }
+    .use-case-desc { font-size:12px; color:var(--subtext); line-height:1.7; }
+    .post-nav { display:flex; justify-content:space-between; margin-top:60px; padding-top:24px; border-top:1px solid var(--border); gap:12px; }
+    .post-nav a { font-size:14px; color:var(--subtext); text-decoration:none; }
+    .post-nav a:hover { color:var(--text); }
+    .cta-box { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:28px; text-align:center; margin:48px 0 0; }
+    .cta-box p { font-size:15px; color:var(--subtext); margin-bottom:16px; }
+    .cta-btn { display:inline-block; background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border-radius:10px; padding:12px 28px; font-size:14px; font-weight:600; text-decoration:none; }
+    .cta-btn:hover { transform:translateY(-2px); box-shadow:0 8px 24px var(--glow); color:white; }
+    .adfit-wrap { text-align:center; margin:24px 0; }
+    .adfit-pc { display:block; }
+    .adfit-mo { display:none; }
+    .back-link { display:inline-flex; align-items:center; gap:6px; color:var(--subtext); font-size:14px; margin-bottom:32px; text-decoration:none; }
+    .back-link:hover { color:var(--text); }
+    .coupang-banner { margin:0 auto 48px; text-align:center; overflow:hidden; }
+    .coupang-notice { font-size:11px; color:var(--subtext); margin-bottom:10px; line-height:1.6; }
+    .coupang-banner-mo { display:none; }
+    @media (max-width:640px) {
+      .feature-grid { grid-template-columns:1fr; }
+      .use-case-grid { grid-template-columns:1fr; }
+      .adfit-pc { display:none; }
+      .adfit-mo { display:block; }
+      .coupang-banner-pc { display:none; }
+      .coupang-banner-mo { display:block; }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="container">
+      <a href="../index.html" class="header-brand"><span class="header-brand-icon">&#x1F9F0;</span><span class="header-brand-text">BrowserKit</span></a>
+      <a href="../index.html" class="header-back">&#x2190; BrowserKit 홈으로</a>
+    </div>
+  </header>
+
+  <div class="post-wrap">
+    <a href="index.html" class="back-link">&#x2190; 블로그 목록</a>
+    <span class="post-tag">가이드</span>
+    <h1 class="post-title">Base64Tool 사용법 완전 가이드</h1>
+    <div class="post-date">2026년 6월 20일</div>
+
+    <div class="post-body">
+      <p>Base64Tool은 텍스트와 이미지를 Base64 형식으로 인코딩하거나, Base64 문자열을 원래 텍스트로 디코딩하는 무료 온라인 도구입니다. 개발자가 API 요청 본문을 만들거나, CSS에 이미지를 인라인으로 삽입하거나, JWT 토큰을 분석할 때 자주 사용합니다. 모든 처리가 브라우저 내에서만 이루어지므로 입력한 데이터가 외부 서버로 전송되지 않습니다.</p>
+
+      <h2>주요 기능</h2>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F510;</div>
+          <div class="feature-title">텍스트 인코딩</div>
+          <div class="feature-desc">일반 텍스트를 Base64 문자열로 변환합니다. 한글을 포함한 모든 유니코드 문자를 지원합니다.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F513;</div>
+          <div class="feature-title">Base64 디코딩</div>
+          <div class="feature-desc">Base64 문자열을 원래 텍스트로 복원합니다. 잘못된 형식 입력 시 오류 메시지를 표시합니다.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F5BC;&#xFE0F;</div>
+          <div class="feature-title">이미지 → Base64</div>
+          <div class="feature-desc">이미지 파일을 업로드하면 Base64 문자열과 data URI 형식으로 변환합니다. 미리보기도 지원합니다.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x21C4;</div>
+          <div class="feature-title">입출력 교환</div>
+          <div class="feature-desc">입력창과 결과창의 내용을 한 번에 교환합니다. 디코딩 결과를 다시 인코딩할 때 편리합니다.</div>
+        </div>
+      </div>
+
+      <h2>Base64란?</h2>
+      <p>Base64는 이진 데이터(바이트)를 ASCII 문자로 변환하는 인코딩 방식입니다. 영문 대소문자 52자, 숫자 10자, 그리고 <code>+</code>, <code>/</code> 두 문자로 이루어진 64개의 문자만 사용합니다. 이메일 첨부파일, 이미지 인라인 삽입, 인증 토큰 등 텍스트만 허용되는 환경에서 이진 데이터를 전달할 때 사용합니다.</p>
+
+      <div class="code-block">
+        <div class="code-label">예시 — "안녕하세요" 를 Base64로 인코딩</div>
+        <span class="code-b64">7JWI64WV7ZWY7IS47JqU</span>
+      </div>
+
+      <h2>텍스트 탭 사용법</h2>
+      <div class="tab-demo">
+        <span class="tab-demo-btn active">&#x1F4DD; 텍스트 변환</span>
+        <span class="tab-demo-btn">&#x1F5BC;&#xFE0F; 이미지 변환</span>
+      </div>
+
+      <h3>텍스트 → Base64 인코딩</h3>
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <h3>텍스트 입력</h3>
+          <p>왼쪽 입력창에 Base64로 변환하고 싶은 텍스트를 입력합니다. 한글, 영문, 숫자, 특수문자 모두 지원합니다.</p>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <h3>인코딩 버튼 클릭</h3>
+          <p><strong>🔐 인코딩 (텍스트 → Base64)</strong> 버튼을 클릭합니다. 오른쪽 결과창에 Base64 문자열이 표시됩니다.</p>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <h3>결과 복사</h3>
+          <p><strong>📋 결과 복사</strong> 버튼으로 클립보드에 복사합니다.</p>
+        </div>
+      </div>
+
+      <h3>Base64 → 텍스트 디코딩</h3>
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <h3>Base64 문자열 입력</h3>
+          <p>왼쪽 입력창에 디코딩할 Base64 문자열을 붙여넣습니다.</p>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <h3>디코딩 버튼 클릭</h3>
+          <p><strong>🔓 디코딩 (Base64 → 텍스트)</strong> 버튼을 클릭합니다. 올바른 Base64 형식이 아니면 오류 메시지가 표시됩니다.</p>
+        </div>
+      </div>
+
+      <h3>입출력 교환 버튼</h3>
+      <p><strong>⇄ 입출력 교환</strong> 버튼을 클릭하면 입력창과 결과창의 내용이 서로 바뀝니다. 인코딩 결과를 다시 디코딩해 검증하거나, 디코딩 결과를 재가공해 다시 인코딩할 때 유용합니다.</p>
+
+      <h2>이미지 탭 사용법</h2>
+      <div class="tab-demo">
+        <span class="tab-demo-btn">&#x1F4DD; 텍스트 변환</span>
+        <span class="tab-demo-btn active">&#x1F5BC;&#xFE0F; 이미지 변환</span>
+      </div>
+
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <h3>이미지 업로드</h3>
+          <p>업로드 존을 클릭하거나 이미지를 드래그해 불러옵니다. JPG, PNG, WEBP, GIF 형식을 지원합니다.</p>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <h3>결과 확인</h3>
+          <p>파일명, 형식, 원본 크기, Base64 변환 크기와 함께 Base64 문자열이 자동으로 표시됩니다.</p>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <h3>원하는 형식으로 복사</h3>
+          <p><strong>📋 Base64 복사</strong>는 순수 Base64 문자열만, <strong>🔗 data URI 복사</strong>는 <code>data:image/png;base64,...</code> 형식 전체를 복사합니다.</p>
+        </div>
+      </div>
+
+      <h2>Base64와 data URI의 차이</h2>
+      <table class="post-table">
+        <thead><tr><th>구분</th><th>형식</th><th>주로 사용하는 곳</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>Base64만</td>
+            <td><code>iVBORw0KGgo...</code></td>
+            <td>API 요청 본문, JWT, 데이터베이스 저장</td>
+          </tr>
+          <tr>
+            <td>data URI</td>
+            <td><code>data:image/png;base64,iVBORw0KGgo...</code></td>
+            <td>HTML <code>&lt;img src&gt;</code>, CSS <code>background-image</code>, 이메일 인라인 이미지</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>한글 인코딩 지원</h2>
+      <p>JavaScript의 기본 <code>btoa()</code> 함수는 ASCII 문자만 처리할 수 있어 한글을 직접 입력하면 오류가 납니다. Base64Tool은 <code>encodeURIComponent()</code>를 통해 한글을 먼저 UTF-8 바이트로 변환한 뒤 Base64로 인코딩하므로 한글을 포함한 모든 유니코드 문자를 안전하게 처리합니다.</p>
+
+      <div class="code-block">
+        <div class="code-label">한글 "BrowserKit" → Base64 인코딩 예시</div>
+        <span class="code-b64">QnJvd3NlcktpdA==</span>
+      </div>
+      <div class="code-block">
+        <div class="code-label">한글 "브라우저킷" → Base64 인코딩 예시</div>
+        <span class="code-b64">67Cv65ik7Ja07Iuc7Y+s</span>
+      </div>
+
+      <h2>활용 예시</h2>
+      <div class="use-case-grid">
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F510;</div>
+          <div class="use-case-title">HTTP Basic 인증</div>
+          <div class="use-case-desc"><code>username:password</code> 형태의 텍스트를 Base64로 인코딩해 Authorization 헤더에 사용합니다.</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F4E7;</div>
+          <div class="use-case-title">이메일 인라인 이미지</div>
+          <div class="use-case-desc">이미지를 data URI로 변환해 HTML 이메일에 외부 링크 없이 직접 삽입합니다.</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F4BB;</div>
+          <div class="use-case-title">CSS 배경 이미지 인라인</div>
+          <div class="use-case-desc">작은 아이콘이나 로고를 data URI로 변환해 CSS에 직접 삽입, HTTP 요청을 줄입니다.</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F511;</div>
+          <div class="use-case-title">JWT 페이로드 확인</div>
+          <div class="use-case-desc">JWT 토큰의 두 번째 부분(페이로드)을 Base64 디코딩해 내용을 확인합니다. <code>=</code> 패딩이 없는 경우 붙여서 디코딩하세요.</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F4E6;</div>
+          <div class="use-case-title">API 이미지 전송</div>
+          <div class="use-case-desc">이미지 파일을 Base64로 변환해 JSON API 요청 본문에 포함시킵니다.</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F4DC;</div>
+          <div class="use-case-title">인코딩된 설정값 확인</div>
+          <div class="use-case-desc">환경 변수나 설정 파일에 Base64로 저장된 값을 디코딩해 원문을 확인합니다.</div>
+        </div>
+      </div>
+
+      <h2>Base64 사용 시 주의사항</h2>
+      <table class="post-table">
+        <thead><tr><th>항목</th><th>내용</th></tr></thead>
+        <tbody>
+          <tr><td>용량 증가</td><td>Base64는 원본보다 약 33% 크기가 늘어납니다. 대용량 파일 인라인 삽입은 성능에 영향을 줄 수 있습니다.</td></tr>
+          <tr><td>보안 오해</td><td>Base64는 암호화가 아닙니다. 누구나 쉽게 디코딩할 수 있으므로 비밀번호나 민감한 정보를 숨기는 용도로 사용하면 안 됩니다.</td></tr>
+          <tr><td>JWT 패딩</td><td>JWT의 Base64 인코딩은 <code>=</code> 패딩이 생략됩니다. 디코딩이 안 될 경우 문자열 끝에 <code>=</code>를 붙여보세요.</td></tr>
+          <tr><td>줄바꿈 문자</td><td>일부 시스템에서 Base64에 줄바꿈(<code>\n</code>)이 포함됩니다. 디코딩 전 줄바꿈을 제거하면 됩니다.</td></tr>
+        </tbody>
+      </table>
+
+      <div class="post-highlight">&#x1F512; Base64Tool은 모든 처리가 브라우저 내에서만 이루어집니다. 입력한 텍스트와 업로드한 이미지가 외부 서버로 전송되지 않으므로, 민감한 설정값이나 내부 시스템 이미지도 안전하게 변환할 수 있습니다.</div>
+    </div>
+
+    <div class="cta-box">
+      <p>지금 바로 Base64Tool을 사용해보세요.<br />설치도, 회원가입도, 비용도 없습니다.</p>
+      <a href="../base64-tool/index.html" class="cta-btn">&#x1F520; 무료로 Base64 변환 시작하기</a>
+    </div>
+
+    <div class="adfit-wrap adfit-pc">
+      <ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-Dfncm24OGOmHKE7V" data-ad-width="728" data-ad-height="90"></ins>
+    </div>
+    <div class="adfit-wrap adfit-mo">
+      <ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-jVI6hdgtW0LyffyR" data-ad-width="320" data-ad-height="50"></ins>
+    </div>
+
+    <div class="coupang-banner coupang-banner-pc">
+      <p class="coupang-notice">이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</p>
+      <script src="https://ads-partners.coupang.com/g.js"></script>
+      <script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"668","height":"100","tsource":""});</script>
+    </div>
+    <div class="coupang-banner coupang-banner-mo">
+      <p class="coupang-notice">이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</p>
+      <script src="https://ads-partners.coupang.com/g.js"></script>
+      <script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"320","height":"50","tsource":""});</script>
+    </div>
+
+    <div class="post-nav">
+      <a href="26-passwordgen-howto.html">&#x2190; 이전 글: PasswordGen 사용법 완전 가이드</a>
+      <span></span>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+      <p class="footer-copy">&#xa9; 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p>
+      <nav class="footer-nav">
+        <a href="../privacy.html">개인정보 처리방침</a>
+        <a href="../terms.html">이용약관</a>
+        <a href="../about.html">서비스 소개</a>
+        <a href="index.html">블로그</a>
+      </nav>
+    </div>
+  </footer>
+</body>
+</html>
