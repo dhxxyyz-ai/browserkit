@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="텍스트와 이미지를 Base64로 인코딩하거나 디코딩하는 무료 온라인 도구. 서버 전송 없이 브라우저에서 바로 처리합니다." />
+  <meta property="og:title" content="Base64Tool — Base64 인코딩/디코딩 도구" />
+  <meta property="og:description" content="텍스트와 이미지를 Base64로 인코딩하거나 디코딩하는 무료 온라인 도구입니다." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://browserkit.pages.dev/base64-tool/" />
+  <title>Base64Tool — Base64 인코딩/디코딩 도구</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+  <script type="text/javascript" src="//t1.kakaocdn.net/kas/static/ba.min.js" async></script>
+  <style>
+    .header { padding:24px 0 16px; border-bottom:1px solid var(--border); }
+    .header .container { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; }
+    .header-brand { display:flex; align-items:center; gap:10px; text-decoration:none; }
+    .header-brand-icon { font-size:24px; }
+    .header-brand-text { font-size:20px; font-weight:700; font-family:'Inter',sans-serif; background:linear-gradient(135deg,var(--point),var(--point-hover)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+    .header-back { font-size:13px; color:var(--subtext); text-decoration:none; }
+    .header-back:hover { color:var(--text); }
+
+    .hero { text-align:center; padding:40px 0 32px; }
+    .hero-icon { font-size:48px; margin-bottom:16px; }
+    .hero-title { font-size:32px; font-weight:700; margin-bottom:12px; background:linear-gradient(135deg,var(--point),var(--point-hover)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+    .hero-desc { color:var(--subtext); font-size:15px; margin-bottom:20px; }
+    .hero-badges { display:flex; justify-content:center; gap:10px; flex-wrap:wrap; }
+    .hero-badge { background:var(--card); border:1px solid var(--border); border-radius:999px; padding:5px 16px; font-size:13px; color:var(--subtext); }
+
+    /* 탭 */
+    .tab-wrap { display:flex; gap:8px; margin-bottom:24px; }
+    .tab-btn { background:var(--card); color:var(--subtext); border:1px solid var(--border); border-radius:10px; padding:10px 28px; font-size:14px; font-weight:600; cursor:pointer; font-family:'Pretendard',sans-serif; transition:all 0.2s; }
+    .tab-btn:hover { border-color:var(--point); color:var(--text); }
+    .tab-btn.active { background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border-color:transparent; }
+
+    /* 공통 패널 */
+    .panel { display:none; }
+    .panel.active { display:block; }
+
+    /* 텍스트 탭 레이아웃 */
+    .text-layout { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:16px; }
+    .pane { display:flex; flex-direction:column; gap:8px; }
+    .pane-label { font-size:13px; font-weight:600; color:var(--subtext); display:flex; align-items:center; justify-content:space-between; }
+    .pane-info { font-size:11px; color:var(--subtext); font-family:'Inter',sans-serif; }
+    .code-area { background:#0a0a12; border:1px solid var(--border); border-radius:12px; padding:16px; font-family:'Fira Code','JetBrains Mono',monospace; font-size:13px; line-height:1.7; color:#e2e8f0; resize:vertical; min-height:220px; width:100%; outline:none; transition:border-color 0.2s; }
+    .code-area:focus { border-color:var(--point); }
+    .code-area::placeholder { color:#4a5568; font-style:italic; font-family:'Pretendard',sans-serif; }
+
+    /* 텍스트 탭 액션 */
+    .text-actions { display:flex; justify-content:center; gap:10px; margin-bottom:24px; flex-wrap:wrap; }
+    .btn-primary { background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border:none; border-radius:10px; padding:11px 24px; font-size:14px; font-weight:600; cursor:pointer; font-family:'Pretendard',sans-serif; transition:all 0.2s; white-space:nowrap; }
+    .btn-primary:hover { transform:translateY(-1px); box-shadow:0 6px 20px var(--glow); }
+    .btn-sub { background:var(--card); color:var(--subtext); border:1px solid var(--border); border-radius:10px; padding:11px 20px; font-size:14px; cursor:pointer; font-family:'Pretendard',sans-serif; transition:all 0.2s; white-space:nowrap; }
+    .btn-sub:hover { color:var(--text); border-color:var(--point); }
+    .btn-danger { background:var(--card); color:#F87171; border:1px solid var(--border); border-radius:10px; padding:11px 20px; font-size:14px; cursor:pointer; font-family:'Pretendard',sans-serif; transition:all 0.2s; white-space:nowrap; }
+    .btn-danger:hover { border-color:#F87171; }
+
+    /* 오류 박스 */
+    .error-box { background:rgba(248,113,113,0.08); border:1px solid rgba(248,113,113,0.3); border-radius:10px; padding:12px 16px; font-size:13px; color:#F87171; margin-bottom:16px; display:none; }
+    .error-box.show { display:block; }
+
+    /* 이미지 탭 */
+    .img-upload-zone { background:var(--card); border:2px dashed var(--border); border-radius:var(--radius); padding:48px 32px; text-align:center; cursor:pointer; margin-bottom:20px; transition:all 0.2s; }
+    .img-upload-zone:hover, .img-upload-zone.drag-over { border-color:var(--point); box-shadow:0 0 24px var(--glow); }
+    .upload-icon { font-size:40px; margin-bottom:12px; }
+    .upload-title { font-size:16px; font-weight:600; margin-bottom:6px; }
+    .upload-sub { color:var(--subtext); font-size:13px; }
+
+    .img-result { display:none; }
+    .img-result.show { display:block; }
+
+    .img-preview-wrap { display:grid; grid-template-columns:200px 1fr; gap:20px; align-items:start; margin-bottom:16px; }
+    .img-preview { background:repeating-conic-gradient(#1e1e2a 0% 25%,#26263a 0% 50%) 0 0/16px 16px; border-radius:12px; overflow:hidden; display:flex; align-items:center; justify-content:center; min-height:150px; }
+    .img-preview img { max-width:100%; max-height:200px; display:block; }
+    .img-meta { display:flex; flex-direction:column; gap:10px; }
+    .img-meta-row { display:flex; gap:8px; align-items:baseline; }
+    .img-meta-label { font-size:12px; color:var(--subtext); min-width:60px; font-weight:600; }
+    .img-meta-value { font-size:13px; color:var(--text); font-family:'Inter',sans-serif; }
+
+    .img-b64-wrap { position:relative; }
+    .img-b64-area { background:#0a0a12; border:1px solid var(--border); border-radius:12px; padding:16px; font-family:'Fira Code','JetBrains Mono',monospace; font-size:12px; line-height:1.6; color:#68d391; min-height:120px; max-height:200px; overflow:auto; word-break:break-all; white-space:pre-wrap; }
+    .img-b64-actions { display:flex; gap:10px; margin-top:12px; flex-wrap:wrap; }
+
+    /* 복사 버튼 상태 */
+    .btn-copied { background:rgba(52,211,153,0.12) !important; color:var(--success) !important; border-color:var(--success) !important; }
+
+    /* 토스트 */
+    .toast { position:fixed; bottom:32px; left:50%; transform:translateX(-50%) translateY(80px); background:var(--success); color:#fff; border-radius:999px; padding:10px 24px; font-size:14px; font-weight:600; opacity:0; pointer-events:none; z-index:999; transition:all 0.3s ease; }
+    .toast.show { transform:translateX(-50%) translateY(0); opacity:1; }
+
+    /* 배너 */
+    .coupang-banner { margin:0 auto 48px; text-align:center; overflow:hidden; }
+    .coupang-notice { font-size:11px; color:var(--subtext); margin-bottom:10px; line-height:1.6; }
+    .coupang-banner-mo { display:none; }
+    .adfit-wrap { text-align:center; margin:24px 0; }
+    .adfit-pc { display:block; }
+    .adfit-mo { display:none; }
+    .footer { border-top:1px solid var(--border); padding:32px 0; text-align:center; }
+    .footer-copy { color:var(--subtext); font-size:13px; margin-bottom:12px; }
+    .footer-nav { display:flex; justify-content:center; gap:20px; flex-wrap:wrap; }
+    .footer-nav a { color:var(--subtext); font-size:13px; text-decoration:none; }
+    .footer-nav a:hover { color:var(--text); }
+
+    @media (max-width:768px) {
+      .text-layout { grid-template-columns:1fr; }
+      .img-preview-wrap { grid-template-columns:1fr; }
+      .hero-title { font-size:24px; }
+      .adfit-pc { display:none; }
+      .adfit-mo { display:block; }
+      .coupang-banner-pc { display:none; }
+      .coupang-banner-mo { display:block; }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="container">
+      <a href="../index.html" class="header-brand">
+        <span class="header-brand-icon">&#x1F9F0;</span>
+        <span class="header-brand-text">BrowserKit</span>
+      </a>
+      <a href="../index.html" class="header-back">&#x2190; BrowserKit 홈으로</a>
+    </div>
+  </header>
+
+  <main><div class="container">
+    <div class="hero">
+      <div class="hero-icon">&#x1F520;</div>
+      <h1 class="hero-title">Base64Tool</h1>
+      <p class="hero-desc">텍스트와 이미지를 Base64로 인코딩하거나 디코딩하세요 — 브라우저에서 바로</p>
+      <div class="hero-badges">
+        <span class="hero-badge">&#x26A1; 무료 사용</span>
+        <span class="hero-badge">&#x1F512; 서버 전송 없음</span>
+        <span class="hero-badge">&#x1F4E6; 설치 불필요</span>
+      </div>
+    </div>
+
+    <div class="adfit-wrap adfit-pc"><ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-Dfncm24OGOmHKE7V" data-ad-width="728" data-ad-height="90"></ins></div>
+    <div class="adfit-wrap adfit-mo"><ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-jVI6hdgtW0LyffyR" data-ad-width="320" data-ad-height="50"></ins></div>
+
+    <!-- 탭 -->
+    <div class="tab-wrap">
+      <button class="tab-btn active" data-tab="text">&#x1F4DD; 텍스트 변환</button>
+      <button class="tab-btn" data-tab="image">&#x1F5BC;&#xFE0F; 이미지 변환</button>
+    </div>
+
+    <!-- ── 텍스트 탭 ── -->
+    <div class="panel active" id="panel-text">
+      <div class="text-layout">
+        <!-- 왼쪽: 입력 -->
+        <div class="pane">
+          <div class="pane-label">
+            <span>입력</span>
+            <span class="pane-info" id="input-info"></span>
+          </div>
+          <textarea class="code-area" id="text-input" placeholder="인코딩할 텍스트 또는 디코딩할 Base64 문자열을 입력하세요"></textarea>
+        </div>
+        <!-- 오른쪽: 결과 -->
+        <div class="pane">
+          <div class="pane-label">
+            <span>결과</span>
+            <span class="pane-info" id="output-info"></span>
+          </div>
+          <textarea class="code-area" id="text-output" placeholder="결과가 여기에 표시됩니다" readonly></textarea>
+        </div>
+      </div>
+
+      <div class="error-box" id="text-error"></div>
+
+      <div class="text-actions">
+        <button class="btn-primary" id="btn-encode">&#x1F510; 인코딩 (텍스트 → Base64)</button>
+        <button class="btn-primary" id="btn-decode">&#x1F513; 디코딩 (Base64 → 텍스트)</button>
+        <button class="btn-sub" id="btn-copy-output">&#x1F4CB; 결과 복사</button>
+        <button class="btn-sub" id="btn-swap">&#x21C4; 입출력 교환</button>
+        <button class="btn-danger" id="btn-clear-text">&#x21BA; 초기화</button>
+      </div>
+    </div>
+
+    <!-- ── 이미지 탭 ── -->
+    <div class="panel" id="panel-image">
+      <!-- 업로드 존 -->
+      <div class="img-upload-zone" id="img-upload-zone">
+        <input type="file" id="img-file-input" accept="image/*" style="display:none" />
+        <div class="upload-icon">&#x1F5BC;&#xFE0F;</div>
+        <div class="upload-title">이미지를 업로드하세요</div>
+        <div class="upload-sub">클릭하거나 파일을 드래그하세요 (JPG, PNG, WEBP, GIF)</div>
+      </div>
+
+      <!-- 결과 -->
+      <div class="img-result" id="img-result">
+        <div class="img-preview-wrap">
+          <div class="img-preview">
+            <img id="img-preview-el" src="" alt="미리보기" />
+          </div>
+          <div class="img-meta">
+            <div class="img-meta-row"><span class="img-meta-label">파일명</span><span class="img-meta-value" id="img-name">—</span></div>
+            <div class="img-meta-row"><span class="img-meta-label">형식</span><span class="img-meta-value" id="img-type">—</span></div>
+            <div class="img-meta-row"><span class="img-meta-label">크기</span><span class="img-meta-value" id="img-size">—</span></div>
+            <div class="img-meta-row"><span class="img-meta-label">Base64</span><span class="img-meta-value" id="img-b64-size">—</span></div>
+          </div>
+        </div>
+
+        <!-- Base64 결과 -->
+        <div style="margin-bottom:8px;font-size:13px;font-weight:600;color:var(--subtext);">Base64 결과</div>
+        <div class="img-b64-wrap">
+          <div class="img-b64-area" id="img-b64-output"></div>
+        </div>
+        <div class="img-b64-actions">
+          <button class="btn-primary" id="btn-copy-b64">&#x1F4CB; Base64 복사</button>
+          <button class="btn-primary" id="btn-copy-data-uri">&#x1F517; data URI 복사</button>
+          <button class="btn-danger" id="btn-clear-img">&#x21BA; 초기화</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="coupang-banner coupang-banner-pc">
+      <p class="coupang-notice">이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</p>
+      <script src="https://ads-partners.coupang.com/g.js"></script>
+      <script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"728","height":"120","tsource":""});</script>
+    </div>
+    <div class="coupang-banner coupang-banner-mo">
+      <p class="coupang-notice">이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</p>
+      <script src="https://ads-partners.coupang.com/g.js"></script>
+      <script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"320","height":"50","tsource":""});</script>
+    </div>
+  </div></main>
+
+  <footer class="footer">
+    <div class="container">
+      <p class="footer-copy">&#xa9; 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p>
+      <nav class="footer-nav">
+        <a href="../privacy.html">개인정보 처리방침</a>
+        <a href="../terms.html">이용약관</a>
+        <a href="../about.html">서비스 소개</a>
+        <a href="../blog/index.html">블로그</a>
+      </nav>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+  // ── 탭 전환 ──
+  document.querySelectorAll('.tab-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.tab-btn').forEach(function(b) { b.classList.remove('active'); });
+      document.querySelectorAll('.panel').forEach(function(p) { p.classList.remove('active'); });
+      btn.classList.add('active');
+      document.getElementById('panel-' + btn.dataset.tab).classList.add('active');
+    });
+  });
+
+  // ── 유틸 ──
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(function() { t.classList.remove('show'); }, 2000);
+  }
+
+  function formatBytes(bytes) {
+    if (bytes === 0) return '0 B';
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / (1024 * 1024)).toFixed(2) + ' MB';
+  }
+
+  function updateInfo(inputEl, infoEl) {
+    var val = inputEl.value;
+    infoEl.textContent = val ? val.length.toLocaleString() + '자' : '';
+  }
+
+  // ── 텍스트 탭 ──
+  var textInput  = document.getElementById('text-input');
+  var textOutput = document.getElementById('text-output');
+  var textError  = document.getElementById('text-error');
+  var inputInfo  = document.getElementById('input-info');
+  var outputInfo = document.getElementById('output-info');
+
+  textInput.addEventListener('input', function() { updateInfo(textInput, inputInfo); });
+
+  // 인코딩: 텍스트 → Base64 (한글 지원)
+  document.getElementById('btn-encode').addEventListener('click', function() {
+    var val = textInput.value;
+    if (!val) { showError('인코딩할 텍스트를 입력해주세요.'); return; }
+    clearError();
+    try {
+      var encoded = btoa(unescape(encodeURIComponent(val)));
+      textOutput.value = encoded;
+      updateInfo(textOutput, outputInfo);
+      showToast('\u2713 인코딩 완료');
+    } catch(e) {
+      showError('인코딩 중 오류가 발생했습니다: ' + e.message);
+    }
+  });
+
+  // 디코딩: Base64 → 텍스트 (한글 지원)
+  document.getElementById('btn-decode').addEventListener('click', function() {
+    var val = textInput.value.trim();
+    if (!val) { showError('디코딩할 Base64 문자열을 입력해주세요.'); return; }
+    clearError();
+    try {
+      var decoded = decodeURIComponent(escape(atob(val)));
+      textOutput.value = decoded;
+      updateInfo(textOutput, outputInfo);
+      showToast('\u2713 디코딩 완료');
+    } catch(e) {
+      showError('올바른 Base64 형식이 아닙니다. 입력값을 확인해주세요.');
+    }
+  });
+
+  // 결과 복사
+  document.getElementById('btn-copy-output').addEventListener('click', function() {
+    var val = textOutput.value;
+    if (!val) { showToast('복사할 결과가 없습니다'); return; }
+    navigator.clipboard.writeText(val).then(function() {
+      showToast('\u2713 결과가 클립보드에 복사되었습니다');
+    });
+  });
+
+  // 입출력 교환
+  document.getElementById('btn-swap').addEventListener('click', function() {
+    var tmp = textInput.value;
+    textInput.value = textOutput.value;
+    textOutput.value = tmp;
+    updateInfo(textInput, inputInfo);
+    updateInfo(textOutput, outputInfo);
+  });
+
+  // 초기화
+  document.getElementById('btn-clear-text').addEventListener('click', function() {
+    textInput.value = '';
+    textOutput.value = '';
+    inputInfo.textContent = '';
+    outputInfo.textContent = '';
+    clearError();
+  });
+
+  function showError(msg) {
+    textError.textContent = msg;
+    textError.classList.add('show');
+  }
+  function clearError() {
+    textError.classList.remove('show');
+    textError.textContent = '';
+  }
+
+  // ── 이미지 탭 ──
+  var imgZone    = document.getElementById('img-upload-zone');
+  var imgInput   = document.getElementById('img-file-input');
+  var imgResult  = document.getElementById('img-result');
+  var imgPreview = document.getElementById('img-preview-el');
+  var imgB64Out  = document.getElementById('img-b64-output');
+  var currentDataURI = '';
+  var currentB64     = '';
+
+  imgZone.addEventListener('click', function() { imgInput.click(); });
+  imgZone.addEventListener('dragover', function(e) { e.preventDefault(); imgZone.classList.add('drag-over'); });
+  imgZone.addEventListener('dragleave', function() { imgZone.classList.remove('drag-over'); });
+  imgZone.addEventListener('drop', function(e) {
+    e.preventDefault();
+    imgZone.classList.remove('drag-over');
+    if (e.dataTransfer.files[0]) loadImage(e.dataTransfer.files[0]);
+  });
+  imgInput.addEventListener('change', function() {
+    if (imgInput.files[0]) loadImage(imgInput.files[0]);
+  });
+
+  function loadImage(file) {
+    var reader = new FileReader();
+    reader.onload = function(e) {
+      var dataURI = e.target.result;
+      currentDataURI = dataURI;
+
+      // data URI에서 Base64만 추출
+      var b64 = dataURI.split(',')[1];
+      currentB64 = b64;
+
+      // 미리보기
+      imgPreview.src = dataURI;
+      imgResult.classList.add('show');
+      imgZone.style.display = 'none';
+
+      // 메타 정보
+      document.getElementById('img-name').textContent = file.name;
+      document.getElementById('img-type').textContent = file.type || '알 수 없음';
+      document.getElementById('img-size').textContent = formatBytes(file.size);
+      document.getElementById('img-b64-size').textContent = formatBytes(Math.ceil(b64.length * 0.75)) + ' (≈' + b64.length.toLocaleString() + '자)';
+
+      // Base64 출력
+      imgB64Out.textContent = b64;
+    };
+    reader.readAsDataURL(file);
+  }
+
+  // Base64만 복사
+  document.getElementById('btn-copy-b64').addEventListener('click', function() {
+    if (!currentB64) return;
+    navigator.clipboard.writeText(currentB64).then(function() {
+      showToast('\u2713 Base64 문자열이 복사되었습니다');
+    });
+  });
+
+  // data URI 복사
+  document.getElementById('btn-copy-data-uri').addEventListener('click', function() {
+    if (!currentDataURI) return;
+    navigator.clipboard.writeText(currentDataURI).then(function() {
+      showToast('\u2713 data URI가 복사되었습니다');
+    });
+  });
+
+  // 이미지 초기화
+  document.getElementById('btn-clear-img').addEventListener('click', function() {
+    imgPreview.src = '';
+    imgB64Out.textContent = '';
+    imgResult.classList.remove('show');
+    imgZone.style.display = '';
+    imgInput.value = '';
+    currentDataURI = '';
+    currentB64 = '';
+    document.getElementById('img-name').textContent = '&#x2014;';
+    document.getElementById('img-type').textContent = '&#x2014;';
+    document.getElementById('img-size').textContent = '&#x2014;';
+    document.getElementById('img-b64-size').textContent = '&#x2014;';
+  });
+  </script>
+</body>
+</html>
