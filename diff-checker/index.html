@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="두 텍스트의 차이점을 줄 단위로 비교하는 무료 온라인 도구. 추가된 내용은 초록색, 삭제된 내용은 빨간색으로 표시합니다. 서버 전송 없이 브라우저에서 바로 처리합니다." />
+  <meta property="og:title" content="DiffChecker — 텍스트 비교 도구" />
+  <meta property="og:description" content="두 텍스트의 차이점을 줄 단위로 비교하는 무료 온라인 도구입니다." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://browserkit.pages.dev/diff-checker/" />
+  <title>DiffChecker — 텍스트 비교 도구</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+  <script type="text/javascript" src="//t1.kakaocdn.net/kas/static/ba.min.js" async></script>
+  <style>
+    .header { padding:24px 0 16px; border-bottom:1px solid var(--border); }
+    .header .container { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; }
+    .header-brand { display:flex; align-items:center; gap:10px; text-decoration:none; }
+    .header-brand-icon { font-size:24px; }
+    .header-brand-text { font-size:20px; font-weight:700; font-family:'Inter',sans-serif; background:linear-gradient(135deg,var(--point),var(--point-hover)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+    .header-back { font-size:13px; color:var(--subtext); text-decoration:none; }
+    .header-back:hover { color:var(--text); }
+
+    .hero { text-align:center; padding:40px 0 32px; }
+    .hero-icon { font-size:48px; margin-bottom:16px; }
+    .hero-title { font-size:32px; font-weight:700; margin-bottom:12px; background:linear-gradient(135deg,var(--point),var(--point-hover)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+    .hero-desc { color:var(--subtext); font-size:15px; margin-bottom:20px; }
+    .hero-badges { display:flex; justify-content:center; gap:10px; flex-wrap:wrap; }
+    .hero-badge { background:var(--card); border:1px solid var(--border); border-radius:999px; padding:5px 16px; font-size:13px; color:var(--subtext); }
+
+    /* 입력 영역 */
+    .input-section { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:16px; }
+    .input-pane { display:flex; flex-direction:column; gap:8px; }
+    .pane-label { font-size:13px; font-weight:600; color:var(--subtext); display:flex; align-items:center; justify-content:space-between; }
+    .pane-info { font-size:11px; color:var(--subtext); font-family:'Inter',sans-serif; }
+    .diff-textarea { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:14px 16px; font-family:'Fira Code','JetBrains Mono',monospace; font-size:13px; line-height:1.7; color:var(--text); resize:vertical; min-height:240px; width:100%; outline:none; transition:border-color 0.2s; }
+    .diff-textarea:focus { border-color:var(--point); }
+    .diff-textarea::placeholder { color:var(--subtext); font-style:italic; font-family:'Pretendard',sans-serif; font-size:13px; }
+
+    /* 액션 바 */
+    .action-bar { display:flex; justify-content:center; gap:10px; margin-bottom:20px; flex-wrap:wrap; }
+    .btn-primary { background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border:none; border-radius:10px; padding:12px 28px; font-size:14px; font-weight:700; cursor:pointer; font-family:'Pretendard',sans-serif; transition:all 0.2s; white-space:nowrap; }
+    .btn-primary:hover { transform:translateY(-2px); box-shadow:0 8px 24px var(--glow); }
+    .btn-sub { background:var(--card); color:var(--subtext); border:1px solid var(--border); border-radius:10px; padding:12px 20px; font-size:14px; cursor:pointer; font-family:'Pretendard',sans-serif; transition:all 0.2s; white-space:nowrap; }
+    .btn-sub:hover { color:var(--text); border-color:var(--point); }
+
+    /* 요약 */
+    .diff-summary { display:flex; gap:12px; margin-bottom:16px; flex-wrap:wrap; align-items:center; }
+    .summary-badge { display:inline-flex; align-items:center; gap:6px; font-size:13px; font-weight:600; padding:5px 14px; border-radius:999px; }
+    .badge-add { background:rgba(52,211,153,0.12); color:#34D399; border:1px solid rgba(52,211,153,0.3); }
+    .badge-del { background:rgba(248,113,113,0.12); color:#F87171; border:1px solid rgba(248,113,113,0.3); }
+    .badge-same { background:var(--card); color:var(--subtext); border:1px solid var(--border); }
+
+    /* 결과 영역 */
+    .result-section { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:48px; }
+    .result-pane { display:flex; flex-direction:column; gap:8px; }
+    .result-label { font-size:13px; font-weight:600; color:var(--subtext); }
+    .diff-view { background:var(--card); border:1px solid var(--border); border-radius:12px; overflow:auto; min-height:240px; max-height:600px; font-family:'Fira Code','JetBrains Mono',monospace; font-size:13px; line-height:1.7; }
+    .diff-view-inner { display:table; width:100%; min-width:100%; }
+    .diff-line { display:table-row; }
+    .diff-line-num { display:table-cell; padding:2px 10px; font-size:11px; color:var(--subtext); user-select:none; border-right:1px solid var(--border); text-align:right; min-width:36px; vertical-align:top; background:var(--bg); white-space:nowrap; }
+    .diff-line-content { display:table-cell; padding:2px 14px; white-space:pre-wrap; word-break:break-all; width:100%; vertical-align:top; color:var(--text); }
+    .line-add { background:rgba(52,211,153,0.10); }
+    .line-add .diff-line-num { background:rgba(52,211,153,0.18); color:#34D399; }
+    .line-add .diff-line-content { color:#34D399; }
+    .line-del { background:rgba(248,113,113,0.10); }
+    .line-del .diff-line-num { background:rgba(248,113,113,0.18); color:#F87171; }
+    .line-del .diff-line-content { color:#F87171; }
+    .line-same .diff-line-content { color:var(--subtext); }
+    .diff-placeholder { padding:32px; text-align:center; color:var(--subtext); font-size:13px; font-family:'Pretendard',sans-serif; font-style:italic; }
+
+    /* 범례 */
+    .legend { display:flex; gap:16px; margin-bottom:12px; flex-wrap:wrap; }
+    .legend-item { display:flex; align-items:center; gap:6px; font-size:12px; color:var(--subtext); }
+    .legend-dot { width:12px; height:12px; border-radius:3px; flex-shrink:0; }
+    .legend-dot-add { background:rgba(52,211,153,0.4); border:1px solid #34D399; }
+    .legend-dot-del { background:rgba(248,113,113,0.4); border:1px solid #F87171; }
+    .legend-dot-same { background:var(--card); border:1px solid var(--border); }
+
+    /* 샘플 */
+    .sample-btn { font-size:12px; color:var(--point-hover); cursor:pointer; background:none; border:none; font-family:'Pretendard',sans-serif; text-decoration:underline; padding:0; }
+    .sample-btn:hover { color:var(--text); }
+
+    /* 토스트 */
+    .toast { position:fixed; bottom:32px; left:50%; transform:translateX(-50%) translateY(80px); background:var(--success); color:#fff; border-radius:999px; padding:10px 24px; font-size:14px; font-weight:600; opacity:0; pointer-events:none; z-index:999; transition:all 0.3s ease; }
+    .toast.show { transform:translateX(-50%) translateY(0); opacity:1; }
+
+    /* 배너 */
+    .coupang-banner { margin:0 auto 48px; text-align:center; overflow:hidden; }
+    .coupang-notice { font-size:11px; color:var(--subtext); margin-bottom:10px; line-height:1.6; }
+    .coupang-banner-mo { display:none; }
+    .adfit-wrap { text-align:center; margin:24px 0; }
+    .adfit-pc { display:block; }
+    .adfit-mo { display:none; }
+    .footer { border-top:1px solid var(--border); padding:32px 0; text-align:center; }
+    .footer-copy { color:var(--subtext); font-size:13px; margin-bottom:12px; }
+    .footer-nav { display:flex; justify-content:center; gap:20px; flex-wrap:wrap; }
+    .footer-nav a { color:var(--subtext); font-size:13px; text-decoration:none; }
+    .footer-nav a:hover { color:var(--text); }
+
+    @media (max-width:768px) {
+      .input-section { grid-template-columns:1fr; }
+      .result-section { grid-template-columns:1fr; }
+      .hero-title { font-size:24px; }
+      .adfit-pc { display:none; }
+      .adfit-mo { display:block; }
+      .coupang-banner-pc { display:none; }
+      .coupang-banner-mo { display:block; }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="container">
+      <a href="../index.html" class="header-brand">
+        <span class="header-brand-icon">&#x1F9F0;</span>
+        <span class="header-brand-text">BrowserKit</span>
+      </a>
+      <a href="../index.html" class="header-back">&#x2190; BrowserKit 홈으로</a>
+    </div>
+  </header>
+
+  <main><div class="container">
+    <div class="hero">
+      <div class="hero-icon">&#x1F504;</div>
+      <h1 class="hero-title">DiffChecker</h1>
+      <p class="hero-desc">두 텍스트의 차이점을 줄 단위로 비교하세요. 추가된 줄은 초록색, 삭제된 줄은 빨간색으로 표시됩니다</p>
+      <div class="hero-badges">
+        <span class="hero-badge">&#x26A1; 무료 사용</span>
+        <span class="hero-badge">&#x1F512; 서버 전송 없음</span>
+        <span class="hero-badge">&#x1F4E6; 설치 불필요</span>
+      </div>
+    </div>
+
+    <div class="adfit-wrap adfit-pc"><ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-Dfncm24OGOmHKE7V" data-ad-width="728" data-ad-height="90"></ins></div>
+    <div class="adfit-wrap adfit-mo"><ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-jVI6hdgtW0LyffyR" data-ad-width="320" data-ad-height="50"></ins></div>
+
+    <!-- 입력 -->
+    <div class="input-section">
+      <div class="input-pane">
+        <div class="pane-label">
+          <span>원본 텍스트</span>
+          <span class="pane-info" id="info-left"></span>
+        </div>
+        <textarea class="diff-textarea" id="left-input" placeholder="비교할 원본 텍스트를 입력하세요&#10;&#10;(예: 수정 전 코드, 문서 초안 등)"></textarea>
+      </div>
+      <div class="input-pane">
+        <div class="pane-label">
+          <span>수정된 텍스트</span>
+          <span class="pane-info" id="info-right"></span>
+        </div>
+        <textarea class="diff-textarea" id="right-input" placeholder="비교할 수정된 텍스트를 입력하세요&#10;&#10;(예: 수정 후 코드, 문서 수정본 등)"></textarea>
+      </div>
+    </div>
+
+    <!-- 액션 -->
+    <div class="action-bar">
+      <button class="btn-primary" id="compare-btn">&#x1F504; 비교하기</button>
+      <button class="btn-sub" id="sample-btn">&#x1F4CB; 샘플 불러오기</button>
+      <button class="btn-sub" id="clear-btn">&#x21BA; 초기화</button>
+    </div>
+
+    <!-- 요약 -->
+    <div class="diff-summary" id="diff-summary" style="display:none;">
+      <span class="summary-badge badge-add" id="badge-add">+ 0줄 추가</span>
+      <span class="summary-badge badge-del" id="badge-del">- 0줄 삭제</span>
+      <span class="summary-badge badge-same" id="badge-same">= 0줄 동일</span>
+    </div>
+
+    <!-- 범례 -->
+    <div class="legend" id="diff-legend" style="display:none;">
+      <div class="legend-item"><div class="legend-dot legend-dot-add"></div>추가된 줄</div>
+      <div class="legend-item"><div class="legend-dot legend-dot-del"></div>삭제된 줄</div>
+      <div class="legend-item"><div class="legend-dot legend-dot-same"></div>동일한 줄</div>
+    </div>
+
+    <!-- 결과 -->
+    <div class="result-section" id="result-section" style="display:none;">
+      <div class="result-pane">
+        <div class="result-label">원본</div>
+        <div class="diff-view" id="left-view">
+          <div class="diff-placeholder">비교하기 버튼을 눌러주세요.</div>
+        </div>
+      </div>
+      <div class="result-pane">
+        <div class="result-label">수정본</div>
+        <div class="diff-view" id="right-view">
+          <div class="diff-placeholder">비교하기 버튼을 눌러주세요.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="coupang-banner coupang-banner-pc">
+      <p class="coupang-notice">이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</p>
+      <script src="https://ads-partners.coupang.com/g.js"></script>
+      <script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"728","height":"120","tsource":""});</script>
+    </div>
+    <div class="coupang-banner coupang-banner-mo">
+      <p class="coupang-notice">이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</p>
+      <script src="https://ads-partners.coupang.com/g.js"></script>
+      <script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"320","height":"50","tsource":""});</script>
+    </div>
+  </div></main>
+
+  <footer class="footer">
+    <div class="container">
+      <p class="footer-copy">&#xa9; 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p>
+      <nav class="footer-nav">
+        <a href="../privacy.html">개인정보 처리방침</a>
+        <a href="../terms.html">이용약관</a>
+        <a href="../about.html">서비스 소개</a>
+        <a href="../blog/index.html">블로그</a>
+      </nav>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+  // ── LCS 기반 diff 알고리즘 ──
+  // 두 줄 배열을 비교해 각 줄의 타입('same'|'add'|'del')과 내용을 반환
+  function computeDiff(leftLines, rightLines) {
+    var n = leftLines.length;
+    var m = rightLines.length;
+
+    // LCS DP 테이블 (메모리 절약: 현재·이전 행만 유지)
+    // 단, 역추적을 위해 전체 테이블을 저장
+    var dp = [];
+    var i, j;
+    for (i = 0; i <= n; i++) {
+      dp[i] = new Int32Array(m + 1);
+    }
+    for (i = 1; i <= n; i++) {
+      for (j = 1; j <= m; j++) {
+        if (leftLines[i - 1] === rightLines[j - 1]) {
+          dp[i][j] = dp[i - 1][j - 1] + 1;
+        } else {
+          dp[i][j] = dp[i - 1][j] > dp[i][j - 1] ? dp[i - 1][j] : dp[i][j - 1];
+        }
+      }
+    }
+
+    // 역추적으로 diff 생성
+    var leftResult = [];  // 왼쪽 패널에 표시할 줄들
+    var rightResult = []; // 오른쪽 패널에 표시할 줄들
+    i = n; j = m;
+
+    while (i > 0 || j > 0) {
+      if (i > 0 && j > 0 && leftLines[i - 1] === rightLines[j - 1]) {
+        leftResult.push({ type: 'same', text: leftLines[i - 1] });
+        rightResult.push({ type: 'same', text: rightLines[j - 1] });
+        i--; j--;
+      } else if (j > 0 && (i === 0 || dp[i][j - 1] >= dp[i - 1][j])) {
+        // 오른쪽에만 있음 = 추가
+        leftResult.push({ type: 'empty', text: '' });
+        rightResult.push({ type: 'add', text: rightLines[j - 1] });
+        j--;
+      } else {
+        // 왼쪽에만 있음 = 삭제
+        leftResult.push({ type: 'del', text: leftLines[i - 1] });
+        rightResult.push({ type: 'empty', text: '' });
+        i--;
+      }
+    }
+
+    leftResult.reverse();
+    rightResult.reverse();
+    return { left: leftResult, right: rightResult };
+  }
+
+  // ── 뷰 렌더링 ──
+  function renderView(container, lines, side) {
+    var inner = document.createElement('div');
+    inner.className = 'diff-view-inner';
+
+    var lineNum = 0;
+    for (var i = 0; i < lines.length; i++) {
+      var item = lines[i];
+      var row = document.createElement('div');
+      row.className = 'diff-line';
+
+      var numCell = document.createElement('div');
+      numCell.className = 'diff-line-num';
+
+      var contentCell = document.createElement('div');
+      contentCell.className = 'diff-line-content';
+
+      if (item.type === 'empty') {
+        row.className += ' line-empty';
+        numCell.textContent = '';
+        contentCell.textContent = '\u00a0'; // nbsp
+        row.style.opacity = '0.3';
+      } else {
+        lineNum++;
+        numCell.textContent = lineNum;
+        // XSS 방지: textContent 사용
+        contentCell.textContent = item.text === '' ? '\u00a0' : item.text;
+
+        if (item.type === 'add') {
+          row.classList.add('line-add');
+          contentCell.textContent = '+ ' + (item.text === '' ? '' : item.text);
+        } else if (item.type === 'del') {
+          row.classList.add('line-del');
+          contentCell.textContent = '- ' + (item.text === '' ? '' : item.text);
+        } else {
+          row.classList.add('line-same');
+          contentCell.textContent = '\u00a0\u00a0' + (item.text === '' ? '' : item.text);
+        }
+      }
+
+      row.appendChild(numCell);
+      row.appendChild(contentCell);
+      inner.appendChild(row);
+    }
+
+    container.innerHTML = '';
+    container.appendChild(inner);
+  }
+
+  // ── 스크롤 동기화 ──
+  var leftView = document.getElementById('left-view');
+  var rightView = document.getElementById('right-view');
+  var syncing = false;
+
+  leftView.addEventListener('scroll', function() {
+    if (syncing) return;
+    syncing = true;
+    rightView.scrollTop = leftView.scrollTop;
+    syncing = false;
+  });
+  rightView.addEventListener('scroll', function() {
+    if (syncing) return;
+    syncing = true;
+    leftView.scrollTop = rightView.scrollTop;
+    syncing = false;
+  });
+
+  // ── 입력 정보 갱신 ──
+  function updateInfo(input, infoEl) {
+    var lines = input.value ? input.value.split('\n').length : 0;
+    infoEl.textContent = input.value ? lines + '줄' : '';
+  }
+
+  var leftInput = document.getElementById('left-input');
+  var rightInput = document.getElementById('right-input');
+  leftInput.addEventListener('input', function() { updateInfo(leftInput, document.getElementById('info-left')); });
+  rightInput.addEventListener('input', function() { updateInfo(rightInput, document.getElementById('info-right')); });
+
+  // ── 비교하기 ──
+  document.getElementById('compare-btn').addEventListener('click', function() {
+    var leftText = leftInput.value;
+    var rightText = rightInput.value;
+
+    if (!leftText && !rightText) {
+      showToast('비교할 텍스트를 입력해주세요');
+      return;
+    }
+
+    var leftLines = leftText ? leftText.split('\n') : [];
+    var rightLines = rightText ? rightText.split('\n') : [];
+
+    var result = computeDiff(leftLines, rightLines);
+
+    renderView(leftView, result.left, 'left');
+    renderView(rightView, result.right, 'right');
+
+    // 요약 계산
+    var addCount = 0, delCount = 0, sameCount = 0;
+    for (var i = 0; i < result.right.length; i++) {
+      if (result.right[i].type === 'add') addCount++;
+    }
+    for (var i = 0; i < result.left.length; i++) {
+      if (result.left[i].type === 'del') delCount++;
+      if (result.left[i].type === 'same') sameCount++;
+    }
+
+    document.getElementById('badge-add').textContent = '+ ' + addCount + '줄 추가';
+    document.getElementById('badge-del').textContent = '- ' + delCount + '줄 삭제';
+    document.getElementById('badge-same').textContent = '= ' + sameCount + '줄 동일';
+
+    document.getElementById('diff-summary').style.display = 'flex';
+    document.getElementById('diff-legend').style.display = 'flex';
+    document.getElementById('result-section').style.display = 'grid';
+  });
+
+  // ── 샘플 ──
+  var SAMPLE_LEFT = [
+    'function greet(name) {',
+    '  console.log("Hello, " + name);',
+    '  return name;',
+    '}',
+    '',
+    'var user = "World";',
+    'greet(user);'
+  ].join('\n');
+
+  var SAMPLE_RIGHT = [
+    'function greet(name, greeting) {',
+    '  greeting = greeting || "Hello";',
+    '  console.log(greeting + ", " + name + "!");',
+    '  return name;',
+    '}',
+    '',
+    'var user = "BrowserKit";',
+    'greet(user, "Hi");'
+  ].join('\n');
+
+  document.getElementById('sample-btn').addEventListener('click', function() {
+    leftInput.value = SAMPLE_LEFT;
+    rightInput.value = SAMPLE_RIGHT;
+    updateInfo(leftInput, document.getElementById('info-left'));
+    updateInfo(rightInput, document.getElementById('info-right'));
+    document.getElementById('compare-btn').click();
+    showToast('\u2713 샘플이 로드되었습니다');
+  });
+
+  // ── 초기화 ──
+  document.getElementById('clear-btn').addEventListener('click', function() {
+    leftInput.value = '';
+    rightInput.value = '';
+    document.getElementById('info-left').textContent = '';
+    document.getElementById('info-right').textContent = '';
+    document.getElementById('diff-summary').style.display = 'none';
+    document.getElementById('diff-legend').style.display = 'none';
+    document.getElementById('result-section').style.display = 'none';
+    leftView.innerHTML = '<div class="diff-placeholder">비교하기 버튼을 눌러주세요.</div>';
+    rightView.innerHTML = '<div class="diff-placeholder">비교하기 버튼을 눌러주세요.</div>';
+  });
+
+  // ── 토스트 ──
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(function() { t.classList.remove('show'); }, 2000);
+  }
+  </script>
+</body>
+</html>
