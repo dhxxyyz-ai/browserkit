@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="DiffChecker의 모든 기능을 단계별로 설명하는 공식 사용 가이드입니다. 두 텍스트의 차이점을 줄 단위로 비교하고 하이라이트하는 방법을 알아보세요." />
+  <meta property="og:title" content="DiffChecker 사용법 완전 가이드 — BrowserKit" />
+  <meta property="og:description" content="두 텍스트의 차이점을 줄 단위로 비교하는 DiffChecker 공식 가이드입니다." />
+  <meta property="og:type" content="article" />
+  <title>DiffChecker 사용법 완전 가이드 — BrowserKit</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+  <script type="text/javascript" src="//t1.kakaocdn.net/kas/static/ba.min.js" async></script>
+  <style>
+    .header { padding:24px 0 16px; border-bottom:1px solid var(--border); }
+    .header .container { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; }
+    .header-brand { display:flex; align-items:center; gap:10px; text-decoration:none; }
+    .header-brand-icon { font-size:24px; }
+    .header-brand-text { font-size:20px; font-weight:700; font-family:'Inter',sans-serif; background:linear-gradient(135deg,var(--point),var(--point-hover)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+    .header-back { font-size:13px; color:var(--subtext); text-decoration:none; }
+    .header-back:hover { color:var(--text); }
+    .post-wrap { max-width:720px; margin:0 auto; padding:48px 24px 80px; }
+    .post-tag { display:inline-block; font-size:12px; color:var(--point-hover); background:rgba(108,99,255,0.15); padding:3px 12px; border-radius:999px; margin-bottom:16px; }
+    .post-title { font-size:28px; font-weight:700; line-height:1.4; margin-bottom:12px; }
+    .post-date { color:var(--subtext); font-size:13px; margin-bottom:40px; padding-bottom:24px; border-bottom:1px solid var(--border); }
+    .post-body h2 { font-size:20px; font-weight:700; margin:40px 0 16px; color:var(--text); }
+    .post-body h3 { font-size:16px; font-weight:600; margin:28px 0 12px; color:var(--point-hover); }
+    .post-body p { font-size:15px; color:var(--subtext); line-height:1.9; margin-bottom:16px; }
+    .post-highlight { background:var(--card); border-left:3px solid var(--point); border-radius:8px; padding:16px 20px; margin:24px 0; font-size:15px; color:var(--text); line-height:1.8; }
+    .feature-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:20px 0; }
+    .feature-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px; }
+    .feature-card:hover { border-color:var(--point); }
+    .feature-icon { font-size:24px; margin-bottom:10px; }
+    .feature-title { font-size:14px; font-weight:600; color:var(--text); margin-bottom:6px; }
+    .feature-desc { font-size:13px; color:var(--subtext); line-height:1.7; }
+    .step-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px 24px; margin:16px 0; display:flex; gap:16px; align-items:flex-start; }
+    .step-num { min-width:36px; height:36px; background:linear-gradient(135deg,var(--point),var(--point-hover)); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:700; color:white; flex-shrink:0; font-family:'Inter',sans-serif; }
+    .step-content h3 { font-size:15px; font-weight:600; margin-bottom:6px; color:var(--text); }
+    .step-content p { font-size:14px; color:var(--subtext); line-height:1.7; margin:0; }
+
+    /* diff 데모 */
+    .diff-demo { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:20px 0; }
+    .diff-pane { background:#0a0a12; border:1px solid var(--border); border-radius:10px; overflow:hidden; }
+    .diff-pane-label { font-size:11px; font-weight:600; color:var(--subtext); padding:8px 14px; border-bottom:1px solid var(--border); background:var(--card); }
+    .diff-line { display:flex; font-family:'Fira Code','JetBrains Mono',monospace; font-size:12px; line-height:1.7; }
+    .diff-num { min-width:32px; padding:1px 8px; font-size:11px; color:var(--subtext); border-right:1px solid var(--border); text-align:right; background:#0d0d1a; flex-shrink:0; }
+    .diff-content { padding:1px 12px; flex:1; white-space:pre; color:var(--subtext); }
+    .diff-line.add { background:rgba(52,211,153,0.10); }
+    .diff-line.add .diff-num { background:rgba(52,211,153,0.18); color:#34D399; }
+    .diff-line.add .diff-content { color:#34D399; }
+    .diff-line.del { background:rgba(248,113,113,0.10); }
+    .diff-line.del .diff-num { background:rgba(248,113,113,0.18); color:#F87171; }
+    .diff-line.del .diff-content { color:#F87171; }
+
+    /* 요약 배지 */
+    .summary-demo { display:flex; gap:10px; flex-wrap:wrap; margin:16px 0; }
+    .badge { display:inline-flex; align-items:center; gap:6px; font-size:13px; font-weight:600; padding:5px 14px; border-radius:999px; }
+    .badge-add { background:rgba(52,211,153,0.12); color:#34D399; border:1px solid rgba(52,211,153,0.3); }
+    .badge-del { background:rgba(248,113,113,0.12); color:#F87171; border:1px solid rgba(248,113,113,0.3); }
+    .badge-same { background:var(--card); color:var(--subtext); border:1px solid var(--border); }
+
+    .post-table { width:100%; border-collapse:collapse; margin:20px 0; font-size:14px; }
+    .post-table th { background:var(--card); padding:12px 16px; text-align:left; font-weight:600; border:1px solid var(--border); color:var(--text); }
+    .post-table td { padding:11px 16px; border:1px solid var(--border); color:var(--subtext); line-height:1.7; }
+    .post-table tr:hover td { background:rgba(108,99,255,0.04); }
+    .use-case-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:20px 0; }
+    .use-case-card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:18px; }
+    .use-case-icon { font-size:24px; margin-bottom:8px; }
+    .use-case-title { font-size:13px; font-weight:600; color:var(--text); margin-bottom:6px; }
+    .use-case-desc { font-size:12px; color:var(--subtext); line-height:1.7; }
+    .post-nav { display:flex; justify-content:space-between; margin-top:60px; padding-top:24px; border-top:1px solid var(--border); gap:12px; }
+    .post-nav a { font-size:14px; color:var(--subtext); text-decoration:none; }
+    .post-nav a:hover { color:var(--text); }
+    .cta-box { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:28px; text-align:center; margin:48px 0 0; }
+    .cta-box p { font-size:15px; color:var(--subtext); margin-bottom:16px; }
+    .cta-btn { display:inline-block; background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border-radius:10px; padding:12px 28px; font-size:14px; font-weight:600; text-decoration:none; }
+    .cta-btn:hover { transform:translateY(-2px); box-shadow:0 8px 24px var(--glow); color:white; }
+    .adfit-wrap { text-align:center; margin:24px 0; }
+    .adfit-pc { display:block; }
+    .adfit-mo { display:none; }
+    .back-link { display:inline-flex; align-items:center; gap:6px; color:var(--subtext); font-size:14px; margin-bottom:32px; text-decoration:none; }
+    .back-link:hover { color:var(--text); }
+    .coupang-banner { margin:0 auto 48px; text-align:center; overflow:hidden; }
+    .coupang-notice { font-size:11px; color:var(--subtext); margin-bottom:10px; line-height:1.6; }
+    .coupang-banner-mo { display:none; }
+    @media (max-width:640px) {
+      .feature-grid { grid-template-columns:1fr; }
+      .diff-demo { grid-template-columns:1fr; }
+      .use-case-grid { grid-template-columns:1fr; }
+      .adfit-pc { display:none; }
+      .adfit-mo { display:block; }
+      .coupang-banner-pc { display:none; }
+      .coupang-banner-mo { display:block; }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="container">
+      <a href="../index.html" class="header-brand"><span class="header-brand-icon">&#x1F9F0;</span><span class="header-brand-text">BrowserKit</span></a>
+      <a href="../index.html" class="header-back">&#x2190; BrowserKit 홈으로</a>
+    </div>
+  </header>
+
+  <div class="post-wrap">
+    <a href="index.html" class="back-link">&#x2190; 블로그 목록</a>
+    <span class="post-tag">가이드</span>
+    <h1 class="post-title">DiffChecker 사용법 완전 가이드</h1>
+    <div class="post-date">2026년 6월 20일</div>
+
+    <div class="post-body">
+      <p>DiffChecker는 두 텍스트의 차이점을 줄 단위로 비교하는 무료 온라인 도구입니다. 추가된 줄은 초록색, 삭제된 줄은 빨간색으로 표시해 어느 부분이 바뀌었는지 한눈에 파악할 수 있습니다. 코드 수정 내역 확인, 문서 버전 비교, 설정 파일 변경 검토 등 다양한 상황에서 활용할 수 있습니다.</p>
+
+      <h2>주요 기능</h2>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F7E2;</div>
+          <div class="feature-title">추가/삭제 줄 강조</div>
+          <div class="feature-desc">추가된 줄은 초록색 배경과 <code>+</code>, 삭제된 줄은 빨간색 배경과 <code>-</code>로 구분해 표시합니다.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F522;</div>
+          <div class="feature-title">줄 번호 표시</div>
+          <div class="feature-desc">원본과 수정본 각각의 줄 번호가 표시되어 몇 번째 줄이 변경됐는지 바로 확인할 수 있습니다.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F4CA;</div>
+          <div class="feature-title">차이 요약</div>
+          <div class="feature-desc">추가된 줄 수, 삭제된 줄 수, 동일한 줄 수를 배지로 요약해 보여줍니다.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x21C4;</div>
+          <div class="feature-title">좌우 동시 표시</div>
+          <div class="feature-desc">원본과 수정본을 좌우로 나란히 표시합니다. 스크롤을 움직이면 양쪽이 동시에 이동합니다.</div>
+        </div>
+      </div>
+
+      <h2>기본 사용법</h2>
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <h3>텍스트 입력</h3>
+          <p>왼쪽 입력창에 <strong>원본 텍스트</strong>, 오른쪽 입력창에 <strong>수정된 텍스트</strong>를 붙여넣습니다.</p>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <h3>비교하기</h3>
+          <p><strong>🔄 비교하기</strong> 버튼을 클릭합니다. 아래에 좌우 분할 결과 뷰가 나타납니다.</p>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <h3>결과 확인</h3>
+          <p>초록색 줄은 수정본에서 추가된 내용, 빨간색 줄은 원본에서 삭제된 내용입니다. 회색 줄은 변경 없는 동일한 내용입니다.</p>
+        </div>
+      </div>
+
+      <h2>결과 화면 예시</h2>
+      <p>아래는 JavaScript 함수를 수정했을 때의 비교 결과 예시입니다.</p>
+
+      <div class="diff-demo">
+        <!-- 왼쪽: 원본 -->
+        <div class="diff-pane">
+          <div class="diff-pane-label">원본</div>
+          <div class="diff-line">
+            <div class="diff-num">1</div>
+            <div class="diff-content">&nbsp;&nbsp;function greet(name) {</div>
+          </div>
+          <div class="diff-line del">
+            <div class="diff-num">2</div>
+            <div class="diff-content">-   console.log("Hello");</div>
+          </div>
+          <div class="diff-line">
+            <div class="diff-num">3</div>
+            <div class="diff-content">&nbsp;&nbsp;  return name;</div>
+          </div>
+          <div class="diff-line del">
+            <div class="diff-num">4</div>
+            <div class="diff-content">-   var user = "World";</div>
+          </div>
+          <div class="diff-line">
+            <div class="diff-num">5</div>
+            <div class="diff-content">&nbsp;&nbsp;}</div>
+          </div>
+        </div>
+        <!-- 오른쪽: 수정본 -->
+        <div class="diff-pane">
+          <div class="diff-pane-label">수정본</div>
+          <div class="diff-line">
+            <div class="diff-num">1</div>
+            <div class="diff-content">&nbsp;&nbsp;function greet(name) {</div>
+          </div>
+          <div class="diff-line add">
+            <div class="diff-num">2</div>
+            <div class="diff-content">+   console.log("Hi, " + name);</div>
+          </div>
+          <div class="diff-line">
+            <div class="diff-num">3</div>
+            <div class="diff-content">&nbsp;&nbsp;  return name;</div>
+          </div>
+          <div class="diff-line add">
+            <div class="diff-num">4</div>
+            <div class="diff-content">+   var user = "BrowserKit";</div>
+          </div>
+          <div class="diff-line">
+            <div class="diff-num">5</div>
+            <div class="diff-content">&nbsp;&nbsp;}</div>
+          </div>
+        </div>
+      </div>
+
+      <h3>차이 요약 배지</h3>
+      <p>비교 결과 상단에 아래와 같이 요약 배지가 표시됩니다.</p>
+      <div class="summary-demo">
+        <span class="badge badge-add">+ 2줄 추가</span>
+        <span class="badge badge-del">- 2줄 삭제</span>
+        <span class="badge badge-same">= 3줄 동일</span>
+      </div>
+
+      <h2>색상 의미</h2>
+      <table class="post-table">
+        <thead><tr><th>색상</th><th>기호</th><th>의미</th></tr></thead>
+        <tbody>
+          <tr><td>&#x1F7E2; 초록색 배경</td><td><code>+</code></td><td>수정본에 새로 추가된 줄</td></tr>
+          <tr><td>&#x1F534; 빨간색 배경</td><td><code>-</code></td><td>원본에서 삭제된 줄 (수정본에 없음)</td></tr>
+          <tr><td>&#x26AA; 회색 (기본)</td><td>&nbsp;&nbsp;</td><td>변경 없이 동일한 줄</td></tr>
+        </tbody>
+      </table>
+
+      <h2>샘플 불러오기</h2>
+      <p><strong>📋 샘플 불러오기</strong> 버튼을 클릭하면 JavaScript 함수 수정 예제가 자동으로 입력되고 비교 결과까지 바로 표시됩니다. 처음 사용하거나 기능을 빠르게 확인할 때 활용하세요.</p>
+
+      <h2>활용 예시</h2>
+      <div class="use-case-grid">
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F4BB;</div>
+          <div class="use-case-title">코드 리뷰</div>
+          <div class="use-case-desc">수정 전/후 코드를 붙여넣어 변경된 부분을 빠르게 파악합니다. PR 전 자체 검토에 유용합니다.</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F4C4;</div>
+          <div class="use-case-title">문서 버전 비교</div>
+          <div class="use-case-desc">계약서, 보고서, 정책 문서의 이전 버전과 현재 버전을 비교해 수정 내역을 확인합니다.</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x2699;&#xFE0F;</div>
+          <div class="use-case-title">설정 파일 변경 확인</div>
+          <div class="use-case-desc"><code>.env</code>, <code>nginx.conf</code>, <code>package.json</code> 등 설정 파일의 변경 사항을 확인합니다.</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F4DD;</div>
+          <div class="use-case-title">번역 검수</div>
+          <div class="use-case-desc">원문과 번역문을 나란히 비교하거나, 번역 수정 전후를 비교해 변경 내역을 검토합니다.</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F50D;</div>
+          <div class="use-case-title">로그 파일 비교</div>
+          <div class="use-case-desc">두 시점의 로그 파일을 비교해 새로 추가된 오류 메시지나 달라진 항목을 찾습니다.</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F4E7;</div>
+          <div class="use-case-title">이메일 초안 비교</div>
+          <div class="use-case-desc">이메일 초안 수정 전후를 비교해 어떤 문장이 추가되거나 삭제됐는지 확인합니다.</div>
+        </div>
+      </div>
+
+      <h2>알고리즘 원리</h2>
+      <p>DiffChecker는 LCS(Longest Common Subsequence, 최장 공통 부분 수열) 알고리즘을 사용해 두 텍스트를 비교합니다. 두 텍스트에서 공통으로 존재하는 가장 긴 줄 순서를 찾아낸 뒤, 공통 줄에 포함되지 않는 줄을 추가(수정본 전용)나 삭제(원본 전용)로 분류합니다.</p>
+      <p>외부 라이브러리 없이 순수 JavaScript로 구현되어 있으며, 모든 비교가 브라우저 내에서만 처리됩니다.</p>
+
+      <h2>주의사항</h2>
+      <table class="post-table">
+        <thead><tr><th>항목</th><th>내용</th></tr></thead>
+        <tbody>
+          <tr><td>비교 단위</td><td>줄(line) 단위로 비교합니다. 한 줄 안에서 일부 단어만 바뀐 경우 줄 전체가 삭제 + 추가로 표시됩니다.</td></tr>
+          <tr><td>대용량 텍스트</td><td>수만 줄 이상의 매우 긴 텍스트는 LCS 알고리즘 특성상 처리 시간이 길어질 수 있습니다.</td></tr>
+          <tr><td>공백 차이</td><td>들여쓰기나 줄 끝 공백이 다르면 다른 줄로 인식합니다. 공백을 정규화한 뒤 비교하려면 먼저 TextTools로 정리하세요.</td></tr>
+          <tr><td>보안</td><td>비교하는 텍스트는 서버로 전송되지 않습니다. 소스 코드나 기밀 문서도 안전하게 비교할 수 있습니다.</td></tr>
+        </tbody>
+      </table>
+
+      <div class="post-highlight">&#x1F512; DiffChecker는 모든 처리가 브라우저 내에서만 이루어집니다. 입력한 텍스트가 외부 서버로 전송되지 않으므로, 소스 코드, 설정 파일, 기밀 문서도 안심하고 비교할 수 있습니다.</div>
+    </div>
+
+    <div class="cta-box">
+      <p>지금 바로 DiffChecker를 사용해보세요.<br />설치도, 회원가입도, 비용도 없습니다.</p>
+      <a href="../diff-checker/index.html" class="cta-btn">&#x1F504; 무료로 텍스트 비교 시작하기</a>
+    </div>
+
+    <div class="adfit-wrap adfit-pc">
+      <ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-Dfncm24OGOmHKE7V" data-ad-width="728" data-ad-height="90"></ins>
+    </div>
+    <div class="adfit-wrap adfit-mo">
+      <ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-jVI6hdgtW0LyffyR" data-ad-width="320" data-ad-height="50"></ins>
+    </div>
+
+    <div class="coupang-banner coupang-banner-pc">
+      <p class="coupang-notice">이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</p>
+      <script src="https://ads-partners.coupang.com/g.js"></script>
+      <script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"668","height":"100","tsource":""});</script>
+    </div>
+    <div class="coupang-banner coupang-banner-mo">
+      <p class="coupang-notice">이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</p>
+      <script src="https://ads-partners.coupang.com/g.js"></script>
+      <script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"320","height":"50","tsource":""});</script>
+    </div>
+
+    <div class="post-nav">
+      <a href="27-base64tool-howto.html">&#x2190; 이전 글: Base64Tool 사용법 완전 가이드</a>
+      <span></span>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+      <p class="footer-copy">&#xa9; 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p>
+      <nav class="footer-nav">
+        <a href="../privacy.html">개인정보 처리방침</a>
+        <a href="../terms.html">이용약관</a>
+        <a href="../about.html">서비스 소개</a>
+        <a href="index.html">블로그</a>
+      </nav>
+    </div>
+  </footer>
+</body>
+</html>
