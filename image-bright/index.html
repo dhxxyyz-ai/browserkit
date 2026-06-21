@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="이미지 밝기, 대비, 채도, 색온도를 실시간으로 보정하는 무료 온라인 도구. 서버 전송 없이 브라우저에서 바로 처리합니다." />
+  <meta property="og:title" content="ImageBright — 이미지 보정 도구" />
+  <meta property="og:description" content="밝기, 대비, 채도, 색온도를 슬라이더로 실시간 조절하는 무료 온라인 이미지 보정 도구입니다." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://browserkit.pages.dev/image-bright/" />
+  <title>ImageBright — 이미지 보정 도구</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+  <script type="text/javascript" src="//t1.kakaocdn.net/kas/static/ba.min.js" async></script>
+  <style>
+    .header { padding:24px 0 16px; border-bottom:1px solid var(--border); }
+    .header .container { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; }
+    .header-brand { display:flex; align-items:center; gap:10px; text-decoration:none; }
+    .header-brand-icon { font-size:24px; }
+    .header-brand-text { font-size:20px; font-weight:700; font-family:'Inter',sans-serif; background:linear-gradient(135deg,var(--point),var(--point-hover)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+    .header-back { font-size:13px; color:var(--subtext); text-decoration:none; }
+    .header-back:hover { color:var(--text); }
+
+    .hero { text-align:center; padding:40px 0 32px; }
+    .hero-icon { font-size:48px; margin-bottom:16px; }
+    .hero-title { font-size:32px; font-weight:700; margin-bottom:12px; background:linear-gradient(135deg,var(--point),var(--point-hover)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+    .hero-desc { color:var(--subtext); font-size:15px; margin-bottom:20px; }
+    .hero-badges { display:flex; justify-content:center; gap:10px; flex-wrap:wrap; }
+    .hero-badge { background:var(--card); border:1px solid var(--border); border-radius:999px; padding:5px 16px; font-size:13px; color:var(--subtext); }
+
+    /* 업로드 존 */
+    .upload-zone { background:var(--card); border:2px dashed var(--border); border-radius:var(--radius); padding:48px 32px; text-align:center; cursor:pointer; margin-bottom:24px; transition:all 0.2s; }
+    .upload-zone:hover, .upload-zone.drag-over { border-color:var(--point); box-shadow:0 0 24px var(--glow); }
+    .upload-icon { font-size:40px; margin-bottom:12px; }
+    .upload-title { font-size:16px; font-weight:600; margin-bottom:6px; }
+    .upload-sub { color:var(--subtext); font-size:13px; }
+
+    /* 작업 영역 */
+    .work-area { display:none; }
+    .work-area.show { display:block; }
+
+    /* 미리보기 */
+    .preview-wrap { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:24px; }
+    .preview-pane { display:flex; flex-direction:column; gap:8px; }
+    .pane-label { font-size:12px; font-weight:600; color:var(--subtext); padding:6px 0; }
+    .canvas-wrap { background:repeating-conic-gradient(#1e1e2a 0% 25%,#26263a 0% 50%) 0 0/16px 16px; border-radius:12px; overflow:hidden; display:flex; align-items:center; justify-content:center; min-height:240px; }
+    .canvas-wrap canvas { max-width:100%; max-height:400px; display:block; }
+
+    /* 파일 정보 */
+    .file-info { font-size:12px; color:var(--subtext); font-family:'Inter',sans-serif; }
+
+    /* 슬라이더 패널 */
+    .slider-panel { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:24px; margin-bottom:20px; }
+    .slider-panel-title { font-size:14px; font-weight:700; color:var(--text); margin-bottom:20px; display:flex; align-items:center; gap:8px; }
+    .slider-row { display:grid; grid-template-columns:90px 1fr 52px; align-items:center; gap:12px; margin-bottom:16px; }
+    .slider-row:last-child { margin-bottom:0; }
+    .slider-label { font-size:13px; font-weight:600; color:var(--subtext); }
+    .range-slider { -webkit-appearance:none; height:6px; border-radius:3px; background:var(--border); outline:none; width:100%; }
+    .range-slider::-webkit-slider-thumb { -webkit-appearance:none; width:18px; height:18px; border-radius:50%; background:var(--point); cursor:pointer; box-shadow:0 0 0 3px rgba(108,99,255,0.2); }
+    .range-slider::-moz-range-thumb { width:18px; height:18px; border-radius:50%; background:var(--point); cursor:pointer; border:none; }
+    .slider-val { font-size:13px; font-weight:600; color:var(--point-hover); font-family:'Inter',sans-serif; text-align:right; }
+
+    /* 액션 버튼 */
+    .action-bar { display:flex; gap:10px; margin-bottom:48px; flex-wrap:wrap; }
+    .btn-primary { background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border:none; border-radius:10px; padding:12px 24px; font-size:14px; font-weight:700; cursor:pointer; font-family:'Pretendard',sans-serif; transition:all 0.2s; white-space:nowrap; }
+    .btn-primary:hover { transform:translateY(-2px); box-shadow:0 8px 24px var(--glow); }
+    .btn-sub { background:var(--card); color:var(--subtext); border:1px solid var(--border); border-radius:10px; padding:12px 20px; font-size:14px; cursor:pointer; font-family:'Pretendard',sans-serif; transition:all 0.2s; white-space:nowrap; }
+    .btn-sub:hover { color:var(--text); border-color:var(--point); }
+    .btn-danger { background:var(--card); color:#F87171; border:1px solid var(--border); border-radius:10px; padding:12px 20px; font-size:14px; cursor:pointer; font-family:'Pretendard',sans-serif; transition:all 0.2s; white-space:nowrap; }
+    .btn-danger:hover { border-color:#F87171; }
+
+    /* 빠른 프리셋 */
+    .preset-wrap { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:16px; }
+    .preset-btn { background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:7px 14px; font-size:12px; font-weight:600; color:var(--subtext); cursor:pointer; font-family:'Pretendard',sans-serif; transition:all 0.2s; }
+    .preset-btn:hover { border-color:var(--point); color:var(--text); }
+
+    /* 토스트 */
+    .toast { position:fixed; bottom:32px; left:50%; transform:translateX(-50%) translateY(80px); background:var(--success); color:#fff; border-radius:999px; padding:10px 24px; font-size:14px; font-weight:600; opacity:0; pointer-events:none; z-index:999; transition:all 0.3s ease; }
+    .toast.show { transform:translateX(-50%) translateY(0); opacity:1; }
+
+    /* 배너 */
+    .coupang-banner { margin:0 auto 48px; text-align:center; overflow:hidden; }
+    .coupang-notice { font-size:11px; color:var(--subtext); margin-bottom:10px; line-height:1.6; }
+    .coupang-banner-mo { display:none; }
+    .adfit-wrap { text-align:center; margin:24px 0; }
+    .adfit-pc { display:block; }
+    .adfit-mo { display:none; }
+    .footer { border-top:1px solid var(--border); padding:32px 0; text-align:center; }
+    .footer-copy { color:var(--subtext); font-size:13px; margin-bottom:12px; }
+    .footer-nav { display:flex; justify-content:center; gap:20px; flex-wrap:wrap; }
+    .footer-nav a { color:var(--subtext); font-size:13px; text-decoration:none; }
+    .footer-nav a:hover { color:var(--text); }
+
+    @media (max-width:768px) {
+      .preview-wrap { grid-template-columns:1fr; }
+      .hero-title { font-size:24px; }
+      .slider-row { grid-template-columns:70px 1fr 44px; }
+      .adfit-pc { display:none; }
+      .adfit-mo { display:block; }
+      .coupang-banner-pc { display:none; }
+      .coupang-banner-mo { display:block; }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="container">
+      <a href="../index.html" class="header-brand">
+        <span class="header-brand-icon">&#x1F9F0;</span>
+        <span class="header-brand-text">BrowserKit</span>
+      </a>
+      <a href="../index.html" class="header-back">&#x2190; BrowserKit 홈으로</a>
+    </div>
+  </header>
+
+  <main><div class="container">
+    <div class="hero">
+      <div class="hero-icon">&#x2728;</div>
+      <h1 class="hero-title">ImageBright</h1>
+      <p class="hero-desc">밝기, 대비, 채도, 색온도를 슬라이더로 실시간 조절하세요. 브라우저에서 바로, 서버 전송 없이</p>
+      <div class="hero-badges">
+        <span class="hero-badge">&#x26A1; 무료 사용</span>
+        <span class="hero-badge">&#x1F512; 서버 전송 없음</span>
+        <span class="hero-badge">&#x1F4E6; 설치 불필요</span>
+      </div>
+    </div>
+
+    <div class="adfit-wrap adfit-pc"><ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-Dfncm24OGOmHKE7V" data-ad-width="728" data-ad-height="90"></ins></div>
+    <div class="adfit-wrap adfit-mo"><ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-jVI6hdgtW0LyffyR" data-ad-width="320" data-ad-height="50"></ins></div>
+
+    <!-- 업로드 존 -->
+    <div class="upload-zone" id="uploadZone">
+      <input type="file" id="fileInput" accept="image/*" style="display:none" />
+      <div class="upload-icon">&#x1F5BC;&#xFE0F;</div>
+      <div class="upload-title">이미지를 업로드하세요</div>
+      <div class="upload-sub">클릭하거나 드래그하세요 (JPG, PNG, WEBP, GIF)</div>
+    </div>
+
+    <!-- 작업 영역 -->
+    <div class="work-area" id="workArea">
+
+      <!-- 미리보기 -->
+      <div class="preview-wrap">
+        <div class="preview-pane">
+          <div class="pane-label">&#x1F4F7; 원본</div>
+          <div class="canvas-wrap">
+            <canvas id="originalCanvas"></canvas>
+          </div>
+          <div class="file-info" id="fileInfo"></div>
+        </div>
+        <div class="preview-pane">
+          <div class="pane-label">&#x2728; 보정 결과</div>
+          <div class="canvas-wrap">
+            <canvas id="resultCanvas"></canvas>
+          </div>
+          <div class="file-info" id="resultInfo"></div>
+        </div>
+      </div>
+
+      <!-- 빠른 프리셋 -->
+      <div class="preset-wrap">
+        <button class="preset-btn" data-preset="vivid">&#x1F31F; 선명하게</button>
+        <button class="preset-btn" data-preset="warm">&#x1F9E1; 따뜻하게</button>
+        <button class="preset-btn" data-preset="cool">&#x1F4D8; 차갑게</button>
+        <button class="preset-btn" data-preset="bright">&#x2600;&#xFE0F; 밝게</button>
+        <button class="preset-btn" data-preset="dark">&#x1F319; 어둡게</button>
+        <button class="preset-btn" data-preset="bw">&#x26AB; 흑백</button>
+      </div>
+
+      <!-- 슬라이더 패널 -->
+      <div class="slider-panel">
+        <div class="slider-panel-title">&#x1F3A8; 보정 설정</div>
+
+        <div class="slider-row">
+          <span class="slider-label">&#x2600;&#xFE0F; 밝기</span>
+          <input type="range" class="range-slider" id="slBright" min="-100" max="100" value="0" />
+          <span class="slider-val" id="valBright">0</span>
+        </div>
+        <div class="slider-row">
+          <span class="slider-label">&#x25D0; 대비</span>
+          <input type="range" class="range-slider" id="slContrast" min="-100" max="100" value="0" />
+          <span class="slider-val" id="valContrast">0</span>
+        </div>
+        <div class="slider-row">
+          <span class="slider-label">&#x1F308; 채도</span>
+          <input type="range" class="range-slider" id="slSaturate" min="-100" max="100" value="0" />
+          <span class="slider-val" id="valSaturate">0</span>
+        </div>
+        <div class="slider-row">
+          <span class="slider-label">&#x1F321;&#xFE0F; 색온도</span>
+          <input type="range" class="range-slider" id="slTemp" min="-100" max="100" value="0" />
+          <span class="slider-val" id="valTemp">0</span>
+        </div>
+        <div class="slider-row">
+          <span class="slider-label">&#x1F4F7; 샤프니스</span>
+          <input type="range" class="range-slider" id="slSharp" min="0" max="100" value="0" />
+          <span class="slider-val" id="valSharp">0</span>
+        </div>
+      </div>
+
+      <!-- 액션 바 -->
+      <div class="action-bar">
+        <button class="btn-primary" id="downloadJpg">&#x2B07; JPG 저장</button>
+        <button class="btn-primary" id="downloadPng">&#x2B07; PNG 저장</button>
+        <button class="btn-sub" id="resetBtn">&#x21BA; 초기화</button>
+        <button class="btn-danger" id="newImageBtn">&#x1F5BC;&#xFE0F; 다른 이미지</button>
+      </div>
+    </div>
+
+    <div class="coupang-banner coupang-banner-pc">
+      <p class="coupang-notice">이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</p>
+      <script src="https://ads-partners.coupang.com/g.js"></script>
+      <script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"728","height":"120","tsource":""});</script>
+    </div>
+    <div class="coupang-banner coupang-banner-mo">
+      <p class="coupang-notice">이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</p>
+      <script src="https://ads-partners.coupang.com/g.js"></script>
+      <script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"320","height":"50","tsource":""});</script>
+    </div>
+  </div></main>
+
+  <footer class="footer">
+    <div class="container">
+      <p class="footer-copy">&#xa9; 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p>
+      <nav class="footer-nav">
+        <a href="../privacy.html">개인정보 처리방침</a>
+        <a href="../terms.html">이용약관</a>
+        <a href="../about.html">서비스 소개</a>
+        <a href="../blog/index.html">블로그</a>
+      </nav>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+  // ── 상태 ──
+  var originalImage = null;
+  var originalFile  = null;
+
+  // ── RGB ↔ HSL 변환 ──
+  function rgbToHsl(r, g, b) {
+    r /= 255; g /= 255; b /= 255;
+    var max = Math.max(r, g, b), min = Math.min(r, g, b);
+    var h, s, l = (max + min) / 2;
+    if (max === min) {
+      h = s = 0;
+    } else {
+      var d = max - min;
+      s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+      switch (max) {
+        case r: h = ((g - b) / d + (g < b ? 6 : 0)) / 6; break;
+        case g: h = ((b - r) / d + 2) / 6; break;
+        case b: h = ((r - g) / d + 4) / 6; break;
+      }
+    }
+    return [h * 360, s * 100, l * 100];
+  }
+
+  function hslToRgb(h, s, l) {
+    h /= 360; s /= 100; l /= 100;
+    var r, g, b;
+    if (s === 0) {
+      r = g = b = l;
+    } else {
+      function hue2rgb(p, q, t) {
+        if (t < 0) t += 1;
+        if (t > 1) t -= 1;
+        if (t < 1/6) return p + (q - p) * 6 * t;
+        if (t < 1/2) return q;
+        if (t < 2/3) return p + (q - p) * (2/3 - t) * 6;
+        return p;
+      }
+      var q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+      var p = 2 * l - q;
+      r = hue2rgb(p, q, h + 1/3);
+      g = hue2rgb(p, q, h);
+      b = hue2rgb(p, q, h - 1/3);
+    }
+    return [Math.round(r * 255), Math.round(g * 255), Math.round(b * 255)];
+  }
+
+  function clamp(v) { return Math.max(0, Math.min(255, Math.round(v))); }
+
+  // ── 픽셀 보정 ──
+  function applyAdjustments(imageData, bright, contrast, saturate, temp, sharp) {
+    var d = imageData.data;
+    var len = d.length;
+
+    // 대비 계산 인수
+    var cFactor = contrast === 0 ? 1 : (259 * (contrast + 255)) / (255 * (259 - contrast));
+
+    for (var i = 0; i < len; i += 4) {
+      var r = d[i], g = d[i+1], b = d[i+2];
+
+      // 1. 밝기 (덧셈)
+      r += bright; g += bright; b += bright;
+
+      // 2. 대비 (중간점 기준 스케일)
+      r = cFactor * (r - 128) + 128;
+      g = cFactor * (g - 128) + 128;
+      b = cFactor * (b - 128) + 128;
+
+      // 3. 색온도 (R↑B↓ = 따뜻, R↓B↑ = 차가움)
+      if (temp !== 0) {
+        var t = temp * 0.5;
+        r += t;
+        b -= t;
+      }
+
+      // 4. 채도 (RGB → HSL → S 조절 → RGB)
+      if (saturate !== 0) {
+        var hsl = rgbToHsl(clamp(r), clamp(g), clamp(b));
+        hsl[1] = Math.max(0, Math.min(100, hsl[1] + saturate));
+        var rgb = hslToRgb(hsl[0], hsl[1], hsl[2]);
+        r = rgb[0]; g = rgb[1]; b = rgb[2];
+      }
+
+      d[i]   = clamp(r);
+      d[i+1] = clamp(g);
+      d[i+2] = clamp(b);
+    }
+    return imageData;
+  }
+
+  // ── 샤프니스 (언샤프 마스크) ──
+  function applySharpen(ctx, w, h, amount) {
+    if (amount <= 0) return;
+    var src = ctx.getImageData(0, 0, w, h);
+    var dst = ctx.createImageData(w, h);
+    var s = src.data, d = dst.data;
+    var k = amount / 100 * 1.2; // 최대 1.2 강도
+
+    for (var y = 1; y < h - 1; y++) {
+      for (var x = 1; x < w - 1; x++) {
+        var idx = (y * w + x) * 4;
+        for (var c = 0; c < 3; c++) {
+          var center = s[idx + c];
+          var neighbors =
+            s[((y-1)*w + x) * 4 + c] +
+            s[((y+1)*w + x) * 4 + c] +
+            s[(y*w + x-1) * 4 + c] +
+            s[(y*w + x+1) * 4 + c];
+          d[idx + c] = clamp(center + k * (4 * center - neighbors));
+        }
+        d[idx + 3] = s[idx + 3];
+      }
+    }
+    // 가장자리는 원본 복사
+    for (var y = 0; y < h; y++) {
+      for (var x = 0; x < w; x++) {
+        if (y === 0 || y === h-1 || x === 0 || x === w-1) {
+          var idx = (y * w + x) * 4;
+          d[idx] = s[idx]; d[idx+1] = s[idx+1]; d[idx+2] = s[idx+2]; d[idx+3] = s[idx+3];
+        }
+      }
+    }
+    ctx.putImageData(dst, 0, 0);
+  }
+
+  // ── 슬라이더 값 읽기 ──
+  function getSliders() {
+    return {
+      bright:   parseInt(document.getElementById('slBright').value),
+      contrast: parseInt(document.getElementById('slContrast').value),
+      saturate: parseInt(document.getElementById('slSaturate').value),
+      temp:     parseInt(document.getElementById('slTemp').value),
+      sharp:    parseInt(document.getElementById('slSharp').value)
+    };
+  }
+
+  // ── 보정 적용 ──
+  function render() {
+    if (!originalImage) return;
+    var v = getSliders();
+    var rc = document.getElementById('resultCanvas');
+    var ctx = rc.getContext('2d');
+
+    // 원본 이미지 다시 그리기
+    ctx.drawImage(originalImage, 0, 0, rc.width, rc.height);
+
+    // 픽셀 보정 (밝기/대비/채도/색온도)
+    var imgData = ctx.getImageData(0, 0, rc.width, rc.height);
+    applyAdjustments(imgData, v.bright, v.contrast, v.saturate, v.temp, v.sharp);
+    ctx.putImageData(imgData, 0, 0);
+
+    // 샤프니스
+    applySharpen(ctx, rc.width, rc.height, v.sharp);
+
+    updateResultInfo(rc);
+  }
+
+  // ── 결과 파일 크기 예측 ──
+  function updateResultInfo(canvas) {
+    try {
+      var dataUrl = canvas.toDataURL('image/jpeg', 0.92);
+      var bytes = Math.round(dataUrl.length * 0.75);
+      document.getElementById('resultInfo').textContent =
+        canvas.width + ' × ' + canvas.height + ' px · ≈' + formatBytes(bytes);
+    } catch(e) {}
+  }
+
+  function formatBytes(b) {
+    if (b < 1024) return b + ' B';
+    if (b < 1048576) return (b/1024).toFixed(1) + ' KB';
+    return (b/1048576).toFixed(2) + ' MB';
+  }
+
+  // ── 슬라이더 이벤트 ──
+  ['slBright','slContrast','slSaturate','slTemp','slSharp'].forEach(function(id) {
+    var el = document.getElementById(id);
+    var valId = 'val' + id.replace('sl','');
+    el.addEventListener('input', function() {
+      document.getElementById(valId).textContent = el.value;
+      render();
+    });
+  });
+
+  // ── 업로드 ──
+  var uploadZone = document.getElementById('uploadZone');
+  var fileInput  = document.getElementById('fileInput');
+
+  uploadZone.addEventListener('click', function() { fileInput.click(); });
+  uploadZone.addEventListener('dragover', function(e) { e.preventDefault(); uploadZone.classList.add('drag-over'); });
+  uploadZone.addEventListener('dragleave', function() { uploadZone.classList.remove('drag-over'); });
+  uploadZone.addEventListener('drop', function(e) {
+    e.preventDefault(); uploadZone.classList.remove('drag-over');
+    if (e.dataTransfer.files[0]) loadImage(e.dataTransfer.files[0]);
+  });
+  fileInput.addEventListener('change', function() {
+    if (fileInput.files[0]) loadImage(fileInput.files[0]);
+  });
+
+  function loadImage(file) {
+    originalFile = file;
+    var reader = new FileReader();
+    reader.onload = function(e) {
+      var img = new Image();
+      img.onload = function() {
+        originalImage = img;
+
+        // 캔버스 크기 설정 (최대 2000px)
+        var maxW = 2000, maxH = 2000;
+        var w = img.width, h = img.height;
+        if (w > maxW) { h = Math.round(h * maxW / w); w = maxW; }
+        if (h > maxH) { w = Math.round(w * maxH / h); h = maxH; }
+
+        // 원본 캔버스
+        var oc = document.getElementById('originalCanvas');
+        oc.width = w; oc.height = h;
+        oc.getContext('2d').drawImage(img, 0, 0, w, h);
+
+        // 결과 캔버스
+        var rc = document.getElementById('resultCanvas');
+        rc.width = w; rc.height = h;
+
+        // 파일 정보
+        document.getElementById('fileInfo').textContent =
+          file.name + ' · ' + w + ' × ' + h + ' px · ' + formatBytes(file.size);
+
+        // 슬라이더 초기화
+        resetSliders();
+        render();
+
+        // 작업 영역 표시
+        document.getElementById('uploadZone').style.display = 'none';
+        document.getElementById('workArea').classList.add('show');
+      };
+      img.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  }
+
+  // ── 슬라이더 초기화 ──
+  function resetSliders() {
+    ['slBright','slContrast','slSaturate','slTemp','slSharp'].forEach(function(id) {
+      document.getElementById(id).value = 0;
+    });
+    document.getElementById('valBright').textContent = '0';
+    document.getElementById('valContrast').textContent = '0';
+    document.getElementById('valSaturate').textContent = '0';
+    document.getElementById('valTemp').textContent = '0';
+    document.getElementById('valSharp').textContent = '0';
+  }
+
+  // ── 프리셋 ──
+  var PRESETS = {
+    vivid:  { bright: 10, contrast: 20, saturate: 30, temp: 0,   sharp: 20 },
+    warm:   { bright: 5,  contrast: 5,  saturate: 10, temp: 40,  sharp: 0  },
+    cool:   { bright: 0,  contrast: 10, saturate: 0,  temp: -40, sharp: 0  },
+    bright: { bright: 40, contrast: -5, saturate: 5,  temp: 0,   sharp: 0  },
+    dark:   { bright:-30, contrast: 10, saturate: 0,  temp: 0,   sharp: 0  },
+    bw:     { bright: 0,  contrast: 20, saturate:-100, temp: 0,  sharp: 10 }
+  };
+
+  document.querySelectorAll('.preset-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var p = PRESETS[btn.dataset.preset];
+      if (!p) return;
+      document.getElementById('slBright').value   = p.bright;
+      document.getElementById('slContrast').value = p.contrast;
+      document.getElementById('slSaturate').value = p.saturate;
+      document.getElementById('slTemp').value     = p.temp;
+      document.getElementById('slSharp').value    = p.sharp;
+      document.getElementById('valBright').textContent   = p.bright;
+      document.getElementById('valContrast').textContent = p.contrast;
+      document.getElementById('valSaturate').textContent = p.saturate;
+      document.getElementById('valTemp').textContent     = p.temp;
+      document.getElementById('valSharp').textContent    = p.sharp;
+      render();
+      showToast('\u2713 \'' + btn.textContent.trim() + '\' \ud504\ub9ac\uc14b \uc801\uc6a9');
+    });
+  });
+
+  // ── 다운로드 ──
+  function download(ext, quality) {
+    var rc = document.getElementById('resultCanvas');
+    var type = ext === 'jpg' ? 'image/jpeg' : 'image/png';
+    rc.toBlob(function(blob) {
+      var a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'imagebright_result.' + ext;
+      a.click();
+      URL.revokeObjectURL(a.href);
+      showToast('\u2713 ' + ext.toUpperCase() + ' \ud30c\uc77c\uc774 \uc800\uc7a5\ub429\ub2c8\ub2e4');
+    }, type, quality);
+  }
+
+  document.getElementById('downloadJpg').addEventListener('click', function() { download('jpg', 0.92); });
+  document.getElementById('downloadPng').addEventListener('click', function() { download('png', 1); });
+
+  // ── 초기화 ──
+  document.getElementById('resetBtn').addEventListener('click', function() {
+    resetSliders();
+    render();
+    showToast('\u21BA \ubcf4\uc815\uac12\uc774 \ucd08\uae30\ud654\ub418\uc5c8\uc2b5\ub2c8\ub2e4');
+  });
+
+  // ── 다른 이미지 ──
+  document.getElementById('newImageBtn').addEventListener('click', function() {
+    originalImage = null; originalFile = null;
+    fileInput.value = '';
+    document.getElementById('workArea').classList.remove('show');
+    document.getElementById('uploadZone').style.display = '';
+    resetSliders();
+  });
+
+  // ── 토스트 ──
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(function() { t.classList.remove('show'); }, 2000);
+  }
+  </script>
+</body>
+</html>
