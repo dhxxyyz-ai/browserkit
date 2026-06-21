@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="마크다운을 입력하면 HTML 미리보기를 실시간으로 확인할 수 있는 무료 온라인 마크다운 편집기. 서버 전송 없이 브라우저에서 바로 처리합니다." />
+  <meta property="og:title" content="MarkdownEditor — 마크다운 편집기" />
+  <meta property="og:description" content="마크다운을 실시간으로 HTML로 변환하는 무료 온라인 편집기입니다." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://browserkit.pages.dev/markdown-editor/" />
+  <title>MarkdownEditor — 마크다운 편집기</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/dompurify/dist/purify.min.js"></script>
+  <script type="text/javascript" src="//t1.kakaocdn.net/kas/static/ba.min.js" async></script>
+  <style>
+    .header { padding:24px 0 16px; border-bottom:1px solid var(--border); }
+    .header .container { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; }
+    .header-brand { display:flex; align-items:center; gap:10px; text-decoration:none; }
+    .header-brand-icon { font-size:24px; }
+    .header-brand-text { font-size:20px; font-weight:700; font-family:'Inter',sans-serif; background:linear-gradient(135deg,var(--point),var(--point-hover)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+    .header-back { font-size:13px; color:var(--subtext); text-decoration:none; }
+    .header-back:hover { color:var(--text); }
+
+    .hero { text-align:center; padding:40px 0 28px; }
+    .hero-icon { font-size:48px; margin-bottom:16px; }
+    .hero-title { font-size:32px; font-weight:700; margin-bottom:12px; background:linear-gradient(135deg,var(--point),var(--point-hover)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+    .hero-desc { color:var(--subtext); font-size:15px; margin-bottom:20px; }
+    .hero-badges { display:flex; justify-content:center; gap:10px; flex-wrap:wrap; }
+    .hero-badge { background:var(--card); border:1px solid var(--border); border-radius:999px; padding:5px 16px; font-size:13px; color:var(--subtext); }
+
+    /* 툴바 */
+    .toolbar { display:flex; align-items:center; gap:6px; flex-wrap:wrap; background:var(--card); border:1px solid var(--border); border-radius:12px 12px 0 0; padding:10px 14px; border-bottom:none; }
+    .toolbar-btn { background:var(--bg); border:1px solid var(--border); border-radius:7px; padding:5px 11px; font-size:13px; font-weight:600; color:var(--subtext); cursor:pointer; font-family:'Pretendard',sans-serif; transition:all 0.15s; white-space:nowrap; }
+    .toolbar-btn:hover { border-color:var(--point); color:var(--text); background:rgba(108,99,255,0.08); }
+    .toolbar-sep { width:1px; height:20px; background:var(--border); margin:0 4px; flex-shrink:0; }
+    .info-text { font-size:12px; color:var(--subtext); margin-left:auto; font-family:'Inter',sans-serif; white-space:nowrap; }
+
+    /* 에디터 레이아웃 */
+    .editor-wrap { display:grid; grid-template-columns:1fr 1fr; gap:0; margin-bottom:16px; border:1px solid var(--border); border-radius:0 0 12px 12px; overflow:hidden; }
+    .editor-pane { display:flex; flex-direction:column; }
+    .pane-label { font-size:12px; font-weight:600; color:var(--subtext); padding:8px 14px; background:var(--bg); border-bottom:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; }
+    .pane-label-right { border-left:1px solid var(--border); }
+    .md-input { background:#0f0f18; border:none; padding:16px; font-family:'Fira Code','JetBrains Mono',monospace; font-size:13px; line-height:1.8; color:#e2e8f0; resize:none; width:100%; min-height:480px; outline:none; tab-size:2; border-right:1px solid var(--border); }
+    .md-preview { background:var(--card); padding:20px 24px; min-height:480px; overflow:auto; border-left:none; }
+
+    /* 미리보기 콘텐츠 스타일 */
+    .md-preview h1 { font-size:24px; font-weight:700; color:var(--text); margin:0 0 16px; padding-bottom:8px; border-bottom:1px solid var(--border); }
+    .md-preview h2 { font-size:20px; font-weight:700; color:var(--text); margin:28px 0 12px; padding-bottom:6px; border-bottom:1px solid var(--border); }
+    .md-preview h3 { font-size:16px; font-weight:600; color:var(--point-hover); margin:20px 0 8px; }
+    .md-preview h4 { font-size:14px; font-weight:600; color:var(--text); margin:16px 0 6px; }
+    .md-preview p { font-size:14px; color:var(--subtext); line-height:1.8; margin:0 0 12px; }
+    .md-preview ul, .md-preview ol { padding-left:24px; margin:0 0 12px; }
+    .md-preview li { font-size:14px; color:var(--subtext); line-height:1.8; margin:4px 0; }
+    .md-preview blockquote { border-left:3px solid var(--point); margin:16px 0; padding:10px 16px; background:rgba(108,99,255,0.06); border-radius:0 8px 8px 0; }
+    .md-preview blockquote p { margin:0; color:var(--text); }
+    .md-preview code { background:rgba(108,99,255,0.12); border-radius:4px; padding:2px 6px; font-family:'Fira Code',monospace; font-size:12px; color:var(--point-hover); }
+    .md-preview pre { background:#0a0a12; border:1px solid var(--border); border-radius:10px; padding:16px; overflow-x:auto; margin:12px 0; }
+    .md-preview pre code { background:none; padding:0; color:#e2e8f0; font-size:13px; }
+    .md-preview a { color:var(--point-hover); text-decoration:underline; }
+    .md-preview a:hover { color:var(--text); }
+    .md-preview hr { border:none; border-top:1px solid var(--border); margin:20px 0; }
+    .md-preview table { width:100%; border-collapse:collapse; margin:12px 0; font-size:13px; }
+    .md-preview th { background:var(--bg); padding:9px 12px; text-align:left; font-weight:600; border:1px solid var(--border); color:var(--text); }
+    .md-preview td { padding:9px 12px; border:1px solid var(--border); color:var(--subtext); }
+    .md-preview tr:hover td { background:rgba(108,99,255,0.04); }
+    .md-preview img { max-width:100%; border-radius:8px; margin:8px 0; }
+    .md-preview-empty { color:var(--subtext); font-size:13px; font-style:italic; text-align:center; padding:60px 0; font-family:'Pretendard',sans-serif; }
+
+    /* 액션 바 */
+    .action-bar { display:flex; gap:10px; margin-bottom:48px; flex-wrap:wrap; }
+    .btn-primary { background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border:none; border-radius:10px; padding:11px 22px; font-size:14px; font-weight:600; cursor:pointer; font-family:'Pretendard',sans-serif; transition:all 0.2s; white-space:nowrap; }
+    .btn-primary:hover { transform:translateY(-1px); box-shadow:0 6px 20px var(--glow); }
+    .btn-sub { background:var(--card); color:var(--subtext); border:1px solid var(--border); border-radius:10px; padding:11px 20px; font-size:14px; cursor:pointer; font-family:'Pretendard',sans-serif; transition:all 0.2s; white-space:nowrap; }
+    .btn-sub:hover { color:var(--text); border-color:var(--point); }
+    .btn-danger { background:var(--card); color:#F87171; border:1px solid var(--border); border-radius:10px; padding:11px 20px; font-size:14px; cursor:pointer; font-family:'Pretendard',sans-serif; transition:all 0.2s; white-space:nowrap; }
+    .btn-danger:hover { border-color:#F87171; }
+
+    /* 토스트 */
+    .toast { position:fixed; bottom:32px; left:50%; transform:translateX(-50%) translateY(80px); background:var(--success); color:#fff; border-radius:999px; padding:10px 24px; font-size:14px; font-weight:600; opacity:0; pointer-events:none; z-index:999; transition:all 0.3s ease; }
+    .toast.show { transform:translateX(-50%) translateY(0); opacity:1; }
+
+    /* 배너 */
+    .coupang-banner { margin:0 auto 48px; text-align:center; overflow:hidden; }
+    .coupang-notice { font-size:11px; color:var(--subtext); margin-bottom:10px; line-height:1.6; }
+    .coupang-banner-mo { display:none; }
+    .adfit-wrap { text-align:center; margin:24px 0; }
+    .adfit-pc { display:block; }
+    .adfit-mo { display:none; }
+    .footer { border-top:1px solid var(--border); padding:32px 0; text-align:center; }
+    .footer-copy { color:var(--subtext); font-size:13px; margin-bottom:12px; }
+    .footer-nav { display:flex; justify-content:center; gap:20px; flex-wrap:wrap; }
+    .footer-nav a { color:var(--subtext); font-size:13px; text-decoration:none; }
+    .footer-nav a:hover { color:var(--text); }
+
+    @media (max-width:768px) {
+      .editor-wrap { grid-template-columns:1fr; }
+      .md-input { border-right:none; border-bottom:1px solid var(--border); min-height:260px; }
+      .md-preview { min-height:260px; }
+      .hero-title { font-size:24px; }
+      .adfit-pc { display:none; }
+      .adfit-mo { display:block; }
+      .coupang-banner-pc { display:none; }
+      .coupang-banner-mo { display:block; }
+      .toolbar { gap:4px; }
+      .toolbar-btn { padding:5px 8px; font-size:12px; }
+      .info-text { display:none; }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="container">
+      <a href="../index.html" class="header-brand">
+        <span class="header-brand-icon">&#x1F9F0;</span>
+        <span class="header-brand-text">BrowserKit</span>
+      </a>
+      <a href="../index.html" class="header-back">&#x2190; BrowserKit 홈으로</a>
+    </div>
+  </header>
+
+  <main><div class="container">
+    <div class="hero">
+      <div class="hero-icon">&#x1F4DD;</div>
+      <h1 class="hero-title">MarkdownEditor</h1>
+      <p class="hero-desc">마크다운을 입력하면 HTML 미리보기가 실시간으로 표시됩니다. HTML로 복사하거나 파일로 저장하세요</p>
+      <div class="hero-badges">
+        <span class="hero-badge">&#x26A1; 무료 사용</span>
+        <span class="hero-badge">&#x1F512; 서버 전송 없음</span>
+        <span class="hero-badge">&#x1F4E6; 설치 불필요</span>
+      </div>
+    </div>
+
+    <div class="adfit-wrap adfit-pc"><ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-Dfncm24OGOmHKE7V" data-ad-width="728" data-ad-height="90"></ins></div>
+    <div class="adfit-wrap adfit-mo"><ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-jVI6hdgtW0LyffyR" data-ad-width="320" data-ad-height="50"></ins></div>
+
+    <!-- 툴바 -->
+    <div class="toolbar">
+      <button class="toolbar-btn" data-insert="# " title="제목 1">H1</button>
+      <button class="toolbar-btn" data-insert="## " title="제목 2">H2</button>
+      <button class="toolbar-btn" data-insert="### " title="제목 3">H3</button>
+      <div class="toolbar-sep"></div>
+      <button class="toolbar-btn" data-wrap="**" title="굵게">B</button>
+      <button class="toolbar-btn" data-wrap="*" title="기울임" style="font-style:italic;">I</button>
+      <button class="toolbar-btn" data-wrap="~~" title="취소선">S</button>
+      <button class="toolbar-btn" data-wrap="`" title="인라인 코드">&lt;/&gt;</button>
+      <div class="toolbar-sep"></div>
+      <button class="toolbar-btn" data-insert="- " title="목록">&#x2022; 목록</button>
+      <button class="toolbar-btn" data-insert="1. " title="번호 목록">1. 목록</button>
+      <button class="toolbar-btn" data-insert="> " title="인용문">" 인용</button>
+      <div class="toolbar-sep"></div>
+      <button class="toolbar-btn" data-block="```\n\n```" title="코드 블록">코드</button>
+      <button class="toolbar-btn" data-insert="[텍스트](URL)" title="링크">링크</button>
+      <button class="toolbar-btn" data-insert="![설명](URL)" title="이미지">이미지</button>
+      <button class="toolbar-btn" data-insert="---" title="구분선">구분선</button>
+      <div class="toolbar-sep"></div>
+      <button class="toolbar-btn" id="sampleBtn" title="샘플 불러오기">&#x1F4CB; 샘플</button>
+      <span class="info-text" id="infoText">0자</span>
+    </div>
+
+    <!-- 에디터 -->
+    <div class="editor-wrap">
+      <div class="editor-pane">
+        <div class="pane-label">&#x270F;&#xFE0F; 마크다운 입력</div>
+        <textarea class="md-input" id="mdInput" placeholder="# 안녕하세요!&#10;&#10;마크다운을 입력하세요.&#10;&#10;- 왼쪽에 입력하면&#10;- 오른쪽에 실시간으로&#10;- 미리보기가 표시됩니다"></textarea>
+      </div>
+      <div class="editor-pane">
+        <div class="pane-label pane-label-right">&#x1F441;&#xFE0F; HTML 미리보기</div>
+        <div class="md-preview" id="mdPreview">
+          <div class="md-preview-empty">왼쪽에 마크다운을 입력하면<br />HTML 미리보기가 여기에 표시됩니다.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 액션 버튼 -->
+    <div class="action-bar">
+      <button class="btn-primary" id="copyHtmlBtn">&#x1F4CB; HTML 복사</button>
+      <button class="btn-primary" id="copyMdBtn">&#x1F4DD; 마크다운 복사</button>
+      <button class="btn-sub" id="downloadHtmlBtn">&#x2B07; HTML 저장</button>
+      <button class="btn-sub" id="downloadMdBtn">&#x2B07; .md 저장</button>
+      <button class="btn-danger" id="clearBtn">&#x21BA; 초기화</button>
+    </div>
+
+    <div class="coupang-banner coupang-banner-pc">
+      <p class="coupang-notice">이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</p>
+      <script src="https://ads-partners.coupang.com/g.js"></script>
+      <script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"728","height":"120","tsource":""});</script>
+    </div>
+    <div class="coupang-banner coupang-banner-mo">
+      <p class="coupang-notice">이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</p>
+      <script src="https://ads-partners.coupang.com/g.js"></script>
+      <script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"320","height":"50","tsource":""});</script>
+    </div>
+  </div></main>
+
+  <footer class="footer">
+    <div class="container">
+      <p class="footer-copy">&#xa9; 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p>
+      <nav class="footer-nav">
+        <a href="../privacy.html">개인정보 처리방침</a>
+        <a href="../terms.html">이용약관</a>
+        <a href="../about.html">서비스 소개</a>
+        <a href="../blog/index.html">블로그</a>
+      </nav>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+  var mdInput  = document.getElementById('mdInput');
+  var preview  = document.getElementById('mdPreview');
+  var infoText = document.getElementById('infoText');
+
+  // ── marked 설정 ──
+  marked.setOptions({ breaks: true, gfm: true });
+
+  // ── 실시간 렌더링 ──
+  function render() {
+    var val = mdInput.value;
+    infoText.textContent = val.length.toLocaleString() + '\uc790 \u00b7 ' + val.split('\n').length + '\uc904';
+    if (!val.trim()) {
+      preview.innerHTML = '<div class="md-preview-empty">\uc67c\ucabd\uc5d0 \ub9c8\ud06c\ub2e4\uc6b4\uc744 \uc785\ub825\ud558\uba74<br />HTML \ubbf8\ub9ac\ubcf4\uae30\uac00 \uc5ec\uae30\uc5d0 \ud45c\uc2dc\ub429\ub2c8\ub2e4.</div>';
+      return;
+    }
+    var rawHtml = marked.parse(val);
+    // DOMPurify로 XSS 방지
+    preview.innerHTML = DOMPurify.sanitize(rawHtml);
+  }
+
+  mdInput.addEventListener('input', render);
+
+  // ── Tab 키 지원 ──
+  mdInput.addEventListener('keydown', function(e) {
+    if (e.key === 'Tab') {
+      e.preventDefault();
+      var s = mdInput.selectionStart, end = mdInput.selectionEnd;
+      mdInput.value = mdInput.value.slice(0, s) + '  ' + mdInput.value.slice(end);
+      mdInput.selectionStart = mdInput.selectionEnd = s + 2;
+      render();
+    }
+  });
+
+  // ── 툴바 버튼 ──
+  document.querySelectorAll('.toolbar-btn[data-insert]').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var ins = btn.dataset.insert;
+      var s = mdInput.selectionStart;
+      // 줄 시작에 삽입
+      var before = mdInput.value.slice(0, s);
+      var after  = mdInput.value.slice(s);
+      var lineStart = before.lastIndexOf('\n') + 1;
+      var newVal = mdInput.value.slice(0, lineStart) + ins + mdInput.value.slice(lineStart);
+      mdInput.value = newVal;
+      mdInput.selectionStart = mdInput.selectionEnd = lineStart + ins.length + (s - lineStart);
+      mdInput.focus();
+      render();
+    });
+  });
+
+  document.querySelectorAll('.toolbar-btn[data-wrap]').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var wrap = btn.dataset.wrap;
+      var s = mdInput.selectionStart, e = mdInput.selectionEnd;
+      var sel = mdInput.value.slice(s, e) || '\ud14d\uc2a4\ud2b8';
+      var newVal = mdInput.value.slice(0, s) + wrap + sel + wrap + mdInput.value.slice(e);
+      mdInput.value = newVal;
+      mdInput.selectionStart = s + wrap.length;
+      mdInput.selectionEnd   = s + wrap.length + sel.length;
+      mdInput.focus();
+      render();
+    });
+  });
+
+  document.querySelectorAll('.toolbar-btn[data-block]').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var block = btn.dataset.block;
+      var s = mdInput.selectionStart;
+      var sel = mdInput.value.slice(s, mdInput.selectionEnd);
+      var parts = block.split('\n\n');
+      var inserted = parts[0] + '\n' + (sel || '') + '\n' + parts[1];
+      mdInput.value = mdInput.value.slice(0, s) + inserted + mdInput.value.slice(mdInput.selectionEnd);
+      mdInput.selectionStart = mdInput.selectionEnd = s + parts[0].length + 1;
+      mdInput.focus();
+      render();
+    });
+  });
+
+  // ── 샘플 ──
+  var SAMPLE = [
+    '# BrowserKit \ub9c8\ud06c\ub2e4\uc6b4 \uc5d0\ub514\ud130',
+    '',
+    '## \uc18c\uac1c',
+    '',
+    '**MarkdownEditor**\ub294 \ub9c8\ud06c\ub2e4\uc6b4\uc744 *\uc2e4\uc2dc\uac04*\uc73c\ub85c HTML\ub85c \ubcc0\ud658\ud569\ub2c8\ub2e4.',
+    '',
+    '> \ubc0f \uc124\uce58\ub3c4, \ud68c\uc6d0\uac00\uc785\ub3c4, \ube44\uc6a9\ub3c4 \uc5c6\uc2b5\ub2c8\ub2e4.',
+    '',
+    '## \uc8fc\uc694 \uae30\ub2a5',
+    '',
+    '- \uc2e4\uc2dc\uac04 \ub9c8\ud06c\ub2e4\uc6b4 \u2192 HTML \ubcc0\ud658',
+    '- \uccab 7\uac1c \ud234\ubc14 \ubc84\ud2bc (H1~H3, Bold, Italic, \ucde8\uc18c\uc120, \ucf54\ub4dc)',
+    '- HTML \ubcf5\uc0ac / `.md` \ud30c\uc77c \uc800\uc7a5',
+    '- DOMPurify\ub85c XSS \uc548\uc804\ud558\uac8c \ucc98\ub9ac',
+    '',
+    '## \ucf54\ub4dc \uc608\uc2dc',
+    '',
+    '```javascript',
+    'function greet(name) {',
+    '  return `Hello, ${name}!`;',
+    '}',
+    'console.log(greet("BrowserKit"));',
+    '```',
+    '',
+    '## \ud45c \uc608\uc2dc',
+    '',
+    '| \uc11c\ube44\uc2a4 | \uc0c1\ud0dc | \ub09c\uc774\ub3c4 |',
+    '|---|---|---|',
+    '| MarkdownEditor | \u2705 \uc11c\ube44\uc2a4 \uc911 | \u2b50 |',
+    '| DiffChecker | \u2705 \uc11c\ube44\uc2a4 \uc911 | \u2b50\u2b50 |',
+    '| BGRemove | \ud83d\udee0\ufe0f \uae30\ud68d \uc911 | \u2b50\u2b50\u2b50\u2b50 |',
+    '',
+    '---',
+    '',
+    '\ub354 \ub9ce\uc740 \ub3c4\uad6c\ub294 [BrowserKit](https://browserkit.pages.dev)\uc5d0\uc11c \ud655\uc778\ud558\uc138\uc694.'
+  ].join('\n');
+
+  document.getElementById('sampleBtn').addEventListener('click', function() {
+    mdInput.value = SAMPLE;
+    render();
+    showToast('\u2713 \uc0d8\ud50c\uc774 \ub85c\ub4dc\ub418\uc5c8\uc2b5\ub2c8\ub2e4');
+  });
+
+  // ── HTML 복사 ──
+  document.getElementById('copyHtmlBtn').addEventListener('click', function() {
+    var html = preview.innerHTML;
+    if (!html || html.includes('md-preview-empty')) { showToast('\ubcf5\uc0ac\ud560 \ub0b4\uc6a9\uc774 \uc5c6\uc2b5\ub2c8\ub2e4'); return; }
+    navigator.clipboard.writeText(html).then(function() {
+      showToast('\u2713 HTML\uc774 \ud074\ub9bd\ubcf4\ub4dc\uc5d0 \ubcf5\uc0ac\ub418\uc5c8\uc2b5\ub2c8\ub2e4');
+    });
+  });
+
+  // ── 마크다운 복사 ──
+  document.getElementById('copyMdBtn').addEventListener('click', function() {
+    var val = mdInput.value;
+    if (!val.trim()) { showToast('\ubcf5\uc0ac\ud560 \ub0b4\uc6a9\uc774 \uc5c6\uc2b5\ub2c8\ub2e4'); return; }
+    navigator.clipboard.writeText(val).then(function() {
+      showToast('\u2713 \ub9c8\ud06c\ub2e4\uc6b4\uc774 \ud074\ub9bd\ubcf4\ub4dc\uc5d0 \ubcf5\uc0ac\ub418\uc5c8\uc2b5\ub2c8\ub2e4');
+    });
+  });
+
+  // ── HTML 저장 ──
+  document.getElementById('downloadHtmlBtn').addEventListener('click', function() {
+    var val = mdInput.value;
+    if (!val.trim()) { showToast('\uc800\uc7a5\ud560 \ub0b4\uc6a9\uc774 \uc5c6\uc2b5\ub2c8\ub2e4'); return; }
+    var fullHtml = '<!DOCTYPE html>\n<html lang="ko">\n<head>\n<meta charset="UTF-8">\n<meta name="viewport" content="width=device-width, initial-scale=1.0">\n<title>Markdown Export</title>\n<style>\nbody{font-family:\'Pretendard\',\'Noto Sans KR\',sans-serif;max-width:800px;margin:40px auto;padding:0 24px;color:#222;line-height:1.7;}\nh1,h2,h3{border-bottom:1px solid #eee;padding-bottom:6px;}\ncode{background:#f5f5f5;padding:2px 6px;border-radius:4px;font-family:monospace;}\npre{background:#f5f5f5;padding:16px;border-radius:8px;overflow-x:auto;}\npre code{background:none;}\nblockquote{border-left:3px solid #6C63FF;margin:0;padding:10px 16px;background:#f8f7ff;}\ntable{border-collapse:collapse;width:100%;}\nth,td{border:1px solid #ddd;padding:8px 12px;text-align:left;}\nth{background:#f5f5f5;}\n</style>\n</head>\n<body>\n' + DOMPurify.sanitize(marked.parse(val)) + '\n</body>\n</html>';
+    download('markdown_export.html', fullHtml, 'text/html');
+    showToast('\u2713 HTML \ud30c\uc77c\uc774 \uc800\uc7a5\ub429\ub2c8\ub2e4');
+  });
+
+  // ── .md 저장 ──
+  document.getElementById('downloadMdBtn').addEventListener('click', function() {
+    var val = mdInput.value;
+    if (!val.trim()) { showToast('\uc800\uc7a5\ud560 \ub0b4\uc6a9\uc774 \uc5c6\uc2b5\ub2c8\ub2e4'); return; }
+    download('document.md', val, 'text/markdown');
+    showToast('\u2713 .md \ud30c\uc77c\uc774 \uc800\uc7a5\ub429\ub2c8\ub2e4');
+  });
+
+  function download(filename, content, type) {
+    var blob = new Blob([content], { type: type + ';charset=utf-8' });
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = filename;
+    a.click();
+    URL.revokeObjectURL(a.href);
+  }
+
+  // ── 초기화 ──
+  document.getElementById('clearBtn').addEventListener('click', function() {
+    mdInput.value = '';
+    preview.innerHTML = '<div class="md-preview-empty">\uc67c\ucabd\uc5d0 \ub9c8\ud06c\ub2e4\uc6b4\uc744 \uc785\ub825\ud558\uba74<br />HTML \ubbf8\ub9ac\ubcf4\uae30\uac00 \uc5ec\uae30\uc5d0 \ud45c\uc2dc\ub429\ub2c8\ub2e4.</div>';
+    infoText.textContent = '0\uc790';
+    mdInput.focus();
+  });
+
+  // ── 토스트 ──
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(function() { t.classList.remove('show'); }, 2000);
+  }
+  </script>
+</body>
+</html>
