@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="MarkdownEditor의 모든 기능을 단계별로 설명하는 공식 사용 가이드입니다. 마크다운 실시간 미리보기, 툴바 버튼 활용법, HTML 저장 방법을 알아보세요." />
+  <meta property="og:title" content="MarkdownEditor 사용법 완전 가이드 — BrowserKit" />
+  <meta property="og:description" content="마크다운을 실시간으로 HTML로 변환하는 MarkdownEditor 공식 가이드입니다." />
+  <meta property="og:type" content="article" />
+  <title>MarkdownEditor 사용법 완전 가이드 — BrowserKit</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+  <script type="text/javascript" src="//t1.kakaocdn.net/kas/static/ba.min.js" async></script>
+  <style>
+    .header { padding:24px 0 16px; border-bottom:1px solid var(--border); }
+    .header .container { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; }
+    .header-brand { display:flex; align-items:center; gap:10px; text-decoration:none; }
+    .header-brand-icon { font-size:24px; }
+    .header-brand-text { font-size:20px; font-weight:700; font-family:'Inter',sans-serif; background:linear-gradient(135deg,var(--point),var(--point-hover)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+    .header-back { font-size:13px; color:var(--subtext); text-decoration:none; }
+    .header-back:hover { color:var(--text); }
+    .post-wrap { max-width:720px; margin:0 auto; padding:48px 24px 80px; }
+    .post-tag { display:inline-block; font-size:12px; color:var(--point-hover); background:rgba(108,99,255,0.15); padding:3px 12px; border-radius:999px; margin-bottom:16px; }
+    .post-title { font-size:28px; font-weight:700; line-height:1.4; margin-bottom:12px; }
+    .post-date { color:var(--subtext); font-size:13px; margin-bottom:40px; padding-bottom:24px; border-bottom:1px solid var(--border); }
+    .post-body h2 { font-size:20px; font-weight:700; margin:40px 0 16px; color:var(--text); }
+    .post-body h3 { font-size:16px; font-weight:600; margin:28px 0 12px; color:var(--point-hover); }
+    .post-body p { font-size:15px; color:var(--subtext); line-height:1.9; margin-bottom:16px; }
+    .post-highlight { background:var(--card); border-left:3px solid var(--point); border-radius:8px; padding:16px 20px; margin:24px 0; font-size:15px; color:var(--text); line-height:1.8; }
+    .feature-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:20px 0; }
+    .feature-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px; }
+    .feature-card:hover { border-color:var(--point); }
+    .feature-icon { font-size:24px; margin-bottom:10px; }
+    .feature-title { font-size:14px; font-weight:600; color:var(--text); margin-bottom:6px; }
+    .feature-desc { font-size:13px; color:var(--subtext); line-height:1.7; }
+    .step-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px 24px; margin:16px 0; display:flex; gap:16px; align-items:flex-start; }
+    .step-num { min-width:36px; height:36px; background:linear-gradient(135deg,var(--point),var(--point-hover)); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:700; color:white; flex-shrink:0; font-family:'Inter',sans-serif; }
+    .step-content h3 { font-size:15px; font-weight:600; margin-bottom:6px; color:var(--text); }
+    .step-content p { font-size:14px; color:var(--subtext); line-height:1.7; margin:0; }
+    /* 툴바 데모 */
+    .toolbar-demo { display:flex; gap:6px; flex-wrap:wrap; background:var(--card); border:1px solid var(--border); border-radius:10px; padding:12px 14px; margin:16px 0; }
+    .tb-btn { background:var(--bg); border:1px solid var(--border); border-radius:6px; padding:5px 10px; font-size:12px; font-weight:600; color:var(--subtext); white-space:nowrap; }
+    .tb-btn.active { background:rgba(108,99,255,0.12); border-color:var(--point); color:var(--point-hover); }
+    .tb-sep { width:1px; background:var(--border); margin:0 2px; }
+    /* 마크다운 예시 */
+    .md-demo { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:16px 0; }
+    .md-pane { border-radius:10px; overflow:hidden; }
+    .md-pane-label { font-size:11px; font-weight:600; color:var(--subtext); padding:7px 12px; background:var(--bg); border:1px solid var(--border); border-bottom:none; border-radius:10px 10px 0 0; }
+    .md-code { background:#0a0a12; border:1px solid var(--border); padding:14px 16px; font-family:'Fira Code','JetBrains Mono',monospace; font-size:12px; line-height:1.8; color:#e2e8f0; white-space:pre-wrap; border-radius:0 0 10px 10px; margin:0; }
+    .md-result { background:var(--card); border:1px solid var(--border); padding:14px 16px; border-radius:0 0 10px 10px; }
+    .md-result h1 { font-size:18px; font-weight:700; color:var(--text); margin:0 0 8px; border-bottom:1px solid var(--border); padding-bottom:6px; }
+    .md-result h2 { font-size:15px; font-weight:700; color:var(--text); margin:12px 0 6px; }
+    .md-result h3 { font-size:13px; font-weight:600; color:var(--point-hover); margin:10px 0 4px; }
+    .md-result p { font-size:13px; color:var(--subtext); line-height:1.7; margin:0 0 8px; }
+    .md-result ul { padding-left:18px; margin:0 0 8px; }
+    .md-result li { font-size:13px; color:var(--subtext); margin:2px 0; }
+    .md-result code { background:rgba(108,99,255,0.12); border-radius:4px; padding:1px 5px; font-family:'Fira Code',monospace; font-size:11px; color:var(--point-hover); }
+    .md-result blockquote { border-left:3px solid var(--point); margin:8px 0; padding:6px 12px; background:rgba(108,99,255,0.06); font-size:13px; color:var(--text); border-radius:0 6px 6px 0; }
+    .md-result strong { color:var(--text); font-weight:700; }
+    .md-result em { color:var(--subtext); font-style:italic; }
+    .md-result del { color:var(--subtext); text-decoration:line-through; }
+    .post-table { width:100%; border-collapse:collapse; margin:20px 0; font-size:14px; }
+    .post-table th { background:var(--card); padding:12px 16px; text-align:left; font-weight:600; border:1px solid var(--border); color:var(--text); }
+    .post-table td { padding:11px 16px; border:1px solid var(--border); color:var(--subtext); line-height:1.7; }
+    .post-table td code { background:var(--bg); border-radius:4px; padding:1px 6px; font-size:12px; color:var(--point-hover); font-family:'Fira Code',monospace; }
+    .post-table tr:hover td { background:rgba(108,99,255,0.04); }
+    .use-case-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:20px 0; }
+    .use-case-card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:18px; }
+    .use-case-icon { font-size:24px; margin-bottom:8px; }
+    .use-case-title { font-size:13px; font-weight:600; color:var(--text); margin-bottom:6px; }
+    .use-case-desc { font-size:12px; color:var(--subtext); line-height:1.7; }
+    .post-nav { display:flex; justify-content:space-between; margin-top:60px; padding-top:24px; border-top:1px solid var(--border); gap:12px; }
+    .post-nav a { font-size:14px; color:var(--subtext); text-decoration:none; }
+    .post-nav a:hover { color:var(--text); }
+    .cta-box { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:28px; text-align:center; margin:48px 0 0; }
+    .cta-box p { font-size:15px; color:var(--subtext); margin-bottom:16px; }
+    .cta-btn { display:inline-block; background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border-radius:10px; padding:12px 28px; font-size:14px; font-weight:600; text-decoration:none; }
+    .cta-btn:hover { transform:translateY(-2px); box-shadow:0 8px 24px var(--glow); color:white; }
+    .adfit-wrap { text-align:center; margin:24px 0; }
+    .adfit-pc { display:block; }
+    .adfit-mo { display:none; }
+    .back-link { display:inline-flex; align-items:center; gap:6px; color:var(--subtext); font-size:14px; margin-bottom:32px; text-decoration:none; }
+    .back-link:hover { color:var(--text); }
+    .coupang-banner { margin:0 auto 48px; text-align:center; overflow:hidden; }
+    .coupang-notice { font-size:11px; color:var(--subtext); margin-bottom:10px; line-height:1.6; }
+    .coupang-banner-mo { display:none; }
+    @media (max-width:640px) {
+      .feature-grid { grid-template-columns:1fr; }
+      .md-demo { grid-template-columns:1fr; }
+      .use-case-grid { grid-template-columns:1fr; }
+      .adfit-pc { display:none; }
+      .adfit-mo { display:block; }
+      .coupang-banner-pc { display:none; }
+      .coupang-banner-mo { display:block; }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="container">
+      <a href="../index.html" class="header-brand"><span class="header-brand-icon">&#x1F9F0;</span><span class="header-brand-text">BrowserKit</span></a>
+      <a href="../index.html" class="header-back">&#x2190; BrowserKit 홈으로</a>
+    </div>
+  </header>
+
+  <div class="post-wrap">
+    <a href="index.html" class="back-link">&#x2190; 블로그 목록</a>
+    <span class="post-tag">가이드</span>
+    <h1 class="post-title">MarkdownEditor 사용법 완전 가이드</h1>
+    <div class="post-date">2026년 6월 21일</div>
+
+    <div class="post-body">
+      <p>MarkdownEditor는 마크다운을 입력하면 HTML 미리보기가 실시간으로 표시되는 무료 온라인 편집기입니다. 설치나 회원가입 없이 브라우저에서 바로 사용할 수 있으며, 작성한 내용을 HTML 파일이나 .md 파일로 저장할 수 있습니다. 모든 처리가 브라우저 내에서만 이루어지므로 입력한 내용이 외부 서버로 전송되지 않습니다.</p>
+
+      <h2>주요 기능</h2>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <div class="feature-icon">&#x26A1;</div>
+          <div class="feature-title">실시간 미리보기</div>
+          <div class="feature-desc">마크다운을 입력하는 즉시 오른쪽 패널에 HTML 미리보기가 표시됩니다. 별도의 변환 버튼이 필요 없습니다.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F6E0;&#xFE0F;</div>
+          <div class="feature-title">툴바 버튼</div>
+          <div class="feature-desc">H1~H3, 굵게, 기울임, 취소선, 코드, 목록, 인용, 링크 등 자주 쓰는 마크다운 구문을 버튼 한 번으로 삽입합니다.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F4BE;</div>
+          <div class="feature-title">파일 저장</div>
+          <div class="feature-desc">작성한 내용을 HTML 파일 또는 .md 파일로 다운로드합니다. HTML 저장 시 기본 스타일이 포함됩니다.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F6E1;&#xFE0F;</div>
+          <div class="feature-title">XSS 안전 처리</div>
+          <div class="feature-desc">DOMPurify 라이브러리를 사용해 마크다운에 삽입된 악성 스크립트를 자동으로 제거합니다.</div>
+        </div>
+      </div>
+
+      <h2>기본 사용법</h2>
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <h3>마크다운 입력</h3>
+          <p>왼쪽 입력창에 마크다운을 입력합니다. 입력하는 즉시 오른쪽에 HTML 미리보기가 표시됩니다. 샘플 버튼으로 예제 문서를 바로 불러올 수도 있습니다.</p>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <h3>툴바 버튼 활용 (선택)</h3>
+          <p>상단 툴바에서 원하는 서식 버튼을 클릭합니다. 텍스트를 선택한 상태로 버튼을 클릭하면 선택 영역에 서식이 적용됩니다.</p>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <h3>저장 또는 복사</h3>
+          <p>하단 버튼으로 HTML 복사, 마크다운 복사, HTML 파일 저장, .md 파일 저장 중 원하는 방식으로 내보냅니다.</p>
+        </div>
+      </div>
+
+      <h2>툴바 버튼 설명</h2>
+      <div class="toolbar-demo">
+        <span class="tb-btn active">H1</span>
+        <span class="tb-btn active">H2</span>
+        <span class="tb-btn active">H3</span>
+        <span class="tb-sep"></span>
+        <span class="tb-btn active"><strong>B</strong></span>
+        <span class="tb-btn active"><em>I</em></span>
+        <span class="tb-btn active"><del>S</del></span>
+        <span class="tb-btn active">&lt;/&gt;</span>
+        <span class="tb-sep"></span>
+        <span class="tb-btn active">• 목록</span>
+        <span class="tb-btn active">1. 목록</span>
+        <span class="tb-btn active">" 인용</span>
+        <span class="tb-sep"></span>
+        <span class="tb-btn active">코드</span>
+        <span class="tb-btn active">링크</span>
+        <span class="tb-btn active">이미지</span>
+        <span class="tb-btn active">구분선</span>
+      </div>
+
+      <table class="post-table">
+        <thead><tr><th>버튼</th><th>기능</th><th>삽입되는 마크다운</th></tr></thead>
+        <tbody>
+          <tr><td>H1 / H2 / H3</td><td>제목 1~3</td><td><code># </code> / <code>## </code> / <code>### </code></td></tr>
+          <tr><td>B (굵게)</td><td>선택 텍스트를 굵게</td><td><code>**텍스트**</code></td></tr>
+          <tr><td>I (기울임)</td><td>선택 텍스트를 기울임</td><td><code>*텍스트*</code></td></tr>
+          <tr><td>S (취소선)</td><td>선택 텍스트에 취소선</td><td><code>~~텍스트~~</code></td></tr>
+          <tr><td>&lt;/&gt; (코드)</td><td>인라인 코드</td><td><code>`코드`</code></td></tr>
+          <tr><td>• 목록</td><td>순서 없는 목록</td><td><code>- </code></td></tr>
+          <tr><td>1. 목록</td><td>순서 있는 목록</td><td><code>1. </code></td></tr>
+          <tr><td>" 인용</td><td>인용문</td><td><code>&gt; </code></td></tr>
+          <tr><td>코드</td><td>코드 블록</td><td><code>```\n\n```</code></td></tr>
+          <tr><td>링크</td><td>하이퍼링크</td><td><code>[텍스트](URL)</code></td></tr>
+          <tr><td>이미지</td><td>이미지 삽입</td><td><code>![설명](URL)</code></td></tr>
+          <tr><td>구분선</td><td>수평 구분선</td><td><code>---</code></td></tr>
+        </tbody>
+      </table>
+
+      <h2>마크다운 문법 빠른 참고</h2>
+
+      <h3>제목과 강조</h3>
+      <div class="md-demo">
+        <div class="md-pane">
+          <div class="md-pane-label">마크다운 입력</div>
+          <pre class="md-code"># 제목 1
+## 제목 2
+### 제목 3
+
+**굵은 텍스트**
+*기울임 텍스트*
+~~취소선 텍스트~~</pre>
+        </div>
+        <div class="md-pane">
+          <div class="md-pane-label">HTML 미리보기</div>
+          <div class="md-result">
+            <h1>제목 1</h1>
+            <h2>제목 2</h2>
+            <h3>제목 3</h3>
+            <p><strong>굵은 텍스트</strong><br /><em>기울임 텍스트</em><br /><del>취소선 텍스트</del></p>
+          </div>
+        </div>
+      </div>
+
+      <h3>목록과 인용</h3>
+      <div class="md-demo">
+        <div class="md-pane">
+          <div class="md-pane-label">마크다운 입력</div>
+          <pre class="md-code">- 항목 1
+- 항목 2
+  - 중첩 항목
+
+1. 첫 번째
+2. 두 번째
+
+&gt; 인용문 내용
+&gt; 여러 줄도 가능합니다</pre>
+        </div>
+        <div class="md-pane">
+          <div class="md-pane-label">HTML 미리보기</div>
+          <div class="md-result">
+            <ul>
+              <li>항목 1</li>
+              <li>항목 2<ul><li>중첩 항목</li></ul></li>
+            </ul>
+            <ol style="padding-left:18px;margin:8px 0;font-size:13px;color:var(--subtext);">
+              <li>첫 번째</li>
+              <li>두 번째</li>
+            </ol>
+            <blockquote>인용문 내용<br />여러 줄도 가능합니다</blockquote>
+          </div>
+        </div>
+      </div>
+
+      <h3>코드와 링크</h3>
+      <div class="md-demo">
+        <div class="md-pane">
+          <div class="md-pane-label">마크다운 입력</div>
+          <pre class="md-code">인라인 `코드`는 백틱으로
+
+```javascript
+function hello() {
+  return "world";
+}
+```
+
+[BrowserKit](https://browserkit.pages.dev)</pre>
+        </div>
+        <div class="md-pane">
+          <div class="md-pane-label">HTML 미리보기</div>
+          <div class="md-result">
+            <p>인라인 <code>코드</code>는 백틱으로</p>
+            <pre style="background:#0a0a12;border:1px solid var(--border);border-radius:8px;padding:10px 12px;font-family:'Fira Code',monospace;font-size:11px;color:#e2e8f0;overflow-x:auto;">function hello() {
+  return "world";
+}</pre>
+            <p><a href="#" style="color:var(--point-hover);">BrowserKit</a></p>
+          </div>
+        </div>
+      </div>
+
+      <h2>파일 저장 옵션</h2>
+      <table class="post-table">
+        <thead><tr><th>버튼</th><th>파일명</th><th>내용</th><th>용도</th></tr></thead>
+        <tbody>
+          <tr><td>HTML 복사</td><td>—</td><td>렌더링된 HTML 태그</td><td>블로그, 위지윅 에디터에 붙여넣기</td></tr>
+          <tr><td>마크다운 복사</td><td>—</td><td>원본 마크다운 텍스트</td><td>GitHub, Notion 등에 붙여넣기</td></tr>
+          <tr><td>HTML 저장</td><td><code>markdown_export.html</code></td><td>기본 CSS 스타일 포함 HTML</td><td>독립 웹페이지로 공유</td></tr>
+          <tr><td>.md 저장</td><td><code>document.md</code></td><td>순수 마크다운 텍스트</td><td>GitHub, VS Code 등에서 편집</td></tr>
+        </tbody>
+      </table>
+
+      <h2>Tab 키 들여쓰기</h2>
+      <p>입력창에서 Tab 키를 누르면 공백 2칸이 삽입됩니다. 코드 블록 안에서 들여쓰기를 작성하거나 중첩 목록을 만들 때 편리합니다.</p>
+
+      <h2>활용 예시</h2>
+      <div class="use-case-grid">
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F4DD;</div>
+          <div class="use-case-title">블로그 글 초안 작성</div>
+          <div class="use-case-desc">마크다운으로 글을 작성하고 HTML로 복사해 티스토리, 네이버 블로그 HTML 편집 모드에 붙여넣습니다.</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F4BB;</div>
+          <div class="use-case-title">README 작성</div>
+          <div class="use-case-desc">GitHub 저장소의 README.md를 작성하고 미리보기로 확인한 뒤 .md 파일로 저장합니다.</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F4CA;</div>
+          <div class="use-case-title">문서 빠른 정리</div>
+          <div class="use-case-desc">회의록, 기획서, 메모를 마크다운으로 빠르게 구조화하고 HTML 파일로 저장해 공유합니다.</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F393;</div>
+          <div class="use-case-title">마크다운 학습</div>
+          <div class="use-case-desc">마크다운 문법을 입력하면서 결과를 바로 확인할 수 있어 처음 마크다운을 배우는 분들에게 유용합니다.</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F4E7;</div>
+          <div class="use-case-title">HTML 이메일 본문</div>
+          <div class="use-case-desc">마크다운으로 이메일 내용을 작성하고 HTML로 복사해 이메일 HTML 편집기에 붙여넣습니다.</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F4C4;</div>
+          <div class="use-case-title">기술 문서 작성</div>
+          <div class="use-case-desc">API 문서, 개발 가이드 등을 마크다운으로 작성하고 HTML 파일로 내보내 팀 위키에 업로드합니다.</div>
+        </div>
+      </div>
+
+      <h2>마크다운이란?</h2>
+      <p>마크다운은 2004년 John Gruber가 만든 경량 마크업 언어입니다. <code>#</code>, <code>**</code>, <code>-</code> 같은 간단한 기호로 제목, 굵기, 목록을 표현하며, HTML보다 훨씬 읽기 쉽고 작성하기 편합니다. GitHub, Notion, Obsidian, Discord, Slack 등 대부분의 현대 서비스에서 마크다운을 지원합니다.</p>
+
+      <div class="post-highlight">&#x1F4DD; MarkdownEditor는 marked.js로 마크다운을 HTML로 변환하고, DOMPurify로 악성 스크립트를 제거합니다. 모든 처리가 브라우저 내에서만 이루어지므로 입력한 내용이 외부 서버로 전송되지 않습니다.</div>
+    </div>
+
+    <div class="cta-box">
+      <p>지금 바로 MarkdownEditor를 사용해보세요.<br />설치도, 회원가입도, 비용도 없습니다.</p>
+      <a href="../markdown-editor/index.html" class="cta-btn">&#x1F4DD; 무료로 마크다운 편집 시작하기</a>
+    </div>
+
+    <div class="adfit-wrap adfit-pc">
+      <ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-Dfncm24OGOmHKE7V" data-ad-width="728" data-ad-height="90"></ins>
+    </div>
+    <div class="adfit-wrap adfit-mo">
+      <ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-jVI6hdgtW0LyffyR" data-ad-width="320" data-ad-height="50"></ins>
+    </div>
+
+    <div class="coupang-banner coupang-banner-pc">
+      <p class="coupang-notice">이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</p>
+      <script src="https://ads-partners.coupang.com/g.js"></script>
+      <script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"668","height":"100","tsource":""});</script>
+    </div>
+    <div class="coupang-banner coupang-banner-mo">
+      <p class="coupang-notice">이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</p>
+      <script src="https://ads-partners.coupang.com/g.js"></script>
+      <script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"320","height":"50","tsource":""});</script>
+    </div>
+
+    <div class="post-nav">
+      <a href="29-unitconvert-howto.html">&#x2190; 이전 글: UnitConvert 사용법 완전 가이드</a>
+      <span></span>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+      <p class="footer-copy">&#xa9; 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p>
+      <nav class="footer-nav">
+        <a href="../privacy.html">개인정보 처리방침</a>
+        <a href="../terms.html">이용약관</a>
+        <a href="../about.html">서비스 소개</a>
+        <a href="index.html">블로그</a>
+      </nav>
+    </div>
+  </footer>
+</body>
+</html>
