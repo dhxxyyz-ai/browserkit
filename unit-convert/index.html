@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="길이, 무게, 온도, 넓이, 속도를 실시간으로 변환하는 무료 온라인 단위 변환기. 서버 전송 없이 브라우저에서 바로 처리합니다." />
+  <meta property="og:title" content="UnitConvert — 단위 변환기" />
+  <meta property="og:description" content="길이, 무게, 온도, 넓이, 속도를 실시간으로 변환하는 무료 온라인 단위 변환기입니다." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://browserkit.pages.dev/unit-convert/" />
+  <title>UnitConvert — 단위 변환기</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+  <script type="text/javascript" src="//t1.kakaocdn.net/kas/static/ba.min.js" async></script>
+  <style>
+    .header { padding:24px 0 16px; border-bottom:1px solid var(--border); }
+    .header .container { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; }
+    .header-brand { display:flex; align-items:center; gap:10px; text-decoration:none; }
+    .header-brand-icon { font-size:24px; }
+    .header-brand-text { font-size:20px; font-weight:700; font-family:'Inter',sans-serif; background:linear-gradient(135deg,var(--point),var(--point-hover)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+    .header-back { font-size:13px; color:var(--subtext); text-decoration:none; }
+    .header-back:hover { color:var(--text); }
+
+    .hero { text-align:center; padding:40px 0 32px; }
+    .hero-icon { font-size:48px; margin-bottom:16px; }
+    .hero-title { font-size:32px; font-weight:700; margin-bottom:12px; background:linear-gradient(135deg,var(--point),var(--point-hover)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+    .hero-desc { color:var(--subtext); font-size:15px; margin-bottom:20px; }
+    .hero-badges { display:flex; justify-content:center; gap:10px; flex-wrap:wrap; }
+    .hero-badge { background:var(--card); border:1px solid var(--border); border-radius:999px; padding:5px 16px; font-size:13px; color:var(--subtext); }
+
+    /* 탭 */
+    .tab-wrap { display:flex; gap:8px; margin-bottom:24px; flex-wrap:wrap; }
+    .tab-btn { background:var(--card); color:var(--subtext); border:1px solid var(--border); border-radius:10px; padding:10px 20px; font-size:14px; font-weight:600; cursor:pointer; font-family:'Pretendard',sans-serif; transition:all 0.2s; white-space:nowrap; }
+    .tab-btn:hover { border-color:var(--point); color:var(--text); }
+    .tab-btn.active { background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border-color:transparent; }
+
+    /* 입력 영역 */
+    .input-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:24px; margin-bottom:20px; }
+    .input-row { display:flex; gap:12px; align-items:center; flex-wrap:wrap; }
+    .value-input { background:var(--bg); border:1px solid var(--border); border-radius:10px; padding:12px 16px; font-size:20px; font-weight:600; color:var(--text); font-family:'Inter',sans-serif; flex:1; min-width:160px; outline:none; transition:border-color 0.2s; }
+    .value-input:focus { border-color:var(--point); }
+    .unit-select { background:var(--bg); border:1px solid var(--border); border-radius:10px; padding:12px 16px; font-size:15px; color:var(--text); font-family:'Pretendard',sans-serif; min-width:160px; outline:none; cursor:pointer; transition:border-color 0.2s; }
+    .unit-select:focus { border-color:var(--point); }
+    .input-label { font-size:13px; color:var(--subtext); margin-bottom:10px; }
+
+    /* 결과 테이블 */
+    .result-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); overflow:hidden; margin-bottom:48px; }
+    .result-table { width:100%; border-collapse:collapse; }
+    .result-table th { background:var(--bg); padding:12px 16px; text-align:left; font-size:12px; font-weight:600; color:var(--subtext); border-bottom:1px solid var(--border); }
+    .result-table td { padding:13px 16px; border-bottom:1px solid var(--border); font-size:14px; color:var(--text); }
+    .result-table tr:last-child td { border-bottom:none; }
+    .result-table tr:hover td { background:rgba(108,99,255,0.04); }
+    .result-table tr.highlight td { background:rgba(108,99,255,0.08); }
+    .result-table tr.highlight .val-cell { color:var(--point-hover); font-weight:700; font-size:15px; }
+    .unit-name { color:var(--subtext); font-size:13px; }
+    .unit-sym { font-family:'Inter',sans-serif; font-weight:600; color:var(--text); }
+    .val-cell { font-family:'Inter',sans-serif; font-weight:500; }
+    .copy-btn { background:rgba(108,99,255,0.1); border:1px solid var(--border); border-radius:6px; padding:4px 10px; font-size:11px; color:var(--point-hover); cursor:pointer; font-family:'Pretendard',sans-serif; transition:all 0.2s; white-space:nowrap; }
+    .copy-btn:hover { background:rgba(108,99,255,0.22); }
+    .copy-btn.copied { background:rgba(52,211,153,0.12); color:var(--success); border-color:var(--success); }
+
+    /* 오류 */
+    .error-msg { color:#F87171; font-size:13px; margin-top:8px; display:none; }
+    .error-msg.show { display:block; }
+
+    /* 토스트 */
+    .toast { position:fixed; bottom:32px; left:50%; transform:translateX(-50%) translateY(80px); background:var(--success); color:#fff; border-radius:999px; padding:10px 24px; font-size:14px; font-weight:600; opacity:0; pointer-events:none; z-index:999; transition:all 0.3s ease; }
+    .toast.show { transform:translateX(-50%) translateY(0); opacity:1; }
+
+    /* 배너 */
+    .coupang-banner { margin:0 auto 48px; text-align:center; overflow:hidden; }
+    .coupang-notice { font-size:11px; color:var(--subtext); margin-bottom:10px; line-height:1.6; }
+    .coupang-banner-mo { display:none; }
+    .adfit-wrap { text-align:center; margin:24px 0; }
+    .adfit-pc { display:block; }
+    .adfit-mo { display:none; }
+    .footer { border-top:1px solid var(--border); padding:32px 0; text-align:center; }
+    .footer-copy { color:var(--subtext); font-size:13px; margin-bottom:12px; }
+    .footer-nav { display:flex; justify-content:center; gap:20px; flex-wrap:wrap; }
+    .footer-nav a { color:var(--subtext); font-size:13px; text-decoration:none; }
+    .footer-nav a:hover { color:var(--text); }
+
+    @media (max-width:640px) {
+      .hero-title { font-size:24px; }
+      .tab-btn { padding:8px 14px; font-size:13px; }
+      .input-row { flex-direction:column; align-items:stretch; }
+      .value-input, .unit-select { width:100%; }
+      .adfit-pc { display:none; }
+      .adfit-mo { display:block; }
+      .coupang-banner-pc { display:none; }
+      .coupang-banner-mo { display:block; }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="container">
+      <a href="../index.html" class="header-brand">
+        <span class="header-brand-icon">&#x1F9F0;</span>
+        <span class="header-brand-text">BrowserKit</span>
+      </a>
+      <a href="../index.html" class="header-back">&#x2190; BrowserKit 홈으로</a>
+    </div>
+  </header>
+
+  <main><div class="container">
+    <div class="hero">
+      <div class="hero-icon">&#x1F4D0;</div>
+      <h1 class="hero-title">UnitConvert</h1>
+      <p class="hero-desc">길이, 무게, 온도, 넓이, 속도를 실시간으로 변환하세요. 입력하면 전체 단위가 한번에 표시됩니다</p>
+      <div class="hero-badges">
+        <span class="hero-badge">&#x26A1; 무료 사용</span>
+        <span class="hero-badge">&#x1F512; 서버 전송 없음</span>
+        <span class="hero-badge">&#x1F4E6; 설치 불필요</span>
+      </div>
+    </div>
+
+    <div class="adfit-wrap adfit-pc"><ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-Dfncm24OGOmHKE7V" data-ad-width="728" data-ad-height="90"></ins></div>
+    <div class="adfit-wrap adfit-mo"><ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-jVI6hdgtW0LyffyR" data-ad-width="320" data-ad-height="50"></ins></div>
+
+    <!-- 탭 -->
+    <div class="tab-wrap">
+      <button class="tab-btn active" data-tab="length">&#x1F4CF; 길이</button>
+      <button class="tab-btn" data-tab="weight">&#x2696;&#xFE0F; 무게</button>
+      <button class="tab-btn" data-tab="temp">&#x1F321;&#xFE0F; 온도</button>
+      <button class="tab-btn" data-tab="area">&#x1F4D0; 넓이</button>
+      <button class="tab-btn" data-tab="speed">&#x1F3CE;&#xFE0F; 속도</button>
+    </div>
+
+    <!-- 입력 -->
+    <div class="input-card">
+      <div class="input-label" id="input-label">변환할 값과 단위를 선택하세요</div>
+      <div class="input-row">
+        <input type="number" class="value-input" id="value-input" placeholder="0" value="" />
+        <select class="unit-select" id="unit-select"></select>
+      </div>
+      <div class="error-msg" id="error-msg">올바른 숫자를 입력해주세요.</div>
+    </div>
+
+    <!-- 결과 -->
+    <div class="result-card">
+      <table class="result-table">
+        <thead>
+          <tr>
+            <th>단위</th>
+            <th>변환 결과</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="result-body">
+          <tr><td colspan="3" style="text-align:center;color:var(--subtext);padding:32px;">값을 입력하면 변환 결과가 표시됩니다.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="coupang-banner coupang-banner-pc">
+      <p class="coupang-notice">이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</p>
+      <script src="https://ads-partners.coupang.com/g.js"></script>
+      <script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"728","height":"120","tsource":""});</script>
+    </div>
+    <div class="coupang-banner coupang-banner-mo">
+      <p class="coupang-notice">이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</p>
+      <script src="https://ads-partners.coupang.com/g.js"></script>
+      <script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"320","height":"50","tsource":""});</script>
+    </div>
+  </div></main>
+
+  <footer class="footer">
+    <div class="container">
+      <p class="footer-copy">&#xa9; 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p>
+      <nav class="footer-nav">
+        <a href="../privacy.html">개인정보 처리방침</a>
+        <a href="../terms.html">이용약관</a>
+        <a href="../about.html">서비스 소개</a>
+        <a href="../blog/index.html">블로그</a>
+      </nav>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+  // ── 단위 데이터 ──
+  var TABS = {
+    length: {
+      label: '길이 변환',
+      units: [
+        { key: 'mm',  name: '밀리미터', sym: 'mm',  toBase: function(v){ return v * 0.001; },         fromBase: function(v){ return v / 0.001; } },
+        { key: 'cm',  name: '센티미터', sym: 'cm',  toBase: function(v){ return v * 0.01; },          fromBase: function(v){ return v / 0.01; } },
+        { key: 'm',   name: '미터',     sym: 'm',   toBase: function(v){ return v; },                 fromBase: function(v){ return v; } },
+        { key: 'km',  name: '킬로미터', sym: 'km',  toBase: function(v){ return v * 1000; },          fromBase: function(v){ return v / 1000; } },
+        { key: 'in',  name: '인치',     sym: 'in',  toBase: function(v){ return v * 0.0254; },        fromBase: function(v){ return v / 0.0254; } },
+        { key: 'ft',  name: '피트',     sym: 'ft',  toBase: function(v){ return v * 0.3048; },        fromBase: function(v){ return v / 0.3048; } },
+        { key: 'yd',  name: '야드',     sym: 'yd',  toBase: function(v){ return v * 0.9144; },        fromBase: function(v){ return v / 0.9144; } },
+        { key: 'mi',  name: '마일',     sym: 'mi',  toBase: function(v){ return v * 1609.344; },      fromBase: function(v){ return v / 1609.344; } },
+        { key: 'nmi', name: '해리',     sym: 'nmi', toBase: function(v){ return v * 1852; },          fromBase: function(v){ return v / 1852; } }
+      ]
+    },
+    weight: {
+      label: '무게 변환',
+      units: [
+        { key: 'mg',  name: '밀리그램', sym: 'mg',  toBase: function(v){ return v * 0.000001; },      fromBase: function(v){ return v / 0.000001; } },
+        { key: 'g',   name: '그램',     sym: 'g',   toBase: function(v){ return v * 0.001; },          fromBase: function(v){ return v / 0.001; } },
+        { key: 'kg',  name: '킬로그램', sym: 'kg',  toBase: function(v){ return v; },                 fromBase: function(v){ return v; } },
+        { key: 't',   name: '톤',       sym: 't',   toBase: function(v){ return v * 1000; },          fromBase: function(v){ return v / 1000; } },
+        { key: 'oz',  name: '온스',     sym: 'oz',  toBase: function(v){ return v * 0.0283495; },     fromBase: function(v){ return v / 0.0283495; } },
+        { key: 'lb',  name: '파운드',   sym: 'lb',  toBase: function(v){ return v * 0.453592; },      fromBase: function(v){ return v / 0.453592; } },
+        { key: 'st',  name: '스톤',     sym: 'st',  toBase: function(v){ return v * 6.35029; },       fromBase: function(v){ return v / 6.35029; } }
+      ]
+    },
+    temp: {
+      label: '온도 변환',
+      units: [
+        { key: 'c', name: '섭씨',   sym: '°C',
+          toBase:   function(v){ return v; },
+          fromBase: function(v){ return v; } },
+        { key: 'f', name: '화씨',   sym: '°F',
+          toBase:   function(v){ return (v - 32) * 5 / 9; },
+          fromBase: function(v){ return v * 9 / 5 + 32; } },
+        { key: 'k', name: '켈빈',   sym: 'K',
+          toBase:   function(v){ return v - 273.15; },
+          fromBase: function(v){ return v + 273.15; } }
+      ]
+    },
+    area: {
+      label: '넓이 변환',
+      units: [
+        { key: 'mm2',  name: '제곱밀리미터', sym: 'mm²',  toBase: function(v){ return v * 0.000001; },    fromBase: function(v){ return v / 0.000001; } },
+        { key: 'cm2',  name: '제곱센티미터', sym: 'cm²',  toBase: function(v){ return v * 0.0001; },      fromBase: function(v){ return v / 0.0001; } },
+        { key: 'm2',   name: '제곱미터',     sym: 'm²',   toBase: function(v){ return v; },               fromBase: function(v){ return v; } },
+        { key: 'km2',  name: '제곱킬로미터', sym: 'km²',  toBase: function(v){ return v * 1000000; },     fromBase: function(v){ return v / 1000000; } },
+        { key: 'ha',   name: '헥타르',       sym: 'ha',   toBase: function(v){ return v * 10000; },       fromBase: function(v){ return v / 10000; } },
+        { key: 'pyeong', name: '평',         sym: '평',   toBase: function(v){ return v * 3.30579; },     fromBase: function(v){ return v / 3.30579; } },
+        { key: 'ft2',  name: '제곱피트',     sym: 'ft²',  toBase: function(v){ return v * 0.092903; },    fromBase: function(v){ return v / 0.092903; } },
+        { key: 'acre', name: '에이커',       sym: 'acre', toBase: function(v){ return v * 4046.86; },     fromBase: function(v){ return v / 4046.86; } }
+      ]
+    },
+    speed: {
+      label: '속도 변환',
+      units: [
+        { key: 'ms',   name: '미터/초',   sym: 'm/s',   toBase: function(v){ return v; },              fromBase: function(v){ return v; } },
+        { key: 'kmh',  name: '킬로미터/시', sym: 'km/h', toBase: function(v){ return v / 3.6; },        fromBase: function(v){ return v * 3.6; } },
+        { key: 'mph',  name: '마일/시',    sym: 'mph',   toBase: function(v){ return v * 0.44704; },    fromBase: function(v){ return v / 0.44704; } },
+        { key: 'knot', name: '노트',       sym: 'kn',    toBase: function(v){ return v * 0.514444; },   fromBase: function(v){ return v / 0.514444; } },
+        { key: 'mach', name: '마하',       sym: 'Mach',  toBase: function(v){ return v * 340.29; },     fromBase: function(v){ return v / 340.29; } }
+      ]
+    }
+  };
+
+  // ── 상태 ──
+  var currentTab = 'length';
+  var currentUnit = 'cm';
+
+  // ── 탭 전환 ──
+  document.querySelectorAll('.tab-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.tab-btn').forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      currentTab = btn.dataset.tab;
+      var tab = TABS[currentTab];
+      currentUnit = tab.units[0].key;
+      buildSelect();
+      document.getElementById('input-label').textContent = tab.label;
+      convert();
+    });
+  });
+
+  // ── 단위 셀렉트 빌드 ──
+  function buildSelect() {
+    var sel = document.getElementById('unit-select');
+    var tab = TABS[currentTab];
+    sel.innerHTML = '';
+    tab.units.forEach(function(u) {
+      var opt = document.createElement('option');
+      opt.value = u.key;
+      opt.textContent = u.name + ' (' + u.sym + ')';
+      if (u.key === currentUnit) opt.selected = true;
+      sel.appendChild(opt);
+    });
+  }
+
+  document.getElementById('unit-select').addEventListener('change', function() {
+    currentUnit = this.value;
+    convert();
+  });
+
+  // ── 입력 이벤트 ──
+  document.getElementById('value-input').addEventListener('input', convert);
+
+  // ── 숫자 포맷 ──
+  function formatNum(v) {
+    if (v === null || v === undefined || isNaN(v)) return '—';
+    var abs = Math.abs(v);
+    if (abs === 0) return '0';
+    // 매우 크거나 작으면 지수 표기
+    if (abs >= 1e12 || (abs < 1e-6 && abs > 0)) {
+      return v.toExponential(6).replace(/\.?0+e/, 'e');
+    }
+    // 소수점 6자리까지 표시 후 trailing zero 제거
+    var s = parseFloat(v.toPrecision(8)).toString();
+    // 소수점이 있으면 trailing zero 제거
+    if (s.indexOf('.') > -1) {
+      s = s.replace(/\.?0+$/, '');
+    }
+    return s;
+  }
+
+  // ── 변환 실행 ──
+  function convert() {
+    var raw = document.getElementById('value-input').value.trim();
+    var err = document.getElementById('error-msg');
+    var tbody = document.getElementById('result-body');
+
+    if (raw === '' || raw === null) {
+      tbody.innerHTML = '<tr><td colspan="3" style="text-align:center;color:var(--subtext);padding:32px;">값을 입력하면 변환 결과가 표시됩니다.</td></tr>';
+      err.classList.remove('show');
+      return;
+    }
+
+    var val = parseFloat(raw);
+    if (isNaN(val)) {
+      err.classList.add('show');
+      tbody.innerHTML = '';
+      return;
+    }
+    err.classList.remove('show');
+
+    var tab = TABS[currentTab];
+    // 선택 단위 → 기준 단위로 변환
+    var fromUnit = tab.units.find(function(u) { return u.key === currentUnit; });
+    var baseVal = fromUnit.toBase(val);
+
+    // 각 단위로 변환해 렌더
+    var rows = '';
+    tab.units.forEach(function(u) {
+      var result = u.fromBase(baseVal);
+      var isActive = u.key === currentUnit;
+      rows += '<tr class="' + (isActive ? 'highlight' : '') + '">' +
+        '<td><span class="unit-sym">' + u.sym + '</span> <span class="unit-name">' + u.name + '</span></td>' +
+        '<td class="val-cell" id="val-' + u.key + '">' + formatNum(result) + '</td>' +
+        '<td><button class="copy-btn" data-val="' + formatNum(result) + '" data-unit="' + u.sym + '">복사</button></td>' +
+        '</tr>';
+    });
+    tbody.innerHTML = rows;
+
+    // 복사 버튼 이벤트
+    tbody.querySelectorAll('.copy-btn').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var text = btn.dataset.val + ' ' + btn.dataset.unit;
+        navigator.clipboard.writeText(text).then(function() {
+          btn.textContent = '✓';
+          btn.classList.add('copied');
+          setTimeout(function() { btn.textContent = '복사'; btn.classList.remove('copied'); }, 1500);
+          showToast('\u2713 ' + text + ' 복사됨');
+        });
+      });
+    });
+  }
+
+  // ── 토스트 ──
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(function() { t.classList.remove('show'); }, 2000);
+  }
+
+  // ── 초기화 ──
+  buildSelect();
+  document.getElementById('input-label').textContent = TABS[currentTab].label;
+  </script>
+</body>
+</html>
