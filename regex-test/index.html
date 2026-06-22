@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="정규식을 입력하면 테스트 텍스트에서 매칭 영역을 실시간으로 하이라이트하는 무료 온라인 정규식 테스터. 서버 전송 없이 브라우저에서 바로 처리합니다." />
+  <meta property="og:title" content="RegexTest — 정규식 테스터" />
+  <meta property="og:description" content="정규식을 실시간으로 테스트하고 매칭 결과를 하이라이트하는 무료 온라인 도구입니다." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://browserkit.pages.dev/regex-test/" />
+  <title>RegexTest — 정규식 테스터</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+  <script type="text/javascript" src="//t1.kakaocdn.net/kas/static/ba.min.js" async></script>
+  <style>
+    .header { padding:24px 0 16px; border-bottom:1px solid var(--border); }
+    .header .container { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; }
+    .header-brand { display:flex; align-items:center; gap:10px; text-decoration:none; }
+    .header-brand-icon { font-size:24px; }
+    .header-brand-text { font-size:20px; font-weight:700; font-family:'Inter',sans-serif; background:linear-gradient(135deg,var(--point),var(--point-hover)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+    .header-back { font-size:13px; color:var(--subtext); text-decoration:none; }
+    .header-back:hover { color:var(--text); }
+
+    .hero { text-align:center; padding:40px 0 28px; }
+    .hero-icon { font-size:48px; margin-bottom:16px; }
+    .hero-title { font-size:32px; font-weight:700; margin-bottom:12px; background:linear-gradient(135deg,var(--point),var(--point-hover)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+    .hero-desc { color:var(--subtext); font-size:15px; margin-bottom:20px; }
+    .hero-badges { display:flex; justify-content:center; gap:10px; flex-wrap:wrap; }
+    .hero-badge { background:var(--card); border:1px solid var(--border); border-radius:999px; padding:5px 16px; font-size:13px; color:var(--subtext); }
+
+    /* 정규식 입력 영역 */
+    .regex-input-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px 24px; margin-bottom:16px; }
+    .regex-row { display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+    .regex-slash { font-size:22px; color:var(--subtext); font-family:'Fira Code',monospace; font-weight:600; flex-shrink:0; }
+    .regex-field { flex:1; min-width:200px; background:var(--bg); border:1px solid var(--border); border-radius:10px; padding:11px 16px; font-family:'Fira Code','JetBrains Mono',monospace; font-size:16px; color:var(--text); outline:none; transition:border-color 0.2s; }
+    .regex-field:focus { border-color:var(--point); }
+    .flag-wrap { display:flex; gap:6px; flex-shrink:0; }
+    .flag-btn { background:var(--bg); border:1px solid var(--border); border-radius:7px; padding:7px 12px; font-size:13px; font-weight:700; color:var(--subtext); cursor:pointer; font-family:'Fira Code',monospace; transition:all 0.15s; user-select:none; }
+    .flag-btn:hover { border-color:var(--point); }
+    .flag-btn.active { background:rgba(108,99,255,0.15); border-color:var(--point); color:var(--point-hover); }
+
+    /* 상태 표시 */
+    .regex-status { margin-top:12px; font-size:13px; font-family:'Fira Code',monospace; min-height:20px; }
+    .status-ok { color:var(--success); }
+    .status-err { color:#F87171; }
+    .status-info { color:var(--subtext); }
+
+    /* 프리셋 */
+    .preset-wrap { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:16px; }
+    .preset-btn { background:var(--card); border:1px solid var(--border); border-radius:8px; padding:7px 14px; font-size:12px; font-weight:600; color:var(--subtext); cursor:pointer; font-family:'Pretendard',sans-serif; transition:all 0.15s; white-space:nowrap; }
+    .preset-btn:hover { border-color:var(--point); color:var(--text); }
+
+    /* 테스트 텍스트 */
+    .test-label { font-size:13px; font-weight:600; color:var(--subtext); margin-bottom:8px; display:flex; align-items:center; justify-content:space-between; }
+    .test-info { font-size:12px; font-family:'Inter',sans-serif; }
+    .test-input { width:100%; background:#0a0a12; border:1px solid var(--border); border-radius:12px; padding:16px; font-family:'Fira Code','JetBrains Mono',monospace; font-size:13px; line-height:1.8; color:#e2e8f0; resize:vertical; min-height:160px; outline:none; transition:border-color 0.2s; margin-bottom:16px; }
+    .test-input:focus { border-color:var(--point); }
+    .test-input::placeholder { color:#4a5568; }
+
+    /* 하이라이트 결과 */
+    .highlight-label { font-size:13px; font-weight:600; color:var(--subtext); margin-bottom:8px; }
+    .highlight-box { background:#0a0a12; border:1px solid var(--border); border-radius:12px; padding:16px; font-family:'Fira Code','JetBrains Mono',monospace; font-size:13px; line-height:1.8; color:#e2e8f0; min-height:80px; white-space:pre-wrap; word-break:break-all; margin-bottom:16px; }
+    .highlight-box mark { background:rgba(251,191,36,0.35); color:#FBBF24; border-radius:3px; padding:0 1px; font-family:inherit; }
+    .highlight-empty { color:#4a5568; font-style:italic; }
+
+    /* 매칭 결과 목록 */
+    .match-section { margin-bottom:48px; }
+    .match-header { font-size:13px; font-weight:600; color:var(--subtext); margin-bottom:10px; }
+    .match-list { display:flex; flex-direction:column; gap:8px; }
+    .match-item { background:var(--card); border:1px solid var(--border); border-radius:10px; padding:12px 16px; display:grid; grid-template-columns:auto 1fr auto; gap:12px; align-items:center; }
+    .match-idx { font-size:11px; font-weight:700; color:var(--subtext); font-family:'Inter',sans-serif; min-width:24px; }
+    .match-val { font-family:'Fira Code',monospace; font-size:13px; color:#FBBF24; word-break:break-all; }
+    .match-pos { font-size:11px; color:var(--subtext); font-family:'Inter',sans-serif; white-space:nowrap; }
+    .match-groups { grid-column:1/-1; display:flex; flex-direction:column; gap:4px; margin-top:4px; }
+    .match-group-row { font-size:12px; color:var(--subtext); font-family:'Fira Code',monospace; }
+    .match-group-label { color:var(--point-hover); }
+    .match-empty { font-size:13px; color:var(--subtext); font-style:italic; padding:12px 0; }
+
+    /* 버튼 */
+    .action-bar { display:flex; gap:10px; margin-bottom:24px; flex-wrap:wrap; }
+    .btn-sub { background:var(--card); color:var(--subtext); border:1px solid var(--border); border-radius:10px; padding:10px 18px; font-size:13px; cursor:pointer; font-family:'Pretendard',sans-serif; transition:all 0.2s; }
+    .btn-sub:hover { color:var(--text); border-color:var(--point); }
+    .btn-danger { background:var(--card); color:#F87171; border:1px solid var(--border); border-radius:10px; padding:10px 18px; font-size:13px; cursor:pointer; font-family:'Pretendard',sans-serif; transition:all 0.2s; }
+    .btn-danger:hover { border-color:#F87171; }
+
+    /* 토스트 */
+    .toast { position:fixed; bottom:32px; left:50%; transform:translateX(-50%) translateY(80px); background:var(--success); color:#fff; border-radius:999px; padding:10px 24px; font-size:14px; font-weight:600; opacity:0; pointer-events:none; z-index:999; transition:all 0.3s ease; }
+    .toast.show { transform:translateX(-50%) translateY(0); opacity:1; }
+
+    /* 배너 */
+    .coupang-banner { margin:0 auto 48px; text-align:center; overflow:hidden; }
+    .coupang-notice { font-size:11px; color:var(--subtext); margin-bottom:10px; line-height:1.6; }
+    .coupang-banner-mo { display:none; }
+    .adfit-wrap { text-align:center; margin:24px 0; }
+    .adfit-pc { display:block; }
+    .adfit-mo { display:none; }
+    .footer { border-top:1px solid var(--border); padding:32px 0; text-align:center; }
+    .footer-copy { color:var(--subtext); font-size:13px; margin-bottom:12px; }
+    .footer-nav { display:flex; justify-content:center; gap:20px; flex-wrap:wrap; }
+    .footer-nav a { color:var(--subtext); font-size:13px; text-decoration:none; }
+    .footer-nav a:hover { color:var(--text); }
+
+    @media (max-width:640px) {
+      .hero-title { font-size:24px; }
+      .regex-row { flex-direction:column; align-items:stretch; }
+      .regex-slash { display:none; }
+      .adfit-pc { display:none; }
+      .adfit-mo { display:block; }
+      .coupang-banner-pc { display:none; }
+      .coupang-banner-mo { display:block; }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="container">
+      <a href="../index.html" class="header-brand">
+        <span class="header-brand-icon">&#x1F9F0;</span>
+        <span class="header-brand-text">BrowserKit</span>
+      </a>
+      <a href="../index.html" class="header-back">&#x2190; BrowserKit 홈으로</a>
+    </div>
+  </header>
+
+  <main><div class="container">
+    <div class="hero">
+      <div class="hero-icon">&#x1F50D;</div>
+      <h1 class="hero-title">RegexTest</h1>
+      <p class="hero-desc">정규식을 입력하면 테스트 텍스트에서 매칭 영역이 실시간으로 하이라이트됩니다</p>
+      <div class="hero-badges">
+        <span class="hero-badge">&#x26A1; 무료 사용</span>
+        <span class="hero-badge">&#x1F512; 서버 전송 없음</span>
+        <span class="hero-badge">&#x1F4E6; 설치 불필요</span>
+      </div>
+    </div>
+
+    <div class="adfit-wrap adfit-pc"><ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-Dfncm24OGOmHKE7V" data-ad-width="728" data-ad-height="90"></ins></div>
+    <div class="adfit-wrap adfit-mo"><ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-jVI6hdgtW0LyffyR" data-ad-width="320" data-ad-height="50"></ins></div>
+
+    <!-- 정규식 입력 -->
+    <div class="regex-input-card">
+      <div class="regex-row">
+        <span class="regex-slash">/</span>
+        <input type="text" class="regex-field" id="regexField" placeholder="정규식을 입력하세요 (예: \d{3}-\d{4}-\d{4})" autocomplete="off" spellcheck="false" />
+        <span class="regex-slash">/</span>
+        <div class="flag-wrap">
+          <button class="flag-btn active" data-flag="g" title="전체 매칭">g</button>
+          <button class="flag-btn" data-flag="i" title="대소문자 무시">i</button>
+          <button class="flag-btn" data-flag="m" title="멀티라인">m</button>
+          <button class="flag-btn" data-flag="s" title="점(.)이 줄바꿈 포함">s</button>
+        </div>
+      </div>
+      <div class="regex-status" id="regexStatus"><span class="status-info">정규식을 입력하세요</span></div>
+    </div>
+
+    <!-- 빠른 프리셋 -->
+    <div class="preset-wrap">
+      <button class="preset-btn" data-preset="email">&#x1F4E7; 이메일</button>
+      <button class="preset-btn" data-preset="phone">&#x1F4F1; 전화번호</button>
+      <button class="preset-btn" data-preset="url">&#x1F517; URL</button>
+      <button class="preset-btn" data-preset="date">&#x1F4C5; 날짜</button>
+      <button class="preset-btn" data-preset="rrn">&#x1F4C4; 주민번호</button>
+      <button class="preset-btn" data-preset="account">&#x1F4B3; 계좌번호</button>
+      <button class="preset-btn" data-preset="ip">&#x1F310; IP 주소</button>
+      <button class="preset-btn" data-preset="hex">&#x1F3A8; HEX 색상</button>
+    </div>
+
+    <!-- 액션 버튼 -->
+    <div class="action-bar">
+      <button class="btn-sub" id="copyRegexBtn">&#x1F4CB; 정규식 복사</button>
+      <button class="btn-danger" id="clearBtn">&#x21BA; 초기화</button>
+    </div>
+
+    <!-- 테스트 텍스트 입력 -->
+    <div class="test-label">
+      <span>&#x270F;&#xFE0F; 테스트 텍스트</span>
+      <span class="test-info" id="textInfo"></span>
+    </div>
+    <textarea class="test-input" id="testInput" placeholder="매칭을 테스트할 텍스트를 입력하세요"></textarea>
+
+    <!-- 하이라이트 결과 -->
+    <div class="highlight-label">&#x1F4A1; 매칭 하이라이트</div>
+    <div class="highlight-box" id="highlightBox">
+      <span class="highlight-empty">정규식과 테스트 텍스트를 입력하면 매칭 영역이 여기에 표시됩니다.</span>
+    </div>
+
+    <!-- 매칭 결과 목록 -->
+    <div class="match-section">
+      <div class="match-header" id="matchHeader">매칭 결과</div>
+      <div class="match-list" id="matchList">
+        <div class="match-empty">아직 매칭 결과가 없습니다.</div>
+      </div>
+    </div>
+
+    <div class="coupang-banner coupang-banner-pc">
+      <p class="coupang-notice">이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</p>
+      <script src="https://ads-partners.coupang.com/g.js"></script>
+      <script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"728","height":"120","tsource":""});</script>
+    </div>
+    <div class="coupang-banner coupang-banner-mo">
+      <p class="coupang-notice">이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</p>
+      <script src="https://ads-partners.coupang.com/g.js"></script>
+      <script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"320","height":"50","tsource":""});</script>
+    </div>
+  </div></main>
+
+  <footer class="footer">
+    <div class="container">
+      <p class="footer-copy">&#xa9; 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p>
+      <nav class="footer-nav">
+        <a href="../privacy.html">개인정보 처리방침</a>
+        <a href="../terms.html">이용약관</a>
+        <a href="../about.html">서비스 소개</a>
+        <a href="../blog/index.html">블로그</a>
+      </nav>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+  // ── 프리셋 데이터 ──
+  var PRESETS = {
+    email:   { pattern: '[\\w.+-]+@[\\w-]+\\.[\\w.]+', flags: 'gi', sample: '문의: support@browserkit.pages.dev\n안녕하세요 user.name+tag@example.co.kr 로 연락주세요.\ntest@test 는 유효하지 않습니다.' },
+    phone:   { pattern: '01[0-9]-?\\d{3,4}-?\\d{4}', flags: 'g', sample: '전화번호: 010-1234-5678\n또는 01012345678\n팩스: 02-1234-5678 (해당 안 됨)\n010.1234.5678' },
+    url:     { pattern: 'https?:\\/\\/[\\w\\-._~:\\/?#\\[\\]@!$&\'()*+,;=%]+', flags: 'gi', sample: '홈페이지: https://browserkit.pages.dev\n블로그: http://example.com/blog?id=1&page=2\n보안: https://secure.site.co.kr/path#section' },
+    date:    { pattern: '\\d{4}[-./](?:0[1-9]|1[0-2])[-./](?:0[1-9]|[12]\\d|3[01])', flags: 'g', sample: '작성일: 2026-06-22\n마감: 2026.12.31\n생년월일: 1990/01/15\n잘못된 형식: 2026-13-01' },
+    rrn:     { pattern: '\\d{6}-[1-4]\\d{6}', flags: 'g', sample: '주민등록번호: 900101-1234567\n외국인등록: 850315-2345678\n잘못된 예: 900101-5234567' },
+    account: { pattern: '\\d{3,6}-\\d{2,6}-\\d{2,6}(?:-\\d{2,3})?', flags: 'g', sample: '국민은행: 123456-78-901234\n신한은행: 110-123-456789\n기업은행: 123-456789-01-012' },
+    ip:      { pattern: '(?:(?:25[0-5]|2[0-4]\\d|[01]?\\d\\d?)\\.){3}(?:25[0-5]|2[0-4]\\d|[01]?\\d\\d?)', flags: 'g', sample: '서버 IP: 192.168.0.1\n공인 IP: 203.0.113.42\nIPv4 최대: 255.255.255.255\n잘못된 예: 256.1.1.1' },
+    hex:     { pattern: '#(?:[0-9a-fA-F]{6}|[0-9a-fA-F]{3})\\b', flags: 'g', sample: '배경색: #FF5733\n포인트: #6C63FF\n단축형: #fff\n잘못된 예: #GGGGGG\n텍스트: #1A1A24' }
+  };
+
+  // ── 상태 ──
+  var flags = { g: true, i: false, m: false, s: false };
+
+  // ── 플래그 토글 ──
+  document.querySelectorAll('.flag-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var f = btn.dataset.flag;
+      flags[f] = !flags[f];
+      btn.classList.toggle('active', flags[f]);
+      run();
+    });
+  });
+
+  // ── 정규식 필드 ──
+  var regexField = document.getElementById('regexField');
+  var testInput  = document.getElementById('testInput');
+  regexField.addEventListener('input', run);
+  testInput.addEventListener('input', function() {
+    var v = testInput.value;
+    document.getElementById('textInfo').textContent = v ? v.length.toLocaleString() + '자 · ' + v.split('\n').length + '줄' : '';
+    run();
+  });
+
+  // ── 실행 ──
+  function run() {
+    var pattern = regexField.value;
+    var text    = testInput.value;
+    var statusEl = document.getElementById('regexStatus');
+
+    if (!pattern) {
+      statusEl.innerHTML = '<span class="status-info">정규식을 입력하세요</span>';
+      renderHighlight(text, []);
+      renderMatches([]);
+      return;
+    }
+
+    // 플래그 문자열 조합
+    var flagStr = '';
+    if (flags.g) flagStr += 'g';
+    if (flags.i) flagStr += 'i';
+    if (flags.m) flagStr += 'm';
+    if (flags.s) flagStr += 's';
+
+    // 정규식 컴파일
+    var re;
+    try {
+      re = new RegExp(pattern, flagStr || 'g');
+    } catch(e) {
+      statusEl.innerHTML = '<span class="status-err">&#x274C; ' + escHtml(e.message) + '</span>';
+      renderHighlight(text, []);
+      renderMatches([]);
+      return;
+    }
+
+    // 매칭 실행
+    var matches = [];
+    if (!text) {
+      statusEl.innerHTML = '<span class="status-ok">&#x2705; 유효한 정규식</span>';
+      renderHighlight('', []);
+      renderMatches([]);
+      return;
+    }
+
+    // g 플래그 없으면 한 번만 매칭
+    var reWithG = flags.g ? re : new RegExp(pattern, flagStr + 'g');
+    var m;
+    reWithG.lastIndex = 0;
+    while ((m = reWithG.exec(text)) !== null) {
+      matches.push({
+        index: m.index,
+        end:   m.index + m[0].length,
+        value: m[0],
+        groups: m.slice(1)
+      });
+      // 무한루프 방지 (빈 문자열 매칭 시)
+      if (m[0].length === 0) {
+        reWithG.lastIndex++;
+      }
+      if (!flags.g) break;
+    }
+
+    var cnt = matches.length;
+    statusEl.innerHTML = cnt > 0
+      ? '<span class="status-ok">&#x2705; ' + cnt.toLocaleString() + '개 매칭</span>'
+      : '<span class="status-info">&#x26AA; 매칭 없음</span>';
+
+    renderHighlight(text, matches);
+    renderMatches(matches);
+  }
+
+  // ── 하이라이트 렌더링 (XSS 안전) ──
+  function renderHighlight(text, matches) {
+    var box = document.getElementById('highlightBox');
+    if (!text) {
+      box.innerHTML = '<span class="highlight-empty">정규식과 테스트 텍스트를 입력하면 매칭 영역이 여기에 표시됩니다.</span>';
+      return;
+    }
+    if (matches.length === 0) {
+      box.textContent = text;
+      return;
+    }
+
+    // 겹치지 않는 매칭만 처리
+    var html = '';
+    var prev = 0;
+    matches.forEach(function(m) {
+      if (m.index < prev) return; // 겹침 무시
+      html += escHtml(text.slice(prev, m.index));
+      html += '<mark>' + escHtml(m.value) + '</mark>';
+      prev = m.end;
+    });
+    html += escHtml(text.slice(prev));
+    box.innerHTML = html;
+  }
+
+  // ── 매칭 목록 렌더링 ──
+  function renderMatches(matches) {
+    var list   = document.getElementById('matchList');
+    var header = document.getElementById('matchHeader');
+
+    if (matches.length === 0) {
+      header.textContent = '매칭 결과';
+      list.innerHTML = '<div class="match-empty">아직 매칭 결과가 없습니다.</div>';
+      return;
+    }
+
+    header.textContent = '매칭 결과 (' + matches.length + '개)';
+    var html = '';
+    matches.forEach(function(m, i) {
+      var groupsHtml = '';
+      if (m.groups.length > 0) {
+        groupsHtml = '<div class="match-groups">';
+        m.groups.forEach(function(g, gi) {
+          groupsHtml += '<div class="match-group-row"><span class="match-group-label">그룹 ' + (gi+1) + ':</span> ' + (g !== undefined ? escHtml(g) : '<span style="color:#4a5568">undefined</span>') + '</div>';
+        });
+        groupsHtml += '</div>';
+      }
+      html += '<div class="match-item">' +
+        '<span class="match-idx">' + (i+1) + '</span>' +
+        '<span class="match-val">' + escHtml(m.value) + '</span>' +
+        '<span class="match-pos">index: ' + m.index + '</span>' +
+        groupsHtml +
+        '</div>';
+    });
+    list.innerHTML = html;
+  }
+
+  // ── HTML 이스케이프 ──
+  function escHtml(s) {
+    if (s === undefined || s === null) return '';
+    return String(s)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+
+  // ── 프리셋 ──
+  document.querySelectorAll('.preset-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var p = PRESETS[btn.dataset.preset];
+      if (!p) return;
+      regexField.value = p.pattern;
+      testInput.value  = p.sample;
+      // 플래그 적용
+      var pf = p.flags || 'g';
+      flags.g = pf.indexOf('g') > -1;
+      flags.i = pf.indexOf('i') > -1;
+      flags.m = pf.indexOf('m') > -1;
+      flags.s = pf.indexOf('s') > -1;
+      document.querySelectorAll('.flag-btn').forEach(function(fb) {
+        fb.classList.toggle('active', flags[fb.dataset.flag]);
+      });
+      var v = testInput.value;
+      document.getElementById('textInfo').textContent = v.length.toLocaleString() + '자 · ' + v.split('\n').length + '줄';
+      run();
+      showToast('\u2713 \'' + btn.textContent.trim() + '\' \ud504\ub9ac\uc14b \ub85c\ub4dc');
+    });
+  });
+
+  // ── 복사 ──
+  document.getElementById('copyRegexBtn').addEventListener('click', function() {
+    var v = regexField.value;
+    if (!v) { showToast('\uc815\uaddc\uc2dd\uc744 \uba3c\uc800 \uc785\ub825\ud558\uc138\uc694'); return; }
+    var flagStr = '';
+    if (flags.g) flagStr += 'g';
+    if (flags.i) flagStr += 'i';
+    if (flags.m) flagStr += 'm';
+    if (flags.s) flagStr += 's';
+    var full = '/' + v + '/' + flagStr;
+    navigator.clipboard.writeText(full).then(function() {
+      showToast('\u2713 ' + full + ' \ubcf5\uc0ac\ub428');
+    });
+  });
+
+  // ── 초기화 ──
+  document.getElementById('clearBtn').addEventListener('click', function() {
+    regexField.value = '';
+    testInput.value  = '';
+    flags = { g: true, i: false, m: false, s: false };
+    document.querySelectorAll('.flag-btn').forEach(function(fb) {
+      fb.classList.toggle('active', flags[fb.dataset.flag]);
+    });
+    document.getElementById('textInfo').textContent = '';
+    document.getElementById('regexStatus').innerHTML = '<span class="status-info">\uc815\uaddc\uc2dd\uc744 \uc785\ub825\ud558\uc138\uc694</span>';
+    document.getElementById('highlightBox').innerHTML = '<span class="highlight-empty">\uc815\uaddc\uc2dd\uacfc \ud14c\uc2a4\ud2b8 \ud14d\uc2a4\ud2b8\ub97c \uc785\ub825\ud558\uba74 \ub9e4\uce845 \uc601\uc5ed\uc774 \uc5ec\uae30\uc5d0 \ud45c\uc2dc\ub429\ub2c8\ub2e4.</span>';
+    document.getElementById('matchHeader').textContent = '\ub9e4\uce845 \uacb0\uacfc';
+    document.getElementById('matchList').innerHTML = '<div class="match-empty">\uc544\uc9c1 \ub9e4\uce845 \uacb0\uacfc\uac00 \uc5c6\uc2b5\ub2c8\ub2e4.</div>';
+  });
+
+  // ── 토스트 ──
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(function() { t.classList.remove('show'); }, 2000);
+  }
+  </script>
+</body>
+</html>
