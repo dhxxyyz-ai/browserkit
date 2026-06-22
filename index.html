@@ -57,6 +57,64 @@
     .tool-badge.live { background:rgba(52,211,153,0.15); color:var(--success); border:1px solid rgba(52,211,153,0.3); }
     .tool-badge.soon { background:rgba(108,99,255,0.15); color:var(--point-hover); border:1px solid var(--border); }
 
+    /* ── Sticky Nav ── */
+    .sticky-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(15,15,19,0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .sticky-nav-inner {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      align-items: stretch;
+      gap: 2px;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .sticky-nav-inner::-webkit-scrollbar { display: none; }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 15px;
+      font-weight: 700;
+      font-family: 'Inter', sans-serif;
+      color: var(--text);
+      padding: 0 16px 0 0;
+      margin-right: 8px;
+      border-right: 1px solid var(--border);
+      flex-shrink: 0;
+      text-decoration: none;
+    }
+    .nav-logo-icon { font-size: 20px; }
+    .nav-tab {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--subtext);
+      padding: 14px 16px;
+      border-bottom: 2px solid transparent;
+      white-space: nowrap;
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: color 0.15s, border-color 0.15s;
+      text-decoration: none;
+    }
+    .nav-tab:hover { color: var(--text); }
+    .nav-tab.active {
+      color: var(--text);
+      border-bottom-color: var(--point);
+    }
+    .nav-tab-icon { font-size: 15px; }
+
     .footer { border-top:1px solid var(--border); padding:32px 0; text-align:center; }
     .footer-copy { color:var(--subtext); font-size:13px; margin-bottom:12px; }
     .footer-nav { display:flex; justify-content:center; gap:20px; flex-wrap:wrap; }
@@ -64,6 +122,7 @@
     .footer-nav a:hover { color:var(--text); }
 
     @media (max-width:768px) { .tool-grid { grid-template-columns:1fr; } .logo-text { font-size:28px; } .logo-icon { font-size:28px; } }
+    @media (max-width:640px) { .nav-tab { font-size:12px; padding:13px 12px; gap:5px; } .nav-logo { font-size:14px; padding-right:12px; margin-right:6px; } }
     @media (min-width:769px) and (max-width:1024px) { .tool-grid { grid-template-columns:repeat(2,1fr); } }
     .adfit-wrap { text-align:center; margin:64px 0 24px; }
     .adfit-mo { display:none; }
@@ -93,11 +152,35 @@
     </div>
   </header>
 
+  <!-- ── Sticky 탭 메뉴 ── -->
+  <nav class="sticky-nav" id="stickyNav">
+    <div class="sticky-nav-inner">
+      <a href="#" class="nav-logo">
+        <span class="nav-logo-icon">&#x1F9F0;</span> BrowserKit
+      </a>
+      <a class="nav-tab active" data-section="sec-privacy" href="#sec-privacy">
+        <span class="nav-tab-icon">&#x1F512;</span> 개인정보
+      </a>
+      <a class="nav-tab" data-section="sec-image" href="#sec-image">
+        <span class="nav-tab-icon">&#x1F5BC;&#xFE0F;</span> 이미지
+      </a>
+      <a class="nav-tab" data-section="sec-doc" href="#sec-doc">
+        <span class="nav-tab-icon">&#x1F4C4;</span> 문서
+      </a>
+      <a class="nav-tab" data-section="sec-util" href="#sec-util">
+        <span class="nav-tab-icon">&#x1F527;</span> 유틸리티
+      </a>
+      <a class="nav-tab" data-section="sec-dev" href="#sec-dev">
+        <span class="nav-tab-icon">&#x1F4BB;</span> 개발자
+      </a>
+    </div>
+  </nav>
+
   <main>
     <div class="container">
 
       <!-- 🔒 개인정보 보호 도구 -->
-      <div class="section-title">🔒 개인정보 보호 도구</div>
+      <div class="section-title" id="sec-privacy">🔒 개인정보 보호 도구</div>
       <div class="tool-grid">
 
         <a href="maskprivacy/index.html" class="tool-card">
@@ -138,7 +221,7 @@
         <ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-jVI6hdgtW0LyffyR" data-ad-width="320" data-ad-height="50"></ins>
       </div>
       <!-- 🖼️ 이미지 편집 도구 -->
-      <div class="section-title">🖼️ 이미지 편집 도구</div>
+      <div class="section-title" id="sec-image">🖼️ 이미지 편집 도구</div>
       <div class="tool-grid">
 
         <a href="image-tools/index.html" class="tool-card">
@@ -193,7 +276,7 @@
         <ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-jVI6hdgtW0LyffyR" data-ad-width="320" data-ad-height="50"></ins>
       </div>
       <!-- 📄 문서 / 텍스트 도구 -->
-      <div class="section-title">📄 문서 / 텍스트 도구</div>
+      <div class="section-title" id="sec-doc">📄 문서 / 텍스트 도구</div>
       <div class="tool-grid">
 
         <a href="pdf-merge/index.html" class="tool-card">
@@ -233,7 +316,7 @@
       <div class="adfit-wrap adfit-mo">
         <ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-jVI6hdgtW0LyffyR" data-ad-width="320" data-ad-height="50"></ins>
       </div>
-      <div class="section-title">🔧 유틸리티 도구</div>
+      <div class="section-title" id="sec-util">🔧 유틸리티 도구</div>
       <div class="tool-grid">
 
         <a href="qr-code/index.html" class="tool-card">
@@ -266,7 +349,7 @@
       <div class="adfit-wrap adfit-mo">
         <ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-jVI6hdgtW0LyffyR" data-ad-width="320" data-ad-height="50"></ins>
       </div>
-      <div class="section-title">💻 개발자 도구</div>
+      <div class="section-title" id="sec-dev">💻 개발자 도구</div>
       <div class="tool-grid">
 
         <a href="json-format/index.html" class="tool-card">
@@ -316,6 +399,57 @@
       </nav>
     </div>
   </footer>
+
+  <script>
+  (function() {
+    var SECTIONS = ['sec-privacy','sec-image','sec-doc','sec-util','sec-dev'];
+    var tabs = {};
+    SECTIONS.forEach(function(id) {
+      tabs[id] = document.querySelector('.nav-tab[data-section="' + id + '"]');
+    });
+
+    function setActive(id) {
+      document.querySelectorAll('.nav-tab').forEach(function(t) { t.classList.remove('active'); });
+      if (tabs[id]) tabs[id].classList.add('active');
+    }
+
+    // IntersectionObserver 로 현재 섹션 자동 감지
+    var current = SECTIONS[0];
+    var io = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          current = entry.target.id;
+          setActive(current);
+        }
+      });
+    }, { rootMargin: '-20% 0px -70% 0px', threshold: 0 });
+
+    SECTIONS.forEach(function(id) {
+      var el = document.getElementById(id);
+      if (el) io.observe(el);
+    });
+
+    // 클릭 시 해당 섹션으로 스크롤 (스티키 내브 높이 감안)
+    document.querySelectorAll('.nav-tab[data-section]').forEach(function(tab) {
+      tab.addEventListener('click', function(e) {
+        e.preventDefault();
+        var id = tab.dataset.section;
+        var el = document.getElementById(id);
+        if (!el) return;
+        var navH = document.getElementById('stickyNav').offsetHeight;
+        var top = el.getBoundingClientRect().top + window.scrollY - navH - 12;
+        window.scrollTo({ top: top, behavior: 'smooth' });
+        setActive(id);
+      });
+    });
+
+    // 로고 클릭 시 맨 위로
+    document.querySelector('.nav-logo').addEventListener('click', function(e) {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  })();
+  </script>
 
 </body>
 </html>
