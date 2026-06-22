@@ -125,17 +125,11 @@
 
     /* 드롭다운 */
     .nav-dropdown {
-      position: absolute;
-      top: 100%;
-      left: 0;
-      right: 0;
-      background: rgba(15,15,19,0.98);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
+      background: var(--card);
       border-bottom: 1px solid var(--border);
       overflow: hidden;
       max-height: 0;
-      transition: max-height 0.25s ease, opacity 0.2s ease;
+      transition: max-height 0.28s ease, opacity 0.2s ease;
       opacity: 0;
       pointer-events: none;
     }
@@ -228,9 +222,6 @@
       </div>
     </div>
   </header>
-
-  <!-- 드롭다운 오버레이 -->
-  <div class="nav-overlay" id="navOverlay"></div>
 
   <!-- ── Sticky 탭 메뉴 ── -->
   <nav class="sticky-nav" id="stickyNav">
@@ -522,7 +513,6 @@
     var currentCat = null;
     var dropdown   = document.getElementById('navDropdown');
     var inner      = document.getElementById('navDropdownInner');
-    var overlay    = document.getElementById('navOverlay');
 
     function openCat(cat) {
       var tools = CATS[cat];
@@ -535,13 +525,11 @@
           '</a>';
       }).join('');
       dropdown.classList.add('open');
-      overlay.classList.add('show');
       currentCat = cat;
     }
 
     function closeAll() {
       dropdown.classList.remove('open');
-      overlay.classList.remove('show');
       document.querySelectorAll('.nav-tab').forEach(function(t) {
         t.classList.remove('active', 'open');
       });
@@ -563,8 +551,12 @@
       });
     });
 
-    // 오버레이 클릭 → 닫기
-    overlay.addEventListener('click', closeAll);
+    // 남는 영역 클릭 → 닫기
+    document.addEventListener('click', function(e) {
+      if (!document.getElementById('stickyNav').contains(e.target)) {
+        closeAll();
+      }
+    });
 
     // ESC 키
     document.addEventListener('keydown', function(e) {
