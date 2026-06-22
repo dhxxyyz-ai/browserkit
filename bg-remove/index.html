@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="이미지 배경을 AI로 자동 제거하는 무료 온라인 도구. 서버 전송 없이 브라우저에서 바로 처리합니다." />
+  <meta property="og:title" content="BGRemove — AI 배경 제거" />
+  <meta property="og:description" content="이미지 배경을 AI로 자동 제거합니다. 투명 PNG로 저장하세요." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://browserkit.pages.dev/bg-remove/" />
+  <title>BGRemove — AI 배경 제거</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+  <script type="text/javascript" src="//t1.kakaocdn.net/kas/static/ba.min.js" async></script>
+  <style>
+    .header { padding:24px 0 16px; border-bottom:1px solid var(--border); }
+    .header .container { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; }
+    .header-brand { display:flex; align-items:center; gap:10px; text-decoration:none; }
+    .header-brand-icon { font-size:24px; }
+    .header-brand-text { font-size:20px; font-weight:700; font-family:'Inter',sans-serif; background:linear-gradient(135deg,var(--point),var(--point-hover)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+    .header-back { font-size:13px; color:var(--subtext); text-decoration:none; }
+    .header-back:hover { color:var(--text); }
+
+    .hero { text-align:center; padding:40px 0 32px; }
+    .hero-icon { font-size:48px; margin-bottom:16px; }
+    .hero-title { font-size:32px; font-weight:700; margin-bottom:12px; background:linear-gradient(135deg,var(--point),var(--point-hover)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+    .hero-desc { color:var(--subtext); font-size:15px; margin-bottom:20px; }
+    .hero-badges { display:flex; justify-content:center; gap:10px; flex-wrap:wrap; }
+    .hero-badge { background:var(--card); border:1px solid var(--border); border-radius:999px; padding:5px 16px; font-size:13px; color:var(--subtext); }
+
+    /* 업로드 존 */
+    .upload-zone { background:var(--card); border:2px dashed var(--border); border-radius:var(--radius); padding:48px 32px; text-align:center; cursor:pointer; margin-bottom:24px; transition:all 0.2s; }
+    .upload-zone:hover, .upload-zone.drag-over { border-color:var(--point); box-shadow:0 0 24px var(--glow); }
+    .upload-icon { font-size:40px; margin-bottom:12px; }
+    .upload-title { font-size:16px; font-weight:600; margin-bottom:6px; }
+    .upload-sub { color:var(--subtext); font-size:13px; }
+    .upload-notice { margin-top:16px; font-size:12px; color:var(--subtext); background:rgba(108,99,255,0.08); border-radius:8px; padding:10px 16px; line-height:1.7; }
+
+    /* 로딩 단계 */
+    .loading-area { display:none; background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:32px; text-align:center; margin-bottom:24px; }
+    .loading-area.show { display:block; }
+    .loading-icon { font-size:40px; margin-bottom:16px; animation:spin 2s linear infinite; display:inline-block; }
+    @keyframes spin { from { transform:rotate(0deg); } to { transform:rotate(360deg); } }
+    .loading-title { font-size:16px; font-weight:600; margin-bottom:6px; }
+    .loading-sub { color:var(--subtext); font-size:13px; margin-bottom:20px; }
+    .progress-wrap { background:var(--bg); border-radius:999px; height:8px; overflow:hidden; margin-bottom:10px; }
+    .progress-bar { height:100%; background:linear-gradient(90deg,var(--point),var(--point-hover)); border-radius:999px; transition:width 0.3s ease; width:0%; }
+    .progress-text { font-size:12px; color:var(--subtext); font-family:'Inter',sans-serif; }
+
+    /* 결과 영역 */
+    .result-area { display:none; }
+    .result-area.show { display:block; }
+    .preview-wrap { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:24px; }
+    .preview-pane { display:flex; flex-direction:column; gap:8px; }
+    .pane-label { font-size:12px; font-weight:600; color:var(--subtext); padding:6px 0; }
+    .canvas-wrap { border-radius:12px; overflow:hidden; display:flex; align-items:center; justify-content:center; min-height:240px; border:1px solid var(--border); }
+    .canvas-wrap.checker { background:repeating-conic-gradient(#1e1e2a 0% 25%,#26263a 0% 50%) 0 0/16px 16px; }
+    .canvas-wrap img, .canvas-wrap canvas { max-width:100%; max-height:400px; display:block; }
+
+    /* 액션 버튼 */
+    .action-bar { display:flex; gap:10px; margin-bottom:48px; flex-wrap:wrap; }
+    .btn-primary { background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border:none; border-radius:10px; padding:12px 24px; font-size:14px; font-weight:700; cursor:pointer; font-family:'Pretendard',sans-serif; transition:all 0.2s; white-space:nowrap; }
+    .btn-primary:hover { transform:translateY(-2px); box-shadow:0 8px 24px var(--glow); }
+    .btn-sub { background:var(--card); color:var(--subtext); border:1px solid var(--border); border-radius:10px; padding:12px 20px; font-size:14px; cursor:pointer; font-family:'Pretendard',sans-serif; transition:all 0.2s; white-space:nowrap; }
+    .btn-sub:hover { color:var(--text); border-color:var(--point); }
+
+    /* 에러 */
+    .error-area { display:none; background:rgba(248,113,113,0.08); border:1px solid rgba(248,113,113,0.3); border-radius:var(--radius); padding:20px 24px; margin-bottom:24px; text-align:center; }
+    .error-area.show { display:block; }
+    .error-msg { color:#F87171; font-size:14px; margin-bottom:12px; }
+
+    /* 배너 */
+    .coupang-banner { margin:0 auto 48px; text-align:center; overflow:hidden; }
+    .coupang-notice { font-size:11px; color:var(--subtext); margin-bottom:10px; line-height:1.6; }
+    .coupang-banner-mo { display:none; }
+    .adfit-wrap { text-align:center; margin:24px 0; }
+    .adfit-pc { display:block; }
+    .adfit-mo { display:none; }
+    .footer { border-top:1px solid var(--border); padding:32px 0; text-align:center; }
+    .footer-copy { color:var(--subtext); font-size:13px; margin-bottom:12px; }
+    .footer-nav { display:flex; justify-content:center; gap:20px; flex-wrap:wrap; }
+    .footer-nav a { color:var(--subtext); font-size:13px; text-decoration:none; }
+    .footer-nav a:hover { color:var(--text); }
+
+    /* 토스트 */
+    .toast { position:fixed; bottom:32px; left:50%; transform:translateX(-50%) translateY(80px); background:var(--success); color:#fff; border-radius:999px; padding:10px 24px; font-size:14px; font-weight:600; opacity:0; pointer-events:none; z-index:999; transition:all 0.3s ease; }
+    .toast.show { transform:translateX(-50%) translateY(0); opacity:1; }
+
+    @media (max-width:640px) {
+      .preview-wrap { grid-template-columns:1fr; }
+      .hero-title { font-size:24px; }
+      .adfit-pc { display:none; }
+      .adfit-mo { display:block; }
+      .coupang-banner-pc { display:none; }
+      .coupang-banner-mo { display:block; }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="container">
+      <a href="../index.html" class="header-brand">
+        <span class="header-brand-icon">&#x1F9F0;</span>
+        <span class="header-brand-text">BrowserKit</span>
+      </a>
+      <a href="../index.html" class="header-back">&#x2190; BrowserKit 홈으로</a>
+    </div>
+  </header>
+
+  <main><div class="container">
+    <div class="hero">
+      <div class="hero-icon">&#x2702;&#xFE0F;</div>
+      <h1 class="hero-title">BGRemove</h1>
+      <p class="hero-desc">AI가 이미지 배경을 자동으로 제거합니다. 투명 PNG로 저장하세요</p>
+      <div class="hero-badges">
+        <span class="hero-badge">&#x1F916; AI 배경 제거</span>
+        <span class="hero-badge">&#x1F512; 서버 전송 없음</span>
+        <span class="hero-badge">&#x1F4E6; 설치 불필요</span>
+      </div>
+    </div>
+
+    <div class="adfit-wrap adfit-pc"><ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-Dfncm24OGOmHKE7V" data-ad-width="728" data-ad-height="90"></ins></div>
+    <div class="adfit-wrap adfit-mo"><ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-jVI6hdgtW0LyffyR" data-ad-width="320" data-ad-height="50"></ins></div>
+
+    <!-- 업로드 존 -->
+    <div class="upload-zone" id="uploadZone">
+      <input type="file" id="fileInput" accept="image/*" style="display:none" />
+      <div class="upload-icon">&#x1F5BC;&#xFE0F;</div>
+      <div class="upload-title">이미지를 업로드하세요</div>
+      <div class="upload-sub">클릭하거나 드래그하세요 (JPG, PNG, WEBP)</div>
+      <div class="upload-notice">
+        &#x1F916; <strong>AI 모델 안내:</strong> 첫 실행 시 약 40MB 모델을 다운로드합니다 (약 5~15초 소요).<br />
+        이후 브라우저 캐시에 저장되어 <strong>재방문 시 즉시 사용</strong>할 수 있습니다.<br />
+        모든 처리는 내 브라우저에서만 이루어지며, 이미지가 외부 서버로 전송되지 않습니다.
+      </div>
+    </div>
+
+    <!-- 로딩 -->
+    <div class="loading-area" id="loadingArea">
+      <div class="loading-icon">&#x2699;&#xFE0F;</div>
+      <div class="loading-title" id="loadingTitle">AI 모델을 준비하는 중...</div>
+      <div class="loading-sub" id="loadingSub">처음 실행 시 약 40MB를 다운로드합니다. 이후 캐시되어 즉시 사용 가능합니다.</div>
+      <div class="progress-wrap">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+      <div class="progress-text" id="progressText">준비 중...</div>
+    </div>
+
+    <!-- 에러 -->
+    <div class="error-area" id="errorArea">
+      <div class="error-msg" id="errorMsg">오류가 발생했습니다.</div>
+      <button class="btn-sub" id="retryBtn">&#x21BA; 다시 시도</button>
+    </div>
+
+    <!-- 결과 -->
+    <div class="result-area" id="resultArea">
+      <div class="preview-wrap">
+        <div class="preview-pane">
+          <div class="pane-label">&#x1F4F7; 원본</div>
+          <div class="canvas-wrap">
+            <img id="originalImg" src="" alt="원본 이미지" />
+          </div>
+        </div>
+        <div class="preview-pane">
+          <div class="pane-label">&#x2702;&#xFE0F; 배경 제거 결과</div>
+          <div class="canvas-wrap checker">
+            <img id="resultImg" src="" alt="배경 제거 결과" />
+          </div>
+        </div>
+      </div>
+      <div class="action-bar">
+        <button class="btn-primary" id="downloadBtn">&#x2B07; PNG 저장 (투명 배경)</button>
+        <button class="btn-sub" id="newImageBtn">&#x1F5BC;&#xFE0F; 다른 이미지</button>
+      </div>
+    </div>
+
+    <div class="coupang-banner coupang-banner-pc">
+      <p class="coupang-notice">이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</p>
+      <script src="https://ads-partners.coupang.com/g.js"></script>
+      <script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"728","height":"120","tsource":""});</script>
+    </div>
+    <div class="coupang-banner coupang-banner-mo">
+      <p class="coupang-notice">이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</p>
+      <script src="https://ads-partners.coupang.com/g.js"></script>
+      <script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"320","height":"50","tsource":""});</script>
+    </div>
+  </div></main>
+
+  <footer class="footer">
+    <div class="container">
+      <p class="footer-copy">&#xa9; 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p>
+      <nav class="footer-nav">
+        <a href="../privacy.html">개인정보 처리방침</a>
+        <a href="../terms.html">이용약관</a>
+        <a href="../about.html">서비스 소개</a>
+        <a href="../blog/index.html">블로그</a>
+      </nav>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast"></div>
+
+  <script type="module">
+  // ── 상태 ──
+  let removeBackgroundFn = null;
+  let resultBlob = null;
+  let originalFileName = 'image';
+
+  // ── DOM ──
+  const uploadZone   = document.getElementById('uploadZone');
+  const fileInput    = document.getElementById('fileInput');
+  const loadingArea  = document.getElementById('loadingArea');
+  const loadingTitle = document.getElementById('loadingTitle');
+  const loadingSub   = document.getElementById('loadingSub');
+  const progressBar  = document.getElementById('progressBar');
+  const progressText = document.getElementById('progressText');
+  const errorArea    = document.getElementById('errorArea');
+  const errorMsg     = document.getElementById('errorMsg');
+  const resultArea   = document.getElementById('resultArea');
+  const originalImg  = document.getElementById('originalImg');
+  const resultImg    = document.getElementById('resultImg');
+
+  // ── 업로드 이벤트 ──
+  uploadZone.addEventListener('click', () => fileInput.click());
+  uploadZone.addEventListener('dragover', e => { e.preventDefault(); uploadZone.classList.add('drag-over'); });
+  uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('drag-over'));
+  uploadZone.addEventListener('drop', e => {
+    e.preventDefault(); uploadZone.classList.remove('drag-over');
+    if (e.dataTransfer.files[0]) processFile(e.dataTransfer.files[0]);
+  });
+  fileInput.addEventListener('change', () => { if (fileInput.files[0]) processFile(fileInput.files[0]); });
+
+  // ── 메인 처리 ──
+  async function processFile(file) {
+    originalFileName = file.name.replace(/\.[^.]+$/, '');
+
+    // 원본 미리보기
+    const originalUrl = URL.createObjectURL(file);
+    originalImg.src = originalUrl;
+
+    // UI 전환: 업로드 존 숨기고 로딩 표시
+    uploadZone.style.display = 'none';
+    resultArea.classList.remove('show');
+    errorArea.classList.remove('show');
+    loadingArea.classList.add('show');
+
+    try {
+      // ── 라이브러리 동적 로드 (첫 호출 시만) ──
+      if (!removeBackgroundFn) {
+        loadingTitle.textContent = 'AI 라이브러리를 불러오는 중...';
+        loadingSub.textContent = '처음 실행 시 약 40MB를 다운로드합니다. 이후 캐시되어 즉시 사용 가능합니다.';
+        progressBar.style.width = '0%';
+        progressText.textContent = '다운로드 준비 중...';
+
+        const module = await import('https://cdn.jsdelivr.net/npm/@imgly/background-removal@1.5.5/+esm');
+        removeBackgroundFn = module.removeBackground;
+      }
+
+      // ── 배경 제거 실행 ──
+      loadingTitle.textContent = '배경을 제거하는 중...';
+      loadingSub.textContent = '이미지를 분석하고 있습니다. 잠시만 기다려주세요.';
+      progressBar.style.width = '10%';
+      progressText.textContent = 'AI 추론 중...';
+
+      const config = {
+        model: 'small',
+        progress: (key, current, total) => {
+          const pct = total > 0 ? Math.round(current / total * 100) : 0;
+          progressBar.style.width = pct + '%';
+          if (key.includes('fetch') || key.includes('load')) {
+            progressText.textContent = `모델 다운로드 중... ${pct}%`;
+          } else {
+            progressText.textContent = `처리 중... ${pct}%`;
+          }
+        }
+      };
+
+      resultBlob = await removeBackgroundFn(file, config);
+
+      // ── 결과 표시 ──
+      const resultUrl = URL.createObjectURL(resultBlob);
+      resultImg.src = resultUrl;
+
+      loadingArea.classList.remove('show');
+      resultArea.classList.add('show');
+      progressBar.style.width = '100%';
+
+    } catch (err) {
+      console.error('BGRemove 오류:', err);
+      loadingArea.classList.remove('show');
+      errorArea.classList.add('show');
+      errorMsg.textContent = '배경 제거 중 오류가 발생했습니다: ' + (err.message || '알 수 없는 오류');
+    }
+  }
+
+  // ── PNG 저장 ──
+  document.getElementById('downloadBtn').addEventListener('click', () => {
+    if (!resultBlob) return;
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(resultBlob);
+    a.download = originalFileName + '_bgremoved.png';
+    a.click();
+    URL.revokeObjectURL(a.href);
+    showToast('\u2713 PNG \ud30c\uc77c\uc774 \uc800\uc7a5\ub429\ub2c8\ub2e4');
+  });
+
+  // ── 다른 이미지 ──
+  document.getElementById('newImageBtn').addEventListener('click', () => {
+    resultBlob = null;
+    fileInput.value = '';
+    resultArea.classList.remove('show');
+    errorArea.classList.remove('show');
+    loadingArea.classList.remove('show');
+    uploadZone.style.display = '';
+  });
+
+  // ── 다시 시도 ──
+  document.getElementById('retryBtn').addEventListener('click', () => {
+    errorArea.classList.remove('show');
+    uploadZone.style.display = '';
+  });
+
+  // ── 토스트 ──
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2000);
+  }
+  </script>
+</body>
+</html>
