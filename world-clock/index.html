@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="전 세계 도시 시간을 실시간으로 확인하고 시간대를 변환하는 무료 온라인 세계 시계. 서버 전송 없이 브라우저에서 바로 처리합니다." />
+  <meta property="og:title" content="WorldClock — 세계 시간 변환기" />
+  <meta property="og:description" content="전 세계 도시 시간을 실시간으로 확인하고 시간대를 변환하는 무료 온라인 세계 시계입니다." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://browserkit.pages.dev/world-clock/" />
+  <title>WorldClock — 세계 시간 변환기</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+  <script type="text/javascript" src="//t1.kakaocdn.net/kas/static/ba.min.js" async></script>
+  <style>
+    .header { padding:24px 0 16px; border-bottom:1px solid var(--border); }
+    .header .container { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; }
+    .header-brand { display:flex; align-items:center; gap:10px; text-decoration:none; }
+    .header-brand-icon { font-size:24px; }
+    .header-brand-text { font-size:20px; font-weight:700; font-family:'Inter',sans-serif; background:linear-gradient(135deg,var(--point),var(--point-hover)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+    .header-back { font-size:13px; color:var(--subtext); text-decoration:none; }
+    .header-back:hover { color:var(--text); }
+
+    .hero { text-align:center; padding:40px 0 32px; }
+    .hero-icon { font-size:48px; margin-bottom:16px; }
+    .hero-title { font-size:32px; font-weight:700; margin-bottom:12px; background:linear-gradient(135deg,var(--point),var(--point-hover)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+    .hero-desc { color:var(--subtext); font-size:15px; margin-bottom:20px; }
+    .hero-badges { display:flex; justify-content:center; gap:10px; flex-wrap:wrap; }
+    .hero-badge { background:var(--card); border:1px solid var(--border); border-radius:999px; padding:5px 16px; font-size:13px; color:var(--subtext); }
+
+    /* 탭 */
+    .tab-bar { display:flex; gap:4px; background:var(--card); border:1px solid var(--border); border-radius:14px; padding:5px; margin-bottom:24px; }
+    .tab-btn { flex:1; padding:10px; font-size:14px; font-weight:600; border:none; border-radius:10px; cursor:pointer; font-family:'Pretendard',sans-serif; background:transparent; color:var(--subtext); transition:all 0.2s; }
+    .tab-btn.active { background:linear-gradient(135deg,var(--point),var(--point-hover)); color:#fff; }
+    .tab-btn:hover:not(.active) { color:var(--text); background:rgba(108,99,255,0.08); }
+
+    /* 패널 */
+    .panel { display:none; }
+    .panel.show { display:block; }
+
+    /* 도시 검색 */
+    .search-wrap { position:relative; margin-bottom:20px; }
+    .search-input { width:100%; background:var(--card); border:1px solid var(--border); border-radius:12px; padding:13px 48px 13px 18px; font-size:14px; color:var(--text); font-family:'Pretendard',sans-serif; outline:none; transition:border-color 0.2s; }
+    .search-input:focus { border-color:var(--point); }
+    .search-input::placeholder { color:var(--subtext); }
+    .search-icon { position:absolute; right:16px; top:50%; transform:translateY(-50%); font-size:18px; pointer-events:none; }
+    .search-dropdown { position:absolute; top:calc(100% + 4px); left:0; right:0; background:var(--card); border:1px solid var(--border); border-radius:12px; z-index:50; max-height:240px; overflow-y:auto; display:none; box-shadow:0 8px 24px rgba(0,0,0,0.3); }
+    .search-dropdown.show { display:block; }
+    .search-item { padding:10px 16px; font-size:13px; cursor:pointer; display:flex; align-items:center; gap:10px; transition:background 0.1s; }
+    .search-item:hover { background:rgba(108,99,255,0.1); }
+    .search-item-flag { font-size:18px; flex-shrink:0; }
+    .search-item-info { display:flex; flex-direction:column; }
+    .search-item-city { font-weight:600; color:var(--text); }
+    .search-item-tz { font-size:11px; color:var(--subtext); margin-top:1px; }
+    .search-empty { padding:16px; text-align:center; font-size:13px; color:var(--subtext); }
+
+    /* 시계 그리드 */
+    .clock-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-bottom:32px; }
+    .clock-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px; position:relative; transition:border-color 0.2s; }
+    .clock-card:hover { border-color:var(--point); }
+    .clock-card.home { border-color:var(--point); background:rgba(108,99,255,0.06); }
+    .clock-remove { position:absolute; top:10px; right:12px; background:none; border:none; font-size:16px; color:var(--subtext); cursor:pointer; padding:2px 6px; border-radius:6px; line-height:1; }
+    .clock-remove:hover { color:#F87171; background:rgba(248,113,113,0.1); }
+    .clock-flag { font-size:24px; margin-bottom:8px; }
+    .clock-city { font-size:14px; font-weight:700; color:var(--text); margin-bottom:2px; }
+    .clock-country { font-size:12px; color:var(--subtext); margin-bottom:12px; }
+    .clock-time { font-size:30px; font-weight:700; font-family:'Inter',sans-serif; color:var(--text); letter-spacing:-0.5px; line-height:1; margin-bottom:4px; }
+    .clock-date { font-size:12px; color:var(--subtext); margin-bottom:4px; }
+    .clock-offset { font-size:11px; color:var(--subtext); font-family:'Inter',sans-serif; }
+    .clock-home-badge { font-size:10px; background:rgba(108,99,255,0.2); color:var(--point-hover); border-radius:999px; padding:2px 8px; margin-left:6px; font-weight:600; }
+
+    /* 시간대 변환기 */
+    .converter-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:24px; margin-bottom:24px; }
+    .converter-title { font-size:14px; font-weight:700; color:var(--text); margin-bottom:16px; }
+    .converter-row { display:grid; grid-template-columns:1fr auto 1fr; gap:12px; align-items:end; margin-bottom:16px; }
+    .conv-field { display:flex; flex-direction:column; gap:6px; }
+    .conv-label { font-size:12px; font-weight:600; color:var(--subtext); }
+    .conv-select { background:var(--bg); border:1px solid var(--border); border-radius:10px; padding:10px 14px; font-size:14px; color:var(--text); font-family:'Pretendard',sans-serif; outline:none; cursor:pointer; }
+    .conv-select:focus { border-color:var(--point); }
+    .conv-time-input { background:var(--bg); border:1px solid var(--border); border-radius:10px; padding:10px 14px; font-size:14px; color:var(--text); font-family:'Inter',sans-serif; outline:none; width:100%; }
+    .conv-time-input:focus { border-color:var(--point); }
+    .conv-arrow { font-size:20px; color:var(--subtext); padding-bottom:10px; text-align:center; }
+    .conv-result { background:var(--bg); border-radius:12px; padding:16px; margin-top:4px; }
+    .conv-result-time { font-size:32px; font-weight:700; font-family:'Inter',sans-serif; color:var(--point-hover); }
+    .conv-result-info { font-size:13px; color:var(--subtext); margin-top:4px; }
+
+    /* 내 시간 표시 */
+    .my-time-bar { display:flex; align-items:center; justify-content:space-between; background:rgba(108,99,255,0.08); border:1px solid var(--border); border-radius:12px; padding:12px 20px; margin-bottom:20px; flex-wrap:wrap; gap:8px; }
+    .my-time-label { font-size:13px; color:var(--subtext); }
+    .my-time-val { font-size:18px; font-weight:700; font-family:'Inter',sans-serif; color:var(--text); }
+    .my-time-tz { font-size:12px; color:var(--subtext); }
+
+    /* 버튼 */
+    .btn-sub { background:var(--card); color:var(--subtext); border:1px solid var(--border); border-radius:10px; padding:10px 18px; font-size:13px; cursor:pointer; font-family:'Pretendard',sans-serif; transition:all 0.2s; }
+    .btn-sub:hover { color:var(--text); border-color:var(--point); }
+
+    /* 배너 */
+    .coupang-banner { margin:0 auto 48px; text-align:center; overflow:hidden; }
+    .coupang-notice { font-size:11px; color:var(--subtext); margin-bottom:10px; line-height:1.6; }
+    .coupang-banner-mo { display:none; }
+    .adfit-wrap { text-align:center; margin:24px 0; }
+    .adfit-pc { display:block; }
+    .adfit-mo { display:none; }
+    .footer { border-top:1px solid var(--border); padding:32px 0; text-align:center; }
+    .footer-copy { color:var(--subtext); font-size:13px; margin-bottom:12px; }
+    .footer-nav { display:flex; justify-content:center; gap:20px; flex-wrap:wrap; }
+    .footer-nav a { color:var(--subtext); font-size:13px; text-decoration:none; }
+    .footer-nav a:hover { color:var(--text); }
+
+    /* 토스트 */
+    .toast { position:fixed; bottom:32px; left:50%; transform:translateX(-50%) translateY(80px); background:var(--success); color:#fff; border-radius:999px; padding:10px 24px; font-size:14px; font-weight:600; opacity:0; pointer-events:none; z-index:999; transition:all 0.3s ease; }
+    .toast.show { transform:translateX(-50%) translateY(0); opacity:1; }
+
+    @media (max-width:768px) {
+      .clock-grid { grid-template-columns:repeat(2,1fr); }
+      .converter-row { grid-template-columns:1fr; }
+      .conv-arrow { transform:rotate(90deg); padding-bottom:0; }
+    }
+    @media (max-width:480px) {
+      .clock-grid { grid-template-columns:1fr; }
+      .hero-title { font-size:24px; }
+      .adfit-pc { display:none; }
+      .adfit-mo { display:block; }
+      .coupang-banner-pc { display:none; }
+      .coupang-banner-mo { display:block; }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="container">
+      <a href="../index.html" class="header-brand">
+        <span class="header-brand-icon">&#x1F9F0;</span>
+        <span class="header-brand-text">BrowserKit</span>
+      </a>
+      <a href="../index.html" class="header-back">&#x2190; BrowserKit 홈으로</a>
+    </div>
+  </header>
+
+  <main><div class="container">
+    <div class="hero">
+      <div class="hero-icon">&#x1F30D;</div>
+      <h1 class="hero-title">WorldClock</h1>
+      <p class="hero-desc">전 세계 도시 시간을 실시간으로 확인하고 시간대를 변환하세요</p>
+      <div class="hero-badges">
+        <span class="hero-badge">&#x26A1; 실시간 업데이트</span>
+        <span class="hero-badge">&#x1F512; 서버 전송 없음</span>
+        <span class="hero-badge">&#x1F4E6; 설치 불필요</span>
+      </div>
+    </div>
+
+    <div class="adfit-wrap adfit-pc"><ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-Dfncm24OGOmHKE7V" data-ad-width="728" data-ad-height="90"></ins></div>
+    <div class="adfit-wrap adfit-mo"><ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-jVI6hdgtW0LyffyR" data-ad-width="320" data-ad-height="50"></ins></div>
+
+    <!-- 탭 -->
+    <div class="tab-bar">
+      <button class="tab-btn active" data-tab="clocks">&#x1F551; 세계 시계</button>
+      <button class="tab-btn" data-tab="converter">&#x1F504; 시간대 변환</button>
+    </div>
+
+    <!-- ─── 세계 시계 탭 ─── -->
+    <div class="panel show" id="panel-clocks">
+
+      <!-- 내 시간 -->
+      <div class="my-time-bar">
+        <div>
+          <div class="my-time-label">&#x1F4CD; 내 현재 시간</div>
+          <div class="my-time-tz" id="myTz"></div>
+        </div>
+        <div class="my-time-val" id="myTime"></div>
+      </div>
+
+      <!-- 도시 검색 -->
+      <div class="search-wrap">
+        <input type="text" class="search-input" id="citySearch" placeholder="&#x1F50D; 도시를 검색하세요 (예: 뉴욕, Tokyo, London...)" autocomplete="off" />
+        <span class="search-icon">&#x1F50D;</span>
+        <div class="search-dropdown" id="searchDropdown"></div>
+      </div>
+
+      <!-- 시계 카드 그리드 -->
+      <div class="clock-grid" id="clockGrid"></div>
+
+      <div style="text-align:center;margin-bottom:48px;">
+        <button class="btn-sub" id="resetBtn">&#x21BA; 기본 도시로 초기화</button>
+      </div>
+    </div>
+
+    <!-- ─── 시간대 변환 탭 ─── -->
+    <div class="panel" id="panel-converter">
+      <div class="converter-card">
+        <div class="converter-title">&#x1F504; 시간대 변환기</div>
+        <div class="converter-row">
+          <div class="conv-field">
+            <label class="conv-label">출발 도시</label>
+            <select class="conv-select" id="convFrom"></select>
+          </div>
+          <div class="conv-arrow">&#x2192;</div>
+          <div class="conv-field">
+            <label class="conv-label">도착 도시</label>
+            <select class="conv-select" id="convTo"></select>
+          </div>
+        </div>
+        <div class="conv-field" style="margin-bottom:16px;">
+          <label class="conv-label">변환할 시간</label>
+          <input type="datetime-local" class="conv-time-input" id="convTime" />
+        </div>
+        <div class="conv-result" id="convResult">
+          <div class="conv-result-time" id="convResultTime">—</div>
+          <div class="conv-result-info" id="convResultInfo">출발 도시와 도착 도시를 선택하세요.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="coupang-banner coupang-banner-pc">
+      <p class="coupang-notice">이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</p>
+      <script src="https://ads-partners.coupang.com/g.js"></script>
+      <script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"728","height":"120","tsource":""});</script>
+    </div>
+    <div class="coupang-banner coupang-banner-mo">
+      <p class="coupang-notice">이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</p>
+      <script src="https://ads-partners.coupang.com/g.js"></script>
+      <script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"320","height":"50","tsource":""});</script>
+    </div>
+  </div></main>
+
+  <footer class="footer">
+    <div class="container">
+      <p class="footer-copy">&#xa9; 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p>
+      <nav class="footer-nav">
+        <a href="../privacy.html">개인정보 처리방침</a>
+        <a href="../terms.html">이용약관</a>
+        <a href="../about.html">서비스 소개</a>
+        <a href="../blog/index.html">블로그</a>
+      </nav>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+  // ── 도시 데이터 (IANA timezone) ──
+  var CITIES = [
+    { city:'서울',      country:'대한민국',  flag:'🇰🇷', tz:'Asia/Seoul',             utc:'+9:00'  },
+    { city:'도쿄',      country:'일본',      flag:'🇯🇵', tz:'Asia/Tokyo',             utc:'+9:00'  },
+    { city:'베이징',    country:'중국',      flag:'🇨🇳', tz:'Asia/Shanghai',          utc:'+8:00'  },
+    { city:'홍콩',      country:'홍콩',      flag:'🇭🇰', tz:'Asia/Hong_Kong',         utc:'+8:00'  },
+    { city:'싱가포르',  country:'싱가포르',  flag:'🇸🇬', tz:'Asia/Singapore',         utc:'+8:00'  },
+    { city:'방콕',      country:'태국',      flag:'🇹🇭', tz:'Asia/Bangkok',           utc:'+7:00'  },
+    { city:'자카르타',  country:'인도네시아',flag:'🇮🇩', tz:'Asia/Jakarta',           utc:'+7:00'  },
+    { city:'뭄바이',    country:'인도',      flag:'🇮🇳', tz:'Asia/Kolkata',           utc:'+5:30'  },
+    { city:'두바이',    country:'UAE',       flag:'🇦🇪', tz:'Asia/Dubai',             utc:'+4:00'  },
+    { city:'모스크바',  country:'러시아',    flag:'🇷🇺', tz:'Europe/Moscow',          utc:'+3:00'  },
+    { city:'이스탄불',  country:'튀르키예',  flag:'🇹🇷', tz:'Europe/Istanbul',        utc:'+3:00'  },
+    { city:'나이로비',  country:'케냐',      flag:'🇰🇪', tz:'Africa/Nairobi',         utc:'+3:00'  },
+    { city:'카이로',    country:'이집트',    flag:'🇪🇬', tz:'Africa/Cairo',           utc:'+2:00'  },
+    { city:'요하네스버그',country:'남아공',  flag:'🇿🇦', tz:'Africa/Johannesburg',    utc:'+2:00'  },
+    { city:'파리',      country:'프랑스',    flag:'🇫🇷', tz:'Europe/Paris',           utc:'+1:00'  },
+    { city:'베를린',    country:'독일',      flag:'🇩🇪', tz:'Europe/Berlin',          utc:'+1:00'  },
+    { city:'로마',      country:'이탈리아',  flag:'🇮🇹', tz:'Europe/Rome',            utc:'+1:00'  },
+    { city:'런던',      country:'영국',      flag:'🇬🇧', tz:'Europe/London',          utc:'±0:00'  },
+    { city:'리스본',    country:'포르투갈',  flag:'🇵🇹', tz:'Europe/Lisbon',          utc:'±0:00'  },
+    { city:'라고스',    country:'나이지리아',flag:'🇳🇬', tz:'Africa/Lagos',           utc:'+1:00'  },
+    { city:'상파울루',  country:'브라질',    flag:'🇧🇷', tz:'America/Sao_Paulo',      utc:'-3:00'  },
+    { city:'부에노스아이레스',country:'아르헨티나',flag:'🇦🇷',tz:'America/Argentina/Buenos_Aires',utc:'-3:00'},
+    { city:'뉴욕',      country:'미국',      flag:'🇺🇸', tz:'America/New_York',       utc:'-5:00'  },
+    { city:'토론토',    country:'캐나다',    flag:'🇨🇦', tz:'America/Toronto',        utc:'-5:00'  },
+    { city:'시카고',    country:'미국',      flag:'🇺🇸', tz:'America/Chicago',        utc:'-6:00'  },
+    { city:'멕시코시티',country:'멕시코',    flag:'🇲🇽', tz:'America/Mexico_City',    utc:'-6:00'  },
+    { city:'덴버',      country:'미국',      flag:'🇺🇸', tz:'America/Denver',         utc:'-7:00'  },
+    { city:'로스앤젤레스',country:'미국',    flag:'🇺🇸', tz:'America/Los_Angeles',    utc:'-8:00'  },
+    { city:'샌프란시스코',country:'미국',    flag:'🇺🇸', tz:'America/Los_Angeles',    utc:'-8:00'  },
+    { city:'밴쿠버',    country:'캐나다',    flag:'🇨🇦', tz:'America/Vancouver',      utc:'-8:00'  },
+    { city:'앵커리지',  country:'미국',      flag:'🇺🇸', tz:'America/Anchorage',      utc:'-9:00'  },
+    { city:'호놀룰루',  country:'미국',      flag:'🇺🇸', tz:'Pacific/Honolulu',       utc:'-10:00' },
+    { city:'시드니',    country:'호주',      flag:'🇦🇺', tz:'Australia/Sydney',       utc:'+11:00' },
+    { city:'멜버른',    country:'호주',      flag:'🇦🇺', tz:'Australia/Melbourne',    utc:'+11:00' },
+    { city:'오클랜드',  country:'뉴질랜드',  flag:'🇳🇿', tz:'Pacific/Auckland',       utc:'+13:00' },
+    // 영문 검색용 별칭
+    { city:'Seoul',     country:'South Korea',flag:'🇰🇷',tz:'Asia/Seoul',             utc:'+9:00'  },
+    { city:'Tokyo',     country:'Japan',     flag:'🇯🇵', tz:'Asia/Tokyo',             utc:'+9:00'  },
+    { city:'Beijing',   country:'China',     flag:'🇨🇳', tz:'Asia/Shanghai',          utc:'+8:00'  },
+    { city:'Hong Kong', country:'Hong Kong', flag:'🇭🇰', tz:'Asia/Hong_Kong',         utc:'+8:00'  },
+    { city:'Singapore', country:'Singapore', flag:'🇸🇬', tz:'Asia/Singapore',         utc:'+8:00'  },
+    { city:'Bangkok',   country:'Thailand',  flag:'🇹🇭', tz:'Asia/Bangkok',           utc:'+7:00'  },
+    { city:'Mumbai',    country:'India',     flag:'🇮🇳', tz:'Asia/Kolkata',           utc:'+5:30'  },
+    { city:'Dubai',     country:'UAE',       flag:'🇦🇪', tz:'Asia/Dubai',             utc:'+4:00'  },
+    { city:'Moscow',    country:'Russia',    flag:'🇷🇺', tz:'Europe/Moscow',          utc:'+3:00'  },
+    { city:'Istanbul',  country:'Turkey',    flag:'🇹🇷', tz:'Europe/Istanbul',        utc:'+3:00'  },
+    { city:'Cairo',     country:'Egypt',     flag:'🇪🇬', tz:'Africa/Cairo',           utc:'+2:00'  },
+    { city:'Paris',     country:'France',    flag:'🇫🇷', tz:'Europe/Paris',           utc:'+1:00'  },
+    { city:'Berlin',    country:'Germany',   flag:'🇩🇪', tz:'Europe/Berlin',          utc:'+1:00'  },
+    { city:'London',    country:'UK',        flag:'🇬🇧', tz:'Europe/London',          utc:'±0:00'  },
+    { city:'New York',  country:'USA',       flag:'🇺🇸', tz:'America/New_York',       utc:'-5:00'  },
+    { city:'Los Angeles',country:'USA',      flag:'🇺🇸', tz:'America/Los_Angeles',    utc:'-8:00'  },
+    { city:'Sydney',    country:'Australia', flag:'🇦🇺', tz:'Australia/Sydney',       utc:'+11:00' },
+    { city:'Auckland',  country:'New Zealand',flag:'🇳🇿',tz:'Pacific/Auckland',       utc:'+13:00' },
+  ];
+
+  // 기본 표시 도시 (한국어 목록만, tz 기준 중복 제거)
+  var DEFAULT_TZS = [
+    'Asia/Seoul','America/New_York','Europe/London',
+    'Europe/Paris','Asia/Tokyo','Asia/Shanghai',
+    'Asia/Dubai','Australia/Sydney'
+  ];
+
+  // 로컬스토리지 키
+  var LS_KEY = 'worldclock_cities';
+
+  // 현재 선택된 도시 목록 (tz 배열)
+  var selectedTzs = [];
+
+  // ── 초기화 ──
+  (function init() {
+    var saved = localStorage.getItem(LS_KEY);
+    selectedTzs = saved ? JSON.parse(saved) : DEFAULT_TZS.slice();
+    renderClocks();
+    renderMyTime();
+    buildConverterOptions();
+    setDefaultConvTime();
+    calcConversion();
+  })();
+
+  // ── 탭 ──
+  document.querySelectorAll('.tab-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.tab-btn').forEach(function(b){ b.classList.remove('active'); });
+      document.querySelectorAll('.panel').forEach(function(p){ p.classList.remove('show'); });
+      btn.classList.add('active');
+      document.getElementById('panel-'+btn.dataset.tab).classList.add('show');
+    });
+  });
+
+  // ── 내 시간 ──
+  function renderMyTime() {
+    var now = new Date();
+    var hm = now.toLocaleTimeString('ko-KR', { hour:'2-digit', minute:'2-digit', second:'2-digit', hour12:false });
+    document.getElementById('myTime').textContent = hm;
+    var tzName = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    var offset = -now.getTimezoneOffset();
+    var sign = offset >= 0 ? '+' : '-';
+    var h = Math.floor(Math.abs(offset)/60);
+    var m = Math.abs(offset)%60;
+    var offsetStr = 'UTC'+sign+h+(m?':'+String(m).padStart(2,'0'):'');
+    document.getElementById('myTz').textContent = tzName + ' (' + offsetStr + ')';
+  }
+
+  // ── 시계 렌더링 ──
+  function renderClocks() {
+    var grid = document.getElementById('clockGrid');
+    var myTz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    var html = '';
+    selectedTzs.forEach(function(tz, idx) {
+      var cityData = getCityByTz(tz);
+      var isHome = (tz === myTz);
+      html += renderClockCard(cityData, tz, idx, isHome);
+    });
+    grid.innerHTML = html;
+    // 삭제 버튼 이벤트
+    grid.querySelectorAll('.clock-remove').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var i = parseInt(btn.dataset.idx);
+        selectedTzs.splice(i, 1);
+        saveAndRender();
+      });
+    });
+  }
+
+  function renderClockCard(cityData, tz, idx, isHome) {
+    var now = new Date();
+    var timeStr = now.toLocaleTimeString('ko-KR', { timeZone:tz, hour:'2-digit', minute:'2-digit', second:'2-digit', hour12:false });
+    var dateStr = now.toLocaleDateString('ko-KR', { timeZone:tz, year:'numeric', month:'long', day:'numeric', weekday:'short' });
+    var flag = cityData ? cityData.flag : '🌐';
+    var city = cityData ? cityData.city : tz.split('/').pop().replace(/_/g,' ');
+    var country = cityData ? cityData.country : '';
+    var utcOffset = getUtcOffset(tz, now);
+
+    return '<div class="clock-card' + (isHome ? ' home' : '') + '">' +
+      (idx > 0 || !isHome ? '<button class="clock-remove" data-idx="'+idx+'" title="삭제">&#x2715;</button>' : '') +
+      '<div class="clock-flag">'+flag+'</div>' +
+      '<div class="clock-city">'+city+(isHome ? '<span class="clock-home-badge">내 위치</span>' : '')+'</div>' +
+      '<div class="clock-country">'+country+'</div>' +
+      '<div class="clock-time" data-tz="'+tz+'">'+timeStr+'</div>' +
+      '<div class="clock-date" data-tz-date="'+tz+'">'+dateStr+'</div>' +
+      '<div class="clock-offset">UTC '+utcOffset+'</div>' +
+      '</div>';
+  }
+
+  // ── 1초마다 시계 업데이트 ──
+  setInterval(function() {
+    var now = new Date();
+    // 내 시간
+    renderMyTime();
+    // 시계 카드 시간만 업데이트
+    document.querySelectorAll('.clock-time[data-tz]').forEach(function(el) {
+      var tz = el.dataset.tz;
+      el.textContent = now.toLocaleTimeString('ko-KR', { timeZone:tz, hour:'2-digit', minute:'2-digit', second:'2-digit', hour12:false });
+    });
+    document.querySelectorAll('.clock-date[data-tz-date]').forEach(function(el) {
+      var tz = el.dataset.tzDate;
+      el.textContent = now.toLocaleDateString('ko-KR', { timeZone:tz, year:'numeric', month:'long', day:'numeric', weekday:'short' });
+    });
+  }, 1000);
+
+  // ── UTC 오프셋 계산 ──
+  function getUtcOffset(tz, now) {
+    try {
+      var date = now || new Date();
+      var utcDate = new Date(date.toLocaleString('en-US', { timeZone:'UTC' }));
+      var tzDate  = new Date(date.toLocaleString('en-US', { timeZone:tz }));
+      var diffMin = (tzDate - utcDate) / 60000;
+      var sign = diffMin >= 0 ? '+' : '-';
+      var h = Math.floor(Math.abs(diffMin)/60);
+      var m = Math.abs(diffMin)%60;
+      return sign + h + ':' + String(m).padStart(2,'0');
+    } catch(e) { return '?'; }
+  }
+
+  // ── tz로 도시 찾기 ──
+  function getCityByTz(tz) {
+    return CITIES.find(function(c) { return c.tz === tz && /[가-힣]/.test(c.city); }) ||
+           CITIES.find(function(c) { return c.tz === tz; }) || null;
+  }
+
+  // ── 저장 & 렌더링 ──
+  function saveAndRender() {
+    localStorage.setItem(LS_KEY, JSON.stringify(selectedTzs));
+    renderClocks();
+    buildConverterOptions();
+  }
+
+  // ── 초기화 ──
+  document.getElementById('resetBtn').addEventListener('click', function() {
+    selectedTzs = DEFAULT_TZS.slice();
+    saveAndRender();
+    showToast('\u21BA \uae30\ubcf8 \ub3c4\uc2dc\ub85c \ucd08\uae30\ud654\ub418\uc5c8\uc2b5\ub2c8\ub2e4');
+  });
+
+  // ── 도시 검색 ──
+  var searchInput = document.getElementById('citySearch');
+  var dropdown    = document.getElementById('searchDropdown');
+
+  searchInput.addEventListener('input', function() {
+    var q = searchInput.value.trim().toLowerCase();
+    if (!q) { dropdown.classList.remove('show'); return; }
+
+    // 중복 tz 제거된 고유 목록 생성
+    var seen = {};
+    var results = CITIES.filter(function(c) {
+      if (seen[c.tz]) return false;
+      var match = c.city.toLowerCase().includes(q) || c.country.toLowerCase().includes(q);
+      if (match) seen[c.tz] = true;
+      return match;
+    }).slice(0, 8);
+
+    if (!results.length) {
+      dropdown.innerHTML = '<div class="search-empty">검색 결과가 없습니다.</div>';
+    } else {
+      dropdown.innerHTML = results.map(function(c) {
+        return '<div class="search-item" data-tz="'+c.tz+'">' +
+          '<span class="search-item-flag">'+c.flag+'</span>' +
+          '<span class="search-item-info">' +
+            '<span class="search-item-city">'+c.city+'</span>' +
+            '<span class="search-item-tz">'+c.country+' · UTC '+c.utc+'</span>' +
+          '</span></div>';
+      }).join('');
+      dropdown.querySelectorAll('.search-item').forEach(function(item) {
+        item.addEventListener('click', function() {
+          var tz = item.dataset.tz;
+          if (selectedTzs.includes(tz)) {
+            showToast('\uc774\ubbf8 \ucd94\uac00\ub41c \ub3c4\uc2dc\uc785\ub2c8\ub2e4');
+          } else {
+            selectedTzs.push(tz);
+            saveAndRender();
+            showToast('\u2713 ' + item.querySelector('.search-item-city').textContent + ' \ucd94\uac00\ub418\uc5c8\uc2b5\ub2c8\ub2e4');
+          }
+          searchInput.value = '';
+          dropdown.classList.remove('show');
+        });
+      });
+    }
+    dropdown.classList.add('show');
+  });
+
+  document.addEventListener('click', function(e) {
+    if (!searchInput.contains(e.target) && !dropdown.contains(e.target)) {
+      dropdown.classList.remove('show');
+    }
+  });
+
+  // ── 시간대 변환기 ──
+  function buildConverterOptions() {
+    var fromSel = document.getElementById('convFrom');
+    var toSel   = document.getElementById('convTo');
+    var fromVal = fromSel.value;
+    var toVal   = toSel.value;
+
+    // 모든 한국어 도시 + 현재 선택된 도시
+    var seen = {};
+    var list = [];
+    // 선택된 도시 먼저
+    selectedTzs.forEach(function(tz) {
+      if (seen[tz]) return;
+      var c = getCityByTz(tz);
+      if (c) { list.push(c); seen[tz] = true; }
+    });
+    // 나머지 전체
+    CITIES.filter(function(c){ return /[가-힣]/.test(c.city); }).forEach(function(c) {
+      if (!seen[c.tz]) { list.push(c); seen[c.tz] = true; }
+    });
+
+    var opts = list.map(function(c) {
+      return '<option value="'+c.tz+'">'+c.flag+' '+c.city+' (UTC '+c.utc+')</option>';
+    }).join('');
+    fromSel.innerHTML = opts;
+    toSel.innerHTML   = opts;
+
+    // 이전 선택값 복원 (가능하면)
+    if (fromVal) fromSel.value = fromVal;
+    if (toVal)   toSel.value   = toVal || 'America/New_York';
+    // 기본값
+    if (!fromSel.value) fromSel.value = 'Asia/Seoul';
+    if (!toSel.value)   toSel.value   = 'America/New_York';
+  }
+
+  function setDefaultConvTime() {
+    var now = new Date();
+    var y = now.getFullYear();
+    var mo = String(now.getMonth()+1).padStart(2,'0');
+    var d  = String(now.getDate()).padStart(2,'0');
+    var h  = String(now.getHours()).padStart(2,'0');
+    var mi = String(now.getMinutes()).padStart(2,'0');
+    document.getElementById('convTime').value = y+'-'+mo+'-'+d+'T'+h+':'+mi;
+  }
+
+  function calcConversion() {
+    var fromTz   = document.getElementById('convFrom').value;
+    var toTz     = document.getElementById('convTo').value;
+    var timeVal  = document.getElementById('convTime').value;
+    var resultTime = document.getElementById('convResultTime');
+    var resultInfo = document.getElementById('convResultInfo');
+
+    if (!timeVal) { resultTime.textContent = '—'; resultInfo.textContent = '시간을 입력하세요.'; return; }
+
+    try {
+      var localDate = new Date(timeVal);
+
+      // fromTz 기준 표시
+      var fromStr = localDate.toLocaleString('ko-KR', {
+        timeZone: fromTz,
+        year:'numeric', month:'long', day:'numeric',
+        hour:'2-digit', minute:'2-digit', weekday:'short', hour12:false
+      });
+      // toTz 기준 변환
+      var toStr = localDate.toLocaleString('ko-KR', {
+        timeZone: toTz,
+        hour:'2-digit', minute:'2-digit', second:'2-digit', hour12:false
+      });
+      var toDateStr = localDate.toLocaleString('ko-KR', {
+        timeZone: toTz,
+        year:'numeric', month:'long', day:'numeric', weekday:'short'
+      });
+
+      var fromCity = getCityByTz(fromTz);
+      var toCity   = getCityByTz(toTz);
+      var fromName = fromCity ? fromCity.city : fromTz;
+      var toName   = toCity   ? toCity.city   : toTz;
+      var fromOff  = getUtcOffset(fromTz, localDate);
+      var toOff    = getUtcOffset(toTz,   localDate);
+
+      resultTime.textContent = toStr;
+      resultInfo.innerHTML =
+        '<strong>'+fromName+'</strong> (UTC '+fromOff+') ' + fromStr +
+        ' → <strong>'+toName+'</strong> (UTC '+toOff+') ' + toDateStr;
+    } catch(e) {
+      resultTime.textContent = '—';
+      resultInfo.textContent = '변환 오류: ' + e.message;
+    }
+  }
+
+  document.getElementById('convFrom').addEventListener('change', calcConversion);
+  document.getElementById('convTo').addEventListener('change', calcConversion);
+  document.getElementById('convTime').addEventListener('change', calcConversion);
+
+  // ── 토스트 ──
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(function() { t.classList.remove('show'); }, 2000);
+  }
+  </script>
+</body>
+</html>
