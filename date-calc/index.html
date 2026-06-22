@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="D-day 계산기, 날짜 차이 계산, 나이 계산을 브라우저에서 바로 사용하세요. 서버 전송 없이 무료로 이용 가능합니다." />
+  <meta property="og:title" content="DateCalc — 날짜 계산기" />
+  <meta property="og:description" content="D-day 계산, 날짜 차이, 나이 계산을 한 번에. 무료 온라인 날짜 계산기." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://browserkit.pages.dev/date-calc/" />
+  <title>DateCalc — 날짜 계산기</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+  <script type="text/javascript" src="//t1.kakaocdn.net/kas/static/ba.min.js" async></script>
+  <style>
+    .header { padding:24px 0 16px; border-bottom:1px solid var(--border); }
+    .header .container { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; }
+    .header-brand { display:flex; align-items:center; gap:10px; text-decoration:none; }
+    .header-brand-icon { font-size:24px; }
+    .header-brand-text { font-size:20px; font-weight:700; font-family:'Inter',sans-serif; background:linear-gradient(135deg,var(--point),var(--point-hover)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+    .header-back { font-size:13px; color:var(--subtext); text-decoration:none; }
+    .header-back:hover { color:var(--text); }
+
+    .hero { text-align:center; padding:40px 0 32px; }
+    .hero-icon { font-size:48px; margin-bottom:16px; }
+    .hero-title { font-size:32px; font-weight:700; margin-bottom:12px; background:linear-gradient(135deg,var(--point),var(--point-hover)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+    .hero-desc { color:var(--subtext); font-size:15px; margin-bottom:20px; }
+    .hero-badges { display:flex; justify-content:center; gap:10px; flex-wrap:wrap; }
+    .hero-badge { background:var(--card); border:1px solid var(--border); border-radius:999px; padding:5px 16px; font-size:13px; color:var(--subtext); }
+
+    /* 탭 */
+    .tab-bar { display:flex; gap:4px; background:var(--card); border:1px solid var(--border); border-radius:14px; padding:5px; margin-bottom:24px; }
+    .tab-btn { flex:1; padding:10px; font-size:14px; font-weight:600; border:none; border-radius:10px; cursor:pointer; font-family:'Pretendard',sans-serif; background:transparent; color:var(--subtext); transition:all 0.2s; }
+    .tab-btn.active { background:linear-gradient(135deg,var(--point),var(--point-hover)); color:#fff; }
+    .tab-btn:hover:not(.active) { color:var(--text); background:rgba(108,99,255,0.08); }
+
+    /* 패널 */
+    .panel { display:none; }
+    .panel.show { display:block; }
+
+    /* 카드 */
+    .calc-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:28px; margin-bottom:20px; }
+
+    /* 입력 */
+    .field-label { font-size:13px; font-weight:600; color:var(--subtext); margin-bottom:8px; display:block; }
+    .date-input { width:100%; background:var(--bg); border:1px solid var(--border); border-radius:10px; padding:12px 16px; font-size:15px; color:var(--text); font-family:'Pretendard',sans-serif; outline:none; transition:border-color 0.2s; }
+    .date-input:focus { border-color:var(--point); }
+    .date-input::-webkit-calendar-picker-indicator { filter:invert(0.5); cursor:pointer; }
+    .field-row { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:20px; }
+    .today-btn { background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:6px 14px; font-size:12px; font-weight:600; color:var(--subtext); cursor:pointer; margin-top:8px; font-family:'Pretendard',sans-serif; transition:all 0.15s; }
+    .today-btn:hover { border-color:var(--point); color:var(--text); }
+
+    /* 결과 */
+    .result-area { background:var(--bg); border-radius:12px; padding:20px 24px; margin-top:4px; }
+    .result-empty { color:var(--subtext); font-size:14px; text-align:center; padding:8px 0; font-style:italic; }
+    .result-dday { text-align:center; padding:12px 0 8px; }
+    .result-dday-num { font-size:56px; font-weight:700; font-family:'Inter',sans-serif; background:linear-gradient(135deg,var(--point),var(--point-hover)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; line-height:1.1; }
+    .result-dday-label { font-size:14px; color:var(--subtext); margin-top:6px; }
+    .result-dday-today { font-size:22px; font-weight:700; color:var(--success); }
+
+    .result-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-top:16px; }
+    .result-item { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:14px; text-align:center; }
+    .result-item-num { font-size:24px; font-weight:700; color:var(--point-hover); font-family:'Inter',sans-serif; }
+    .result-item-label { font-size:12px; color:var(--subtext); margin-top:4px; }
+
+    .result-row-list { display:flex; flex-direction:column; gap:10px; margin-top:4px; }
+    .result-row { display:flex; justify-content:space-between; align-items:center; padding:10px 0; border-bottom:1px solid var(--border); }
+    .result-row:last-child { border-bottom:none; }
+    .result-row-label { font-size:14px; color:var(--subtext); }
+    .result-row-val { font-size:15px; font-weight:700; color:var(--text); font-family:'Inter',sans-serif; }
+    .result-row-val.accent { color:var(--point-hover); }
+
+    /* 나이 탭 특화 */
+    .age-big { text-align:center; padding:16px 0 8px; }
+    .age-big-num { font-size:72px; font-weight:700; font-family:'Inter',sans-serif; background:linear-gradient(135deg,var(--point),var(--point-hover)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; line-height:1; }
+    .age-big-label { font-size:13px; color:var(--subtext); margin-top:4px; }
+    .age-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; margin-top:16px; }
+    .age-item { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:14px; text-align:center; }
+    .age-item-num { font-size:20px; font-weight:700; color:var(--text); font-family:'Inter',sans-serif; }
+    .age-item-label { font-size:11px; color:var(--subtext); margin-top:4px; line-height:1.4; }
+    .age-item-sub { font-size:12px; color:var(--subtext); margin-top:2px; }
+
+    /* 토스트 */
+    .toast { position:fixed; bottom:32px; left:50%; transform:translateX(-50%) translateY(80px); background:var(--success); color:#fff; border-radius:999px; padding:10px 24px; font-size:14px; font-weight:600; opacity:0; pointer-events:none; z-index:999; transition:all 0.3s ease; }
+    .toast.show { transform:translateX(-50%) translateY(0); opacity:1; }
+
+    /* 배너 */
+    .coupang-banner { margin:0 auto 48px; text-align:center; overflow:hidden; }
+    .coupang-notice { font-size:11px; color:var(--subtext); margin-bottom:10px; line-height:1.6; }
+    .coupang-banner-mo { display:none; }
+    .adfit-wrap { text-align:center; margin:24px 0; }
+    .adfit-pc { display:block; }
+    .adfit-mo { display:none; }
+    .footer { border-top:1px solid var(--border); padding:32px 0; text-align:center; }
+    .footer-copy { color:var(--subtext); font-size:13px; margin-bottom:12px; }
+    .footer-nav { display:flex; justify-content:center; gap:20px; flex-wrap:wrap; }
+    .footer-nav a { color:var(--subtext); font-size:13px; text-decoration:none; }
+    .footer-nav a:hover { color:var(--text); }
+
+    @media (max-width:640px) {
+      .hero-title { font-size:24px; }
+      .field-row { grid-template-columns:1fr; gap:12px; }
+      .result-grid { grid-template-columns:repeat(2,1fr); }
+      .age-grid { grid-template-columns:1fr 1fr; }
+      .tab-btn { font-size:13px; padding:9px 6px; }
+      .adfit-pc { display:none; }
+      .adfit-mo { display:block; }
+      .coupang-banner-pc { display:none; }
+      .coupang-banner-mo { display:block; }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="container">
+      <a href="../index.html" class="header-brand">
+        <span class="header-brand-icon">&#x1F9F0;</span>
+        <span class="header-brand-text">BrowserKit</span>
+      </a>
+      <a href="../index.html" class="header-back">&#x2190; BrowserKit 홈으로</a>
+    </div>
+  </header>
+
+  <main><div class="container">
+    <div class="hero">
+      <div class="hero-icon">&#x1F4C5;</div>
+      <h1 class="hero-title">DateCalc</h1>
+      <p class="hero-desc">D-day 계산, 날짜 차이, 나이 계산을 한 번에</p>
+      <div class="hero-badges">
+        <span class="hero-badge">&#x26A1; 무료 사용</span>
+        <span class="hero-badge">&#x1F512; 서버 전송 없음</span>
+        <span class="hero-badge">&#x1F4E6; 설치 불필요</span>
+      </div>
+    </div>
+
+    <div class="adfit-wrap adfit-pc"><ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-Dfncm24OGOmHKE7V" data-ad-width="728" data-ad-height="90"></ins></div>
+    <div class="adfit-wrap adfit-mo"><ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-jVI6hdgtW0LyffyR" data-ad-width="320" data-ad-height="50"></ins></div>
+
+    <!-- 탭 -->
+    <div class="tab-bar">
+      <button class="tab-btn active" data-tab="dday">&#x1F3AF; D-day 계산</button>
+      <button class="tab-btn" data-tab="diff">&#x1F4CF; 날짜 차이</button>
+      <button class="tab-btn" data-tab="age">&#x1F382; 나이 계산</button>
+    </div>
+
+    <!-- ─── D-day 탭 ─── -->
+    <div class="panel show" id="panel-dday">
+      <div class="calc-card">
+        <label class="field-label">&#x1F3AF; 목표 날짜</label>
+        <input type="date" class="date-input" id="dday-target" />
+        <div>
+          <button class="today-btn" id="dday-today-btn">&#x1F4C5; 오늘로 설정</button>
+        </div>
+      </div>
+      <div class="calc-card">
+        <div class="result-area" id="dday-result">
+          <div class="result-empty">목표 날짜를 선택하면 D-day가 표시됩니다.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── 날짜 차이 탭 ─── -->
+    <div class="panel" id="panel-diff">
+      <div class="calc-card">
+        <div class="field-row">
+          <div>
+            <label class="field-label">&#x1F4C5; 시작일</label>
+            <input type="date" class="date-input" id="diff-start" />
+            <button class="today-btn" id="diff-start-today">&#x1F4C5; 오늘</button>
+          </div>
+          <div>
+            <label class="field-label">&#x1F4C5; 종료일</label>
+            <input type="date" class="date-input" id="diff-end" />
+            <button class="today-btn" id="diff-end-today">&#x1F4C5; 오늘</button>
+          </div>
+        </div>
+      </div>
+      <div class="calc-card">
+        <div class="result-area" id="diff-result">
+          <div class="result-empty">시작일과 종료일을 선택하면 날짜 차이가 표시됩니다.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── 나이 계산 탭 ─── -->
+    <div class="panel" id="panel-age">
+      <div class="calc-card">
+        <label class="field-label">&#x1F382; 생년월일</label>
+        <input type="date" class="date-input" id="age-birth" />
+      </div>
+      <div class="calc-card">
+        <div class="result-area" id="age-result">
+          <div class="result-empty">생년월일을 입력하면 나이가 표시됩니다.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="coupang-banner coupang-banner-pc">
+      <p class="coupang-notice">이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</p>
+      <script src="https://ads-partners.coupang.com/g.js"></script>
+      <script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"728","height":"120","tsource":""});</script>
+    </div>
+    <div class="coupang-banner coupang-banner-mo">
+      <p class="coupang-notice">이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</p>
+      <script src="https://ads-partners.coupang.com/g.js"></script>
+      <script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"320","height":"50","tsource":""});</script>
+    </div>
+  </div></main>
+
+  <footer class="footer">
+    <div class="container">
+      <p class="footer-copy">&#xa9; 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p>
+      <nav class="footer-nav">
+        <a href="../privacy.html">개인정보 처리방침</a>
+        <a href="../terms.html">이용약관</a>
+        <a href="../about.html">서비스 소개</a>
+        <a href="../blog/index.html">블로그</a>
+      </nav>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+  // ── 유틸 ──
+  function today() {
+    var d = new Date();
+    var y = d.getFullYear();
+    var m = String(d.getMonth()+1).padStart(2,'0');
+    var dd = String(d.getDate()).padStart(2,'0');
+    return y+'-'+m+'-'+dd;
+  }
+
+  function parseDate(s) {
+    if (!s) return null;
+    var p = s.split('-');
+    return new Date(+p[0], +p[1]-1, +p[2]);
+  }
+
+  function diffDays(a, b) {
+    return Math.round((b - a) / 86400000);
+  }
+
+  function comma(n) {
+    return Math.abs(n).toLocaleString();
+  }
+
+  function weekday(d) {
+    return ['일','월','화','수','목','금','토'][d.getDay()];
+  }
+
+  function formatDate(d) {
+    return d.getFullYear()+'년 '+(d.getMonth()+1)+'월 '+d.getDate()+'일 ('+weekday(d)+')';
+  }
+
+  // ── 탭 ──
+  document.querySelectorAll('.tab-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.tab-btn').forEach(function(b){ b.classList.remove('active'); });
+      document.querySelectorAll('.panel').forEach(function(p){ p.classList.remove('show'); });
+      btn.classList.add('active');
+      document.getElementById('panel-'+btn.dataset.tab).classList.add('show');
+    });
+  });
+
+  // ════════════════════════════
+  // D-day 계산
+  // ════════════════════════════
+  var ddayTarget = document.getElementById('dday-target');
+  ddayTarget.value = today();
+  calcDday();
+
+  ddayTarget.addEventListener('change', calcDday);
+  document.getElementById('dday-today-btn').addEventListener('click', function() {
+    ddayTarget.value = today();
+    calcDday();
+  });
+
+  function calcDday() {
+    var tStr = ddayTarget.value;
+    var el   = document.getElementById('dday-result');
+    if (!tStr) { el.innerHTML = '<div class="result-empty">목표 날짜를 선택하면 D-day가 표시됩니다.</div>'; return; }
+
+    var t  = parseDate(tStr);
+    var now = parseDate(today());
+    var diff = diffDays(now, t); // 양수=미래, 음수=과거
+
+    var label, numHtml;
+    if (diff === 0) {
+      numHtml = '<div class="result-dday-today">D-DAY</div>';
+      label   = '오늘이 바로 그 날입니다! 🎉';
+    } else if (diff > 0) {
+      numHtml = '<div class="result-dday-num">D-' + comma(diff) + '</div>';
+      label   = formatDate(t) + ' 까지 <strong>' + comma(diff) + '일</strong> 남았습니다.';
+    } else {
+      numHtml = '<div class="result-dday-num">D+' + comma(Math.abs(diff)) + '</div>';
+      label   = formatDate(t) + ' 로부터 <strong>' + comma(Math.abs(diff)) + '일</strong> 지났습니다.';
+    }
+
+    // 추가 정보
+    var weeks   = Math.floor(Math.abs(diff) / 7);
+    var months  = Math.abs(Math.round(diff / 30.4375));
+    var years   = Math.abs(+(diff / 365.25).toFixed(1));
+
+    el.innerHTML =
+      '<div class="result-dday">' + numHtml +
+      '<div class="result-dday-label" style="margin-top:10px;font-size:14px;color:var(--subtext);">' + label + '</div>' +
+      '</div>' +
+      '<div class="result-grid">' +
+        '<div class="result-item"><div class="result-item-num">' + comma(Math.abs(diff)) + '</div><div class="result-item-label">일</div></div>' +
+        '<div class="result-item"><div class="result-item-num">' + weeks.toLocaleString() + '</div><div class="result-item-label">주</div></div>' +
+        '<div class="result-item"><div class="result-item-num">' + months.toLocaleString() + '</div><div class="result-item-label">개월 (약)</div></div>' +
+      '</div>';
+  }
+
+  // ════════════════════════════
+  // 날짜 차이 계산
+  // ════════════════════════════
+  var diffStart = document.getElementById('diff-start');
+  var diffEnd   = document.getElementById('diff-end');
+  diffStart.value = today();
+  diffEnd.value   = today();
+
+  diffStart.addEventListener('change', calcDiff);
+  diffEnd.addEventListener('change', calcDiff);
+  document.getElementById('diff-start-today').addEventListener('click', function() { diffStart.value = today(); calcDiff(); });
+  document.getElementById('diff-end-today').addEventListener('click', function()   { diffEnd.value   = today(); calcDiff(); });
+
+  function calcDiff() {
+    var sStr = diffStart.value, eStr = diffEnd.value;
+    var el   = document.getElementById('diff-result');
+    if (!sStr || !eStr) { el.innerHTML = '<div class="result-empty">시작일과 종료일을 선택하면 날짜 차이가 표시됩니다.</div>'; return; }
+
+    var s = parseDate(sStr), e = parseDate(eStr);
+    var totalDays = diffDays(s, e);
+    var absDays   = Math.abs(totalDays);
+    var direction = totalDays >= 0 ? '이후' : '이전';
+
+    // 년/월/일 분해
+    var big = totalDays >= 0 ? e : s;
+    var sml = totalDays >= 0 ? s : e;
+    var y   = big.getFullYear()  - sml.getFullYear();
+    var mo  = big.getMonth()     - sml.getMonth();
+    var d   = big.getDate()      - sml.getDate();
+    if (d < 0) { mo--; var prev = new Date(big.getFullYear(), big.getMonth(), 0); d += prev.getDate(); }
+    if (mo < 0) { y--; mo += 12; }
+
+    var weeks   = Math.floor(absDays / 7);
+    var hours   = absDays * 24;
+    var minutes = hours * 60;
+
+    el.innerHTML =
+      '<div class="result-row-list">' +
+        '<div class="result-row"><span class="result-row-label">&#x1F4C5; 시작일</span><span class="result-row-val">' + formatDate(s) + '</span></div>' +
+        '<div class="result-row"><span class="result-row-label">&#x1F4C5; 종료일</span><span class="result-row-val">' + formatDate(e) + '</span></div>' +
+        '<div class="result-row"><span class="result-row-label">&#x1F4CF; 총 일수</span><span class="result-row-val accent">' + absDays.toLocaleString() + '일 ' + direction + '</span></div>' +
+        '<div class="result-row"><span class="result-row-label">&#x1F551; 년/월/일</span><span class="result-row-val accent">' + y + '년 ' + mo + '개월 ' + d + '일</span></div>' +
+        '<div class="result-row"><span class="result-row-label">&#x1F4C6; 주 수</span><span class="result-row-val">' + weeks.toLocaleString() + '주 ' + (absDays % 7) + '일</span></div>' +
+        '<div class="result-row"><span class="result-row-label">&#x1F552; 시간</span><span class="result-row-val">' + hours.toLocaleString() + '시간</span></div>' +
+        '<div class="result-row"><span class="result-row-label">&#x23F1;&#xFE0F; 분</span><span class="result-row-val">' + minutes.toLocaleString() + '분</span></div>' +
+      '</div>';
+  }
+
+  // ════════════════════════════
+  // 나이 계산
+  // ════════════════════════════
+  var ageBirth = document.getElementById('age-birth');
+  ageBirth.addEventListener('change', calcAge);
+
+  function calcAge() {
+    var bStr = ageBirth.value;
+    var el   = document.getElementById('age-result');
+    if (!bStr) { el.innerHTML = '<div class="result-empty">생년월일을 입력하면 나이가 표시됩니다.</div>'; return; }
+
+    var b    = parseDate(bStr);
+    var now  = new Date();
+    var todayStr = today();
+    var t    = parseDate(todayStr);
+
+    // 만 나이 계산
+    var fullAge = now.getFullYear() - b.getFullYear();
+    var mDiff   = now.getMonth() - b.getMonth();
+    if (mDiff < 0 || (mDiff === 0 && now.getDate() < b.getDate())) fullAge--;
+
+    // 한국 나이
+    var korAge = now.getFullYear() - b.getFullYear() + 1;
+
+    // 연 나이 (올해 - 출생연도)
+    var yearAge = now.getFullYear() - b.getFullYear();
+
+    // 태어난 날로부터 총 일수
+    var totalDays = diffDays(b, t);
+    var totalWeeks = Math.floor(totalDays / 7);
+
+    // 다음 생일
+    var nextBday = new Date(now.getFullYear(), b.getMonth(), b.getDate());
+    if (nextBday < now) nextBday.setFullYear(now.getFullYear() + 1);
+    var daysToNextBday = diffDays(t, nextBday);
+
+    // 생일 여부
+    var isBirthday = (b.getMonth() === now.getMonth() && b.getDate() === now.getDate());
+
+    el.innerHTML =
+      '<div class="age-big">' +
+        '<div class="age-big-num">' + fullAge + '</div>' +
+        '<div class="age-big-label">만 나이' + (isBirthday ? ' 🎂 오늘이 생일입니다!' : '') + '</div>' +
+      '</div>' +
+      '<div class="age-grid">' +
+        '<div class="age-item"><div class="age-item-num">' + korAge + '세</div><div class="age-item-label">한국 나이<br>(세는 나이)</div></div>' +
+        '<div class="age-item"><div class="age-item-num">' + yearAge + '세</div><div class="age-item-label">연 나이<br>(올해 - 출생연도)</div></div>' +
+        '<div class="age-item"><div class="age-item-num">' + fullAge + '세</div><div class="age-item-label">만 나이<br>(국제 기준)</div></div>' +
+      '</div>' +
+      '<div class="result-row-list" style="margin-top:16px;">' +
+        '<div class="result-row"><span class="result-row-label">&#x1F382; 생년월일</span><span class="result-row-val">' + formatDate(b) + '</span></div>' +
+        '<div class="result-row"><span class="result-row-label">&#x1F4C5; 오늘</span><span class="result-row-val">' + formatDate(t) + '</span></div>' +
+        '<div class="result-row"><span class="result-row-label">&#x23F3; 태어난 지</span><span class="result-row-val accent">' + totalDays.toLocaleString() + '일 (' + totalWeeks.toLocaleString() + '주)</span></div>' +
+        '<div class="result-row"><span class="result-row-label">&#x1F382; 다음 생일까지</span><span class="result-row-val accent">' + (isBirthday ? '오늘이 생일! 🎉' : daysToNextBday.toLocaleString() + '일') + '</span></div>' +
+      '</div>';
+  }
+  </script>
+</body>
+</html>
