@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="RegexTest의 모든 기능을 단계별로 설명하는 공식 사용 가이드입니다. 정규식 실시간 매칭, 플래그 설정, 프리셋 활용법을 알아보세요." />
+  <meta property="og:title" content="RegexTest 사용법 완전 가이드 — BrowserKit" />
+  <meta property="og:description" content="정규식을 실시간으로 테스트하고 매칭 결과를 하이라이트하는 RegexTest 공식 가이드입니다." />
+  <meta property="og:type" content="article" />
+  <title>RegexTest 사용법 완전 가이드 — BrowserKit</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+  <script type="text/javascript" src="//t1.kakaocdn.net/kas/static/ba.min.js" async></script>
+  <style>
+    .header { padding:24px 0 16px; border-bottom:1px solid var(--border); }
+    .header .container { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; }
+    .header-brand { display:flex; align-items:center; gap:10px; text-decoration:none; }
+    .header-brand-icon { font-size:24px; }
+    .header-brand-text { font-size:20px; font-weight:700; font-family:'Inter',sans-serif; background:linear-gradient(135deg,var(--point),var(--point-hover)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+    .header-back { font-size:13px; color:var(--subtext); text-decoration:none; }
+    .header-back:hover { color:var(--text); }
+    .post-wrap { max-width:720px; margin:0 auto; padding:48px 24px 80px; }
+    .post-tag { display:inline-block; font-size:12px; color:var(--point-hover); background:rgba(108,99,255,0.15); padding:3px 12px; border-radius:999px; margin-bottom:16px; }
+    .post-title { font-size:28px; font-weight:700; line-height:1.4; margin-bottom:12px; }
+    .post-date { color:var(--subtext); font-size:13px; margin-bottom:40px; padding-bottom:24px; border-bottom:1px solid var(--border); }
+    .post-body h2 { font-size:20px; font-weight:700; margin:40px 0 16px; color:var(--text); }
+    .post-body h3 { font-size:16px; font-weight:600; margin:28px 0 12px; color:var(--point-hover); }
+    .post-body p { font-size:15px; color:var(--subtext); line-height:1.9; margin-bottom:16px; }
+    .post-highlight { background:var(--card); border-left:3px solid var(--point); border-radius:8px; padding:16px 20px; margin:24px 0; font-size:15px; color:var(--text); line-height:1.8; }
+    .feature-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:20px 0; }
+    .feature-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px; }
+    .feature-card:hover { border-color:var(--point); }
+    .feature-icon { font-size:24px; margin-bottom:10px; }
+    .feature-title { font-size:14px; font-weight:600; color:var(--text); margin-bottom:6px; }
+    .feature-desc { font-size:13px; color:var(--subtext); line-height:1.7; }
+    .step-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px 24px; margin:16px 0; display:flex; gap:16px; align-items:flex-start; }
+    .step-num { min-width:36px; height:36px; background:linear-gradient(135deg,var(--point),var(--point-hover)); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:700; color:white; flex-shrink:0; font-family:'Inter',sans-serif; }
+    .step-content h3 { font-size:15px; font-weight:600; margin-bottom:6px; color:var(--text); }
+    .step-content p { font-size:14px; color:var(--subtext); line-height:1.7; margin:0; }
+
+    /* 정규식 UI 데모 */
+    .regex-demo-wrap { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:20px 24px; margin:16px 0; }
+    .regex-demo-row { display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:12px; }
+    .regex-demo-slash { font-size:20px; color:var(--subtext); font-family:'Fira Code',monospace; font-weight:600; }
+    .regex-demo-input { flex:1; background:var(--bg); border:1px solid var(--point); border-radius:8px; padding:9px 14px; font-family:'Fira Code',monospace; font-size:14px; color:var(--text); min-width:160px; }
+    .flag-demo-wrap { display:flex; gap:6px; }
+    .flag-chip { background:rgba(108,99,255,0.15); border:1px solid var(--point); border-radius:6px; padding:5px 10px; font-size:12px; font-weight:700; color:var(--point-hover); font-family:'Fira Code',monospace; }
+    .flag-chip.off { background:var(--bg); border-color:var(--border); color:var(--subtext); }
+    .regex-demo-status { font-size:12px; color:var(--success); font-family:'Fira Code',monospace; }
+    /* 하이라이트 데모 */
+    .highlight-demo { background:#0a0a12; border:1px solid var(--border); border-radius:10px; padding:14px 16px; font-family:'Fira Code',monospace; font-size:13px; color:#e2e8f0; line-height:1.8; white-space:pre-wrap; margin:12px 0; }
+    .highlight-demo mark { background:rgba(251,191,36,0.3); color:#FBBF24; border-radius:3px; padding:0 2px; font-family:inherit; }
+
+    /* 플래그 표 */
+    .post-table { width:100%; border-collapse:collapse; margin:20px 0; font-size:14px; }
+    .post-table th { background:var(--card); padding:12px 16px; text-align:left; font-weight:600; border:1px solid var(--border); color:var(--text); }
+    .post-table td { padding:11px 16px; border:1px solid var(--border); color:var(--subtext); line-height:1.7; }
+    .post-table td code { background:var(--bg); border-radius:4px; padding:1px 6px; font-size:12px; color:var(--point-hover); font-family:'Fira Code',monospace; }
+    .post-table td.mono { font-family:'Fira Code',monospace; color:var(--text); }
+    .post-table tr:hover td { background:rgba(108,99,255,0.04); }
+
+    /* 프리셋 데모 */
+    .preset-demo { display:flex; gap:8px; flex-wrap:wrap; margin:16px 0; }
+    .preset-chip { background:var(--card); border:1px solid var(--border); border-radius:8px; padding:7px 14px; font-size:12px; font-weight:600; color:var(--subtext); }
+    .preset-chip.active { background:rgba(108,99,255,0.12); border-color:var(--point); color:var(--point-hover); }
+
+    /* 매칭 결과 데모 */
+    .match-demo { display:flex; flex-direction:column; gap:8px; margin:16px 0; }
+    .match-item-demo { background:var(--card); border:1px solid var(--border); border-radius:10px; padding:10px 14px; display:flex; gap:10px; align-items:center; font-size:13px; }
+    .match-idx-demo { font-size:11px; font-weight:700; color:var(--subtext); font-family:'Inter',sans-serif; min-width:20px; }
+    .match-val-demo { font-family:'Fira Code',monospace; color:#FBBF24; font-weight:600; }
+    .match-pos-demo { font-size:11px; color:var(--subtext); font-family:'Inter',sans-serif; margin-left:auto; }
+
+    .use-case-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:20px 0; }
+    .use-case-card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:18px; }
+    .use-case-icon { font-size:24px; margin-bottom:8px; }
+    .use-case-title { font-size:13px; font-weight:600; color:var(--text); margin-bottom:6px; }
+    .use-case-desc { font-size:12px; color:var(--subtext); line-height:1.7; }
+    .post-nav { display:flex; justify-content:space-between; margin-top:60px; padding-top:24px; border-top:1px solid var(--border); gap:12px; }
+    .post-nav a { font-size:14px; color:var(--subtext); text-decoration:none; }
+    .post-nav a:hover { color:var(--text); }
+    .cta-box { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:28px; text-align:center; margin:48px 0 0; }
+    .cta-box p { font-size:15px; color:var(--subtext); margin-bottom:16px; }
+    .cta-btn { display:inline-block; background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border-radius:10px; padding:12px 28px; font-size:14px; font-weight:600; text-decoration:none; }
+    .cta-btn:hover { transform:translateY(-2px); box-shadow:0 8px 24px var(--glow); color:white; }
+    .adfit-wrap { text-align:center; margin:24px 0; }
+    .adfit-pc { display:block; }
+    .adfit-mo { display:none; }
+    .back-link { display:inline-flex; align-items:center; gap:6px; color:var(--subtext); font-size:14px; margin-bottom:32px; text-decoration:none; }
+    .back-link:hover { color:var(--text); }
+    .coupang-banner { margin:0 auto 48px; text-align:center; overflow:hidden; }
+    .coupang-notice { font-size:11px; color:var(--subtext); margin-bottom:10px; line-height:1.6; }
+    .coupang-banner-mo { display:none; }
+    @media (max-width:640px) {
+      .feature-grid { grid-template-columns:1fr; }
+      .use-case-grid { grid-template-columns:1fr; }
+      .regex-demo-row { flex-direction:column; align-items:flex-start; }
+      .adfit-pc { display:none; }
+      .adfit-mo { display:block; }
+      .coupang-banner-pc { display:none; }
+      .coupang-banner-mo { display:block; }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="container">
+      <a href="../index.html" class="header-brand"><span class="header-brand-icon">&#x1F9F0;</span><span class="header-brand-text">BrowserKit</span></a>
+      <a href="../index.html" class="header-back">&#x2190; BrowserKit 홈으로</a>
+    </div>
+  </header>
+
+  <div class="post-wrap">
+    <a href="index.html" class="back-link">&#x2190; 블로그 목록</a>
+    <span class="post-tag">가이드</span>
+    <h1 class="post-title">RegexTest 사용법 완전 가이드</h1>
+    <div class="post-date">2026년 6월 22일</div>
+
+    <div class="post-body">
+      <p>RegexTest는 정규식을 입력하면 테스트 텍스트에서 매칭 영역이 실시간으로 하이라이트되는 무료 온라인 정규식 테스터입니다. 설치나 회원가입 없이 브라우저에서 바로 사용할 수 있으며, 이메일·전화번호·URL 등 자주 쓰는 정규식 프리셋 8개를 기본 제공합니다. 모든 처리가 브라우저 내에서만 이루어지므로 입력한 내용이 외부 서버로 전송되지 않습니다.</p>
+
+      <h2>주요 기능</h2>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <div class="feature-icon">&#x26A1;</div>
+          <div class="feature-title">실시간 매칭 하이라이트</div>
+          <div class="feature-desc">정규식이나 텍스트를 입력하는 즉시 매칭 영역이 노란색으로 하이라이트됩니다. 별도의 실행 버튼이 필요 없습니다.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F6A9;</div>
+          <div class="feature-title">플래그 토글 버튼</div>
+          <div class="feature-desc">g(전체), i(대소문자 무시), m(멀티라인), s(점이 줄바꿈 포함) 플래그를 버튼 클릭으로 즉시 전환합니다.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F4CB;</div>
+          <div class="feature-title">매칭 결과 목록</div>
+          <div class="feature-desc">각 매칭의 순서, 값, 인덱스 위치, 그룹 캡처 결과를 목록으로 표시합니다. 매칭 건수도 상태 표시줄에서 확인 가능합니다.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F4C4;</div>
+          <div class="feature-title">8가지 빠른 프리셋</div>
+          <div class="feature-desc">이메일, 전화번호, URL, 날짜, 주민번호, 계좌번호, IP 주소, HEX 색상 정규식을 샘플 텍스트와 함께 즉시 불러올 수 있습니다.</div>
+        </div>
+      </div>
+
+      <h2>기본 사용법</h2>
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <h3>정규식 입력</h3>
+          <p>상단 입력창에 정규식 패턴을 입력합니다. <code>/</code> 슬래시 사이에 패턴만 입력하면 됩니다. 유효하지 않은 정규식이면 오류 메시지가 즉시 표시됩니다.</p>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <h3>플래그 선택 (선택)</h3>
+          <p>g, i, m, s 플래그 버튼을 클릭해 토글합니다. 기본은 g(전체 매칭)가 활성화되어 있습니다.</p>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <h3>테스트 텍스트 입력</h3>
+          <p>아래 텍스트 입력창에 매칭을 테스트할 텍스트를 입력합니다. 입력하는 즉시 하이라이트 결과와 매칭 목록이 갱신됩니다.</p>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <h3>결과 확인</h3>
+          <p>하이라이트 영역에서 매칭 위치를 시각적으로 확인하고, 아래 목록에서 각 매칭의 세부 정보(값, 인덱스, 그룹)를 확인합니다.</p>
+        </div>
+      </div>
+
+      <h2>인터페이스 구성</h2>
+
+      <h3>정규식 입력창</h3>
+      <div class="regex-demo-wrap">
+        <div class="regex-demo-row">
+          <span class="regex-demo-slash">/</span>
+          <div class="regex-demo-input">[\w.+-]+@[\w-]+\.[\w.]+</div>
+          <span class="regex-demo-slash">/</span>
+          <div class="flag-demo-wrap">
+            <span class="flag-chip">g</span>
+            <span class="flag-chip">i</span>
+            <span class="flag-chip off">m</span>
+            <span class="flag-chip off">s</span>
+          </div>
+        </div>
+        <div class="regex-demo-status">&#x2705; 2개 매칭</div>
+      </div>
+      <p>슬래시(<code>/</code>) 사이의 영역에 정규식 패턴을 입력합니다. 오른쪽에는 플래그 버튼 4개가 있으며, 활성화된 플래그는 보라색으로 표시됩니다. 상태 표시줄에는 매칭 건수 또는 오류 메시지가 나타납니다.</p>
+
+      <h3>매칭 하이라이트 결과</h3>
+      <div class="highlight-demo">이메일 주소: <mark>support@browserkit.pages.dev</mark>
+문의는 <mark>user.name+tag@example.co.kr</mark> 로 연락주세요.
+test@test 는 유효하지 않습니다.</div>
+      <p>테스트 텍스트 입력창 아래에 같은 내용이 표시되며, 정규식과 일치하는 부분이 노란색으로 하이라이트됩니다. 일치하지 않는 텍스트는 원래 색으로 표시됩니다.</p>
+
+      <h3>매칭 결과 목록</h3>
+      <div class="match-demo">
+        <div class="match-item-demo">
+          <span class="match-idx-demo">1</span>
+          <span class="match-val-demo">support@browserkit.pages.dev</span>
+          <span class="match-pos-demo">index: 6</span>
+        </div>
+        <div class="match-item-demo">
+          <span class="match-idx-demo">2</span>
+          <span class="match-val-demo">user.name+tag@example.co.kr</span>
+          <span class="match-pos-demo">index: 38</span>
+        </div>
+      </div>
+      <p>각 매칭의 순서 번호, 매칭된 값, 텍스트 내 시작 인덱스 위치가 표시됩니다. 캡처 그룹을 사용한 경우 그룹별 결과도 함께 표시됩니다.</p>
+
+      <h2>플래그 설명</h2>
+      <table class="post-table">
+        <thead><tr><th>플래그</th><th>역할</th><th>사용 예</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="mono">g</td>
+            <td>전체 매칭 (Global). 텍스트 전체에서 모든 매칭을 찾습니다. 비활성 시 첫 번째 매칭만 반환합니다.</td>
+            <td>로그 파일에서 모든 IP 주소 찾기</td>
+          </tr>
+          <tr>
+            <td class="mono">i</td>
+            <td>대소문자 무시 (Case-Insensitive). <code>Hello</code>와 <code>hello</code>를 동일하게 처리합니다.</td>
+            <td><code>Error</code>, <code>error</code>, <code>ERROR</code> 동시에 찾기</td>
+          </tr>
+          <tr>
+            <td class="mono">m</td>
+            <td>멀티라인 (Multiline). <code>^</code>와 <code>$</code>가 각 줄의 시작과 끝에 매칭됩니다.</td>
+            <td>여러 줄 텍스트에서 줄별로 패턴 찾기</td>
+          </tr>
+          <tr>
+            <td class="mono">s</td>
+            <td>점 전체 (DotAll). 점(<code>.</code>)이 줄바꿈 문자(<code>\n</code>)도 포함하여 매칭됩니다.</td>
+            <td>여러 줄에 걸친 HTML 태그 매칭</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>빠른 프리셋</h2>
+      <p>자주 사용하는 정규식 패턴을 샘플 텍스트와 함께 즉시 불러올 수 있습니다. 프리셋을 클릭하면 정규식 입력창과 테스트 텍스트가 자동으로 채워집니다.</p>
+      <div class="preset-demo">
+        <span class="preset-chip active">&#x1F4E7; 이메일</span>
+        <span class="preset-chip">&#x1F4F1; 전화번호</span>
+        <span class="preset-chip">&#x1F517; URL</span>
+        <span class="preset-chip">&#x1F4C5; 날짜</span>
+        <span class="preset-chip">&#x1F4C4; 주민번호</span>
+        <span class="preset-chip">&#x1F4B3; 계좌번호</span>
+        <span class="preset-chip">&#x1F310; IP 주소</span>
+        <span class="preset-chip">&#x1F3A8; HEX 색상</span>
+      </div>
+      <table class="post-table">
+        <thead><tr><th>프리셋</th><th>정규식 패턴</th><th>매칭 예시</th></tr></thead>
+        <tbody>
+          <tr><td>&#x1F4E7; 이메일</td><td><code>[\w.+-]+@[\w-]+\.[\w.]+</code></td><td>user@example.com</td></tr>
+          <tr><td>&#x1F4F1; 전화번호</td><td><code>01[0-9]-?\d{3,4}-?\d{4}</code></td><td>010-1234-5678</td></tr>
+          <tr><td>&#x1F517; URL</td><td><code>https?://[\w\-._~:/?#...]+</code></td><td>https://browserkit.pages.dev</td></tr>
+          <tr><td>&#x1F4C5; 날짜</td><td><code>\d{4}[-./](?:0[1-9]|1[0-2])[-./](?:0[1-9]|[12]\d|3[01])</code></td><td>2026-06-22</td></tr>
+          <tr><td>&#x1F4C4; 주민번호</td><td><code>\d{6}-[1-4]\d{6}</code></td><td>900101-1234567</td></tr>
+          <tr><td>&#x1F4B3; 계좌번호</td><td><code>\d{3,6}-\d{2,6}-\d{2,6}(?:-\d{2,3})?</code></td><td>110-123-456789</td></tr>
+          <tr><td>&#x1F310; IP 주소</td><td><code>(?:(?:25[0-5]|2[0-4]\d|[01]?\d\d?)\.){3}...</code></td><td>192.168.0.1</td></tr>
+          <tr><td>&#x1F3A8; HEX 색상</td><td><code>#(?:[0-9a-fA-F]{6}|[0-9a-fA-F]{3})\b</code></td><td>#FF5733, #fff</td></tr>
+        </tbody>
+      </table>
+
+      <h2>정규식 기본 문법 빠른 참고</h2>
+      <table class="post-table">
+        <thead><tr><th>패턴</th><th>의미</th><th>예시</th></tr></thead>
+        <tbody>
+          <tr><td><code>.</code></td><td>임의의 문자 1개 (줄바꿈 제외)</td><td><code>a.c</code> → abc, aXc</td></tr>
+          <tr><td><code>\d</code></td><td>숫자 (0~9)</td><td><code>\d{4}</code> → 2026</td></tr>
+          <tr><td><code>\w</code></td><td>영문자·숫자·밑줄</td><td><code>\w+</code> → hello_123</td></tr>
+          <tr><td><code>\s</code></td><td>공백 문자 (스페이스, 탭, 줄바꿈)</td><td><code>a\sb</code> → a b</td></tr>
+          <tr><td><code>^</code></td><td>문자열(또는 줄) 시작</td><td><code>^Hello</code></td></tr>
+          <tr><td><code>$</code></td><td>문자열(또는 줄) 끝</td><td><code>world$</code></td></tr>
+          <tr><td><code>*</code></td><td>0회 이상 반복</td><td><code>ab*c</code> → ac, abc, abbc</td></tr>
+          <tr><td><code>+</code></td><td>1회 이상 반복</td><td><code>ab+c</code> → abc, abbc</td></tr>
+          <tr><td><code>?</code></td><td>0회 또는 1회</td><td><code>colou?r</code> → color, colour</td></tr>
+          <tr><td><code>{n,m}</code></td><td>n회 이상 m회 이하 반복</td><td><code>\d{2,4}</code> → 12, 1234</td></tr>
+          <tr><td><code>[abc]</code></td><td>문자 클래스 (a, b, c 중 하나)</td><td><code>[aeiou]</code> → 모음</td></tr>
+          <tr><td><code>(abc)</code></td><td>캡처 그룹</td><td><code>(\d{4})-(\d{2})</code></td></tr>
+          <tr><td><code>(?:abc)</code></td><td>비캡처 그룹</td><td>그룹이지만 결과에 미포함</td></tr>
+          <tr><td><code>a|b</code></td><td>a 또는 b</td><td><code>cat|dog</code></td></tr>
+        </tbody>
+      </table>
+
+      <h2>캡처 그룹 활용</h2>
+      <p>정규식에서 소괄호 <code>()</code>로 그룹을 지정하면 RegexTest가 각 그룹의 매칭 결과를 별도로 표시합니다. 예를 들어 날짜에서 연·월·일을 따로 추출하고 싶을 때 유용합니다.</p>
+      <div class="regex-demo-wrap">
+        <div class="regex-demo-row">
+          <span class="regex-demo-slash">/</span>
+          <div class="regex-demo-input">(\d{4})-(0[1-9]|1[0-2])-([0-2]\d|3[01])</div>
+          <span class="regex-demo-slash">/</span>
+          <div class="flag-demo-wrap">
+            <span class="flag-chip">g</span>
+            <span class="flag-chip off">i</span>
+            <span class="flag-chip off">m</span>
+            <span class="flag-chip off">s</span>
+          </div>
+        </div>
+        <div class="regex-demo-status">&#x2705; 1개 매칭 · 그룹 3개</div>
+      </div>
+      <p>이 정규식으로 <code>2026-06-22</code>를 테스트하면 매칭 결과 목록에 그룹 1: <code>2026</code>, 그룹 2: <code>06</code>, 그룹 3: <code>22</code>가 별도로 표시됩니다.</p>
+
+      <h2>활용 예시</h2>
+      <div class="use-case-grid">
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F4BB;</div>
+          <div class="use-case-title">개발 중 패턴 검증</div>
+          <div class="use-case-desc">코드에 적용할 정규식을 실제 데이터로 테스트해 오탐이나 누락 없이 동작하는지 확인합니다.</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F50D;</div>
+          <div class="use-case-title">로그 파일 분석</div>
+          <div class="use-case-desc">서버 로그나 에러 메시지를 붙여넣고 특정 패턴(IP, 날짜, 에러 코드)이 얼마나 등장하는지 빠르게 파악합니다.</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F4DD;</div>
+          <div class="use-case-title">데이터 추출 패턴 작성</div>
+          <div class="use-case-desc">크롤링이나 파싱 작업에서 원하는 데이터를 추출하는 정규식을 미리 테스트하고 완성도를 높입니다.</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F9FC;</div>
+          <div class="use-case-title">개인정보 패턴 검수</div>
+          <div class="use-case-desc">주민번호·전화번호 마스킹 로직에 쓸 정규식을 다양한 형식의 샘플로 테스트해 완성도를 확인합니다.</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F4DA;</div>
+          <div class="use-case-title">정규식 학습</div>
+          <div class="use-case-desc">정규식 문법을 공부하면서 패턴을 직접 입력하고 결과를 확인해 빠르게 익힐 수 있습니다.</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x2705;</div>
+          <div class="use-case-title">입력값 유효성 검사</div>
+          <div class="use-case-desc">폼 유효성 검사에 쓸 이메일·전화번호·URL 정규식이 엣지 케이스를 올바르게 처리하는지 검증합니다.</div>
+        </div>
+      </div>
+
+      <h2>오류 처리</h2>
+      <p>정규식 문법이 잘못된 경우 상태 표시줄에 빨간색으로 오류 메시지가 즉시 표시됩니다. 예를 들어 괄호가 닫히지 않거나 수량자 뒤에 아무것도 없는 경우입니다.</p>
+      <table class="post-table">
+        <thead><tr><th>상태</th><th>표시 내용</th></tr></thead>
+        <tbody>
+          <tr><td>✅ 정상 매칭</td><td>초록색으로 N개 매칭 표시</td></tr>
+          <tr><td>⚪ 매칭 없음</td><td>회색으로 "매칭 없음" 표시</td></tr>
+          <tr><td>❌ 오류</td><td>빨간색으로 오류 메시지 표시 (예: Invalid regular expression)</td></tr>
+        </tbody>
+      </table>
+
+      <div class="post-highlight">&#x1F50D; RegexTest는 모든 처리가 브라우저 내에서만 이루어집니다. 테스트한 정규식과 텍스트가 외부 서버로 전송되지 않으므로 민감한 데이터 패턴도 안심하고 테스트할 수 있습니다.</div>
+    </div>
+
+    <div class="cta-box">
+      <p>지금 바로 RegexTest를 사용해보세요.<br />설치도, 회원가입도, 비용도 없습니다.</p>
+      <a href="../regex-test/index.html" class="cta-btn">&#x1F50D; 무료로 정규식 테스트 시작하기</a>
+    </div>
+
+    <div class="adfit-wrap adfit-pc">
+      <ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-Dfncm24OGOmHKE7V" data-ad-width="728" data-ad-height="90"></ins>
+    </div>
+    <div class="adfit-wrap adfit-mo">
+      <ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-jVI6hdgtW0LyffyR" data-ad-width="320" data-ad-height="50"></ins>
+    </div>
+
+    <div class="coupang-banner coupang-banner-pc">
+      <p class="coupang-notice">이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</p>
+      <script src="https://ads-partners.coupang.com/g.js"></script>
+      <script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"668","height":"100","tsource":""});</script>
+    </div>
+    <div class="coupang-banner coupang-banner-mo">
+      <p class="coupang-notice">이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</p>
+      <script src="https://ads-partners.coupang.com/g.js"></script>
+      <script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"320","height":"50","tsource":""});</script>
+    </div>
+
+    <div class="post-nav">
+      <a href="31-imagebright-howto.html">&#x2190; 이전 글: ImageBright 사용법 완전 가이드</a>
+      <span></span>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+      <p class="footer-copy">&#xa9; 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p>
+      <nav class="footer-nav">
+        <a href="../privacy.html">개인정보 처리방침</a>
+        <a href="../terms.html">이용약관</a>
+        <a href="../about.html">서비스 소개</a>
+        <a href="index.html">블로그</a>
+      </nav>
+    </div>
+  </footer>
+</body>
+</html>
