@@ -577,18 +577,30 @@
     var fromVal = fromSel.value;
     var toVal   = toSel.value;
 
-    // 모든 한국어 도시 + 현재 선택된 도시
+    // tz 기준 중복 제거 후 전체 도시 목록 생성
+    // 우선순위: 1) 한국어 도시명 2) 영문 도시명
     var seen = {};
     var list = [];
-    // 선택된 도시 먼저
-    selectedTzs.forEach(function(tz) {
-      if (seen[tz]) return;
-      var c = getCityByTz(tz);
-      if (c) { list.push(c); seen[tz] = true; }
-    });
-    // 나머지 전체
+
+    // 1단계: 한국어 도시 전체 먼저 (한 tz당 하나)
     CITIES.filter(function(c){ return /[가-힣]/.test(c.city); }).forEach(function(c) {
       if (!seen[c.tz]) { list.push(c); seen[c.tz] = true; }
+    });
+
+    // 2단계: 한국어 도시가 없는 tz의 영문 도시 추가
+    CITIES.filter(function(c){ return !/[가-힣]/.test(c.city); }).forEach(function(c) {
+      if (!seen[c.tz]) { list.push(c); seen[c.tz] = true; }
+    });
+
+    // UTC 오프셋 기준 정렬 (+13 ~ -11)
+    list.sort(function(a, b) {
+      var toMin = function(utc) {
+        var m = utc.replace('±','').match(/([+-]?)(\d+):(\d+)/);
+        if (!m) return 0;
+        var sign = m[1] === '-' ? -1 : 1;
+        return sign * (parseInt(m[2]) * 60 + parseInt(m[3]));
+      };
+      return toMin(b.utc) - toMin(a.utc);
     });
 
     var opts = list.map(function(c) {
@@ -597,10 +609,8 @@
     fromSel.innerHTML = opts;
     toSel.innerHTML   = opts;
 
-    // 이전 선택값 복원 (가능하면)
     if (fromVal) fromSel.value = fromVal;
-    if (toVal)   toSel.value   = toVal || 'America/New_York';
-    // 기본값
+    if (toVal)   toSel.value   = toVal;
     if (!fromSel.value) fromSel.value = 'Asia/Seoul';
     if (!toSel.value)   toSel.value   = 'America/New_York';
   }
