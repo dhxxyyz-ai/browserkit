@@ -62,7 +62,7 @@
       position: sticky;
       top: 0;
       z-index: 100;
-      background: rgba(15,15,19,0.92);
+      background: rgba(15,15,19,0.96);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border);
@@ -91,6 +91,7 @@
       border-right: 1px solid var(--border);
       flex-shrink: 0;
       text-decoration: none;
+      cursor: pointer;
     }
     .nav-logo-icon { font-size: 20px; }
     .nav-tab {
@@ -106,7 +107,7 @@
       cursor: pointer;
       flex-shrink: 0;
       transition: color 0.15s, border-color 0.15s;
-      text-decoration: none;
+      user-select: none;
     }
     .nav-tab:hover { color: var(--text); }
     .nav-tab.active {
@@ -114,6 +115,82 @@
       border-bottom-color: var(--point);
     }
     .nav-tab-icon { font-size: 15px; }
+    .nav-tab-chevron {
+      font-size: 10px;
+      margin-left: 2px;
+      transition: transform 0.2s;
+      opacity: 0.5;
+    }
+    .nav-tab.open .nav-tab-chevron { transform: rotate(180deg); opacity: 1; }
+
+    /* 드롭다운 */
+    .nav-dropdown {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: rgba(15,15,19,0.98);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      overflow: hidden;
+      max-height: 0;
+      transition: max-height 0.25s ease, opacity 0.2s ease;
+      opacity: 0;
+      pointer-events: none;
+    }
+    .nav-dropdown.open {
+      max-height: 400px;
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .nav-dropdown-inner {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 16px 24px 20px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 6px;
+    }
+    .nav-drop-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      border-radius: 10px;
+      border: 1px solid transparent;
+      text-decoration: none;
+      color: var(--subtext);
+      font-size: 13px;
+      font-weight: 600;
+      transition: all 0.15s;
+      cursor: pointer;
+    }
+    .nav-drop-item:hover {
+      background: var(--card);
+      border-color: var(--border);
+      color: var(--text);
+    }
+    .nav-drop-icon { font-size: 18px; flex-shrink: 0; }
+    .nav-drop-name { font-size: 13px; font-weight: 600; color: inherit; }
+    .nav-drop-badge {
+      font-size: 10px;
+      padding: 2px 7px;
+      border-radius: 999px;
+      margin-left: auto;
+      flex-shrink: 0;
+      background: rgba(52,211,153,0.12);
+      color: var(--success);
+      border: 1px solid rgba(52,211,153,0.25);
+    }
+    /* 드롭다운 오버레이 (클릭하면 닫힘) */
+    .nav-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 99;
+    }
+    .nav-overlay.show { display: block; }
 
     .footer { border-top:1px solid var(--border); padding:32px 0; text-align:center; }
     .footer-copy { color:var(--subtext); font-size:13px; margin-bottom:12px; }
@@ -152,27 +229,34 @@
     </div>
   </header>
 
+  <!-- 드롭다운 오버레이 -->
+  <div class="nav-overlay" id="navOverlay"></div>
+
   <!-- ── Sticky 탭 메뉴 ── -->
   <nav class="sticky-nav" id="stickyNav">
     <div class="sticky-nav-inner">
-      <a href="#" class="nav-logo">
+      <div class="nav-logo" id="navLogo">
         <span class="nav-logo-icon">&#x1F9F0;</span> BrowserKit
-      </a>
-      <a class="nav-tab active" data-section="sec-privacy" href="#sec-privacy">
-        <span class="nav-tab-icon">&#x1F512;</span> 개인정보
-      </a>
-      <a class="nav-tab" data-section="sec-image" href="#sec-image">
-        <span class="nav-tab-icon">&#x1F5BC;&#xFE0F;</span> 이미지
-      </a>
-      <a class="nav-tab" data-section="sec-doc" href="#sec-doc">
-        <span class="nav-tab-icon">&#x1F4C4;</span> 문서
-      </a>
-      <a class="nav-tab" data-section="sec-util" href="#sec-util">
-        <span class="nav-tab-icon">&#x1F527;</span> 유틸리티
-      </a>
-      <a class="nav-tab" data-section="sec-dev" href="#sec-dev">
-        <span class="nav-tab-icon">&#x1F4BB;</span> 개발자
-      </a>
+      </div>
+      <div class="nav-tab" data-cat="privacy">
+        <span class="nav-tab-icon">&#x1F512;</span> 개인정보 <span class="nav-tab-chevron">&#x25BC;</span>
+      </div>
+      <div class="nav-tab" data-cat="image">
+        <span class="nav-tab-icon">&#x1F5BC;&#xFE0F;</span> 이미지 <span class="nav-tab-chevron">&#x25BC;</span>
+      </div>
+      <div class="nav-tab" data-cat="doc">
+        <span class="nav-tab-icon">&#x1F4C4;</span> 문서 <span class="nav-tab-chevron">&#x25BC;</span>
+      </div>
+      <div class="nav-tab" data-cat="util">
+        <span class="nav-tab-icon">&#x1F527;</span> 유틸리티 <span class="nav-tab-chevron">&#x25BC;</span>
+      </div>
+      <div class="nav-tab" data-cat="dev">
+        <span class="nav-tab-icon">&#x1F4BB;</span> 개발자 <span class="nav-tab-chevron">&#x25BC;</span>
+      </div>
+    </div>
+    <!-- 드롭다운 패널 -->
+    <div class="nav-dropdown" id="navDropdown">
+      <div class="nav-dropdown-inner" id="navDropdownInner"></div>
     </div>
   </nav>
 
@@ -402,50 +486,94 @@
 
   <script>
   (function() {
-    var SECTIONS = ['sec-privacy','sec-image','sec-doc','sec-util','sec-dev'];
-    var tabs = {};
-    SECTIONS.forEach(function(id) {
-      tabs[id] = document.querySelector('.nav-tab[data-section="' + id + '"]');
-    });
+    var CATS = {
+      privacy: [
+        { icon: '🔒', name: '개인정보 마스킹 (MaskPrivacy)', href: 'maskprivacy/index.html' },
+        { icon: '📄', name: 'PDF 마스킹 (MaskPDF)', href: 'pdf-tools/index.html' },
+        { icon: '👤', name: '얼굴 블러 (MaskFace)', href: 'mask-face/index.html' },
+        { icon: '📝', name: '텍스트 마스킹 (MaskDoc)', href: 'mask-doc/index.html' }
+      ],
+      image: [
+        { icon: '🖼️', name: '이미지 변환 (FitImage)', href: 'image-tools/index.html' },
+        { icon: '✂️', name: '이미지 자르기 (CropImage)', href: 'crop-image/index.html' },
+        { icon: '🏷️', name: '워터마크 (WatermarkImage)', href: 'watermark-image/index.html' },
+        { icon: '🎨', name: '색상 추출 (ColorPicker)', href: 'color-picker/index.html' },
+        { icon: '✨', name: '이미지 보정 (ImageBright)', href: 'image-bright/index.html' },
+        { icon: '✂️', name: 'AI 배경 제거 (BGRemove)', href: 'bg-remove/index.html' }
+      ],
+      doc: [
+        { icon: '📦', name: 'PDF 합치기 (PDFMerge)', href: 'pdf-merge/index.html' },
+        { icon: '⌨️', name: '텍스트 변환 (TextTools)', href: 'text-tools/index.html' },
+        { icon: '🔄', name: '텍스트 비교 (DiffChecker)', href: 'diff-checker/index.html' },
+        { icon: '📝', name: '마크다운 편집기 (MarkdownEditor)', href: 'markdown-editor/index.html' }
+      ],
+      util: [
+        { icon: '📱', name: 'QR 코드 생성 (QRCode)', href: 'qr-code/index.html' },
+        { icon: '🔐', name: '비밀번호 생성기 (PasswordGen)', href: 'password-gen/index.html' },
+        { icon: '📐', name: '단위 변환기 (UnitConvert)', href: 'unit-convert/index.html' }
+      ],
+      dev: [
+        { icon: '📦', name: 'JSON 포맷터 (JSONFormat)', href: 'json-format/index.html' },
+        { icon: '🔍', name: '정규식 테스터 (RegexTest)', href: 'regex-test/index.html' },
+        { icon: '🔠', name: 'Base64 변환 (Base64Tool)', href: 'base64-tool/index.html' }
+      ]
+    };
 
-    function setActive(id) {
-      document.querySelectorAll('.nav-tab').forEach(function(t) { t.classList.remove('active'); });
-      if (tabs[id]) tabs[id].classList.add('active');
+    var currentCat = null;
+    var dropdown   = document.getElementById('navDropdown');
+    var inner      = document.getElementById('navDropdownInner');
+    var overlay    = document.getElementById('navOverlay');
+
+    function openCat(cat) {
+      var tools = CATS[cat];
+      if (!tools) return;
+      inner.innerHTML = tools.map(function(t) {
+        return '<a class="nav-drop-item" href="' + t.href + '">' +
+          '<span class="nav-drop-icon">' + t.icon + '</span>' +
+          '<span class="nav-drop-name">' + t.name + '</span>' +
+          '<span class="nav-drop-badge">✓</span>' +
+          '</a>';
+      }).join('');
+      dropdown.classList.add('open');
+      overlay.classList.add('show');
+      currentCat = cat;
     }
 
-    // IntersectionObserver 로 현재 섹션 자동 감지
-    var current = SECTIONS[0];
-    var io = new IntersectionObserver(function(entries) {
-      entries.forEach(function(entry) {
-        if (entry.isIntersecting) {
-          current = entry.target.id;
-          setActive(current);
-        }
+    function closeAll() {
+      dropdown.classList.remove('open');
+      overlay.classList.remove('show');
+      document.querySelectorAll('.nav-tab').forEach(function(t) {
+        t.classList.remove('active', 'open');
       });
-    }, { rootMargin: '-20% 0px -70% 0px', threshold: 0 });
+      currentCat = null;
+    }
 
-    SECTIONS.forEach(function(id) {
-      var el = document.getElementById(id);
-      if (el) io.observe(el);
-    });
-
-    // 클릭 시 해당 섹션으로 스크롤 (스티키 내브 높이 감안)
-    document.querySelectorAll('.nav-tab[data-section]').forEach(function(tab) {
+    // 탭 클릭
+    document.querySelectorAll('.nav-tab[data-cat]').forEach(function(tab) {
       tab.addEventListener('click', function(e) {
-        e.preventDefault();
-        var id = tab.dataset.section;
-        var el = document.getElementById(id);
-        if (!el) return;
-        var navH = document.getElementById('stickyNav').offsetHeight;
-        var top = el.getBoundingClientRect().top + window.scrollY - navH - 12;
-        window.scrollTo({ top: top, behavior: 'smooth' });
-        setActive(id);
+        e.stopPropagation();
+        var cat = tab.dataset.cat;
+        if (currentCat === cat) {
+          closeAll();
+          return;
+        }
+        closeAll();
+        tab.classList.add('active', 'open');
+        openCat(cat);
       });
     });
 
-    // 로고 클릭 시 맨 위로
-    document.querySelector('.nav-logo').addEventListener('click', function(e) {
-      e.preventDefault();
+    // 오버레이 클릭 → 닫기
+    overlay.addEventListener('click', closeAll);
+
+    // ESC 키
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeAll();
+    });
+
+    // 로고 클릭 → 맨 위로
+    document.getElementById('navLogo').addEventListener('click', function() {
+      closeAll();
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
   })();
