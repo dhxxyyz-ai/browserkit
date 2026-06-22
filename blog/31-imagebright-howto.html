@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="ImageBright의 모든 기능을 단계별로 설명하는 공식 사용 가이드입니다. 밝기, 대비, 채도, 색온도, 샤프니스를 실시간으로 조절하는 방법을 알아보세요." />
+  <meta property="og:title" content="ImageBright 사용법 완전 가이드 — BrowserKit" />
+  <meta property="og:description" content="밝기, 대비, 채도, 색온도를 슬라이더로 실시간 조절하는 ImageBright 공식 가이드입니다." />
+  <meta property="og:type" content="article" />
+  <title>ImageBright 사용법 완전 가이드 — BrowserKit</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+  <script type="text/javascript" src="//t1.kakaocdn.net/kas/static/ba.min.js" async></script>
+  <style>
+    .header { padding:24px 0 16px; border-bottom:1px solid var(--border); }
+    .header .container { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; }
+    .header-brand { display:flex; align-items:center; gap:10px; text-decoration:none; }
+    .header-brand-icon { font-size:24px; }
+    .header-brand-text { font-size:20px; font-weight:700; font-family:'Inter',sans-serif; background:linear-gradient(135deg,var(--point),var(--point-hover)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+    .header-back { font-size:13px; color:var(--subtext); text-decoration:none; }
+    .header-back:hover { color:var(--text); }
+    .post-wrap { max-width:720px; margin:0 auto; padding:48px 24px 80px; }
+    .post-tag { display:inline-block; font-size:12px; color:var(--point-hover); background:rgba(108,99,255,0.15); padding:3px 12px; border-radius:999px; margin-bottom:16px; }
+    .post-title { font-size:28px; font-weight:700; line-height:1.4; margin-bottom:12px; }
+    .post-date { color:var(--subtext); font-size:13px; margin-bottom:40px; padding-bottom:24px; border-bottom:1px solid var(--border); }
+    .post-body h2 { font-size:20px; font-weight:700; margin:40px 0 16px; color:var(--text); }
+    .post-body h3 { font-size:16px; font-weight:600; margin:28px 0 12px; color:var(--point-hover); }
+    .post-body p { font-size:15px; color:var(--subtext); line-height:1.9; margin-bottom:16px; }
+    .post-highlight { background:var(--card); border-left:3px solid var(--point); border-radius:8px; padding:16px 20px; margin:24px 0; font-size:15px; color:var(--text); line-height:1.8; }
+    .feature-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:20px 0; }
+    .feature-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px; }
+    .feature-card:hover { border-color:var(--point); }
+    .feature-icon { font-size:24px; margin-bottom:10px; }
+    .feature-title { font-size:14px; font-weight:600; color:var(--text); margin-bottom:6px; }
+    .feature-desc { font-size:13px; color:var(--subtext); line-height:1.7; }
+    .step-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px 24px; margin:16px 0; display:flex; gap:16px; align-items:flex-start; }
+    .step-num { min-width:36px; height:36px; background:linear-gradient(135deg,var(--point),var(--point-hover)); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:700; color:white; flex-shrink:0; font-family:'Inter',sans-serif; }
+    .step-content h3 { font-size:15px; font-weight:600; margin-bottom:6px; color:var(--text); }
+    .step-content p { font-size:14px; color:var(--subtext); line-height:1.7; margin:0; }
+
+    /* 슬라이더 데모 */
+    .slider-demo { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:20px 24px; margin:16px 0; }
+    .slider-demo-row { display:grid; grid-template-columns:90px 1fr 44px; align-items:center; gap:12px; margin-bottom:14px; }
+    .slider-demo-row:last-child { margin-bottom:0; }
+    .slider-demo-label { font-size:13px; font-weight:600; color:var(--subtext); }
+    .slider-track { height:6px; border-radius:3px; background:linear-gradient(to right, var(--point) 50%, var(--border) 50%); position:relative; }
+    .slider-val { font-size:12px; font-weight:600; color:var(--point-hover); font-family:'Inter',sans-serif; text-align:right; }
+
+    /* 프리셋 데모 */
+    .preset-demo { display:flex; gap:8px; flex-wrap:wrap; margin:16px 0; }
+    .preset-chip { background:var(--card); border:1px solid var(--border); border-radius:8px; padding:8px 16px; font-size:13px; font-weight:600; color:var(--subtext); display:inline-flex; align-items:center; gap:6px; }
+    .preset-chip.active { background:rgba(108,99,255,0.12); border-color:var(--point); color:var(--point-hover); }
+
+    .post-table { width:100%; border-collapse:collapse; margin:20px 0; font-size:14px; }
+    .post-table th { background:var(--card); padding:12px 16px; text-align:left; font-weight:600; border:1px solid var(--border); color:var(--text); }
+    .post-table td { padding:11px 16px; border:1px solid var(--border); color:var(--subtext); line-height:1.7; }
+    .post-table tr:hover td { background:rgba(108,99,255,0.04); }
+    .use-case-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:20px 0; }
+    .use-case-card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:18px; }
+    .use-case-icon { font-size:24px; margin-bottom:8px; }
+    .use-case-title { font-size:13px; font-weight:600; color:var(--text); margin-bottom:6px; }
+    .use-case-desc { font-size:12px; color:var(--subtext); line-height:1.7; }
+    .post-nav { display:flex; justify-content:space-between; margin-top:60px; padding-top:24px; border-top:1px solid var(--border); gap:12px; }
+    .post-nav a { font-size:14px; color:var(--subtext); text-decoration:none; }
+    .post-nav a:hover { color:var(--text); }
+    .cta-box { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:28px; text-align:center; margin:48px 0 0; }
+    .cta-box p { font-size:15px; color:var(--subtext); margin-bottom:16px; }
+    .cta-btn { display:inline-block; background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border-radius:10px; padding:12px 28px; font-size:14px; font-weight:600; text-decoration:none; }
+    .cta-btn:hover { transform:translateY(-2px); box-shadow:0 8px 24px var(--glow); color:white; }
+    .adfit-wrap { text-align:center; margin:24px 0; }
+    .adfit-pc { display:block; }
+    .adfit-mo { display:none; }
+    .back-link { display:inline-flex; align-items:center; gap:6px; color:var(--subtext); font-size:14px; margin-bottom:32px; text-decoration:none; }
+    .back-link:hover { color:var(--text); }
+    .coupang-banner { margin:0 auto 48px; text-align:center; overflow:hidden; }
+    .coupang-notice { font-size:11px; color:var(--subtext); margin-bottom:10px; line-height:1.6; }
+    .coupang-banner-mo { display:none; }
+    @media (max-width:640px) {
+      .feature-grid { grid-template-columns:1fr; }
+      .use-case-grid { grid-template-columns:1fr; }
+      .slider-demo-row { grid-template-columns:72px 1fr 36px; }
+      .adfit-pc { display:none; }
+      .adfit-mo { display:block; }
+      .coupang-banner-pc { display:none; }
+      .coupang-banner-mo { display:block; }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="container">
+      <a href="../index.html" class="header-brand"><span class="header-brand-icon">&#x1F9F0;</span><span class="header-brand-text">BrowserKit</span></a>
+      <a href="../index.html" class="header-back">&#x2190; BrowserKit 홈으로</a>
+    </div>
+  </header>
+
+  <div class="post-wrap">
+    <a href="index.html" class="back-link">&#x2190; 블로그 목록</a>
+    <span class="post-tag">가이드</span>
+    <h1 class="post-title">ImageBright 사용법 완전 가이드</h1>
+    <div class="post-date">2026년 6월 22일</div>
+
+    <div class="post-body">
+      <p>ImageBright는 이미지의 밝기, 대비, 채도, 색온도, 샤프니스를 슬라이더로 실시간 조절하는 무료 온라인 이미지 보정 도구입니다. 사진 편집 앱 없이 브라우저에서 바로 보정할 수 있으며, 6가지 빠른 프리셋으로 한 번에 원하는 느낌을 낼 수도 있습니다. 모든 처리가 브라우저 내에서만 이루어지므로 이미지가 외부 서버로 전송되지 않습니다.</p>
+
+      <h2>주요 기능</h2>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F3A8;</div>
+          <div class="feature-title">5가지 보정 슬라이더</div>
+          <div class="feature-desc">밝기, 대비, 채도, 색온도, 샤프니스를 슬라이더로 실시간 조절합니다. 값을 바꾸는 즉시 결과가 표시됩니다.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x26A1;</div>
+          <div class="feature-title">6가지 빠른 프리셋</div>
+          <div class="feature-desc">선명하게, 따뜻하게, 차갑게, 밝게, 어둡게, 흑백 중 하나를 클릭하면 슬라이더가 자동으로 설정됩니다.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F4F7;</div>
+          <div class="feature-title">원본 / 결과 비교</div>
+          <div class="feature-desc">원본과 보정 결과를 좌우로 나란히 표시합니다. 체커보드 배경으로 투명 픽셀을 쉽게 확인할 수 있습니다.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x2B07;</div>
+          <div class="feature-title">JPG / PNG 저장</div>
+          <div class="feature-desc">보정된 이미지를 JPG(고화질 0.92) 또는 PNG(무손실)로 다운로드합니다.</div>
+        </div>
+      </div>
+
+      <h2>기본 사용법</h2>
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <h3>이미지 업로드</h3>
+          <p>업로드 존을 클릭하거나 이미지를 드래그해 불러옵니다. JPG, PNG, WEBP, GIF 형식을 지원합니다.</p>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <h3>슬라이더 조절 또는 프리셋 선택</h3>
+          <p>슬라이더를 좌우로 움직이거나 빠른 프리셋 버튼을 클릭합니다. 오른쪽 결과 패널에 변화가 즉시 반영됩니다.</p>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <h3>저장</h3>
+          <p><strong>JPG 저장</strong> 또는 <strong>PNG 저장</strong> 버튼으로 보정된 이미지를 다운로드합니다.</p>
+        </div>
+      </div>
+
+      <h2>보정 슬라이더 설명</h2>
+      <div class="slider-demo">
+        <div class="slider-demo-row">
+          <span class="slider-demo-label">☀️ 밝기</span>
+          <div class="slider-track"></div>
+          <span class="slider-val">0</span>
+        </div>
+        <div class="slider-demo-row">
+          <span class="slider-demo-label">◑ 대비</span>
+          <div class="slider-track"></div>
+          <span class="slider-val">0</span>
+        </div>
+        <div class="slider-demo-row">
+          <span class="slider-demo-label">🌈 채도</span>
+          <div class="slider-track"></div>
+          <span class="slider-val">0</span>
+        </div>
+        <div class="slider-demo-row">
+          <span class="slider-demo-label">🌡️ 색온도</span>
+          <div class="slider-track"></div>
+          <span class="slider-val">0</span>
+        </div>
+        <div class="slider-demo-row">
+          <span class="slider-demo-label">📷 샤프니스</span>
+          <div class="slider-track" style="background:linear-gradient(to right, var(--point) 0%, var(--border) 0%);"></div>
+          <span class="slider-val">0</span>
+        </div>
+      </div>
+
+      <table class="post-table">
+        <thead><tr><th>슬라이더</th><th>범위</th><th>효과</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>&#x2600;&#xFE0F; 밝기</td>
+            <td>-100 ~ +100</td>
+            <td>모든 픽셀의 R, G, B 값을 일정량 올리거나 내립니다. +값은 밝게, -값은 어둡게 만듭니다.</td>
+          </tr>
+          <tr>
+            <td>&#x25D0; 대비</td>
+            <td>-100 ~ +100</td>
+            <td>밝은 부분은 더 밝게, 어두운 부분은 더 어둡게 만들어 명암 차이를 강조합니다. -값은 대비를 줄여 뿌옇게 만듭니다.</td>
+          </tr>
+          <tr>
+            <td>&#x1F308; 채도</td>
+            <td>-100 ~ +100</td>
+            <td>색의 선명도를 조절합니다. +값은 색이 진해지고, -값은 색이 빠지며, -100이면 흑백이 됩니다.</td>
+          </tr>
+          <tr>
+            <td>&#x1F321;&#xFE0F; 색온도</td>
+            <td>-100 ~ +100</td>
+            <td>+값은 붉은 계열(따뜻함), -값은 파란 계열(차가움)로 색조가 변합니다. 실내 조명 보정에 유용합니다.</td>
+          </tr>
+          <tr>
+            <td>&#x1F4F7; 샤프니스</td>
+            <td>0 ~ 100</td>
+            <td>언샤프 마스크 알고리즘으로 경계선을 선명하게 만듭니다. 과도하면 노이즈가 생길 수 있습니다.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>빠른 프리셋</h2>
+      <p>슬라이더를 일일이 조절하지 않아도 프리셋 버튼 하나로 원하는 분위기를 즉시 적용할 수 있습니다.</p>
+      <div class="preset-demo">
+        <span class="preset-chip active">&#x1F31F; 선명하게</span>
+        <span class="preset-chip">&#x1F9E1; 따뜻하게</span>
+        <span class="preset-chip">&#x1F4D8; 차갑게</span>
+        <span class="preset-chip">&#x2600;&#xFE0F; 밝게</span>
+        <span class="preset-chip">&#x1F319; 어둡게</span>
+        <span class="preset-chip">&#x26AB; 흑백</span>
+      </div>
+
+      <table class="post-table">
+        <thead><tr><th>프리셋</th><th>주요 효과</th><th>적합한 상황</th></tr></thead>
+        <tbody>
+          <tr><td>🌟 선명하게</td><td>밝기 +10, 대비 +20, 채도 +30, 샤프니스 20</td><td>풍경 사진, 제품 사진, 전반적인 품질 향상</td></tr>
+          <tr><td>🧡 따뜻하게</td><td>밝기 +5, 색온도 +40</td><td>실내 조명 보정, 음식 사진, 따뜻한 분위기</td></tr>
+          <tr><td>📘 차갑게</td><td>대비 +10, 색온도 -40</td><td>겨울 풍경, 하늘 사진, 차가운 분위기</td></tr>
+          <tr><td>☀️ 밝게</td><td>밝기 +40, 채도 +5</td><td>어두운 사진, 실내 역광 보정</td></tr>
+          <tr><td>🌙 어둡게</td><td>밝기 -30, 대비 +10</td><td>과노출 사진, 드라마틱한 분위기</td></tr>
+          <tr><td>⚫ 흑백</td><td>채도 -100, 대비 +20, 샤프니스 10</td><td>흑백 사진 변환, 감성적인 연출</td></tr>
+        </tbody>
+      </table>
+
+      <h2>활용 예시</h2>
+      <div class="use-case-grid">
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F374;</div>
+          <div class="use-case-title">음식 사진 보정</div>
+          <div class="use-case-desc">따뜻하게 프리셋 또는 채도 +20, 색온도 +20으로 음식의 색감을 더 맛있어 보이게 만듭니다.</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F3D4;&#xFE0F;</div>
+          <div class="use-case-title">풍경 사진 강화</div>
+          <div class="use-case-desc">선명하게 프리셋 또는 대비 +15, 채도 +20으로 하늘과 녹음을 더 선명하게 표현합니다.</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F4CA;</div>
+          <div class="use-case-title">프레젠테이션 이미지</div>
+          <div class="use-case-desc">밝기 +15, 대비 +10으로 빔 프로젝터에서 선명하게 보일 수 있도록 이미지를 밝게 보정합니다.</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F465;</div>
+          <div class="use-case-title">인물 사진 보정</div>
+          <div class="use-case-desc">밝기 +10, 대비 -5, 채도 +5로 피부 톤을 자연스럽게 밝히고 샤프니스로 눈매를 선명하게 표현합니다.</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F4E6;</div>
+          <div class="use-case-title">제품 사진 보정</div>
+          <div class="use-case-desc">선명하게 프리셋 또는 대비 +15, 샤프니스 +30으로 제품의 디테일과 질감을 강조합니다.</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F30A;</div>
+          <div class="use-case-title">흑백 사진 변환</div>
+          <div class="use-case-desc">흑백 프리셋 하나로 채도를 완전히 제거하고 대비를 높여 감성적인 흑백 사진으로 변환합니다.</div>
+        </div>
+      </div>
+
+      <h2>저장 형식 선택 가이드</h2>
+      <table class="post-table">
+        <thead><tr><th>형식</th><th>특징</th><th>추천 용도</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>JPG 저장</td>
+            <td>압축률 높음, 파일 크기 작음 (품질 0.92 적용)</td>
+            <td>SNS 업로드, 이메일 첨부, 웹 사용</td>
+          </tr>
+          <tr>
+            <td>PNG 저장</td>
+            <td>무손실 압축, 파일 크기 큼, 투명 배경 지원</td>
+            <td>인쇄, 고화질 보존, 투명 배경 필요 시</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>기술 원리</h2>
+      <p>ImageBright는 Canvas API의 <code>getImageData()</code>로 이미지의 전체 픽셀 배열을 읽어와 각 픽셀의 R, G, B 값을 직접 계산합니다. 외부 이미지 편집 라이브러리 없이 순수 JavaScript만으로 구현되어 있습니다.</p>
+      <table class="post-table">
+        <thead><tr><th>보정 항목</th><th>알고리즘</th></tr></thead>
+        <tbody>
+          <tr><td>밝기</td><td>모든 픽셀의 R, G, B에 고정값을 더하거나 뺍니다</td></tr>
+          <tr><td>대비</td><td>중간점(128) 기준으로 <code>(259×(c+255))/(255×(259-c))</code> 팩터를 곱합니다</td></tr>
+          <tr><td>채도</td><td>RGB → HSL 변환 → S(채도) 값 조절 → RGB 역변환</td></tr>
+          <tr><td>색온도</td><td>R 채널 값을 올리고(따뜻) B 채널 값을 내리거나(차갑게), 반대로 적용합니다</td></tr>
+          <tr><td>샤프니스</td><td>4-이웃 언샤프 마스크 컨볼루션으로 경계 픽셀을 강조합니다</td></tr>
+        </tbody>
+      </table>
+
+      <h2>주의사항</h2>
+      <table class="post-table">
+        <thead><tr><th>항목</th><th>내용</th></tr></thead>
+        <tbody>
+          <tr><td>샤프니스 과도 적용</td><td>샤프니스를 너무 높이면 노이즈가 생기거나 가장자리가 과하게 강조될 수 있습니다. 20~40 범위를 권장합니다.</td></tr>
+          <tr><td>대용량 이미지</td><td>픽셀 단위 처리 특성상 매우 큰 이미지는 처리 시간이 길어질 수 있습니다. 자동으로 2000px 이하로 리샘플링됩니다.</td></tr>
+          <tr><td>GIF 애니메이션</td><td>GIF 업로드 시 첫 번째 프레임만 처리됩니다. 애니메이션은 보존되지 않습니다.</td></tr>
+          <tr><td>JPG 손실</td><td>JPG 저장은 압축 손실이 있습니다. 원본 화질 보존이 필요하면 PNG로 저장하세요.</td></tr>
+        </tbody>
+      </table>
+
+      <div class="post-highlight">&#x2728; ImageBright는 모든 처리가 브라우저 내에서만 이루어집니다. 업로드한 이미지가 외부 서버로 전송되지 않으므로, 개인 사진이나 민감한 이미지도 안전하게 보정할 수 있습니다.</div>
+    </div>
+
+    <div class="cta-box">
+      <p>지금 바로 ImageBright를 사용해보세요.<br />설치도, 회원가입도, 비용도 없습니다.</p>
+      <a href="../image-bright/index.html" class="cta-btn">&#x2728; 무료로 이미지 보정 시작하기</a>
+    </div>
+
+    <div class="adfit-wrap adfit-pc">
+      <ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-Dfncm24OGOmHKE7V" data-ad-width="728" data-ad-height="90"></ins>
+    </div>
+    <div class="adfit-wrap adfit-mo">
+      <ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-jVI6hdgtW0LyffyR" data-ad-width="320" data-ad-height="50"></ins>
+    </div>
+
+    <div class="coupang-banner coupang-banner-pc">
+      <p class="coupang-notice">이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</p>
+      <script src="https://ads-partners.coupang.com/g.js"></script>
+      <script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"668","height":"100","tsource":""});</script>
+    </div>
+    <div class="coupang-banner coupang-banner-mo">
+      <p class="coupang-notice">이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</p>
+      <script src="https://ads-partners.coupang.com/g.js"></script>
+      <script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"320","height":"50","tsource":""});</script>
+    </div>
+
+    <div class="post-nav">
+      <a href="30-markdowneditor-howto.html">&#x2190; 이전 글: MarkdownEditor 사용법 완전 가이드</a>
+      <span></span>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+      <p class="footer-copy">&#xa9; 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p>
+      <nav class="footer-nav">
+        <a href="../privacy.html">개인정보 처리방침</a>
+        <a href="../terms.html">이용약관</a>
+        <a href="../about.html">서비스 소개</a>
+        <a href="index.html">블로그</a>
+      </nav>
+    </div>
+  </footer>
+</body>
+</html>
