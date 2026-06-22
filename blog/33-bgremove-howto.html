@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="BGRemove의 모든 기능을 단계별로 설명하는 공식 사용 가이드입니다. AI로 이미지 배경을 자동 제거하고 투명 PNG로 저장하는 방법을 알아보세요." />
+  <meta property="og:title" content="BGRemove 사용법 완전 가이드 — BrowserKit" />
+  <meta property="og:description" content="AI가 이미지 배경을 자동으로 제거하는 BGRemove 공식 가이드입니다. 서버 전송 없이 브라우저에서 바로 처리합니다." />
+  <meta property="og:type" content="article" />
+  <title>BGRemove 사용법 완전 가이드 — BrowserKit</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+  <script type="text/javascript" src="//t1.kakaocdn.net/kas/static/ba.min.js" async></script>
+  <style>
+    .header { padding:24px 0 16px; border-bottom:1px solid var(--border); }
+    .header .container { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; }
+    .header-brand { display:flex; align-items:center; gap:10px; text-decoration:none; }
+    .header-brand-icon { font-size:24px; }
+    .header-brand-text { font-size:20px; font-weight:700; font-family:'Inter',sans-serif; background:linear-gradient(135deg,var(--point),var(--point-hover)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+    .header-back { font-size:13px; color:var(--subtext); text-decoration:none; }
+    .header-back:hover { color:var(--text); }
+    .post-wrap { max-width:720px; margin:0 auto; padding:48px 24px 80px; }
+    .post-tag { display:inline-block; font-size:12px; color:var(--point-hover); background:rgba(108,99,255,0.15); padding:3px 12px; border-radius:999px; margin-bottom:16px; }
+    .post-title { font-size:28px; font-weight:700; line-height:1.4; margin-bottom:12px; }
+    .post-date { color:var(--subtext); font-size:13px; margin-bottom:40px; padding-bottom:24px; border-bottom:1px solid var(--border); }
+    .post-body h2 { font-size:20px; font-weight:700; margin:40px 0 16px; color:var(--text); }
+    .post-body h3 { font-size:16px; font-weight:600; margin:28px 0 12px; color:var(--point-hover); }
+    .post-body p { font-size:15px; color:var(--subtext); line-height:1.9; margin-bottom:16px; }
+    .post-highlight { background:var(--card); border-left:3px solid var(--point); border-radius:8px; padding:16px 20px; margin:24px 0; font-size:15px; color:var(--text); line-height:1.8; }
+    .post-warn { background:rgba(248,113,113,0.08); border-left:3px solid #F87171; border-radius:8px; padding:16px 20px; margin:24px 0; font-size:14px; color:var(--subtext); line-height:1.8; }
+    .post-warn strong { color:#F87171; }
+    .feature-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:20px 0; }
+    .feature-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px; }
+    .feature-card:hover { border-color:var(--point); }
+    .feature-icon { font-size:24px; margin-bottom:10px; }
+    .feature-title { font-size:14px; font-weight:600; color:var(--text); margin-bottom:6px; }
+    .feature-desc { font-size:13px; color:var(--subtext); line-height:1.7; }
+    .step-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px 24px; margin:16px 0; display:flex; gap:16px; align-items:flex-start; }
+    .step-num { min-width:36px; height:36px; background:linear-gradient(135deg,var(--point),var(--point-hover)); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:700; color:white; flex-shrink:0; font-family:'Inter',sans-serif; }
+    .step-content h3 { font-size:15px; font-weight:600; margin-bottom:6px; color:var(--text); }
+    .step-content p { font-size:14px; color:var(--subtext); line-height:1.7; margin:0; }
+
+    /* 처리 흐름 다이어그램 */
+    .flow-wrap { display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin:20px 0; justify-content:center; }
+    .flow-item { background:var(--card); border:1px solid var(--border); border-radius:10px; padding:10px 16px; font-size:13px; font-weight:600; color:var(--text); text-align:center; white-space:nowrap; }
+    .flow-item.highlight { background:rgba(108,99,255,0.12); border-color:var(--point); color:var(--point-hover); }
+    .flow-arrow { color:var(--subtext); font-size:16px; flex-shrink:0; }
+
+    /* 로딩 단계 데모 */
+    .loading-demo { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:20px 24px; margin:16px 0; }
+    .loading-demo-title { font-size:14px; font-weight:600; color:var(--text); margin-bottom:12px; }
+    .progress-demo { background:var(--bg); border-radius:999px; height:8px; overflow:hidden; margin-bottom:8px; }
+    .progress-demo-bar { height:100%; border-radius:999px; }
+    .progress-demo-bar.w30 { width:30%; background:linear-gradient(90deg,var(--point),var(--point-hover)); }
+    .progress-demo-bar.w100 { width:100%; background:linear-gradient(90deg,var(--success),#10b981); }
+    .progress-demo-text { font-size:12px; color:var(--subtext); font-family:'Inter',sans-serif; }
+
+    /* 체커보드 데모 */
+    .checker-demo { background:repeating-conic-gradient(#1e1e2a 0% 25%,#26263a 0% 50%) 0 0/16px 16px; border-radius:10px; padding:20px; text-align:center; font-size:13px; color:var(--subtext); margin:16px 0; border:1px solid var(--border); }
+
+    .post-table { width:100%; border-collapse:collapse; margin:20px 0; font-size:14px; }
+    .post-table th { background:var(--card); padding:12px 16px; text-align:left; font-weight:600; border:1px solid var(--border); color:var(--text); }
+    .post-table td { padding:11px 16px; border:1px solid var(--border); color:var(--subtext); line-height:1.7; }
+    .post-table tr:hover td { background:rgba(108,99,255,0.04); }
+    .use-case-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:20px 0; }
+    .use-case-card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:18px; }
+    .use-case-icon { font-size:24px; margin-bottom:8px; }
+    .use-case-title { font-size:13px; font-weight:600; color:var(--text); margin-bottom:6px; }
+    .use-case-desc { font-size:12px; color:var(--subtext); line-height:1.7; }
+    .post-nav { display:flex; justify-content:space-between; margin-top:60px; padding-top:24px; border-top:1px solid var(--border); gap:12px; }
+    .post-nav a { font-size:14px; color:var(--subtext); text-decoration:none; }
+    .post-nav a:hover { color:var(--text); }
+    .cta-box { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:28px; text-align:center; margin:48px 0 0; }
+    .cta-box p { font-size:15px; color:var(--subtext); margin-bottom:16px; }
+    .cta-btn { display:inline-block; background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border-radius:10px; padding:12px 28px; font-size:14px; font-weight:600; text-decoration:none; }
+    .cta-btn:hover { transform:translateY(-2px); box-shadow:0 8px 24px var(--glow); color:white; }
+    .adfit-wrap { text-align:center; margin:24px 0; }
+    .adfit-pc { display:block; }
+    .adfit-mo { display:none; }
+    .back-link { display:inline-flex; align-items:center; gap:6px; color:var(--subtext); font-size:14px; margin-bottom:32px; text-decoration:none; }
+    .back-link:hover { color:var(--text); }
+    .coupang-banner { margin:0 auto 48px; text-align:center; overflow:hidden; }
+    .coupang-notice { font-size:11px; color:var(--subtext); margin-bottom:10px; line-height:1.6; }
+    .coupang-banner-mo { display:none; }
+    @media (max-width:640px) {
+      .feature-grid { grid-template-columns:1fr; }
+      .use-case-grid { grid-template-columns:1fr; }
+      .flow-wrap { flex-direction:column; align-items:flex-start; }
+      .adfit-pc { display:none; }
+      .adfit-mo { display:block; }
+      .coupang-banner-pc { display:none; }
+      .coupang-banner-mo { display:block; }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="container">
+      <a href="../index.html" class="header-brand"><span class="header-brand-icon">&#x1F9F0;</span><span class="header-brand-text">BrowserKit</span></a>
+      <a href="../index.html" class="header-back">&#x2190; BrowserKit 홈으로</a>
+    </div>
+  </header>
+
+  <div class="post-wrap">
+    <a href="index.html" class="back-link">&#x2190; 블로그 목록</a>
+    <span class="post-tag">가이드</span>
+    <h1 class="post-title">BGRemove 사용법 완전 가이드</h1>
+    <div class="post-date">2026년 6월 22일</div>
+
+    <div class="post-body">
+      <p>BGRemove는 AI가 이미지 배경을 자동으로 제거해 투명 PNG로 저장하는 무료 온라인 도구입니다. 설치나 회원가입 없이 브라우저에서 바로 사용할 수 있으며, 모든 처리가 내 PC 브라우저 안에서만 이루어지므로 이미지가 외부 서버로 전송되지 않습니다.</p>
+
+      <div class="post-warn">
+        <strong>⚠️ 참고:</strong> AI 인식률에 따라 배경이 완벽하게 제거되지 않을 수 있습니다. 복잡한 배경이나 피사체 경계가 불분명한 이미지에서는 부분적으로 남는 영역이 생길 수 있습니다.
+      </div>
+
+      <h2>주요 기능</h2>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F916;</div>
+          <div class="feature-title">AI 자동 배경 제거</div>
+          <div class="feature-desc">ONNX 기반 AI 모델이 피사체와 배경을 구분해 배경을 자동으로 제거합니다. 별도 설정 없이 이미지를 올리기만 하면 됩니다.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F512;</div>
+          <div class="feature-title">완전 로컬 처리</div>
+          <div class="feature-desc">AI 추론이 내 PC 브라우저에서 직접 실행됩니다. 이미지가 외부 서버로 전송되지 않아 개인 사진도 안심하고 처리할 수 있습니다.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F5BC;&#xFE0F;</div>
+          <div class="feature-title">투명 PNG 저장</div>
+          <div class="feature-desc">배경이 제거된 결과를 투명 배경 PNG 파일로 저장합니다. 다른 이미지에 합성하거나 디자인 작업에 바로 활용할 수 있습니다.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x26A1;</div>
+          <div class="feature-title">브라우저 캐시 활용</div>
+          <div class="feature-desc">첫 방문 시 약 40MB 모델을 다운로드하지만, 이후에는 브라우저 캐시에서 즉시 로드됩니다. 재방문 시 대기 시간이 크게 줄어듭니다.</div>
+        </div>
+      </div>
+
+      <h2>기본 사용법</h2>
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <h3>이미지 업로드</h3>
+          <p>업로드 존을 클릭하거나 이미지를 드래그해 불러옵니다. JPG, PNG, WEBP 형식을 지원합니다.</p>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <h3>AI 모델 로드 및 처리 (자동)</h3>
+          <p>이미지를 올리면 자동으로 시작됩니다. 첫 방문이면 AI 모델(약 40MB)을 다운로드한 뒤 배경 제거를 실행합니다. 재방문이면 캐시에서 즉시 로드됩니다.</p>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <h3>결과 확인</h3>
+          <p>원본과 배경 제거 결과를 좌우로 비교합니다. 체커보드 패턴이 투명 영역을 나타냅니다.</p>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <h3>PNG 저장</h3>
+          <p><strong>PNG 저장 (투명 배경)</strong> 버튼을 클릭해 결과를 다운로드합니다. 파일명은 <code>원본파일명_bgremoved.png</code> 형식으로 저장됩니다.</p>
+        </div>
+      </div>
+
+      <h2>처리 흐름</h2>
+      <p>BGRemove는 다음 5단계로 동작하며, 모든 과정이 내 브라우저 안에서만 실행됩니다.</p>
+      <div class="flow-wrap">
+        <div class="flow-item">&#x1F5BC;&#xFE0F; 이미지 업로드</div>
+        <div class="flow-arrow">&#x2192;</div>
+        <div class="flow-item highlight">&#x1F916; AI 모델 로드</div>
+        <div class="flow-arrow">&#x2192;</div>
+        <div class="flow-item highlight">&#x2699;&#xFE0F; WebAssembly 추론</div>
+        <div class="flow-arrow">&#x2192;</div>
+        <div class="flow-item">&#x1F3A8; 마스크 생성</div>
+        <div class="flow-arrow">&#x2192;</div>
+        <div class="flow-item">&#x2B07; 투명 PNG 저장</div>
+      </div>
+      <p>보라색으로 표시된 단계가 AI가 실제로 작동하는 구간입니다. 이 모든 연산이 외부 서버가 아닌 내 PC 브라우저에서 직접 실행됩니다.</p>
+
+      <h2>첫 방문 로딩 안내</h2>
+      <p>BGRemove는 AI 모델을 브라우저에서 직접 실행하는 방식이어서, 첫 방문 시 모델 파일(약 40MB)을 다운로드해야 합니다.</p>
+
+      <div class="loading-demo">
+        <div class="loading-demo-title">⚙️ AI 모델을 준비하는 중... (첫 방문)</div>
+        <div class="progress-demo"><div class="progress-demo-bar w30"></div></div>
+        <div class="progress-demo-text">모델 다운로드 중... 30%</div>
+      </div>
+
+      <table class="post-table">
+        <thead><tr><th>방문 유형</th><th>모델 로딩</th><th>대기 시간</th></tr></thead>
+        <tbody>
+          <tr><td>첫 방문 (캐시 없음)</td><td>약 40MB 다운로드</td><td>5~15초 (인터넷 속도에 따라 다름)</td></tr>
+          <tr><td>재방문 (캐시 있음)</td><td>캐시에서 즉시 로드</td><td>1~3초</td></tr>
+        </tbody>
+      </table>
+
+      <p>모델은 브라우저 캐시에 저장되므로 브라우저 캐시를 지우지 않는 한 다시 다운로드할 필요가 없습니다.</p>
+
+      <h2>결과 미리보기 — 체커보드 패턴</h2>
+      <p>배경이 제거된 결과는 아래와 같이 체커보드(바둑판) 배경 위에 표시됩니다. 체커보드 영역이 투명한 부분을 나타냅니다. 실제 PNG 파일을 저장하면 해당 영역이 투명 배경으로 저장됩니다.</p>
+      <div class="checker-demo">
+        &#x1F4F7; 체커보드 영역 = 투명 배경<br />피사체만 남고 배경이 제거된 상태입니다.
+      </div>
+
+      <h2>잘 되는 이미지 vs 어려운 이미지</h2>
+      <table class="post-table">
+        <thead><tr><th>유형</th><th>결과 품질</th><th>예시</th></tr></thead>
+        <tbody>
+          <tr><td>&#x2705; 단색 배경</td><td>매우 좋음</td><td>흰 배경 제품 사진, 스튜디오 인물 사진</td></tr>
+          <tr><td>&#x2705; 배경과 피사체 대비 뚜렷</td><td>좋음</td><td>하늘 배경 인물, 잔디밭 동물 사진</td></tr>
+          <tr><td>&#x26A0;&#xFE0F; 복잡한 배경</td><td>보통</td><td>번화가 거리, 수풀이 많은 풍경</td></tr>
+          <tr><td>&#x26A0;&#xFE0F; 배경과 피사체 색상 유사</td><td>어려움</td><td>흰 옷 + 흰 배경, 갈색 개 + 갈색 소파</td></tr>
+          <tr><td>&#x274C; 머리카락·털 등 세밀한 경계</td><td>부분적 제거</td><td>곱슬머리, 장모종 동물</td></tr>
+        </tbody>
+      </table>
+
+      <div class="post-warn">
+        <strong>⚠️ AI 인식률 한계:</strong> BGRemove는 AI가 배경을 자동으로 판단하므로 이미지 특성에 따라 배경이 완벽하게 제거되지 않을 수 있습니다. 특히 피사체와 배경의 색상이 비슷하거나 경계가 복잡한 경우 일부 배경이 남거나 피사체 일부가 제거될 수 있습니다.
+      </div>
+
+      <h2>활용 예시</h2>
+      <div class="use-case-grid">
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F6CD;&#xFE0F;</div>
+          <div class="use-case-title">제품 이미지 배경 제거</div>
+          <div class="use-case-desc">쇼핑몰 제품 사진의 배경을 제거하고 흰 배경이나 다른 배경으로 교체해 상품 이미지를 제작합니다.</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F4F7;</div>
+          <div class="use-case-title">프로필 사진 배경 변경</div>
+          <div class="use-case-desc">인물 사진의 배경을 제거한 뒤 다른 배경 이미지와 합성해 색다른 프로필 사진을 만듭니다.</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F58C;&#xFE0F;</div>
+          <div class="use-case-title">디자인 소스 제작</div>
+          <div class="use-case-desc">배경이 없는 투명 PNG 이미지를 만들어 PPT, 포토샵, 피그마 등 디자인 작업에 바로 활용합니다.</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F4CB;</div>
+          <div class="use-case-title">썸네일 · 배너 제작</div>
+          <div class="use-case-desc">블로그 썸네일이나 SNS 배너 제작 시 인물·제품을 배경 없이 추출해 다양한 배경에 합성합니다.</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F43E;</div>
+          <div class="use-case-title">반려동물 사진 편집</div>
+          <div class="use-case-desc">강아지, 고양이 사진의 배경을 제거해 귀여운 스티커 이미지나 합성 사진을 만듭니다.</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F4BC;</div>
+          <div class="use-case-title">증명사진 배경 변경</div>
+          <div class="use-case-desc">흰 배경 또는 파란 배경이 필요한 증명사진의 배경을 빠르게 교체합니다. (결과 품질 확인 필수)</div>
+        </div>
+      </div>
+
+      <h2>AI 모델 기술 원리</h2>
+      <p>BGRemove는 <code>@imgly/background-removal</code> 오픈소스 라이브러리를 사용합니다. 이 라이브러리는 ONNX(Open Neural Network Exchange) 형식의 AI 세그멘테이션 모델을 WebAssembly(WASM)로 브라우저에서 직접 실행합니다.</p>
+      <table class="post-table">
+        <thead><tr><th>구성 요소</th><th>역할</th></tr></thead>
+        <tbody>
+          <tr><td>ONNX 모델 (small, ~40MB)</td><td>이미지에서 피사체와 배경을 구분하는 AI 세그멘테이션 모델</td></tr>
+          <tr><td>ONNX Runtime Web (WebAssembly)</td><td>브라우저에서 AI 모델을 실행하는 추론 엔진</td></tr>
+          <tr><td>브라우저 캐시</td><td>첫 방문 이후 모델 파일을 저장해 재다운로드 방지</td></tr>
+          <tr><td>Canvas API</td><td>마스크를 적용해 배경 픽셀을 투명으로 처리</td></tr>
+        </tbody>
+      </table>
+
+      <div class="post-highlight">&#x1F512; BGRemove는 모든 AI 추론이 내 PC 브라우저에서만 실행됩니다. 이미지가 외부 서버로 전송되지 않아 개인 사진, 기업 제품 이미지 등 민감한 이미지도 안심하고 처리할 수 있습니다.</div>
+    </div>
+
+    <div class="cta-box">
+      <p>지금 바로 BGRemove를 사용해보세요.<br />설치도, 회원가입도, 비용도 없습니다.</p>
+      <a href="../bg-remove/index.html" class="cta-btn">&#x2702;&#xFE0F; 무료로 배경 제거 시작하기</a>
+    </div>
+
+    <div class="adfit-wrap adfit-pc">
+      <ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-Dfncm24OGOmHKE7V" data-ad-width="728" data-ad-height="90"></ins>
+    </div>
+    <div class="adfit-wrap adfit-mo">
+      <ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-jVI6hdgtW0LyffyR" data-ad-width="320" data-ad-height="50"></ins>
+    </div>
+
+    <div class="coupang-banner coupang-banner-pc">
+      <p class="coupang-notice">이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</p>
+      <script src="https://ads-partners.coupang.com/g.js"></script>
+      <script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"668","height":"100","tsource":""});</script>
+    </div>
+    <div class="coupang-banner coupang-banner-mo">
+      <p class="coupang-notice">이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</p>
+      <script src="https://ads-partners.coupang.com/g.js"></script>
+      <script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"320","height":"50","tsource":""});</script>
+    </div>
+
+    <div class="post-nav">
+      <a href="32-regextest-howto.html">&#x2190; 이전 글: RegexTest 사용법 완전 가이드</a>
+      <span></span>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+      <p class="footer-copy">&#xa9; 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p>
+      <nav class="footer-nav">
+        <a href="../privacy.html">개인정보 처리방침</a>
+        <a href="../terms.html">이용약관</a>
+        <a href="../about.html">서비스 소개</a>
+        <a href="index.html">블로그</a>
+      </nav>
+    </div>
+  </footer>
+</body>
+</html>
