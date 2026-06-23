@@ -7,7 +7,7 @@
   <meta property="og:title" content="RegexTest — 정규식 테스터" />
   <meta property="og:description" content="정규식을 실시간으로 테스트하고 매칭 결과를 하이라이트하는 무료 온라인 도구입니다." />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://browserkit.pages.dev/regex-test/" />
+  <meta property="og:url" content="https://browserkit.online/regex-test/" />
   <title>RegexTest — 정규식 테스터</title>
   <link rel="stylesheet" href="../css/style.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
@@ -222,9 +222,9 @@
   <script>
   // ── 프리셋 데이터 ──
   var PRESETS = {
-    email:   { pattern: '[\\w.+-]+@[\\w-]+\\.[\\w.]+', flags: 'gi', sample: '문의: support@browserkit.pages.dev\n안녕하세요 user.name+tag@example.co.kr 로 연락주세요.\ntest@test 는 유효하지 않습니다.' },
+    email:   { pattern: '[\\w.+-]+@[\\w-]+\\.[\\w.]+', flags: 'gi', sample: '문의: support@browserkit.online\n안녕하세요 user.name+tag@example.co.kr 로 연락주세요.\ntest@test 는 유효하지 않습니다.' },
     phone:   { pattern: '01[0-9]-?\\d{3,4}-?\\d{4}', flags: 'g', sample: '전화번호: 010-1234-5678\n또는 01012345678\n팩스: 02-1234-5678 (해당 안 됨)\n010.1234.5678' },
-    url:     { pattern: 'https?:\\/\\/[\\w\\-._~:\\/?#\\[\\]@!$&\'()*+,;=%]+', flags: 'gi', sample: '홈페이지: https://browserkit.pages.dev\n블로그: http://example.com/blog?id=1&page=2\n보안: https://secure.site.co.kr/path#section' },
+    url:     { pattern: 'https?:\\/\\/[\\w\\-._~:\\/?#\\[\\]@!$&\'()*+,;=%]+', flags: 'gi', sample: '홈페이지: https://browserkit.online\n블로그: http://example.com/blog?id=1&page=2\n보안: https://secure.site.co.kr/path#section' },
     date:    { pattern: '\\d{4}[-./](?:0[1-9]|1[0-2])[-./](?:0[1-9]|[12]\\d|3[01])', flags: 'g', sample: '작성일: 2026-06-22\n마감: 2026.12.31\n생년월일: 1990/01/15\n잘못된 형식: 2026-13-01' },
     rrn:     { pattern: '\\d{6}-[1-4]\\d{6}', flags: 'g', sample: '주민등록번호: 900101-1234567\n외국인등록: 850315-2345678\n잘못된 예: 900101-5234567' },
     account: { pattern: '\\d{3,6}-\\d{2,6}-\\d{2,6}(?:-\\d{2,3})?', flags: 'g', sample: '국민은행: 123456-78-901234\n신한은행: 110-123-456789\n기업은행: 123-456789-01-012' },
