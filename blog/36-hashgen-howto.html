@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="HashGen의 모든 기능을 단계별로 설명하는 공식 사용 가이드입니다. MD5, SHA-1, SHA-256, SHA-512 해시 생성과 파일 무결성 검증 방법을 알아보세요." />
+  <meta property="og:title" content="HashGen 사용법 완전 가이드 — BrowserKit" />
+  <meta property="og:description" content="텍스트와 파일의 해시값을 즉시 생성하고 무결성을 검증하는 HashGen 공식 가이드입니다." />
+  <meta property="og:type" content="article" />
+  <title>HashGen 사용법 완전 가이드 — BrowserKit</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+  <script type="text/javascript" src="//t1.kakaocdn.net/kas/static/ba.min.js" async></script>
+  <style>
+    .header { padding:24px 0 16px; border-bottom:1px solid var(--border); }
+    .header .container { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; }
+    .header-brand { display:flex; align-items:center; gap:10px; text-decoration:none; }
+    .header-brand-icon { font-size:24px; }
+    .header-brand-text { font-size:20px; font-weight:700; font-family:'Inter',sans-serif; background:linear-gradient(135deg,var(--point),var(--point-hover)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+    .header-back { font-size:13px; color:var(--subtext); text-decoration:none; }
+    .header-back:hover { color:var(--text); }
+    .post-wrap { max-width:720px; margin:0 auto; padding:48px 24px 80px; }
+    .post-tag { display:inline-block; font-size:12px; color:var(--point-hover); background:rgba(108,99,255,0.15); padding:3px 12px; border-radius:999px; margin-bottom:16px; }
+    .post-title { font-size:28px; font-weight:700; line-height:1.4; margin-bottom:12px; }
+    .post-date { color:var(--subtext); font-size:13px; margin-bottom:40px; padding-bottom:24px; border-bottom:1px solid var(--border); }
+    .post-body h2 { font-size:20px; font-weight:700; margin:40px 0 16px; color:var(--text); }
+    .post-body h3 { font-size:16px; font-weight:600; margin:28px 0 12px; color:var(--point-hover); }
+    .post-body p { font-size:15px; color:var(--subtext); line-height:1.9; margin-bottom:16px; }
+    .post-highlight { background:var(--card); border-left:3px solid var(--point); border-radius:8px; padding:16px 20px; margin:24px 0; font-size:15px; color:var(--text); line-height:1.8; }
+    .post-warn { background:rgba(248,113,113,0.08); border-left:3px solid #F87171; border-radius:8px; padding:16px 20px; margin:24px 0; font-size:14px; color:var(--subtext); line-height:1.8; }
+    .feature-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:20px 0; }
+    .feature-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px; }
+    .feature-card:hover { border-color:var(--point); }
+    .feature-icon { font-size:24px; margin-bottom:10px; }
+    .feature-title { font-size:14px; font-weight:600; color:var(--text); margin-bottom:6px; }
+    .feature-desc { font-size:13px; color:var(--subtext); line-height:1.7; }
+    .step-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px 24px; margin:16px 0; display:flex; gap:16px; align-items:flex-start; }
+    .step-num { min-width:36px; height:36px; background:linear-gradient(135deg,var(--point),var(--point-hover)); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:700; color:white; flex-shrink:0; font-family:'Inter',sans-serif; }
+    .step-content h3 { font-size:15px; font-weight:600; margin-bottom:6px; color:var(--text); }
+    .step-content p { font-size:14px; color:var(--subtext); line-height:1.7; margin:0; }
+
+    /* 탭 데모 */
+    .tab-demo { display:flex; gap:4px; background:var(--card); border:1px solid var(--border); border-radius:12px; padding:4px; margin:16px 0; }
+    .tab-demo-btn { flex:1; padding:8px; font-size:13px; font-weight:600; border-radius:9px; text-align:center; color:var(--subtext); }
+    .tab-demo-btn.on { background:linear-gradient(135deg,var(--point),var(--point-hover)); color:#fff; }
+
+    /* 해시 결과 데모 */
+    .hash-result-demo { background:var(--card); border:1px solid var(--border); border-radius:12px; overflow:hidden; margin:16px 0; }
+    .hash-row-demo { padding:13px 18px; display:grid; grid-template-columns:80px 1fr auto; gap:12px; align-items:center; border-bottom:1px solid var(--border); }
+    .hash-row-demo:last-child { border-bottom:none; }
+    .hash-algo-demo { font-size:12px; font-weight:700; color:var(--subtext); font-family:'Fira Code',monospace; }
+    .hash-val-demo { font-size:11px; font-family:'Fira Code',monospace; color:var(--text); word-break:break-all; line-height:1.5; }
+    .hash-copy-demo { font-size:11px; background:var(--bg); border:1px solid var(--border); border-radius:6px; padding:4px 10px; color:var(--subtext); white-space:nowrap; }
+
+    /* 알고리즘 토글 데모 */
+    .algo-demo { display:flex; gap:8px; flex-wrap:wrap; margin:12px 0; }
+    .algo-chip { background:rgba(108,99,255,0.15); border:1px solid var(--point); border-radius:8px; padding:6px 14px; font-size:12px; font-weight:700; color:var(--point-hover); font-family:'Fira Code',monospace; }
+    .algo-chip.off { background:var(--bg); border-color:var(--border); color:var(--subtext); }
+
+    /* 검증 데모 */
+    .verify-demo { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:16px 20px; margin:16px 0; }
+    .verify-label-demo { font-size:12px; font-weight:600; color:var(--subtext); margin-bottom:8px; }
+    .verify-input-demo { background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:9px 13px; font-size:12px; font-family:'Fira Code',monospace; color:var(--subtext); width:100%; margin-bottom:10px; }
+    .verify-ok-demo { font-size:13px; font-weight:600; color:var(--success); display:flex; align-items:center; gap:6px; }
+    .verify-fail-demo { font-size:13px; font-weight:600; color:#F87171; display:flex; align-items:center; gap:6px; }
+
+    /* 알고리즘 비교 표 */
+    .post-table { width:100%; border-collapse:collapse; margin:20px 0; font-size:14px; }
+    .post-table th { background:var(--card); padding:12px 16px; text-align:left; font-weight:600; border:1px solid var(--border); color:var(--text); }
+    .post-table td { padding:11px 16px; border:1px solid var(--border); color:var(--subtext); line-height:1.7; }
+    .post-table tr:hover td { background:rgba(108,99,255,0.04); }
+    .badge-safe { display:inline-block; font-size:11px; background:rgba(52,211,153,0.12); color:var(--success); border:1px solid rgba(52,211,153,0.25); border-radius:999px; padding:1px 8px; }
+    .badge-warn { display:inline-block; font-size:11px; background:rgba(248,113,113,0.1); color:#F87171; border:1px solid rgba(248,113,113,0.25); border-radius:999px; padding:1px 8px; }
+
+    .use-case-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:20px 0; }
+    .use-case-card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:18px; }
+    .use-case-icon { font-size:24px; margin-bottom:8px; }
+    .use-case-title { font-size:13px; font-weight:600; color:var(--text); margin-bottom:6px; }
+    .use-case-desc { font-size:12px; color:var(--subtext); line-height:1.7; }
+    .post-nav { display:flex; justify-content:space-between; margin-top:60px; padding-top:24px; border-top:1px solid var(--border); gap:12px; }
+    .post-nav a { font-size:14px; color:var(--subtext); text-decoration:none; }
+    .post-nav a:hover { color:var(--text); }
+    .cta-box { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:28px; text-align:center; margin:48px 0 0; }
+    .cta-box p { font-size:15px; color:var(--subtext); margin-bottom:16px; }
+    .cta-btn { display:inline-block; background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border-radius:10px; padding:12px 28px; font-size:14px; font-weight:600; text-decoration:none; }
+    .cta-btn:hover { transform:translateY(-2px); box-shadow:0 8px 24px var(--glow); color:white; }
+    .adfit-wrap { text-align:center; margin:24px 0; }
+    .adfit-pc { display:block; }
+    .adfit-mo { display:none; }
+    .back-link { display:inline-flex; align-items:center; gap:6px; color:var(--subtext); font-size:14px; margin-bottom:32px; text-decoration:none; }
+    .back-link:hover { color:var(--text); }
+    .coupang-banner { margin:0 auto 48px; text-align:center; overflow:hidden; }
+    .coupang-notice { font-size:11px; color:var(--subtext); margin-bottom:10px; line-height:1.6; }
+    .coupang-banner-mo { display:none; }
+    @media (max-width:640px) {
+      .feature-grid { grid-template-columns:1fr; }
+      .use-case-grid { grid-template-columns:1fr; }
+      .hash-row-demo { grid-template-columns:60px 1fr; }
+      .hash-copy-demo { display:none; }
+      .adfit-pc { display:none; }
+      .adfit-mo { display:block; }
+      .coupang-banner-pc { display:none; }
+      .coupang-banner-mo { display:block; }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="container">
+      <a href="../index.html" class="header-brand"><span class="header-brand-icon">&#x1F9F0;</span><span class="header-brand-text">BrowserKit</span></a>
+      <a href="../index.html" class="header-back">&#x2190; BrowserKit 홈으로</a>
+    </div>
+  </header>
+
+  <div class="post-wrap">
+    <a href="index.html" class="back-link">&#x2190; 블로그 목록</a>
+    <span class="post-tag">가이드</span>
+    <h1 class="post-title">HashGen 사용법 완전 가이드</h1>
+    <div class="post-date">2026년 6월 23일</div>
+
+    <div class="post-body">
+      <p>HashGen은 텍스트와 파일의 MD5, SHA-1, SHA-256, SHA-512 해시값을 즉시 생성하고 무결성을 검증하는 무료 온라인 도구입니다. 다운로드한 파일이 변조되지 않았는지 확인하거나, 특정 텍스트의 고유 해시값이 필요할 때 바로 사용할 수 있습니다. 모든 처리가 브라우저 내에서만 이루어지므로 텍스트나 파일이 외부 서버로 전송되지 않습니다.</p>
+
+      <h2>주요 기능</h2>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F4DD;</div>
+          <div class="feature-title">텍스트 해시 생성</div>
+          <div class="feature-desc">텍스트를 입력하면 MD5, SHA-1, SHA-256, SHA-512 해시값이 실시간으로 생성됩니다. 글자를 입력하는 즉시 결과가 업데이트됩니다.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F4C2;</div>
+          <div class="feature-title">파일 해시 생성</div>
+          <div class="feature-desc">파일을 업로드하면 파일 전체의 해시값을 계산합니다. 드래그&드롭으로 간편하게 파일을 올릴 수 있습니다.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F50D;</div>
+          <div class="feature-title">해시 검증</div>
+          <div class="feature-desc">비교할 해시값을 붙여넣으면 생성된 해시와 자동으로 비교합니다. 파일 제공자가 공개한 해시값과 대조해 무결성을 확인할 수 있습니다.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F526;</div>
+          <div class="feature-title">알고리즘 선택</div>
+          <div class="feature-desc">MD5, SHA-1, SHA-256, SHA-512를 개별적으로 켜고 끌 수 있습니다. 필요한 알고리즘만 활성화해 결과를 간결하게 볼 수 있습니다.</div>
+        </div>
+      </div>
+
+      <h2>탭 구성</h2>
+      <div class="tab-demo">
+        <div class="tab-demo-btn on">&#x1F4DD; 텍스트 해시</div>
+        <div class="tab-demo-btn">&#x1F4C2; 파일 해시</div>
+      </div>
+      <p>텍스트 해시 탭에서는 직접 입력한 텍스트의 해시를 생성하고, 파일 해시 탭에서는 업로드한 파일의 해시를 계산합니다.</p>
+
+      <h2>텍스트 해시 사용법</h2>
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <h3>텍스트 입력</h3>
+          <p>텍스트 입력창에 해시를 생성할 텍스트를 입력합니다. 입력하는 즉시 아래에 해시값이 실시간으로 표시됩니다. 우측 상단에서 현재까지 입력한 글자 수를 확인할 수 있습니다.</p>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <h3>알고리즘 선택 (선택사항)</h3>
+          <p>기본적으로 MD5, SHA-1, SHA-256, SHA-512 모두 활성화되어 있습니다. 특정 알고리즘만 필요하다면 버튼을 클릭해 비활성화할 수 있습니다.</p>
+        </div>
+      </div>
+
+      <h3>알고리즘 토글 예시</h3>
+      <div class="algo-demo">
+        <span class="algo-chip">MD5</span>
+        <span class="algo-chip off">SHA-1</span>
+        <span class="algo-chip">SHA-256</span>
+        <span class="algo-chip off">SHA-512</span>
+      </div>
+      <p>위처럼 SHA-1, SHA-512를 비활성화하면 MD5와 SHA-256 결과만 표시됩니다.</p>
+
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <h3>결과 복사</h3>
+          <p>각 해시값 우측의 복사 버튼을 클릭해 개별 해시를 복사하거나, 하단의 전체 복사 버튼으로 모든 해시를 한 번에 복사할 수 있습니다.</p>
+        </div>
+      </div>
+
+      <h3>텍스트 해시 결과 예시</h3>
+      <p>텍스트 <code>hello</code>를 입력했을 때 생성되는 해시값입니다.</p>
+      <div class="hash-result-demo">
+        <div class="hash-row-demo">
+          <span class="hash-algo-demo">MD5</span>
+          <span class="hash-val-demo">5d41402abc4b2a76b9719d911017c592</span>
+          <span class="hash-copy-demo">복사</span>
+        </div>
+        <div class="hash-row-demo">
+          <span class="hash-algo-demo">SHA-1</span>
+          <span class="hash-val-demo">aaf4c61ddcc5e8a2dabede0f3b482cd9aea9434d</span>
+          <span class="hash-copy-demo">복사</span>
+        </div>
+        <div class="hash-row-demo">
+          <span class="hash-algo-demo">SHA-256</span>
+          <span class="hash-val-demo">2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824</span>
+          <span class="hash-copy-demo">복사</span>
+        </div>
+        <div class="hash-row-demo">
+          <span class="hash-algo-demo">SHA-512</span>
+          <span class="hash-val-demo">9b71d224bd62f3785d96d46ad3ea3d73319bfbc2890caadae2dff72519673ca72323c3d99ba5c11d7c7acc6e14b8c5da0c4663475c2e5c3adef46f73bcdec043</span>
+          <span class="hash-copy-demo">복사</span>
+        </div>
+      </div>
+
+      <h2>파일 해시 사용법</h2>
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <h3>파일 업로드</h3>
+          <p>업로드 존을 클릭하거나 파일을 드래그해 올립니다. 모든 파일 형식을 지원하며, 파일이 외부 서버로 전송되지 않으므로 민감한 파일도 안심하고 처리할 수 있습니다.</p>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <h3>해시 계산 (자동)</h3>
+          <p>파일을 올리면 자동으로 해시 계산이 시작됩니다. 진행 바가 표시되며 MD5 → SHA-1 → SHA-256 → SHA-512 순서로 계산됩니다.</p>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <h3>결과 확인 및 복사</h3>
+          <p>계산이 완료되면 각 알고리즘의 해시값이 표시됩니다. 개별 복사 또는 전체 복사(파일명 포함) 버튼으로 결과를 복사할 수 있습니다.</p>
+        </div>
+      </div>
+
+      <h2>해시 검증 기능</h2>
+      <p>소프트웨어 공식 사이트나 다운로드 페이지에서 제공하는 해시값과 내 파일의 해시값을 비교해 파일이 변조되지 않았는지 확인할 수 있습니다.</p>
+
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <h3>공개된 해시값 복사</h3>
+          <p>파일 제공 사이트에서 SHA-256 또는 MD5 해시값을 복사합니다.</p>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <h3>검증 입력창에 붙여넣기</h3>
+          <p>결과 카드 아래의 해시 검증 입력창에 붙여넣습니다. 자동으로 생성된 해시값과 비교해 결과를 표시합니다.</p>
+        </div>
+      </div>
+
+      <h3>검증 결과 예시</h3>
+      <div class="verify-demo">
+        <div class="verify-label-demo">&#x1F50D; 해시 검증 — 파일 제공자의 해시값과 비교합니다</div>
+        <div class="verify-input-demo">2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824</div>
+        <div class="verify-ok-demo">&#x2705; 일치합니다 (SHA-256) — 파일이 변조되지 않았습니다.</div>
+      </div>
+      <div class="verify-demo" style="margin-top:12px;">
+        <div class="verify-label-demo">&#x1F50D; 해시 검증 — 일치하지 않는 경우</div>
+        <div class="verify-input-demo">abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890</div>
+        <div class="verify-fail-demo">&#x274C; 일치하는 해시값이 없습니다. 파일이 변조되었을 수 있습니다.</div>
+      </div>
+
+      <div class="post-warn">
+        <strong>⚠️ 주의:</strong> 해시값이 일치하지 않는다면 파일이 전송 중에 손상되었거나 변조되었을 가능성이 있습니다. 공식 사이트에서 파일을 다시 다운로드하는 것을 권장합니다.
+      </div>
+
+      <h2>알고리즘별 특징 및 용도</h2>
+      <table class="post-table">
+        <thead>
+          <tr><th>알고리즘</th><th>해시 길이</th><th>속도</th><th>보안 수준</th><th>주요 용도</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>MD5</strong></td>
+            <td>32자 (128비트)</td>
+            <td>빠름</td>
+            <td><span class="badge-warn">낮음</span></td>
+            <td>파일 무결성 확인 (빠른 비교용), 체크섬</td>
+          </tr>
+          <tr>
+            <td><strong>SHA-1</strong></td>
+            <td>40자 (160비트)</td>
+            <td>빠름</td>
+            <td><span class="badge-warn">낮음</span></td>
+            <td>레거시 시스템, Git 커밋 ID</td>
+          </tr>
+          <tr>
+            <td><strong>SHA-256</strong></td>
+            <td>64자 (256비트)</td>
+            <td>보통</td>
+            <td><span class="badge-safe">높음</span></td>
+            <td>파일 무결성 검증 (권장), 보안 애플리케이션, 비트코인</td>
+          </tr>
+          <tr>
+            <td><strong>SHA-512</strong></td>
+            <td>128자 (512비트)</td>
+            <td>보통</td>
+            <td><span class="badge-safe">매우 높음</span></td>
+            <td>최고 보안 요구 환경, 비밀번호 해시, 전자서명</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>파일 무결성 검증에는 <strong>SHA-256</strong>을 사용하는 것이 일반적입니다. 대부분의 소프트웨어 배포 사이트(Linux ISO, Python 설치 파일, 오픈소스 도구 등)에서 SHA-256 또는 SHA-512 해시를 제공합니다.</p>
+
+      <h2>활용 예시</h2>
+      <div class="use-case-grid">
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F4E5;</div>
+          <div class="use-case-title">다운로드 파일 검증</div>
+          <div class="use-case-desc">Ubuntu, Python, Node.js 등 공식 소프트웨어를 다운로드한 후 제공된 SHA-256 해시와 비교해 파일이 손상되지 않았는지 확인합니다.</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F4BE;</div>
+          <div class="use-case-title">백업 파일 무결성 확인</div>
+          <div class="use-case-desc">중요한 파일의 해시값을 백업 전후에 비교해 데이터가 정확히 보존되었는지 확인합니다.</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F511;</div>
+          <div class="use-case-title">비밀번호 해시 참고</div>
+          <div class="use-case-desc">특정 텍스트가 어떤 해시값을 가지는지 확인합니다. 개발 중 해시 함수 동작을 이해하고 테스트하는 데 활용합니다.</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F4C4;</div>
+          <div class="use-case-title">문서 변조 여부 확인</div>
+          <div class="use-case-desc">계약서, 보고서 등 중요 문서의 원본 해시값을 기록해두고, 이후 파일이 수정되지 않았는지 해시 비교로 확인합니다.</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F6E1;&#xFE0F;</div>
+          <div class="use-case-title">API 서명 확인</div>
+          <div class="use-case-desc">HMAC 없이 단순 해시 기반 API 서명을 수동으로 계산하거나 검증할 때 사용합니다.</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F50E;</div>
+          <div class="use-case-title">중복 파일 탐지</div>
+          <div class="use-case-desc">두 파일의 해시값이 같으면 내용이 동일합니다. 이름이 다른 중복 파일을 빠르게 확인하는 데 활용합니다.</div>
+        </div>
+      </div>
+
+      <h2>기술 원리</h2>
+      <p>HashGen은 SHA 계열 해시를 브라우저에 내장된 <code>Web Crypto API</code>로 계산하고, MD5는 Web Crypto API에서 지원하지 않아 경량 오픈소스 라이브러리 <code>js-md5</code>를 CDN으로 불러와 처리합니다.</p>
+      <table class="post-table">
+        <thead><tr><th>알고리즘</th><th>처리 방식</th><th>특징</th></tr></thead>
+        <tbody>
+          <tr><td>MD5</td><td>js-md5 (CDN)</td><td>Web Crypto API가 MD5 미지원 — 경량 라이브러리 사용</td></tr>
+          <tr><td>SHA-1, SHA-256, SHA-512</td><td>Web Crypto API (내장)</td><td>브라우저 네이티브 지원, 추가 라이브러리 없음</td></tr>
+          <tr><td>파일 처리</td><td>file.arrayBuffer()</td><td>파일 전체를 메모리에서 직접 처리, 서버 전송 없음</td></tr>
+        </tbody>
+      </table>
+
+      <div class="post-highlight">&#x1F512; HashGen은 모든 해시 계산이 내 PC 브라우저에서만 실행됩니다. 입력한 텍스트와 업로드한 파일이 외부 서버로 전송되지 않아 기밀 문서, 개인 파일도 안심하고 사용할 수 있습니다.</div>
+    </div>
+
+    <div class="cta-box">
+      <p>지금 바로 HashGen을 사용해보세요.<br />설치도, 회원가입도, 비용도 없습니다.</p>
+      <a href="../hash-gen/index.html" class="cta-btn">&#x1F511; 무료로 해시 생성 시작하기</a>
+    </div>
+
+    <div class="adfit-wrap adfit-pc">
+      <ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-Dfncm24OGOmHKE7V" data-ad-width="728" data-ad-height="90"></ins>
+    </div>
+    <div class="adfit-wrap adfit-mo">
+      <ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-jVI6hdgtW0LyffyR" data-ad-width="320" data-ad-height="50"></ins>
+    </div>
+
+    <div class="coupang-banner coupang-banner-pc">
+      <p class="coupang-notice">이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</p>
+      <script src="https://ads-partners.coupang.com/g.js"></script>
+      <script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"668","height":"100","tsource":""});</script>
+    </div>
+    <div class="coupang-banner coupang-banner-mo">
+      <p class="coupang-notice">이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</p>
+      <script src="https://ads-partners.coupang.com/g.js"></script>
+      <script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"320","height":"50","tsource":""});</script>
+    </div>
+
+    <div class="post-nav">
+      <a href="35-worldclock-howto.html">&#x2190; 이전 글: WorldClock 사용법 완전 가이드</a>
+      <span></span>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+      <p class="footer-copy">&#xa9; 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p>
+      <nav class="footer-nav">
+        <a href="../privacy.html">개인정보 처리방침</a>
+        <a href="../terms.html">이용약관</a>
+        <a href="../about.html">서비스 소개</a>
+        <a href="index.html">블로그</a>
+      </nav>
+    </div>
+  </footer>
+</body>
+</html>
