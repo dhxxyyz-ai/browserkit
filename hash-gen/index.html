@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="텍스트나 파일의 MD5, SHA-1, SHA-256, SHA-512 해시값을 즉시 생성하는 무료 온라인 해시 생성기. 서버 전송 없이 브라우저에서 바로 처리합니다." />
+  <meta property="og:title" content="HashGen — 해시 생성기" />
+  <meta property="og:description" content="MD5, SHA-1, SHA-256, SHA-512 해시값을 즉시 생성합니다. 서버 전송 없이 브라우저에서 바로 처리." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://browserkit.pages.dev/hash-gen/" />
+  <title>HashGen — 해시 생성기</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+  <script type="text/javascript" src="//t1.kakaocdn.net/kas/static/ba.min.js" async></script>
+  <!-- MD5: Web Crypto API가 MD5 미지원 → 경량 CDN 라이브러리 사용 -->
+  <script src="https://cdn.jsdelivr.net/npm/js-md5@0.8.3/src/md5.min.js"></script>
+  <style>
+    .header { padding:24px 0 16px; border-bottom:1px solid var(--border); }
+    .header .container { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; }
+    .header-brand { display:flex; align-items:center; gap:10px; text-decoration:none; }
+    .header-brand-icon { font-size:24px; }
+    .header-brand-text { font-size:20px; font-weight:700; font-family:'Inter',sans-serif; background:linear-gradient(135deg,var(--point),var(--point-hover)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+    .header-back { font-size:13px; color:var(--subtext); text-decoration:none; }
+    .header-back:hover { color:var(--text); }
+
+    .hero { text-align:center; padding:40px 0 32px; }
+    .hero-icon { font-size:48px; margin-bottom:16px; }
+    .hero-title { font-size:32px; font-weight:700; margin-bottom:12px; background:linear-gradient(135deg,var(--point),var(--point-hover)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+    .hero-desc { color:var(--subtext); font-size:15px; margin-bottom:20px; }
+    .hero-badges { display:flex; justify-content:center; gap:10px; flex-wrap:wrap; }
+    .hero-badge { background:var(--card); border:1px solid var(--border); border-radius:999px; padding:5px 16px; font-size:13px; color:var(--subtext); }
+
+    /* 탭 */
+    .tab-bar { display:flex; gap:4px; background:var(--card); border:1px solid var(--border); border-radius:14px; padding:5px; margin-bottom:24px; }
+    .tab-btn { flex:1; padding:10px; font-size:14px; font-weight:600; border:none; border-radius:10px; cursor:pointer; font-family:'Pretendard',sans-serif; background:transparent; color:var(--subtext); transition:all 0.2s; }
+    .tab-btn.active { background:linear-gradient(135deg,var(--point),var(--point-hover)); color:#fff; }
+    .tab-btn:hover:not(.active) { color:var(--text); background:rgba(108,99,255,0.08); }
+
+    /* 패널 */
+    .panel { display:none; }
+    .panel.show { display:block; }
+
+    /* 입력 카드 */
+    .input-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:24px; margin-bottom:20px; }
+    .field-label { font-size:13px; font-weight:600; color:var(--subtext); margin-bottom:8px; display:flex; align-items:center; justify-content:space-between; }
+    .text-input { width:100%; background:var(--bg); border:1px solid var(--border); border-radius:10px; padding:13px 16px; font-size:14px; color:var(--text); font-family:'Fira Code','JetBrains Mono',monospace; resize:vertical; min-height:120px; outline:none; transition:border-color 0.2s; line-height:1.6; }
+    .text-input:focus { border-color:var(--point); }
+    .text-input::placeholder { color:var(--subtext); font-family:'Pretendard',sans-serif; }
+    .char-count { font-size:12px; color:var(--subtext); font-family:'Inter',sans-serif; }
+
+    /* 알고리즘 선택 */
+    .algo-wrap { display:flex; gap:8px; flex-wrap:wrap; margin-top:16px; }
+    .algo-btn { background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:7px 16px; font-size:13px; font-weight:700; color:var(--subtext); cursor:pointer; font-family:'Fira Code',monospace; transition:all 0.15s; user-select:none; }
+    .algo-btn:hover { border-color:var(--point); color:var(--text); }
+    .algo-btn.active { background:rgba(108,99,255,0.15); border-color:var(--point); color:var(--point-hover); }
+
+    /* 파일 업로드 존 */
+    .upload-zone { background:var(--bg); border:2px dashed var(--border); border-radius:12px; padding:32px; text-align:center; cursor:pointer; transition:all 0.2s; margin-bottom:16px; }
+    .upload-zone:hover, .upload-zone.drag-over { border-color:var(--point); box-shadow:0 0 16px var(--glow); }
+    .upload-zone-icon { font-size:32px; margin-bottom:8px; }
+    .upload-zone-text { font-size:14px; font-weight:600; margin-bottom:4px; }
+    .upload-zone-sub { font-size:12px; color:var(--subtext); }
+    .file-info { display:flex; align-items:center; gap:10px; background:var(--bg); border:1px solid var(--border); border-radius:10px; padding:10px 14px; margin-bottom:16px; font-size:13px; }
+    .file-info-icon { font-size:18px; }
+    .file-info-name { font-weight:600; color:var(--text); flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+    .file-info-size { color:var(--subtext); flex-shrink:0; }
+    .file-clear { background:none; border:none; color:var(--subtext); cursor:pointer; font-size:16px; padding:0 4px; flex-shrink:0; }
+    .file-clear:hover { color:#F87171; }
+
+    /* 결과 카드 */
+    .result-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); margin-bottom:20px; overflow:hidden; }
+    .result-row { padding:14px 20px; display:grid; grid-template-columns:100px 1fr auto; gap:12px; align-items:center; border-bottom:1px solid var(--border); }
+    .result-row:last-child { border-bottom:none; }
+    .result-algo { font-size:12px; font-weight:700; color:var(--subtext); font-family:'Fira Code',monospace; flex-shrink:0; }
+    .result-hash { font-size:12px; font-family:'Fira Code','JetBrains Mono',monospace; color:var(--text); word-break:break-all; line-height:1.6; }
+    .result-hash.empty { color:var(--subtext); font-style:italic; font-family:'Pretendard',sans-serif; font-size:13px; }
+    .result-hash.computing { color:var(--subtext); font-family:'Pretendard',sans-serif; font-size:13px; }
+    .copy-btn { background:var(--bg); border:1px solid var(--border); border-radius:7px; padding:5px 12px; font-size:12px; font-weight:600; color:var(--subtext); cursor:pointer; font-family:'Pretendard',sans-serif; transition:all 0.15s; white-space:nowrap; flex-shrink:0; }
+    .copy-btn:hover { border-color:var(--point); color:var(--text); }
+    .copy-btn:disabled { opacity:0.4; cursor:not-allowed; }
+
+    /* 검증 섹션 */
+    .verify-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px 24px; margin-bottom:20px; }
+    .verify-title { font-size:13px; font-weight:600; color:var(--subtext); margin-bottom:12px; }
+    .verify-input { width:100%; background:var(--bg); border:1px solid var(--border); border-radius:10px; padding:11px 16px; font-size:13px; color:var(--text); font-family:'Fira Code',monospace; outline:none; transition:border-color 0.2s; }
+    .verify-input:focus { border-color:var(--point); }
+    .verify-result { margin-top:10px; font-size:13px; font-weight:600; display:flex; align-items:center; gap:8px; min-height:20px; }
+    .verify-ok { color:var(--success); }
+    .verify-fail { color:#F87171; }
+
+    /* 버튼 */
+    .btn-sub { background:var(--card); color:var(--subtext); border:1px solid var(--border); border-radius:10px; padding:10px 18px; font-size:13px; cursor:pointer; font-family:'Pretendard',sans-serif; transition:all 0.2s; }
+    .btn-sub:hover { color:var(--text); border-color:var(--point); }
+    .btn-danger { background:var(--card); color:#F87171; border:1px solid var(--border); border-radius:10px; padding:10px 18px; font-size:13px; cursor:pointer; font-family:'Pretendard',sans-serif; transition:all 0.2s; }
+    .btn-danger:hover { border-color:#F87171; }
+    .action-bar { display:flex; gap:10px; margin-bottom:48px; flex-wrap:wrap; }
+
+    /* 진행 표시 */
+    .progress-wrap { display:none; background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px 24px; margin-bottom:20px; text-align:center; }
+    .progress-wrap.show { display:block; }
+    .progress-bar-outer { background:var(--bg); border-radius:999px; height:6px; overflow:hidden; margin:12px 0 8px; }
+    .progress-bar-inner { height:100%; background:linear-gradient(90deg,var(--point),var(--point-hover)); border-radius:999px; transition:width 0.3s ease; width:0%; }
+    .progress-text { font-size:13px; color:var(--subtext); }
+
+    /* 토스트 */
+    .toast { position:fixed; bottom:32px; left:50%; transform:translateX(-50%) translateY(80px); background:var(--success); color:#fff; border-radius:999px; padding:10px 24px; font-size:14px; font-weight:600; opacity:0; pointer-events:none; z-index:999; transition:all 0.3s ease; }
+    .toast.show { transform:translateX(-50%) translateY(0); opacity:1; }
+
+    /* 배너 */
+    .coupang-banner { margin:0 auto 48px; text-align:center; overflow:hidden; }
+    .coupang-notice { font-size:11px; color:var(--subtext); margin-bottom:10px; line-height:1.6; }
+    .coupang-banner-mo { display:none; }
+    .adfit-wrap { text-align:center; margin:24px 0; }
+    .adfit-pc { display:block; }
+    .adfit-mo { display:none; }
+    .footer { border-top:1px solid var(--border); padding:32px 0; text-align:center; }
+    .footer-copy { color:var(--subtext); font-size:13px; margin-bottom:12px; }
+    .footer-nav { display:flex; justify-content:center; gap:20px; flex-wrap:wrap; }
+    .footer-nav a { color:var(--subtext); font-size:13px; text-decoration:none; }
+    .footer-nav a:hover { color:var(--text); }
+
+    @media (max-width:640px) {
+      .hero-title { font-size:24px; }
+      .result-row { grid-template-columns:80px 1fr; gap:8px; }
+      .copy-btn { grid-column:2; justify-self:start; }
+      .adfit-pc { display:none; }
+      .adfit-mo { display:block; }
+      .coupang-banner-pc { display:none; }
+      .coupang-banner-mo { display:block; }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="container">
+      <a href="../index.html" class="header-brand">
+        <span class="header-brand-icon">&#x1F9F0;</span>
+        <span class="header-brand-text">BrowserKit</span>
+      </a>
+      <a href="../index.html" class="header-back">&#x2190; BrowserKit 홈으로</a>
+    </div>
+  </header>
+
+  <main><div class="container">
+    <div class="hero">
+      <div class="hero-icon">&#x1F511;</div>
+      <h1 class="hero-title">HashGen</h1>
+      <p class="hero-desc">텍스트와 파일의 해시값을 즉시 생성하고 무결성을 검증하세요</p>
+      <div class="hero-badges">
+        <span class="hero-badge">&#x26A1; 즉시 생성</span>
+        <span class="hero-badge">&#x1F512; 서버 전송 없음</span>
+        <span class="hero-badge">&#x1F4E6; 설치 불필요</span>
+      </div>
+    </div>
+
+    <div class="adfit-wrap adfit-pc"><ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-Dfncm24OGOmHKE7V" data-ad-width="728" data-ad-height="90"></ins></div>
+    <div class="adfit-wrap adfit-mo"><ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-jVI6hdgtW0LyffyR" data-ad-width="320" data-ad-height="50"></ins></div>
+
+    <!-- 탭 -->
+    <div class="tab-bar">
+      <button class="tab-btn active" data-tab="text">&#x1F4DD; 텍스트 해시</button>
+      <button class="tab-btn" data-tab="file">&#x1F4C2; 파일 해시</button>
+    </div>
+
+    <!-- ─── 텍스트 해시 탭 ─── -->
+    <div class="panel show" id="panel-text">
+      <div class="input-card">
+        <div class="field-label">
+          <span>&#x270F;&#xFE0F; 텍스트 입력</span>
+          <span class="char-count" id="charCount">0자</span>
+        </div>
+        <textarea class="text-input" id="textInput" placeholder="해시를 생성할 텍스트를 입력하세요..."></textarea>
+        <div class="algo-wrap">
+          <span style="font-size:12px;color:var(--subtext);align-self:center;margin-right:4px;">알고리즘:</span>
+          <button class="algo-btn active" data-algo="MD5">MD5</button>
+          <button class="algo-btn active" data-algo="SHA-1">SHA-1</button>
+          <button class="algo-btn active" data-algo="SHA-256">SHA-256</button>
+          <button class="algo-btn active" data-algo="SHA-512">SHA-512</button>
+        </div>
+      </div>
+
+      <!-- 텍스트 결과 -->
+      <div class="result-card" id="textResultCard">
+        <div class="result-row" id="row-text-MD5">
+          <span class="result-algo">MD5</span>
+          <span class="result-hash empty">텍스트를 입력하면 해시가 표시됩니다.</span>
+          <button class="copy-btn" disabled>복사</button>
+        </div>
+        <div class="result-row" id="row-text-SHA-1">
+          <span class="result-algo">SHA-1</span>
+          <span class="result-hash empty">텍스트를 입력하면 해시가 표시됩니다.</span>
+          <button class="copy-btn" disabled>복사</button>
+        </div>
+        <div class="result-row" id="row-text-SHA-256">
+          <span class="result-algo">SHA-256</span>
+          <span class="result-hash empty">텍스트를 입력하면 해시가 표시됩니다.</span>
+          <button class="copy-btn" disabled>복사</button>
+        </div>
+        <div class="result-row" id="row-text-SHA-512">
+          <span class="result-algo">SHA-512</span>
+          <span class="result-hash empty">텍스트를 입력하면 해시가 표시됩니다.</span>
+          <button class="copy-btn" disabled>복사</button>
+        </div>
+      </div>
+
+      <!-- 해시 검증 -->
+      <div class="verify-card">
+        <div class="verify-title">&#x1F50D; 해시 검증 — 생성된 해시와 비교할 값을 입력하세요</div>
+        <input type="text" class="verify-input" id="verifyInput" placeholder="검증할 해시값 붙여넣기..." />
+        <div class="verify-result" id="verifyResult"></div>
+      </div>
+
+      <div class="action-bar">
+        <button class="btn-sub" id="copyAllTextBtn">&#x1F4CB; 전체 복사</button>
+        <button class="btn-danger" id="clearTextBtn">&#x21BA; 초기화</button>
+      </div>
+    </div>
+
+    <!-- ─── 파일 해시 탭 ─── -->
+    <div class="panel" id="panel-file">
+      <div class="input-card">
+        <input type="file" id="fileInput" style="display:none" />
+        <div class="upload-zone" id="uploadZone">
+          <div class="upload-zone-icon">&#x1F4C2;</div>
+          <div class="upload-zone-text">파일을 업로드하세요</div>
+          <div class="upload-zone-sub">클릭하거나 드래그 · 모든 파일 형식 지원</div>
+        </div>
+        <div class="file-info" id="fileInfo" style="display:none;">
+          <span class="file-info-icon">&#x1F4C4;</span>
+          <span class="file-info-name" id="fileName"></span>
+          <span class="file-info-size" id="fileSize"></span>
+          <button class="file-clear" id="fileClear">&#x2715;</button>
+        </div>
+        <div class="algo-wrap">
+          <span style="font-size:12px;color:var(--subtext);align-self:center;margin-right:4px;">알고리즘:</span>
+          <button class="algo-btn active" data-algo="MD5">MD5</button>
+          <button class="algo-btn active" data-algo="SHA-1">SHA-1</button>
+          <button class="algo-btn active" data-algo="SHA-256">SHA-256</button>
+          <button class="algo-btn active" data-algo="SHA-512">SHA-512</button>
+        </div>
+      </div>
+
+      <!-- 파일 진행 -->
+      <div class="progress-wrap" id="fileProgress">
+        <div style="font-size:14px;font-weight:600;">&#x2699;&#xFE0F; 해시 계산 중...</div>
+        <div class="progress-bar-outer"><div class="progress-bar-inner" id="progressBar"></div></div>
+        <div class="progress-text" id="progressText">준비 중...</div>
+      </div>
+
+      <!-- 파일 결과 -->
+      <div class="result-card" id="fileResultCard">
+        <div class="result-row" id="row-file-MD5">
+          <span class="result-algo">MD5</span>
+          <span class="result-hash empty">파일을 업로드하면 해시가 표시됩니다.</span>
+          <button class="copy-btn" disabled>복사</button>
+        </div>
+        <div class="result-row" id="row-file-SHA-1">
+          <span class="result-algo">SHA-1</span>
+          <span class="result-hash empty">파일을 업로드하면 해시가 표시됩니다.</span>
+          <button class="copy-btn" disabled>복사</button>
+        </div>
+        <div class="result-row" id="row-file-SHA-256">
+          <span class="result-algo">SHA-256</span>
+          <span class="result-hash empty">파일을 업로드하면 해시가 표시됩니다.</span>
+          <button class="copy-btn" disabled>복사</button>
+        </div>
+        <div class="result-row" id="row-file-SHA-512">
+          <span class="result-algo">SHA-512</span>
+          <span class="result-hash empty">파일을 업로드하면 해시가 표시됩니다.</span>
+          <button class="copy-btn" disabled>복사</button>
+        </div>
+      </div>
+
+      <!-- 파일 해시 검증 -->
+      <div class="verify-card">
+        <div class="verify-title">&#x1F50D; 해시 검증 — 파일 제공자의 해시값과 비교합니다</div>
+        <input type="text" class="verify-input" id="verifyFileInput" placeholder="검증할 해시값 붙여넣기..." />
+        <div class="verify-result" id="verifyFileResult"></div>
+      </div>
+
+      <div class="action-bar">
+        <button class="btn-sub" id="copyAllFileBtn">&#x1F4CB; 전체 복사</button>
+        <button class="btn-danger" id="clearFileBtn">&#x21BA; 초기화</button>
+      </div>
+    </div>
+
+    <div class="coupang-banner coupang-banner-pc">
+      <p class="coupang-notice">이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</p>
+      <script src="https://ads-partners.coupang.com/g.js"></script>
+      <script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"728","height":"120","tsource":""});</script>
+    </div>
+    <div class="coupang-banner coupang-banner-mo">
+      <p class="coupang-notice">이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</p>
+      <script src="https://ads-partners.coupang.com/g.js"></script>
+      <script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"320","height":"50","tsource":""});</script>
+    </div>
+  </div></main>
+
+  <footer class="footer">
+    <div class="container">
+      <p class="footer-copy">&#xa9; 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p>
+      <nav class="footer-nav">
+        <a href="../privacy.html">개인정보 처리방침</a>
+        <a href="../terms.html">이용약관</a>
+        <a href="../about.html">서비스 소개</a>
+        <a href="../blog/index.html">블로그</a>
+      </nav>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+  // ── 유틸 ──
+  function bufToHex(buf) {
+    return Array.from(new Uint8Array(buf))
+      .map(function(b) { return b.toString(16).padStart(2, '0'); })
+      .join('');
+  }
+
+  function formatBytes(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1048576) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1048576).toFixed(2) + ' MB';
+  }
+
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(function() { t.classList.remove('show'); }, 2000);
+  }
+
+  // ── SHA 계열: Web Crypto API ──
+  async function sha(algo, data) {
+    // data: ArrayBuffer 또는 string
+    var buf;
+    if (typeof data === 'string') {
+      buf = new TextEncoder().encode(data);
+    } else {
+      buf = data;
+    }
+    var hashBuf = await crypto.subtle.digest(algo, buf);
+    return bufToHex(hashBuf);
+  }
+
+  // ── 탭 ──
+  document.querySelectorAll('.tab-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.tab-btn').forEach(function(b){ b.classList.remove('active'); });
+      document.querySelectorAll('.panel').forEach(function(p){ p.classList.remove('show'); });
+      btn.classList.add('active');
+      document.getElementById('panel-' + btn.dataset.tab).classList.add('show');
+    });
+  });
+
+  // ══════════════════════════
+  // 텍스트 해시
+  // ══════════════════════════
+  var textInput    = document.getElementById('textInput');
+  var charCount    = document.getElementById('charCount');
+  var verifyInput  = document.getElementById('verifyInput');
+  var verifyResult = document.getElementById('verifyResult');
+
+  // 알고리즘 활성 상태 (텍스트 탭)
+  var textAlgos = { 'MD5': true, 'SHA-1': true, 'SHA-256': true, 'SHA-512': true };
+  // 현재 해시 결과 저장
+  var textHashes = {};
+  var fileHashes = {};
+
+  // 텍스트 탭 알고리즘 버튼
+  document.querySelectorAll('#panel-text .algo-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var algo = btn.dataset.algo;
+      textAlgos[algo] = !textAlgos[algo];
+      btn.classList.toggle('active', textAlgos[algo]);
+      computeTextHash();
+    });
+  });
+
+  // 텍스트 입력 → 해시 계산
+  textInput.addEventListener('input', function() {
+    var v = textInput.value;
+    charCount.textContent = v.length.toLocaleString() + '자';
+    computeTextHash();
+    verifyResult.textContent = '';
+  });
+
+  async function computeTextHash() {
+    var val = textInput.value;
+    textHashes = {};
+
+    var algos = ['MD5', 'SHA-1', 'SHA-256', 'SHA-512'];
+    for (var i = 0; i < algos.length; i++) {
+      var algo = algos[i];
+      var row = document.getElementById('row-text-' + algo);
+      var hashEl = row.querySelector('.result-hash');
+      var copyBtn = row.querySelector('.copy-btn');
+
+      if (!textAlgos[algo]) {
+        hashEl.textContent = '비활성화됨';
+        hashEl.className = 'result-hash empty';
+        copyBtn.disabled = true;
+        continue;
+      }
+      if (!val) {
+        hashEl.textContent = '텍스트를 입력하면 해시가 표시됩니다.';
+        hashEl.className = 'result-hash empty';
+        copyBtn.disabled = true;
+        continue;
+      }
+
+      try {
+        var hash;
+        if (algo === 'MD5') {
+          hash = md5(val);
+        } else {
+          hash = await sha(algo, val);
+        }
+        textHashes[algo] = hash;
+        hashEl.textContent = hash;
+        hashEl.className = 'result-hash';
+        copyBtn.disabled = false;
+        copyBtn.onclick = (function(h) {
+          return function() {
+            navigator.clipboard.writeText(h);
+            showToast('\u2713 ' + algo + ' \ubcf5\uc0ac\ub428');
+          };
+        })(hash);
+      } catch(e) {
+        hashEl.textContent = '오류: ' + e.message;
+        hashEl.className = 'result-hash empty';
+        copyBtn.disabled = true;
+      }
+    }
+    runTextVerify();
+  }
+
+  // 해시 검증 (텍스트)
+  verifyInput.addEventListener('input', runTextVerify);
+  function runTextVerify() {
+    var v = verifyInput.value.trim().toLowerCase();
+    verifyResult.textContent = '';
+    if (!v || Object.keys(textHashes).length === 0) return;
+    for (var algo in textHashes) {
+      if (textHashes[algo].toLowerCase() === v) {
+        verifyResult.innerHTML = '<span class="verify-ok">&#x2705; 일치합니다 (' + algo + ')</span>';
+        return;
+      }
+    }
+    verifyResult.innerHTML = '<span class="verify-fail">&#x274C; 일치하는 해시값이 없습니다.</span>';
+  }
+
+  // 전체 복사 (텍스트)
+  document.getElementById('copyAllTextBtn').addEventListener('click', function() {
+    if (!Object.keys(textHashes).length) { showToast('\ud574\uc2dc\ub97c \uba3c\uc800 \uc0dd\uc131\ud558\uc138\uc694'); return; }
+    var text = Object.entries(textHashes).map(function(e) { return e[0] + ':\n' + e[1]; }).join('\n\n');
+    navigator.clipboard.writeText(text);
+    showToast('\u2713 \uc804\uccb4 \ud574\uc2dc \ubcf5\uc0ac\ub428');
+  });
+
+  // 초기화 (텍스트)
+  document.getElementById('clearTextBtn').addEventListener('click', function() {
+    textInput.value = '';
+    charCount.textContent = '0자';
+    verifyInput.value = '';
+    verifyResult.textContent = '';
+    textHashes = {};
+    ['MD5','SHA-1','SHA-256','SHA-512'].forEach(function(algo) {
+      var row = document.getElementById('row-text-' + algo);
+      row.querySelector('.result-hash').textContent = '\ud14d\uc2a4\ud2b8\ub97c \uc785\ub825\ud558\uba74 \ud574\uc2dc\uac00 \ud45c\uc2dc\ub429\ub2c8\ub2e4.';
+      row.querySelector('.result-hash').className = 'result-hash empty';
+      row.querySelector('.copy-btn').disabled = true;
+    });
+  });
+
+  // ══════════════════════════
+  // 파일 해시
+  // ══════════════════════════
+  var fileAlgos = { 'MD5': true, 'SHA-1': true, 'SHA-256': true, 'SHA-512': true };
+  var currentFile = null;
+
+  // 파일 탭 알고리즘 버튼
+  document.querySelectorAll('#panel-file .algo-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var algo = btn.dataset.algo;
+      fileAlgos[algo] = !fileAlgos[algo];
+      btn.classList.toggle('active', fileAlgos[algo]);
+      if (currentFile) computeFileHash(currentFile);
+    });
+  });
+
+  // 업로드 존
+  var uploadZone = document.getElementById('uploadZone');
+  var fileInput  = document.getElementById('fileInput');
+  uploadZone.addEventListener('click', function() { fileInput.click(); });
+  uploadZone.addEventListener('dragover', function(e) { e.preventDefault(); uploadZone.classList.add('drag-over'); });
+  uploadZone.addEventListener('dragleave', function() { uploadZone.classList.remove('drag-over'); });
+  uploadZone.addEventListener('drop', function(e) {
+    e.preventDefault(); uploadZone.classList.remove('drag-over');
+    if (e.dataTransfer.files[0]) handleFile(e.dataTransfer.files[0]);
+  });
+  fileInput.addEventListener('change', function() {
+    if (fileInput.files[0]) handleFile(fileInput.files[0]);
+  });
+
+  function handleFile(file) {
+    currentFile = file;
+    document.getElementById('uploadZone').style.display = 'none';
+    document.getElementById('fileInfo').style.display = 'flex';
+    document.getElementById('fileName').textContent = file.name;
+    document.getElementById('fileSize').textContent = formatBytes(file.size);
+    computeFileHash(file);
+  }
+
+  // 파일 지우기
+  document.getElementById('fileClear').addEventListener('click', function() {
+    clearFile();
+  });
+
+  function clearFile() {
+    currentFile = null;
+    fileInput.value = '';
+    fileHashes = {};
+    document.getElementById('uploadZone').style.display = '';
+    document.getElementById('fileInfo').style.display = 'none';
+    document.getElementById('fileProgress').classList.remove('show');
+    document.getElementById('verifyFileInput').value = '';
+    document.getElementById('verifyFileResult').textContent = '';
+    ['MD5','SHA-1','SHA-256','SHA-512'].forEach(function(algo) {
+      var row = document.getElementById('row-file-' + algo);
+      row.querySelector('.result-hash').textContent = '\ud30c\uc77c\uc744 \uc5c5\ub85c\ub4dc\ud558\uba74 \ud574\uc2dc\uac00 \ud45c\uc2dc\ub429\ub2c8\ub2e4.';
+      row.querySelector('.result-hash').className = 'result-hash empty';
+      row.querySelector('.copy-btn').disabled = true;
+    });
+  }
+
+  async function computeFileHash(file) {
+    var progressWrap = document.getElementById('fileProgress');
+    var progressBar  = document.getElementById('progressBar');
+    var progressText = document.getElementById('progressText');
+    fileHashes = {};
+
+    progressWrap.classList.add('show');
+    progressBar.style.width = '0%';
+    progressText.textContent = '파일 읽는 중...';
+
+    // 파일 ArrayBuffer 읽기
+    var arrayBuffer;
+    try {
+      arrayBuffer = await file.arrayBuffer();
+    } catch(e) {
+      progressWrap.classList.remove('show');
+      showToast('\ud30c\uc77c \uc77d\uae30 \uc2e4\ud328: ' + e.message);
+      return;
+    }
+
+    var algos = ['MD5', 'SHA-1', 'SHA-256', 'SHA-512'];
+    var total  = algos.filter(function(a) { return fileAlgos[a]; }).length;
+    var done   = 0;
+
+    for (var i = 0; i < algos.length; i++) {
+      var algo = algos[i];
+      var row = document.getElementById('row-file-' + algo);
+      var hashEl = row.querySelector('.result-hash');
+      var copyBtn = row.querySelector('.copy-btn');
+
+      if (!fileAlgos[algo]) {
+        hashEl.textContent = '비활성화됨';
+        hashEl.className = 'result-hash empty';
+        copyBtn.disabled = true;
+        continue;
+      }
+
+      hashEl.textContent = '계산 중...';
+      hashEl.className = 'result-hash computing';
+      progressText.textContent = algo + ' 계산 중...';
+
+      try {
+        var hash;
+        if (algo === 'MD5') {
+          // js-md5: ArrayBuffer 직접 지원
+          hash = md5(arrayBuffer);
+        } else {
+          hash = await sha(algo, arrayBuffer);
+        }
+        fileHashes[algo] = hash;
+        hashEl.textContent = hash;
+        hashEl.className = 'result-hash';
+        copyBtn.disabled = false;
+        copyBtn.onclick = (function(h, a) {
+          return function() {
+            navigator.clipboard.writeText(h);
+            showToast('\u2713 ' + a + ' \ubcf5\uc0ac\ub428');
+          };
+        })(hash, algo);
+      } catch(e) {
+        hashEl.textContent = '오류: ' + e.message;
+        hashEl.className = 'result-hash empty';
+        copyBtn.disabled = true;
+      }
+
+      done++;
+      progressBar.style.width = Math.round(done / total * 100) + '%';
+    }
+
+    progressText.textContent = '완료!';
+    setTimeout(function() { progressWrap.classList.remove('show'); }, 1000);
+    runFileVerify();
+  }
+
+  // 해시 검증 (파일)
+  document.getElementById('verifyFileInput').addEventListener('input', runFileVerify);
+  function runFileVerify() {
+    var v = document.getElementById('verifyFileInput').value.trim().toLowerCase();
+    var el = document.getElementById('verifyFileResult');
+    el.textContent = '';
+    if (!v || Object.keys(fileHashes).length === 0) return;
+    for (var algo in fileHashes) {
+      if (fileHashes[algo].toLowerCase() === v) {
+        el.innerHTML = '<span class="verify-ok">&#x2705; 일치합니다 (' + algo + ') — 파일이 변조되지 않았습니다.</span>';
+        return;
+      }
+    }
+    el.innerHTML = '<span class="verify-fail">&#x274C; 일치하는 해시값이 없습니다. 파일이 변조되었을 수 있습니다.</span>';
+  }
+
+  // 전체 복사 (파일)
+  document.getElementById('copyAllFileBtn').addEventListener('click', function() {
+    if (!Object.keys(fileHashes).length) { showToast('\ud574\uc2dc\ub97c \uba3c\uc800 \uc0dd\uc131\ud558\uc138\uc694'); return; }
+    var name = currentFile ? currentFile.name : '';
+    var text = (name ? '\ud30c\uc77c: ' + name + '\n\n' : '') +
+      Object.entries(fileHashes).map(function(e) { return e[0] + ':\n' + e[1]; }).join('\n\n');
+    navigator.clipboard.writeText(text);
+    showToast('\u2713 \uc804\uccb4 \ud574\uc2dc \ubcf5\uc0ac\ub428');
+  });
+
+  // 초기화 (파일)
+  document.getElementById('clearFileBtn').addEventListener('click', clearFile);
+  </script>
+</body>
+</html>
