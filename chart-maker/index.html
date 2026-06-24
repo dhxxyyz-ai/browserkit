@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="무료 온라인 차트 생성기. 막대/선형/원형/도넛/레이더 차트를 즉시 만들고 PNG로 저장하세요. CSV 파일 업로드 지원. 서버 전송 없이 브라우저에서 바로 처리합니다." />
+  <meta property="og:title" content="ChartMaker — 차트 생성기" />
+  <meta property="og:description" content="막대/선형/원형/도넛 차트를 즉시 만들고 PNG로 저장. CSV 업로드 지원." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://browserkit.online/chart-maker/" />
+  <title>ChartMaker — 차트 생성기</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+  <script type="text/javascript" src="//t1.kakaocdn.net/kas/static/ba.min.js" async></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+  <style>
+    .header { padding:24px 0 16px; border-bottom:1px solid var(--border); }
+    .header .container { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; }
+    .header-brand { display:flex; align-items:center; gap:10px; text-decoration:none; }
+    .header-brand-icon { font-size:24px; }
+    .header-brand-text { font-size:20px; font-weight:700; font-family:'Inter',sans-serif; background:linear-gradient(135deg,var(--point),var(--point-hover)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+    .header-back { font-size:13px; color:var(--subtext); text-decoration:none; }
+    .header-back:hover { color:var(--text); }
+
+    .hero { text-align:center; padding:40px 0 32px; }
+    .hero-icon { font-size:48px; margin-bottom:16px; }
+    .hero-title { font-size:32px; font-weight:700; margin-bottom:12px; background:linear-gradient(135deg,var(--point),var(--point-hover)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+    .hero-desc { color:var(--subtext); font-size:15px; margin-bottom:20px; }
+    .hero-badges { display:flex; justify-content:center; gap:10px; flex-wrap:wrap; }
+    .hero-badge { background:var(--card); border:1px solid var(--border); border-radius:999px; padding:5px 16px; font-size:13px; color:var(--subtext); }
+
+    /* 차트 타입 선택 */
+    .chart-type-bar { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:24px; justify-content:center; }
+    .type-btn { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:12px 20px; font-size:14px; font-weight:600; color:var(--subtext); cursor:pointer; font-family:'Pretendard',sans-serif; transition:all 0.2s; display:flex; flex-direction:column; align-items:center; gap:6px; min-width:80px; }
+    .type-btn:hover { border-color:var(--point); color:var(--text); }
+    .type-btn.active { background:rgba(108,99,255,0.15); border-color:var(--point); color:var(--point-hover); }
+    .type-btn-icon { font-size:22px; }
+    .type-btn-label { font-size:12px; }
+
+    /* 메인 레이아웃 */
+    .main-grid { display:grid; grid-template-columns:360px 1fr; gap:20px; margin-bottom:48px; }
+
+    /* 왼쪽 설정 패널 */
+    .settings-panel { display:flex; flex-direction:column; gap:16px; }
+    .setting-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px; }
+    .setting-label { font-size:12px; font-weight:600; color:var(--subtext); margin-bottom:10px; display:block; letter-spacing:0.04em; }
+    .text-input { width:100%; background:var(--bg); border:1px solid var(--border); border-radius:10px; padding:10px 14px; font-size:14px; color:var(--text); font-family:'Pretendard',sans-serif; outline:none; transition:border-color 0.2s; }
+    .text-input:focus { border-color:var(--point); }
+    .text-input::placeholder { color:var(--subtext); }
+
+    /* 데이터 테이블 */
+    .data-table-wrap { overflow-x:auto; }
+    .data-table { width:100%; border-collapse:collapse; font-size:13px; }
+    .data-table th { background:var(--bg); padding:8px 10px; text-align:left; font-weight:600; color:var(--subtext); border-bottom:1px solid var(--border); font-size:12px; }
+    .data-table td { padding:4px 4px; border-bottom:1px solid var(--border); }
+    .data-table td:last-child { width:32px; }
+    .cell-input { width:100%; background:transparent; border:1px solid transparent; border-radius:6px; padding:6px 8px; font-size:13px; color:var(--text); font-family:'Pretendard',sans-serif; outline:none; transition:all 0.15s; }
+    .cell-input:focus { background:var(--bg); border-color:var(--point); }
+    .cell-input::placeholder { color:var(--subtext); }
+    .cell-color { width:32px; height:32px; border:1px solid var(--border); border-radius:6px; cursor:pointer; padding:2px; background:transparent; }
+    .del-btn { background:none; border:none; color:var(--subtext); cursor:pointer; font-size:16px; padding:4px 6px; border-radius:6px; }
+    .del-btn:hover { color:#F87171; background:rgba(248,113,113,0.1); }
+    .add-row-btn { width:100%; padding:9px; background:var(--bg); border:1px dashed var(--border); border-radius:8px; font-size:13px; color:var(--subtext); cursor:pointer; font-family:'Pretendard',sans-serif; margin-top:8px; transition:all 0.15s; }
+    .add-row-btn:hover { border-color:var(--point); color:var(--point-hover); }
+
+    /* CSV 업로드 */
+    .csv-zone { background:var(--bg); border:2px dashed var(--border); border-radius:10px; padding:16px; text-align:center; cursor:pointer; transition:all 0.2s; }
+    .csv-zone:hover { border-color:var(--point); }
+    .csv-zone-text { font-size:13px; color:var(--subtext); }
+
+    /* 옵션 */
+    .option-row { display:flex; align-items:center; justify-content:space-between; padding:8px 0; border-bottom:1px solid var(--border); }
+    .option-row:last-child { border-bottom:none; }
+    .option-label { font-size:13px; color:var(--subtext); }
+    .toggle { position:relative; width:40px; height:22px; }
+    .toggle input { opacity:0; width:0; height:0; }
+    .toggle-slider { position:absolute; cursor:pointer; inset:0; background:var(--border); border-radius:999px; transition:0.2s; }
+    .toggle-slider::before { content:''; position:absolute; width:16px; height:16px; left:3px; top:3px; background:#fff; border-radius:50%; transition:0.2s; }
+    .toggle input:checked + .toggle-slider { background:var(--point); }
+    .toggle input:checked + .toggle-slider::before { transform:translateX(18px); }
+    .select-input { background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:6px 10px; font-size:13px; color:var(--text); font-family:'Pretendard',sans-serif; outline:none; }
+
+    /* 버튼 */
+    .btn-primary { width:100%; padding:13px; font-size:15px; font-weight:700; background:linear-gradient(135deg,var(--point),var(--point-hover)); color:#fff; border:none; border-radius:12px; cursor:pointer; font-family:'Pretendard',sans-serif; transition:all 0.2s; }
+    .btn-primary:hover { transform:translateY(-2px); box-shadow:0 8px 24px var(--glow); }
+    .sub-actions { display:flex; gap:8px; }
+    .btn-sub { flex:1; background:var(--card); color:var(--subtext); border:1px solid var(--border); border-radius:10px; padding:10px; font-size:13px; cursor:pointer; font-family:'Pretendard',sans-serif; transition:all 0.15s; text-align:center; }
+    .btn-sub:hover { color:var(--text); border-color:var(--point); }
+    .btn-danger { background:var(--card); color:#F87171; border:1px solid var(--border); border-radius:10px; padding:10px 16px; font-size:13px; cursor:pointer; font-family:'Pretendard',sans-serif; transition:all 0.15s; }
+    .btn-danger:hover { border-color:#F87171; }
+
+    /* 오른쪽 차트 패널 */
+    .chart-panel { display:flex; flex-direction:column; gap:16px; }
+    .chart-wrap { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:24px; display:flex; align-items:center; justify-content:center; min-height:400px; position:relative; }
+    .chart-canvas-wrap { width:100%; max-width:560px; }
+    .chart-empty { text-align:center; color:var(--subtext); }
+    .chart-empty-icon { font-size:48px; margin-bottom:12px; }
+    .chart-empty-text { font-size:14px; }
+
+    /* 토스트 */
+    .toast { position:fixed; bottom:32px; left:50%; transform:translateX(-50%) translateY(80px); background:var(--success); color:#fff; border-radius:999px; padding:10px 24px; font-size:14px; font-weight:600; opacity:0; pointer-events:none; z-index:999; transition:all 0.3s ease; }
+    .toast.show { transform:translateX(-50%) translateY(0); opacity:1; }
+
+    /* 배너 */
+    .coupang-banner { margin:0 auto 48px; text-align:center; overflow:hidden; }
+    .coupang-notice { font-size:11px; color:var(--subtext); margin-bottom:10px; line-height:1.6; }
+    .coupang-banner-mo { display:none; }
+    .adfit-wrap { text-align:center; margin:24px 0; }
+    .adfit-pc { display:block; }
+    .adfit-mo { display:none; }
+    .footer { border-top:1px solid var(--border); padding:32px 0; text-align:center; }
+    .footer-copy { color:var(--subtext); font-size:13px; margin-bottom:12px; }
+    .footer-nav { display:flex; justify-content:center; gap:20px; flex-wrap:wrap; }
+    .footer-nav a { color:var(--subtext); font-size:13px; text-decoration:none; }
+    .footer-nav a:hover { color:var(--text); }
+
+    @media (max-width:900px) { .main-grid { grid-template-columns:1fr; } }
+    @media (max-width:640px) {
+      .hero-title { font-size:24px; }
+      .type-btn { min-width:60px; padding:10px 12px; }
+      .adfit-pc { display:none; } .adfit-mo { display:block; }
+      .coupang-banner-pc { display:none; } .coupang-banner-mo { display:block; }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="container">
+      <a href="../index.html" class="header-brand">
+        <span class="header-brand-icon">&#x1F9F0;</span>
+        <span class="header-brand-text">BrowserKit</span>
+      </a>
+      <a href="../index.html" class="header-back">&#x2190; BrowserKit 홈으로</a>
+    </div>
+  </header>
+
+  <main><div class="container">
+    <div class="hero">
+      <div class="hero-icon">&#x1F4CA;</div>
+      <h1 class="hero-title">ChartMaker</h1>
+      <p class="hero-desc">데이터를 입력하거나 CSV를 업로드해 차트를 즉시 만들고 PNG로 저장하세요</p>
+      <div class="hero-badges">
+        <span class="hero-badge">&#x26A1; 즉시 생성</span>
+        <span class="hero-badge">&#x1F512; 서버 전송 없음</span>
+        <span class="hero-badge">&#x1F4E6; 설치 불필요</span>
+      </div>
+    </div>
+
+    <div class="adfit-wrap adfit-pc"><ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-QD4pRIpdIj7i2mbt" data-ad-width="728" data-ad-height="90"></ins></div>
+    <div class="adfit-wrap adfit-mo"><ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-R4xA2niTT8HgGjoO" data-ad-width="320" data-ad-height="50"></ins></div>
+
+    <!-- 차트 타입 선택 -->
+    <div class="chart-type-bar">
+      <button class="type-btn active" data-type="bar">
+        <span class="type-btn-icon">&#x1F4CA;</span>
+        <span class="type-btn-label">막대</span>
+      </button>
+      <button class="type-btn" data-type="line">
+        <span class="type-btn-icon">&#x1F4C8;</span>
+        <span class="type-btn-label">선형</span>
+      </button>
+      <button class="type-btn" data-type="pie">
+        <span class="type-btn-icon">&#x1F967;</span>
+        <span class="type-btn-label">원형</span>
+      </button>
+      <button class="type-btn" data-type="doughnut">
+        <span class="type-btn-icon">&#x1F35C;</span>
+        <span class="type-btn-label">도넛</span>
+      </button>
+      <button class="type-btn" data-type="radar">
+        <span class="type-btn-icon">&#x1F578;&#xFE0F;</span>
+        <span class="type-btn-label">레이더</span>
+      </button>
+      <button class="type-btn" data-type="polarArea">
+        <span class="type-btn-icon">&#x1F3AF;</span>
+        <span class="type-btn-label">폴라</span>
+      </button>
+    </div>
+
+    <div class="main-grid">
+      <!-- 왼쪽: 설정 패널 -->
+      <div class="settings-panel">
+
+        <!-- 차트 제목 -->
+        <div class="setting-card">
+          <label class="setting-label">&#x1F4DD; 차트 제목</label>
+          <input type="text" class="text-input" id="chartTitle" placeholder="차트 제목 입력..." value="월별 판매량" />
+        </div>
+
+        <!-- 데이터 입력 -->
+        <div class="setting-card">
+          <label class="setting-label">&#x1F4C5; 데이터 입력</label>
+          <div class="data-table-wrap">
+            <table class="data-table" id="dataTable">
+              <thead>
+                <tr>
+                  <th style="width:36px;">색상</th>
+                  <th>레이블</th>
+                  <th style="width:80px;">값</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="dataBody"></tbody>
+            </table>
+          </div>
+          <button class="add-row-btn" id="addRowBtn">+ 행 추가</button>
+        </div>
+
+        <!-- CSV 업로드 -->
+        <div class="setting-card">
+          <label class="setting-label">&#x1F4C2; CSV 파일 업로드</label>
+          <input type="file" id="csvInput" accept=".csv" style="display:none;" />
+          <div class="csv-zone" id="csvZone">
+            <div class="csv-zone-text">CSV 파일을 클릭하거나 드래그해서 업로드<br /><span style="font-size:11px;margin-top:4px;display:block;">첫 번째 열: 레이블, 두 번째 열: 값</span></div>
+          </div>
+        </div>
+
+        <!-- X축 레이블 (막대/선형 전용) -->
+        <div class="setting-card" id="xLabelCard">
+          <label class="setting-label">&#x1F4CF; X축 레이블</label>
+          <input type="text" class="text-input" id="xAxisLabel" placeholder="예: 월, 분기, 카테고리..." value="" />
+          <div style="margin-top:8px;">
+            <label class="setting-label" style="margin-bottom:6px;">Y축 레이블</label>
+            <input type="text" class="text-input" id="yAxisLabel" placeholder="예: 판매량, 금액(원)..." value="" />
+          </div>
+        </div>
+
+        <!-- 차트 옵션 -->
+        <div class="setting-card">
+          <label class="setting-label">&#x2699;&#xFE0F; 차트 옵션</label>
+          <div class="option-row">
+            <span class="option-label">범례 표시</span>
+            <label class="toggle"><input type="checkbox" id="optLegend" checked /><span class="toggle-slider"></span></label>
+          </div>
+          <div class="option-row">
+            <span class="option-label">데이터 레이블</span>
+            <label class="toggle"><input type="checkbox" id="optDataLabels" /><span class="toggle-slider"></span></label>
+          </div>
+          <div class="option-row">
+            <span class="option-label">격자선</span>
+            <label class="toggle"><input type="checkbox" id="optGrid" checked /><span class="toggle-slider"></span></label>
+          </div>
+          <div class="option-row">
+            <span class="option-label">배경색</span>
+            <select class="select-input" id="optBg">
+              <option value="transparent">투명</option>
+              <option value="white" selected>흰색</option>
+              <option value="dark">다크</option>
+            </select>
+          </div>
+          <div class="option-row" id="optStackRow">
+            <span class="option-label">누적 차트</span>
+            <label class="toggle"><input type="checkbox" id="optStack" /><span class="toggle-slider"></span></label>
+          </div>
+        </div>
+
+        <!-- 실행 버튼 -->
+        <button class="btn-primary" id="generateBtn">&#x1F4CA; 차트 생성</button>
+
+        <!-- 하위 버튼 -->
+        <div class="sub-actions">
+          <button class="btn-sub" id="downloadPngBtn">&#x1F5BC;&#xFE0F; PNG 저장</button>
+          <button class="btn-sub" id="downloadSvgBtn">&#x1F4C4; SVG 저장</button>
+        </div>
+        <div class="sub-actions">
+          <button class="btn-danger" id="resetBtn">&#x21BA; 초기화</button>
+        </div>
+
+      </div>
+
+      <!-- 오른쪽: 차트 패널 -->
+      <div class="chart-panel">
+        <div class="chart-wrap" id="chartWrap">
+          <div class="chart-empty" id="chartEmpty">
+            <div class="chart-empty-icon">&#x1F4CA;</div>
+            <div class="chart-empty-text">데이터를 입력하고 차트 생성 버튼을 클릭하세요</div>
+          </div>
+          <div class="chart-canvas-wrap" id="chartCanvasWrap" style="display:none;">
+            <canvas id="myChart"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="coupang-banner coupang-banner-pc">
+      <p class="coupang-notice">이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</p>
+      <script src="https://ads-partners.coupang.com/g.js"></script>
+      <script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"728","height":"120","tsource":""});</script>
+    </div>
+    <div class="coupang-banner coupang-banner-mo">
+      <p class="coupang-notice">이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</p>
+      <script src="https://ads-partners.coupang.com/g.js"></script>
+      <script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"320","height":"50","tsource":""});</script>
+    </div>
+  </div></main>
+
+  <footer class="footer">
+    <div class="container">
+      <p class="footer-copy">&#xa9; 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p>
+      <nav class="footer-nav">
+        <a href="../privacy.html">개인정보 처리방침</a>
+        <a href="../terms.html">이용약관</a>
+        <a href="../about.html">서비스 소개</a>
+        <a href="../blog/index.html">블로그</a>
+      </nav>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+  // ── 기본 색상 팔레트 ──
+  var PALETTE = [
+    '#6C63FF','#34D399','#F59E0B','#EF4444','#3B82F6',
+    '#A78BFA','#10B981','#F97316','#EC4899','#06B6D4',
+    '#84CC16','#8B5CF6','#14B8A6','#F43F5E','#0EA5E9'
+  ];
+
+  // ── 상태 ──
+  var currentType = 'bar';
+  var chartInstance = null;
+  var rows = [];
+
+  // ── 유틸 ──
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(function() { t.classList.remove('show'); }, 2200);
+  }
+
+  function uid() { return Math.random().toString(36).slice(2, 7); }
+
+  // ── 차트 타입 버튼 ──
+  document.querySelectorAll('.type-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.type-btn').forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      currentType = btn.dataset.type;
+      // 누적/격자 옵션 표시 제어
+      var isCartesian = ['bar','line'].indexOf(currentType) !== -1;
+      document.getElementById('optStackRow').style.display = isCartesian ? '' : 'none';
+      document.getElementById('xLabelCard').style.display = isCartesian ? '' : 'none';
+      document.getElementById('optGrid').parentElement.parentElement.style.display = isCartesian ? '' : 'none';
+    });
+  });
+
+  // ── 행 추가 ──
+  function addRow(label, value, color) {
+    var id = uid();
+    var idx = rows.length;
+    var col = color || PALETTE[idx % PALETTE.length];
+    rows.push({ id: id, label: label || '', value: value !== undefined ? value : '', color: col });
+    renderTable();
+  }
+
+  function renderTable() {
+    var tbody = document.getElementById('dataBody');
+    tbody.innerHTML = '';
+    rows.forEach(function(row, i) {
+      var tr = document.createElement('tr');
+      tr.innerHTML =
+        '<td><input type="color" class="cell-color" value="' + row.color + '" data-id="' + row.id + '" /></td>' +
+        '<td><input type="text" class="cell-input" placeholder="\ub808\uc774\ube14" value="' + escHtml(row.label) + '" data-id="' + row.id + '" data-field="label" /></td>' +
+        '<td><input type="number" class="cell-input" placeholder="0" value="' + row.value + '" data-id="' + row.id + '" data-field="value" /></td>' +
+        '<td><button class="del-btn" data-id="' + row.id + '">\u00d7</button></td>';
+      tbody.appendChild(tr);
+    });
+
+    // 이벤트
+    tbody.querySelectorAll('.cell-color').forEach(function(el) {
+      el.addEventListener('input', function() { updateRow(el.dataset.id, 'color', el.value); });
+    });
+    tbody.querySelectorAll('.cell-input').forEach(function(el) {
+      el.addEventListener('input', function() { updateRow(el.dataset.id, el.dataset.field, el.value); });
+    });
+    tbody.querySelectorAll('.del-btn').forEach(function(el) {
+      el.addEventListener('click', function() {
+        rows = rows.filter(function(r) { return r.id !== el.dataset.id; });
+        renderTable();
+      });
+    });
+  }
+
+  function updateRow(id, field, value) {
+    var row = rows.find(function(r) { return r.id === id; });
+    if (row) row[field] = value;
+  }
+
+  function escHtml(s) {
+    return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  // ── 행 추가 버튼 ──
+  document.getElementById('addRowBtn').addEventListener('click', function() { addRow(); });
+
+  // ── 기본 샘플 데이터 ──
+  function loadSample() {
+    rows = [];
+    var samples = [
+      { label:'1월', value:120 },
+      { label:'2월', value:190 },
+      { label:'3월', value:170 },
+      { label:'4월', value:250 },
+      { label:'5월', value:310 },
+      { label:'6월', value:280 },
+    ];
+    samples.forEach(function(s, i) { addRow(s.label, s.value, PALETTE[i]); });
+  }
+  loadSample();
+
+  // ── CSV 업로드 ──
+  var csvZone = document.getElementById('csvZone');
+  var csvInput = document.getElementById('csvInput');
+  csvZone.addEventListener('click', function() { csvInput.click(); });
+  csvZone.addEventListener('dragover', function(e) { e.preventDefault(); csvZone.style.borderColor = 'var(--point)'; });
+  csvZone.addEventListener('dragleave', function() { csvZone.style.borderColor = ''; });
+  csvZone.addEventListener('drop', function(e) {
+    e.preventDefault(); csvZone.style.borderColor = '';
+    var file = e.dataTransfer.files[0];
+    if (file) parseCsv(file);
+  });
+  csvInput.addEventListener('change', function() {
+    if (csvInput.files[0]) parseCsv(csvInput.files[0]);
+  });
+
+  function parseCsv(file) {
+    Papa.parse(file, {
+      skipEmptyLines: true,
+      complete: function(result) {
+        var data = result.data;
+        // 첫 행이 헤더인지 판단 (두 번째 열이 숫자가 아니면 헤더)
+        var startIdx = 0;
+        if (data.length > 1 && isNaN(parseFloat(data[0][1]))) startIdx = 1;
+        rows = [];
+        data.slice(startIdx).forEach(function(row, i) {
+          if (row.length >= 2) {
+            addRow(row[0], parseFloat(row[1]) || 0, PALETTE[i % PALETTE.length]);
+          }
+        });
+        showToast('\u2713 CSV \ub85c\ub4dc \uc644\ub8cc (' + (data.length - startIdx) + '\uac1c \ud56d\ubaa9)');
+        generateChart();
+      },
+      error: function() { showToast('\u274C CSV \ud30c\uc2f1 \uc2e4\ud328'); }
+    });
+  }
+
+  // ── 차트 생성 ──
+  document.getElementById('generateBtn').addEventListener('click', generateChart);
+
+  function generateChart() {
+    var validRows = rows.filter(function(r) { return r.label || r.value !== ''; });
+    if (validRows.length === 0) { showToast('\ub370\uc774\ud130\ub97c \uc785\ub825\ud574\uc8fc\uc138\uc694'); return; }
+
+    var labels = validRows.map(function(r) { return r.label || ''; });
+    var values = validRows.map(function(r) { return parseFloat(r.value) || 0; });
+    var colors = validRows.map(function(r) { return r.color; });
+    var alphaColors = colors.map(function(c) { return c + 'CC'; }); // 80% 투명도
+
+    var title = document.getElementById('chartTitle').value;
+    var showLegend = document.getElementById('optLegend').checked;
+    var showDataLabels = document.getElementById('optDataLabels').checked;
+    var showGrid = document.getElementById('optGrid').checked;
+    var bgOption = document.getElementById('optBg').value;
+    var stacked = document.getElementById('optStack').checked;
+    var xLabel = document.getElementById('xAxisLabel').value;
+    var yLabel = document.getElementById('yAxisLabel').value;
+
+    // 배경색
+    var bgColor = bgOption === 'white' ? '#FFFFFF' : bgOption === 'dark' ? '#0F0F13' : null;
+    var textColor = bgOption === 'dark' ? '#F0F0F5' : '#333333';
+    var gridColor = bgOption === 'dark' ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.08)';
+
+    // 기존 차트 제거
+    if (chartInstance) { chartInstance.destroy(); chartInstance = null; }
+
+    document.getElementById('chartEmpty').style.display = 'none';
+    document.getElementById('chartCanvasWrap').style.display = 'block';
+
+    // Canvas 크기 초기화
+    var wrap = document.getElementById('chartCanvasWrap');
+    wrap.innerHTML = '<canvas id="myChart"></canvas>';
+    var canvas = document.getElementById('myChart');
+
+    // isPolar: 원형 계열
+    var isPolar = ['pie','doughnut','radar','polarArea'].indexOf(currentType) !== -1;
+
+    var dataset = {
+      label: title || '\ub370\uc774\ud130',
+      data: values,
+      backgroundColor: isPolar ? alphaColors : (currentType === 'line' ? alphaColors[0] : alphaColors),
+      borderColor: isPolar ? colors : (currentType === 'line' ? colors[0] : colors),
+      borderWidth: currentType === 'line' ? 2 : 1,
+      fill: currentType === 'line' ? false : undefined,
+      tension: currentType === 'line' ? 0.3 : undefined,
+      pointRadius: currentType === 'line' ? 4 : undefined,
+    };
+
+    var scales = {};
+    if (!isPolar) {
+      scales.x = {
+        stacked: stacked,
+        grid: { display: showGrid, color: gridColor },
+        ticks: { color: textColor },
+        title: xLabel ? { display: true, text: xLabel, color: textColor } : { display: false }
+      };
+      scales.y = {
+        stacked: stacked,
+        grid: { display: showGrid, color: gridColor },
+        ticks: { color: textColor },
+        title: yLabel ? { display: true, text: yLabel, color: textColor } : { display: false }
+      };
+    }
+
+    // 데이터 레이블 플러그인 (내장)
+    var plugins = {
+      legend: {
+        display: showLegend,
+        labels: { color: textColor, font: { family: 'Pretendard' } }
+      },
+      title: {
+        display: !!title,
+        text: title,
+        color: textColor,
+        font: { size: 16, weight: '700', family: 'Pretendard' },
+        padding: { bottom: 16 }
+      },
+      tooltip: { enabled: true }
+    };
+
+    // 배경 채우기 플러그인
+    var bgPlugin = bgColor ? [{
+      id: 'customBg',
+      beforeDraw: function(chart) {
+        var ctx = chart.canvas.getContext('2d');
+        ctx.save();
+        ctx.globalCompositeOperation = 'destination-over';
+        ctx.fillStyle = bgColor;
+        ctx.fillRect(0, 0, chart.width, chart.height);
+        ctx.restore();
+      }
+    }] : [];
+
+    chartInstance = new Chart(canvas, {
+      type: currentType,
+      data: { labels: labels, datasets: [dataset] },
+      options: {
+        animation: { duration: 400 },
+        responsive: true,
+        plugins: plugins,
+        scales: scales
+      },
+      plugins: bgPlugin
+    });
+
+    // 데이터 레이블 (간단 구현 - afterDraw)
+    if (showDataLabels) {
+      chartInstance.options.animation.onComplete = function() {
+        var ctx = canvas.getContext('2d');
+        ctx.font = 'bold 12px Pretendard';
+        ctx.fillStyle = textColor;
+        ctx.textAlign = 'center';
+        chartInstance.data.datasets[0].data.forEach(function(val, i) {
+          var meta = chartInstance.getDatasetMeta(0);
+          if (meta.data[i]) {
+            var x = meta.data[i].x;
+            var y = meta.data[i].y - 8;
+            ctx.fillText(val, x, y);
+          }
+        });
+      };
+      chartInstance.update();
+    }
+
+    showToast('\u2713 \ucc28\ud2b8 \uc0dd\uc131 \uc644\ub8cc');
+  }
+
+  // ── PNG 저장 ──
+  document.getElementById('downloadPngBtn').addEventListener('click', function() {
+    if (!chartInstance) { showToast('\uba3c\uc800 \ucc28\ud2b8\ub97c \uc0dd\uc131\ud558\uc138\uc694'); return; }
+    // 배경 포함 PNG
+    var canvas = document.getElementById('myChart');
+    var bgOption = document.getElementById('optBg').value;
+    var exportCanvas = document.createElement('canvas');
+    exportCanvas.width = canvas.width;
+    exportCanvas.height = canvas.height;
+    var ctx = exportCanvas.getContext('2d');
+    if (bgOption !== 'transparent') {
+      ctx.fillStyle = bgOption === 'dark' ? '#0F0F13' : '#FFFFFF';
+      ctx.fillRect(0, 0, exportCanvas.width, exportCanvas.height);
+    }
+    ctx.drawImage(canvas, 0, 0);
+    var a = document.createElement('a');
+    var title = (document.getElementById('chartTitle').value || 'chart').replace(/\s+/g, '_');
+    a.download = title + '.png';
+    a.href = exportCanvas.toDataURL('image/png');
+    a.click();
+    showToast('\u2713 PNG \uc800\uc7a5\ub428');
+  });
+
+  // ── SVG 저장 (Canvas를 SVG 이미지로 래핑) ──
+  document.getElementById('downloadSvgBtn').addEventListener('click', function() {
+    if (!chartInstance) { showToast('\uba3c\uc800 \ucc28\ud2b8\ub97c \uc0dd\uc131\ud558\uc138\uc694'); return; }
+    var canvas = document.getElementById('myChart');
+    var dataUrl = canvas.toDataURL('image/png');
+    var svgStr = '<svg xmlns="http://www.w3.org/2000/svg" width="' + canvas.width + '" height="' + canvas.height + '">' +
+      '<image href="' + dataUrl + '" width="' + canvas.width + '" height="' + canvas.height + '" />' +
+      '</svg>';
+    var blob = new Blob([svgStr], { type: 'image/svg+xml' });
+    var a = document.createElement('a');
+    var title = (document.getElementById('chartTitle').value || 'chart').replace(/\s+/g, '_');
+    a.download = title + '.svg';
+    a.href = URL.createObjectURL(blob);
+    a.click();
+    showToast('\u2713 SVG \uc800\uc7a5\ub428');
+  });
+
+  // ── 초기화 ──
+  document.getElementById('resetBtn').addEventListener('click', function() {
+    document.getElementById('chartTitle').value = '\uc6d4\ubcc4 \ud310\ub9e4\ub7c9';
+    document.getElementById('xAxisLabel').value = '';
+    document.getElementById('yAxisLabel').value = '';
+    document.getElementById('optLegend').checked = true;
+    document.getElementById('optDataLabels').checked = false;
+    document.getElementById('optGrid').checked = true;
+    document.getElementById('optBg').value = 'white';
+    document.getElementById('optStack').checked = false;
+    if (chartInstance) { chartInstance.destroy(); chartInstance = null; }
+    document.getElementById('chartEmpty').style.display = '';
+    document.getElementById('chartCanvasWrap').style.display = 'none';
+    loadSample();
+    showToast('\u21BA \ucd08\uae30\ud654\ub428');
+  });
+  </script>
+</body>
+</html>
