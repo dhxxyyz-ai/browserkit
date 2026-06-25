@@ -162,11 +162,11 @@
         <span class="type-btn-label">선형</span>
       </button>
       <button class="type-btn" data-type="pie">
-        <span class="type-btn-icon">&#x1F967;</span>
+        <span class="type-btn-icon">⭕</span>
         <span class="type-btn-label">원형</span>
       </button>
       <button class="type-btn" data-type="doughnut">
-        <span class="type-btn-icon">&#x1F35C;</span>
+        <span class="type-btn-icon">&#x1F369;</span>
         <span class="type-btn-label">도넛</span>
       </button>
       <button class="type-btn" data-type="radar">
@@ -542,6 +542,75 @@
         ctx.restore();
       }
     }] : [];
+
+    // 데이터 레이블 (afterDraw 커스텀 구현)
+    if (showDataLabels) {
+      var dataLabelPlugin = {
+        id: 'dataLabels',
+        afterDatasetsDraw: function(chart) {
+          var ctx = chart.ctx;
+          var meta = chart.getDatasetMeta(0);
+          ctx.save();
+          ctx.font = 'bold 12px Pretendard, sans-serif';
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+
+          if (['pie', 'doughnut', 'polarArea'].indexOf(currentType) !== -1) {
+            // 원형 계열: 각 조각의 중심 각도를 계산해 바깥쪽에 표시
+            meta.data.forEach(function(arc, i) {
+              var val = chart.data.datasets[0].data[i];
+              if (val === undefined || val === null) return;
+
+              var startAngle = arc.startAngle;
+              var endAngle   = arc.endAngle;
+              var midAngle   = (startAngle + endAngle) / 2;
+
+              // polarArea는 outerRadius, pie/doughnut는 outerRadius
+              var outerR = arc.outerRadius || 0;
+              var innerR = arc.innerRadius || 0;
+              // 조각 중간 반지름 (pie: 외만부터 60% 지점, doughnut: inner+outer 중간)
+              var labelR = currentType === 'doughnut'
+                ? (innerR + outerR) / 2
+                : outerR * 0.65;
+
+              var x = arc.x + Math.cos(midAngle) * labelR;
+              var y = arc.y + Math.sin(midAngle) * labelR;
+
+              // 클리핑 업돈시 조각 영역 안에만 표시
+              var sliceAngle = endAngle - startAngle;
+              if (sliceAngle < 0.2) return; // 너무 작은 조각은 생략
+
+              ctx.fillStyle = '#ffffff';
+              ctx.strokeStyle = 'rgba(0,0,0,0.4)';
+              ctx.lineWidth = 2;
+              ctx.strokeText(String(val), x, y);
+              ctx.fillText(String(val), x, y);
+            });
+
+          } else if (currentType === 'radar') {
+            // 레이더: 점 위치 기준 약간 위에 표시
+            meta.data.forEach(function(point, i) {
+              var val = chart.data.datasets[0].data[i];
+              if (val === undefined) return;
+              ctx.fillStyle = textColor;
+              ctx.fillText(String(val), point.x, point.y - 10);
+            });
+
+          } else {
+            // 막대 / 선형: 점/막대 위에 표시
+            meta.data.forEach(function(el, i) {
+              var val = chart.data.datasets[0].data[i];
+              if (val === undefined) return;
+              ctx.fillStyle = textColor;
+              ctx.fillText(String(val), el.x, el.y - 8);
+            });
+          }
+
+          ctx.restore();
+        }
+      };
+      bgPlugin.push(dataLabelPlugin);
+    }
 
     chartInstance = new Chart(canvas, {
       type: currentType,
