@@ -597,13 +597,26 @@
             });
 
           } else {
-            // 막대 / 선형: 점/막대 위에 표시
-            meta.data.forEach(function(el, i) {
-              var val = chart.data.datasets[0].data[i];
-              if (val === undefined) return;
-              ctx.fillStyle = textColor;
-              ctx.fillText(String(val), el.x, el.y - 8);
-            });
+            // 막대 / 선형: 단일 데이터셋 모드
+            if (stacked) {
+              // 누적 모드: 데이터셋별로 순회해 각 막대 위에 표시
+              chart.data.datasets.forEach(function(ds, dsIdx) {
+                var dsMeta = chart.getDatasetMeta(dsIdx);
+                dsMeta.data.forEach(function(el, i) {
+                  var val = ds.data[i];
+                  if (!val) return;
+                  ctx.fillStyle = textColor;
+                  ctx.fillText(String(val), el.x, el.y - 8);
+                });
+              });
+            } else {
+              meta.data.forEach(function(el, i) {
+                var val = chart.data.datasets[0].data[i];
+                if (val === undefined) return;
+                ctx.fillStyle = textColor;
+                ctx.fillText(String(val), el.x, el.y - 8);
+              });
+            }
           }
 
           ctx.restore();
@@ -614,15 +627,17 @@
 
     chartInstance = new Chart(canvas, {
       type: currentType,
-      data: { labels: labels, datasets: (stacked && !isPolar) ? validRows.map(function(r, i) {
-        return {
-          label: r.label || ('항목 ' + (i+1)),
-          data: validRows.map(function(_, j) { return j === i ? (parseFloat(r.value) || 0) : 0; }),
-          backgroundColor: r.color + 'CC',
-          borderColor: r.color,
-          borderWidth: 1
-        };
-      }) : [dataset] },
+      data: { labels: (stacked && !isPolar) ? [title || '합계'] : labels,
+              datasets: (stacked && !isPolar) ? validRows.map(function(r) {
+                return {
+                  label: r.label || '',
+                  data: [parseFloat(r.value) || 0],
+                  backgroundColor: r.color + 'CC',
+                  borderColor: r.color,
+                  borderWidth: 1,
+                  stack: 'stack0'
+                };
+              }) : [dataset] },
       options: {
         animation: { duration: 400 },
         responsive: true,
