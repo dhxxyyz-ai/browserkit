@@ -614,7 +614,15 @@
 
     chartInstance = new Chart(canvas, {
       type: currentType,
-      data: { labels: labels, datasets: [dataset] },
+      data: { labels: labels, datasets: (stacked && !isPolar) ? validRows.map(function(r, i) {
+        return {
+          label: r.label || ('항목 ' + (i+1)),
+          data: validRows.map(function(_, j) { return j === i ? (parseFloat(r.value) || 0) : 0; }),
+          backgroundColor: r.color + 'CC',
+          borderColor: r.color,
+          borderWidth: 1
+        };
+      }) : [dataset] },
       options: {
         animation: { duration: 400 },
         responsive: true,
