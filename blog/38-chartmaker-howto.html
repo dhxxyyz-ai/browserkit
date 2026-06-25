@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<meta name="description" content="ChartMaker의 모든 기능을 단계별로 설명하는 공식 사용 가이드입니다. 막대/선형/원형/도넛/레이더/폴라 차트 생성, CSV 업로드, PNG 저장 방법을 알아보세요."/>
+<meta property="og:title" content="ChartMaker 사용법 완전 가이드 — BrowserKit"/>
+<meta property="og:type" content="article"/>
+<title>ChartMaker 사용법 완전 가이드 — BrowserKit</title>
+<link rel="stylesheet" href="../css/style.css"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet"/>
+<script type="text/javascript" src="//t1.kakaocdn.net/kas/static/ba.min.js" async></script>
+<style>
+.header{padding:24px 0 16px;border-bottom:1px solid var(--border)}.header .container{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}.header-brand{display:flex;align-items:center;gap:10px;text-decoration:none}.header-brand-icon{font-size:24px}.header-brand-text{font-size:20px;font-weight:700;font-family:'Inter',sans-serif;background:linear-gradient(135deg,var(--point),var(--point-hover));-webkit-background-clip:text;-webkit-text-fill-color:transparent}.header-back{font-size:13px;color:var(--subtext);text-decoration:none}.header-back:hover{color:var(--text)}.post-wrap{max-width:720px;margin:0 auto;padding:48px 24px 80px}.post-tag{display:inline-block;font-size:12px;color:var(--point-hover);background:rgba(108,99,255,0.15);padding:3px 12px;border-radius:999px;margin-bottom:16px}.post-title{font-size:28px;font-weight:700;line-height:1.4;margin-bottom:12px}.post-date{color:var(--subtext);font-size:13px;margin-bottom:40px;padding-bottom:24px;border-bottom:1px solid var(--border)}.post-body h2{font-size:20px;font-weight:700;margin:40px 0 16px;color:var(--text)}.post-body h3{font-size:16px;font-weight:600;margin:28px 0 12px;color:var(--point-hover)}.post-body p{font-size:15px;color:var(--subtext);line-height:1.9;margin-bottom:16px}.post-highlight{background:var(--card);border-left:3px solid var(--point);border-radius:8px;padding:16px 20px;margin:24px 0;font-size:15px;color:var(--text);line-height:1.8}.feature-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:20px 0}.feature-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:20px}.feature-card:hover{border-color:var(--point)}.feature-icon{font-size:24px;margin-bottom:10px}.feature-title{font-size:14px;font-weight:600;color:var(--text);margin-bottom:6px}.feature-desc{font-size:13px;color:var(--subtext);line-height:1.7}.step-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:20px 24px;margin:16px 0;display:flex;gap:16px;align-items:flex-start}.step-num{min-width:36px;height:36px;background:linear-gradient(135deg,var(--point),var(--point-hover));border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:white;flex-shrink:0;font-family:'Inter',sans-serif}.step-content h3{font-size:15px;font-weight:600;margin-bottom:6px;color:var(--text)}.step-content p{font-size:14px;color:var(--subtext);line-height:1.7;margin:0}.chart-type-demo{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0}.type-chip{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:10px 16px;font-size:13px;font-weight:600;color:var(--subtext)}.type-chip.active{background:rgba(108,99,255,0.15);border-color:var(--point);color:var(--point-hover)}.post-table{width:100%;border-collapse:collapse;margin:20px 0;font-size:14px}.post-table th{background:var(--card);padding:12px 16px;text-align:left;font-weight:600;border:1px solid var(--border);color:var(--text)}.post-table td{padding:11px 16px;border:1px solid var(--border);color:var(--subtext);line-height:1.7}.post-table tr:hover td{background:rgba(108,99,255,0.04)}.layout-demo{background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin:16px 0}.layout-top{background:rgba(108,99,255,0.08);border-bottom:1px solid var(--border);padding:12px 16px;font-size:12px;font-weight:600;color:var(--point-hover)}.layout-cols{display:grid;grid-template-columns:180px 1fr}.layout-left{border-right:1px solid var(--border);padding:14px 16px;font-size:12px}.layout-right{padding:14px 16px;font-size:12px}.layout-item{padding:3px 0;color:var(--subtext)}.layout-item-title{font-weight:600;color:var(--text);margin-bottom:4px;font-size:11px}.option-demo{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px 20px;margin:16px 0}.option-row-demo{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px}.option-row-demo:last-child{border-bottom:none}.option-label-demo{color:var(--subtext)}.toggle-on{background:var(--point);border-radius:999px;width:36px;height:20px;display:inline-block}.toggle-off{background:var(--border);border-radius:999px;width:36px;height:20px;display:inline-block}.csv-demo{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:14px 18px;font-size:12px;font-family:'Fira Code',monospace;color:var(--text);margin:12px 0;line-height:1.8}.use-case-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:20px 0}.use-case-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:18px}.use-case-icon{font-size:24px;margin-bottom:8px}.use-case-title{font-size:13px;font-weight:600;color:var(--text);margin-bottom:6px}.use-case-desc{font-size:12px;color:var(--subtext);line-height:1.7}.btn-demo-row{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}.btn-demo{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:9px 18px;font-size:13px;color:var(--subtext)}.btn-demo.primary{background:linear-gradient(135deg,var(--point),var(--point-hover));color:#fff;border:none}.post-nav{display:flex;justify-content:space-between;margin-top:60px;padding-top:24px;border-top:1px solid var(--border);gap:12px}.post-nav a{font-size:14px;color:var(--subtext);text-decoration:none}.post-nav a:hover{color:var(--text)}.cta-box{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:28px;text-align:center;margin:48px 0 0}.cta-box p{font-size:15px;color:var(--subtext);margin-bottom:16px}.cta-btn{display:inline-block;background:linear-gradient(135deg,var(--point),var(--point-hover));color:white;border-radius:10px;padding:12px 28px;font-size:14px;font-weight:600;text-decoration:none}.cta-btn:hover{transform:translateY(-2px);box-shadow:0 8px 24px var(--glow);color:white}.adfit-wrap{text-align:center;margin:24px 0}.adfit-pc{display:block}.adfit-mo{display:none}.back-link{display:inline-flex;align-items:center;gap:6px;color:var(--subtext);font-size:14px;margin-bottom:32px;text-decoration:none}.back-link:hover{color:var(--text)}.coupang-banner{margin:0 auto 48px;text-align:center;overflow:hidden}.coupang-notice{font-size:11px;color:var(--subtext);margin-bottom:10px;line-height:1.6}.coupang-banner-mo{display:none}@media(max-width:640px){.feature-grid{grid-template-columns:1fr}.use-case-grid{grid-template-columns:1fr}.layout-cols{grid-template-columns:1fr}.adfit-pc{display:none}.adfit-mo{display:block}.coupang-banner-pc{display:none}.coupang-banner-mo{display:block}}
+</style>
+</head>
+<body>
+<header class="header"><div class="container"><a href="../index.html" class="header-brand"><span class="header-brand-icon">&#x1F9F0;</span><span class="header-brand-text">BrowserKit</span></a><a href="../index.html" class="header-back">&#x2190; BrowserKit 홈으로</a></div></header>
+<div class="post-wrap">
+<a href="index.html" class="back-link">&#x2190; 블로그 목록</a>
+<span class="post-tag">가이드</span>
+<h1 class="post-title">ChartMaker 사용법 완전 가이드</h1>
+<div class="post-date">2026년 6월 24일</div>
+<div class="post-body">
+<p>ChartMaker는 데이터를 입력하거나 CSV 파일을 업로드해 막대, 선형, 원형, 도넛, 레이더, 폴라 차트를 즉시 만들 수 있는 무료 온라인 도구입니다. 별도 설치 없이 브라우저에서 바로 사용할 수 있고, 완성된 차트는 PNG 또는 SVG 파일로 저장할 수 있습니다. 모든 처리가 브라우저 안에서만 이루어지므로 데이터가 외부 서버로 전송되지 않습니다.</p>
+<h2>주요 기능</h2>
+<div class="feature-grid">
+<div class="feature-card"><div class="feature-icon">&#x1F4CA;</div><div class="feature-title">차트 6종 지원</div><div class="feature-desc">막대, 선형, 원형, 도넛, 레이더, 폴라 차트를 상단 버튼으로 즉시 전환해 생성할 수 있습니다.</div></div>
+<div class="feature-card"><div class="feature-icon">&#x1F4C2;</div><div class="feature-title">CSV 파일 업로드</div><div class="feature-desc">스프레드시트에서 내보낸 CSV를 드래그&amp;드롭으로 업로드하면 자동으로 데이터를 불러와 차트를 생성합니다.</div></div>
+<div class="feature-card"><div class="feature-icon">&#x1F5BC;&#xFE0F;</div><div class="feature-title">PNG / SVG 저장</div><div class="feature-desc">완성된 차트를 PNG(배경 포함) 또는 SVG 파일로 저장합니다. 배경을 흰색, 투명, 다크로 선택할 수 있습니다.</div></div>
+<div class="feature-card"><div class="feature-icon">&#x2699;&#xFE0F;</div><div class="feature-title">다양한 옵션</div><div class="feature-desc">범례, 데이터 레이블, 격자선, 배경색, 누적 차트 옵션을 토글로 자유롭게 설정할 수 있습니다.</div></div>
+</div>
+<h2>화면 구성</h2>
+<p>상단의 차트 타입 버튼에서 원하는 종류를 선택한 뒤, 좌측 설정 패널에서 데이터와 옵션을 입력하고 우측에서 차트를 확인합니다.</p>
+<div class="layout-demo">
+<div class="layout-top">&#x1F4CA; 차트 타입 선택 바 — 막대 · 선형 · 원형 · 도넛 · 레이더 · 폴라</div>
+<div class="layout-cols">
+<div class="layout-left"><div class="layout-item-title">&#x2699; 왼쪽 설정 패널</div><div class="layout-item">&#x1F4DD; 차트 제목</div><div class="layout-item">&#x1F4C5; 데이터 입력 테이블</div><div class="layout-item">&nbsp;&nbsp;(색상 · 레이블 · 값)</div><div class="layout-item">&#x1F4C2; CSV 파일 업로드</div><div class="layout-item">&#x1F4CF; X축 · Y축 레이블</div><div class="layout-item">&#x1F518; 옵션 토글</div><div class="layout-item">&#x1F4CA; 차트 생성 버튼</div><div class="layout-item">&#x1F5BC;&#xFE0F; PNG / SVG 저장</div></div>
+<div class="layout-right"><div class="layout-item-title">&#x1F4CA; 오른쪽 차트 패널</div><div class="layout-item">차트 생성 후 렌더링 결과 표시</div><div class="layout-item" style="margin-top:8px;color:var(--point-hover);">&#x2728; 차트 타입 전환 후 재생성 시 바로 업데이트</div></div>
+</div>
+</div>
+<h2>기본 사용법</h2>
+<div class="step-card"><div class="step-num">1</div><div class="step-content"><h3>차트 타입 선택</h3><p>상단 버튼에서 원하는 차트 종류를 선택합니다. 기본값은 막대 차트이며, 타입을 바꿔도 입력한 데이터는 유지됩니다.</p></div></div>
+<div class="chart-type-demo">
+<div class="type-chip active">&#x1F4CA; 막대</div><div class="type-chip">&#x1F4C8; 선형</div><div class="type-chip">&#x2B55; 원형</div><div class="type-chip">&#x1F369; 도넛</div><div class="type-chip">&#x1F578;&#xFE0F; 레이더</div><div class="type-chip">&#x1F3AF; 폴라</div>
+</div>
+<div class="step-card"><div class="step-num">2</div><div class="step-content"><h3>데이터 입력</h3><p>데이터 입력 테이블에서 색상 피커로 각 항목 색상을 지정하고, 레이블과 값을 입력합니다. 기본으로 1~6월 샘플 데이터 6개가 입력되어 있으며, <strong>+ 행 추가</strong> 버튼으로 항목을 늘릴 수 있습니다.</p></div></div>
+<div class="step-card"><div class="step-num">3</div><div class="step-content"><h3>차트 제목 입력 (선택)</h3><p>차트 제목 입력창에 원하는 제목을 입력합니다. 제목은 차트 상단에 표시되며 PNG 저장 시 파일명으로도 사용됩니다.</p></div></div>
+<div class="step-card"><div class="step-num">4</div><div class="step-content"><h3>옵션 설정 (선택)</h3><p>범례, 데이터 레이블, 격자선, 배경색 등을 설정합니다. 막대·선형 차트에서는 X축·Y축 레이블과 누적 차트 옵션도 사용할 수 있습니다.</p></div></div>
+<div class="step-card"><div class="step-num">5</div><div class="step-content"><h3>차트 생성</h3><p><strong>&#x1F4CA; 차트 생성</strong> 버튼을 클릭하면 오른쪽 패널에 차트가 렌더링됩니다.</p></div></div>
+<div class="step-card"><div class="step-num">6</div><div class="step-content"><h3>저장</h3><p><strong>PNG 저장</strong>으로 이미지를 다운로드하거나, <strong>SVG 저장</strong>으로 벡터 파일을 저장합니다.</p></div></div>
+<div class="btn-demo-row"><div class="btn-demo primary">&#x1F4CA; 차트 생성</div><div class="btn-demo">&#x1F5BC;&#xFE0F; PNG 저장</div><div class="btn-demo">&#x1F4C4; SVG 저장</div><div class="btn-demo">&#x21BA; 초기화</div></div>
+<h2>CSV 파일 업로드</h2>
+<p>엑셀이나 구글 스프레드시트에서 데이터를 CSV로 내보낸 뒤 업로드하면 자동으로 차트를 생성합니다. 첫 번째 열이 레이블, 두 번째 열이 값으로 인식됩니다.</p>
+<h3>CSV 파일 형식 예시</h3>
+<div class="csv-demo">카테고리,판매량<br>1월,120<br>2월,190<br>3월,170<br>4월,250<br>5월,310<br>6월,280</div>
+<p>첫 번째 행이 헤더(숫자가 아닌 텍스트)이면 자동으로 건너뜁니다. 드래그&amp;드롭 또는 클릭으로 파일을 업로드하면 즉시 데이터가 불러와지고 차트가 자동 생성됩니다.</p>
+<h2>차트 타입별 특징</h2>
+<table class="post-table"><thead><tr><th>타입</th><th>아이콘</th><th>적합한 데이터</th><th>특징</th></tr></thead><tbody>
+<tr><td><strong>막대</strong></td><td>&#x1F4CA;</td><td>항목 간 수치 비교</td><td>누적 차트 옵션 지원. 가장 범용적인 차트.</td></tr>
+<tr><td><strong>선형</strong></td><td>&#x1F4C8;</td><td>시간에 따른 변화 추이</td><td>월별 매출, 주가 흐름 등 추세 표현에 적합.</td></tr>
+<tr><td><strong>원형</strong></td><td>&#x2B55;</td><td>전체 대비 비율</td><td>항목별 구성 비율을 직관적으로 표현.</td></tr>
+<tr><td><strong>도넛</strong></td><td>&#x1F369;</td><td>전체 대비 비율</td><td>원형과 동일하나 중앙이 비어 있어 더 세련된 느낌.</td></tr>
+<tr><td><strong>레이더</strong></td><td>&#x1F578;&#xFE0F;</td><td>다항목 능력치 비교</td><td>스킬, 역량, 평가 항목 시각화에 적합.</td></tr>
+<tr><td><strong>폴라</strong></td><td>&#x1F3AF;</td><td>방향별 수치 비교</td><td>레이더와 유사하나 조각 면적으로 크기를 표현.</td></tr>
+</tbody></table>
+<h2>차트 옵션 설명</h2>
+<div class="option-demo">
+<div class="option-row-demo"><span class="option-label-demo">&#x1F4D6; 범례 표시</span><span class="toggle-on"></span></div>
+<div class="option-row-demo"><span class="option-label-demo">&#x1F3F7;&#xFE0F; 데이터 레이블</span><span class="toggle-off"></span></div>
+<div class="option-row-demo"><span class="option-label-demo">&#x25A6; 격자선</span><span class="toggle-on"></span></div>
+<div class="option-row-demo"><span class="option-label-demo">&#x1F3A8; 배경색</span><span style="font-size:12px;color:var(--subtext);background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:4px 12px;">흰색</span></div>
+<div class="option-row-demo"><span class="option-label-demo">&#x1F4CA; 누적 차트 (막대/선형)</span><span class="toggle-off"></span></div>
+</div>
+<table class="post-table"><thead><tr><th>옵션</th><th>설명</th></tr></thead><tbody>
+<tr><td><strong>범례 표시</strong></td><td>차트 아래에 항목명과 색상 범례를 표시합니다.</td></tr>
+<tr><td><strong>데이터 레이블</strong></td><td>각 데이터 포인트에 수치를 직접 표시합니다. 원형/도넛은 조각 내부, 막대/선형은 위에 표시됩니다.</td></tr>
+<tr><td><strong>격자선</strong></td><td>막대/선형 차트의 배경 격자선을 켜거나 끕니다.</td></tr>
+<tr><td><strong>배경색</strong></td><td>투명(PNG 저장 시 배경 없음) / 흰색 / 다크 중 선택합니다.</td></tr>
+<tr><td><strong>누적 차트</strong></td><td>막대·선형 차트에서 여러 데이터를 쌓아서 표현합니다.</td></tr>
+</tbody></table>
+<h2>활용 예시</h2>
+<div class="use-case-grid">
+<div class="use-case-card"><div class="use-case-icon">&#x1F4B0;</div><div class="use-case-title">월별 매출 리포트</div><div class="use-case-desc">월별 매출 데이터를 막대 또는 선형 차트로 시각화해 보고서나 발표 자료에 삽입합니다.</div></div>
+<div class="use-case-card"><div class="use-case-icon">&#x1F967;</div><div class="use-case-title">예산 구성 비율</div><div class="use-case-desc">항목별 예산 배분을 원형 또는 도넛 차트로 표현해 전체 대비 비율을 한눈에 파악합니다.</div></div>
+<div class="use-case-card"><div class="use-case-icon">&#x1F9D1;&#x200D;&#x1F4BC;</div><div class="use-case-title">역량 평가 시각화</div><div class="use-case-desc">직원 역량 평가 항목을 레이더 차트로 시각화해 강점과 약점을 직관적으로 표현합니다.</div></div>
+<div class="use-case-card"><div class="use-case-icon">&#x1F4C8;</div><div class="use-case-title">주간 방문자 추이</div><div class="use-case-desc">웹사이트 주간 방문자 수를 선형 차트로 시각화해 트래픽 변화 패턴을 분석합니다.</div></div>
+<div class="use-case-card"><div class="use-case-icon">&#x1F393;</div><div class="use-case-title">발표 자료용 차트</div><div class="use-case-desc">파워포인트나 Keynote 발표 자료에 삽입할 차트를 PNG로 저장해 바로 활용합니다.</div></div>
+<div class="use-case-card"><div class="use-case-icon">&#x1F4DD;</div><div class="use-case-title">설문 결과 시각화</div><div class="use-case-desc">설문 응답 데이터를 CSV로 내보낸 뒤 업로드해 즉시 원형 차트로 시각화합니다.</div></div>
+</div>
+<h2>PNG vs SVG 저장 차이</h2>
+<table class="post-table"><thead><tr><th>형식</th><th>특징</th><th>추천 사용 상황</th></tr></thead><tbody>
+<tr><td><strong>PNG</strong></td><td>배경 포함 이미지 파일. 설정한 배경색(투명/흰색/다크)이 적용됩니다.</td><td>발표 자료, 보고서, SNS 공유, 문서 삽입</td></tr>
+<tr><td><strong>SVG</strong></td><td>벡터 기반 파일. 어떤 크기로 확대해도 선명하게 유지됩니다.</td><td>웹사이트 삽입, 인쇄용 고해상도 출력</td></tr>
+</tbody></table>
+<div class="post-highlight">&#x1F512; ChartMaker는 모든 데이터 처리가 브라우저 안에서만 실행됩니다. 입력한 데이터와 CSV 파일이 외부 서버로 전송되지 않으므로 매출, 인사 등 민감한 업무 데이터도 안심하고 사용할 수 있습니다.</div>
+</div>
+<div class="cta-box"><p>지금 바로 ChartMaker를 사용해보세요.<br/>설치도, 회원가입도, 비용도 없습니다.</p><a href="../chart-maker/index.html" class="cta-btn">&#x1F4CA; 무료로 차트 만들기</a></div>
+<div class="adfit-wrap adfit-pc"><ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-QD4pRIpdIj7i2mbt" data-ad-width="728" data-ad-height="90"></ins></div>
+<div class="adfit-wrap adfit-mo"><ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-R4xA2niTT8HgGjoO" data-ad-width="320" data-ad-height="50"></ins></div>
+<div class="coupang-banner coupang-banner-pc"><p class="coupang-notice">이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</p><script src="https://ads-partners.coupang.com/g.js"></script><script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"668","height":"100","tsource":""});</script></div>
+<div class="coupang-banner coupang-banner-mo"><p class="coupang-notice">이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</p><script src="https://ads-partners.coupang.com/g.js"></script><script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"320","height":"50","tsource":""});</script></div>
+<div class="post-nav"><a href="37-findreplace-howto.html">&#x2190; 이전 글: FindReplace 사용법 완전 가이드</a><span></span></div>
+</div>
+<footer class="footer"><div class="container"><p class="footer-copy">&#xa9; 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p><nav class="footer-nav"><a href="../privacy.html">개인정보 처리방침</a><a href="../terms.html">이용약관</a><a href="../about.html">서비스 소개</a><a href="index.html">블로그</a></nav></div></footer>
+</body>
+</html>
