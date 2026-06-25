@@ -341,7 +341,7 @@
       currentType = btn.dataset.type;
       // 누적/격자 옵션 표시 제어
       var isCartesian = ['bar','line'].indexOf(currentType) !== -1;
-      document.getElementById('optStackRow').style.display = isCartesian ? '' : 'none';
+      document.getElementById('optStackRow').style.display = currentType === 'bar' ? '' : 'none';
       document.getElementById('xLabelCard').style.display = isCartesian ? '' : 'none';
       document.getElementById('optGrid').parentElement.parentElement.style.display = isCartesian ? '' : 'none';
     });
