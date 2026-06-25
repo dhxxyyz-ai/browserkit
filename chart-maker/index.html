@@ -624,25 +624,6 @@
       plugins: bgPlugin
     });
 
-    // 데이터 레이블 (간단 구현 - afterDraw)
-    if (showDataLabels) {
-      chartInstance.options.animation.onComplete = function() {
-        var ctx = canvas.getContext('2d');
-        ctx.font = 'bold 12px Pretendard';
-        ctx.fillStyle = textColor;
-        ctx.textAlign = 'center';
-        chartInstance.data.datasets[0].data.forEach(function(val, i) {
-          var meta = chartInstance.getDatasetMeta(0);
-          if (meta.data[i]) {
-            var x = meta.data[i].x;
-            var y = meta.data[i].y - 8;
-            ctx.fillText(val, x, y);
-          }
-        });
-      };
-      chartInstance.update();
-    }
-
     showToast('\u2713 \ucc28\ud2b8 \uc0dd\uc131 \uc644\ub8cc');
   }
 
