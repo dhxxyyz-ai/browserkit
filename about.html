@@ -3,18 +3,15 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="BrowserKit 서비스 소개 — 브라우저에서 바로 쓰는 무료 도구 모음. 서버 전송 없이 개인정보 마스킹, 이미지 편집, PDF 처리까지." />
+  <meta name="description" content="BrowserKit은 설치·회원가입·비용 없이 브라우저에서 바로 쓰는 무료 도구 모음입니다. 개인정보 마스킹, 이미지 편집, PDF 처리, QR 코드 생성 등 25가지 도구를 서버 전송 없이 안전하게 제공합니다." />
   <title>서비스 소개 — BrowserKit</title>
-  <link rel="stylesheet" href="css/style.css" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
+  <link rel="stylesheet" href="/css/style.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
   <style>
     .doc-wrap { max-width:720px; margin:0 auto; padding:60px 24px 80px; }
-    .back-link { display:inline-flex; align-items:center; gap:6px; color:var(--subtext); font-size:14px; margin-bottom:32px; }
-    .back-link:hover { color:var(--text); }
     .about-hero { text-align:center; padding:48px 0 56px; }
-    .about-hero-icon { font-size:56px; margin-bottom:20px; }
     .about-hero h1 { font-size:36px; font-weight:700; margin-bottom:16px; background:linear-gradient(135deg,var(--point),var(--point-hover)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
     .about-hero p { color:var(--subtext); font-size:16px; line-height:1.8; max-width:520px; margin:0 auto; }
     .features { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin:48px 0; }
@@ -28,11 +25,11 @@
     .service-cards { display:flex; flex-direction:column; gap:16px; }
     .service-card { display:flex; align-items:flex-start; gap:20px; background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:24px; }
     .service-card:hover { border-color:var(--point); }
-    .service-card-icon { font-size:36px; flex-shrink:0; }
+    .service-card { cursor: default; }
+    .service-card-icon { flex-shrink:0; }
     .service-card-name { font-size:17px; font-weight:700; color:var(--text); margin-bottom:6px; display:flex; align-items:center; gap:10px; }
     .service-badge { font-size:11px; font-weight:600; padding:2px 10px; border-radius:999px; }
     .service-badge.live { background:rgba(52,211,153,0.15); color:var(--success); border:1px solid rgba(52,211,153,0.3); }
-    .service-badge.soon { background:rgba(108,99,255,0.15); color:var(--point-hover); border:1px solid var(--border); }
     .service-card-desc { font-size:14px; color:var(--subtext); line-height:1.8; margin-bottom:10px; }
     .service-card-tags { display:flex; gap:8px; flex-wrap:wrap; }
     .service-tag { font-size:12px; color:var(--subtext); background:var(--bg); border:1px solid var(--border); border-radius:999px; padding:2px 10px; }
@@ -41,7 +38,7 @@
     .how-steps { display:flex; flex-direction:column; gap:16px; }
     .how-step { display:flex; align-items:flex-start; gap:20px; background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px 24px; }
     .how-step:hover { border-color:var(--point); }
-    .step-num { min-width:36px; height:36px; background:linear-gradient(135deg,var(--point),var(--point-hover)); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:700; font-family:'Inter',sans-serif; color:white; flex-shrink:0; }
+    .step-num { min-width:36px; height:36px; background:linear-gradient(135deg,var(--point),var(--point-hover)); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:700; color:white; flex-shrink:0; }
     .step-content h3 { font-size:15px; font-weight:600; margin-bottom:4px; color:var(--text); }
     .step-content p { font-size:14px; color:var(--subtext); line-height:1.7; }
     .compare-section { margin:56px 0; }
@@ -51,14 +48,14 @@
     .compare-table th:first-child { text-align:left; }
     .compare-table td { padding:12px 16px; border:1px solid var(--border); color:var(--subtext); text-align:center; }
     .compare-table td:first-child { text-align:left; color:var(--text); }
-    .compare-table tr:hover td { background:rgba(108,99,255,0.04); }
+    .compare-table tr:hover td { background:rgba(123,108,255,0.04); }
     .check { color:var(--success); font-size:16px; }
     .cross { color:#EF4444; font-size:16px; }
     .th-us { color:var(--point-hover) !important; }
     .cta-section { text-align:center; margin:56px 0 0; padding:48px 32px; background:var(--card); border:1px solid var(--border); border-radius:var(--radius); }
     .cta-section h2 { font-size:22px; font-weight:700; margin-bottom:12px; }
     .cta-section p { color:var(--subtext); font-size:15px; margin-bottom:28px; }
-    .btn-cta { display:inline-block; background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border-radius:12px; padding:14px 36px; font-size:15px; font-weight:600; font-family:'Pretendard',sans-serif; text-decoration:none; border:none; cursor:pointer; }
+    .btn-cta { display:inline-flex; align-items:center; gap:10px; background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border-radius:12px; padding:14px 36px; font-size:15px; font-weight:600; font-family:'Gowun Dodum',sans-serif; text-decoration:none; border:none; cursor:pointer; }
     .btn-cta:hover { transform:translateY(-2px); box-shadow:0 8px 24px var(--glow); color:white; }
     @media (max-width:640px) {
       .features { grid-template-columns:1fr; }
@@ -66,26 +63,23 @@
       .service-card { flex-direction:column; gap:12px; }
     }
   </style>
+  <meta property="og:image" content="https://browserkit.online/img/og-browserkit.png" />
+  <link rel="canonical" href="https://browserkit.online/about.html" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://browserkit.online/img/og-browserkit.png" />
 </head>
 <body>
 
   <header class="header">
     <div class="container">
-      <div class="logo">
-        <a href="index.html" style="display:flex;align-items:center;gap:10px;text-decoration:none;">
-          <span class="logo-icon">🧰</span>
-          <span class="logo-text">BrowserKit</span>
-        </a>
-      </div>
+      <a href="/" class="header-brand"><div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Gowun Dodum,sans-serif;flex-shrink:0">B</div><span class="header-brand-text"><span style="color:var(--text)">Browser</span><span style="color:var(--point)">Kit</span></span></a>
+      <a href="/" class="header-back">← BrowserKit 홈으로</a>
     </div>
   </header>
 
   <div class="doc-wrap">
 
-    <a href="index.html" class="back-link">← BrowserKit 홈으로</a>
-
     <section class="about-hero">
-      <div class="about-hero-icon">🧰</div>
       <h1>브라우저에서 바로 쓰는 무료 도구 모음</h1>
       <p>BrowserKit은 설치도, 회원가입도, 서버 전송도 없는 브라우저 기반 도구 모음입니다. 개인정보 마스킹부터 이미지 편집, PDF 처리까지 하나의 플랫폼에서 제공합니다.</p>
     </section>
@@ -126,11 +120,15 @@
     <section class="services-section">
       <h2>제공 서비스</h2>
       <div class="service-cards">
+
+      <!-- ── 개인정보  F[0]=#ffd36e ── -->
+      <div style="display:flex;align-items:center;gap:10px;margin:36px 0 10px 4px"><div style="flex-shrink:0"><div style="position:relative;width:46px;height:36px"><div style="position:absolute;left:2px;top:0;width:20px;height:10px;background:#ffd36e;border:2.5px solid #2a2433;border-radius:6px 8px 0 0;box-sizing:border-box"></div><div style="position:absolute;left:0;bottom:0;width:46px;height:28px;background:#ffd36e;border:2.5px solid #2a2433;border-radius:4px 7px 6px 5px;box-sizing:border-box"></div><div style="position:absolute;left:5px;bottom:19px;width:22px;height:2.5px;background:rgba(255,255,255,.55);border-radius:3px"></div></div></div><span style="font-size:15px;font-weight:700;color:var(--text)">개인정보</span></div>
+
         <div class="service-card">
-          <div class="service-card-icon">🔒</div>
+          <div class="service-card-icon"><div style="width:46px;height:46px;background:#ffd36e;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="position:relative;width:34px;height:24px;background:#fffdf9;border:2.5px solid #2a2433;border-radius:4px;box-sizing:border-box"><div style="position:absolute;left:3px;top:3px;width:9px;height:9px;border-radius:50%;background:#ffd36e;border:2px solid #2a2433;box-sizing:border-box"></div><div style="position:absolute;left:15px;top:4px;width:14px;height:3px;background:#2a2433;border-radius:2px"></div><div style="position:absolute;left:15px;top:10px;width:10px;height:2.5px;background:rgba(42,36,51,.3);border-radius:2px"></div><div style="position:absolute;left:3px;bottom:2px;width:26px;height:3.5px;background:#2a2433;border-radius:2px"></div></div></div></div>
           <div class="service-card-body">
             <div class="service-card-name">
-              개인정보 마스킹 (MaskPrivacy)
+              <a href="/maskprivacy/" style="color:inherit;text-decoration:none;font-weight:700;">개인정보 마스킹 (MaskPrivacy)</a>
               <span class="service-badge live">✓ 서비스 중</span>
             </div>
             <div class="service-card-desc">이미지 속 주민번호, 전화번호, 이메일, 계좌번호를 OCR로 자동 탐지해 마스킹합니다. 수동 드래그 마스킹과 부분 마스킹 옵션도 지원합니다.</div>
@@ -143,26 +141,12 @@
             </div>
           </div>
         </div>
+
         <div class="service-card">
-          <div class="service-card-icon">🖼️</div>
+          <div class="service-card-icon"><div style="width:46px;height:46px;background:#ffd36e;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="position:relative;width:26px;height:32px;background:#fffdf9;border:2.5px solid #2a2433;border-radius:3px;box-sizing:border-box;overflow:hidden"><div style="position:absolute;top:5px;left:0;width:100%;text-align:center;font:700 8px Gowun Dodum,sans-serif;color:#2a2433">PDF</div><div style="position:absolute;top:16px;left:3px;width:20px;height:4px;background:#2a2433;border-radius:2px"></div><div style="position:absolute;top:23px;left:3px;width:13px;height:3px;background:rgba(42,36,51,.3);border-radius:2px"></div></div></div></div>
           <div class="service-card-body">
             <div class="service-card-name">
-              이미지 변환 (FitImage)
-              <span class="service-badge live">✓ 서비스 중</span>
-            </div>
-            <div class="service-card-desc">이미지 크기 조정, 형식 변환(PNG↔JPG), 용량 압축을 브라우저에서 바로 처리합니다. 모두 서버 전송 없이 로컬에서 처리됩니다.</div>
-            <div class="service-card-tags">
-              <span class="service-tag">크기 조정</span>
-              <span class="service-tag">형식 변환</span>
-              <span class="service-tag">용량 압축</span>
-            </div>
-          </div>
-        </div>
-        <div class="service-card">
-          <div class="service-card-icon">📄</div>
-          <div class="service-card-body">
-            <div class="service-card-name">
-              PDF 마스킹 (MaskPDF)
+              <a href="/pdf-tools/" style="color:inherit;text-decoration:none;font-weight:700;">PDF 마스킹 (MaskPDF)</a>
               <span class="service-badge live">✓ 서비스 중</span>
             </div>
             <div class="service-card-desc">PDF 문서 속 개인정보를 브라우저에서 바로 마스킹합니다. 병원 서류, 계약서 등 민감한 PDF를 안전하게 처리할 수 있습니다.</div>
@@ -172,26 +156,12 @@
             </div>
           </div>
         </div>
+
         <div class="service-card">
-          <div class="service-card-icon">📦</div>
+          <div class="service-card-icon"><div style="width:46px;height:46px;background:#ffd36e;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="position:relative;width:27px;height:27px;border-radius:50%;background:#fffdf9;border:2.5px solid #2a2433;box-sizing:border-box;overflow:hidden"><div style="position:absolute;left:6px;top:8px;width:3px;height:3px;border-radius:50%;background:#2a2433"></div><div style="position:absolute;right:6px;top:8px;width:3px;height:3px;border-radius:50%;background:#2a2433"></div><div style="position:absolute;left:7px;bottom:5px;width:11px;height:3px;border-radius:3px;background:rgba(42,36,51,.4)"></div><div style="position:absolute;left:-3px;bottom:4px;width:34px;height:3px;background:rgba(255,255,255,.85)"></div><div style="position:absolute;left:-3px;bottom:9px;width:34px;height:3px;background:rgba(255,255,255,.7)"></div></div></div></div>
           <div class="service-card-body">
             <div class="service-card-name">
-              PDF 합치기 (PDFMerge)
-              <span class="service-badge live">✓ 서비스 중</span>
-            </div>
-            <div class="service-card-desc">여러 PDF를 하나로 합치거나 특정 페이지만 추출합니다. 드래그로 파일 순서를 조정하고 페이지 범위를 입력해 원하는 페이지만 선택해 작업할 수 있습니다.</div>
-            <div class="service-card-tags">
-              <span class="service-tag">PDF 합치기</span>
-              <span class="service-tag">페이지 추출</span>
-              <span class="service-tag">순서 조정</span>
-            </div>
-          </div>
-        </div>
-        <div class="service-card">
-          <div class="service-card-icon">👤</div>
-          <div class="service-card-body">
-            <div class="service-card-name">
-              얼굴 블러 (MaskFace)
+              <a href="/mask-face/" style="color:inherit;text-decoration:none;font-weight:700;">얼굴 블러 (MaskFace)</a>
               <span class="service-badge live">✓ 서비스 중</span>
             </div>
             <div class="service-card-desc">이미지 속 얼굴을 자동으로 감지해 모자이크 또는 검정 박스로 처리합니다. 수동 드래그로 추가 영역도 마스킹할 수 있습니다.</div>
@@ -202,101 +172,12 @@
             </div>
           </div>
         </div>
+
         <div class="service-card">
-          <div class="service-card-icon">✂️</div>
+          <div class="service-card-icon"><div style="width:46px;height:46px;background:#ffd36e;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="position:relative;width:28px;height:32px;background:#fffdf9;border:2.5px solid #2a2433;border-radius:3px;box-sizing:border-box"><div style="position:absolute;top:5px;left:4px;width:18px;height:2.5px;background:rgba(42,36,51,.35);border-radius:2px"></div><div style="position:absolute;top:12px;left:4px;width:20px;height:5px;background:#2a2433;border-radius:2px"></div><div style="position:absolute;top:21px;left:4px;width:14px;height:2.5px;background:rgba(42,36,51,.35);border-radius:2px"></div></div></div></div>
           <div class="service-card-body">
             <div class="service-card-name">
-              이미지 자르기 (CropImage)
-              <span class="service-badge live">✓ 서비스 중</span>
-            </div>
-            <div class="service-card-desc">드래그로 자르기, 90° 회전, 좌우/상하 반전을 브라우저에서 바로 처리합니다. 정방형 / 증명사진 / 16:9 등 비율 단축 버튼 지원.</div>
-            <div class="service-card-tags">
-              <span class="service-tag">이미지 자르기</span>
-              <span class="service-tag">회전 / 반전</span>
-              <span class="service-tag">비율 조정</span>
-            </div>
-          </div>
-        </div>
-        <div class="service-card">
-          <div class="service-card-icon">🏷️</div>
-          <div class="service-card-body">
-            <div class="service-card-name">
-              워터마크 추가 (WatermarkImage)
-              <span class="service-badge live">✓ 서비스 중</span>
-            </div>
-            <div class="service-card-desc">텍스트 또는 이미지 워터마크를 원본 이미지에 합성합니다. 투명도, 위치, 크기, 타일 배치를 자유롭게 조절할 수 있습니다.</div>
-            <div class="service-card-tags">
-              <span class="service-tag">텍스트 워터마크</span>
-              <span class="service-tag">이미지 워터마크</span>
-              <span class="service-tag">투명도 조절</span>
-            </div>
-          </div>
-        </div>
-        <div class="service-card">
-          <div class="service-card-icon">🎨</div>
-          <div class="service-card-body">
-            <div class="service-card-name">
-              색상 추출 (ColorPicker)
-              <span class="service-badge live">✓ 서비스 중</span>
-            </div>
-            <div class="service-card-desc">이미지를 클릭해 색상을 추출합니다. HEX, RGB, HSL 코드를 클립보드에 바로 복사하고, 팔레트를 저장하거나 내보낼 수 있습니다.</div>
-            <div class="service-card-tags">
-              <span class="service-tag">색상 추출</span>
-              <span class="service-tag">HEX/RGB/HSL</span>
-              <span class="service-tag">팔레트 저장</span>
-            </div>
-          </div>
-        </div>
-        <div class="service-card">
-          <div class="service-card-icon">✨</div>
-          <div class="service-card-body">
-            <div class="service-card-name">
-              이미지 보정 (ImageBright)
-              <span class="service-badge live">✓ 서비스 중</span>
-            </div>
-            <div class="service-card-desc">밀기, 대비, 채도, 색온도, 샤프니스를 슬라이더로 실시간 조절합니다. 6가지 빠른 프리셋으로 한 번에 보정.</div>
-            <div class="service-card-tags">
-              <span class="service-tag">밀기/대비/채도</span>
-              <span class="service-tag">색온도/샤프니스</span>
-              <span class="service-tag">빠른 프리셋</span>
-            </div>
-          </div>
-        </div>
-        <div class="service-card">
-          <div class="service-card-icon">✂️</div>
-          <div class="service-card-body">
-            <div class="service-card-name">
-              AI 배경 제거 (BGRemove)
-              <span class="service-badge live">✓ 서비스 중</span>
-            </div>
-            <div class="service-card-desc">AI가 이미지 배경을 자동으로 제거합니다. 투명 PNG로 저장하세요. 서버 전송 없이 붌라우저에서 직접 처리.</div>
-            <div class="service-card-tags">
-              <span class="service-tag">AI 적용</span>
-              <span class="service-tag">투명 PNG</span>
-              <span class="service-tag">서버 전송 없음</span>
-            </div>
-          </div>
-        </div>
-        <div class="service-card">
-          <div class="service-card-icon">⌨️</div>
-          <div class="service-card-body">
-            <div class="service-card-name">
-              텍스트 변환 (TextTools)
-              <span class="service-badge live">✓ 서비스 중</span>
-            </div>
-            <div class="service-card-desc">글자수 세기, 공백 정리, 대소문자 변환, 중복 제거까지 브라우저에서 바로 처리합니다.</div>
-            <div class="service-card-tags">
-              <span class="service-tag">글자수 세기</span>
-              <span class="service-tag">공백 정리</span>
-              <span class="service-tag">대소문자 변환</span>
-            </div>
-          </div>
-        </div>
-        <div class="service-card">
-          <div class="service-card-icon">📝</div>
-          <div class="service-card-body">
-            <div class="service-card-name">
-              텍스트 마스킹 (MaskDoc)
+              <a href="/mask-doc/" style="color:inherit;text-decoration:none;font-weight:700;">텍스트 마스킹 (MaskDoc)</a>
               <span class="service-badge live">✓ 서비스 중</span>
             </div>
             <div class="service-card-desc">텍스트 속 주민번호, 전화번호, 이메일, 계좌번호를 자동으로 탐지해 마스킹합니다. OCR 불필요.</div>
@@ -307,49 +188,197 @@
             </div>
           </div>
         </div>
+
+      <!-- ── 이미지 편집  F[1]=#ffb3c7 ── -->
+      <div style="display:flex;align-items:center;gap:10px;margin:36px 0 10px 4px"><div style="flex-shrink:0"><div style="position:relative;width:46px;height:36px"><div style="position:absolute;left:2px;top:0;width:20px;height:10px;background:#ffb3c7;border:2.5px solid #2a2433;border-radius:6px 8px 0 0;box-sizing:border-box"></div><div style="position:absolute;left:0;bottom:0;width:46px;height:28px;background:#ffb3c7;border:2.5px solid #2a2433;border-radius:4px 7px 6px 5px;box-sizing:border-box"></div><div style="position:absolute;left:5px;bottom:19px;width:22px;height:2.5px;background:rgba(255,255,255,.55);border-radius:3px"></div></div></div><span style="font-size:15px;font-weight:700;color:var(--text)">이미지 편집</span></div>
+
         <div class="service-card">
-          <div class="service-card-icon">🔄</div>
+          <div class="service-card-icon"><div style="width:46px;height:46px;background:#ffb3c7;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="position:relative;width:30px;height:30px;background:#fffdf9;border:2.5px solid #2a2433;border-radius:4px;box-sizing:border-box"><div style="position:absolute;left:4px;top:4px;width:9px;height:2.5px;background:#2a2433;border-radius:2px"></div><div style="position:absolute;left:4px;top:4px;width:2.5px;height:9px;background:#2a2433;border-radius:2px"></div><div style="position:absolute;right:4px;bottom:4px;width:9px;height:2.5px;background:#2a2433;border-radius:2px"></div><div style="position:absolute;right:4px;bottom:4px;width:2.5px;height:9px;background:#2a2433;border-radius:2px"></div></div></div></div>
           <div class="service-card-body">
             <div class="service-card-name">
-              텍스트 비교 (DiffChecker)
+              <a href="/image-tools/" style="color:inherit;text-decoration:none;font-weight:700;">이미지 변환 (FitImage)</a>
               <span class="service-badge live">✓ 서비스 중</span>
             </div>
-            <div class="service-card-desc">두 텍스트의 차이점을 줄 단위로 하이라이트합니다. 추가된 내용은 녹색, 삭제된 내용은 빨간색으로 표시합니다.</div>
+            <div class="service-card-desc">이미지 크기 조정, 형식 변환(PNG↔JPG), 용량 압축을 브라우저에서 바로 처리합니다. 모두 서버 전송 없이 로컬에서 처리됩니다.</div>
             <div class="service-card-tags">
-              <span class="service-tag">줄 단위 비교</span>
-              <span class="service-tag">측우 동시 표시</span>
-              <span class="service-tag">차이 요약</span>
-            </div>
-          </div>
-        </div>
-        <div class="service-card">
-          <div class="service-card-icon">📝</div>
-          <div class="service-card-body">
-            <div class="service-card-name">
-              마크다운 편집기 (MarkdownEditor)
-              <span class="service-badge live">✓ 서비스 중</span>
-            </div>
-            <div class="service-card-desc">마크다운을 입력하면 HTML 미리보기를 실시간으로 확인할 수 있습니다. HTML 저장 및 클립보드 복사 지원.</div>
-            <div class="service-card-tags">
-              <span class="service-tag">실시간 미리보기</span>
-              <span class="service-tag">HTML 저장</span>
-              <span class="service-tag">.md 저장</span>
+              <span class="service-tag">크기 조정</span>
+              <span class="service-tag">형식 변환</span>
+              <span class="service-tag">용량 압축</span>
             </div>
           </div>
         </div>
 
-        <!-- 🔧 유틸리티 도구 (준비 중) -->
-        <div class="service-card" style="margin-top:24px;border-top:1px solid var(--border);padding-top:24px;">
-          <div class="service-card-icon">🔧</div>
-          <div class="service-card-body">
-            <div class="service-card-name" style="font-size:15px;color:var(--subtext);">유틸리티 도구 — 준비 중</div>
-          </div>
-        </div>
         <div class="service-card">
-          <div class="service-card-icon">📱</div>
+          <div class="service-card-icon"><div style="width:46px;height:46px;background:#ffb3c7;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="position:relative;width:30px;height:30px"><div style="position:absolute;left:4px;top:0;width:3px;height:26px;background:#2a2433;border-radius:2px"></div><div style="position:absolute;left:0;top:4px;width:26px;height:3px;background:#2a2433;border-radius:2px"></div><div style="position:absolute;right:4px;bottom:0;width:3px;height:26px;background:#2a2433;border-radius:2px"></div><div style="position:absolute;left:0;bottom:4px;width:26px;height:3px;background:#2a2433;border-radius:2px"></div></div></div></div>
           <div class="service-card-body">
             <div class="service-card-name">
-              QR 코드 생성 (QRCode)
+              <a href="/crop-image/" style="color:inherit;text-decoration:none;font-weight:700;">이미지 자르기 (CropImage)</a>
+              <span class="service-badge live">✓ 서비스 중</span>
+            </div>
+            <div class="service-card-desc">드래그로 자르기, 90° 회전, 좌우/상하 반전을 브라우저에서 바로 처리합니다. 정방형 / 증명사진 / 16:9 등 비율 단축 버튼 지원.</div>
+            <div class="service-card-tags">
+              <span class="service-tag">이미지 자르기</span>
+              <span class="service-tag">회전 / 반전</span>
+              <span class="service-tag">비율 조정</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-card-icon"><div style="width:46px;height:46px;background:#ffb3c7;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="position:relative;width:32px;height:28px;background:#fffdf9;border:2.5px solid #2a2433;border-radius:4px;box-sizing:border-box;overflow:hidden;display:flex;align-items:center;justify-content:center"><div style="position:absolute;left:4px;bottom:4px;width:9px;height:9px;border-radius:50%;background:#ffb3c7;border:2px solid #2a2433;box-sizing:border-box"></div><div style="font:700 14px Gowun Dodum,sans-serif;color:rgba(42,36,51,.55)">W</div></div></div></div>
+          <div class="service-card-body">
+            <div class="service-card-name">
+              <a href="/watermark-image/" style="color:inherit;text-decoration:none;font-weight:700;">워터마크 추가 (WatermarkImage)</a>
+              <span class="service-badge live">✓ 서비스 중</span>
+            </div>
+            <div class="service-card-desc">텍스트 또는 이미지 워터마크를 원본 이미지에 합성합니다. 투명도, 위치, 크기, 타일 배치를 자유롭게 조절할 수 있습니다.</div>
+            <div class="service-card-tags">
+              <span class="service-tag">텍스트 워터마크</span>
+              <span class="service-tag">이미지 워터마크</span>
+              <span class="service-tag">투명도 조절</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-card-icon"><div style="width:46px;height:46px;background:#ffb3c7;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="width:20px;height:20px;background:#fffdf9;border:2.5px solid #2a2433;box-sizing:border-box;border-radius:50% 50% 50% 0;transform:rotate(45deg)"><div style="width:7px;height:7px;border-radius:50%;background:#ffb3c7;margin:4px 0 0 4px;transform:rotate(-45deg)"></div></div></div></div>
+          <div class="service-card-body">
+            <div class="service-card-name">
+              <a href="/color-picker/" style="color:inherit;text-decoration:none;font-weight:700;">색상 추출 (ColorPicker)</a>
+              <span class="service-badge live">✓ 서비스 중</span>
+            </div>
+            <div class="service-card-desc">이미지를 클릭해 색상을 추출합니다. HEX, RGB, HSL 코드를 클립보드에 바로 복사하고, 팔레트를 저장하거나 내보낼 수 있습니다.</div>
+            <div class="service-card-tags">
+              <span class="service-tag">색상 추출</span>
+              <span class="service-tag">HEX/RGB/HSL</span>
+              <span class="service-tag">팔레트 저장</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-card-icon"><div style="width:46px;height:46px;background:#ffb3c7;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="position:relative;width:30px;height:30px;display:flex;align-items:center;justify-content:center"><div style="width:16px;height:16px;border-radius:50%;background:#fffdf9;border:2.5px solid #2a2433;box-sizing:border-box"></div><div style="position:absolute;top:0;left:50%;transform:translateX(-50%);width:2.5px;height:5px;background:#2a2433;border-radius:2px"></div><div style="position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:2.5px;height:5px;background:#2a2433;border-radius:2px"></div><div style="position:absolute;left:0;top:50%;transform:translateY(-50%);width:5px;height:2.5px;background:#2a2433;border-radius:2px"></div><div style="position:absolute;right:0;top:50%;transform:translateY(-50%);width:5px;height:2.5px;background:#2a2433;border-radius:2px"></div></div></div></div>
+          <div class="service-card-body">
+            <div class="service-card-name">
+              <a href="/image-bright/" style="color:inherit;text-decoration:none;font-weight:700;">이미지 보정 (ImageBright)</a>
+              <span class="service-badge live">✓ 서비스 중</span>
+            </div>
+            <div class="service-card-desc">밀기, 대비, 채도, 색온도, 샤프니스를 슬라이더로 실시간 조절합니다. 6가지 빠른 프리셋으로 한 번에 보정.</div>
+            <div class="service-card-tags">
+              <span class="service-tag">밀기/대비/채도</span>
+              <span class="service-tag">색온도/샤프니스</span>
+              <span class="service-tag">빠른 프리셋</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-card-icon"><div style="width:46px;height:46px;background:#ffb3c7;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="font:700 16px Gowun Dodum,sans-serif;color:#2a2433;line-height:1;letter-spacing:-.5px;white-space:nowrap">BG</div></div></div>
+          <div class="service-card-body">
+            <div class="service-card-name">
+              <a href="/bg-remove/" style="color:inherit;text-decoration:none;font-weight:700;">AI 배경 제거 (BGRemove)</a>
+              <span class="service-badge live">✓ 서비스 중</span>
+            </div>
+            <div class="service-card-desc">AI가 이미지 배경을 자동으로 제거합니다. 투명 PNG로 저장하세요. 서버 전송 없이 브라우저에서 직접 처리합니다.</div>
+            <div class="service-card-tags">
+              <span class="service-tag">AI 적용</span>
+              <span class="service-tag">투명 PNG</span>
+              <span class="service-tag">서버 전송 없음</span>
+            </div>
+          </div>
+        </div>
+
+      <!-- ── 문서·텍스트  F[2]=#a8e6cf ── -->
+      <div style="display:flex;align-items:center;gap:10px;margin:36px 0 10px 4px"><div style="flex-shrink:0"><div style="position:relative;width:46px;height:36px"><div style="position:absolute;left:2px;top:0;width:20px;height:10px;background:#a8e6cf;border:2.5px solid #2a2433;border-radius:6px 8px 0 0;box-sizing:border-box"></div><div style="position:absolute;left:0;bottom:0;width:46px;height:28px;background:#a8e6cf;border:2.5px solid #2a2433;border-radius:4px 7px 6px 5px;box-sizing:border-box"></div><div style="position:absolute;left:5px;bottom:19px;width:22px;height:2.5px;background:rgba(255,255,255,.55);border-radius:3px"></div></div></div><span style="font-size:15px;font-weight:700;color:var(--text)">문서·텍스트</span></div>
+
+        <div class="service-card">
+          <div class="service-card-icon"><div style="width:46px;height:46px;background:#a8e6cf;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="position:relative;width:34px;height:32px"><div style="position:absolute;left:0;top:3px;width:20px;height:26px;background:#fffdf9;border:2.5px solid #2a2433;border-radius:3px;box-sizing:border-box"></div><div style="position:absolute;right:0;top:0;width:20px;height:26px;background:#a8e6cf;border:2.5px solid #2a2433;border-radius:3px;box-sizing:border-box"></div><div style="position:absolute;right:8px;top:9px;width:4px;height:12px;background:#2a2433;border-radius:2px"></div><div style="position:absolute;right:4px;top:13px;width:12px;height:4px;background:#2a2433;border-radius:2px"></div></div></div></div>
+          <div class="service-card-body">
+            <div class="service-card-name">
+              <a href="/pdf-merge/" style="color:inherit;text-decoration:none;font-weight:700;">PDF 합치기 (PDFMerge)</a>
+              <span class="service-badge live">✓ 서비스 중</span>
+            </div>
+            <div class="service-card-desc">여러 PDF 파일을 하나로 합칩니다. 파일을 드래그해 순서를 조정하고 병합할 수 있으며, 모든 처리가 브라우저에서 이루어집니다.</div>
+            <div class="service-card-tags">
+              <span class="service-tag">PDF 병합</span>
+              <span class="service-tag">순서 조정</span>
+              <span class="service-tag">페이지 추출</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-card-icon"><div style="width:46px;height:46px;background:#a8e6cf;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="font:700 16px Gowun Dodum,sans-serif;color:#2a2433;line-height:1;letter-spacing:-.5px;white-space:nowrap">Aa</div></div></div>
+          <div class="service-card-body">
+            <div class="service-card-name">
+              <a href="/text-tools/" style="color:inherit;text-decoration:none;font-weight:700;">텍스트 도구 (TextTools)</a>
+              <span class="service-badge live">✓ 서비스 중</span>
+            </div>
+            <div class="service-card-desc">텍스트 변환, 정렬, 중복 제거, 줄 바꿈 처리 등 다양한 텍스트 작업을 한 곳에서 처리합니다.</div>
+            <div class="service-card-tags">
+              <span class="service-tag">텍스트 변환</span>
+              <span class="service-tag">중복 제거</span>
+              <span class="service-tag">대소문자</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-card-icon"><div style="width:46px;height:46px;background:#a8e6cf;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="display:flex;gap:4px"><div style="width:15px;height:30px;background:#fffdf9;border:2.5px solid #2a2433;border-radius:3px;box-sizing:border-box;padding:4px 3px;display:flex;flex-direction:column;gap:3px"><div style="height:2.5px;background:rgba(42,36,51,.35);border-radius:2px"></div><div style="height:2.5px;background:#2a2433;border-radius:2px"></div><div style="height:2.5px;background:rgba(42,36,51,.35);border-radius:2px"></div></div><div style="width:15px;height:30px;background:#fffdf9;border:2.5px solid #2a2433;border-radius:3px;box-sizing:border-box;padding:4px 3px;display:flex;flex-direction:column;gap:3px"><div style="height:2.5px;background:rgba(42,36,51,.35);border-radius:2px"></div><div style="height:2.5px;background:#a8e6cf;border-radius:2px"></div><div style="height:2.5px;background:rgba(42,36,51,.35);border-radius:2px"></div></div></div></div></div>
+          <div class="service-card-body">
+            <div class="service-card-name">
+              <a href="/diff-checker/" style="color:inherit;text-decoration:none;font-weight:700;">텍스트 비교 (DiffChecker)</a>
+              <span class="service-badge live">✓ 서비스 중</span>
+            </div>
+            <div class="service-card-desc">두 텍스트를 나란히 비교해 추가, 삭제, 변경된 내용을 강조 표시합니다. 코드 비교, 문서 변경 내역 확인에 유용합니다.</div>
+            <div class="service-card-tags">
+              <span class="service-tag">텍스트 비교</span>
+              <span class="service-tag">차이 강조</span>
+              <span class="service-tag">코드 비교</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-card-icon"><div style="width:46px;height:46px;background:#a8e6cf;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="font:700 16px Gowun Dodum,sans-serif;color:#2a2433;line-height:1;letter-spacing:-.5px;white-space:nowrap">M↓</div></div></div>
+          <div class="service-card-body">
+            <div class="service-card-name">
+              <a href="/markdown-editor/" style="color:inherit;text-decoration:none;font-weight:700;">마크다운 편집기 (MarkdownEditor)</a>
+              <span class="service-badge live">✓ 서비스 중</span>
+            </div>
+            <div class="service-card-desc">실시간 미리보기가 지원되는 마크다운 편집기입니다. HTML/PDF로 내보내기, 단축키 지원, 깃허브 스타일 렌더링.</div>
+            <div class="service-card-tags">
+              <span class="service-tag">마크다운 편집</span>
+              <span class="service-tag">실시간 미리보기</span>
+              <span class="service-tag">HTML 내보내기</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-card-icon"><div style="width:46px;height:46px;background:#a8e6cf;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="position:relative;width:30px;height:30px"><div style="position:absolute;left:2px;top:2px;width:18px;height:18px;border-radius:50%;background:#fffdf9;border:3px solid #2a2433;box-sizing:border-box"></div><div style="position:absolute;right:1px;bottom:1px;width:11px;height:4px;background:#2a2433;border-radius:3px;transform:rotate(45deg);transform-origin:right bottom"></div></div></div></div>
+          <div class="service-card-body">
+            <div class="service-card-name">
+              <a href="/find-replace/" style="color:inherit;text-decoration:none;font-weight:700;">찾아 바꾸기 (FindReplace)</a>
+              <span class="service-badge live">✓ 서비스 중</span>
+            </div>
+            <div class="service-card-desc">텍스트 내 특정 문자열을 찾아 일괄 또는 선택적으로 바꿉니다. 정규식 모드와 대소문자 구분 옵션 지원.</div>
+            <div class="service-card-tags">
+              <span class="service-tag">찾기/바꾸기</span>
+              <span class="service-tag">정규식 모드</span>
+              <span class="service-tag">일괄 처리</span>
+            </div>
+          </div>
+        </div>
+
+      <!-- ── 유틸리티  F[3]=#bcd4ff ── -->
+      <div style="display:flex;align-items:center;gap:10px;margin:36px 0 10px 4px"><div style="flex-shrink:0"><div style="position:relative;width:46px;height:36px"><div style="position:absolute;left:2px;top:0;width:20px;height:10px;background:#bcd4ff;border:2.5px solid #2a2433;border-radius:6px 8px 0 0;box-sizing:border-box"></div><div style="position:absolute;left:0;bottom:0;width:46px;height:28px;background:#bcd4ff;border:2.5px solid #2a2433;border-radius:4px 7px 6px 5px;box-sizing:border-box"></div><div style="position:absolute;left:5px;bottom:19px;width:22px;height:2.5px;background:rgba(255,255,255,.55);border-radius:3px"></div></div></div><span style="font-size:15px;font-weight:700;color:var(--text)">유틸리티</span></div>
+
+        <div class="service-card">
+          <div class="service-card-icon"><div style="width:46px;height:46px;background:#bcd4ff;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="display:grid;grid-template-columns:repeat(3,7px);grid-template-rows:repeat(3,7px);gap:2px"><div style="background:#2a2433;border-radius:1px"></div><div style="background:transparent"></div><div style="background:#2a2433;border-radius:1px"></div><div style="background:transparent"></div><div style="background:#2a2433;border-radius:1px"></div><div style="background:transparent"></div><div style="background:#2a2433;border-radius:1px"></div><div style="background:#2a2433;border-radius:1px"></div><div style="background:#2a2433;border-radius:1px"></div></div></div></div>
+          <div class="service-card-body">
+            <div class="service-card-name">
+              <a href="/qr-code/" style="color:inherit;text-decoration:none;font-weight:700;">QR 코드 생성 (QRCode)</a>
               <span class="service-badge live">✓ 서비스 중</span>
             </div>
             <div class="service-card-desc">URL, 텍스트, 연락처를 QR 코드로 생성합니다. 크기와 색상을 설정하고 PNG로 다운로드할 수 있습니다.</div>
@@ -360,11 +389,12 @@
             </div>
           </div>
         </div>
+
         <div class="service-card">
-          <div class="service-card-icon">🔐</div>
+          <div class="service-card-icon"><div style="width:46px;height:46px;background:#bcd4ff;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="position:relative;width:30px;height:18px;display:flex;align-items:center"><div style="width:15px;height:15px;border-radius:50%;background:transparent;border:3px solid #2a2433;box-sizing:border-box"></div><div style="position:absolute;left:13px;top:50%;transform:translateY(-50%);width:15px;height:3px;background:#2a2433;border-radius:2px"></div><div style="position:absolute;right:1px;top:50%;width:3px;height:7px;background:#2a2433;border-radius:2px"></div><div style="position:absolute;right:6px;top:50%;width:3px;height:7px;background:#2a2433;border-radius:2px"></div></div></div></div>
           <div class="service-card-body">
             <div class="service-card-name">
-              비밀번호 생성기 (PasswordGen)
+              <a href="/password-gen/" style="color:inherit;text-decoration:none;font-weight:700;">비밀번호 생성기 (PasswordGen)</a>
               <span class="service-badge live">✓ 서비스 중</span>
             </div>
             <div class="service-card-desc">안전한 난수로 비밀번호를 생성합니다. 길이, 대소문자, 숫자, 특수문자 조합을 자유롭게 설정할 수 있습니다.</div>
@@ -375,11 +405,12 @@
             </div>
           </div>
         </div>
+
         <div class="service-card">
-          <div class="service-card-icon">📐</div>
+          <div class="service-card-icon"><div style="width:46px;height:46px;background:#bcd4ff;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="font:700 16px Gowun Dodum,sans-serif;color:#2a2433;line-height:1;letter-spacing:-.5px;white-space:nowrap">↔</div></div></div>
           <div class="service-card-body">
             <div class="service-card-name">
-              단위 변환기 (UnitConvert)
+              <a href="/unit-convert/" style="color:inherit;text-decoration:none;font-weight:700;">단위 변환기 (UnitConvert)</a>
               <span class="service-badge live">✓ 서비스 중</span>
             </div>
             <div class="service-card-desc">길이, 무게, 온도, 넓이, 속도를 실시간으로 변환합니다. 입력하면 전체 단위 표가 한번에 표시됩니다.</div>
@@ -391,101 +422,11 @@
           </div>
         </div>
 
-        <!-- 💻 개발자 도구 (준비 중) -->
-        <div class="service-card" style="margin-top:24px;border-top:1px solid var(--border);padding-top:24px;">
-          <div class="service-card-icon">💻</div>
-          <div class="service-card-body">
-            <div class="service-card-name" style="font-size:15px;color:var(--subtext);">개발자 도구 — 준비 중</div>
-          </div>
-        </div>
         <div class="service-card">
-          <div class="service-card-icon">📦</div>
+          <div class="service-card-icon"><div style="width:46px;height:46px;background:#bcd4ff;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="position:relative;width:30px;height:30px;background:#fffdf9;border:2.5px solid #2a2433;border-radius:4px;box-sizing:border-box;overflow:hidden"><div style="position:absolute;top:0;left:0;width:100%;height:8px;background:#bcd4ff;border-bottom:2.5px solid #2a2433"></div><div style="position:absolute;top:13px;left:4px;width:4px;height:4px;background:#2a2433;border-radius:1px"></div><div style="position:absolute;top:13px;left:13px;width:4px;height:4px;background:rgba(42,36,51,.3);border-radius:1px"></div><div style="position:absolute;top:13px;left:22px;width:4px;height:4px;background:rgba(42,36,51,.3);border-radius:1px"></div><div style="position:absolute;top:21px;left:4px;width:4px;height:4px;background:rgba(42,36,51,.3);border-radius:1px"></div><div style="position:absolute;top:21px;left:13px;width:4px;height:4px;background:#2a2433;border-radius:1px"></div></div></div></div>
           <div class="service-card-body">
             <div class="service-card-name">
-              JSON 포맷터 (JSONFormat)
-              <span class="service-badge live">✓ 서비스 중</span>
-            </div>
-            <div class="service-card-desc">JSON을 보기 쭐게 정렬하거나 압축합니다. 유효성 검사와 오류 위치 표시 기능을 지원합니다.</div>
-            <div class="service-card-tags">
-              <span class="service-tag">JSON 정렬/압축</span>
-              <span class="service-tag">유효성 검사</span>
-              <span class="service-tag">오류 위치 표시</span>
-            </div>
-          </div>
-        </div>
-        <div class="service-card">
-          <div class="service-card-icon">🔍</div>
-          <div class="service-card-body">
-            <div class="service-card-name">
-              정규식 테스터 (RegexTest)
-              <span class="service-badge live">✓ 서비스 중</span>
-            </div>
-            <div class="service-card-desc">정규식을 입력하면 테스트 텍스트에서 매칭 영역을 실시간으로 하이라이트합니다.</div>
-            <div class="service-card-tags">
-              <span class="service-tag">실시간 매칭</span>
-              <span class="service-tag">플래그 지원</span>
-              <span class="service-tag">프리셋 제공</span>
-            </div>
-          </div>
-        </div>
-        <div class="service-card">
-          <div class="service-card-icon">🔠</div>
-          <div class="service-card-body">
-            <div class="service-card-name">
-              Base64 변환 (Base64Tool)
-              <span class="service-badge live">✓ 서비스 중</span>
-            </div>
-            <div class="service-card-desc">텍스트 또는 이미지를 Base64로 인코딩하거나 디코딩합니다. data URI 형식으로 미리보기도 지원합니다.</div>
-            <div class="service-card-tags">
-              <span class="service-tag">인코딩/디코딩</span>
-              <span class="service-tag">이미지 변환</span>
-              <span class="service-tag">data URI</span>
-            </div>
-          </div>
-        </div>
-        <div class="service-card">
-          <div class="service-card-icon">🔑</div>
-          <div class="service-card-body">
-            <div class="service-card-name">
-              해시 생성기 (HashGen)
-              <span class="service-badge live">✓ 서비스 중</span>
-            </div>
-            <div class="service-card-desc">텍스트와 파일의 MD5, SHA-1, SHA-256, SHA-512 해시값을 즉시 생성합니다. 파일 무결성 검증에 활용하세요.</div>
-            <div class="service-card-tags">
-              <span class="service-tag">MD5 / SHA</span>
-              <span class="service-tag">파일 해시</span>
-              <span class="service-tag">무결성 검증</span>
-            </div>
-          </div>
-        </div>
-        <div class="service-card">
-          <div class="service-card-icon">🔄</div>
-          <div class="service-card-body">
-            <div class="service-card-name">
-              찾아 바꾸기 (FindReplace)
-              <span class="service-badge live">✓ 서비스 중</span>
-            </div>
-            <div class="service-card-desc">텍스트에서 단어를 찾아 일괄 치환합니다. 정규식 모드와 개인정보 마스킹 프리셋 6개 제공.</div>
-            <div class="service-card-tags">
-              <span class="service-tag">정규식 모드</span>
-              <span class="service-tag">마스킹 프리셋</span>
-              <span class="service-tag">연속 치환</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- 🕒 유틸리티 도구 추가 -->
-        <div class="service-card" style="margin-top:24px;border-top:1px solid var(--border);padding-top:24px;">
-          <div class="service-card-icon">🕒</div>
-          <div class="service-card-body">
-            <div class="service-card-name" style="font-size:15px;color:var(--subtext);">유틸리티 도구 추가</div>
-          </div>
-        </div>
-        <div class="service-card">
-          <div class="service-card-icon">🗓️</div>
-          <div class="service-card-body">
-            <div class="service-card-name">
-              날짜 계산기 (DateCalc)
+              <a href="/date-calc/" style="color:inherit;text-decoration:none;font-weight:700;">날짜 계산기 (DateCalc)</a>
               <span class="service-badge live">✓ 서비스 중</span>
             </div>
             <div class="service-card-desc">D-day 계산, 날짜 차이, 만 나이/한국 나이를 한 번에 계산합니다. 오늘 날짜 자동 입력, 요일 표시 지원.</div>
@@ -496,11 +437,12 @@
             </div>
           </div>
         </div>
+
         <div class="service-card">
-          <div class="service-card-icon">🌍</div>
+          <div class="service-card-icon"><div style="width:46px;height:46px;background:#bcd4ff;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="position:relative;width:28px;height:28px;border-radius:50%;background:#fffdf9;border:2.5px solid #2a2433;box-sizing:border-box"><div style="position:absolute;left:50%;top:50%;width:2.5px;height:9px;background:#2a2433;border-radius:2px;transform-origin:bottom center;transform:translate(-50%,-100%)"></div><div style="position:absolute;left:50%;top:50%;width:2.5px;height:7px;background:#2a2433;border-radius:2px;transform-origin:bottom center;transform:translate(-50%,-100%) rotate(90deg)"></div></div></div></div>
           <div class="service-card-body">
             <div class="service-card-name">
-              세계 시계 (WorldClock)
+              <a href="/world-clock/" style="color:inherit;text-decoration:none;font-weight:700;">세계 시계 (WorldClock)</a>
               <span class="service-badge live">✓ 서비스 중</span>
             </div>
             <div class="service-card-desc">전 세계 도시 시간을 실시간으로 확인하고 시간대를 변환합니다. 내 위치 자동 감지, 100개+ 도시 지원.</div>
@@ -512,18 +454,81 @@
           </div>
         </div>
 
-        <!-- 📊 데이터 / 시각화 도구 -->
-        <div class="service-card" style="margin-top:24px;border-top:1px solid var(--border);padding-top:24px;">
-          <div class="service-card-icon">📊</div>
-          <div class="service-card-body">
-            <div class="service-card-name" style="font-size:15px;color:var(--subtext);">데이터 / 시각화 도구</div>
-          </div>
-        </div>
+      <!-- ── 개발자  F[4]=#e0c3ff ── -->
+      <div style="display:flex;align-items:center;gap:10px;margin:36px 0 10px 4px"><div style="flex-shrink:0"><div style="position:relative;width:46px;height:36px"><div style="position:absolute;left:2px;top:0;width:20px;height:10px;background:#e0c3ff;border:2.5px solid #2a2433;border-radius:6px 8px 0 0;box-sizing:border-box"></div><div style="position:absolute;left:0;bottom:0;width:46px;height:28px;background:#e0c3ff;border:2.5px solid #2a2433;border-radius:4px 7px 6px 5px;box-sizing:border-box"></div><div style="position:absolute;left:5px;bottom:19px;width:22px;height:2.5px;background:rgba(255,255,255,.55);border-radius:3px"></div></div></div><span style="font-size:15px;font-weight:700;color:var(--text)">개발자</span></div>
+
         <div class="service-card">
-          <div class="service-card-icon">📊</div>
+          <div class="service-card-icon"><div style="width:46px;height:46px;background:#e0c3ff;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="font:700 16px Gowun Dodum,sans-serif;color:#2a2433;line-height:1;letter-spacing:-.5px;white-space:nowrap">{ }</div></div></div>
           <div class="service-card-body">
             <div class="service-card-name">
-              차트 생성기 (ChartMaker)
+              <a href="/json-format/" style="color:inherit;text-decoration:none;font-weight:700;">JSON 포맷터 (JSONFormat)</a>
+              <span class="service-badge live">✓ 서비스 중</span>
+            </div>
+            <div class="service-card-desc">JSON 데이터를 들여쓰기와 함께 보기 좋게 정렬합니다. 유효성 검사, 축소, 경로 탐색 기능도 제공합니다.</div>
+            <div class="service-card-tags">
+              <span class="service-tag">JSON 포맷</span>
+              <span class="service-tag">유효성 검사</span>
+              <span class="service-tag">축소/정렬</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-card-icon"><div style="width:46px;height:46px;background:#e0c3ff;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="font:700 16px Gowun Dodum,sans-serif;color:#2a2433;line-height:1;letter-spacing:-.5px;white-space:nowrap">.*</div></div></div>
+          <div class="service-card-body">
+            <div class="service-card-name">
+              <a href="/regex-test/" style="color:inherit;text-decoration:none;font-weight:700;">정규식 테스터 (RegexTest)</a>
+              <span class="service-badge live">✓ 서비스 중</span>
+            </div>
+            <div class="service-card-desc">정규 표현식을 실시간으로 테스트합니다. 매칭 결과를 하이라이팅하고, 캡처 그룹과 플래그를 직관적으로 확인할 수 있습니다.</div>
+            <div class="service-card-tags">
+              <span class="service-tag">정규식 테스트</span>
+              <span class="service-tag">매칭 확인</span>
+              <span class="service-tag">캡처 그룹</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-card-icon"><div style="width:46px;height:46px;background:#e0c3ff;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="font:700 16px Gowun Dodum,sans-serif;color:#2a2433;line-height:1;letter-spacing:-.5px;white-space:nowrap">64</div></div></div>
+          <div class="service-card-body">
+            <div class="service-card-name">
+              <a href="/base64-tool/" style="color:inherit;text-decoration:none;font-weight:700;">Base64 변환 (Base64Tool)</a>
+              <span class="service-badge live">✓ 서비스 중</span>
+            </div>
+            <div class="service-card-desc">텍스트 또는 파일을 Base64로 인코딩하거나 디코딩합니다. URL-safe 인코딩, 이미지 Data URI 변환도 지원합니다.</div>
+            <div class="service-card-tags">
+              <span class="service-tag">Base64 인코딩</span>
+              <span class="service-tag">Base64 디코딩</span>
+              <span class="service-tag">파일 변환</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-card-icon"><div style="width:46px;height:46px;background:#e0c3ff;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="font:700 16px Gowun Dodum,sans-serif;color:#2a2433;line-height:1;letter-spacing:-.5px;white-space:nowrap">#</div></div></div>
+          <div class="service-card-body">
+            <div class="service-card-name">
+              <a href="/hash-gen/" style="color:inherit;text-decoration:none;font-weight:700;">해시 생성기 (HashGen)</a>
+              <span class="service-badge live">✓ 서비스 중</span>
+            </div>
+            <div class="service-card-desc">텍스트 또는 파일의 MD5, SHA-1, SHA-256, SHA-512 해시를 생성합니다. 파일 무결성 검증에 유용합니다.</div>
+            <div class="service-card-tags">
+              <span class="service-tag">MD5/SHA-256</span>
+              <span class="service-tag">파일 해시</span>
+              <span class="service-tag">무결성 검증</span>
+            </div>
+          </div>
+        </div>
+
+      <!-- ── 데이터·시각화  F[5]=#ffd9a8 ── -->
+      <div style="display:flex;align-items:center;gap:10px;margin:36px 0 10px 4px"><div style="flex-shrink:0"><div style="position:relative;width:46px;height:36px"><div style="position:absolute;left:2px;top:0;width:20px;height:10px;background:#ffd9a8;border:2.5px solid #2a2433;border-radius:6px 8px 0 0;box-sizing:border-box"></div><div style="position:absolute;left:0;bottom:0;width:46px;height:28px;background:#ffd9a8;border:2.5px solid #2a2433;border-radius:4px 7px 6px 5px;box-sizing:border-box"></div><div style="position:absolute;left:5px;bottom:19px;width:22px;height:2.5px;background:rgba(255,255,255,.55);border-radius:3px"></div></div></div><span style="font-size:15px;font-weight:700;color:var(--text)">데이터·시각화</span></div>
+
+        <div class="service-card">
+          <div class="service-card-icon"><div style="width:46px;height:46px;background:#ffd9a8;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="display:flex;align-items:flex-end;gap:3px;height:28px"><div style="width:6px;height:13px;background:#fffdf9;border:2px solid #2a2433;border-radius:2px 2px 0 0;box-sizing:border-box"></div><div style="width:6px;height:22px;background:#fffdf9;border:2px solid #2a2433;border-radius:2px 2px 0 0;box-sizing:border-box"></div><div style="width:6px;height:17px;background:#fffdf9;border:2px solid #2a2433;border-radius:2px 2px 0 0;box-sizing:border-box"></div></div></div></div>
+          <div class="service-card-body">
+            <div class="service-card-name">
+              <a href="/chart-maker/" style="color:inherit;text-decoration:none;font-weight:700;">차트 생성기 (ChartMaker)</a>
               <span class="service-badge live">✓ 서비스 중</span>
             </div>
             <div class="service-card-desc">막대/선형/원형/도넛/레이더/폴라 차트를 즉시 생성합니다. CSV 업로드 지원, PNG/SVG로 저장.</div>
@@ -577,9 +582,9 @@
       <table class="compare-table">
         <thead>
           <tr>
-            <th>항목</th>
+            <th>기능</th>
             <th class="th-us">BrowserKit</th>
-            <th>일반 온라인 도구</th>
+            <th>무료 온라인 도구</th>
             <th>유료 소프트웨어</th>
           </tr>
         </thead>
@@ -597,7 +602,7 @@
     <section class="cta-section">
       <h2>지금 바로 시작하세요</h2>
       <p>설치도, 회원가입도, 비용도 없습니다.<br />브라우저만 있으면 바로 사용할 수 있습니다.</p>
-      <a href="index.html" class="btn-cta">🧰 BrowserKit 시작하기</a>
+      <a href="/" class="btn-cta"><div style="width:24px;height:24px;border-radius:50%;background:#7b6cff;border:2px solid rgba(255,255,255,.7);display:flex;align-items:center;justify-content:center;color:#fff;font:700 14px Gowun Dodum,sans-serif;flex-shrink:0">B</div>BrowserKit 시작하기</a>
     </section>
 
   </div>
@@ -606,10 +611,10 @@
     <div class="container">
       <p class="footer-copy">© 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p>
       <nav class="footer-nav">
-        <a href="privacy.html">개인정보 처리방침</a>
-        <a href="terms.html">이용약관</a>
-        <a href="about.html">서비스 소개</a>
-        <a href="blog/index.html">블로그</a>
+        <a href="/privacy.html">개인정보 처리방침</a>
+        <a href="/terms.html">이용약관</a>
+        <a href="/about.html">서비스 소개</a>
+        <a href="/blog/">블로그</a>
       </nav>
     </div>
   </footer>

@@ -3,118 +3,140 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="복잡한 툴 없이 브라우저에서 바로 이미지 속 개인정보를 무료로 마스킹하는 방법을 안내합니다." />
-  <meta property="og:title" content="이미지 속 개인정보 무료로 가리는 방법 — BrowserKit" />
-  <meta property="og:description" content="복잡한 툴 없이 브라우저에서 바로 이미지 속 개인정보를 무료로 마스킹하는 방법을 안내합니다." />
+  <meta name="description" content="신분증·계약서·진단서 이미지를 공유할 때 어떤 개인정보가 숨어있는지, 왜 이미지 마스킹이 반드시 필요한지 상황별로 설명합니다." />
+  <meta property="og:title" content="이미지 속 개인정보, 어떤 위험이 있을까? 상황별 마스킹 가이드 — BrowserKit" />
+  <meta property="og:description" content="신분증·계약서·진단서 이미지를 공유할 때 어떤 개인정보가 숨어있는지, 왜 이미지 마스킹이 반드시 필요한지 상황별로 설명합니다." />
   <meta property="og:type" content="article" />
-  <title>이미지 속 개인정보 무료로 가리는 방법 — BrowserKit</title>
-  <link rel="stylesheet" href="../css/style.css" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
+  <title>이미지 속 개인정보, 어떤 위험이 있을까? 상황별 마스킹 가이드 — BrowserKit</title>
+  <link rel="stylesheet" href="/css/style.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
-  <script type="text/javascript" src="//t1.kakaocdn.net/kas/static/ba.min.js" async></script>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506"
      crossorigin="anonymous"></script>
   <style>
-    .header{padding:24px 0 16px;border-bottom:1px solid var(--border)}.header .container{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}.header-brand{display:flex;align-items:center;gap:10px;text-decoration:none}.header-brand-icon{font-size:24px}.header-brand-text{font-size:20px;font-weight:700;font-family:'Inter',sans-serif;background:linear-gradient(135deg,var(--point),var(--point-hover));-webkit-background-clip:text;-webkit-text-fill-color:transparent}.header-back{font-size:13px;color:var(--subtext);display:flex;align-items:center;gap:6px;text-decoration:none}.header-back:hover{color:var(--text)}
-    .post-wrap { max-width:720px; margin:0 auto; padding:48px 24px 80px; }
-    .post-tag { display:inline-block; font-size:12px; color:var(--point-hover); background:rgba(108,99,255,0.15); padding:3px 12px; border-radius:999px; margin-bottom:16px; }
-    .post-title { font-size:28px; font-weight:700; line-height:1.4; margin-bottom:12px; }
-    .post-date { color:var(--subtext); font-size:13px; margin-bottom:40px; padding-bottom:24px; border-bottom:1px solid var(--border); }
-    .post-body h2 { font-size:20px; font-weight:700; margin:40px 0 16px; color:var(--text); }
-    .post-body h3 { font-size:16px; font-weight:600; margin:28px 0 12px; color:var(--point-hover); }
-    .post-body p { font-size:15px; color:var(--subtext); line-height:1.9; margin-bottom:16px; }
-    .post-body ul { padding-left:20px; margin-bottom:16px; }
-    .post-body li { font-size:15px; color:var(--subtext); line-height:1.9; margin-bottom:6px; }
-    .post-highlight { background:var(--card); border-left:3px solid var(--point); border-radius:8px; padding:16px 20px; margin:24px 0; font-size:15px; color:var(--text); line-height:1.8; }
+    .header{padding:24px 0 16px;border-bottom:1px solid var(--border)}.header .container{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}.header-brand{display:flex;align-items:center;gap:10px;text-decoration:none}.header-brand-icon{font-size:24px}.header-brand-text{font-size:20px;font-weight:700;font-family:'Gowun Dodum',sans-serif;background:linear-gradient(135deg,var(--point),var(--point-hover));-webkit-background-clip:text;-webkit-text-fill-color:transparent}.header-back{font-size:13px;color:var(--subtext);display:flex;align-items:center;gap:6px;text-decoration:none}.header-back:hover{color:var(--text)}
     .post-warn { background:rgba(239,68,68,0.08); border-left:3px solid #EF4444; border-radius:8px; padding:16px 20px; margin:24px 0; font-size:15px; color:var(--text); line-height:1.8; }
     .step-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px 24px; margin:16px 0; display:flex; gap:16px; align-items:flex-start; }
-    .step-num { min-width:36px; height:36px; background:linear-gradient(135deg,var(--point),var(--point-hover)); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:700; color:white; flex-shrink:0; font-family:'Inter',sans-serif; }
+    .step-num { min-width:36px; height:36px; background:linear-gradient(135deg,var(--point),var(--point-hover)); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:700; color:white; flex-shrink:0; font-family:'Gowun Dodum',sans-serif; }
     .step-content h3 { font-size:15px; font-weight:600; margin-bottom:6px; color:var(--text); }
     .step-content p { font-size:14px; color:var(--subtext); line-height:1.7; margin:0; }
     .post-table { width:100%; border-collapse:collapse; margin:20px 0; font-size:14px; }
     .post-table th { background:var(--card); padding:12px 16px; text-align:left; font-weight:600; border:1px solid var(--border); color:var(--text); }
     .post-table td { padding:11px 16px; border:1px solid var(--border); color:var(--subtext); line-height:1.7; }
-    .post-table tr:hover td { background:rgba(108,99,255,0.04); }
+    .post-table tr:hover td { background:rgba(123,108,255,0.04); }
     .post-nav { display:flex; justify-content:space-between; margin-top:60px; padding-top:24px; border-top:1px solid var(--border); gap:12px; }
     .post-nav a { font-size:14px; color:var(--subtext); } .post-nav a:hover { color:var(--text); }
     .cta-box { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:28px; text-align:center; margin:48px 0 0; }
     .cta-box p { font-size:15px; color:var(--subtext); margin-bottom:16px; }
     .cta-btn { display:inline-block; background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border-radius:10px; padding:12px 28px; font-size:14px; font-weight:600; text-decoration:none; }
     .cta-btn:hover { transform:translateY(-2px); box-shadow:0 8px 24px var(--glow); color:white; }
-    .back-link { display:inline-flex; align-items:center; gap:6px; color:var(--subtext); font-size:14px; margin-bottom:32px; text-decoration:none; }
+    .back-link { display:flex; align-items:center; gap:6px; color:var(--subtext); font-size:14px; margin-bottom:32px; text-decoration:none; }
     .back-link:hover { color:var(--text); }
-    .adfit-wrap { text-align:center; margin:24px 0; }
-    .adfit-mo { display:none; }
     @media (max-width:640px) { .adfit-pc { display:none; } .adfit-mo { display:block; } }
   </style>
+<meta property="og:image" content="https://browserkit.online/img/og-browserkit.png" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "이미지 속 개인정보, 어떤 위험이 있을까? 상황별 마스킹 가이드",
+    "description": "신분증·계약서·진단서 이미지를 공유할 때 어떤 개인정보가 숨어있는지, 왜 이미지 마스킹이 반드시 필요한지 상황별로 설명합니다.",
+    "datePublished": "2026-06-10T00:00:00+09:00",
+    "dateModified": "2026-06-10T00:00:00+09:00",
+    "author": { "@type": "Organization", "name": "BrowserKit", "url": "https://browserkit.online" },
+    "publisher": { "@type": "Organization", "name": "BrowserKit", "url": "https://browserkit.online", "logo": { "@type": "ImageObject", "url": "https://browserkit.online/img/og-browserkit.png" } },
+    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://browserkit.online/blog/06-image-masking-guide.html" },
+    "image": "https://browserkit.online/img/og-browserkit.png"
+  }
+  </script>  <link rel="canonical" href="https://browserkit.online/blog/06-image-masking-guide.html" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://browserkit.online/img/og-browserkit.png" />
 </head>
 <body>
   <header class="header">
     <div class="container">
-      <a href="../index.html" class="header-brand"><span class="header-brand-icon">🧰</span><span class="header-brand-text">BrowserKit</span></a>
-      <a href="../index.html" class="header-back">← BrowserKit 홈으로</a>
+      <a href="/" class="header-brand"><div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Gowun Dodum,sans-serif;flex-shrink:0">B</div><span class="header-brand-text"><span style="color:var(--text)">Browser</span><span style="color:var(--point)">Kit</span></span></a>
+      <a href="/" class="header-back">← BrowserKit 홈으로</a>
     </div>
   </header>
-  <div class="post-wrap">
-    <a href="index.html" class="back-link">← 블로그 목록</a>
-    <span class="post-tag">가이드</span>
-    <h1 class="post-title">이미지 속 개인정보 무료로 가리는 방법</h1>
+  <article class="post-wrap">
+    <a href="/blog/" class="back-link">← 블로그 목록</a>
+    <span class="post-tag">개인정보 보호</span>
+    <h1 class="post-title">이미지 속 개인정보, 어떤 위험이 있을까? 상황별 마스킹 가이드</h1>
     <div class="post-date">2026년 6월 10일</div>
+    <div style="margin:0"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
     <div class="post-body">
-      <p>신분증, 계약서, 명함 등의 사진을 공유해야 할 때 개인정보를 가리고 싶지만 어떻게 해야 할지 모르는 분들이 많습니다. 포토샵 같은 전문 툴 없이도 브라우저에서 무료로 간편하게 마스킹할 수 있는 방법을 소개합니다.</p>
-      <h2>이미지 마스킹이 필요한 상황</h2>
-      <ul>
-        <li>신분증 사진을 카카오톡이나 이메일로 전송할 때</li>
-        <li>계약서를 스캔해서 공유할 때</li>
-        <li>명함 사진을 SNS에 올릴 때</li>
-        <li>의료 서류를 제출할 때</li>
-        <li>이력서에 첨부된 사진을 가릴 때</li>
-      </ul>
-      <h2>기존 방법의 문제점</h2>
-      <div class="post-warn">⚠️ 스티커나 이모지로 가리는 방법은 원본 레이어가 남아 있어 쉽게 제거될 수 있습니다. 반드시 픽셀 단위로 완전히 덮어쓰는 방식을 사용해야 합니다.</div>
+      <p>카카오톡으로 신분증 사진을 보낸 적 있으신가요? 계약서를 스캔해 이메일로 전송하거나, 진단서를 사진으로 찍어 제출한 경험도 있을 겁니다. 이런 이미지에는 우리가 생각하는 것보다 훨씬 많은 개인정보가 담겨 있습니다. 어떤 위험이 있는지, 어떤 상황에서 반드시 마스킹해야 하는지 구체적으로 살펴보겠습니다.</p>
+
+      <h2>이미지 속에 숨은 개인정보 유형</h2>
+      <p>우리가 흔히 공유하는 이미지에는 다음과 같은 개인정보가 포함될 수 있습니다.</p>
       <table class="post-table">
-        <thead><tr><th>방법</th><th>안전성</th><th>편의성</th></tr></thead>
+        <thead><tr><th>문서 유형</th><th>포함된 개인정보</th><th>유출 시 위험</th></tr></thead>
         <tbody>
-          <tr><td>스티커/이모지 덮기</td><td>❌ 위험 (레이어 제거 가능)</td><td>✓ 쉬움</td></tr>
-          <tr><td>포토샵 편집</td><td>✓ 안전</td><td>❌ 복잡</td></tr>
-          <tr><td>스마트폰 기본 편집</td><td>△ 앱에 따라 다름</td><td>✓ 쉬움</td></tr>
-          <tr><td>MaskPrivacy</td><td>✓ 안전 (로컬 처리)</td><td>✓ 쉬움</td></tr>
+          <tr><td>주민등록증 / 운전면허증</td><td>주민번호, 주소, 얼굴사진, 발급일</td><td>명의도용, 대출 사기</td></tr>
+          <tr><td>건강보험증 / 의료 서류</td><td>주민번호, 병력 정보, 가족관계</td><td>보험 사기, 개인정보 매매</td></tr>
+          <tr><td>계약서 / 동의서</td><td>이름, 주소, 서명, 계좌번호</td><td>계약 위조, 금융 피해</td></tr>
+          <tr><td>급여명세서 / 재직증명서</td><td>급여, 세금, 사번, 회사 정보</td><td>피싱, 사회공학 공격</td></tr>
+          <tr><td>명함 / 연락처</td><td>전화번호, 이메일, 부서 정보</td><td>스팸, 보이스피싱</td></tr>
+          <tr><td>택배 운송장</td><td>이름, 주소, 전화번호</td><td>주소 추적, 스토킹</td></tr>
         </tbody>
       </table>
-      <h2>MaskPrivacy로 마스킹하는 방법</h2>
-      <div class="step-card"><div class="step-num">1</div><div class="step-content"><h3>이미지 업로드</h3><p>MaskPrivacy 메인 페이지에서 이미지를 드래그하거나 클릭해서 업로드합니다. PNG, JPG, WEBP 형식을 지원합니다.</p></div></div>
-      <div class="step-card"><div class="step-num">2</div><div class="step-content"><h3>자동 탐지 확인</h3><p>OCR 엔진이 이미지를 분석해 주민번호, 전화번호, 이메일, 계좌번호를 자동으로 탐지합니다.</p></div></div>
-      <div class="step-card"><div class="step-num">3</div><div class="step-content"><h3>마스킹 방식 선택</h3><p>주민번호는 전체 가리기, 뒷자리 전체, 뒷자리 6자리 중 선택할 수 있습니다.</p></div></div>
-      <div class="step-card"><div class="step-num">4</div><div class="step-content"><h3>수동 마스킹 보완</h3><p>자동으로 탐지되지 않은 영역은 마스킹 결과 이미지에서 직접 드래그해 가릴 수 있습니다.</p></div></div>
-      <div class="step-card"><div class="step-num">5</div><div class="step-content"><h3>다운로드</h3><p>마스킹이 완료된 이미지를 PNG 파일로 다운로드합니다. 원본 이미지는 어디에도 저장되지 않습니다.</p></div></div>
-      <div class="post-highlight">💡 MaskPrivacy는 모든 처리가 브라우저 내에서만 이루어집니다. 이미지가 외부 서버로 전송되지 않아 마스킹 과정 자체도 완전히 안전합니다.</div>
+
+      <div style="margin:0"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+
+      <h2>이미지 마스킹이 꼭 필요한 7가지 상황</h2>
+
+      <div class="step-card"><div class="step-num">1</div><div class="step-content"><h3>신분증을 메신저로 전송할 때</h3><p>카카오톡, 문자 등으로 신분증 사진을 보내면 대화 서버에 이미지가 저장됩니다. 계정이 해킹되거나 기기를 분실하면 신분증 정보가 그대로 노출됩니다. 주민번호 뒷자리와 사진은 반드시 마스킹 후 전송해야 합니다.</p></div></div>
+
+      <div class="step-card"><div class="step-num">2</div><div class="step-content"><h3>계약서·동의서를 스캔해 제출할 때</h3><p>부동산 계약서나 각종 동의서에는 계좌번호, 서명, 인감 정보가 포함됩니다. 필요한 항목만 확인 가능하도록 나머지는 마스킹한 뒤 제출하는 것이 안전합니다.</p></div></div>
+
+      <div class="step-card"><div class="step-num">3</div><div class="step-content"><h3>의료 서류를 보험사·직장에 제출할 때</h3><p>진단서나 소견서에는 병명, 처방 내역, 주민번호가 모두 담겨 있습니다. 보험 청구에 필요한 부분 외에는 가리고 제출하면 불필요한 의료 정보 노출을 막을 수 있습니다.</p></div></div>
+
+      <div class="step-card"><div class="step-num">4</div><div class="step-content"><h3>택배 운송장이 담긴 사진을 SNS에 올릴 때</h3><p>상품 리뷰나 언박싱 사진을 SNS에 게시할 때 운송장이 함께 찍히는 경우가 많습니다. 이름·주소·전화번호가 그대로 공개되면 불특정 다수에게 노출됩니다.</p></div></div>
+
+      <div class="step-card"><div class="step-num">5</div><div class="step-content"><h3>재직증명서·급여명세서를 제출할 때</h3><p>대출 심사나 임대차 계약 시 소득 증빙 서류를 제출합니다. 급여액, 세금 정보, 사번 등 불필요한 항목은 마스킹 후 제출하는 것이 원칙입니다.</p></div></div>
+
+      <div class="step-card"><div class="step-num">6</div><div class="step-content"><h3>자동차 등록증·보험증권을 공유할 때</h3><p>차량번호판과 차대번호가 조합되면 차량 이력 조회가 가능합니다. 보험 관련 서류에는 주민번호도 포함되므로 필요한 부분만 보이도록 가려야 합니다.</p></div></div>
+
+      <div class="step-card"><div class="step-num">7</div><div class="step-content"><h3>스크린샷·화면 캡처를 공유할 때</h3><p>결제 내역, 포인트 잔액, 주소록 화면 등을 캡처해 공유할 때도 배경에 개인정보가 담길 수 있습니다. 공유 전 반드시 확인하고 가려야 합니다.</p></div></div>
+
+      <h2>잘못된 마스킹 방법과 그 위험성</h2>
+      <div class="post-warn">⚠️ 스티커·이모지·흰 박스로 덮는 방법은 원본 데이터가 이미지 레이어에 그대로 남아 있어, 간단한 편집 작업으로 원본이 복원될 수 있습니다.</div>
+      <table class="post-table">
+        <thead><tr><th>마스킹 방법</th><th>안전성</th><th>이유</th></tr></thead>
+        <tbody>
+          <tr><td>카카오톡 스티커 덮기</td><td>❌ 매우 위험</td><td>스티커 레이어 제거 시 원본 노출</td></tr>
+          <tr><td>PowerPoint 흰 도형 덮기</td><td>❌ 위험</td><td>도형 삭제 시 원본 텍스트 그대로 남음</td></tr>
+          <tr><td>스마트폰 드로잉 앱</td><td>△ 앱에 따라 다름</td><td>픽셀 병합 여부를 확인해야 함</td></tr>
+          <tr><td>포토샵 픽셀 편집</td><td>✓ 안전</td><td>픽셀을 직접 덮어써 원본 복원 불가</td></tr>
+          <tr><td>MaskPrivacy</td><td>✓ 안전</td><td>브라우저에서 픽셀 단위로 처리, 서버 전송 없음</td></tr>
+        </tbody>
+      </table>
+
+      <h2>상황별 마스킹 체크리스트</h2>
+      <p>이미지를 공유하기 전에 아래 항목을 반드시 확인하세요.</p>
+      <div class="post-highlight">
+        ☑ 주민번호 뒷자리가 보이지 않는가?<br />
+        ☑ 계좌번호 전체가 노출되지 않는가?<br />
+        ☑ 서명 또는 인감이 포함되어 있지 않은가?<br />
+        ☑ 이름·주소·전화번호 중 불필요한 항목은 가렸는가?<br />
+        ☑ 배경에 다른 사람의 개인정보가 찍혀 있지 않은가?<br />
+        ☑ 스티커·이모지가 아닌 픽셀 마스킹 방식을 사용했는가?
+      </div>
+
+      <p>구체적인 사용 방법(업로드 → 자동 탐지 → 마스킹 → 다운로드)은 <a href="/blog/07-maskprivacy-howto.html" style="color:var(--point-hover)">MaskPrivacy 사용법 완전 가이드</a>에서 확인할 수 있습니다.</p>
     </div>
     <div class="cta-box">
-      <p>지금 바로 이미지 속 개인정보를 무료로 마스킹해보세요.<br />설치 없이 브라우저에서 바로 사용할 수 있습니다.</p>
-      <a href="../maskprivacy/index.html" class="cta-btn">🔒 무료로 마스킹 시작하기</a>
+      <p>신분증·계약서·택배 운송장 — 공유 전에 마스킹하세요.<br />브라우저에서 바로, 서버 전송 없이 안전하게 처리됩니다.</p>
+      <a href="/maskprivacy/" class="cta-btn">🔒 무료로 마스킹 시작하기</a>
     </div>
-    <div class="adfit-wrap adfit-pc">
-      <ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-QD4pRIpdIj7i2mbt" data-ad-width="728" data-ad-height="90"></ins>
-    </div>
-    <div class="adfit-wrap adfit-mo">
-      <ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-R4xA2niTT8HgGjoO" data-ad-width="320" data-ad-height="50"></ins>
-    </div>
-    <div class="coupang-banner coupang-banner-pc">
-      <p class="coupang-notice">이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</p>
-      <script src="https://ads-partners.coupang.com/g.js"></script>
-      <script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"668","height":"100","tsource":""});</script>
-    </div>
-    <div class="coupang-banner coupang-banner-mo">
-      <p class="coupang-notice">이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</p>
-      <script src="https://ads-partners.coupang.com/g.js"></script>
-      <script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"320","height":"50","tsource":""});</script>
-    </div>
+    <div style="margin:0"><ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="9500090221"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
     <div class="post-nav">
-      <a href="05-privacy-leak-cases.html">← 이전 글: 개인정보 유출 실제 사례 모음</a>
-      <a href="07-maskprivacy-howto.html">다음 글: MaskPrivacy 사용법 완전 가이드 →</a>
+      <a href="/blog/05-privacy-leak-cases.html">← 이전 글: 개인정보 유출 실제 사례 모음</a>
+      <a href="/blog/07-maskprivacy-howto.html">다음 글: MaskPrivacy 사용법 완전 가이드 →</a>
     </div>
-  </div>
-  <footer class="footer"><div class="container"><p class="footer-copy">© 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p><nav class="footer-nav"><a href="../privacy.html">개인정보 처리방침</a><a href="../terms.html">이용약관</a><a href="../about.html">서비스 소개</a><a href="index.html">블로그</a></nav></div></footer>
+  </article>
+  <footer class="footer"><div class="container"><p class="footer-copy">© 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p><nav class="footer-nav"><a href="/privacy.html">개인정보 처리방침</a><a href="/terms.html">이용약관</a><a href="/about.html">서비스 소개</a><a href="/blog/">블로그</a></nav></div></footer>
 </body>
 </html>

@@ -8,55 +8,60 @@
   <meta property="og:description" content="카카오톡으로 신분증을 전송할 때의 위험성과 안전한 대안을 알아봅니다." />
   <meta property="og:type" content="article" />
   <title>카카오톡으로 신분증 보내도 될까? — BrowserKit</title>
-  <link rel="stylesheet" href="../css/style.css" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
+  <link rel="stylesheet" href="/css/style.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
-  <script type="text/javascript" src="//t1.kakaocdn.net/kas/static/ba.min.js" async></script>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506"
      crossorigin="anonymous"></script>
   <style>
-    .header{padding:24px 0 16px;border-bottom:1px solid var(--border)}.header .container{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}.header-brand{display:flex;align-items:center;gap:10px;text-decoration:none}.header-brand-icon{font-size:24px}.header-brand-text{font-size:20px;font-weight:700;font-family:'Inter',sans-serif;background:linear-gradient(135deg,var(--point),var(--point-hover));-webkit-background-clip:text;-webkit-text-fill-color:transparent}.header-back{font-size:13px;color:var(--subtext);display:flex;align-items:center;gap:6px;text-decoration:none}.header-back:hover{color:var(--text)}
-    .post-wrap { max-width:720px; margin:0 auto; padding:48px 24px 80px; }
-    .post-tag { display:inline-block; font-size:12px; color:var(--point-hover); background:rgba(108,99,255,0.15); padding:3px 12px; border-radius:999px; margin-bottom:16px; }
-    .post-title { font-size:28px; font-weight:700; line-height:1.4; margin-bottom:12px; }
-    .post-date { color:var(--subtext); font-size:13px; margin-bottom:40px; padding-bottom:24px; border-bottom:1px solid var(--border); }
-    .post-body h2 { font-size:20px; font-weight:700; margin:40px 0 16px; color:var(--text); }
-    .post-body h3 { font-size:16px; font-weight:600; margin:28px 0 12px; color:var(--point-hover); }
-    .post-body p { font-size:15px; color:var(--subtext); line-height:1.9; margin-bottom:16px; }
-    .post-body ul, .post-body ol { padding-left:20px; margin-bottom:16px; }
-    .post-body li { font-size:15px; color:var(--subtext); line-height:1.9; margin-bottom:6px; }
-    .post-highlight { background:var(--card); border-left:3px solid var(--point); border-radius:8px; padding:16px 20px; margin:24px 0; font-size:15px; color:var(--text); line-height:1.8; }
+    .header{padding:24px 0 16px;border-bottom:1px solid var(--border)}.header .container{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}.header-brand{display:flex;align-items:center;gap:10px;text-decoration:none}.header-brand-icon{font-size:24px}.header-brand-text{font-size:20px;font-weight:700;font-family:'Gowun Dodum',sans-serif;background:linear-gradient(135deg,var(--point),var(--point-hover));-webkit-background-clip:text;-webkit-text-fill-color:transparent}.header-back{font-size:13px;color:var(--subtext);display:flex;align-items:center;gap:6px;text-decoration:none}.header-back:hover{color:var(--text)}
     .post-warn { background:rgba(239,68,68,0.08); border-left:3px solid #EF4444; border-radius:8px; padding:16px 20px; margin:24px 0; font-size:15px; color:var(--text); line-height:1.8; }
     .post-table { width:100%; border-collapse:collapse; margin:20px 0; font-size:14px; }
     .post-table th { background:var(--card); padding:12px 16px; text-align:left; font-weight:600; border:1px solid var(--border); color:var(--text); }
     .post-table td { padding:11px 16px; border:1px solid var(--border); color:var(--subtext); line-height:1.7; }
-    .post-table tr:hover td { background:rgba(108,99,255,0.04); }
+    .post-table tr:hover td { background:rgba(123,108,255,0.04); }
     .post-nav { display:flex; justify-content:space-between; margin-top:60px; padding-top:24px; border-top:1px solid var(--border); gap:12px; }
     .post-nav a { font-size:14px; color:var(--subtext); } .post-nav a:hover { color:var(--text); }
     .cta-box { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:28px; text-align:center; margin:48px 0 0; }
     .cta-box p { font-size:15px; color:var(--subtext); margin-bottom:16px; }
     .cta-btn { display:inline-block; background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border-radius:10px; padding:12px 28px; font-size:14px; font-weight:600; text-decoration:none; }
     .cta-btn:hover { transform:translateY(-2px); box-shadow:0 8px 24px var(--glow); color:white; }
-    .back-link { display:inline-flex; align-items:center; gap:6px; color:var(--subtext); font-size:14px; margin-bottom:32px; text-decoration:none; }
+    .back-link { display:flex; align-items:center; gap:6px; color:var(--subtext); font-size:14px; margin-bottom:32px; text-decoration:none; }
     .back-link:hover { color:var(--text); }
-    .adfit-wrap { text-align:center; margin:24px 0; }
-    .adfit-mo { display:none; }
     @media (max-width:640px) { .adfit-pc { display:none; } .adfit-mo { display:block; } }
   </style>
+<meta property="og:image" content="https://browserkit.online/img/og-browserkit.png" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "카카오톡으로 신분증 보내도 될까?",
+    "description": "카카오톡으로 신분증을 전송할 때의 위험성과 안전한 대안을 알아봅니다.",
+    "datePublished": "2026-06-10T00:00:00+09:00",
+    "dateModified": "2026-06-10T00:00:00+09:00",
+    "author": { "@type": "Organization", "name": "BrowserKit", "url": "https://browserkit.online" },
+    "publisher": { "@type": "Organization", "name": "BrowserKit", "url": "https://browserkit.online", "logo": { "@type": "ImageObject", "url": "https://browserkit.online/img/og-browserkit.png" } },
+    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://browserkit.online/blog/11-kakao-id-photo.html" },
+    "image": "https://browserkit.online/img/og-browserkit.png"
+  }
+  </script>  <link rel="canonical" href="https://browserkit.online/blog/11-kakao-id-photo.html" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://browserkit.online/img/og-browserkit.png" />
 </head>
 <body>
   <header class="header">
     <div class="container">
-      <a href="../index.html" class="header-brand"><span class="header-brand-icon">🧰</span><span class="header-brand-text">BrowserKit</span></a>
-      <a href="../index.html" class="header-back">← BrowserKit 홈으로</a>
+      <a href="/" class="header-brand"><div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Gowun Dodum,sans-serif;flex-shrink:0">B</div><span class="header-brand-text"><span style="color:var(--text)">Browser</span><span style="color:var(--point)">Kit</span></span></a>
+      <a href="/" class="header-back">← BrowserKit 홈으로</a>
     </div>
   </header>
-  <div class="post-wrap">
-    <a href="index.html" class="back-link">← 블로그 목록</a>
+  <article class="post-wrap">
+    <a href="/blog/" class="back-link">← 블로그 목록</a>
     <span class="post-tag">보안</span>
     <h1 class="post-title">카카오톡으로 신분증 보내도 될까?</h1>
     <div class="post-date">2026년 6월 10일</div>
+    <div style="margin:0"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
     <div class="post-body">
       <p>카카오톡은 대한민국에서 가장 많이 쓰는 메신저입니다. 그래서 신분증 사진도 카카오톡으로 전송하는 경우가 매우 흔합니다. 하지만 카카오톡으로 신분증을 보내는 것이 과연 안전할까요?</p>
       <h2>카카오톡 신분증 전송의 위험성</h2>
@@ -69,7 +74,8 @@
       <h3>4. 삭제해도 완전히 지워지지 않습니다</h3>
       <p>카카오톡 대화에서 사진을 삭제해도 상대방 기기에 이미 저장된 사진은 삭제되지 않습니다.</p>
       <div class="post-warn">⚠️ 신분증 원본 사진을 카카오톡으로 전송하는 것은 매우 위험합니다. 반드시 주민번호 등 민감한 정보를 마스킹한 후 전송해야 합니다.</div>
-      <h2>메신저별 보안 비교</h2>
+            <div style="margin:0"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+<h2>메신저별 보안 비교</h2>
       <table class="post-table">
         <thead><tr><th>메신저</th><th>종단간 암호화</th><th>서버 저장</th><th>권장 여부</th></tr></thead>
         <tbody>
@@ -92,29 +98,14 @@
     </div>
     <div class="cta-box">
       <p>카카오톡 전송 전, 신분증 마스킹하셨나요?<br />MaskPrivacy로 30초 안에 안전하게 처리할 수 있습니다.</p>
-      <a href="../maskprivacy/index.html" class="cta-btn">🔒 무료로 마스킹 시작하기</a>
+      <a href="/maskprivacy/" class="cta-btn">🔒 무료로 마스킹 시작하기</a>
     </div>
-    <div class="adfit-wrap adfit-pc">
-      <ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-QD4pRIpdIj7i2mbt" data-ad-width="728" data-ad-height="90"></ins>
-    </div>
-    <div class="adfit-wrap adfit-mo">
-      <ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-R4xA2niTT8HgGjoO" data-ad-width="320" data-ad-height="50"></ins>
-    </div>
-    <div class="coupang-banner coupang-banner-pc">
-      <p class="coupang-notice">이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</p>
-      <script src="https://ads-partners.coupang.com/g.js"></script>
-      <script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"668","height":"100","tsource":""});</script>
-    </div>
-    <div class="coupang-banner coupang-banner-mo">
-      <p class="coupang-notice">이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</p>
-      <script src="https://ads-partners.coupang.com/g.js"></script>
-      <script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"320","height":"50","tsource":""});</script>
-    </div>
+    <div style="margin:0"><ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="9500090221"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
     <div class="post-nav">
-      <a href="10-contract-masking.html">← 이전 글: 계약서 개인정보 마스킹하는 법</a>
-      <a href="12-privacy-policy-guide.html">다음 글: 개인정보 처리방침 어떻게 만드나요? →</a>
+      <a href="/blog/10-contract-masking.html">← 이전 글: 계약서 개인정보 마스킹하는 법</a>
+      <a href="/blog/12-privacy-policy-guide.html">다음 글: 개인정보 처리방침 어떻게 만드나요? →</a>
     </div>
-  </div>
-  <footer class="footer"><div class="container"><p class="footer-copy">© 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p><nav class="footer-nav"><a href="../privacy.html">개인정보 처리방침</a><a href="../terms.html">이용약관</a><a href="../about.html">서비스 소개</a><a href="index.html">블로그</a></nav></div></footer>
+  </article>
+  <footer class="footer"><div class="container"><p class="footer-copy">© 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p><nav class="footer-nav"><a href="/privacy.html">개인정보 처리방침</a><a href="/terms.html">이용약관</a><a href="/about.html">서비스 소개</a><a href="/blog/">블로그</a></nav></div></footer>
 </body>
 </html>

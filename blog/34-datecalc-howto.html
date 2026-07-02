@@ -8,26 +8,10 @@
   <meta property="og:description" content="D-day 계산, 날짜 차이, 만 나이/한국 나이를 한 번에 계산하는 DateCalc 공식 가이드입니다." />
   <meta property="og:type" content="article" />
   <title>DateCalc 사용법 완전 가이드 — BrowserKit</title>
-  <link rel="stylesheet" href="../css/style.css" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
-  <script type="text/javascript" src="//t1.kakaocdn.net/kas/static/ba.min.js" async></script>
+  <link rel="stylesheet" href="/css/style.css" />
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506"
+     crossorigin="anonymous"></script>
   <style>
-    .header { padding:24px 0 16px; border-bottom:1px solid var(--border); }
-    .header .container { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; }
-    .header-brand { display:flex; align-items:center; gap:10px; text-decoration:none; }
-    .header-brand-icon { font-size:24px; }
-    .header-brand-text { font-size:20px; font-weight:700; font-family:'Inter',sans-serif; background:linear-gradient(135deg,var(--point),var(--point-hover)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
-    .header-back { font-size:13px; color:var(--subtext); text-decoration:none; }
-    .header-back:hover { color:var(--text); }
-    .post-wrap { max-width:720px; margin:0 auto; padding:48px 24px 80px; }
-    .post-tag { display:inline-block; font-size:12px; color:var(--point-hover); background:rgba(108,99,255,0.15); padding:3px 12px; border-radius:999px; margin-bottom:16px; }
-    .post-title { font-size:28px; font-weight:700; line-height:1.4; margin-bottom:12px; }
-    .post-date { color:var(--subtext); font-size:13px; margin-bottom:40px; padding-bottom:24px; border-bottom:1px solid var(--border); }
-    .post-body h2 { font-size:20px; font-weight:700; margin:40px 0 16px; color:var(--text); }
-    .post-body h3 { font-size:16px; font-weight:600; margin:28px 0 12px; color:var(--point-hover); }
-    .post-body p { font-size:15px; color:var(--subtext); line-height:1.9; margin-bottom:16px; }
-    .post-highlight { background:var(--card); border-left:3px solid var(--point); border-radius:8px; padding:16px 20px; margin:24px 0; font-size:15px; color:var(--text); line-height:1.8; }
     .feature-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:20px 0; }
     .feature-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px; }
     .feature-card:hover { border-color:var(--point); }
@@ -35,7 +19,7 @@
     .feature-title { font-size:14px; font-weight:600; color:var(--text); margin-bottom:6px; }
     .feature-desc { font-size:13px; color:var(--subtext); line-height:1.7; }
     .step-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px 24px; margin:16px 0; display:flex; gap:16px; align-items:flex-start; }
-    .step-num { min-width:36px; height:36px; background:linear-gradient(135deg,var(--point),var(--point-hover)); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:700; color:white; flex-shrink:0; font-family:'Inter',sans-serif; }
+    .step-num { min-width:36px; height:36px; background:linear-gradient(135deg,var(--point),var(--point-hover)); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:700; color:white; flex-shrink:0; font-family:'Gowun Dodum',sans-serif; }
     .step-content h3 { font-size:15px; font-weight:600; margin-bottom:6px; color:var(--text); }
     .step-content p { font-size:14px; color:var(--subtext); line-height:1.7; margin:0; }
 
@@ -43,25 +27,25 @@
     .demo-card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:20px 24px; margin:16px 0; }
     .demo-label { font-size:11px; font-weight:600; color:var(--subtext); letter-spacing:0.06em; text-transform:uppercase; margin-bottom:16px; }
     .demo-dday { text-align:center; padding:8px 0; }
-    .demo-dday-num { font-size:48px; font-weight:700; font-family:'Inter',sans-serif; background:linear-gradient(135deg,var(--point),var(--point-hover)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; line-height:1.1; }
+    .demo-dday-num { font-size:48px; font-weight:700; font-family:'Gowun Dodum',sans-serif; background:linear-gradient(135deg,var(--point),var(--point-hover)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; line-height:1.1; }
     .demo-dday-label { font-size:13px; color:var(--subtext); margin-top:6px; }
     .demo-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-top:14px; }
     .demo-item { background:var(--bg); border-radius:10px; padding:12px; text-align:center; }
-    .demo-item-num { font-size:20px; font-weight:700; color:var(--point-hover); font-family:'Inter',sans-serif; }
+    .demo-item-num { font-size:20px; font-weight:700; color:var(--point-hover); font-family:'Gowun Dodum',sans-serif; }
     .demo-item-label { font-size:11px; color:var(--subtext); margin-top:3px; }
 
-    .demo-age-num { font-size:56px; font-weight:700; font-family:'Inter',sans-serif; background:linear-gradient(135deg,var(--point),var(--point-hover)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; text-align:center; line-height:1; padding:8px 0; }
+    .demo-age-num { font-size:56px; font-weight:700; font-family:'Gowun Dodum',sans-serif; background:linear-gradient(135deg,var(--point),var(--point-hover)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; text-align:center; line-height:1; padding:8px 0; }
     .demo-age-label { font-size:12px; color:var(--subtext); text-align:center; margin-bottom:12px; }
     .demo-age-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; }
     .demo-age-item { background:var(--bg); border-radius:10px; padding:10px; text-align:center; }
-    .demo-age-item-num { font-size:18px; font-weight:700; color:var(--text); font-family:'Inter',sans-serif; }
+    .demo-age-item-num { font-size:18px; font-weight:700; color:var(--text); font-family:'Gowun Dodum',sans-serif; }
     .demo-age-item-label { font-size:10px; color:var(--subtext); margin-top:3px; line-height:1.4; }
 
     .demo-row-list { display:flex; flex-direction:column; gap:0; }
     .demo-row { display:flex; justify-content:space-between; align-items:center; padding:9px 0; border-bottom:1px solid var(--border); }
     .demo-row:last-child { border-bottom:none; }
     .demo-row-label { font-size:13px; color:var(--subtext); }
-    .demo-row-val { font-size:13px; font-weight:700; color:var(--point-hover); font-family:'Inter',sans-serif; }
+    .demo-row-val { font-size:13px; font-weight:700; color:var(--point-hover); font-family:'Gowun Dodum',sans-serif; }
 
     /* 탭 데모 */
     .tab-demo { display:flex; gap:4px; background:var(--card); border:1px solid var(--border); border-radius:12px; padding:4px; margin:16px 0; }
@@ -71,7 +55,7 @@
     .post-table { width:100%; border-collapse:collapse; margin:20px 0; font-size:14px; }
     .post-table th { background:var(--card); padding:12px 16px; text-align:left; font-weight:600; border:1px solid var(--border); color:var(--text); }
     .post-table td { padding:11px 16px; border:1px solid var(--border); color:var(--subtext); line-height:1.7; }
-    .post-table tr:hover td { background:rgba(108,99,255,0.04); }
+    .post-table tr:hover td { background:rgba(123,108,255,0.04); }
     .use-case-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:20px 0; }
     .use-case-card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:18px; }
     .use-case-icon { font-size:24px; margin-bottom:8px; }
@@ -84,39 +68,49 @@
     .cta-box p { font-size:15px; color:var(--subtext); margin-bottom:16px; }
     .cta-btn { display:inline-block; background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border-radius:10px; padding:12px 28px; font-size:14px; font-weight:600; text-decoration:none; }
     .cta-btn:hover { transform:translateY(-2px); box-shadow:0 8px 24px var(--glow); color:white; }
-    .adfit-wrap { text-align:center; margin:24px 0; }
-    .adfit-pc { display:block; }
-    .adfit-mo { display:none; }
-    .back-link { display:inline-flex; align-items:center; gap:6px; color:var(--subtext); font-size:14px; margin-bottom:32px; text-decoration:none; }
+    .back-link { display:flex; align-items:center; gap:6px; color:var(--subtext); font-size:14px; margin-bottom:32px; text-decoration:none; }
     .back-link:hover { color:var(--text); }
-    .coupang-banner { margin:0 auto 48px; text-align:center; overflow:hidden; }
-    .coupang-notice { font-size:11px; color:var(--subtext); margin-bottom:10px; line-height:1.6; }
-    .coupang-banner-mo { display:none; }
     @media (max-width:640px) {
       .feature-grid { grid-template-columns:1fr; }
       .use-case-grid { grid-template-columns:1fr; }
       .demo-grid { grid-template-columns:repeat(2,1fr); }
       .demo-age-grid { grid-template-columns:1fr 1fr; }
-      .adfit-pc { display:none; }
-      .adfit-mo { display:block; }
-      .coupang-banner-pc { display:none; }
-      .coupang-banner-mo { display:block; }
     }
   </style>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+<meta property="og:image" content="https://browserkit.online/img/og-browserkit.png" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "DateCalc 사용법 완전 가이드",
+    "description": "DateCalc의 모든 기능을 단계별로 설명하는 공식 사용 가이드입니다. D-day 계산, 날짜 차이, 나이 계산 방법을 알아보세요.",
+    "datePublished": "2026-06-24T00:00:00+09:00",
+    "dateModified": "2026-06-24T00:00:00+09:00",
+    "author": { "@type": "Organization", "name": "BrowserKit", "url": "https://browserkit.online" },
+    "publisher": { "@type": "Organization", "name": "BrowserKit", "url": "https://browserkit.online", "logo": { "@type": "ImageObject", "url": "https://browserkit.online/img/og-browserkit.png" } },
+    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://browserkit.online/blog/34-datecalc-howto.html" },
+    "image": "https://browserkit.online/img/og-browserkit.png"
+  }
+  </script>  <link rel="canonical" href="https://browserkit.online/blog/34-datecalc-howto.html" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://browserkit.online/img/og-browserkit.png" />
 </head>
 <body>
   <header class="header">
     <div class="container">
-      <a href="../index.html" class="header-brand"><span class="header-brand-icon">&#x1F9F0;</span><span class="header-brand-text">BrowserKit</span></a>
-      <a href="../index.html" class="header-back">&#x2190; BrowserKit 홈으로</a>
+      <a href="/" class="header-brand"><div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Gowun Dodum,sans-serif;flex-shrink:0">B</div><span class="header-brand-text"><span style="color:var(--text)">Browser</span><span style="color:var(--point)">Kit</span></span></a>
+      <a href="/" class="header-back">&#x2190; BrowserKit 홈으로</a>
     </div>
   </header>
 
-  <div class="post-wrap">
-    <a href="index.html" class="back-link">&#x2190; 블로그 목록</a>
+  <article class="post-wrap">
+    <a href="/blog/" class="back-link">&#x2190; 블로그 목록</a>
     <span class="post-tag">가이드</span>
     <h1 class="post-title">DateCalc 사용법 완전 가이드</h1>
     <div class="post-date">2026년 6월 23일</div>
+    <div style="margin:0"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
 
     <div class="post-body">
       <p>DateCalc는 D-day 계산, 날짜 차이 계산, 나이 계산을 한 번에 처리하는 무료 온라인 날짜 계산기입니다. 설치나 회원가입 없이 브라우저에서 바로 사용할 수 있으며, 만 나이와 한국 나이를 동시에 확인할 수 있습니다. 모든 계산이 브라우저 내에서만 이루어집니다.</p>
@@ -145,7 +139,8 @@
         </div>
       </div>
 
-      <h2>탭 구성</h2>
+            <div style="margin:0"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+<h2>탭 구성</h2>
       <div class="tab-demo">
         <div class="tab-demo-btn on">&#x1F3AF; D-day 계산</div>
         <div class="tab-demo-btn">&#x1F4CF; 날짜 차이</div>
@@ -325,31 +320,14 @@
     </div>
 
     <div class="cta-box">
-      <p>지금 바로 DateCalc를 사용해보세요.<br />설치도, 회원가입도, 비용도 없습니다.</p>
-      <a href="../date-calc/index.html" class="cta-btn">&#x1F4C5; 무료로 날짜 계산 시작하기</a>
+      <p>D-day 계산, 날짜 차이, 만 나이를 한 번에 확인하세요.<br />오늘 날짜가 자동 입력되어 바로 계산할 수 있습니다.</p>
+      <a href="/date-calc/" class="cta-btn">&#x1F4C5; 무료로 날짜 계산 시작하기</a>
     </div>
+    <div style="margin:0"><ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="9500090221"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
 
-    <div class="adfit-wrap adfit-pc">
-      <ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-QD4pRIpdIj7i2mbt" data-ad-width="728" data-ad-height="90"></ins>
-    </div>
-    <div class="adfit-wrap adfit-mo">
-      <ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-R4xA2niTT8HgGjoO" data-ad-width="320" data-ad-height="50"></ins>
-    </div>
-
-    <div class="coupang-banner coupang-banner-pc">
-      <p class="coupang-notice">이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</p>
-      <script src="https://ads-partners.coupang.com/g.js"></script>
-      <script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"668","height":"100","tsource":""});</script>
-    </div>
-    <div class="coupang-banner coupang-banner-mo">
-      <p class="coupang-notice">이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</p>
-      <script src="https://ads-partners.coupang.com/g.js"></script>
-      <script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"320","height":"50","tsource":""});</script>
-    </div>
-
-    <div class="post-nav">
-      <a href="33-bgremove-howto.html">&#x2190; 이전 글: BGRemove 사용법 완전 가이드</a>
-      <a href="35-worldclock-howto.html">다음 글: WorldClock 사용법 완전 가이드 &#x2192;</a>
+<div class="post-nav">
+      <a href="/blog/33-bgremove-howto.html">&#x2190; 이전 글: BGRemove 사용법 완전 가이드</a>
+      <a href="/blog/35-worldclock-howto.html">다음 글: WorldClock 사용법 완전 가이드 &#x2192;</a>
     </div>
   </div>
 
@@ -357,10 +335,10 @@
     <div class="container">
       <p class="footer-copy">&#xa9; 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p>
       <nav class="footer-nav">
-        <a href="../privacy.html">개인정보 처리방침</a>
-        <a href="../terms.html">이용약관</a>
-        <a href="../about.html">서비스 소개</a>
-        <a href="index.html">블로그</a>
+        <a href="/privacy.html">개인정보 처리방침</a>
+        <a href="/terms.html">이용약관</a>
+        <a href="/about.html">서비스 소개</a>
+        <a href="/blog/">블로그</a>
       </nav>
     </div>
   </footer>

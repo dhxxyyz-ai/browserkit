@@ -10,26 +10,16 @@
   <meta property="og:url" content="https://browserkit.online/crop-image/" />
   <meta property="og:locale" content="ko_KR" />
   <title>CropImage &#x2014; 이미지 자르기 / 회전 / 반전 도구</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
-  <script type="text/javascript" src="//t1.kakaocdn.net/kas/static/ba.min.js" async></script>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506"
+     crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="/css/style.css" />
   <style>
-    :root {
-      --bg:          #0F0F13;
-      --card:        #1A1A24;
-      --point:       #6C63FF;
-      --point-hover: #A78BFA;
-      --text:        #F0F0F5;
-      --subtext:     #8B8B9E;
-      --success:     #34D399;
-      --danger:      #F87171;
-      --border:      rgba(108, 99, 255, 0.3);
-      --glow:        rgba(108, 99, 255, 0.5);
-      --radius:      16px;
-    }
+    
     * { margin:0; padding:0; box-sizing:border-box; transition:all 0.2s ease; }
-    body { background-color:var(--bg); color:var(--text); font-family:'Pretendard','Inter',sans-serif; font-size:16px; line-height:1.6; min-height:100vh; }
+    body { color:var(--text); font-family:'Gowun Dodum',sans-serif; font-size:16px; line-height:1.6; min-height:100vh; }
     a { color:var(--point-hover); text-decoration:none; }
     a:hover { color:var(--text); }
     .container { max-width:960px; margin:0 auto; padding:0 24px; }
@@ -39,7 +29,7 @@
     .header .container { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; }
     .logo { display:flex; align-items:center; gap:10px; text-decoration:none; }
     .logo-icon { font-size:24px; }
-    .logo-text { font-size:20px; font-weight:700; font-family:'Inter',sans-serif; background:linear-gradient(135deg,var(--point),var(--point-hover)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+    .logo-text { font-size:20px; font-weight:700; font-family:'Gowun Dodum',sans-serif; background:linear-gradient(135deg,var(--point),var(--point-hover)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
     .back-link { font-size:13px; color:var(--subtext); display:flex; align-items:center; gap:6px; }
     .back-link:hover { color:var(--text); }
 
@@ -53,7 +43,7 @@
 
     /* 업로드 존 */
     .upload-zone { background:var(--card); border:2px dashed var(--border); border-radius:var(--radius); padding:48px 40px; text-align:center; cursor:pointer; margin:0 0 20px; }
-    .upload-zone:hover, .upload-zone.drag-over { border-color:var(--point); box-shadow:0 0 24px var(--glow); background:rgba(108,99,255,0.05); }
+    .upload-zone:hover, .upload-zone.drag-over { border-color:var(--point); box-shadow:0 0 24px var(--glow); background:rgba(123,108,255,0.05); }
     .upload-icon { font-size:48px; margin-bottom:16px; }
     .upload-title { font-size:18px; font-weight:600; margin-bottom:8px; }
     .upload-sub { color:var(--subtext); font-size:14px; margin-bottom:12px; }
@@ -61,9 +51,9 @@
 
     /* 탭 */
     .tab-wrap { display:flex; gap:8px; margin-bottom:20px; }
-    .tab-btn { background:var(--card); border:1px solid var(--border); border-radius:8px; padding:10px 20px; font-size:14px; font-weight:600; cursor:pointer; color:var(--subtext); font-family:'Pretendard',sans-serif; }
-    .tab-btn.active { background:rgba(108,99,255,0.15); border-color:var(--point); color:var(--point-hover); }
-    .tab-btn:hover:not(.active) { border-color:rgba(108,99,255,0.5); color:var(--text); }
+    .tab-btn { background:var(--card); border:1px solid var(--border); border-radius:8px; padding:10px 20px; font-size:14px; font-weight:600; cursor:pointer; color:var(--subtext); font-family:'Gowun Dodum',sans-serif; }
+    .tab-btn.active { background:rgba(123,108,255,0.15); border-color:var(--point); color:var(--point-hover); }
+    .tab-btn:hover:not(.active) { border-color:rgba(123,108,255,0.5); color:var(--text); }
 
     /* 편집 영역 */
     .editor-section { display:none; }
@@ -76,17 +66,17 @@
 
     /* 비율 버튼 */
     .ratio-group { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:16px; }
-    .ratio-btn { background:var(--card); border:1px solid var(--border); border-radius:8px; padding:7px 14px; font-size:13px; cursor:pointer; color:var(--subtext); font-family:'Pretendard',sans-serif; }
-    .ratio-btn.active { background:rgba(108,99,255,0.15); border-color:var(--point); color:var(--point-hover); }
-    .ratio-btn:hover:not(.active) { border-color:rgba(108,99,255,0.5); color:var(--text); }
+    .ratio-btn { background:var(--card); border:1px solid var(--border); border-radius:8px; padding:7px 14px; font-size:13px; cursor:pointer; color:var(--subtext); font-family:'Gowun Dodum',sans-serif; }
+    .ratio-btn.active { background:rgba(123,108,255,0.15); border-color:var(--point); color:var(--point-hover); }
+    .ratio-btn:hover:not(.active) { border-color:rgba(123,108,255,0.5); color:var(--text); }
 
     /* 크롭 좌표 정보 */
-    .crop-info { font-size:13px; color:var(--subtext); margin-bottom:16px; font-family:'Inter',sans-serif; background:var(--card); border:1px solid var(--border); border-radius:8px; padding:10px 14px; }
+    .crop-info { font-size:13px; color:var(--subtext); margin-bottom:16px; font-family:'Gowun Dodum',sans-serif; background:var(--card); border:1px solid var(--border); border-radius:8px; padding:10px 14px; }
 
     /* 회전/반전 버튼 그룹 */
     .transform-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:20px; }
-    .transform-btn { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:20px 16px; font-size:14px; font-weight:600; cursor:pointer; color:var(--text); font-family:'Pretendard',sans-serif; display:flex; flex-direction:column; align-items:center; gap:8px; }
-    .transform-btn:hover { border-color:var(--point); background:rgba(108,99,255,0.08); transform:translateY(-2px); }
+    .transform-btn { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:20px 16px; font-size:14px; font-weight:600; cursor:pointer; color:var(--text); font-family:'Gowun Dodum',sans-serif; display:flex; flex-direction:column; align-items:center; gap:8px; }
+    .transform-btn:hover { border-color:var(--point); background:rgba(123,108,255,0.08); transform:translateY(-2px); }
     .transform-btn .t-icon { font-size:28px; }
     .transform-btn .t-label { font-size:13px; color:var(--subtext); }
 
@@ -95,26 +85,20 @@
     .preview-box { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:16px; }
     .preview-label { font-size:13px; color:var(--subtext); margin-bottom:10px; font-weight:600; }
     .preview-box canvas { width:100%; height:auto; border-radius:8px; display:block; }
-    .preview-info { font-size:12px; color:var(--subtext); margin-top:8px; font-family:'Inter',sans-serif; }
+    .preview-info { font-size:12px; color:var(--subtext); margin-top:8px; font-family:'Gowun Dodum',sans-serif; }
 
     /* 액션 버튼 */
     .action-wrap { display:flex; justify-content:center; gap:12px; margin:0 0 48px; flex-wrap:wrap; }
-    .btn-apply { background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border:none; border-radius:12px; padding:14px 32px; font-size:15px; font-weight:600; cursor:pointer; font-family:'Pretendard',sans-serif; }
+    .btn-apply { background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border:none; border-radius:12px; padding:14px 32px; font-size:15px; font-weight:600; cursor:pointer; font-family:'Gowun Dodum',sans-serif; }
     .btn-apply:hover { transform:translateY(-2px); box-shadow:0 8px 24px var(--glow); }
     .btn-apply:disabled { opacity:0.4; cursor:default; transform:none; box-shadow:none; }
-    .btn-download { background:var(--card); color:var(--subtext); border:1px solid var(--border); border-radius:12px; padding:14px 24px; font-size:15px; cursor:pointer; font-family:'Pretendard',sans-serif; }
+    .btn-download { background:var(--card); color:var(--subtext); border:1px solid var(--border); border-radius:12px; padding:14px 24px; font-size:15px; cursor:pointer; font-family:'Gowun Dodum',sans-serif; }
     .btn-download:hover { transform:translateY(-2px); color:var(--text); border-color:var(--point); }
     .btn-download:disabled { opacity:0.4; cursor:default; transform:none; }
-    .btn-reset { background:var(--card); color:var(--subtext); border:1px solid var(--border); border-radius:12px; padding:14px 24px; font-size:15px; cursor:pointer; font-family:'Pretendard',sans-serif; }
+    .btn-reset { background:var(--card); color:var(--subtext); border:1px solid var(--border); border-radius:12px; padding:14px 24px; font-size:15px; cursor:pointer; font-family:'Gowun Dodum',sans-serif; }
     .btn-reset:hover { transform:translateY(-2px); color:var(--text); border-color:var(--point); }
 
     /* 배너 */
-    .coupang-banner { margin:0 auto 48px; text-align:center; overflow:hidden; }
-    .coupang-notice { font-size:11px; color:var(--subtext); margin-bottom:10px; line-height:1.6; }
-    .coupang-banner-mo { display:none; }
-    .adfit-wrap { text-align:center; margin:24px 0; }
-    .adfit-pc { display:block; }
-    .adfit-mo { display:none; }
 
     /* 푸터 */
     .footer { border-top:1px solid var(--border); padding:32px 0; text-align:center; }
@@ -129,22 +113,19 @@
       .upload-zone { padding:40px 20px; }
       .hero h1 { font-size:24px; }
       .tab-wrap { flex-wrap:wrap; }
-      .coupang-banner-pc { display:none; }
-      .coupang-banner-mo { display:block; }
-      .adfit-pc { display:none; }
-      .adfit-mo { display:block; }
     }
   </style>
+  <meta property="og:image" content="https://browserkit.online/img/og-browserkit.png" />
+  <link rel="canonical" href="https://browserkit.online/crop-image/" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://browserkit.online/img/og-browserkit.png" />
 </head>
 <body>
 
   <header class="header">
     <div class="container">
-      <a href="../index.html" class="logo">
-        <span class="logo-icon">&#x1F9F0;</span>
-        <span class="logo-text">BrowserKit</span>
-      </a>
-      <a href="../index.html" class="back-link">&#x2190; BrowserKit 홈으로</a>
+      <a href="/" class="header-brand"><div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Gowun Dodum,sans-serif;flex-shrink:0">B</div><span class="header-brand-text"><span style="color:var(--text)">Browser</span><span style="color:var(--point)">Kit</span></span></a>
+      <a href="/" class="header-back">&#x2190; BrowserKit 홈으로</a>
     </div>
   </header>
 
@@ -152,7 +133,7 @@
     <div class="container">
 
       <div class="hero">
-        <div class="hero-icon">&#x2702;&#xFE0F;</div>
+        <div class="hero-icon" style="height:78px;display:flex;justify-content:center;align-items:center"><div style="transform:scale(1.7);transform-origin:center"><div style="width:46px;height:46px;background:#ffd36e;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="position:relative;width:30px;height:30px"><div style="position:absolute;left:4px;top:0;width:3px;height:26px;background:#2a2433;border-radius:2px"></div><div style="position:absolute;left:0;top:4px;width:26px;height:3px;background:#2a2433;border-radius:2px"></div><div style="position:absolute;right:4px;bottom:0;width:3px;height:26px;background:#2a2433;border-radius:2px"></div><div style="position:absolute;left:0;bottom:4px;width:26px;height:3px;background:#2a2433;border-radius:2px"></div></div></div></div></div>
         <h1>CropImage</h1>
         <p>이미지 자르기, 회전, 반전을 브라우저에서 바로 처리하는 무료 도구</p>
         <div class="badges">
@@ -162,19 +143,12 @@
           <span class="badge">&#x1F4E6; 설치 불필요</span>
         </div>
       </div>
+    <div style="margin:0"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
 
-      <!-- 카카오 애드핏 -->
-      <div class="adfit-wrap adfit-pc">
-        <ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-QD4pRIpdIj7i2mbt" data-ad-width="728" data-ad-height="90"></ins>
-      </div>
-      <div class="adfit-wrap adfit-mo">
-        <ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-R4xA2niTT8HgGjoO" data-ad-width="320" data-ad-height="50"></ins>
-      </div>
-
-      <!-- 업로드 존 -->
+<!-- 업로드 존 -->
       <div class="upload-zone" id="uploadZone">
         <input type="file" id="fileInput" accept="image/*" hidden />
-        <div class="upload-icon">&#x1F5BC;&#xFE0F;</div>
+        <div class="upload-icon" style="height:64px;display:flex;justify-content:center;align-items:center"><div style="transform:scale(1.4);transform-origin:center"><div style="width:46px;height:46px;background:#ffd36e;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="position:relative;width:30px;height:30px"><div style="position:absolute;left:4px;top:0;width:3px;height:26px;background:#2a2433;border-radius:2px"></div><div style="position:absolute;left:0;top:4px;width:26px;height:3px;background:#2a2433;border-radius:2px"></div><div style="position:absolute;right:4px;bottom:0;width:3px;height:26px;background:#2a2433;border-radius:2px"></div><div style="position:absolute;left:0;bottom:4px;width:26px;height:3px;background:#2a2433;border-radius:2px"></div></div></div></div></div>
         <p class="upload-title">이미지를 드래그하여 놓으세요</p>
         <p class="upload-sub">또는 클릭하여 파일 선택 (JPG, PNG, WEBP, GIF 지원)</p>
         <p class="upload-safe">&#x2713; 파일이 서버로 전송되지 않습니다</p>
@@ -257,30 +231,17 @@
 
       </div>
 
-      <!-- 쿠팡 배너 PC -->
-      <div class="coupang-banner coupang-banner-pc">
-        <p class="coupang-notice">이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</p>
-        <script src="https://ads-partners.coupang.com/g.js"></script>
-        <script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"728","height":"120","tsource":""});</script>
-      </div>
-      <!-- 쿠팡 배너 모바일 -->
-      <div class="coupang-banner coupang-banner-mo">
-        <p class="coupang-notice">이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</p>
-        <script src="https://ads-partners.coupang.com/g.js"></script>
-        <script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"320","height":"50","tsource":""});</script>
-      </div>
-
-    </div>
+</div>
   </main>
 
   <footer class="footer">
     <div class="container">
       <p class="footer-copy">&#169; 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p>
       <nav class="footer-nav">
-        <a href="../privacy.html">개인정보 처리방침</a>
-        <a href="../terms.html">이용약관</a>
-        <a href="../about.html">서비스 소개</a>
-        <a href="../blog/index.html">블로그</a>
+        <a href="/privacy.html">개인정보 처리방침</a>
+        <a href="/terms.html">이용약관</a>
+        <a href="/about.html">서비스 소개</a>
+        <a href="/blog/">블로그</a>
       </nav>
     </div>
   </footer>
@@ -450,7 +411,7 @@
     // 선택 영역 투명하게
     ctx.clearRect(x, y, w, h);
     // 선택 테두리
-    ctx.strokeStyle = 'rgba(108,99,255,0.9)';
+    ctx.strokeStyle = 'rgba(123,108,255,0.9)';
     ctx.lineWidth   = 2;
     ctx.setLineDash([6, 3]);
     ctx.strokeRect(x, y, w, h);

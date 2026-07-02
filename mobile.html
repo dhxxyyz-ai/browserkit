@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="BrowserKit — 브라우저에서 바로 쓰는 무료 도구 모음. 서버 전송 없이 개인정보 마스킹, 이미지 편집, PDF 처리까지.">
+  <meta property="og:title" content="BrowserKit — 브라우저 기반 무료 도구 모음">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://browserkit.online/">
+  <meta name="google-adsense-account" content="ca-pub-2077977787979506">
+  <title>BrowserKit — 브라우저 기반 무료 도구 모음</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gowun Dodum:wght@300;400;700&display=swap" rel="stylesheet">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506" crossorigin="anonymous"></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { font-family: 'Gowun Dodum', sans-serif; background: #e2cdff; }
+    a { text-decoration: none; }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-thumb { background: #cdbce8; border-radius: 3px; }
+  </style>
+  <meta property="og:image" content="https://browserkit.online/img/og-browserkit.png" />
+  <link rel="canonical" href="https://browserkit.online/mobile.html" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://browserkit.online/img/og-browserkit.png" />
+</head>
+<body>
+
+<!-- 로딩 화면 -->
+<div id="bk-loading" style="position:fixed;inset:0;z-index:99999;background:radial-gradient(125% 90% at 16% 90%,#b6f0c6 0%,transparent 46%),radial-gradient(120% 90% at 86% 14%,#c7d6ff 0%,transparent 50%),radial-gradient(105% 80% at 82% 84%,#ffc9de 0%,transparent 48%),radial-gradient(90% 70% at 6% 10%,#fff0bf 0%,transparent 44%),linear-gradient(135deg,#e2cdff,#bfe7ff);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;user-select:none">
+  <div style="width:88px;height:88px;border-radius:50%;background:#7b6cff;border:3.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 52px Gowun Dodum,sans-serif;transform:rotate(-6deg);box-shadow:0 6px 0 rgba(42,36,51,.18)">B</div>
+  <div style="font:700 40px Gowun Dodum,sans-serif;letter-spacing:-.5px"><span style="color:#2a2433">Browser</span><span style="color:#7b6cff">Kit</span></div>
+  <div style="width:220px;height:2.5px;background:rgba(42,36,51,.18);border-radius:2px"></div>
+  <div style="font:400 19px Gowun Dodum,sans-serif;color:rgba(42,36,51,.72);text-align:center">브라우저에서 바로 쓰는 무료 도구 모음</div>
+  <div style="font:400 15px Gowun Dodum,sans-serif;color:rgba(42,36,51,.45)">서버 전송 없음 &nbsp;·&nbsp; 설치 불필요 &nbsp;·&nbsp; 완전 무료</div>
+  <div style="margin-top:24px;font:400 22px Gowun Dodum,sans-serif;color:rgba(42,36,51,.55);letter-spacing:3px">loading <span id="bk-dots"></span></div>
+</div>
+
+<!-- 앱 루트 -->
+<div id="bk-app" style="display:none"></div>
+
+<script>
+// ── 상수 ──────────────────────────────────────────────────────────────────────
+const BASE_URL = 'https://browserkit.online';
+const SHOW_ADSENSE = true;
+
+const TOOL_URLS = {
+  MaskPrivacy:'/maskprivacy/', MaskPDF:'/pdf-tools/', MaskFace:'/mask-face/', MaskDoc:'/mask-doc/',
+  FitImage:'/image-tools/', CropImage:'/crop-image/', WatermarkImage:'/watermark-image/', ColorPicker:'/color-picker/',
+  ImageBright:'/image-bright/', BGRemove:'/bg-remove/', PDFMerge:'/pdf-merge/', TextTools:'/text-tools/',
+  DiffChecker:'/diff-checker/', MarkdownEditor:'/markdown-editor/', FindReplace:'/find-replace/',
+  QRCode:'/qr-code/', PasswordGen:'/password-gen/', UnitConvert:'/unit-convert/', DateCalc:'/date-calc/',
+  WorldClock:'/world-clock/', JSONFormat:'/json-format/', RegexTest:'/regex-test/', Base64Tool:'/base64-tool/',
+  HashGen:'/hash-gen/', ChartMaker:'/chart-maker/'
+};
+
+const BLOG_URLS = {
+  '개인정보보호법이란? 핵심만 쉽게 정리':'/blog/01-privacy-law-intro.html',
+  '주민번호 유출되면 어떻게 되나요?':'/blog/02-rrn-leak-danger.html',
+  '신분증 사진 보낼 때 꼭 마스킹해야 하는 이유':'/blog/03-id-photo-masking.html',
+  '이력서 개인정보, 어디까지 써야 할까?':'/blog/04-resume-privacy.html',
+  '개인정보 유출 실제 사례 모음':'/blog/05-privacy-leak-cases.html',
+  '이미지 속 개인정보 무료로 가리는 방법':'/blog/06-image-masking-guide.html',
+  'MaskPrivacy 사용법 완전 가이드':'/blog/07-maskprivacy-howto.html',
+  '직장인이 꼭 알아야 할 개인정보보호법 5가지':'/blog/08-worker-privacy-law.html',
+  '병원 서류 개인정보 처리 방법':'/blog/09-hospital-privacy.html',
+  '계약서 개인정보 마스킹하는 법':'/blog/10-contract-masking.html',
+  '카카오톡으로 신분증 보내도 될까?':'/blog/11-kakao-id-photo.html',
+  '개인정보 처리방침 어떻게 만드나요?':'/blog/12-privacy-policy-guide.html',
+  '무료 개인정보 마스킹 툴 비교':'/blog/13-masking-tool-compare.html',
+  '서버 없이 개인정보 처리하는 방법':'/blog/14-local-processing.html',
+  '개인정보보호위원회 신고 방법 안내':'/blog/15-privacy-report-guide.html',
+  'MaskPDF 사용법 완전 가이드':'/blog/16-maskpdf-howto.html',
+  'FitImage 사용법 완전 가이드':'/blog/17-fitimage-howto.html',
+  'PDFMerge 사용법 완전 가이드':'/blog/18-pdfmerge-howto.html',
+  'MaskFace 사용법 완전 가이드':'/blog/19-maskface-howto.html',
+  'TextTools 사용법 완전 가이드':'/blog/20-texttools-howto.html',
+  'MaskDoc 사용법 완전 가이드':'/blog/21-maskdoc-howto.html',
+  'WatermarkImage 사용법 완전 가이드':'/blog/22-watermarkimage-howto.html',
+  'ColorPicker 사용법 완전 가이드':'/blog/23-colorpicker-howto.html',
+  'QRCode 사용법 완전 가이드':'/blog/24-qrcode-howto.html',
+  'JSONFormat 사용법 완전 가이드':'/blog/25-jsonformat-howto.html',
+  'PasswordGen 사용법 완전 가이드':'/blog/26-passwordgen-howto.html',
+  'Base64Tool 사용법 완전 가이드':'/blog/27-base64tool-howto.html',
+  'DiffChecker 사용법 완전 가이드':'/blog/28-diffchecker-howto.html',
+  'UnitConvert 사용법 완전 가이드':'/blog/29-unitconvert-howto.html',
+  'MarkdownEditor 사용법 완전 가이드':'/blog/30-markdowneditor-howto.html',
+  'ImageBright 사용법 완전 가이드':'/blog/31-imagebright-howto.html',
+  'RegexTest 사용법 완전 가이드':'/blog/32-regextest-howto.html',
+  'BGRemove 사용법 완전 가이드':'/blog/33-bgremove-howto.html',
+  'DateCalc 사용법 완전 가이드':'/blog/34-datecalc-howto.html',
+  'WorldClock 사용법 완전 가이드':'/blog/35-worldclock-howto.html',
+  'HashGen 사용법 완전 가이드':'/blog/36-hashgen-howto.html',
+  'FindReplace 사용법 완전 가이드':'/blog/37-findreplace-howto.html',
+  'ChartMaker 사용법 완전 가이드':'/blog/38-chartmaker-howto.html'
+};
+
+const INFO_URLS = {
+  '개인정보 처리방침':'/privacy.html',
+  '이용약관':'/terms.html',
+  '서비스 소개':'/about.html'
+};
+
+const PAL = {
+  wallpaper:'radial-gradient(125% 90% at 16% 90%,#b6f0c6 0%,transparent 46%),radial-gradient(120% 90% at 86% 14%,#c7d6ff 0%,transparent 50%),radial-gradient(105% 80% at 82% 84%,#ffc9de 0%,transparent 48%),radial-gradient(90% 70% at 6% 10%,#fff0bf 0%,transparent 44%),linear-gradient(135deg,#e2cdff,#bfe7ff)',
+  barBg:'#fbf6ff', ink:'#2a2433', accent:'#7b6cff',
+  folders:['#ffd36e','#ffb3c7','#a8e6cf','#bcd4ff','#e0c3ff','#ffd9a8','#c2f0e8','#ffc2d6']
+};
+
+const TOOLBOX_CATS = [
+  { label:'개인정보',      keys:['MaskPrivacy','MaskPDF','MaskFace','MaskDoc'] },
+  { label:'이미지 편집',   keys:['FitImage','CropImage','WatermarkImage','ColorPicker','ImageBright','BGRemove'] },
+  { label:'문서·텍스트',   keys:['PDFMerge','TextTools','DiffChecker','MarkdownEditor','FindReplace'] },
+  { label:'유틸리티',      keys:['QRCode','PasswordGen','UnitConvert','DateCalc','WorldClock'] },
+  { label:'개발자',        keys:['JSONFormat','RegexTest','Base64Tool','HashGen'] },
+  { label:'데이터·시각화', keys:['ChartMaker'] }
+];
+
+const SEARCH_TOOLS = [
+  {code:'MaskPrivacy',name:'개인정보 마스킹'},{code:'MaskPDF',name:'PDF 마스킹'},
+  {code:'MaskFace',name:'얼굴 블러'},{code:'MaskDoc',name:'텍스트 마스킹'},
+  {code:'FitImage',name:'이미지 변환'},{code:'CropImage',name:'이미지 자르기'},
+  {code:'WatermarkImage',name:'워터마크 추가'},{code:'ColorPicker',name:'색상 추출'},
+  {code:'ImageBright',name:'이미지 보정'},{code:'BGRemove',name:'AI 배경 제거'},
+  {code:'PDFMerge',name:'PDF 합치기'},{code:'TextTools',name:'텍스트 변환'},
+  {code:'DiffChecker',name:'텍스트 비교'},{code:'MarkdownEditor',name:'마크다운 편집기'},
+  {code:'FindReplace',name:'찾아 바꾸기'},{code:'QRCode',name:'QR 코드 생성'},
+  {code:'PasswordGen',name:'비밀번호 생성기'},{code:'UnitConvert',name:'단위 변환기'},
+  {code:'DateCalc',name:'날짜 계산기'},{code:'WorldClock',name:'세계 시간'},
+  {code:'JSONFormat',name:'JSON 포맷터'},{code:'RegexTest',name:'정규식 테스터'},
+  {code:'Base64Tool',name:'Base64 변환'},{code:'HashGen',name:'해시 생성기'},
+  {code:'ChartMaker',name:'차트 생성기'}
+];
+
+const TOOL_LABEL   = Object.fromEntries(SEARCH_TOOLS.map(t => [t.code, t.name]));
+const TOOL_CAT_IDX = {};
+TOOLBOX_CATS.forEach((cat, ci) => cat.keys.forEach(k => { TOOL_CAT_IDX[k] = ci; }));
+
+// ── 아이콘 렌더러 ─────────────────────────────────────────────────────────────
+function glyphInfo(code) {
+  const m = {
+    MaskPrivacy:'idcard', MaskPDF:'pdfmask', MaskFace:'face', MaskDoc:'redact',
+    FitImage:'resize', CropImage:'crop', WatermarkImage:'watermark', ColorPicker:'droplet',
+    PDFMerge:'merge', TextTools:'token:Aa', DiffChecker:'diff', MarkdownEditor:'token:M↓',
+    FindReplace:'search', ImageBright:'sun', BGRemove:'token:BG',
+    QRCode:'qr', PasswordGen:'key', UnitConvert:'token:↔', DateCalc:'calendar', WorldClock:'clock',
+    JSONFormat:'token:{ }', RegexTest:'token:.*', Base64Tool:'token:64', HashGen:'token:#',
+    ChartMaker:'chart'
+  };
+  const v = m[code];
+  if (!v) return { glyph:'token', token:'+' };
+  if (v.indexOf('token:') === 0) return { glyph:'token', token:v.slice(6) };
+  return { glyph:v, token:'' };
+}
+
+function toolIcon(fill, ink, glyph, token) {
+  const f = fill||'#ffd36e', k = ink||'#2a2433';
+  let inner;
+  if (glyph==='idcard') inner=`<div style="position:relative;width:34px;height:24px;background:#fffdf9;border:2.5px solid ${k};border-radius:4px;box-sizing:border-box"><div style="position:absolute;left:3px;top:3px;width:9px;height:9px;border-radius:50%;background:${f};border:2px solid ${k};box-sizing:border-box"></div><div style="position:absolute;left:15px;top:4px;width:14px;height:3px;background:${k};border-radius:2px"></div><div style="position:absolute;left:15px;top:10px;width:10px;height:2.5px;background:rgba(42,36,51,.3);border-radius:2px"></div><div style="position:absolute;left:3px;bottom:2px;width:26px;height:3.5px;background:${k};border-radius:2px"></div></div>`;
+  else if (glyph==='pdfmask') inner=`<div style="position:relative;width:26px;height:32px;background:#fffdf9;border:2.5px solid ${k};border-radius:3px;box-sizing:border-box;overflow:hidden"><div style="position:absolute;top:5px;left:0;width:100%;text-align:center;font:700 8px Gowun Dodum,sans-serif;color:${k}">PDF</div><div style="position:absolute;top:16px;left:3px;width:20px;height:4px;background:${k};border-radius:2px"></div><div style="position:absolute;top:23px;left:3px;width:13px;height:3px;background:rgba(42,36,51,.3);border-radius:2px"></div></div>`;
+  else if (glyph==='face') inner=`<div style="position:relative;width:27px;height:27px;border-radius:50%;background:#fffdf9;border:2.5px solid ${k};box-sizing:border-box;overflow:hidden"><div style="position:absolute;left:6px;top:8px;width:3px;height:3px;border-radius:50%;background:${k}"></div><div style="position:absolute;right:6px;top:8px;width:3px;height:3px;border-radius:50%;background:${k}"></div><div style="position:absolute;left:7px;bottom:5px;width:11px;height:3px;border-radius:3px;background:rgba(42,36,51,.4)"></div><div style="position:absolute;left:-3px;bottom:4px;width:34px;height:3px;background:rgba(255,255,255,.85)"></div><div style="position:absolute;left:-3px;bottom:9px;width:34px;height:3px;background:rgba(255,255,255,.7)"></div></div>`;
+  else if (glyph==='redact') inner=`<div style="position:relative;width:28px;height:32px;background:#fffdf9;border:2.5px solid ${k};border-radius:3px;box-sizing:border-box"><div style="position:absolute;top:5px;left:4px;width:18px;height:2.5px;background:rgba(42,36,51,.35);border-radius:2px"></div><div style="position:absolute;top:12px;left:4px;width:20px;height:5px;background:${k};border-radius:2px"></div><div style="position:absolute;top:21px;left:4px;width:14px;height:2.5px;background:rgba(42,36,51,.35);border-radius:2px"></div></div>`;
+  else if (glyph==='merge') inner=`<div style="position:relative;width:34px;height:32px"><div style="position:absolute;left:0;top:3px;width:20px;height:26px;background:#fffdf9;border:2.5px solid ${k};border-radius:3px;box-sizing:border-box"></div><div style="position:absolute;right:0;top:0;width:20px;height:26px;background:${f};border:2.5px solid ${k};border-radius:3px;box-sizing:border-box"></div><div style="position:absolute;right:8px;top:9px;width:4px;height:12px;background:${k};border-radius:2px"></div><div style="position:absolute;right:4px;top:13px;width:12px;height:4px;background:${k};border-radius:2px"></div></div>`;
+  else if (glyph==='diff') inner=`<div style="display:flex;gap:4px"><div style="width:15px;height:30px;background:#fffdf9;border:2.5px solid ${k};border-radius:3px;box-sizing:border-box;padding:4px 3px;display:flex;flex-direction:column;gap:3px"><div style="height:2.5px;background:rgba(42,36,51,.35);border-radius:2px"></div><div style="height:2.5px;background:${k};border-radius:2px"></div><div style="height:2.5px;background:rgba(42,36,51,.35);border-radius:2px"></div></div><div style="width:15px;height:30px;background:#fffdf9;border:2.5px solid ${k};border-radius:3px;box-sizing:border-box;padding:4px 3px;display:flex;flex-direction:column;gap:3px"><div style="height:2.5px;background:rgba(42,36,51,.35);border-radius:2px"></div><div style="height:2.5px;background:${f};border-radius:2px"></div><div style="height:2.5px;background:rgba(42,36,51,.35);border-radius:2px"></div></div></div>`;
+  else if (glyph==='search') inner=`<div style="position:relative;width:30px;height:30px"><div style="position:absolute;left:2px;top:2px;width:18px;height:18px;border-radius:50%;background:#fffdf9;border:3px solid ${k};box-sizing:border-box"></div><div style="position:absolute;right:1px;bottom:1px;width:11px;height:4px;background:${k};border-radius:3px;transform:rotate(45deg);transform-origin:right bottom"></div></div>`;
+  else if (glyph==='sun') inner=`<div style="position:relative;width:30px;height:30px;display:flex;align-items:center;justify-content:center"><div style="width:16px;height:16px;border-radius:50%;background:#fffdf9;border:2.5px solid ${k};box-sizing:border-box"></div><div style="position:absolute;top:0;left:50%;transform:translateX(-50%);width:2.5px;height:5px;background:${k};border-radius:2px"></div><div style="position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:2.5px;height:5px;background:${k};border-radius:2px"></div><div style="position:absolute;left:0;top:50%;transform:translateY(-50%);width:5px;height:2.5px;background:${k};border-radius:2px"></div><div style="position:absolute;right:0;top:50%;transform:translateY(-50%);width:5px;height:2.5px;background:${k};border-radius:2px"></div></div>`;
+  else if (glyph==='resize') inner=`<div style="position:relative;width:30px;height:30px;background:#fffdf9;border:2.5px solid ${k};border-radius:4px;box-sizing:border-box"><div style="position:absolute;left:4px;top:4px;width:9px;height:2.5px;background:${k};border-radius:2px"></div><div style="position:absolute;left:4px;top:4px;width:2.5px;height:9px;background:${k};border-radius:2px"></div><div style="position:absolute;right:4px;bottom:4px;width:9px;height:2.5px;background:${k};border-radius:2px"></div><div style="position:absolute;right:4px;bottom:4px;width:2.5px;height:9px;background:${k};border-radius:2px"></div></div>`;
+  else if (glyph==='crop') inner=`<div style="position:relative;width:30px;height:30px"><div style="position:absolute;left:4px;top:0;width:3px;height:26px;background:${k};border-radius:2px"></div><div style="position:absolute;left:0;top:4px;width:26px;height:3px;background:${k};border-radius:2px"></div><div style="position:absolute;right:4px;bottom:0;width:3px;height:26px;background:${k};border-radius:2px"></div><div style="position:absolute;left:0;bottom:4px;width:26px;height:3px;background:${k};border-radius:2px"></div></div>`;
+  else if (glyph==='watermark') inner=`<div style="position:relative;width:32px;height:28px;background:#fffdf9;border:2.5px solid ${k};border-radius:4px;box-sizing:border-box;overflow:hidden;display:flex;align-items:center;justify-content:center"><div style="position:absolute;left:4px;bottom:4px;width:9px;height:9px;border-radius:50%;background:${f};border:2px solid ${k};box-sizing:border-box"></div><div style="font:700 14px Gowun Dodum,sans-serif;color:rgba(42,36,51,.55)">W</div></div>`;
+  else if (glyph==='droplet') inner=`<div style="width:20px;height:20px;background:#fffdf9;border:2.5px solid ${k};box-sizing:border-box;border-radius:50% 50% 50% 0;transform:rotate(45deg)"><div style="width:7px;height:7px;border-radius:50%;background:${f};margin:4px 0 0 4px;transform:rotate(-45deg)"></div></div>`;
+  else if (glyph==='qr') inner=`<div style="display:grid;grid-template-columns:repeat(3,7px);grid-template-rows:repeat(3,7px);gap:2px"><div style="background:${k};border-radius:1px"></div><div style="background:transparent"></div><div style="background:${k};border-radius:1px"></div><div style="background:transparent"></div><div style="background:${k};border-radius:1px"></div><div style="background:transparent"></div><div style="background:${k};border-radius:1px"></div><div style="background:${k};border-radius:1px"></div><div style="background:${k};border-radius:1px"></div></div>`;
+  else if (glyph==='calendar') inner=`<div style="position:relative;width:30px;height:30px;background:#fffdf9;border:2.5px solid ${k};border-radius:4px;box-sizing:border-box;overflow:hidden"><div style="position:absolute;top:0;left:0;width:100%;height:8px;background:${f};border-bottom:2.5px solid ${k}"></div><div style="position:absolute;top:13px;left:4px;width:4px;height:4px;background:${k};border-radius:1px"></div><div style="position:absolute;top:13px;left:13px;width:4px;height:4px;background:rgba(42,36,51,.3);border-radius:1px"></div><div style="position:absolute;top:13px;left:22px;width:4px;height:4px;background:rgba(42,36,51,.3);border-radius:1px"></div><div style="position:absolute;top:21px;left:4px;width:4px;height:4px;background:rgba(42,36,51,.3);border-radius:1px"></div><div style="position:absolute;top:21px;left:13px;width:4px;height:4px;background:${k};border-radius:1px"></div></div>`;
+  else if (glyph==='clock') inner=`<div style="position:relative;width:28px;height:28px;border-radius:50%;background:#fffdf9;border:2.5px solid ${k};box-sizing:border-box"><div style="position:absolute;left:50%;top:50%;width:2.5px;height:9px;background:${k};border-radius:2px;transform-origin:bottom center;transform:translate(-50%,-100%)"></div><div style="position:absolute;left:50%;top:50%;width:2.5px;height:7px;background:${k};border-radius:2px;transform-origin:bottom center;transform:translate(-50%,-100%) rotate(90deg)"></div></div>`;
+  else if (glyph==='chart') inner=`<div style="display:flex;align-items:flex-end;gap:3px;height:28px"><div style="width:6px;height:13px;background:#fffdf9;border:2px solid ${k};border-radius:2px 2px 0 0;box-sizing:border-box"></div><div style="width:6px;height:22px;background:#fffdf9;border:2px solid ${k};border-radius:2px 2px 0 0;box-sizing:border-box"></div><div style="width:6px;height:17px;background:#fffdf9;border:2px solid ${k};border-radius:2px 2px 0 0;box-sizing:border-box"></div></div>`;
+  else if (glyph==='key') inner=`<div style="position:relative;width:30px;height:18px;display:flex;align-items:center"><div style="width:15px;height:15px;border-radius:50%;background:transparent;border:3px solid ${k};box-sizing:border-box"></div><div style="position:absolute;left:13px;top:50%;transform:translateY(-50%);width:15px;height:3px;background:${k};border-radius:2px"></div><div style="position:absolute;right:1px;top:50%;width:3px;height:7px;background:${k};border-radius:2px"></div><div style="position:absolute;right:6px;top:50%;width:3px;height:7px;background:${k};border-radius:2px"></div></div>`;
+  else inner=`<div style="font:700 16px Gowun Dodum,sans-serif;color:${k};line-height:1;letter-spacing:-.5px;white-space:nowrap">${token||'+'}</div>`;
+  return `<div style="width:46px;height:46px;background:${f};border:2.5px solid ${k};border-radius:14px 11px 13px 10px;box-sizing:border-box;display:flex;align-items:center;justify-content:center;overflow:hidden;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08)">${inner}</div>`;
+}
+
+function folderIcon(fill, ink) {
+  const f=fill||'#ffd36e', k=ink||'#2a2433';
+  return `<div style="position:relative;width:58px;height:46px"><div style="position:absolute;left:3px;top:0;width:26px;height:13px;background:${f};border:2.5px solid ${k};border-radius:7px 9px 0 0;box-sizing:border-box"></div><div style="position:absolute;left:0;bottom:0;width:58px;height:37px;background:${f};border:2.5px solid ${k};border-radius:5px 9px 8px 7px;box-sizing:border-box"></div><div style="position:absolute;left:8px;bottom:27px;width:30px;height:3px;background:rgba(255,255,255,.55);border-radius:3px"></div></div>`;
+}
+
+function computerIcon(fill, ink) {
+  const f=fill||'#bcd4ff', k=ink||'#2a2433';
+  return `<div style="position:relative;width:52px;height:48px"><div style="position:absolute;top:0;left:0;width:52px;height:37px;background:${f};border:2.5px solid ${k};border-radius:8px;box-sizing:border-box"></div><div style="position:absolute;top:5px;left:5px;width:42px;height:23px;background:rgba(255,255,255,.55);border-radius:4px"></div><div style="position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:24px;height:9px;background:${f};border:2.5px solid ${k};border-radius:0 0 5px 5px;box-sizing:border-box"></div></div>`;
+}
+
+function recycleIcon(fill, ink) {
+  const f=fill||'#a8e6cf', k=ink||'#2a2433';
+  return `<div style="position:relative;width:44px;height:48px"><div style="position:absolute;top:0;left:5px;width:34px;height:7px;background:${f};border:2.5px solid ${k};border-radius:5px;box-sizing:border-box"></div><div style="position:absolute;top:-3px;left:16px;width:12px;height:5px;background:${f};border:2.5px solid ${k};border-radius:4px 4px 0 0;box-sizing:border-box"></div><div style="position:absolute;top:9px;left:7px;width:30px;height:38px;background:${f};border:2.5px solid ${k};border-radius:3px 3px 7px 7px;box-sizing:border-box;clip-path:polygon(0 0,100% 0,86% 100%,14% 100%)"></div><div style="position:absolute;top:16px;left:16px;width:3px;height:22px;background:rgba(255,255,255,.6);border-radius:3px"></div><div style="position:absolute;top:16px;left:25px;width:3px;height:22px;background:rgba(255,255,255,.6);border-radius:3px"></div></div>`;
+}
+
+function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+// ── 상태 ──────────────────────────────────────────────────────────────────────
+const S = {};
+
+// ── 렌더 ──────────────────────────────────────────────────────────────────────
+function render() {
+  const { ink, accent, folders:F, wallpaper } = PAL;
+
+  // 도구상자 카테고리
+  const catHtml = TOOLBOX_CATS.map((cat, ci) => {
+    const items = cat.keys.map(key => {
+      const gi = glyphInfo(key);
+      const url = BASE_URL + (TOOL_URLS[key] || '/');
+      return `<a href="${url}" style="display:flex;flex-direction:column;align-items:center;gap:5px;padding:8px 4px">
+        ${toolIcon(F[ci%F.length], ink, gi.glyph, gi.token)}
+        <div style="font:400 13px Gowun Dodum,sans-serif;text-align:center;color:${ink};line-height:1.2;word-break:keep-all">${esc(TOOL_LABEL[key]||key)}</div>
+      </a>`;
+    }).join('');
+    return `<fieldset style="border:2px dashed rgba(42,36,51,.28);border-radius:13px;padding:0 8px 8px">
+      <legend style="font:700 14px Gowun Dodum,sans-serif;color:${ink};padding:0 8px;background:rgba(255,255,255,.7);border:1.5px solid ${ink};border-radius:7px">${esc(cat.label)}</legend>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:4px;margin-top:4px">${items}</div>
+    </fieldset>`;
+  }).join('');
+
+  document.getElementById('bk-app').innerHTML = `
+  <div style="min-height:100vh;background:${wallpaper};padding-bottom:120px">
+
+    <!-- 고정 헤더 -->
+    <div style="position:sticky;top:0;z-index:100;background:#fbf6ff;box-shadow:0 2px 16px rgba(42,36,51,.08)">
+      <div style="padding:10px 16px 10px;display:flex;flex-direction:column;align-items:center;gap:6px">
+        <div style="display:flex;align-items:center;gap:8px">
+          <div style="width:28px;height:28px;border-radius:50%;background:${accent};border:2.5px solid ${ink};display:flex;align-items:center;justify-content:center;color:#fff;font:700 16px Gowun Dodum,sans-serif;transform:rotate(-6deg)">B</div>
+          <div style="font:700 28px Gowun Dodum,sans-serif;letter-spacing:-.5px"><span style="color:${ink}">Browser</span><span style="color:${accent}">Kit</span></div>
+        </div>
+        <div style="font:400 14px Gowun Dodum,sans-serif;color:rgba(42,36,51,.62)">100% 무료 · 서버 전송 없음</div>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center">
+          <a href="${BASE_URL}/about.html" style="font:400 12px Gowun Dodum,sans-serif;color:rgba(42,36,51,.5);border-bottom:1px solid rgba(42,36,51,.25)">소개</a>
+          <a href="${BASE_URL}/blog/"      style="font:400 12px Gowun Dodum,sans-serif;color:rgba(42,36,51,.5);border-bottom:1px solid rgba(42,36,51,.25)">블로그</a>
+          <a href="${BASE_URL}/privacy.html" style="font:400 12px Gowun Dodum,sans-serif;color:rgba(42,36,51,.5);border-bottom:1px solid rgba(42,36,51,.25)">개인정보 처리방침</a>
+          <a href="${BASE_URL}/terms.html"   style="font:400 12px Gowun Dodum,sans-serif;color:rgba(42,36,51,.5);border-bottom:1px solid rgba(42,36,51,.25)">이용약관</a>
+        </div>
+      </div>
+      <!-- 상단 디스플레이 광고 (sticky) -->
+      <div style="padding:6px 0;text-align:center;border-top:1px solid rgba(42,36,51,.08)">
+        <ins class="adsbygoogle bk-ad-top" style="display:block;min-height:50px"
+          data-ad-client="ca-pub-2077977787979506"
+          data-ad-slot="6825825428"
+          data-ad-format="auto"
+          data-full-width-responsive="true"></ins>
+      </div>
+    </div>
+
+    <!-- 도구상자 -->
+    <fieldset id="bk-tools" style="margin:14px 12px 0;border:3px solid ${ink};border-radius:18px;background:rgba(255,255,255,.42);padding:6px 12px 12px">
+      <legend style="font:700 20px Gowun Dodum,sans-serif;color:${ink};padding:2px 12px;background:rgba(255,255,255,.78);border:2.5px solid ${ink};border-radius:10px;margin-left:10px">도구상자</legend>
+      <div style="display:flex;flex-direction:column;gap:8px;margin-top:6px">${catHtml}</div>
+    </fieldset>
+
+  </div>
+
+  <!-- 하단 고정 멀티플렉스 광고 -->
+  <div style="position:fixed;bottom:0;left:0;right:0;z-index:200;background:rgba(251,246,255,.82);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);box-shadow:0 -2px 16px rgba(42,36,51,.08)">
+    <ins class="adsbygoogle bk-ad-bottom" style="display:block;min-height:100px"
+      data-ad-client="ca-pub-2077977787979506"
+      data-ad-slot="9500090221"
+      data-ad-format="autorelaxed"></ins>
+  </div>`;
+
+  // 광고 초기화 (이미 초기화된 슬롯 제외)
+  document.querySelectorAll('.bk-ad-top, .bk-ad-bottom').forEach(el => {
+    if (!el.dataset.adsbygoogleStatus) {
+      try { (adsbygoogle = window.adsbygoogle || []).push({}); } catch(e) {}
+    }
+  });
+}
+
+// ── 로딩 → 앱 전환 ───────────────────────────────────────────────────────────
+(function () {
+  const ld = document.getElementById('bk-loading');
+  const dotsEl = document.getElementById('bk-dots');
+  const dots = ['', '.', '..', '...'];
+  let n = 0;
+  const iv = setInterval(() => { dotsEl.textContent = dots[n++ % dots.length]; }, 420);
+
+  function show() {
+    clearInterval(iv);
+    render();
+    document.getElementById('bk-app').style.display = 'block';
+    ld.style.transition = 'opacity .45s ease';
+    ld.style.opacity = '0';
+    setTimeout(() => { ld.style.display = 'none'; }, 480);
+  }
+
+  if (document.readyState === 'complete') {
+    setTimeout(show, 600);
+  } else {
+    window.addEventListener('load', () => setTimeout(show, 600));
+  }
+})();
+</script>
+</body>
+</html>

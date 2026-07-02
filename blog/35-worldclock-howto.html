@@ -8,26 +8,10 @@
   <meta property="og:description" content="전 세계 도시 시간을 실시간으로 확인하고 시간대를 변환하는 WorldClock 공식 가이드입니다." />
   <meta property="og:type" content="article" />
   <title>WorldClock 사용법 완전 가이드 — BrowserKit</title>
-  <link rel="stylesheet" href="../css/style.css" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
-  <script type="text/javascript" src="//t1.kakaocdn.net/kas/static/ba.min.js" async></script>
+  <link rel="stylesheet" href="/css/style.css" />
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506"
+     crossorigin="anonymous"></script>
   <style>
-    .header { padding:24px 0 16px; border-bottom:1px solid var(--border); }
-    .header .container { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; }
-    .header-brand { display:flex; align-items:center; gap:10px; text-decoration:none; }
-    .header-brand-icon { font-size:24px; }
-    .header-brand-text { font-size:20px; font-weight:700; font-family:'Inter',sans-serif; background:linear-gradient(135deg,var(--point),var(--point-hover)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
-    .header-back { font-size:13px; color:var(--subtext); text-decoration:none; }
-    .header-back:hover { color:var(--text); }
-    .post-wrap { max-width:720px; margin:0 auto; padding:48px 24px 80px; }
-    .post-tag { display:inline-block; font-size:12px; color:var(--point-hover); background:rgba(108,99,255,0.15); padding:3px 12px; border-radius:999px; margin-bottom:16px; }
-    .post-title { font-size:28px; font-weight:700; line-height:1.4; margin-bottom:12px; }
-    .post-date { color:var(--subtext); font-size:13px; margin-bottom:40px; padding-bottom:24px; border-bottom:1px solid var(--border); }
-    .post-body h2 { font-size:20px; font-weight:700; margin:40px 0 16px; color:var(--text); }
-    .post-body h3 { font-size:16px; font-weight:600; margin:28px 0 12px; color:var(--point-hover); }
-    .post-body p { font-size:15px; color:var(--subtext); line-height:1.9; margin-bottom:16px; }
-    .post-highlight { background:var(--card); border-left:3px solid var(--point); border-radius:8px; padding:16px 20px; margin:24px 0; font-size:15px; color:var(--text); line-height:1.8; }
     .feature-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:20px 0; }
     .feature-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px; }
     .feature-card:hover { border-color:var(--point); }
@@ -35,7 +19,7 @@
     .feature-title { font-size:14px; font-weight:600; color:var(--text); margin-bottom:6px; }
     .feature-desc { font-size:13px; color:var(--subtext); line-height:1.7; }
     .step-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px 24px; margin:16px 0; display:flex; gap:16px; align-items:flex-start; }
-    .step-num { min-width:36px; height:36px; background:linear-gradient(135deg,var(--point),var(--point-hover)); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:700; color:white; flex-shrink:0; font-family:'Inter',sans-serif; }
+    .step-num { min-width:36px; height:36px; background:linear-gradient(135deg,var(--point),var(--point-hover)); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:700; color:white; flex-shrink:0; font-family:'Gowun Dodum',sans-serif; }
     .step-content h3 { font-size:15px; font-weight:600; margin-bottom:6px; color:var(--text); }
     .step-content p { font-size:14px; color:var(--subtext); line-height:1.7; margin:0; }
 
@@ -45,29 +29,29 @@
     .tab-demo-btn.on { background:linear-gradient(135deg,var(--point),var(--point-hover)); color:#fff; }
 
     /* 내 위치 바 데모 */
-    .my-time-demo { display:flex; align-items:center; justify-content:space-between; background:rgba(108,99,255,0.08); border:1px solid var(--border); border-radius:12px; padding:12px 20px; margin:16px 0; flex-wrap:wrap; gap:8px; }
+    .my-time-demo { display:flex; align-items:center; justify-content:space-between; background:rgba(123,108,255,0.08); border:1px solid var(--border); border-radius:12px; padding:12px 20px; margin:16px 0; flex-wrap:wrap; gap:8px; }
     .my-time-demo-label { font-size:13px; color:var(--subtext); }
     .my-time-demo-tz { font-size:11px; color:var(--subtext); }
-    .my-time-demo-val { font-size:18px; font-weight:700; font-family:'Inter',sans-serif; color:var(--text); }
+    .my-time-demo-val { font-size:18px; font-weight:700; font-family:'Gowun Dodum',sans-serif; color:var(--text); }
 
     /* 시계 카드 데모 */
     .clock-grid-demo { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin:16px 0; }
     .clock-card-demo { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:16px; }
-    .clock-card-demo.home { border-color:var(--point); background:rgba(108,99,255,0.06); }
+    .clock-card-demo.home { border-color:var(--point); background:rgba(123,108,255,0.06); }
     .clock-flag-demo { font-size:20px; margin-bottom:6px; }
     .clock-city-demo { font-size:13px; font-weight:700; color:var(--text); margin-bottom:2px; }
     .clock-country-demo { font-size:11px; color:var(--subtext); margin-bottom:8px; }
-    .clock-time-demo { font-size:22px; font-weight:700; font-family:'Inter',sans-serif; color:var(--text); letter-spacing:-0.5px; margin-bottom:3px; }
+    .clock-time-demo { font-size:22px; font-weight:700; font-family:'Gowun Dodum',sans-serif; color:var(--text); letter-spacing:-0.5px; margin-bottom:3px; }
     .clock-date-demo { font-size:11px; color:var(--subtext); margin-bottom:3px; }
     .clock-offset-demo { font-size:10px; color:var(--subtext); }
-    .home-badge { font-size:10px; background:rgba(108,99,255,0.2); color:var(--point-hover); border-radius:999px; padding:1px 7px; margin-left:4px; }
+    .home-badge { font-size:10px; background:rgba(123,108,255,0.2); color:var(--point-hover); border-radius:999px; padding:1px 7px; margin-left:4px; }
 
     /* 검색 데모 */
     .search-demo { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:11px 16px; font-size:14px; color:var(--subtext); margin:16px 0; display:flex; align-items:center; justify-content:space-between; }
     .search-demo-drop { background:var(--card); border:1px solid var(--border); border-radius:12px; overflow:hidden; margin:-8px 0 16px; }
     .search-demo-item { padding:10px 16px; font-size:13px; display:flex; align-items:center; gap:10px; border-bottom:1px solid var(--border); }
     .search-demo-item:last-child { border-bottom:none; }
-    .search-demo-item.active { background:rgba(108,99,255,0.08); }
+    .search-demo-item.active { background:rgba(123,108,255,0.08); }
     .search-demo-city { font-weight:600; color:var(--text); }
     .search-demo-tz { font-size:11px; color:var(--subtext); }
 
@@ -78,13 +62,13 @@
     .conv-select-demo { background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:8px 12px; font-size:13px; color:var(--text); width:100%; }
     .conv-arrow-demo { font-size:18px; color:var(--subtext); text-align:center; padding-bottom:8px; }
     .conv-result-demo { background:var(--bg); border-radius:10px; padding:14px 16px; }
-    .conv-result-time-demo { font-size:28px; font-weight:700; font-family:'Inter',sans-serif; color:var(--point-hover); }
+    .conv-result-time-demo { font-size:28px; font-weight:700; font-family:'Gowun Dodum',sans-serif; color:var(--point-hover); }
     .conv-result-info-demo { font-size:12px; color:var(--subtext); margin-top:4px; line-height:1.6; }
 
     .post-table { width:100%; border-collapse:collapse; margin:20px 0; font-size:14px; }
     .post-table th { background:var(--card); padding:12px 16px; text-align:left; font-weight:600; border:1px solid var(--border); color:var(--text); }
     .post-table td { padding:11px 16px; border:1px solid var(--border); color:var(--subtext); line-height:1.7; }
-    .post-table tr:hover td { background:rgba(108,99,255,0.04); }
+    .post-table tr:hover td { background:rgba(123,108,255,0.04); }
     .use-case-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:20px 0; }
     .use-case-card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:18px; }
     .use-case-icon { font-size:24px; margin-bottom:8px; }
@@ -97,39 +81,49 @@
     .cta-box p { font-size:15px; color:var(--subtext); margin-bottom:16px; }
     .cta-btn { display:inline-block; background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border-radius:10px; padding:12px 28px; font-size:14px; font-weight:600; text-decoration:none; }
     .cta-btn:hover { transform:translateY(-2px); box-shadow:0 8px 24px var(--glow); color:white; }
-    .adfit-wrap { text-align:center; margin:24px 0; }
-    .adfit-pc { display:block; }
-    .adfit-mo { display:none; }
-    .back-link { display:inline-flex; align-items:center; gap:6px; color:var(--subtext); font-size:14px; margin-bottom:32px; text-decoration:none; }
+    .back-link { display:flex; align-items:center; gap:6px; color:var(--subtext); font-size:14px; margin-bottom:32px; text-decoration:none; }
     .back-link:hover { color:var(--text); }
-    .coupang-banner { margin:0 auto 48px; text-align:center; overflow:hidden; }
-    .coupang-notice { font-size:11px; color:var(--subtext); margin-bottom:10px; line-height:1.6; }
-    .coupang-banner-mo { display:none; }
     @media (max-width:640px) {
       .feature-grid { grid-template-columns:1fr; }
       .use-case-grid { grid-template-columns:1fr; }
       .clock-grid-demo { grid-template-columns:1fr 1fr; }
       .conv-row-demo { grid-template-columns:1fr; }
-      .adfit-pc { display:none; }
-      .adfit-mo { display:block; }
-      .coupang-banner-pc { display:none; }
-      .coupang-banner-mo { display:block; }
     }
   </style>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+<meta property="og:image" content="https://browserkit.online/img/og-browserkit.png" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "WorldClock 사용법 완전 가이드",
+    "description": "WorldClock의 모든 기능을 단계별로 설명하는 공식 사용 가이드입니다. 세계 시간 실시간 확인, 도시 추가/삭제, 시간대 변환 방법을 알아보세요.",
+    "datePublished": "2026-06-25T00:00:00+09:00",
+    "dateModified": "2026-06-25T00:00:00+09:00",
+    "author": { "@type": "Organization", "name": "BrowserKit", "url": "https://browserkit.online" },
+    "publisher": { "@type": "Organization", "name": "BrowserKit", "url": "https://browserkit.online", "logo": { "@type": "ImageObject", "url": "https://browserkit.online/img/og-browserkit.png" } },
+    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://browserkit.online/blog/35-worldclock-howto.html" },
+    "image": "https://browserkit.online/img/og-browserkit.png"
+  }
+  </script>  <link rel="canonical" href="https://browserkit.online/blog/35-worldclock-howto.html" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://browserkit.online/img/og-browserkit.png" />
 </head>
 <body>
   <header class="header">
     <div class="container">
-      <a href="../index.html" class="header-brand"><span class="header-brand-icon">&#x1F9F0;</span><span class="header-brand-text">BrowserKit</span></a>
-      <a href="../index.html" class="header-back">&#x2190; BrowserKit 홈으로</a>
+      <a href="/" class="header-brand"><div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Gowun Dodum,sans-serif;flex-shrink:0">B</div><span class="header-brand-text"><span style="color:var(--text)">Browser</span><span style="color:var(--point)">Kit</span></span></a>
+      <a href="/" class="header-back">&#x2190; BrowserKit 홈으로</a>
     </div>
   </header>
 
-  <div class="post-wrap">
-    <a href="index.html" class="back-link">&#x2190; 블로그 목록</a>
+  <article class="post-wrap">
+    <a href="/blog/" class="back-link">&#x2190; 블로그 목록</a>
     <span class="post-tag">가이드</span>
     <h1 class="post-title">WorldClock 사용법 완전 가이드</h1>
     <div class="post-date">2026년 6월 23일</div>
+    <div style="margin:0"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
 
     <div class="post-body">
       <p>WorldClock은 전 세계 도시 시간을 실시간으로 확인하고 시간대를 변환하는 무료 온라인 세계 시계입니다. 해외 팀과의 회의 시간 조율, 해외 여행 일정 계획, 해외 거래처 업무 시간 확인 등 다양한 상황에서 활용할 수 있습니다. 외부 API 없이 브라우저의 Intl API만으로 동작하므로 데이터가 외부 서버로 전송되지 않습니다.</p>
@@ -158,7 +152,8 @@
         </div>
       </div>
 
-      <h2>탭 구성</h2>
+            <div style="margin:0"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+<h2>탭 구성</h2>
       <div class="tab-demo">
         <div class="tab-demo-btn on">&#x1F551; 세계 시계</div>
         <div class="tab-demo-btn">&#x1F504; 시간대 변환</div>
@@ -383,31 +378,14 @@
     </div>
 
     <div class="cta-box">
-      <p>지금 바로 WorldClock을 사용해보세요.<br />설치도, 회원가입도, 비용도 없습니다.</p>
-      <a href="../world-clock/index.html" class="cta-btn">&#x1F30D; 무료로 세계 시간 확인하기</a>
+      <p>해외 팀과 회의 시간을 잡거나, 여행 중 시차를 확인할 때 사용하세요.<br />100개 이상 도시의 실시간 시계를 한 화면에 표시합니다.</p>
+      <a href="/world-clock/" class="cta-btn">&#x1F30D; 무료로 세계 시간 확인하기</a>
     </div>
+    <div style="margin:0"><ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="9500090221"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
 
-    <div class="adfit-wrap adfit-pc">
-      <ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-QD4pRIpdIj7i2mbt" data-ad-width="728" data-ad-height="90"></ins>
-    </div>
-    <div class="adfit-wrap adfit-mo">
-      <ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-R4xA2niTT8HgGjoO" data-ad-width="320" data-ad-height="50"></ins>
-    </div>
-
-    <div class="coupang-banner coupang-banner-pc">
-      <p class="coupang-notice">이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</p>
-      <script src="https://ads-partners.coupang.com/g.js"></script>
-      <script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"668","height":"100","tsource":""});</script>
-    </div>
-    <div class="coupang-banner coupang-banner-mo">
-      <p class="coupang-notice">이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</p>
-      <script src="https://ads-partners.coupang.com/g.js"></script>
-      <script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"320","height":"50","tsource":""});</script>
-    </div>
-
-    <div class="post-nav">
-      <a href="34-datecalc-howto.html">&#x2190; 이전 글: DateCalc 사용법 완전 가이드</a>
-      <a href="36-hashgen-howto.html">다음 글: HashGen 사용법 완전 가이드 &#x2192;</a>
+<div class="post-nav">
+      <a href="/blog/34-datecalc-howto.html">&#x2190; 이전 글: DateCalc 사용법 완전 가이드</a>
+      <a href="/blog/36-hashgen-howto.html">다음 글: HashGen 사용법 완전 가이드 &#x2192;</a>
     </div>
   </div>
 
@@ -415,10 +393,10 @@
     <div class="container">
       <p class="footer-copy">&#xa9; 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p>
       <nav class="footer-nav">
-        <a href="../privacy.html">개인정보 처리방침</a>
-        <a href="../terms.html">이용약관</a>
-        <a href="../about.html">서비스 소개</a>
-        <a href="index.html">블로그</a>
+        <a href="/privacy.html">개인정보 처리방침</a>
+        <a href="/terms.html">이용약관</a>
+        <a href="/about.html">서비스 소개</a>
+        <a href="/blog/">블로그</a>
       </nav>
     </div>
   </footer>

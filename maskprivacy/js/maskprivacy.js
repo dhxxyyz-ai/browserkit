@@ -596,4 +596,3 @@ function showProgress(percent, label) {
   progressWrap.style.display = 'block';
   progressFill.style.width   = `${percent}%`;
   progressLabel.textContent  = label;
-}

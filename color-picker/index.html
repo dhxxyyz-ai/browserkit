@@ -9,24 +9,10 @@
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://browserkit.online/color-picker/" />
   <title>ColorPicker — 이미지 색상 추출 도구</title>
-  <link rel="stylesheet" href="../css/style.css" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
-  <script type="text/javascript" src="//t1.kakaocdn.net/kas/static/ba.min.js" async></script>
+  <link rel="stylesheet" href="/css/style.css" />
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506"
+     crossorigin="anonymous"></script>
   <style>
-    .header{padding:24px 0 16px;border-bottom:1px solid var(--border);}
-    .header .container{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;}
-    .header-brand{display:flex;align-items:center;gap:10px;text-decoration:none;}
-    .header-brand-icon{font-size:24px;}
-    .header-brand-text{font-size:20px;font-weight:700;font-family:'Inter',sans-serif;background:linear-gradient(135deg,var(--point),var(--point-hover));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
-    .header-back{font-size:13px;color:var(--subtext);text-decoration:none;}
-    .header-back:hover{color:var(--text);}
-    .hero{text-align:center;padding:40px 0 32px;}
-    .hero-icon{font-size:48px;margin-bottom:16px;}
-    .hero-title{font-size:32px;font-weight:700;margin-bottom:12px;background:linear-gradient(135deg,var(--point),var(--point-hover));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
-    .hero-desc{color:var(--subtext);font-size:15px;margin-bottom:20px;}
-    .hero-badges{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;}
-    .hero-badge{background:var(--card);border:1px solid var(--border);border-radius:999px;padding:5px 16px;font-size:13px;color:var(--subtext);}
 
     /* 업로드 */
     .upload-zone{background:var(--card);border:2px dashed var(--border);border-radius:var(--radius);padding:48px 40px;text-align:center;cursor:pointer;margin-bottom:24px;}
@@ -56,9 +42,9 @@
     .color-format-row{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);}
     .color-format-row:last-child{border-bottom:none;}
     .color-format-name{font-size:12px;color:var(--subtext);min-width:36px;font-weight:600;}
-    .color-format-value{font-size:13px;color:var(--text);font-family:'Inter',sans-serif;flex:1;margin:0 8px;}
-    .copy-btn{background:rgba(108,99,255,0.15);border:1px solid var(--border);border-radius:6px;padding:4px 10px;font-size:11px;color:var(--point-hover);cursor:pointer;white-space:nowrap;font-family:'Pretendard',sans-serif;}
-    .copy-btn:hover{background:rgba(108,99,255,0.3);}
+    .color-format-value{font-size:13px;color:var(--text);font-family:'Gowun Dodum',sans-serif;flex:1;margin:0 8px;}
+    .copy-btn{background:rgba(123,108,255,0.15);border:1px solid var(--border);border-radius:6px;padding:4px 10px;font-size:11px;color:var(--point-hover);cursor:pointer;white-space:nowrap;font-family:'Gowun Dodum',sans-serif;}
+    .copy-btn:hover{background:rgba(123,108,255,0.3);}
     .copy-btn.copied{background:rgba(52,211,153,0.15);color:var(--success);border-color:var(--success);}
 
     /* 팔레트 */
@@ -66,13 +52,13 @@
     .palette-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
     .palette-title{font-size:14px;font-weight:600;color:var(--text);}
     .palette-actions{display:flex;gap:8px;}
-    .palette-btn{background:transparent;border:1px solid var(--border);border-radius:6px;padding:4px 10px;font-size:12px;color:var(--subtext);cursor:pointer;font-family:'Pretendard',sans-serif;}
+    .palette-btn{background:transparent;border:1px solid var(--border);border-radius:6px;padding:4px 10px;font-size:12px;color:var(--subtext);cursor:pointer;font-family:'Gowun Dodum',sans-serif;}
     .palette-btn:hover{color:var(--text);border-color:var(--point);}
     .palette-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;}
     .palette-swatch{aspect-ratio:1;border-radius:8px;cursor:pointer;border:2px solid transparent;position:relative;}
     .palette-swatch:hover{transform:scale(1.1);border-color:white;}
     .palette-swatch.selected{border-color:var(--point-hover);}
-    .palette-swatch .swatch-tooltip{position:absolute;bottom:calc(100% + 6px);left:50%;transform:translateX(-50%);background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:4px 8px;font-size:11px;color:var(--text);white-space:nowrap;font-family:'Inter',sans-serif;pointer-events:none;opacity:0;z-index:10;}
+    .palette-swatch .swatch-tooltip{position:absolute;bottom:calc(100% + 6px);left:50%;transform:translateX(-50%);background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:4px 8px;font-size:11px;color:var(--text);white-space:nowrap;font-family:'Gowun Dodum',sans-serif;pointer-events:none;opacity:0;z-index:10;}
     .palette-swatch:hover .swatch-tooltip{opacity:1;}
     .palette-empty{grid-column:span 6;text-align:center;padding:24px;color:var(--subtext);font-size:13px;}
 
@@ -84,11 +70,11 @@
     .extract-swatch:hover{transform:scale(1.05);border-color:white;}
 
     /* 하단 버튼 */
-    .action-wrap{display:flex;justify-content:center;gap:12px;margin-bottom:48px;flex-wrap:wrap;}
-    .btn-primary{background:linear-gradient(135deg,var(--point),var(--point-hover));color:white;border:none;border-radius:12px;padding:13px 28px;font-size:15px;font-weight:600;cursor:pointer;font-family:'Pretendard',sans-serif;}
+    .action-wrap{display:flex;justify-content:center;gap:12px;margin-bottom:0;flex-wrap:wrap;}
+    .btn-primary{background:linear-gradient(135deg,var(--point),var(--point-hover));color:white;border:none;border-radius:12px;padding:13px 28px;font-size:15px;font-weight:600;cursor:pointer;font-family:'Gowun Dodum',sans-serif;}
     .btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 24px var(--glow);}
     .btn-primary:disabled{opacity:0.4;cursor:default;transform:none;box-shadow:none;}
-    .btn-sub{background:var(--card);color:var(--subtext);border:1px solid var(--border);border-radius:12px;padding:13px 22px;font-size:15px;cursor:pointer;font-family:'Pretendard',sans-serif;}
+    .btn-sub{background:var(--card);color:var(--subtext);border:1px solid var(--border);border-radius:12px;padding:13px 22px;font-size:15px;cursor:pointer;font-family:'Gowun Dodum',sans-serif;}
     .btn-sub:hover{transform:translateY(-2px);color:var(--text);border-color:var(--point);}
 
     /* 토스트 */
@@ -96,11 +82,7 @@
     .toast.show{transform:translateX(-50%) translateY(0);opacity:1;}
 
     /* 배너 */
-    .coupang-banner{margin:0 auto 48px;text-align:center;overflow:hidden;}
-    .coupang-notice{font-size:11px;color:var(--subtext);margin-bottom:10px;line-height:1.6;}
-    .coupang-banner-mo{display:none;}
-    .adfit-wrap{text-align:center;margin:24px 0;}.adfit-pc{display:block;}.adfit-mo{display:none;}
-    .footer{border-top:1px solid var(--border);padding:32px 0;text-align:center;}
+    .adfit-wrap{text-align:center;margin:24px 0;}.adfit-pc{display:block;}    .footer{border-top:1px solid var(--border);padding:32px 0;text-align:center;}
     .footer-copy{color:var(--subtext);font-size:13px;margin-bottom:12px;}
     .footer-nav{display:flex;justify-content:center;gap:20px;flex-wrap:wrap;}
     .footer-nav a{color:var(--subtext);font-size:13px;text-decoration:none;}.footer-nav a:hover{color:var(--text);}
@@ -108,22 +90,26 @@
     @media(max-width:768px){
       .work-area{grid-template-columns:1fr;}
       .hero-title{font-size:24px;}
-      .adfit-pc{display:none;}.adfit-mo{display:block;}
-      .coupang-banner-pc{display:none;}.coupang-banner-mo{display:block;}
-    }
+      .adfit-pc{display:none;}      .coupang-banner-pc{display:none;}    }
   </style>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+  <meta property="og:image" content="https://browserkit.online/img/og-browserkit.png" />
+  <link rel="canonical" href="https://browserkit.online/color-picker/" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://browserkit.online/img/og-browserkit.png" />
 </head>
 <body>
   <header class="header">
     <div class="container">
-      <a href="../index.html" class="header-brand"><span class="header-brand-icon">&#x1F9F0;</span><span class="header-brand-text">BrowserKit</span></a>
-      <a href="../index.html" class="header-back">← BrowserKit 홈으로</a>
+      <a href="/" class="header-brand"><div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Gowun Dodum,sans-serif;flex-shrink:0">B</div><span class="header-brand-text"><span style="color:var(--text)">Browser</span><span style="color:var(--point)">Kit</span></span></a>
+      <a href="/" class="header-back">← BrowserKit 홈으로</a>
     </div>
   </header>
 
   <main><div class="container">
     <div class="hero">
-      <div class="hero-icon">&#x1F3A8;</div>
+      <div class="hero-icon" style="height:78px;display:flex;justify-content:center;align-items:center"><div style="transform:scale(1.7);transform-origin:center"><div style="width:46px;height:46px;background:#ffd36e;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="width:20px;height:20px;background:#fffdf9;border:2.5px solid #2a2433;box-sizing:border-box;border-radius:50% 50% 50% 0;transform:rotate(45deg)"><div style="width:7px;height:7px;border-radius:50%;background:#ffd36e;margin:4px 0 0 4px;transform:rotate(-45deg)"></div></div></div></div></div>
       <h1 class="hero-title">ColorPicker</h1>
       <p class="hero-desc">이미지를 클릭해 색상을 추출하고 HEX, RGB, HSL 코드를 바로 복사하세요</p>
       <div class="hero-badges">
@@ -132,13 +118,11 @@
         <span class="hero-badge">&#x1F4E6; 설치 불필요</span>
       </div>
     </div>
+    <div style="margin:0"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
 
-    <div class="adfit-wrap adfit-pc"><ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-QD4pRIpdIj7i2mbt" data-ad-width="728" data-ad-height="90"></ins></div>
-    <div class="adfit-wrap adfit-mo"><ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-R4xA2niTT8HgGjoO" data-ad-width="320" data-ad-height="50"></ins></div>
-
-    <!-- 업로드 존 -->
+<!-- 업로드 존 -->
     <div class="upload-zone" id="uploadZone">
-      <div class="upload-icon">&#x1F5BC;&#xFE0F;</div>
+      <div class="upload-icon" style="height:64px;display:flex;justify-content:center;align-items:center"><div style="transform:scale(1.4);transform-origin:center"><div style="width:46px;height:46px;background:#ffd36e;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="width:20px;height:20px;background:#fffdf9;border:2.5px solid #2a2433;box-sizing:border-box;border-radius:50% 50% 50% 0;transform:rotate(45deg)"><div style="width:7px;height:7px;border-radius:50%;background:#ffd36e;margin:4px 0 0 4px;transform:rotate(-45deg)"></div></div></div></div></div>
       <div class="upload-title">이미지를 업로드하세요</div>
       <div class="upload-sub">클릭하거나 파일을 여기로 드래그하세요 (JPG, PNG, WEBP)</div>
       <div class="upload-safe">&#x1F512; 파일이 서버로 전송되지 않습니다</div>
@@ -209,11 +193,12 @@
       <button class="btn-sub" id="resetBtn">↺ 처음부터</button>
     </div>
 
-    <div class="coupang-banner coupang-banner-pc"><p class="coupang-notice">이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</p><script src="https://ads-partners.coupang.com/g.js"></script><script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"728","height":"120","tsource":""});</script></div>
-    <div class="coupang-banner coupang-banner-mo"><p class="coupang-notice">이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</p><script src="https://ads-partners.coupang.com/g.js"></script><script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"320","height":"50","tsource":""});</script></div>
+    <div style="margin:32px 0 0;"></div>
+  
+    <div style="margin:0"><ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="9500090221"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
   </div></main>
 
-  <footer class="footer"><div class="container"><p class="footer-copy">© 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p><nav class="footer-nav"><a href="../privacy.html">개인정보 처리방침</a><a href="../terms.html">이용약관</a><a href="../about.html">서비스 소개</a><a href="../blog/index.html">블로그</a></nav></div></footer>
+  <footer class="footer"><div class="container"><p class="footer-copy">© 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p><nav class="footer-nav"><a href="/privacy.html">개인정보 처리방침</a><a href="/terms.html">이용약관</a><a href="/about.html">서비스 소개</a><a href="/blog/">블로그</a></nav></div></footer>
 
   <div class="toast" id="toast">✓ 클립보드에 복사되었습니다</div>
 

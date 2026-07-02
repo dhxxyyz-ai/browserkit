@@ -9,27 +9,12 @@
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://browserkit.online/password-gen/" />
   <title>PasswordGen — 비밀번호 생성기</title>
-  <link rel="stylesheet" href="../css/style.css" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
-  <script type="text/javascript" src="//t1.kakaocdn.net/kas/static/ba.min.js" async></script>
+  <link rel="stylesheet" href="/css/style.css" />
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506"
+     crossorigin="anonymous"></script>
   <style>
-    .header { padding:24px 0 16px; border-bottom:1px solid var(--border); }
-    .header .container { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; }
-    .header-brand { display:flex; align-items:center; gap:10px; text-decoration:none; }
-    .header-brand-icon { font-size:24px; }
-    .header-brand-text { font-size:20px; font-weight:700; font-family:'Inter',sans-serif; background:linear-gradient(135deg,var(--point),var(--point-hover)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
-    .header-back { font-size:13px; color:var(--subtext); text-decoration:none; }
-    .header-back:hover { color:var(--text); }
 
-    .hero { text-align:center; padding:40px 0 32px; }
-    .hero-icon { font-size:48px; margin-bottom:16px; }
-    .hero-title { font-size:32px; font-weight:700; margin-bottom:12px; background:linear-gradient(135deg,var(--point),var(--point-hover)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
-    .hero-desc { color:var(--subtext); font-size:15px; margin-bottom:20px; }
-    .hero-badges { display:flex; justify-content:center; gap:10px; flex-wrap:wrap; }
-    .hero-badge { background:var(--card); border:1px solid var(--border); border-radius:999px; padding:5px 16px; font-size:13px; color:var(--subtext); }
-
-    /* 설정 패널 */
+/* 설정 패널 */
     .setting-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:24px; margin-bottom:20px; }
     .setting-row { display:flex; align-items:center; gap:16px; margin-bottom:20px; flex-wrap:wrap; }
     .setting-row:last-child { margin-bottom:0; }
@@ -38,15 +23,15 @@
     /* 슬라이더 */
     .slider-wrap { display:flex; align-items:center; gap:12px; flex:1; }
     .range-slider { flex:1; -webkit-appearance:none; height:6px; border-radius:3px; background:var(--border); outline:none; }
-    .range-slider::-webkit-slider-thumb { -webkit-appearance:none; width:18px; height:18px; border-radius:50%; background:var(--point); cursor:pointer; box-shadow:0 0 0 3px rgba(108,99,255,0.2); }
+    .range-slider::-webkit-slider-thumb { -webkit-appearance:none; width:18px; height:18px; border-radius:50%; background:var(--point); cursor:pointer; box-shadow:0 0 0 3px rgba(123,108,255,0.2); }
     .range-slider::-moz-range-thumb { width:18px; height:18px; border-radius:50%; background:var(--point); cursor:pointer; border:none; }
-    .slider-val { font-size:16px; font-weight:700; color:var(--point-hover); font-family:'Inter',sans-serif; min-width:32px; text-align:center; }
+    .slider-val { font-size:16px; font-weight:700; color:var(--point-hover); font-family:'Gowun Dodum',sans-serif; min-width:32px; text-align:center; }
 
     /* 체크박스 옵션 */
     .check-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:10px; flex:1; }
     .check-item { display:flex; align-items:center; gap:10px; background:var(--bg); border:1px solid var(--border); border-radius:10px; padding:10px 14px; cursor:pointer; transition:all 0.2s; }
     .check-item:hover { border-color:var(--point); }
-    .check-item.active { border-color:var(--point); background:rgba(108,99,255,0.08); }
+    .check-item.active { border-color:var(--point); background:rgba(123,108,255,0.08); }
     .check-item input[type=checkbox] { display:none; }
     .check-box { width:18px; height:18px; border:2px solid var(--border); border-radius:5px; flex-shrink:0; display:flex; align-items:center; justify-content:center; transition:all 0.2s; }
     .check-item.active .check-box { background:var(--point); border-color:var(--point); }
@@ -59,13 +44,13 @@
     /* 제외 문자 */
     .exclude-input { background:var(--bg); border:1px solid var(--border); border-radius:10px; padding:10px 14px; font-size:14px; color:var(--text); font-family:'Fira Code','JetBrains Mono',monospace; flex:1; outline:none; transition:border-color 0.2s; }
     .exclude-input:focus { border-color:var(--point); }
-    .exclude-input::placeholder { color:var(--subtext); font-family:'Pretendard',sans-serif; }
+    .exclude-input::placeholder { color:var(--subtext); font-family:'Gowun Dodum',sans-serif; }
 
     /* 생성 개수 */
     .count-btns { display:flex; gap:6px; flex-wrap:wrap; }
-    .count-btn { background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:7px 14px; font-size:13px; color:var(--subtext); cursor:pointer; font-family:'Pretendard',sans-serif; transition:all 0.2s; }
+    .count-btn { background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:7px 14px; font-size:13px; color:var(--subtext); cursor:pointer; font-family:'Gowun Dodum',sans-serif; transition:all 0.2s; }
     .count-btn:hover { border-color:var(--point); color:var(--text); }
-    .count-btn.active { background:rgba(108,99,255,0.15); border-color:var(--point); color:var(--point-hover); font-weight:600; }
+    .count-btn.active { background:rgba(123,108,255,0.15); border-color:var(--point); color:var(--point-hover); font-weight:600; }
 
     /* 강도 바 */
     .strength-wrap { margin-bottom:20px; }
@@ -75,7 +60,7 @@
     .strength-fill { height:100%; border-radius:4px; transition:width 0.3s, background 0.3s; width:0%; }
 
     /* 생성 버튼 */
-    .btn-generate { background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border:none; border-radius:12px; padding:14px 32px; font-size:16px; font-weight:700; cursor:pointer; font-family:'Pretendard',sans-serif; width:100%; margin-bottom:20px; transition:all 0.2s; }
+    .btn-generate { background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border:none; border-radius:12px; padding:14px 32px; font-size:16px; font-weight:700; cursor:pointer; font-family:'Gowun Dodum',sans-serif; width:100%; margin-bottom:20px; transition:all 0.2s; }
     .btn-generate:hover { transform:translateY(-2px); box-shadow:0 8px 24px var(--glow); }
     .btn-generate:active { transform:translateY(0); }
 
@@ -87,13 +72,13 @@
     .result-list { display:flex; flex-direction:column; gap:10px; margin-bottom:48px; }
     .result-item { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:16px 20px; display:flex; align-items:center; justify-content:space-between; gap:16px; min-height:56px; }
     .result-pw { font-family:'Fira Code','JetBrains Mono',monospace; font-size:14px; color:var(--text); word-break:break-all; flex:1; letter-spacing:0.5px; line-height:1.6; min-width:0; }
-    .result-copy { background:rgba(108,99,255,0.12); border:1px solid var(--border); border-radius:8px; padding:7px 16px; font-size:12px; color:var(--point-hover); cursor:pointer; white-space:nowrap; font-family:'Pretendard',sans-serif; transition:all 0.2s; flex-shrink:0; min-width:56px; text-align:center; }
-    .result-copy:hover { background:rgba(108,99,255,0.25); }
+    .result-copy { background:rgba(123,108,255,0.12); border:1px solid var(--border); border-radius:8px; padding:7px 16px; font-size:12px; color:var(--point-hover); cursor:pointer; white-space:nowrap; font-family:'Gowun Dodum',sans-serif; transition:all 0.2s; flex-shrink:0; min-width:56px; text-align:center; }
+    .result-copy:hover { background:rgba(123,108,255,0.25); }
     .result-copy.copied { background:rgba(52,211,153,0.12); color:var(--success); border-color:var(--success); }
     .result-empty { text-align:center; padding:40px; color:var(--subtext); font-size:14px; }
 
     /* 전체 복사 */
-    .btn-copy-all { background:var(--card); border:1px solid var(--border); border-radius:10px; padding:11px 20px; font-size:14px; color:var(--subtext); cursor:pointer; font-family:'Pretendard',sans-serif; width:100%; margin-bottom:48px; transition:all 0.2s; }
+    .btn-copy-all { background:var(--card); border:1px solid var(--border); border-radius:10px; padding:11px 20px; font-size:14px; color:var(--subtext); cursor:pointer; font-family:'Gowun Dodum',sans-serif; width:100%; margin-bottom:48px; transition:all 0.2s; }
     .btn-copy-all:hover { color:var(--text); border-color:var(--point); }
     .btn-copy-all.copied { color:var(--success); border-color:var(--success); }
 
@@ -102,12 +87,6 @@
     .toast.show { transform:translateX(-50%) translateY(0); opacity:1; }
 
     /* 배너 */
-    .coupang-banner { margin:0 auto 48px; text-align:center; overflow:hidden; }
-    .coupang-notice { font-size:11px; color:var(--subtext); margin-bottom:10px; line-height:1.6; }
-    .coupang-banner-mo { display:none; }
-    .adfit-wrap { text-align:center; margin:24px 0; }
-    .adfit-pc { display:block; }
-    .adfit-mo { display:none; }
     .footer { border-top:1px solid var(--border); padding:32px 0; text-align:center; }
     .footer-copy { color:var(--subtext); font-size:13px; margin-bottom:12px; }
     .footer-nav { display:flex; justify-content:center; gap:20px; flex-wrap:wrap; }
@@ -117,29 +96,31 @@
     @media (max-width:640px) {
       .check-grid { grid-template-columns:1fr 1fr; }
       .hero-title { font-size:24px; }
-      .adfit-pc { display:none; }
-      .adfit-mo { display:block; }
-      .coupang-banner-pc { display:none; }
-      .coupang-banner-mo { display:block; }
       .setting-row { flex-direction:column; align-items:stretch; }
       .setting-label { min-width:unset; }
     }
   </style>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+  <meta property="og:image" content="https://browserkit.online/img/og-browserkit.png" />
+  <link rel="canonical" href="https://browserkit.online/password-gen/" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://browserkit.online/img/og-browserkit.png" />
 </head>
 <body>
   <header class="header">
     <div class="container">
-      <a href="../index.html" class="header-brand">
-        <span class="header-brand-icon">&#x1F9F0;</span>
-        <span class="header-brand-text">BrowserKit</span>
+      <a href="/" class="header-brand">
+        <div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Gowun Dodum,sans-serif;flex-shrink:0">B</div>
+        <span class="header-brand-text"><span style="color:var(--text)">Browser</span><span style="color:var(--point)">Kit</span></span>
       </a>
-      <a href="../index.html" class="header-back">&#x2190; BrowserKit 홈으로</a>
+      <a href="/" class="header-back">&#x2190; BrowserKit 홈으로</a>
     </div>
   </header>
 
   <main><div class="container">
     <div class="hero">
-      <div class="hero-icon">&#x1F510;</div>
+      <div class="hero-icon" style="height:78px;display:flex;justify-content:center;align-items:center"><div style="transform:scale(1.7);transform-origin:center"><div style="width:46px;height:46px;background:#ffe5a0;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="position:relative;width:30px;height:18px;display:flex;align-items:center"><div style="width:15px;height:15px;border-radius:50%;background:transparent;border:3px solid #2a2433;box-sizing:border-box"></div><div style="position:absolute;left:13px;top:50%;transform:translateY(-50%);width:15px;height:3px;background:#2a2433;border-radius:2px"></div><div style="position:absolute;right:1px;top:50%;width:3px;height:7px;background:#2a2433;border-radius:2px"></div><div style="position:absolute;right:6px;top:50%;width:3px;height:7px;background:#2a2433;border-radius:2px"></div></div></div></div></div>
       <h1 class="hero-title">PasswordGen</h1>
       <p class="hero-desc">안전한 난수로 강력한 비밀번호를 생성하세요. 조합과 길이를 자유롭게 설정하세요</p>
       <div class="hero-badges">
@@ -148,11 +129,9 @@
         <span class="hero-badge">&#x1F6E1;&#xFE0F; Crypto API 사용</span>
       </div>
     </div>
+    <div style="margin:0"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
 
-    <div class="adfit-wrap adfit-pc"><ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-QD4pRIpdIj7i2mbt" data-ad-width="728" data-ad-height="90"></ins></div>
-    <div class="adfit-wrap adfit-mo"><ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-R4xA2niTT8HgGjoO" data-ad-width="320" data-ad-height="50"></ins></div>
-
-    <!-- 설정 패널 -->
+<!-- 설정 패널 -->
     <div class="setting-card">
       <!-- 길이 -->
       <div class="setting-row">
@@ -228,26 +207,17 @@
     <!-- 전체 복사 -->
     <button class="btn-copy-all" id="copyAllBtn" style="display:none;">&#x1F4CB; 전체 복사</button>
 
-    <div class="coupang-banner coupang-banner-pc">
-      <p class="coupang-notice">이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</p>
-      <script src="https://ads-partners.coupang.com/g.js"></script>
-      <script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"728","height":"120","tsource":""});</script>
-    </div>
-    <div class="coupang-banner coupang-banner-mo">
-      <p class="coupang-notice">이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</p>
-      <script src="https://ads-partners.coupang.com/g.js"></script>
-      <script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"320","height":"50","tsource":""});</script>
-    </div>
+<div style="margin:0"><ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="9500090221"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
   </div></main>
 
   <footer class="footer">
     <div class="container">
       <p class="footer-copy">&#xa9; 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p>
       <nav class="footer-nav">
-        <a href="../privacy.html">개인정보 처리방침</a>
-        <a href="../terms.html">이용약관</a>
-        <a href="../about.html">서비스 소개</a>
-        <a href="../blog/index.html">블로그</a>
+        <a href="/privacy.html">개인정보 처리방침</a>
+        <a href="/terms.html">이용약관</a>
+        <a href="/about.html">서비스 소개</a>
+        <a href="/blog/">블로그</a>
       </nav>
     </div>
   </footer>

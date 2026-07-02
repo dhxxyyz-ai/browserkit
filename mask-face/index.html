@@ -10,26 +10,16 @@
   <meta property="og:url" content="https://browserkit.online/mask-face/" />
   <meta property="og:locale" content="ko_KR" />
   <title>MaskFace &#x2014; 얼굴 자동 블러 처리 도구</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
-  <script type="text/javascript" src="//t1.kakaocdn.net/kas/static/ba.min.js" async></script>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506"
+     crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="/css/style.css" />
   <style>
-    :root {
-      --bg:          #0F0F13;
-      --card:        #1A1A24;
-      --point:       #6C63FF;
-      --point-hover: #A78BFA;
-      --text:        #F0F0F5;
-      --subtext:     #8B8B9E;
-      --success:     #34D399;
-      --danger:      #F87171;
-      --border:      rgba(108, 99, 255, 0.3);
-      --glow:        rgba(108, 99, 255, 0.5);
-      --radius:      16px;
-    }
+    
     * { margin:0; padding:0; box-sizing:border-box; transition:all 0.2s ease; }
-    body { background-color:var(--bg); color:var(--text); font-family:'Pretendard','Inter',sans-serif; font-size:16px; line-height:1.6; min-height:100vh; }
+    body { color:var(--text); font-family:'Gowun Dodum',sans-serif; font-size:16px; line-height:1.6; min-height:100vh; }
     a { color:var(--point-hover); text-decoration:none; }
     a:hover { color:var(--text); }
     .container { max-width:960px; margin:0 auto; padding:0 24px; }
@@ -39,7 +29,7 @@
     .header .container { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; }
     .logo { display:flex; align-items:center; gap:10px; text-decoration:none; }
     .logo-icon { font-size:24px; }
-    .logo-text { font-size:20px; font-weight:700; font-family:'Inter',sans-serif; background:linear-gradient(135deg,var(--point),var(--point-hover)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+    .logo-text { font-size:20px; font-weight:700; font-family:'Gowun Dodum',sans-serif; background:linear-gradient(135deg,var(--point),var(--point-hover)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
     .back-link { font-size:13px; color:var(--subtext); display:flex; align-items:center; gap:6px; }
     .back-link:hover { color:var(--text); }
 
@@ -65,7 +55,7 @@
     /* 업로드 존 */
     .upload-zone { background:var(--card); border:2px dashed var(--border); border-radius:var(--radius); padding:48px 40px; text-align:center; cursor:pointer; margin:0 0 20px; }
     .upload-zone.disabled { opacity:0.5; cursor:not-allowed; }
-    .upload-zone:not(.disabled):hover, .upload-zone.drag-over { border-color:var(--point); box-shadow:0 0 24px var(--glow); background:rgba(108,99,255,0.05); }
+    .upload-zone:not(.disabled):hover, .upload-zone.drag-over { border-color:var(--point); box-shadow:0 0 24px var(--glow); background:rgba(123,108,255,0.05); }
     .upload-icon { font-size:48px; margin-bottom:16px; }
     .upload-title { font-size:18px; font-weight:600; margin-bottom:8px; }
     .upload-sub { color:var(--subtext); font-size:14px; margin-bottom:12px; }
@@ -78,12 +68,12 @@
     .preview-label { font-size:13px; color:var(--subtext); margin-bottom:10px; font-weight:600; }
     .preview-canvas-wrap { position:relative; width:100%; }
     canvas { width:100%; height:auto; border-radius:8px; display:block; }
-    .preview-info { font-size:12px; color:var(--subtext); margin-top:8px; font-family:'Inter',sans-serif; }
+    .preview-info { font-size:12px; color:var(--subtext); margin-top:8px; font-family:'Gowun Dodum',sans-serif; }
 
     /* 탐지 결과 */
     .detect-result { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:16px 20px; margin-bottom:20px; }
     .detect-result-title { font-size:14px; font-weight:600; margin-bottom:10px; }
-    .detect-count { font-size:28px; font-weight:700; color:var(--point-hover); font-family:'Inter',sans-serif; }
+    .detect-count { font-size:28px; font-weight:700; color:var(--point-hover); font-family:'Gowun Dodum',sans-serif; }
     .detect-count-label { font-size:13px; color:var(--subtext); margin-left:6px; }
     .detect-none { color:var(--subtext); font-size:14px; }
 
@@ -94,32 +84,26 @@
     .option-group:last-child { margin-bottom:0; }
     .option-group-label { font-size:13px; color:var(--subtext); margin-bottom:10px; }
     .radio-group { display:flex; gap:10px; flex-wrap:wrap; }
-    .radio-btn { background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:8px 16px; font-size:13px; cursor:pointer; font-family:'Pretendard',sans-serif; color:var(--subtext); }
-    .radio-btn.active { border-color:var(--point); color:var(--point-hover); background:rgba(108,99,255,0.1); }
-    .radio-btn:hover:not(.active) { border-color:rgba(108,99,255,0.5); color:var(--text); }
+    .radio-btn { background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:8px 16px; font-size:13px; cursor:pointer; font-family:'Gowun Dodum',sans-serif; color:var(--subtext); }
+    .radio-btn.active { border-color:var(--point); color:var(--point-hover); background:rgba(123,108,255,0.1); }
+    .radio-btn:hover:not(.active) { border-color:rgba(123,108,255,0.5); color:var(--text); }
     .slider-wrap { display:flex; align-items:center; gap:12px; }
     .slider-wrap input[type=range] { flex:1; accent-color:var(--point); }
-    .slider-value { font-size:13px; color:var(--point-hover); font-family:'Inter',sans-serif; min-width:32px; text-align:right; }
+    .slider-value { font-size:13px; color:var(--point-hover); font-family:'Gowun Dodum',sans-serif; min-width:32px; text-align:right; }
 
     /* 수동 마스킹 안내 */
-    .manual-notice { font-size:13px; color:var(--subtext); background:rgba(108,99,255,0.07); border:1px solid var(--border); border-radius:10px; padding:12px 16px; margin-bottom:20px; line-height:1.7; }
+    .manual-notice { font-size:13px; color:var(--subtext); background:rgba(123,108,255,0.07); border:1px solid var(--border); border-radius:10px; padding:12px 16px; margin-bottom:20px; line-height:1.7; }
 
     /* 액션 */
     .action-wrap { display:flex; justify-content:center; gap:12px; margin:0 0 48px; flex-wrap:wrap; }
-    .btn-download { background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border:none; border-radius:12px; padding:14px 32px; font-size:15px; font-weight:600; cursor:pointer; font-family:'Pretendard',sans-serif; }
+    .btn-download { background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border:none; border-radius:12px; padding:14px 32px; font-size:15px; font-weight:600; cursor:pointer; font-family:'Gowun Dodum',sans-serif; }
     .btn-download:hover { transform:translateY(-2px); box-shadow:0 8px 24px var(--glow); }
     .btn-download:disabled { opacity:0.4; cursor:default; transform:none; box-shadow:none; }
-    .btn-reset { background:var(--card); color:var(--subtext); border:1px solid var(--border); border-radius:12px; padding:14px 24px; font-size:15px; cursor:pointer; font-family:'Pretendard',sans-serif; }
+    .btn-reset { background:var(--card); color:var(--subtext); border:1px solid var(--border); border-radius:12px; padding:14px 24px; font-size:15px; cursor:pointer; font-family:'Gowun Dodum',sans-serif; }
     .btn-reset:hover { transform:translateY(-2px); color:var(--text); border-color:var(--point); }
     .btn-reset:disabled { opacity:0.4; cursor:default; transform:none; }
 
     /* 배너 */
-    .coupang-banner { margin:0 auto 48px; text-align:center; overflow:hidden; }
-    .coupang-notice { font-size:11px; color:var(--subtext); margin-bottom:10px; line-height:1.6; }
-    .coupang-banner-mo { display:none; }
-    .adfit-wrap { text-align:center; margin:24px 0; }
-    .adfit-pc { display:block; }
-    .adfit-mo { display:none; }
 
     /* 푸터 */
     .footer { border-top:1px solid var(--border); padding:32px 0; text-align:center; }
@@ -132,22 +116,19 @@
       .preview-wrap { grid-template-columns:1fr; }
       .upload-zone { padding:40px 20px; }
       .hero h1 { font-size:24px; }
-      .coupang-banner-pc { display:none; }
-      .coupang-banner-mo { display:block; }
-      .adfit-pc { display:none; }
-      .adfit-mo { display:block; }
     }
   </style>
+  <meta property="og:image" content="https://browserkit.online/img/og-browserkit.png" />
+  <link rel="canonical" href="https://browserkit.online/mask-face/" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://browserkit.online/img/og-browserkit.png" />
 </head>
 <body>
 
   <header class="header">
     <div class="container">
-      <a href="../index.html" class="logo">
-        <span class="logo-icon">&#x1F9F0;</span>
-        <span class="logo-text">BrowserKit</span>
-      </a>
-      <a href="../index.html" class="back-link">&#x2190; BrowserKit 홈으로</a>
+      <a href="/" class="header-brand"><div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Gowun Dodum,sans-serif;flex-shrink:0">B</div><span class="header-brand-text"><span style="color:var(--text)">Browser</span><span style="color:var(--point)">Kit</span></span></a>
+      <a href="/" class="header-back">&#x2190; BrowserKit 홈으로</a>
     </div>
   </header>
 
@@ -155,7 +136,7 @@
     <div class="container">
 
       <div class="hero">
-        <div class="hero-icon">&#x1F464;</div>
+        <div class="hero-icon" style="height:78px;display:flex;justify-content:center;align-items:center"><div style="transform:scale(1.7);transform-origin:center"><div style="width:46px;height:46px;background:#c9d9ff;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="position:relative;width:27px;height:27px;border-radius:50%;background:#fffdf9;border:2.5px solid #2a2433;box-sizing:border-box;overflow:hidden"><div style="position:absolute;left:6px;top:8px;width:3px;height:3px;border-radius:50%;background:#2a2433"></div><div style="position:absolute;right:6px;top:8px;width:3px;height:3px;border-radius:50%;background:#2a2433"></div><div style="position:absolute;left:7px;bottom:5px;width:11px;height:3px;border-radius:3px;background:rgba(42,36,51,.4)"></div><div style="position:absolute;left:-3px;bottom:4px;width:34px;height:3px;background:rgba(255,255,255,.85)"></div><div style="position:absolute;left:-3px;bottom:9px;width:34px;height:3px;background:rgba(255,255,255,.7)"></div></div></div></div></div>
         <h1>MaskFace</h1>
         <p>이미지 속 얼굴을 자동으로 감지해 모자이크 처리하는 무료 도구</p>
         <div class="badges">
@@ -165,14 +146,9 @@
           <span class="badge">&#x1F4E6; 설치 불필요</span>
         </div>
       </div>
+    <div style="margin:0"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
 
       <!-- 카카오 애드핏 -->
-      <div class="adfit-wrap adfit-pc">
-        <ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-QD4pRIpdIj7i2mbt" data-ad-width="728" data-ad-height="90"></ins>
-      </div>
-      <div class="adfit-wrap adfit-mo">
-        <ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-R4xA2niTT8HgGjoO" data-ad-width="320" data-ad-height="50"></ins>
-      </div>
 
       <!-- 모델 로딩 상태 -->
       <div class="model-loading" id="modelStatus">
@@ -187,7 +163,7 @@
       <!-- 업로드 존 -->
       <div class="upload-zone disabled" id="uploadZone">
         <input type="file" id="fileInput" accept="image/*" hidden />
-        <div class="upload-icon">&#x1F5BC;&#xFE0F;</div>
+        <div class="upload-icon" style="height:64px;display:flex;justify-content:center;align-items:center"><div style="transform:scale(1.4);transform-origin:center"><div style="width:46px;height:46px;background:#c9d9ff;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="position:relative;width:27px;height:27px;border-radius:50%;background:#fffdf9;border:2.5px solid #2a2433;box-sizing:border-box;overflow:hidden"><div style="position:absolute;left:6px;top:8px;width:3px;height:3px;border-radius:50%;background:#2a2433"></div><div style="position:absolute;right:6px;top:8px;width:3px;height:3px;border-radius:50%;background:#2a2433"></div><div style="position:absolute;left:7px;bottom:5px;width:11px;height:3px;border-radius:3px;background:rgba(42,36,51,.4)"></div><div style="position:absolute;left:-3px;bottom:4px;width:34px;height:3px;background:rgba(255,255,255,.85)"></div><div style="position:absolute;left:-3px;bottom:9px;width:34px;height:3px;background:rgba(255,255,255,.7)"></div></div></div></div></div>
         <p class="upload-title">이미지를 드래그하여 놓으세요</p>
         <p class="upload-sub">또는 클릭하여 파일 선택 (JPG, PNG, WEBP 지원)</p>
         <p class="upload-safe">&#x2713; 파일이 서버로 전송되지 않습니다</p>
@@ -248,30 +224,17 @@
 
       </div>
 
-      <!-- 쿠팡 배너 PC -->
-      <div class="coupang-banner coupang-banner-pc">
-        <p class="coupang-notice">이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</p>
-        <script src="https://ads-partners.coupang.com/g.js"></script>
-        <script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"728","height":"120","tsource":""});</script>
-      </div>
-      <!-- 쿠팡 배너 모바일 -->
-      <div class="coupang-banner coupang-banner-mo">
-        <p class="coupang-notice">이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</p>
-        <script src="https://ads-partners.coupang.com/g.js"></script>
-        <script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"320","height":"50","tsource":""});</script>
-      </div>
-
-    </div>
+</div>
   </main>
 
   <footer class="footer">
     <div class="container">
       <p class="footer-copy">&#169; 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p>
       <nav class="footer-nav">
-        <a href="../privacy.html">개인정보 처리방침</a>
-        <a href="../terms.html">이용약관</a>
-        <a href="../about.html">서비스 소개</a>
-        <a href="../blog/index.html">블로그</a>
+        <a href="/privacy.html">개인정보 처리방침</a>
+        <a href="/terms.html">이용약관</a>
+        <a href="/about.html">서비스 소개</a>
+        <a href="/blog/">블로그</a>
       </nav>
     </div>
   </footer>
@@ -461,7 +424,7 @@
     // 실시간 드래그 미리보기
     applyMasking();
     const ctx = resultCanvas.getContext('2d');
-    ctx.strokeStyle = 'rgba(108,99,255,0.8)';
+    ctx.strokeStyle = 'rgba(123,108,255,0.8)';
     ctx.lineWidth   = 2;
     ctx.setLineDash([6, 3]);
     ctx.strokeRect(

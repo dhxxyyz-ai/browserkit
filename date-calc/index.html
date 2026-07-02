@@ -9,31 +9,16 @@
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://browserkit.online/date-calc/" />
   <title>DateCalc — 날짜 계산기</title>
-  <link rel="stylesheet" href="../css/style.css" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
-  <script type="text/javascript" src="//t1.kakaocdn.net/kas/static/ba.min.js" async></script>
+  <link rel="stylesheet" href="/css/style.css" />
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506"
+     crossorigin="anonymous"></script>
   <style>
-    .header { padding:24px 0 16px; border-bottom:1px solid var(--border); }
-    .header .container { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; }
-    .header-brand { display:flex; align-items:center; gap:10px; text-decoration:none; }
-    .header-brand-icon { font-size:24px; }
-    .header-brand-text { font-size:20px; font-weight:700; font-family:'Inter',sans-serif; background:linear-gradient(135deg,var(--point),var(--point-hover)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
-    .header-back { font-size:13px; color:var(--subtext); text-decoration:none; }
-    .header-back:hover { color:var(--text); }
 
-    .hero { text-align:center; padding:40px 0 32px; }
-    .hero-icon { font-size:48px; margin-bottom:16px; }
-    .hero-title { font-size:32px; font-weight:700; margin-bottom:12px; background:linear-gradient(135deg,var(--point),var(--point-hover)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
-    .hero-desc { color:var(--subtext); font-size:15px; margin-bottom:20px; }
-    .hero-badges { display:flex; justify-content:center; gap:10px; flex-wrap:wrap; }
-    .hero-badge { background:var(--card); border:1px solid var(--border); border-radius:999px; padding:5px 16px; font-size:13px; color:var(--subtext); }
-
-    /* 탭 */
+/* 탭 */
     .tab-bar { display:flex; gap:4px; background:var(--card); border:1px solid var(--border); border-radius:14px; padding:5px; margin-bottom:24px; }
-    .tab-btn { flex:1; padding:10px; font-size:14px; font-weight:600; border:none; border-radius:10px; cursor:pointer; font-family:'Pretendard',sans-serif; background:transparent; color:var(--subtext); transition:all 0.2s; }
+    .tab-btn { flex:1; padding:10px; font-size:14px; font-weight:600; border:none; border-radius:10px; cursor:pointer; font-family:'Gowun Dodum',sans-serif; background:transparent; color:var(--subtext); transition:all 0.2s; }
     .tab-btn.active { background:linear-gradient(135deg,var(--point),var(--point-hover)); color:#fff; }
-    .tab-btn:hover:not(.active) { color:var(--text); background:rgba(108,99,255,0.08); }
+    .tab-btn:hover:not(.active) { color:var(--text); background:rgba(123,108,255,0.08); }
 
     /* 패널 */
     .panel { display:none; }
@@ -44,40 +29,40 @@
 
     /* 입력 */
     .field-label { font-size:13px; font-weight:600; color:var(--subtext); margin-bottom:8px; display:block; }
-    .date-input { width:100%; background:var(--bg); border:1px solid var(--border); border-radius:10px; padding:12px 16px; font-size:15px; color:var(--text); font-family:'Pretendard',sans-serif; outline:none; transition:border-color 0.2s; }
+    .date-input { width:100%; background:var(--bg); border:1px solid var(--border); border-radius:10px; padding:12px 16px; font-size:15px; color:var(--text); font-family:'Gowun Dodum',sans-serif; outline:none; transition:border-color 0.2s; }
     .date-input:focus { border-color:var(--point); }
     .date-input::-webkit-calendar-picker-indicator { filter:invert(0.5); cursor:pointer; }
     .field-row { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:20px; }
-    .today-btn { background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:6px 14px; font-size:12px; font-weight:600; color:var(--subtext); cursor:pointer; margin-top:8px; font-family:'Pretendard',sans-serif; transition:all 0.15s; }
+    .today-btn { background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:6px 14px; font-size:12px; font-weight:600; color:var(--subtext); cursor:pointer; margin-top:8px; font-family:'Gowun Dodum',sans-serif; transition:all 0.15s; }
     .today-btn:hover { border-color:var(--point); color:var(--text); }
 
     /* 결과 */
     .result-area { background:var(--bg); border-radius:12px; padding:20px 24px; margin-top:4px; }
     .result-empty { color:var(--subtext); font-size:14px; text-align:center; padding:8px 0; font-style:italic; }
     .result-dday { text-align:center; padding:12px 0 8px; }
-    .result-dday-num { font-size:56px; font-weight:700; font-family:'Inter',sans-serif; background:linear-gradient(135deg,var(--point),var(--point-hover)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; line-height:1.1; }
+    .result-dday-num { font-size:56px; font-weight:700; font-family:'Gowun Dodum',sans-serif; background:linear-gradient(135deg,var(--point),var(--point-hover)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; line-height:1.1; }
     .result-dday-label { font-size:14px; color:var(--subtext); margin-top:6px; }
     .result-dday-today { font-size:22px; font-weight:700; color:var(--success); }
 
     .result-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-top:16px; }
     .result-item { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:14px; text-align:center; }
-    .result-item-num { font-size:24px; font-weight:700; color:var(--point-hover); font-family:'Inter',sans-serif; }
+    .result-item-num { font-size:24px; font-weight:700; color:var(--point-hover); font-family:'Gowun Dodum',sans-serif; }
     .result-item-label { font-size:12px; color:var(--subtext); margin-top:4px; }
 
     .result-row-list { display:flex; flex-direction:column; gap:10px; margin-top:4px; }
     .result-row { display:flex; justify-content:space-between; align-items:center; padding:10px 0; border-bottom:1px solid var(--border); }
     .result-row:last-child { border-bottom:none; }
     .result-row-label { font-size:14px; color:var(--subtext); }
-    .result-row-val { font-size:15px; font-weight:700; color:var(--text); font-family:'Inter',sans-serif; }
+    .result-row-val { font-size:15px; font-weight:700; color:var(--text); font-family:'Gowun Dodum',sans-serif; }
     .result-row-val.accent { color:var(--point-hover); }
 
     /* 나이 탭 특화 */
     .age-big { text-align:center; padding:16px 0 8px; }
-    .age-big-num { font-size:72px; font-weight:700; font-family:'Inter',sans-serif; background:linear-gradient(135deg,var(--point),var(--point-hover)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; line-height:1; }
+    .age-big-num { font-size:72px; font-weight:700; font-family:'Gowun Dodum',sans-serif; background:linear-gradient(135deg,var(--point),var(--point-hover)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; line-height:1; }
     .age-big-label { font-size:13px; color:var(--subtext); margin-top:4px; }
     .age-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; margin-top:16px; }
     .age-item { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:14px; text-align:center; }
-    .age-item-num { font-size:20px; font-weight:700; color:var(--text); font-family:'Inter',sans-serif; }
+    .age-item-num { font-size:20px; font-weight:700; color:var(--text); font-family:'Gowun Dodum',sans-serif; }
     .age-item-label { font-size:11px; color:var(--subtext); margin-top:4px; line-height:1.4; }
     .age-item-sub { font-size:12px; color:var(--subtext); margin-top:2px; }
 
@@ -86,12 +71,6 @@
     .toast.show { transform:translateX(-50%) translateY(0); opacity:1; }
 
     /* 배너 */
-    .coupang-banner { margin:0 auto 48px; text-align:center; overflow:hidden; }
-    .coupang-notice { font-size:11px; color:var(--subtext); margin-bottom:10px; line-height:1.6; }
-    .coupang-banner-mo { display:none; }
-    .adfit-wrap { text-align:center; margin:24px 0; }
-    .adfit-pc { display:block; }
-    .adfit-mo { display:none; }
     .footer { border-top:1px solid var(--border); padding:32px 0; text-align:center; }
     .footer-copy { color:var(--subtext); font-size:13px; margin-bottom:12px; }
     .footer-nav { display:flex; justify-content:center; gap:20px; flex-wrap:wrap; }
@@ -104,27 +83,29 @@
       .result-grid { grid-template-columns:repeat(2,1fr); }
       .age-grid { grid-template-columns:1fr 1fr; }
       .tab-btn { font-size:13px; padding:9px 6px; }
-      .adfit-pc { display:none; }
-      .adfit-mo { display:block; }
-      .coupang-banner-pc { display:none; }
-      .coupang-banner-mo { display:block; }
     }
   </style>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+  <meta property="og:image" content="https://browserkit.online/img/og-browserkit.png" />
+  <link rel="canonical" href="https://browserkit.online/date-calc/" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://browserkit.online/img/og-browserkit.png" />
 </head>
 <body>
   <header class="header">
     <div class="container">
-      <a href="../index.html" class="header-brand">
-        <span class="header-brand-icon">&#x1F9F0;</span>
-        <span class="header-brand-text">BrowserKit</span>
+      <a href="/" class="header-brand">
+        <div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Gowun Dodum,sans-serif;flex-shrink:0">B</div>
+        <span class="header-brand-text"><span style="color:var(--text)">Browser</span><span style="color:var(--point)">Kit</span></span>
       </a>
-      <a href="../index.html" class="header-back">&#x2190; BrowserKit 홈으로</a>
+      <a href="/" class="header-back">&#x2190; BrowserKit 홈으로</a>
     </div>
   </header>
 
   <main><div class="container">
     <div class="hero">
-      <div class="hero-icon">&#x1F4C5;</div>
+      <div class="hero-icon" style="height:78px;display:flex;justify-content:center;align-items:center"><div style="transform:scale(1.7);transform-origin:center"><div style="width:46px;height:46px;background:#ffe5a0;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="position:relative;width:30px;height:30px;background:#fffdf9;border:2.5px solid #2a2433;border-radius:4px;box-sizing:border-box;overflow:hidden"><div style="position:absolute;top:0;left:0;width:100%;height:8px;background:#ffe5a0;border-bottom:2.5px solid #2a2433"></div><div style="position:absolute;top:13px;left:4px;width:4px;height:4px;background:#2a2433;border-radius:1px"></div><div style="position:absolute;top:13px;left:13px;width:4px;height:4px;background:rgba(42,36,51,.3);border-radius:1px"></div><div style="position:absolute;top:13px;left:22px;width:4px;height:4px;background:rgba(42,36,51,.3);border-radius:1px"></div><div style="position:absolute;top:21px;left:4px;width:4px;height:4px;background:rgba(42,36,51,.3);border-radius:1px"></div><div style="position:absolute;top:21px;left:13px;width:4px;height:4px;background:#2a2433;border-radius:1px"></div></div></div></div></div>
       <h1 class="hero-title">DateCalc</h1>
       <p class="hero-desc">D-day 계산, 날짜 차이, 나이 계산을 한 번에</p>
       <div class="hero-badges">
@@ -133,11 +114,9 @@
         <span class="hero-badge">&#x1F4E6; 설치 불필요</span>
       </div>
     </div>
+    <div style="margin:0"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
 
-    <div class="adfit-wrap adfit-pc"><ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-QD4pRIpdIj7i2mbt" data-ad-width="728" data-ad-height="90"></ins></div>
-    <div class="adfit-wrap adfit-mo"><ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-R4xA2niTT8HgGjoO" data-ad-width="320" data-ad-height="50"></ins></div>
-
-    <!-- 탭 -->
+<!-- 탭 -->
     <div class="tab-bar">
       <button class="tab-btn active" data-tab="dday">&#x1F3AF; D-day 계산</button>
       <button class="tab-btn" data-tab="diff">&#x1F4CF; 날짜 차이</button>
@@ -196,26 +175,17 @@
       </div>
     </div>
 
-    <div class="coupang-banner coupang-banner-pc">
-      <p class="coupang-notice">이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</p>
-      <script src="https://ads-partners.coupang.com/g.js"></script>
-      <script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"728","height":"120","tsource":""});</script>
-    </div>
-    <div class="coupang-banner coupang-banner-mo">
-      <p class="coupang-notice">이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</p>
-      <script src="https://ads-partners.coupang.com/g.js"></script>
-      <script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"320","height":"50","tsource":""});</script>
-    </div>
+<div style="margin:0"><ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="9500090221"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
   </div></main>
 
   <footer class="footer">
     <div class="container">
       <p class="footer-copy">&#xa9; 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p>
       <nav class="footer-nav">
-        <a href="../privacy.html">개인정보 처리방침</a>
-        <a href="../terms.html">이용약관</a>
-        <a href="../about.html">서비스 소개</a>
-        <a href="../blog/index.html">블로그</a>
+        <a href="/privacy.html">개인정보 처리방침</a>
+        <a href="/terms.html">이용약관</a>
+        <a href="/about.html">서비스 소개</a>
+        <a href="/blog/">블로그</a>
       </nav>
     </div>
   </footer>

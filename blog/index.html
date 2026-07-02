@@ -3,138 +3,151 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="BrowserKit 블로그 — 개인정보 보호, 이미지 편집, 브라우저 도구 활용법까지 유용한 정보를 제공합니다." />
+  <meta name="description" content="BrowserKit 블로그입니다. 개인정보 보호 실천법, 이미지·PDF 편집 도구 활용법, 브라우저 기반 무료 도구 가이드까지 실생활에 바로 쓸 수 있는 정보를 제공합니다." />
   <meta property="og:title" content="블로그 — BrowserKit" />
   <meta property="og:description" content="개인정보 보호, 이미지 편집, 브라우저 도구 활용법까지 유용한 정보를 제공합니다." />
   <meta property="og:type" content="website" />
   <title>블로그 — BrowserKit</title>
-  <link rel="stylesheet" href="../css/style.css" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
+  <link rel="stylesheet" href="/css/style.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
-  <script type="text/javascript" src="//t1.kakaocdn.net/kas/static/ba.min.js" async></script>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
   <meta name="google-adsense-account" content="ca-pub-2077977787979506">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506" crossorigin="anonymous"></script>
   <style>
-    .blog-hero { text-align:center; padding:48px 0 40px; }
-    .blog-hero h1 { font-size:32px; font-weight:700; margin-bottom:12px; background:linear-gradient(135deg,var(--point),var(--point-hover)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
-    .blog-hero p { color:var(--subtext); font-size:15px; }
-    .blog-section-title { font-size:13px; font-weight:600; color:var(--subtext); letter-spacing:0.08em; text-transform:uppercase; margin:40px 0 16px; }
+    .blog-hero { text-align:center; padding:40px 0 36px; }
+    .blog-hero h1 { font-size:34px; font-weight:700; margin-bottom:12px; color:var(--text); font-family:'Gowun Dodum',sans-serif; }
+    .blog-hero p { color:var(--subtext); font-size:17px; font-family:'Gowun Dodum',sans-serif; }
+    .blog-section-title { font-size:15px; font-weight:700; color:var(--text); letter-spacing:0.04em; margin:40px 0 16px; font-family:'Gowun Dodum',sans-serif; }
     .blog-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; padding-bottom:40px; }
-    .blog-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:24px; text-decoration:none; display:flex; flex-direction:column; gap:10px; }
-    .blog-card:hover { border-color:var(--point); box-shadow:0 0 16px var(--glow); transform:translateY(-2px); }
-    .blog-card-tag { font-size:12px; color:var(--point-hover); background:rgba(108,99,255,0.15); padding:2px 10px; border-radius:999px; width:fit-content; }
-    .blog-card-title { font-size:16px; font-weight:600; color:var(--text); line-height:1.5; }
-    .blog-card-desc { font-size:13px; color:var(--subtext); line-height:1.7; }
-    .blog-card-date { font-size:12px; color:var(--subtext); margin-top:auto; }
-    .back-link { display:inline-flex; align-items:center; gap:6px; color:var(--subtext); font-size:14px; margin-bottom:8px; text-decoration:none; }
-    .back-link:hover { color:var(--text); }
-    .blog-ad-wrap { max-width:728px; margin:20px auto 48px; text-align:center; overflow:hidden; }
-    .blog-ad-notice { font-size:11px; color:var(--subtext); margin-bottom:10px; line-height:1.6; }
-    .blog-ad-mo { display:none; }
-    .adfit-wrap { text-align:center; margin:24px 0; }
-    .adfit-mo { display:none; }
-    @media (max-width:640px) { .adfit-pc { display:none; } .adfit-mo { display:block; } }
-    @media (max-width:768px) { .blog-grid { grid-template-columns:1fr; } .blog-hero h1 { font-size:24px; } .blog-ad-wrap { max-width:100%; } .blog-ad-pc { display:none; } .blog-ad-mo { display:block; } }
+    .blog-card { background:rgba(255,255,255,0.72); border:2px solid var(--border); border-radius:13px 11px 12px 10px; padding:22px; text-decoration:none; display:flex; flex-direction:column; gap:10px; box-shadow:3px 3px 0 var(--border); }
+    .blog-card:hover { transform:translateY(-3px); box-shadow:3px 6px 0 var(--border); }
+    .blog-card-tag { font-size:13px; color:var(--point); background:rgba(123,108,255,0.15); border:1.5px solid var(--point); padding:2px 10px; border-radius:999px; width:fit-content; font-family:'Gowun Dodum',sans-serif; }
+    .blog-card-title { font-size:17px; font-weight:700; color:var(--text); line-height:1.5; font-family:'Gowun Dodum',sans-serif; }
+    .blog-card-desc { font-size:15px; color:var(--subtext); line-height:1.7; font-family:'Gowun Dodum',sans-serif; }
+    .blog-card-date { font-size:13px; color:var(--subtext); margin-top:auto; font-family:'Gowun Dodum',sans-serif; }
+    @media (max-width:768px) { .blog-grid { grid-template-columns:1fr; } .blog-hero h1 { font-size:26px; } }
     @media (min-width:769px) and (max-width:1024px) { .blog-grid { grid-template-columns:repeat(2,1fr); } }
   </style>
+  <meta property="og:image" content="https://browserkit.online/img/og-browserkit.png" />
+  <link rel="canonical" href="https://browserkit.online/blog/" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://browserkit.online/img/og-browserkit.png" />
 </head>
 <body>
 
   <header class="header">
     <div class="container">
-      <div class="logo">
-        <a href="../index.html" style="display:flex;align-items:center;gap:10px;text-decoration:none;">
-          <span class="logo-icon">🧰</span>
-          <span class="logo-text">BrowserKit</span>
-        </a>
-      </div>
+      <a href="/" class="header-brand">
+        <div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Gowun Dodum,sans-serif;flex-shrink:0">B</div>
+        <span class="header-brand-text"><span style="color:var(--text)">Browser</span><span style="color:var(--point)">Kit</span></span>
+      </a>
+      <a href="/" class="header-back">← BrowserKit 홈으로</a>
     </div>
   </header>
 
   <main>
     <div class="container">
 
-      <a href="../index.html" class="back-link">← BrowserKit 홈으로</a>
-
       <div class="blog-hero">
         <h1>BrowserKit 블로그</h1>
         <p>개인정보 보호, 마스킹 방법, 브라우저 도구 활용법까지 유용한 정보를 제공합니다.</p>
       </div>
 
-      <div class="blog-section-title">🔒 개인정보 보호</div>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:28px 32px;margin:0 0 32px;display:grid;grid-template-columns:repeat(3,1fr);gap:24px;">
+        <div>
+          <div style="font-size:22px;margin-bottom:8px;">🔒</div>
+          <div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:6px;font-family:'Gowun Dodum',sans-serif;">개인정보 보호 실천법</div>
+          <div style="font-size:13px;color:var(--subtext);line-height:1.7;font-family:'Gowun Dodum',sans-serif;">신분증·계약서·이력서 공유 전에 알아야 할 개인정보 보호 지식을 다룹니다. 법률 해설부터 실제 유출 사례까지 구체적으로 안내합니다.</div>
+        </div>
+        <div>
+          <div style="font-size:22px;margin-bottom:8px;">🛠️</div>
+          <div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:6px;font-family:'Gowun Dodum',sans-serif;">BrowserKit 도구 사용 가이드</div>
+          <div style="font-size:13px;color:var(--subtext);line-height:1.7;font-family:'Gowun Dodum',sans-serif;">이미지 마스킹, PDF 편집, QR 코드 생성 등 25가지 도구의 기능과 활용법을 단계별로 설명합니다. 처음 사용하는 분도 따라할 수 있습니다.</div>
+        </div>
+        <div>
+          <div style="font-size:22px;margin-bottom:8px;">📊</div>
+          <div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:6px;font-family:'Gowun Dodum',sans-serif;">브라우저 도구 활용 팁</div>
+          <div style="font-size:13px;color:var(--subtext);line-height:1.7;font-family:'Gowun Dodum',sans-serif;">설치 없이 브라우저만으로 할 수 있는 작업의 범위를 넓혀줍니다. 직장인·학생·프리랜서 등 누구나 바로 활용할 수 있는 실용적인 내용으로 구성합니다.</div>
+        </div>
+      </div>
+
+      <div style="margin:0"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+
+      <div class="blog-section-title">개인정보 보호</div>
       <div class="blog-grid">
 
-        <a href="01-privacy-law-intro.html" class="blog-card">
+        <a href="/blog/01-privacy-law-intro.html" class="blog-card">
           <span class="blog-card-tag">법률</span>
           <div class="blog-card-title">개인정보보호법이란? 핵심만 쉽게 정리</div>
           <div class="blog-card-desc">개인정보보호법의 주요 내용과 위반 시 처벌 수위를 알기 쉽게 설명합니다.</div>
           <div class="blog-card-date">2026.06.10</div>
         </a>
 
-        <a href="02-rrn-leak-danger.html" class="blog-card">
+        <a href="/blog/02-rrn-leak-danger.html" class="blog-card">
           <span class="blog-card-tag">보안</span>
           <div class="blog-card-title">주민번호 유출되면 어떻게 되나요?</div>
           <div class="blog-card-desc">주민등록번호가 유출됐을 때 발생하는 피해와 대처 방법을 안내합니다.</div>
           <div class="blog-card-date">2026.06.10</div>
         </a>
 
-        <a href="03-id-photo-masking.html" class="blog-card">
+        <a href="/blog/03-id-photo-masking.html" class="blog-card">
           <span class="blog-card-tag">실용</span>
           <div class="blog-card-title">신분증 사진 보낼 때 꼭 마스킹해야 하는 이유</div>
           <div class="blog-card-desc">신분증 사진을 그냥 전송할 때의 위험성과 올바른 마스킹 방법을 소개합니다.</div>
           <div class="blog-card-date">2026.06.10</div>
         </a>
 
-        <a href="04-resume-privacy.html" class="blog-card">
+        <a href="/blog/04-resume-privacy.html" class="blog-card">
           <span class="blog-card-tag">실용</span>
           <div class="blog-card-title">이력서 개인정보, 어디까지 써야 할까?</div>
           <div class="blog-card-desc">이력서에 꼭 필요한 개인정보와 불필요한 정보를 구분하는 방법을 알려드립니다.</div>
           <div class="blog-card-date">2026.06.10</div>
         </a>
 
-        <a href="05-privacy-leak-cases.html" class="blog-card">
+        <a href="/blog/05-privacy-leak-cases.html" class="blog-card">
           <span class="blog-card-tag">사례</span>
           <div class="blog-card-title">개인정보 유출 실제 사례 모음</div>
           <div class="blog-card-desc">국내외 개인정보 유출 사례를 통해 보안의 중요성을 다시 한번 확인해보세요.</div>
           <div class="blog-card-date">2026.06.10</div>
         </a>
 
-        <a href="08-worker-privacy-law.html" class="blog-card">
+        <a href="/blog/08-worker-privacy-law.html" class="blog-card">
           <span class="blog-card-tag">법률</span>
           <div class="blog-card-title">직장인이 꼭 알아야 할 개인정보보호법 5가지</div>
           <div class="blog-card-desc">업무 중 자주 발생하는 개인정보 관련 실수와 올바른 처리 방법을 알려드립니다.</div>
           <div class="blog-card-date">2026.06.10</div>
         </a>
 
-        <a href="09-hospital-privacy.html" class="blog-card">
+        <a href="/blog/09-hospital-privacy.html" class="blog-card">
           <span class="blog-card-tag">실용</span>
           <div class="blog-card-title">병원 서류 개인정보 처리 방법</div>
           <div class="blog-card-desc">진료 기록, 처방전 등 의료 서류의 개인정보를 안전하게 처리하는 방법을 소개합니다.</div>
           <div class="blog-card-date">2026.06.10</div>
         </a>
 
-        <a href="10-contract-masking.html" class="blog-card">
+        <a href="/blog/10-contract-masking.html" class="blog-card">
           <span class="blog-card-tag">실용</span>
           <div class="blog-card-title">계약서 개인정보 마스킹하는 법</div>
           <div class="blog-card-desc">계약서를 공유하기 전 반드시 처리해야 할 개인정보 항목과 마스킹 방법을 안내합니다.</div>
           <div class="blog-card-date">2026.06.10</div>
         </a>
 
-        <a href="11-kakao-id-photo.html" class="blog-card">
+        <a href="/blog/11-kakao-id-photo.html" class="blog-card">
           <span class="blog-card-tag">보안</span>
           <div class="blog-card-title">카카오톡으로 신분증 보내도 될까?</div>
           <div class="blog-card-desc">메신저로 신분증을 전송할 때의 위험성과 안전한 대안을 알아봅니다.</div>
           <div class="blog-card-date">2026.06.10</div>
         </a>
 
-        <a href="12-privacy-policy-guide.html" class="blog-card">
+        <a href="/blog/12-privacy-policy-guide.html" class="blog-card">
           <span class="blog-card-tag">법률</span>
           <div class="blog-card-title">개인정보 처리방침 어떻게 만드나요?</div>
           <div class="blog-card-desc">개인정보 처리방침의 필수 항목과 작성 방법을 알기 쉽게 설명합니다.</div>
           <div class="blog-card-date">2026.06.10</div>
         </a>
 
-        <a href="15-privacy-report-guide.html" class="blog-card">
+        <a href="/blog/15-privacy-report-guide.html" class="blog-card">
           <span class="blog-card-tag">법률</span>
           <div class="blog-card-title">개인정보보호위원회 신고 방법 안내</div>
           <div class="blog-card-desc">개인정보 침해를 당했을 때 신고하는 방법과 절차를 단계별로 안내합니다.</div>
@@ -143,198 +156,194 @@
 
       </div>
 
-      <div class="adfit-wrap adfit-pc">
-        <ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-QD4pRIpdIj7i2mbt" data-ad-width="728" data-ad-height="90"></ins>
-      </div>
-      <div class="adfit-wrap adfit-mo">
-        <ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-R4xA2niTT8HgGjoO" data-ad-width="320" data-ad-height="50"></ins>
-      </div>
-      <div class="blog-section-title">🛠️ 도구 활용 가이드</div>
+      <div style="margin:0"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+
+      <div class="blog-section-title">도구 활용 가이드</div>
       <div class="blog-grid">
 
-        <a href="06-image-masking-guide.html" class="blog-card">
+        <a href="/blog/06-image-masking-guide.html" class="blog-card">
           <span class="blog-card-tag">가이드</span>
           <div class="blog-card-title">이미지 속 개인정보 무료로 가리는 방법</div>
           <div class="blog-card-desc">복잡한 툴 없이 브라우저에서 바로 개인정보를 마스킹하는 방법을 안내합니다.</div>
           <div class="blog-card-date">2026.06.10</div>
         </a>
 
-        <a href="07-maskprivacy-howto.html" class="blog-card">
+        <a href="/blog/07-maskprivacy-howto.html" class="blog-card">
           <span class="blog-card-tag">가이드</span>
           <div class="blog-card-title">MaskPrivacy 사용법 완전 가이드</div>
           <div class="blog-card-desc">MaskPrivacy의 모든 기능을 단계별로 설명하는 공식 사용 가이드입니다.</div>
           <div class="blog-card-date">2026.06.10</div>
         </a>
 
-        <a href="13-masking-tool-compare.html" class="blog-card">
+        <a href="/blog/13-masking-tool-compare.html" class="blog-card">
           <span class="blog-card-tag">비교</span>
           <div class="blog-card-title">무료 개인정보 마스킹 툴 비교</div>
           <div class="blog-card-desc">다양한 무료 마스킹 도구를 비교하고 상황에 맞는 툴을 선택하는 방법을 안내합니다.</div>
           <div class="blog-card-date">2026.06.10</div>
         </a>
 
-        <a href="14-local-processing.html" class="blog-card">
+        <a href="/blog/14-local-processing.html" class="blog-card">
           <span class="blog-card-tag">기술</span>
           <div class="blog-card-title">서버 없이 개인정보 처리하는 방법</div>
           <div class="blog-card-desc">클라이언트 사이드 처리 방식이 왜 더 안전한지, 원리와 장점을 설명합니다.</div>
           <div class="blog-card-date">2026.06.10</div>
         </a>
 
-        <a href="16-maskpdf-howto.html" class="blog-card">
+        <a href="/blog/16-maskpdf-howto.html" class="blog-card">
           <span class="blog-card-tag">가이드</span>
           <div class="blog-card-title">MaskPDF 사용법 완전 가이드</div>
           <div class="blog-card-desc">MaskPDF의 모든 기능을 단계별로 설명하는 공식 사용 가이드입니다. PDF 마스킹부터 다운로드까지 쉽게 따라할 수 있습니다.</div>
           <div class="blog-card-date">2026.06.13</div>
         </a>
 
-        <a href="17-fitimage-howto.html" class="blog-card">
+        <a href="/blog/17-fitimage-howto.html" class="blog-card">
           <span class="blog-card-tag">가이드</span>
           <div class="blog-card-title">FitImage 사용법 완전 가이드</div>
           <div class="blog-card-desc">FitImage의 모든 기능을 단계별로 설명하는 공식 사용 가이드입니다. 크기 조정, 형식 변환, 용량 압축까지 쉽게 따라할 수 있습니다.</div>
           <div class="blog-card-date">2026.06.16</div>
         </a>
 
-        <a href="18-pdfmerge-howto.html" class="blog-card">
+        <a href="/blog/18-pdfmerge-howto.html" class="blog-card">
           <span class="blog-card-tag">가이드</span>
           <div class="blog-card-title">PDFMerge 사용법 완전 가이드</div>
           <div class="blog-card-desc">여러 PDF 합치기, 페이지 범위 추출, 순서 변경까지 제대로 활용하는 PDFMerge 공식 가이드입니다.</div>
           <div class="blog-card-date">2026.06.16</div>
         </a>
 
-        <a href="19-maskface-howto.html" class="blog-card">
+        <a href="/blog/19-maskface-howto.html" class="blog-card">
           <span class="blog-card-tag">가이드</span>
           <div class="blog-card-title">MaskFace 사용법 완전 가이드</div>
           <div class="blog-card-desc">얼굴 자동 탐지, 모자이크 처리, 수동 드래그 마스킹까지 제대로 활용하는 MaskFace 공식 가이드입니다.</div>
           <div class="blog-card-date">2026.06.17</div>
         </a>
 
-        <a href="20-texttools-howto.html" class="blog-card">
+        <a href="/blog/20-texttools-howto.html" class="blog-card">
           <span class="blog-card-tag">가이드</span>
           <div class="blog-card-title">TextTools 사용법 완전 가이드</div>
           <div class="blog-card-desc">글자수 세기, 공백 정리, 대소문자 변환, 중복 제거까지 제대로 활용하는 TextTools 공식 가이드입니다.</div>
           <div class="blog-card-date">2026.06.18</div>
         </a>
 
-        <a href="21-maskdoc-howto.html" class="blog-card">
+        <a href="/blog/21-maskdoc-howto.html" class="blog-card">
           <span class="blog-card-tag">가이드</span>
           <div class="blog-card-title">MaskDoc 사용법 완전 가이드</div>
           <div class="blog-card-desc">텍스트 속 주민번호, 전화번호, 이메일, 계좌번호를 자동으로 탐지해 마스킹하는 MaskDoc 공식 가이드입니다.</div>
           <div class="blog-card-date">2026.06.18</div>
         </a>
 
-        <a href="22-watermarkimage-howto.html" class="blog-card">
+        <a href="/blog/22-watermarkimage-howto.html" class="blog-card">
           <span class="blog-card-tag">가이드</span>
           <div class="blog-card-title">WatermarkImage 사용법 완전 가이드</div>
           <div class="blog-card-desc">텍스트/이미지 워터마크 추가, 투명도/위치/타일 배치까지 제대로 활용하는 WatermarkImage 공식 가이드입니다.</div>
           <div class="blog-card-date">2026.06.19</div>
         </a>
 
-        <a href="23-colorpicker-howto.html" class="blog-card">
+        <a href="/blog/23-colorpicker-howto.html" class="blog-card">
           <span class="blog-card-tag">가이드</span>
           <div class="blog-card-title">ColorPicker 사용법 완전 가이드</div>
           <div class="blog-card-desc">이미지에서 색상을 추출하고 HEX, RGB, HSL 코드를 바로 복사하는 ColorPicker 공식 가이드입니다.</div>
           <div class="blog-card-date">2026.06.19</div>
         </a>
 
-        <a href="24-qrcode-howto.html" class="blog-card">
+        <a href="/blog/24-qrcode-howto.html" class="blog-card">
           <span class="blog-card-tag">가이드</span>
           <div class="blog-card-title">QRCode 사용법 완전 가이드</div>
           <div class="blog-card-desc">URL, 텍스트, 연락처를 QR 코드로 생성하고 PNG로 다운로드하는 QRCode 공식 가이드입니다. Wi-Fi QR 코드 만들기도 수록.</div>
           <div class="blog-card-date">2026.06.19</div>
         </a>
 
-        <a href="25-jsonformat-howto.html" class="blog-card">
+        <a href="/blog/25-jsonformat-howto.html" class="blog-card">
           <span class="blog-card-tag">가이드</span>
           <div class="blog-card-title">JSONFormat 사용법 완전 가이드</div>
           <div class="blog-card-desc">JSON 정렬, 압축, 유효성 검사, 오류 위치 표시까지 제대로 활용하는 JSONFormat 공식 가이드입니다.</div>
           <div class="blog-card-date">2026.06.19</div>
         </a>
 
-        <a href="26-passwordgen-howto.html" class="blog-card">
+        <a href="/blog/26-passwordgen-howto.html" class="blog-card">
           <span class="blog-card-tag">가이드</span>
           <div class="blog-card-title">PasswordGen 사용법 완전 가이드</div>
           <div class="blog-card-desc">안전한 난수로 강력한 비밀번호를 생성하는 PasswordGen 공식 가이드입니다. 엔트로피 기반 강도 표시와 Crypto API 사용 원리도 수록.</div>
           <div class="blog-card-date">2026.06.19</div>
         </a>
 
-        <a href="27-base64tool-howto.html" class="blog-card">
+        <a href="/blog/27-base64tool-howto.html" class="blog-card">
           <span class="blog-card-tag">가이드</span>
           <div class="blog-card-title">Base64Tool 사용법 완전 가이드</div>
           <div class="blog-card-desc">텍스트와 이미지를 Base64로 인코딩/디코딩하는 Base64Tool 공식 가이드입니다. data URI 활용법과 JWT 페이로드 확인법도 수록.</div>
           <div class="blog-card-date">2026.06.20</div>
         </a>
 
-        <a href="28-diffchecker-howto.html" class="blog-card">
+        <a href="/blog/28-diffchecker-howto.html" class="blog-card">
           <span class="blog-card-tag">가이드</span>
           <div class="blog-card-title">DiffChecker 사용법 완전 가이드</div>
           <div class="blog-card-desc">두 텍스트의 차이점을 줄 단위로 비교하는 DiffChecker 공식 가이드입니다. LCS 알고리즘 원리와 활용 예시 6가지 수록.</div>
           <div class="blog-card-date">2026.06.20</div>
         </a>
 
-        <a href="29-unitconvert-howto.html" class="blog-card">
+        <a href="/blog/29-unitconvert-howto.html" class="blog-card">
           <span class="blog-card-tag">가이드</span>
           <div class="blog-card-title">UnitConvert 사용법 완전 가이드</div>
           <div class="blog-card-desc">길이, 무게, 온도, 넓이, 속도를 실시간으로 변환하는 UnitConvert 공식 가이드입니다. 온도 변환 공식과 활용 예시 6가지 수록.</div>
           <div class="blog-card-date">2026.06.20</div>
         </a>
 
-        <a href="30-markdowneditor-howto.html" class="blog-card">
+        <a href="/blog/30-markdowneditor-howto.html" class="blog-card">
           <span class="blog-card-tag">가이드</span>
           <div class="blog-card-title">MarkdownEditor 사용법 완전 가이드</div>
           <div class="blog-card-desc">마크다운 실시간 미리보기, 툴바 버튼, HTML/md 파일 저장까지 제대로 활용하는 MarkdownEditor 공식 가이드입니다.</div>
           <div class="blog-card-date">2026.06.21</div>
         </a>
 
-        <a href="31-imagebright-howto.html" class="blog-card">
+        <a href="/blog/31-imagebright-howto.html" class="blog-card">
           <span class="blog-card-tag">가이드</span>
           <div class="blog-card-title">ImageBright 사용법 완전 가이드</div>
           <div class="blog-card-desc">밀기, 대비, 채도, 색온도를 슬라이더로 실시간 보정하는 ImageBright 공식 가이드입니다. 6가지 프리셋 활용법과 각 알고리즘 원리 수록.</div>
           <div class="blog-card-date">2026.06.22</div>
         </a>
 
-        <a href="32-regextest-howto.html" class="blog-card">
+        <a href="/blog/32-regextest-howto.html" class="blog-card">
           <span class="blog-card-tag">가이드</span>
           <div class="blog-card-title">RegexTest 사용법 완전 가이드</div>
           <div class="blog-card-desc">정규식 실시간 매캄5, 플래그 설정, 프리셋 8가지까지 제대로 활용하는 RegexTest 공식 가이드입니다. 정규식 기본 문법 빠른 참고 수록.</div>
           <div class="blog-card-date">2026.06.22</div>
         </a>
 
-        <a href="33-bgremove-howto.html" class="blog-card">
+        <a href="/blog/33-bgremove-howto.html" class="blog-card">
           <span class="blog-card-tag">가이드</span>
           <div class="blog-card-title">BGRemove 사용법 완전 가이드</div>
           <div class="blog-card-desc">AI가 이미지 배경을 자동으로 제거하는 BGRemove 공식 가이드입니다. 처리 흐름, AI 인식률 한계, 활용 예시 6가지 수록.</div>
           <div class="blog-card-date">2026.06.22</div>
         </a>
 
-        <a href="34-datecalc-howto.html" class="blog-card">
+        <a href="/blog/34-datecalc-howto.html" class="blog-card">
           <span class="blog-card-tag">가이드</span>
           <div class="blog-card-title">DateCalc 사용법 완전 가이드</div>
           <div class="blog-card-desc">D-day 계산, 날짜 차이, 만 나이/한국 나이를 한 번에 계산하는 DateCalc 공식 가이드입니다. 나이 계산 방식 차이 설명 포함.</div>
           <div class="blog-card-date">2026.06.23</div>
         </a>
 
-        <a href="35-worldclock-howto.html" class="blog-card">
+        <a href="/blog/35-worldclock-howto.html" class="blog-card">
           <span class="blog-card-tag">가이드</span>
           <div class="blog-card-title">WorldClock 사용법 완전 가이드</div>
           <div class="blog-card-desc">전 세계 도시 시간을 실시간으로 확인하고 시간대를 변환하는 WorldClock 공식 가이드입니다. 서머타임 자동 반영, 100개+ 도시 지원.</div>
           <div class="blog-card-date">2026.06.23</div>
         </a>
 
-        <a href="36-hashgen-howto.html" class="blog-card">
+        <a href="/blog/36-hashgen-howto.html" class="blog-card">
           <span class="blog-card-tag">가이드</span>
           <div class="blog-card-title">HashGen 사용법 완전 가이드</div>
           <div class="blog-card-desc">MD5, SHA-1, SHA-256, SHA-512 해시값을 즉시 생성하고 파일 무결성을 검증하는 HashGen 공식 가이드입니다. 알고리즘별 특징 비교 수록.</div>
           <div class="blog-card-date">2026.06.23</div>
         </a>
 
-        <a href="37-findreplace-howto.html" class="blog-card">
+        <a href="/blog/37-findreplace-howto.html" class="blog-card">
           <span class="blog-card-tag">가이드</span>
           <div class="blog-card-title">FindReplace 사용법 완전 가이드</div>
           <div class="blog-card-desc">텍스트에서 단어를 찾아 일괄 치환하는 FindReplace 공식 가이드입니다. 정규식 모드, 개인정보 마스킹 프리셋 포함.</div>
           <div class="blog-card-date">2026.06.23</div>
         </a>
 
-        <a href="38-chartmaker-howto.html" class="blog-card">
+        <a href="/blog/38-chartmaker-howto.html" class="blog-card">
           <span class="blog-card-tag">가이드</span>
           <div class="blog-card-title">ChartMaker 사용법 완전 가이드</div>
           <div class="blog-card-desc">막대/선형/원형/도넛/레이더/폴라 차트를 즉시 만들고 PNG로 저장하는 ChartMaker 공식 가이드입니다. CSV 업로드 지원.</div>
@@ -343,18 +352,7 @@
 
       </div>
 
-      <!-- 쿠팡 파트너스 배너: PC 728×90 -->
-      <div class="blog-ad-wrap blog-ad-pc">
-        <p class="blog-ad-notice">이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</p>
-        <script src="https://ads-partners.coupang.com/g.js"></script>
-        <script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"728","height":"90","tsource":""});</script>
-      </div>
-      <!-- 쿠팡 파트너스 배너: 모바일 320×50 -->
-      <div class="blog-ad-wrap blog-ad-mo">
-        <p class="blog-ad-notice">이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</p>
-        <script src="https://ads-partners.coupang.com/g.js"></script>
-        <script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"320","height":"50","tsource":""});</script>
-      </div>
+      <div style="margin:0"><ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="9500090221"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
 
     </div>
   </main>
@@ -363,10 +361,10 @@
     <div class="container">
       <p class="footer-copy">© 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p>
       <nav class="footer-nav">
-        <a href="../privacy.html">개인정보 처리방침</a>
-        <a href="../terms.html">이용약관</a>
-        <a href="../about.html">서비스 소개</a>
-        <a href="index.html">블로그</a>
+        <a href="/privacy.html">개인정보 처리방침</a>
+        <a href="/terms.html">이용약관</a>
+        <a href="/about.html">서비스 소개</a>
+        <a href="/blog/">블로그</a>
       </nav>
     </div>
   </footer>
