@@ -492,6 +492,10 @@ a:hover { color: var(--text); }
   padding: 28px 0;
   text-align: center;
   background: rgba(255,255,255,0.45);
+  margin-top: 28px;
+}
+
+.post-wrap + .footer {
   margin-top: 48px;
 }
 
@@ -683,7 +687,7 @@ a:hover { color: var(--text); }
 .post-nav {
   display: flex;
   justify-content: space-between;
-  margin-top: 60px;
+  margin-top: 28px;
   padding-top: 24px;
   border-top: 2px solid var(--border);
   gap: 12px;
