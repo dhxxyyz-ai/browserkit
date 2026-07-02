@@ -594,14 +594,16 @@ function redrawMasked() {
 
 
 // ============================
-// 12. 수동 마스킹 (드래그)
+// 12. 수동 마스킹 (Pointer Events — 마우스·터치 통합)
 // ============================
-maskedCanvas.addEventListener('mousedown', (e) => {
+maskedCanvas.addEventListener('pointerdown', (e) => {
+  e.preventDefault();
+  maskedCanvas.setPointerCapture(e.pointerId);
   isDrawing = true;
   dragStart = getCanvasPos(maskedCanvas, e);
 });
 
-maskedCanvas.addEventListener('mousemove', (e) => {
+maskedCanvas.addEventListener('pointermove', (e) => {
   if (!isDrawing) return;
   const pos = getCanvasPos(maskedCanvas, e);
   redrawMasked();
@@ -613,38 +615,16 @@ maskedCanvas.addEventListener('mousemove', (e) => {
   ctx.fillRect(dragStart.x, dragStart.y, pos.x - dragStart.x, pos.y - dragStart.y);
 });
 
-maskedCanvas.addEventListener('mouseup', (e) => {
+maskedCanvas.addEventListener('pointerup', (e) => {
   if (!isDrawing) return;
   isDrawing = false;
   finishDraw(getCanvasPos(maskedCanvas, e));
 });
 
-// 터치 이벤트
-maskedCanvas.addEventListener('touchstart', (e) => {
-  e.preventDefault();
-  isDrawing = true;
-  dragStart = getCanvasPos(maskedCanvas, e.touches[0]);
-}, { passive: false });
-
-maskedCanvas.addEventListener('touchmove', (e) => {
-  e.preventDefault();
-  if (!isDrawing) return;
-  const pos = getCanvasPos(maskedCanvas, e.touches[0]);
-  redrawMasked();
-  const ctx = maskedCanvas.getContext('2d');
-  const previewColor = manualMaskStyle === 'black'
-    ? 'rgba(0,0,0,0.5)'
-    : 'rgba(123,108,255,0.4)';
-  ctx.fillStyle = previewColor;
-  ctx.fillRect(dragStart.x, dragStart.y, pos.x - dragStart.x, pos.y - dragStart.y);
-}, { passive: false });
-
-maskedCanvas.addEventListener('touchend', (e) => {
-  e.preventDefault();
-  if (!isDrawing) return;
+maskedCanvas.addEventListener('pointercancel', () => {
   isDrawing = false;
-  finishDraw(getCanvasPos(maskedCanvas, e.changedTouches[0]));
-}, { passive: false });
+  if (originalImage) redrawMasked();
+});
 
 function finishDraw(pos) {
   const w = pos.x - dragStart.x;
