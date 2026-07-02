@@ -2,6 +2,7 @@
    CSS 변수 (라이트 파스텔 테마)
 ============================ */
 :root {
+  color-scheme: light;
   --bg:          #f0e8ff;
   --card:        rgba(255,255,255,0.72);
   --point:       #7b6cff;
@@ -25,13 +26,13 @@
 }
 
 body {
-  background:
+  background-color: #e2cdff;
+  background-image:
     radial-gradient(125% 90% at 16% 90%, #b6f0c6 0%, transparent 46%),
     radial-gradient(120% 90% at 86% 14%, #c7d6ff 0%, transparent 50%),
     radial-gradient(105% 80% at 82% 84%, #ffc9de 0%, transparent 48%),
     radial-gradient(90%  70% at  6% 10%, #fff0bf 0%, transparent 44%),
     linear-gradient(135deg, #e2cdff, #bfe7ff);
-  background-attachment: fixed;
   color: var(--text);
   font-family: 'Gowun Dodum', system-ui, sans-serif;
   font-size: 17px;
@@ -147,7 +148,11 @@ a:hover { color: var(--text); }
   font-weight: 700;
   margin-bottom: 12px;
   font-family: 'Gowun Dodum', sans-serif;
-  color: var(--text);
+  background: linear-gradient(135deg, var(--point), var(--point-hover));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
 }
 
 .hero-desc {
@@ -165,14 +170,13 @@ a:hover { color: var(--text); }
 }
 
 .hero-badge {
-  background: rgba(255,255,255,0.8);
-  border: 2px solid var(--border);
+  background: var(--card);
+  border: 1px solid var(--border);
   border-radius: 999px;
-  padding: 4px 16px;
-  font-size: 14px;
-  color: var(--text);
+  padding: 5px 16px;
+  font-size: 13px;
+  color: var(--subtext);
   font-family: 'Gowun Dodum', sans-serif;
-  box-shadow: 2px 2px 0 var(--border);
 }
 
 /* ============================

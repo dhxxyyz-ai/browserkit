@@ -90,14 +90,8 @@
   <link rel="canonical" href="https://browserkit.online/markdown-editor/" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:image" content="https://browserkit.online/img/og-browserkit.png" />
-  <style>
-    .header .container { max-width:none; padding:0 32px; display:flex; align-items:center; justify-content:space-between; flex-wrap:nowrap; gap:12px; }
-    .hero-title { font-family:'Gowun Dodum',sans-serif; font-size:34px; font-weight:700; color:var(--text); margin-bottom:12px; }
-    .hero-desc { font-family:'Gowun Dodum',sans-serif; color:var(--subtext); font-size:17px; margin-bottom:20px; }
-    .hero-badge { font-family:'Gowun Dodum',sans-serif; }
-    .hero-badges { display:flex; flex-wrap:wrap; gap:8px; justify-content:center; }
-  </style>
 </head>
+
 <body>
   <header class="header">
     <div class="container">
@@ -338,14 +332,8 @@
   <link rel="canonical" href="https://browserkit.online/markdown-editor/" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:image" content="https://browserkit.online/img/og-browserkit.png" />
-  <style>
-    .header .container { max-width:none; padding:0 32px; display:flex; align-items:center; justify-content:space-between; flex-wrap:nowrap; gap:12px; }
-    .hero-title { font-family:'Gowun Dodum',sans-serif; font-size:34px; font-weight:700; color:var(--text); margin-bottom:12px; }
-    .hero-desc { font-family:'Gowun Dodum',sans-serif; color:var(--subtext); font-size:17px; margin-bottom:20px; }
-    .hero-badge { font-family:'Gowun Dodum',sans-serif; }
-    .hero-badges { display:flex; flex-wrap:wrap; gap:8px; justify-content:center; }
-  </style>
-</head>\n<body>\n' + DOMPurify.sanitize(marked.parse(val)) + '\n</body>\n</html>';
+</head>
+\n<body>\n' + DOMPurify.sanitize(marked.parse(val)) + '\n</body>\n</html>';
     download('markdown_export.html', fullHtml, 'text/html');
     showToast('\u2713 HTML \ud30c\uc77c\uc774 \uc800\uc7a5\ub429\ub2c8\ub2e4');
   });
@@ -385,4 +373,5 @@
   </script>
 </body>
 </html>
+
 
