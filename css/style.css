@@ -589,8 +589,8 @@ a:hover { color: var(--text); }
 .post-date {
   color: var(--subtext);
   font-size: 15px;
-  margin-bottom: 40px;
-  padding-bottom: 24px;
+  margin-bottom: 12px;
+  padding-bottom: 12px;
   border-bottom: 2px solid var(--border);
   font-family: 'Gowun Dodum', sans-serif;
 }
@@ -598,7 +598,7 @@ a:hover { color: var(--text); }
 .post-body h2 {
   font-size: 22px;
   font-weight: 700;
-  margin: 40px 0 16px;
+  margin: 24px 0 12px;
   color: var(--text);
   font-family: 'Gowun Dodum', sans-serif;
 }
