@@ -138,7 +138,7 @@ a:hover { color: var(--text); }
 ============================ */
 .hero {
   text-align: center;
-  padding: 40px 0 20px;
+  padding: 40px 0 28px;
 }
 
 .hero-icon { font-size: 52px; margin-bottom: 16px; }
