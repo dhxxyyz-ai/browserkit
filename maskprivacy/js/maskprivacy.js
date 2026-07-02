@@ -22,6 +22,7 @@ const downloadBtn       = document.getElementById('downloadBtn');
 const resetBtn          = document.getElementById('resetBtn');
 const rrnOptionWrap     = document.getElementById('rrnOptionWrap');
 const phoneOptionWrap   = document.getElementById('phoneOptionWrap');
+const maskToolbar       = document.getElementById('maskToolbar');
 
 // ============================
 // 2. 상태 관리
@@ -30,8 +31,9 @@ let originalImage = null;
 let maskRegions   = [];
 let isDrawing     = false;
 let dragStart     = { x: 0, y: 0 };
-let rrnMode       = 'full';   // full | back | back6
-let phoneMode     = 'full';   // full | back8 | back4
+let rrnMode           = 'full';   // full | back | back6
+let phoneMode         = 'full';   // full | back8 | back4
+let manualMaskStyle   = 'black';  // black | mosaic | blur
 
 // ============================
 // 3. 정규식 패턴
@@ -135,6 +137,31 @@ document.querySelectorAll('.phone-btn').forEach((btn) => {
   });
 });
 
+// 수동 마스킹 스타일 버튼
+document.querySelectorAll('.mask-style-btn').forEach((btn) => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.mask-style-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    manualMaskStyle = btn.dataset.style;
+  });
+});
+
+// Ctrl+Z: 마지막 수동 마스킹 되돌리기
+document.addEventListener('keydown', (e) => {
+  if ((e.ctrlKey || e.metaKey) && e.key === 'z' && originalImage) {
+    for (let i = maskRegions.length - 1; i >= 0; i--) {
+      if (maskRegions[i].manual) {
+        maskRegions.splice(i, 1);
+        redrawMasked();
+        renderDetectedList();
+        if (maskRegions.length === 0) detectedWrap.style.display = 'none';
+        e.preventDefault();
+        break;
+      }
+    }
+  }
+});
+
 // ============================
 // 5. 파일 처리 메인 흐름
 // ============================
@@ -158,10 +185,11 @@ async function handleFile(file) {
     showProgress(100, '완료!');
 
     setTimeout(() => {
-      progressWrap.style.display = 'none';
-      previewWrap.style.display  = 'grid';
-      detectedWrap.style.display = maskRegions.length > 0 ? 'block' : 'none';
-      actionWrap.style.display   = 'flex';
+      progressWrap.style.display    = 'none';
+      previewWrap.style.display     = 'grid';
+      maskToolbar.style.display     = 'flex';
+      detectedWrap.style.display    = maskRegions.length > 0 ? 'block' : 'none';
+      actionWrap.style.display      = 'flex';
     }, 500);
 
   } catch (err) {
@@ -462,10 +490,13 @@ function renderDetectedList() {
         <span class="detected-type">${region.type}</span>
         <span class="detected-value">${maskValue(region.value)}</span>
       </div>
-      <label class="toggle">
-        <input type="checkbox" checked data-index="${index}" />
-        <span class="toggle-slider"></span>
-      </label>
+      <div class="detected-item-right">
+        <label class="toggle">
+          <input type="checkbox" ${region.active ? 'checked' : ''} data-index="${index}" />
+          <span class="toggle-slider"></span>
+        </label>
+        <button class="detected-delete" data-index="${index}" title="삭제">✕</button>
+      </div>
     `;
     detectedList.appendChild(li);
   });
@@ -475,6 +506,16 @@ function renderDetectedList() {
       const idx = parseInt(e.target.dataset.index);
       maskRegions[idx].active = e.target.checked;
       redrawMasked();
+    });
+  });
+
+  detectedList.querySelectorAll('.detected-delete').forEach((btn) => {
+    btn.addEventListener('click', (e) => {
+      const idx = parseInt(e.currentTarget.dataset.index);
+      maskRegions.splice(idx, 1);
+      redrawMasked();
+      renderDetectedList();
+      if (maskRegions.length === 0) detectedWrap.style.display = 'none';
     });
   });
 }
@@ -487,16 +528,62 @@ function maskValue(value) {
 // ============================
 // 11. 마스킹 재렌더링
 // ============================
+function applyMask(ctx, region) {
+  const style = region.style || 'black';
+  if (style === 'mosaic') {
+    applyMosaicMask(ctx, region);
+  } else if (style === 'blur') {
+    applyBlurMask(ctx, region);
+  } else {
+    ctx.fillStyle = '#000000';
+    ctx.fillRect(region.x, region.y, region.w, region.h);
+  }
+}
+
+function applyMosaicMask(ctx, region) {
+  const { x, y, w, h } = region;
+  const size = Math.max(8, Math.floor(Math.min(w, h) / 8));
+  const x0 = Math.max(0, Math.floor(x));
+  const y0 = Math.max(0, Math.floor(y));
+  const x1 = Math.min(maskedCanvas.width,  Math.ceil(x + w));
+  const y1 = Math.min(maskedCanvas.height, Math.ceil(y + h));
+  for (let px = x0; px < x1; px += size) {
+    for (let py = y0; py < y1; py += size) {
+      const bw = Math.min(size, x1 - px);
+      const bh = Math.min(size, y1 - py);
+      if (bw <= 0 || bh <= 0) continue;
+      const d = ctx.getImageData(px, py, bw, bh);
+      let r = 0, g = 0, b = 0;
+      const n = d.data.length / 4;
+      for (let i = 0; i < d.data.length; i += 4) { r += d.data[i]; g += d.data[i+1]; b += d.data[i+2]; }
+      ctx.fillStyle = `rgb(${Math.round(r/n)},${Math.round(g/n)},${Math.round(b/n)})`;
+      ctx.fillRect(px, py, bw, bh);
+    }
+  }
+}
+
+function applyBlurMask(ctx, region) {
+  const { x, y, w, h } = region;
+  ctx.save();
+  ctx.beginPath();
+  ctx.rect(x, y, w, h);
+  ctx.clip();
+  ctx.filter = 'blur(14px)';
+  ctx.drawImage(originalImage, 0, 0);
+  ctx.filter = 'none';
+  ctx.restore();
+}
+
 function redrawMasked() {
   const ctx = maskedCanvas.getContext('2d');
   ctx.clearRect(0, 0, maskedCanvas.width, maskedCanvas.height);
   ctx.drawImage(originalImage, 0, 0);
   maskRegions.forEach((region) => {
     if (!region.active) return;
-    ctx.fillStyle = '#000000';
-    ctx.fillRect(region.x, region.y, region.w, region.h);
+    applyMask(ctx, region);
   });
 }
+
 
 // ============================
 // 12. 수동 마스킹 (드래그)
@@ -511,7 +598,10 @@ maskedCanvas.addEventListener('mousemove', (e) => {
   const pos = getCanvasPos(maskedCanvas, e);
   redrawMasked();
   const ctx = maskedCanvas.getContext('2d');
-  ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
+  const previewColor = manualMaskStyle === 'black'
+    ? 'rgba(0,0,0,0.5)'
+    : 'rgba(123,108,255,0.4)';
+  ctx.fillStyle = previewColor;
   ctx.fillRect(dragStart.x, dragStart.y, pos.x - dragStart.x, pos.y - dragStart.y);
 });
 
@@ -527,6 +617,7 @@ maskedCanvas.addEventListener('mouseup', (e) => {
     x: Math.min(dragStart.x, pos.x), y: Math.min(dragStart.y, pos.y),
     w: Math.abs(w), h: Math.abs(h),
     type: '수동 마스킹', value: '직접 지정', active: true,
+    style: manualMaskStyle, manual: true,
   });
 
   redrawMasked();
@@ -577,10 +668,14 @@ resetBtn.addEventListener('click', () => {
   uploadZone.style.display      = 'block';
   progressWrap.style.display    = 'none';
   previewWrap.style.display     = 'none';
+  maskToolbar.style.display     = 'none';
   detectedWrap.style.display    = 'none';
   rrnOptionWrap.style.display   = 'none';
   phoneOptionWrap.style.display = 'none';
   actionWrap.style.display      = 'none';
+  manualMaskStyle               = 'black';
+  document.querySelectorAll('.mask-style-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector('.mask-style-btn[data-style="black"]').classList.add('active');
 
   document.querySelectorAll('.rrn-btn').forEach(b => b.classList.remove('active'));
   document.querySelector('.rrn-btn[data-mode="full"]').classList.add('active');

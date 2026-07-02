@@ -81,7 +81,16 @@
         </div>
         <div class="preview-panel">
           <div class="preview-label">마스킹 결과</div>
+          <div class="mask-toolbar" id="maskToolbar">
+            <span class="mask-toolbar-label">수동 마스킹</span>
+            <div class="mask-style-btns">
+              <button class="mask-style-btn active" data-style="black">■ 검정</button>
+              <button class="mask-style-btn" data-style="mosaic">⊞ 모자이크</button>
+              <button class="mask-style-btn" data-style="blur">◌ 블러</button>
+            </div>
+          </div>
           <canvas id="maskedCanvas"></canvas>
+          <p class="canvas-hint">캔버스 위에서 드래그하여 영역 추가 • Ctrl+Z로 되돌리기</p>
         </div>
       </div>
 
