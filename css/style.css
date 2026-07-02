@@ -483,7 +483,6 @@ a:hover { color: var(--text); }
 }
 
 .mask-undo-btn {
-  margin-left: auto;
   padding: 4px 12px;
   border: 2px solid var(--border);
   border-radius: 8px;
@@ -497,10 +496,10 @@ a:hover { color: var(--text); }
 }
 
 .mask-undo-btn:hover {
-  background: rgba(42,36,51,0.08);
+  background: rgba(123,108,255,0.12);
 }
 
-#maskedCanvas { cursor: crosshair; }
+#maskedCanvas { cursor: crosshair; touch-action: none; }
 
 /* 탐지 항목 우측 (토글 + 삭제) */
 .detected-item-right {
