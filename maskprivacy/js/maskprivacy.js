@@ -23,6 +23,7 @@ const resetBtn          = document.getElementById('resetBtn');
 const rrnOptionWrap     = document.getElementById('rrnOptionWrap');
 const phoneOptionWrap   = document.getElementById('phoneOptionWrap');
 const maskToolbar       = document.getElementById('maskToolbar');
+const undoBtn           = document.getElementById('undoBtn');
 
 // ============================
 // 2. 상태 관리
@@ -146,19 +147,26 @@ document.querySelectorAll('.mask-style-btn').forEach((btn) => {
   });
 });
 
-// Ctrl+Z: 마지막 수동 마스킹 되돌리기
-document.addEventListener('keydown', (e) => {
-  if ((e.ctrlKey || e.metaKey) && e.key === 'z' && originalImage) {
-    for (let i = maskRegions.length - 1; i >= 0; i--) {
-      if (maskRegions[i].manual) {
-        maskRegions.splice(i, 1);
-        redrawMasked();
-        renderDetectedList();
-        if (maskRegions.length === 0) detectedWrap.style.display = 'none';
-        e.preventDefault();
-        break;
-      }
+// 되돌리기: 마지막 수동 마스킹 제거
+function undoLastManual() {
+  if (!originalImage) return;
+  for (let i = maskRegions.length - 1; i >= 0; i--) {
+    if (maskRegions[i].manual) {
+      maskRegions.splice(i, 1);
+      redrawMasked();
+      renderDetectedList();
+      if (maskRegions.length === 0) detectedWrap.style.display = 'none';
+      break;
     }
+  }
+}
+
+undoBtn.addEventListener('click', undoLastManual);
+
+document.addEventListener('keydown', (e) => {
+  if ((e.ctrlKey || e.metaKey) && e.key === 'z') {
+    e.preventDefault();
+    undoLastManual();
   }
 });
 
@@ -608,9 +616,39 @@ maskedCanvas.addEventListener('mousemove', (e) => {
 maskedCanvas.addEventListener('mouseup', (e) => {
   if (!isDrawing) return;
   isDrawing = false;
-  const pos = getCanvasPos(maskedCanvas, e);
-  const w   = pos.x - dragStart.x;
-  const h   = pos.y - dragStart.y;
+  finishDraw(getCanvasPos(maskedCanvas, e));
+});
+
+// 터치 이벤트
+maskedCanvas.addEventListener('touchstart', (e) => {
+  e.preventDefault();
+  isDrawing = true;
+  dragStart = getCanvasPos(maskedCanvas, e.touches[0]);
+}, { passive: false });
+
+maskedCanvas.addEventListener('touchmove', (e) => {
+  e.preventDefault();
+  if (!isDrawing) return;
+  const pos = getCanvasPos(maskedCanvas, e.touches[0]);
+  redrawMasked();
+  const ctx = maskedCanvas.getContext('2d');
+  const previewColor = manualMaskStyle === 'black'
+    ? 'rgba(0,0,0,0.5)'
+    : 'rgba(123,108,255,0.4)';
+  ctx.fillStyle = previewColor;
+  ctx.fillRect(dragStart.x, dragStart.y, pos.x - dragStart.x, pos.y - dragStart.y);
+}, { passive: false });
+
+maskedCanvas.addEventListener('touchend', (e) => {
+  e.preventDefault();
+  if (!isDrawing) return;
+  isDrawing = false;
+  finishDraw(getCanvasPos(maskedCanvas, e.changedTouches[0]));
+}, { passive: false });
+
+function finishDraw(pos) {
+  const w = pos.x - dragStart.x;
+  const h = pos.y - dragStart.y;
   if (Math.abs(w) < 5 || Math.abs(h) < 5) return;
 
   maskRegions.push({
@@ -623,7 +661,7 @@ maskedCanvas.addEventListener('mouseup', (e) => {
   redrawMasked();
   renderDetectedList();
   detectedWrap.style.display = 'block';
-});
+}
 
 function getCanvasPos(canvas, e) {
   const rect   = canvas.getBoundingClientRect();

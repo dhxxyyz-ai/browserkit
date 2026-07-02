@@ -482,6 +482,24 @@ a:hover { color: var(--text); }
   font-family: 'Gowun Dodum', sans-serif;
 }
 
+.mask-undo-btn {
+  margin-left: auto;
+  padding: 4px 12px;
+  border: 2px solid var(--border);
+  border-radius: 8px;
+  background: transparent;
+  font-size: 13px;
+  font-weight: 700;
+  font-family: 'Gowun Dodum', sans-serif;
+  cursor: pointer;
+  color: var(--text);
+  white-space: nowrap;
+}
+
+.mask-undo-btn:hover {
+  background: rgba(42,36,51,0.08);
+}
+
 #maskedCanvas { cursor: crosshair; }
 
 /* 탐지 항목 우측 (토글 + 삭제) */
