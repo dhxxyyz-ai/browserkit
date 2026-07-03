@@ -509,6 +509,11 @@ function renderDetectedList() {
         <span class="detected-value">${maskValue(region.value)}</span>
       </div>
       <div class="detected-item-right">
+        <select class="detected-style-select" data-index="${index}" title="마스킹 스타일">
+          <option value="black"  ${(region.style || 'black') === 'black'  ? 'selected' : ''}>■ 검정</option>
+          <option value="mosaic" ${region.style === 'mosaic' ? 'selected' : ''}>⊞ 모자이크</option>
+          <option value="blur"   ${region.style === 'blur'   ? 'selected' : ''}>◌ 블러</option>
+        </select>
         <label class="toggle">
           <input type="checkbox" ${region.active ? 'checked' : ''} data-index="${index}" />
           <span class="toggle-slider"></span>
@@ -517,6 +522,14 @@ function renderDetectedList() {
       </div>
     `;
     detectedList.appendChild(li);
+  });
+
+  detectedList.querySelectorAll('.detected-style-select').forEach((sel) => {
+    sel.addEventListener('change', (e) => {
+      const idx = parseInt(e.target.dataset.index);
+      maskRegions[idx].style = e.target.value;
+      redrawMasked();
+    });
   });
 
   detectedList.querySelectorAll('input[type="checkbox"]').forEach((checkbox) => {
