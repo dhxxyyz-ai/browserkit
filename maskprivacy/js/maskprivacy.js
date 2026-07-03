@@ -35,6 +35,9 @@ let dragStart     = { x: 0, y: 0 };
 let rrnMode           = 'full';   // full | back | back6
 let phoneMode         = 'full';   // full | back8 | back4
 let manualMaskStyle   = 'black';  // black | mosaic | blur
+let displayScale      = 1;        // 캔버스 표시 축소 비율
+
+const DISPLAY_MAX = 1200;         // 캔버스 최대 크기(px) — 모바일 성능
 
 // ============================
 // 3. 정규식 패턴
@@ -225,17 +228,20 @@ function loadImage(file) {
 // 7. Canvas 렌더링
 // ============================
 function drawOriginal() {
+  const w = originalImage.width;
+  const h = originalImage.height;
+  displayScale = Math.min(1, DISPLAY_MAX / Math.max(w, h));
   const ctx = originalCanvas.getContext('2d');
-  originalCanvas.width  = originalImage.width;
-  originalCanvas.height = originalImage.height;
-  ctx.drawImage(originalImage, 0, 0);
+  originalCanvas.width  = Math.round(w * displayScale);
+  originalCanvas.height = Math.round(h * displayScale);
+  ctx.drawImage(originalImage, 0, 0, originalCanvas.width, originalCanvas.height);
 }
 
 function drawMasked() {
   const ctx = maskedCanvas.getContext('2d');
-  maskedCanvas.width  = originalImage.width;
-  maskedCanvas.height = originalImage.height;
-  ctx.drawImage(originalImage, 0, 0);
+  maskedCanvas.width  = originalCanvas.width;
+  maskedCanvas.height = originalCanvas.height;
+  ctx.drawImage(originalImage, 0, 0, maskedCanvas.width, maskedCanvas.height);
   maskRegions.forEach((region, index) => {
     if (!region.active) return;
     animateMask(ctx, region, index);
@@ -304,10 +310,10 @@ function detectPrivateInfo(words) {
         );
         if (matchedWords.length === 0) return;
 
-        const x0 = Math.min(...matchedWords.map(w => w.bbox.x0));
-        const y0 = Math.min(...matchedWords.map(w => w.bbox.y0));
-        const x1 = Math.max(...matchedWords.map(w => w.bbox.x1));
-        const y1 = Math.max(...matchedWords.map(w => w.bbox.y1));
+        const x0 = Math.min(...matchedWords.map(w => w.bbox.x0)) * displayScale;
+        const y0 = Math.min(...matchedWords.map(w => w.bbox.y0)) * displayScale;
+        const x1 = Math.max(...matchedWords.map(w => w.bbox.x1)) * displayScale;
+        const y1 = Math.max(...matchedWords.map(w => w.bbox.y1)) * displayScale;
         const padding = 4;
 
         // 전화번호는 phoneMode, 주민번호는 rrnMode, 나머지는 full
@@ -393,10 +399,10 @@ function detectAddress(lineList) {
     }
 
     const allWords = mergedLines.flat();
-    const x0       = Math.min(...allWords.map(w => w.bbox.x0));
-    const y0       = Math.min(...allWords.map(w => w.bbox.y0));
-    const x1       = Math.max(...allWords.map(w => w.bbox.x1));
-    const y1       = Math.max(...allWords.map(w => w.bbox.y1));
+    const x0       = Math.min(...allWords.map(w => w.bbox.x0)) * displayScale;
+    const y0       = Math.min(...allWords.map(w => w.bbox.y0)) * displayScale;
+    const x1       = Math.max(...allWords.map(w => w.bbox.x1)) * displayScale;
+    const y1       = Math.max(...allWords.map(w => w.bbox.y1)) * displayScale;
     const padding  = 4;
 
     maskRegions.push({
@@ -577,7 +583,7 @@ function applyBlurMask(ctx, region) {
   ctx.rect(x, y, w, h);
   ctx.clip();
   ctx.filter = 'blur(14px)';
-  ctx.drawImage(originalImage, 0, 0);
+  ctx.drawImage(originalImage, 0, 0, maskedCanvas.width, maskedCanvas.height);
   ctx.filter = 'none';
   ctx.restore();
 }
@@ -585,7 +591,7 @@ function applyBlurMask(ctx, region) {
 function redrawMasked() {
   const ctx = maskedCanvas.getContext('2d');
   ctx.clearRect(0, 0, maskedCanvas.width, maskedCanvas.height);
-  ctx.drawImage(originalImage, 0, 0);
+  ctx.drawImage(originalImage, 0, 0, maskedCanvas.width, maskedCanvas.height);
   maskRegions.forEach((region) => {
     if (!region.active) return;
     applyMask(ctx, region);
@@ -694,6 +700,7 @@ resetBtn.addEventListener('click', () => {
   isDrawing     = false;
   rrnMode       = 'full';
   phoneMode     = 'full';
+  displayScale  = 1;
 
   [originalCanvas, maskedCanvas].forEach((c) => {
     c.getContext('2d').clearRect(0, 0, c.width, c.height);
