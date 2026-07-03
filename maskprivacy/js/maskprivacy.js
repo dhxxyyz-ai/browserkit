@@ -658,6 +658,7 @@ maskedCanvas.addEventListener('touchend', (e) => {
     ctx.restore();
   } else {
     // 2번 탭: 영역 확정
+    dragStart = tapStart;
     finishDraw(pos);
     tapStart = null;
   }
