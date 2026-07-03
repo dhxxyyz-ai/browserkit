@@ -453,6 +453,8 @@ a:hover { color: var(--text); }
 }
 
 .mask-style-btn {
+  -webkit-appearance: none;
+  appearance: none;
   padding: 4px 12px;
   border: 2px solid var(--border);
   border-radius: 8px;
@@ -483,6 +485,8 @@ a:hover { color: var(--text); }
 }
 
 .mask-undo-btn {
+  -webkit-appearance: none;
+  appearance: none;
   padding: 4px 12px;
   border: 2px solid var(--border);
   border-radius: 8px;

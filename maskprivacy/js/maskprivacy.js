@@ -594,37 +594,51 @@ function redrawMasked() {
 
 
 // ============================
-// 12. 수동 마스킹 (Pointer Events — 마우스·터치 통합)
+// 12. 수동 마스킹 (드래그)
 // ============================
-maskedCanvas.addEventListener('pointerdown', (e) => {
-  e.preventDefault();
-  maskedCanvas.setPointerCapture(e.pointerId);
+function drawPreview(pos) {
+  redrawMasked();
+  const ctx = maskedCanvas.getContext('2d');
+  ctx.fillStyle = manualMaskStyle === 'black' ? 'rgba(0,0,0,0.5)' : 'rgba(123,108,255,0.4)';
+  ctx.fillRect(dragStart.x, dragStart.y, pos.x - dragStart.x, pos.y - dragStart.y);
+}
+
+// 마우스 이벤트 (데스크톱)
+maskedCanvas.addEventListener('mousedown', (e) => {
+  if (e.pointerType === 'touch') return;
   isDrawing = true;
   dragStart = getCanvasPos(maskedCanvas, e);
 });
-
-maskedCanvas.addEventListener('pointermove', (e) => {
+maskedCanvas.addEventListener('mousemove', (e) => {
   if (!isDrawing) return;
-  const pos = getCanvasPos(maskedCanvas, e);
-  redrawMasked();
-  const ctx = maskedCanvas.getContext('2d');
-  const previewColor = manualMaskStyle === 'black'
-    ? 'rgba(0,0,0,0.5)'
-    : 'rgba(123,108,255,0.4)';
-  ctx.fillStyle = previewColor;
-  ctx.fillRect(dragStart.x, dragStart.y, pos.x - dragStart.x, pos.y - dragStart.y);
+  drawPreview(getCanvasPos(maskedCanvas, e));
 });
-
-maskedCanvas.addEventListener('pointerup', (e) => {
+maskedCanvas.addEventListener('mouseup', (e) => {
   if (!isDrawing) return;
   isDrawing = false;
   finishDraw(getCanvasPos(maskedCanvas, e));
 });
-
-maskedCanvas.addEventListener('pointercancel', () => {
-  isDrawing = false;
-  if (originalImage) redrawMasked();
+maskedCanvas.addEventListener('mouseleave', () => {
+  if (isDrawing) { isDrawing = false; if (originalImage) redrawMasked(); }
 });
+
+// 터치 이벤트 (모바일)
+maskedCanvas.addEventListener('touchstart', (e) => {
+  e.preventDefault();
+  isDrawing = true;
+  dragStart = getCanvasPos(maskedCanvas, e.touches[0]);
+}, { passive: false });
+maskedCanvas.addEventListener('touchmove', (e) => {
+  e.preventDefault();
+  if (!isDrawing) return;
+  drawPreview(getCanvasPos(maskedCanvas, e.touches[0]));
+}, { passive: false });
+maskedCanvas.addEventListener('touchend', (e) => {
+  e.preventDefault();
+  if (!isDrawing) return;
+  isDrawing = false;
+  finishDraw(getCanvasPos(maskedCanvas, e.changedTouches[0]));
+}, { passive: false });
 
 function finishDraw(pos) {
   const w = pos.x - dragStart.x;
