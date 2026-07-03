@@ -137,6 +137,7 @@ a:hover { color: var(--text); }
    히어로 섹션 (도구 페이지 공통)
 ============================ */
 .hero {
+  position: relative;
   text-align: center;
   padding: 40px 0 20px;
 }
@@ -181,8 +182,9 @@ a:hover { color: var(--text); }
 }
 
 .hero-guide-link {
-  display: inline-block;
-  margin-top: 14px;
+  position: absolute;
+  top: 16px;
+  right: 0;
   font-size: 13px;
   color: var(--subtext);
   text-decoration: underline;
