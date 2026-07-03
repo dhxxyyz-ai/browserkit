@@ -25,7 +25,6 @@
     .container { max-width:960px; margin:0 auto; padding:0 24px; }
 
     /* 헤더 */
-    .header { padding:24px 0 16px; border-bottom:1px solid var(--border); }
     .header .container { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; }
     .logo { display:flex; align-items:center; gap:10px; text-decoration:none; }
     .logo-icon { font-size:24px; }
@@ -36,11 +35,7 @@
     /* 히어로 */
     .hero { text-align:center; padding:40px 0 20px; }
     .hero-icon { font-size:48px; margin-bottom:16px; }
-    .hero h1 { font-size:32px; font-weight:700; margin-bottom:12px; background:linear-gradient(135deg,var(--point),var(--point-hover)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
-    .hero p { color:var(--subtext); font-size:15px; margin-bottom:20px; }
     .badges { display:flex; justify-content:center; gap:10px; flex-wrap:wrap; padding-bottom:0; }
-    .badge { background:var(--card); border:1px solid var(--border); border-radius:999px; padding:5px 16px; font-size:13px; color:var(--subtext); }
-
     /* 업로드 존 */
     .upload-zone { background:var(--card); border:2px dashed var(--border); border-radius:var(--radius); padding:48px 40px; text-align:center; cursor:pointer; margin:0 0 20px; }
     .upload-zone:hover, .upload-zone.drag-over { border-color:var(--point); box-shadow:0 0 24px var(--glow); background:rgba(123,108,255,0.05); }
@@ -111,7 +106,6 @@
       .preview-wrap { grid-template-columns:1fr; }
       .transform-grid { grid-template-columns:1fr 1fr; }
       .upload-zone { padding:40px 20px; }
-      .hero h1 { font-size:24px; }
       .tab-wrap { flex-wrap:wrap; }
     }
   </style>
@@ -134,14 +128,14 @@
 
       <div class="hero">
         <div class="hero-icon" style="height:78px;display:flex;justify-content:center;align-items:center"><div style="transform:scale(1.7);transform-origin:center"><div style="width:46px;height:46px;background:#ffd36e;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="position:relative;width:30px;height:30px"><div style="position:absolute;left:4px;top:0;width:3px;height:26px;background:#2a2433;border-radius:2px"></div><div style="position:absolute;left:0;top:4px;width:26px;height:3px;background:#2a2433;border-radius:2px"></div><div style="position:absolute;right:4px;bottom:0;width:3px;height:26px;background:#2a2433;border-radius:2px"></div><div style="position:absolute;left:0;bottom:4px;width:26px;height:3px;background:#2a2433;border-radius:2px"></div></div></div></div></div>
-        <h1>CropImage</h1>
-        <p>이미지 자르기, 회전, 반전을 브라우저에서 바로 처리하는 무료 도구</p>
-        <div class="badges">
-          <span class="badge">&#x1F512; 완전 로컬 처리</span>
-          <span class="badge">&#x26A1; 무료 사용</span>
-          <span class="badge">&#x1F6E1;&#xFE0F; 서버 전송 없음</span>
-          <span class="badge">&#x1F4E6; 설치 불필요</span>
-        </div>
+        <h1 class="hero-title">CropImage</h1>
+        <p class="hero-desc">이미지 자르기, 회전, 반전을 브라우저에서 바로 처리하는 무료 도구</p>
+        <div class="hero-badges">
+        <span class="badge">🔒 완전 로컬 처리</span>
+        <span class="badge">⚡ 무료 사용</span>
+        <span class="badge">🛡️ 서버 전송 없음</span>
+        <span class="badge">📦 설치 불필요</span>
+      </div>
       </div>
     <div style="margin:0 0 12px"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
 
