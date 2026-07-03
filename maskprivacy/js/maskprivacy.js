@@ -24,6 +24,10 @@ const rrnOptionWrap     = document.getElementById('rrnOptionWrap');
 const phoneOptionWrap   = document.getElementById('phoneOptionWrap');
 const maskToolbar       = document.getElementById('maskToolbar');
 const undoBtn           = document.getElementById('undoBtn');
+const canvasHint        = document.getElementById('canvasHint');
+
+const isTouch = navigator.maxTouchPoints > 0;
+if (isTouch) canvasHint.textContent = '이미지를 두 번 탭하여 영역 추가 (1번째 탭: 시작점, 2번째 탭: 끝점)';
 
 // ============================
 // 2. 상태 관리
@@ -628,25 +632,39 @@ maskedCanvas.addEventListener('mouseleave', () => {
   if (isDrawing) { isDrawing = false; if (originalImage) redrawMasked(); }
 });
 
-// 터치 이벤트 (모바일)
+// 터치 이벤트 (모바일) — 탭 2번으로 영역 지정
+let tapStart = null;
+
 maskedCanvas.addEventListener('touchstart', (e) => {
   e.preventDefault();
-  isDrawing = true;
-  dragStart = getCanvasPos(maskedCanvas, e.touches[0]);
 }, { passive: false });
-maskedCanvas.addEventListener('touchmove', (e) => {
-  e.preventDefault();
-  if (!isDrawing) return;
-  drawPreview(getCanvasPos(maskedCanvas, e.touches[0]));
-}, { passive: false });
+
 maskedCanvas.addEventListener('touchend', (e) => {
   e.preventDefault();
-  if (!isDrawing) return;
-  isDrawing = false;
-  finishDraw(getCanvasPos(maskedCanvas, e.changedTouches[0]));
+  if (!originalImage) return;
+  const pos = getCanvasPos(maskedCanvas, e.changedTouches[0]);
+
+  if (!tapStart) {
+    // 1번 탭: 시작점 표시
+    tapStart = pos;
+    redrawMasked();
+    const ctx = maskedCanvas.getContext('2d');
+    ctx.save();
+    ctx.strokeStyle = 'rgba(123,108,255,0.9)';
+    ctx.lineWidth = 2;
+    ctx.setLineDash([4, 4]);
+    ctx.strokeRect(pos.x - 12, pos.y - 12, 24, 24);
+    ctx.setLineDash([]);
+    ctx.restore();
+  } else {
+    // 2번 탭: 영역 확정
+    finishDraw(pos);
+    tapStart = null;
+  }
 }, { passive: false });
+
 maskedCanvas.addEventListener('touchcancel', () => {
-  isDrawing = false;
+  tapStart = null;
   if (originalImage) redrawMasked();
 });
 
@@ -698,6 +716,7 @@ resetBtn.addEventListener('click', () => {
   originalImage = null;
   maskRegions   = [];
   isDrawing     = false;
+  tapStart      = null;
   rrnMode       = 'full';
   phoneMode     = 'full';
   displayScale  = 1;
