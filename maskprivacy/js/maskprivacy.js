@@ -27,7 +27,7 @@ const undoBtn           = document.getElementById('undoBtn');
 const canvasHint        = document.getElementById('canvasHint');
 
 const isTouch = navigator.maxTouchPoints > 0;
-if (isTouch) canvasHint.textContent = '이미지를 두 번 탭하여 영역 추가 (1번째 탭: 시작점, 2번째 탭: 끝점) · v3';
+if (isTouch) canvasHint.textContent = '이미지를 두 번 탭하여 영역 추가 (1번째 탭: 시작점, 2번째 탭: 끝점) · v4';
 
 // ============================
 // 2. 상태 관리
