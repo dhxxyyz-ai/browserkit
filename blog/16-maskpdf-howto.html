@@ -58,6 +58,12 @@
   </script>  <link rel="canonical" href="https://browserkit.online/blog/16-maskpdf-howto.html" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:image" content="https://browserkit.online/img/og-browserkit.png" />
+  <style>
+    .post-table-wrap { overflow-x:auto; }
+    .post-table th, .post-table td { white-space:nowrap; }
+    .post-nav a { word-break:keep-all; }
+    .post-nav .nav-label { display:block; font-size:13px; color:var(--subtext); opacity:0.7; margin-bottom:4px; }
+  </style>
 </head>
 <body>
   <header class="header">
@@ -94,7 +100,7 @@
       <div class="step-card"><div class="step-num">6</div><div class="step-content"><h3>페이지 이동 및 전체 확인</h3><p>이전/다음 버튼으로 페이지를 이동하며 모든 페이지의 마스킹 결과를 검토합니다.</p></div></div>
       <div class="step-card"><div class="step-num">7</div><div class="step-content"><h3>PDF 다운로드</h3><p>마스킹 완료 후 다운로드 버튼을 클릭하면 <code>maskpdf_result.pdf</code> 파일로 저장됩니다.</p></div></div>
       <h2>마스킹 방식 비교</h2>
-      <table class="post-table">
+      <div class="post-table-wrap"><table class="post-table">
         <thead><tr><th>항목</th><th>옵션</th><th>결과 예시</th></tr></thead>
         <tbody>
           <tr><td>주민번호 전체</td><td>전체 가리기</td><td>██████-███████</td></tr>
@@ -104,9 +110,9 @@
           <tr><td>전화번호 뒷 8자리</td><td>뒷 번호 8자리</td><td>010-████-████</td></tr>
           <tr><td>전화번호 뒷 4자리</td><td>뒷 번호 4자리</td><td>010-1234-████</td></tr>
         </tbody>
-      </table>
+      </table></div>
       <h2>MaskPrivacy와의 차이점</h2>
-      <table class="post-table">
+      <div class="post-table-wrap"><table class="post-table">
         <thead><tr><th>항목</th><th>MaskPrivacy</th><th>MaskPDF</th></tr></thead>
         <tbody>
           <tr><td>처리 대상</td><td>이미지 (PNG/JPG/WEBP)</td><td>PDF 문서</td></tr>
@@ -115,7 +121,7 @@
           <tr><td>처리 시간</td><td>10~30초</td><td>페이지 수에 따라 수 분 소요</td></tr>
           <tr><td>권장 파일</td><td>제한 없음</td><td>20페이지 이하 권장</td></tr>
         </tbody>
-      </table>
+      </table></div>
       <div class="post-highlight">💡 OCR 특성상 이미지 품질이 낮거나 손글씨, 특수 폰트의 경우 자동 탐지 정확도가 낮을 수 있습니다. 탐지 결과를 반드시 육안으로 확인하고 수동 마스킹으로 보완하세요. 스캔 PDF의 경우 해상도가 높을수록 탐지 정확도가 올라갑니다.</div>
     </div>
     <div class="cta-box">
@@ -124,8 +130,8 @@
     </div>
     <div style="margin:12px 0"><ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="9500090221"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
     <div class="post-nav">
-      <a href="/blog/15-privacy-report-guide.html">← 이전 글: 개인정보보호위원회 신고 방법 안내</a>
-      <a href="/blog/17-fitimage-howto.html">다음 글: FitImage 사용법 완전 가이드 →</a>
+      <a href="/blog/15-privacy-report-guide.html"><span class="nav-label">← 이전 글</span>개인정보보호위원회 신고 방법 안내</a>
+      <a href="/blog/17-fitimage-howto.html" style="text-align:right"><span class="nav-label">다음 글 →</span>FitImage 사용법 완전 가이드</a>
     </div>
   </article>
   <footer class="footer">

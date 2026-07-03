@@ -110,6 +110,12 @@
   </script>  <link rel="canonical" href="https://browserkit.online/blog/37-findreplace-howto.html" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:image" content="https://browserkit.online/img/og-browserkit.png" />
+  <style>
+    .post-table-wrap { overflow-x:auto; }
+    .post-table th, .post-table td { white-space:nowrap; }
+    .post-nav a { word-break:keep-all; }
+    .post-nav .nav-label { display:block; font-size:13px; color:var(--subtext); opacity:0.7; margin-bottom:4px; }
+  </style>
 </head>
 <body>
   <header class="header">
@@ -238,7 +244,7 @@
         <span class="opt-chip">.*</span>
         <span class="opt-chip">^$</span>
       </div>
-      <table class="post-table">
+      <div class="post-table-wrap"><table class="post-table">
         <thead><tr><th>버튼</th><th>기능</th><th>설명</th></tr></thead>
         <tbody>
           <tr><td><strong>Aa</strong></td><td>대소문자 구분</td><td>활성화 시 대소문자를 구분합니다. <code>Hello</code>와 <code>hello</code>를 다른 단어로 취급합니다. 기본값: 비활성(대소문자 무시)</td></tr>
@@ -246,7 +252,7 @@
           <tr><td><strong>.*</strong></td><td>정규식 모드</td><td>활성화 시 찾을 내용을 정규식으로 해석합니다. 패턴 기반 치환이 필요할 때 사용합니다.</td></tr>
           <tr><td><strong>^$</strong></td><td>여러 줄 모드</td><td>정규식의 <code>^</code>(줄 시작), <code>$</code>(줄 끝)이 각 줄에 적용됩니다. 빈 줄 제거 프리셋 등에서 사용합니다.</td></tr>
         </tbody>
-      </table>
+      </table></div>
 
       <h2>정규식 모드 사용법</h2>
       <p>정규식 모드(.*) 버튼을 활성화하면 찾을 내용을 정규식 패턴으로 해석합니다. 활성화 시 입력창 아래에 정규식 빠른 참고 표가 자동으로 펼쳐집니다.</p>
@@ -318,14 +324,14 @@
       </div>
 
       <h3>텍스트 정리 프리셋</h3>
-      <table class="post-table">
+      <div class="post-table-wrap"><table class="post-table">
         <thead><tr><th>프리셋</th><th>효과</th><th>활용 상황</th></tr></thead>
         <tbody>
           <tr><td>연속 공백 → 단일 공백</td><td>두 칸 이상 공백을 한 칸으로 줄임</td><td>붙여넣기한 텍스트 정리</td></tr>
           <tr><td>앞뒤 공백 제거</td><td>각 줄의 앞뒤 공백 제거</td><td>엑셀 데이터 정제</td></tr>
           <tr><td>빈 줄 제거</td><td>빈 줄 전체 삭제</td><td>문서 압축, 로그 정리</td></tr>
         </tbody>
-      </table>
+      </table></div>
 
       <h2>활용 예시</h2>
       <div class="use-case-grid">
@@ -395,8 +401,8 @@
     <div style="margin:12px 0"><ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="9500090221"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
 
 <div class="post-nav">
-      <a href="/blog/36-hashgen-howto.html">&#x2190; 이전 글: HashGen 사용법 완전 가이드</a>
-      <a href="/blog/38-chartmaker-howto.html">다음 글: ChartMaker 사용법 완전 가이드 &#x2192;</a>
+      <a href="/blog/36-hashgen-howto.html"><span class="nav-label">← 이전 글</span>HashGen 사용법 완전 가이드</a>
+      <a href="/blog/38-chartmaker-howto.html" style="text-align:right"><span class="nav-label">다음 글 →</span>ChartMaker 사용법 완전 가이드</a>
     </div>
   </div>
 

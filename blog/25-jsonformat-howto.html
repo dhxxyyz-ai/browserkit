@@ -69,6 +69,12 @@
   </script>  <link rel="canonical" href="https://browserkit.online/blog/25-jsonformat-howto.html" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:image" content="https://browserkit.online/img/og-browserkit.png" />
+  <style>
+    .post-table-wrap { overflow-x:auto; }
+    .post-table th, .post-table td { white-space:nowrap; }
+    .post-nav a { word-break:keep-all; }
+    .post-nav .nav-label { display:block; font-size:13px; color:var(--subtext); opacity:0.7; margin-bottom:4px; }
+  </style>
 </head>
 <body>
   <header class="header">
@@ -159,7 +165,7 @@
 <span class="json-bracket">}</span></div>
 
       <h2>구문 강조 색상 가이드</h2>
-      <table class="post-table">
+      <div class="post-table-wrap"><table class="post-table">
         <thead><tr><th>타입</th><th>색상</th><th>예시</th></tr></thead>
         <tbody>
           <tr><td>키 (Key)</td><td>보라색</td><td><code>"name"</code>, <code>"version"</code></td></tr>
@@ -169,19 +175,19 @@
           <tr><td>null</td><td>빨간색</td><td><code>null</code></td></tr>
           <tr><td>괄호 (Bracket)</td><td>흰색</td><td><code>{</code>, <code>}</code>, <code>[</code>, <code>]</code></td></tr>
         </tbody>
-      </table>
+      </table></div>
 
       <h2>들여쓰기 2칸 vs 4칸</h2>
-      <table class="post-table">
+      <div class="post-table-wrap"><table class="post-table">
         <thead><tr><th>옵션</th><th>권장 상황</th></tr></thead>
         <tbody>
           <tr><td>2칸 들여쓰기</td><td>JavaScript, Node.js, 웹 개발 표준. 화면 공간을 효율적으로 사용</td></tr>
           <tr><td>4칸 들여쓰기</td><td>Python, Java 등 4칸을 표준으로 사용하는 환경. 가독성이 더 높음</td></tr>
         </tbody>
-      </table>
+      </table></div>
 
       <h2>자주 발생하는 JSON 오류</h2>
-      <table class="post-table">
+      <div class="post-table-wrap"><table class="post-table">
         <thead><tr><th>오류 유형</th><th>잘못된 예</th><th>올바른 예</th></tr></thead>
         <tbody>
           <tr><td>작은따옴표 사용</td><td><code>{'key': 'value'}</code></td><td><code>{"key": "value"}</code></td></tr>
@@ -190,7 +196,7 @@
           <tr><td>주석 포함</td><td><code>{"a": 1 // 주석}</code></td><td><code>{"a": 1}</code></td></tr>
           <tr><td>undefined 값</td><td><code>{"a": undefined}</code></td><td><code>{"a": null}</code></td></tr>
         </tbody>
-      </table>
+      </table></div>
 
       <h2>활용 예시</h2>
 
@@ -216,8 +222,8 @@
     <div style="margin:12px 0"><ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="9500090221"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
 
 <div class="post-nav">
-      <a href="/blog/24-qrcode-howto.html">← 이전 글: QRCode 사용법 완전 가이드</a>
-      <a href="/blog/26-passwordgen-howto.html">다음 글: PasswordGen 사용법 완전 가이드 →</a>
+      <a href="/blog/24-qrcode-howto.html"><span class="nav-label">← 이전 글</span>QRCode 사용법 완전 가이드</a>
+      <a href="/blog/26-passwordgen-howto.html" style="text-align:right"><span class="nav-label">다음 글 →</span>PasswordGen 사용법 완전 가이드</a>
     </div>
   </div>
 

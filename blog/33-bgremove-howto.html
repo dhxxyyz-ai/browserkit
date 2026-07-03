@@ -86,6 +86,12 @@
   </script>  <link rel="canonical" href="https://browserkit.online/blog/33-bgremove-howto.html" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:image" content="https://browserkit.online/img/og-browserkit.png" />
+  <style>
+    .post-table-wrap { overflow-x:auto; }
+    .post-table th, .post-table td { white-space:nowrap; }
+    .post-nav a { word-break:keep-all; }
+    .post-nav .nav-label { display:block; font-size:13px; color:var(--subtext); opacity:0.7; margin-bottom:4px; }
+  </style>
 </head>
 <body>
   <header class="header">
@@ -188,13 +194,13 @@
         <div class="progress-demo-text">모델 다운로드 중... 30%</div>
       </div>
 
-      <table class="post-table">
+      <div class="post-table-wrap"><table class="post-table">
         <thead><tr><th>방문 유형</th><th>모델 로딩</th><th>대기 시간</th></tr></thead>
         <tbody>
           <tr><td>첫 방문 (캐시 없음)</td><td>약 40MB 다운로드</td><td>5~15초 (인터넷 속도에 따라 다름)</td></tr>
           <tr><td>재방문 (캐시 있음)</td><td>캐시에서 즉시 로드</td><td>1~3초</td></tr>
         </tbody>
-      </table>
+      </table></div>
 
       <p>모델은 브라우저 캐시에 저장되므로 브라우저 캐시를 지우지 않는 한 다시 다운로드할 필요가 없습니다.</p>
 
@@ -205,7 +211,7 @@
       </div>
 
       <h2>잘 되는 이미지 vs 어려운 이미지</h2>
-      <table class="post-table">
+      <div class="post-table-wrap"><table class="post-table">
         <thead><tr><th>유형</th><th>결과 품질</th><th>예시</th></tr></thead>
         <tbody>
           <tr><td>&#x2705; 단색 배경</td><td>매우 좋음</td><td>흰 배경 제품 사진, 스튜디오 인물 사진</td></tr>
@@ -214,7 +220,7 @@
           <tr><td>&#x26A0;&#xFE0F; 배경과 피사체 색상 유사</td><td>어려움</td><td>흰 옷 + 흰 배경, 갈색 개 + 갈색 소파</td></tr>
           <tr><td>&#x274C; 머리카락·털 등 세밀한 경계</td><td>부분적 제거</td><td>곱슬머리, 장모종 동물</td></tr>
         </tbody>
-      </table>
+      </table></div>
 
       <div class="post-warn">
         <strong>⚠️ AI 인식률 한계:</strong> BGRemove는 AI가 배경을 자동으로 판단하므로 이미지 특성에 따라 배경이 완벽하게 제거되지 않을 수 있습니다. 특히 피사체와 배경의 색상이 비슷하거나 경계가 복잡한 경우 일부 배경이 남거나 피사체 일부가 제거될 수 있습니다.
@@ -256,7 +262,7 @@
 
       <h2>AI 모델 기술 원리</h2>
       <p>BGRemove는 <code>@imgly/background-removal</code> 오픈소스 라이브러리를 사용합니다. 이 라이브러리는 ONNX(Open Neural Network Exchange) 형식의 AI 세그멘테이션 모델을 WebAssembly(WASM)로 브라우저에서 직접 실행합니다.</p>
-      <table class="post-table">
+      <div class="post-table-wrap"><table class="post-table">
         <thead><tr><th>구성 요소</th><th>역할</th></tr></thead>
         <tbody>
           <tr><td>ONNX 모델 (small, ~40MB)</td><td>이미지에서 피사체와 배경을 구분하는 AI 세그멘테이션 모델</td></tr>
@@ -264,7 +270,7 @@
           <tr><td>브라우저 캐시</td><td>첫 방문 이후 모델 파일을 저장해 재다운로드 방지</td></tr>
           <tr><td>Canvas API</td><td>마스크를 적용해 배경 픽셀을 투명으로 처리</td></tr>
         </tbody>
-      </table>
+      </table></div>
 
       <div class="post-highlight">&#x1F512; BGRemove는 모든 AI 추론이 내 PC 브라우저에서만 실행됩니다. 이미지가 외부 서버로 전송되지 않아 개인 사진, 기업 제품 이미지 등 민감한 이미지도 안심하고 처리할 수 있습니다.</div>
     </div>
@@ -276,8 +282,8 @@
     <div style="margin:12px 0"><ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="9500090221"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
 
 <div class="post-nav">
-      <a href="/blog/32-regextest-howto.html">&#x2190; 이전 글: RegexTest 사용법 완전 가이드</a>
-      <a href="/blog/34-datecalc-howto.html">다음 글: DateCalc 사용법 완전 가이드 &#x2192;</a>
+      <a href="/blog/32-regextest-howto.html"><span class="nav-label">← 이전 글</span>RegexTest 사용법 완전 가이드</a>
+      <a href="/blog/34-datecalc-howto.html" style="text-align:right"><span class="nav-label">다음 글 →</span>DateCalc 사용법 완전 가이드</a>
     </div>
   </div>
 

@@ -88,6 +88,12 @@
   </script>  <link rel="canonical" href="https://browserkit.online/blog/30-markdowneditor-howto.html" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:image" content="https://browserkit.online/img/og-browserkit.png" />
+  <style>
+    .post-table-wrap { overflow-x:auto; }
+    .post-table th, .post-table td { white-space:nowrap; }
+    .post-nav a { word-break:keep-all; }
+    .post-nav .nav-label { display:block; font-size:13px; color:var(--subtext); opacity:0.7; margin-bottom:4px; }
+  </style>
 </head>
 <body>
   <header class="header">
@@ -176,7 +182,7 @@
         <span class="tb-btn active">구분선</span>
       </div>
 
-      <table class="post-table">
+      <div class="post-table-wrap"><table class="post-table">
         <thead><tr><th>버튼</th><th>기능</th><th>삽입되는 마크다운</th></tr></thead>
         <tbody>
           <tr><td>H1 / H2 / H3</td><td>제목 1~3</td><td><code># </code> / <code>## </code> / <code>### </code></td></tr>
@@ -192,7 +198,7 @@
           <tr><td>이미지</td><td>이미지 삽입</td><td><code>![설명](URL)</code></td></tr>
           <tr><td>구분선</td><td>수평 구분선</td><td><code>---</code></td></tr>
         </tbody>
-      </table>
+      </table></div>
 
       <h2>마크다운 문법 빠른 참고</h2>
 
@@ -276,7 +282,7 @@ function hello() {
       </div>
 
       <h2>파일 저장 옵션</h2>
-      <table class="post-table">
+      <div class="post-table-wrap"><table class="post-table">
         <thead><tr><th>버튼</th><th>파일명</th><th>내용</th><th>용도</th></tr></thead>
         <tbody>
           <tr><td>HTML 복사</td><td>—</td><td>렌더링된 HTML 태그</td><td>블로그, 위지윅 에디터에 붙여넣기</td></tr>
@@ -284,7 +290,7 @@ function hello() {
           <tr><td>HTML 저장</td><td><code>markdown_export.html</code></td><td>기본 CSS 스타일 포함 HTML</td><td>독립 웹페이지로 공유</td></tr>
           <tr><td>.md 저장</td><td><code>document.md</code></td><td>순수 마크다운 텍스트</td><td>GitHub, VS Code 등에서 편집</td></tr>
         </tbody>
-      </table>
+      </table></div>
 
       <h2>Tab 키 들여쓰기</h2>
       <p>입력창에서 Tab 키를 누르면 공백 2칸이 삽입됩니다. 코드 블록 안에서 들여쓰기를 작성하거나 중첩 목록을 만들 때 편리합니다.</p>
@@ -336,8 +342,8 @@ function hello() {
     <div style="margin:12px 0"><ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="9500090221"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
 
 <div class="post-nav">
-      <a href="/blog/29-unitconvert-howto.html">&#x2190; 이전 글: UnitConvert 사용법 완전 가이드</a>
-      <a href="/blog/31-imagebright-howto.html">다음 글: ImageBright 사용법 완전 가이드 &#x2192;</a>
+      <a href="/blog/29-unitconvert-howto.html"><span class="nav-label">← 이전 글</span>UnitConvert 사용법 완전 가이드</a>
+      <a href="/blog/31-imagebright-howto.html" style="text-align:right"><span class="nav-label">다음 글 →</span>ImageBright 사용법 완전 가이드</a>
     </div>
   </div>
 

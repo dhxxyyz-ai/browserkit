@@ -49,6 +49,12 @@
   </script>  <link rel="canonical" href="https://browserkit.online/blog/04-resume-privacy.html" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:image" content="https://browserkit.online/img/og-browserkit.png" />
+  <style>
+    .post-table-wrap { overflow-x:auto; }
+    .post-table th, .post-table td { white-space:nowrap; }
+    .post-nav a { word-break:keep-all; }
+    .post-nav .nav-label { display:block; font-size:13px; color:var(--subtext); opacity:0.7; margin-bottom:4px; }
+  </style>
 </head>
 <body>
   <header class="header">
@@ -66,7 +72,7 @@
     <div class="post-body">
       <p>취업 준비생이라면 이력서를 작성하면서 어디까지 개인정보를 써야 할지 고민해본 적 있을 겁니다. 지나치게 많은 정보를 기재하면 개인정보 유출 위험이 높아지고, 너무 적으면 채용에 불리할 수 있다는 걱정도 있습니다.</p>
       <h2>꼭 필요한 정보 vs 불필요한 정보</h2>
-      <table class="post-table">
+      <div class="post-table-wrap"><table class="post-table">
         <thead><tr><th>항목</th><th>필요 여부</th><th>이유</th></tr></thead>
         <tbody>
           <tr><td>이름</td><td><span class="check">✓ 필요</span></td><td>기본 신원 확인</td></tr>
@@ -79,7 +85,7 @@
           <tr><td>종교·정치 성향</td><td><span class="cross">✗ 불필요</span></td><td>민감정보, 기재 금물</td></tr>
           <tr><td>사진</td><td>선택적</td><td>직무에 따라 다름</td></tr>
         </tbody>
-      </table>
+      </table></div>
       <div class="post-warn">⚠️ 채용 전 주민등록번호를 요구하는 것은 개인정보보호법 위반입니다. 채용 담당자가 요구하더라도 거부할 수 있으며, 불합격 등의 불이익을 줄 경우 신고 대상이 됩니다.</div>
             
       <div style="margin:12px 0"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
@@ -106,8 +112,8 @@
     </div>
     <div style="margin:12px 0"><ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="9500090221"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
     <div class="post-nav">
-      <a href="/blog/03-id-photo-masking.html">← 이전 글: 신분증 사진 보낼 때 꼭 마스킹해야 하는 이유</a>
-      <a href="/blog/05-privacy-leak-cases.html">다음 글: 개인정보 유출 실제 사례 모음 →</a>
+      <a href="/blog/03-id-photo-masking.html"><span class="nav-label">← 이전 글</span>신분증 사진 보낼 때 꼭 마스킹해야 하는 이유</a>
+      <a href="/blog/05-privacy-leak-cases.html" style="text-align:right"><span class="nav-label">다음 글 →</span>개인정보 유출 실제 사례 모음</a>
     </div>
   </article>
   <footer class="footer"><div class="container"><p class="footer-copy">© 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p><nav class="footer-nav"><a href="/privacy.html">개인정보 처리방침</a><a href="/terms.html">이용약관</a><a href="/about.html">서비스 소개</a><a href="/blog/">블로그</a></nav></div></footer>

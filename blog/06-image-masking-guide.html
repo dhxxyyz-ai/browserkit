@@ -52,6 +52,12 @@
   </script>  <link rel="canonical" href="https://browserkit.online/blog/06-image-masking-guide.html" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:image" content="https://browserkit.online/img/og-browserkit.png" />
+  <style>
+    .post-table-wrap { overflow-x:auto; }
+    .post-table th, .post-table td { white-space:nowrap; }
+    .post-nav a { word-break:keep-all; }
+    .post-nav .nav-label { display:block; font-size:13px; color:var(--subtext); opacity:0.7; margin-bottom:4px; }
+  </style>
 </head>
 <body>
   <header class="header">
@@ -71,7 +77,7 @@
 
       <h2>이미지 속에 숨은 개인정보 유형</h2>
       <p>우리가 흔히 공유하는 이미지에는 다음과 같은 개인정보가 포함될 수 있습니다.</p>
-      <table class="post-table">
+      <div class="post-table-wrap"><table class="post-table">
         <thead><tr><th>문서 유형</th><th>포함된 개인정보</th><th>유출 시 위험</th></tr></thead>
         <tbody>
           <tr><td>주민등록증 / 운전면허증</td><td>주민번호, 주소, 얼굴사진, 발급일</td><td>명의도용, 대출 사기</td></tr>
@@ -81,7 +87,7 @@
           <tr><td>명함 / 연락처</td><td>전화번호, 이메일, 부서 정보</td><td>스팸, 보이스피싱</td></tr>
           <tr><td>택배 운송장</td><td>이름, 주소, 전화번호</td><td>주소 추적, 스토킹</td></tr>
         </tbody>
-      </table>
+      </table></div>
 
       <div style="margin:12px 0 0"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
       <h2>이미지 마스킹이 꼭 필요한 7가지 상황</h2>
@@ -102,7 +108,7 @@
 
       <h2>잘못된 마스킹 방법과 그 위험성</h2>
       <div class="post-warn">⚠️ 스티커·이모지·흰 박스로 덮는 방법은 원본 데이터가 이미지 레이어에 그대로 남아 있어, 간단한 편집 작업으로 원본이 복원될 수 있습니다.</div>
-      <table class="post-table">
+      <div class="post-table-wrap"><table class="post-table">
         <thead><tr><th>마스킹 방법</th><th>안전성</th><th>이유</th></tr></thead>
         <tbody>
           <tr><td>카카오톡 스티커 덮기</td><td>❌ 매우 위험</td><td>스티커 레이어 제거 시 원본 노출</td></tr>
@@ -111,7 +117,7 @@
           <tr><td>포토샵 픽셀 편집</td><td>✓ 안전</td><td>픽셀을 직접 덮어써 원본 복원 불가</td></tr>
           <tr><td>MaskPrivacy</td><td>✓ 안전</td><td>브라우저에서 픽셀 단위로 처리, 서버 전송 없음</td></tr>
         </tbody>
-      </table>
+      </table></div>
 
       <h2>상황별 마스킹 체크리스트</h2>
       <p>이미지를 공유하기 전에 아래 항목을 반드시 확인하세요.</p>
@@ -132,8 +138,8 @@
     </div>
     <div style="margin:12px 0"><ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="9500090221"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
     <div class="post-nav">
-      <a href="/blog/05-privacy-leak-cases.html">← 이전 글: 개인정보 유출 실제 사례 모음</a>
-      <a href="/blog/07-maskprivacy-howto.html">다음 글: MaskPrivacy 사용법 완전 가이드 →</a>
+      <a href="/blog/05-privacy-leak-cases.html"><span class="nav-label">← 이전 글</span>개인정보 유출 실제 사례 모음</a>
+      <a href="/blog/07-maskprivacy-howto.html" style="text-align:right"><span class="nav-label">다음 글 →</span>MaskPrivacy 사용법 완전 가이드</a>
     </div>
   </article>
   <footer class="footer"><div class="container"><p class="footer-copy">© 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p><nav class="footer-nav"><a href="/privacy.html">개인정보 처리방침</a><a href="/terms.html">이용약관</a><a href="/about.html">서비스 소개</a><a href="/blog/">블로그</a></nav></div></footer>

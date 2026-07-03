@@ -59,6 +59,12 @@
   </script>  <link rel="canonical" href="https://browserkit.online/blog/18-pdfmerge-howto.html" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:image" content="https://browserkit.online/img/og-browserkit.png" />
+  <style>
+    .post-table-wrap { overflow-x:auto; }
+    .post-table th, .post-table td { white-space:nowrap; }
+    .post-nav a { word-break:keep-all; }
+    .post-nav .nav-label { display:block; font-size:13px; color:var(--subtext); opacity:0.7; margin-bottom:4px; }
+  </style>
 </head>
 <body>
   <header class="header">
@@ -152,7 +158,7 @@
 
       <h2>페이지 범위 입력 방법</h2>
       <p>페이지 범위 필드를 비워두면 해당 파일의 전체 페이지가 포함됩니다. 아래와 같이 다양한 방식으로 입력할 수 있습니다.</p>
-      <table class="post-table">
+      <div class="post-table-wrap"><table class="post-table">
         <thead><tr><th>입력 예시</th><th>결과</th></tr></thead>
         <tbody>
           <tr><td>비워둠</td><td>전체 페이지 포함</td></tr>
@@ -161,10 +167,10 @@
           <tr><td>1-3, 5</td><td>1, 2, 3, 5페이지</td></tr>
           <tr><td>2-4, 7-9</td><td>2, 3, 4, 7, 8, 9페이지</td></tr>
         </tbody>
-      </table>
+      </table></div>
 
       <h2>다른 PDF 도구와의 비교</h2>
-      <table class="post-table">
+      <div class="post-table-wrap"><table class="post-table">
         <thead><tr><th>항목</th><th>PDFMerge</th><th>MaskPDF</th></tr></thead>
         <tbody>
           <tr><td>주요 기능</td><td>여러 PDF 합치기 / 페이지 추출</td><td>PDF 속 개인정보 마스킹</td></tr>
@@ -173,7 +179,7 @@
           <tr><td>처리 시간</td><td>파일 수·페이지 수에 따라 다름</td><td>페이지 수에 따라 다름</td></tr>
           <tr><td>서버 전송</td><td>없음 (완전 로컬 처리)</td><td>없음 (완전 로컬 처리)</td></tr>
         </tbody>
-      </table>
+      </table></div>
 
       <div class="post-highlight">&#x1F4A1; 대용량 PDF 또는 파일 수가 많을 경우 브라우저 메모리 부족이 발생할 수 있습니다. 파일 5개 이하, 총 페이지 수 50페이지 이하를 권장합니다. 처리 중 다른 탭을 여러 개 열면 속도가 느려질 수 있습니다.</div>
     </div>
@@ -185,8 +191,8 @@
     <div style="margin:12px 0"><ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="9500090221"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
 
 <div class="post-nav">
-      <a href="/blog/17-fitimage-howto.html">← 이전 글: FitImage 사용법 완전 가이드</a>
-      <a href="/blog/19-maskface-howto.html">다음 글: MaskFace 사용법 완전 가이드 →</a>
+      <a href="/blog/17-fitimage-howto.html"><span class="nav-label">← 이전 글</span>FitImage 사용법 완전 가이드</a>
+      <a href="/blog/19-maskface-howto.html" style="text-align:right"><span class="nav-label">다음 글 →</span>MaskFace 사용법 완전 가이드</a>
     </div>
   </div>
 

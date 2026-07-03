@@ -95,6 +95,12 @@
   </script>  <link rel="canonical" href="https://browserkit.online/blog/32-regextest-howto.html" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:image" content="https://browserkit.online/img/og-browserkit.png" />
+  <style>
+    .post-table-wrap { overflow-x:auto; }
+    .post-table th, .post-table td { white-space:nowrap; }
+    .post-nav a { word-break:keep-all; }
+    .post-nav .nav-label { display:block; font-size:13px; color:var(--subtext); opacity:0.7; margin-bottom:4px; }
+  </style>
 </head>
 <body>
   <header class="header">
@@ -210,7 +216,7 @@ test@test 는 유효하지 않습니다.</div>
       <p>각 매칭의 순서 번호, 매칭된 값, 텍스트 내 시작 인덱스 위치가 표시됩니다. 캡처 그룹을 사용한 경우 그룹별 결과도 함께 표시됩니다.</p>
 
       <h2>플래그 설명</h2>
-      <table class="post-table">
+      <div class="post-table-wrap"><table class="post-table">
         <thead><tr><th>플래그</th><th>역할</th><th>사용 예</th></tr></thead>
         <tbody>
           <tr>
@@ -234,7 +240,7 @@ test@test 는 유효하지 않습니다.</div>
             <td>여러 줄에 걸친 HTML 태그 매칭</td>
           </tr>
         </tbody>
-      </table>
+      </table></div>
 
       <h2>빠른 프리셋</h2>
       <p>자주 사용하는 정규식 패턴을 샘플 텍스트와 함께 즉시 불러올 수 있습니다. 프리셋을 클릭하면 정규식 입력창과 테스트 텍스트가 자동으로 채워집니다.</p>
@@ -248,7 +254,7 @@ test@test 는 유효하지 않습니다.</div>
         <span class="preset-chip">&#x1F310; IP 주소</span>
         <span class="preset-chip">&#x1F3A8; HEX 색상</span>
       </div>
-      <table class="post-table">
+      <div class="post-table-wrap"><table class="post-table">
         <thead><tr><th>프리셋</th><th>정규식 패턴</th><th>매칭 예시</th></tr></thead>
         <tbody>
           <tr><td>&#x1F4E7; 이메일</td><td><code>[\w.+-]+@[\w-]+\.[\w.]+</code></td><td>user@example.com</td></tr>
@@ -260,10 +266,10 @@ test@test 는 유효하지 않습니다.</div>
           <tr><td>&#x1F310; IP 주소</td><td><code>(?:(?:25[0-5]|2[0-4]\d|[01]?\d\d?)\.){3}...</code></td><td>192.168.0.1</td></tr>
           <tr><td>&#x1F3A8; HEX 색상</td><td><code>#(?:[0-9a-fA-F]{6}|[0-9a-fA-F]{3})\b</code></td><td>#FF5733, #fff</td></tr>
         </tbody>
-      </table>
+      </table></div>
 
       <h2>정규식 기본 문법 빠른 참고</h2>
-      <table class="post-table">
+      <div class="post-table-wrap"><table class="post-table">
         <thead><tr><th>패턴</th><th>의미</th><th>예시</th></tr></thead>
         <tbody>
           <tr><td><code>.</code></td><td>임의의 문자 1개 (줄바꿈 제외)</td><td><code>a.c</code> → abc, aXc</td></tr>
@@ -281,7 +287,7 @@ test@test 는 유효하지 않습니다.</div>
           <tr><td><code>(?:abc)</code></td><td>비캡처 그룹</td><td>그룹이지만 결과에 미포함</td></tr>
           <tr><td><code>a|b</code></td><td>a 또는 b</td><td><code>cat|dog</code></td></tr>
         </tbody>
-      </table>
+      </table></div>
 
       <h2>캡처 그룹 활용</h2>
       <p>정규식에서 소괄호 <code>()</code>로 그룹을 지정하면 RegexTest가 각 그룹의 매칭 결과를 별도로 표시합니다. 예를 들어 날짜에서 연·월·일을 따로 추출하고 싶을 때 유용합니다.</p>
@@ -337,14 +343,14 @@ test@test 는 유효하지 않습니다.</div>
 
       <h2>오류 처리</h2>
       <p>정규식 문법이 잘못된 경우 상태 표시줄에 빨간색으로 오류 메시지가 즉시 표시됩니다. 예를 들어 괄호가 닫히지 않거나 수량자 뒤에 아무것도 없는 경우입니다.</p>
-      <table class="post-table">
+      <div class="post-table-wrap"><table class="post-table">
         <thead><tr><th>상태</th><th>표시 내용</th></tr></thead>
         <tbody>
           <tr><td>✅ 정상 매칭</td><td>초록색으로 N개 매칭 표시</td></tr>
           <tr><td>⚪ 매칭 없음</td><td>회색으로 "매칭 없음" 표시</td></tr>
           <tr><td>❌ 오류</td><td>빨간색으로 오류 메시지 표시 (예: Invalid regular expression)</td></tr>
         </tbody>
-      </table>
+      </table></div>
 
       <div class="post-highlight">&#x1F50D; RegexTest는 모든 처리가 브라우저 내에서만 이루어집니다. 테스트한 정규식과 텍스트가 외부 서버로 전송되지 않으므로 민감한 데이터 패턴도 안심하고 테스트할 수 있습니다.</div>
     </div>
@@ -356,8 +362,8 @@ test@test 는 유효하지 않습니다.</div>
     <div style="margin:12px 0"><ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="9500090221"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
 
 <div class="post-nav">
-      <a href="/blog/31-imagebright-howto.html">&#x2190; 이전 글: ImageBright 사용법 완전 가이드</a>
-      <a href="/blog/33-bgremove-howto.html">다음 글: BGRemove 사용법 완전 가이드 &#x2192;</a>
+      <a href="/blog/31-imagebright-howto.html"><span class="nav-label">← 이전 글</span>ImageBright 사용법 완전 가이드</a>
+      <a href="/blog/33-bgremove-howto.html" style="text-align:right"><span class="nav-label">다음 글 →</span>BGRemove 사용법 완전 가이드</a>
     </div>
   </div>
 

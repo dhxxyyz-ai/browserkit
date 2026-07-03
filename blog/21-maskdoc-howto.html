@@ -60,6 +60,12 @@
   </script>  <link rel="canonical" href="https://browserkit.online/blog/21-maskdoc-howto.html" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:image" content="https://browserkit.online/img/og-browserkit.png" />
+  <style>
+    .post-table-wrap { overflow-x:auto; }
+    .post-table th, .post-table td { white-space:nowrap; }
+    .post-nav a { word-break:keep-all; }
+    .post-nav .nav-label { display:block; font-size:13px; color:var(--subtext); opacity:0.7; margin-bottom:4px; }
+  </style>
 </head>
 <body>
   <header class="header">
@@ -137,46 +143,46 @@
       <h2>마스킹 방식 상세 가이드</h2>
 
       <h3>🪪 주민등록번호</h3>
-      <table class="post-table">
+      <div class="post-table-wrap"><table class="post-table">
         <thead><tr><th>방식</th><th>원본</th><th>결과</th></tr></thead>
         <tbody>
           <tr><td>전체 가리기</td><td>901225-1234567</td><td>●●●●●●-●●●●●●●</td></tr>
           <tr><td>뒷자리 전체 가리기</td><td>901225-1234567</td><td>901225-●●●●●●●</td></tr>
           <tr><td>뒷자리 6자리 가리기</td><td>901225-1234567</td><td>901225-1●●●●●●</td></tr>
         </tbody>
-      </table>
+      </table></div>
 
       <h3>📱 전화번호</h3>
-      <table class="post-table">
+      <div class="post-table-wrap"><table class="post-table">
         <thead><tr><th>방식</th><th>원본</th><th>결과</th></tr></thead>
         <tbody>
           <tr><td>전체 가리기</td><td>010-1234-5678</td><td>●●●-●●●●-●●●●</td></tr>
           <tr><td>뒤 8자리 가리기</td><td>010-1234-5678</td><td>010-●●●●-●●●●</td></tr>
           <tr><td>뒤 4자리 가리기</td><td>010-1234-5678</td><td>010-1234-●●●●</td></tr>
         </tbody>
-      </table>
+      </table></div>
 
       <h3>✉️ 이메일</h3>
-      <table class="post-table">
+      <div class="post-table-wrap"><table class="post-table">
         <thead><tr><th>방식</th><th>원본</th><th>결과</th></tr></thead>
         <tbody>
           <tr><td>전체 가리기</td><td>hong@example.com</td><td>●●●@●●●.●●●</td></tr>
           <tr><td>아이디만 가리기</td><td>hong@example.com</td><td>●●●@example.com</td></tr>
         </tbody>
-      </table>
+      </table></div>
 
       <h3>🏦 계좌번호</h3>
-      <table class="post-table">
+      <div class="post-table-wrap"><table class="post-table">
         <thead><tr><th>방식</th><th>원본</th><th>결과</th></tr></thead>
         <tbody>
           <tr><td>전체 가리기</td><td>110-123-456789</td><td>●●●-●●●-●●●●●●</td></tr>
           <tr><td>뒤 4자리 가리기</td><td>110-123-456789</td><td>110-123-45●●●●</td></tr>
         </tbody>
-      </table>
+      </table></div>
 
       <h2>MaskDoc vs MaskPrivacy 비교</h2>
       <p>MaskDoc과 MaskPrivacy는 목적이 다른 도구입니다. 상황에 맞게 선택하세요.</p>
-      <table class="post-table">
+      <div class="post-table-wrap"><table class="post-table">
         <thead><tr><th>항목</th><th>MaskDoc</th><th>MaskPrivacy</th></tr></thead>
         <tbody>
           <tr><td>처리 대상</td><td>텍스트 (복사/붙여넣기)</td><td>이미지 (JPG, PNG 등)</td></tr>
@@ -186,7 +192,7 @@
           <tr><td>출력 형식</td><td>텍스트 (.txt)</td><td>이미지 (.png)</td></tr>
           <tr><td>추천 상황</td><td>문서, 이메일, 메모장 텍스트</td><td>스캔 문서, 캡처 이미지</td></tr>
         </tbody>
-      </table>
+      </table></div>
 
       <div class="post-highlight">💡 MaskDoc은 텍스트를 그대로 붙여넣으면 즉시 처리되므로 속도가 매우 빠릅니다. 정규식 기반 탐지이므로 OCR 오탐 없이 높은 정확도를 유지합니다. 단, 이미지나 PDF에서 개인정보를 제거하려면 MaskPrivacy 또는 MaskPDF를 사용하세요.</div>
     </div>
@@ -198,8 +204,8 @@
     <div style="margin:12px 0"><ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="9500090221"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
 
 <div class="post-nav">
-      <a href="/blog/20-texttools-howto.html">← 이전 글: TextTools 사용법 완전 가이드</a>
-      <a href="/blog/22-watermarkimage-howto.html">다음 글: WatermarkImage 사용법 완전 가이드 →</a>
+      <a href="/blog/20-texttools-howto.html"><span class="nav-label">← 이전 글</span>TextTools 사용법 완전 가이드</a>
+      <a href="/blog/22-watermarkimage-howto.html" style="text-align:right"><span class="nav-label">다음 글 →</span>WatermarkImage 사용법 완전 가이드</a>
     </div>
   </div>
 

@@ -79,6 +79,12 @@
   </script>  <link rel="canonical" href="https://browserkit.online/blog/31-imagebright-howto.html" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:image" content="https://browserkit.online/img/og-browserkit.png" />
+  <style>
+    .post-table-wrap { overflow-x:auto; }
+    .post-table th, .post-table td { white-space:nowrap; }
+    .post-nav a { word-break:keep-all; }
+    .post-nav .nav-label { display:block; font-size:13px; color:var(--subtext); opacity:0.7; margin-bottom:4px; }
+  </style>
 </head>
 <body>
   <header class="header">
@@ -175,7 +181,7 @@
         </div>
       </div>
 
-      <table class="post-table">
+      <div class="post-table-wrap"><table class="post-table">
         <thead><tr><th>슬라이더</th><th>범위</th><th>효과</th></tr></thead>
         <tbody>
           <tr>
@@ -204,7 +210,7 @@
             <td>언샤프 마스크 알고리즘으로 경계선을 선명하게 만듭니다. 과도하면 노이즈가 생길 수 있습니다.</td>
           </tr>
         </tbody>
-      </table>
+      </table></div>
 
       <h2>빠른 프리셋</h2>
       <p>슬라이더를 일일이 조절하지 않아도 프리셋 버튼 하나로 원하는 분위기를 즉시 적용할 수 있습니다.</p>
@@ -217,7 +223,7 @@
         <span class="preset-chip">&#x26AB; 흑백</span>
       </div>
 
-      <table class="post-table">
+      <div class="post-table-wrap"><table class="post-table">
         <thead><tr><th>프리셋</th><th>주요 효과</th><th>적합한 상황</th></tr></thead>
         <tbody>
           <tr><td>🌟 선명하게</td><td>밝기 +10, 대비 +20, 채도 +30, 샤프니스 20</td><td>풍경 사진, 제품 사진, 전반적인 품질 향상</td></tr>
@@ -227,7 +233,7 @@
           <tr><td>🌙 어둡게</td><td>밝기 -30, 대비 +10</td><td>과노출 사진, 드라마틱한 분위기</td></tr>
           <tr><td>⚫ 흑백</td><td>채도 -100, 대비 +20, 샤프니스 10</td><td>흑백 사진 변환, 감성적인 연출</td></tr>
         </tbody>
-      </table>
+      </table></div>
 
       <h2>활용 예시</h2>
       <div class="use-case-grid">
@@ -264,7 +270,7 @@
       </div>
 
       <h2>저장 형식 선택 가이드</h2>
-      <table class="post-table">
+      <div class="post-table-wrap"><table class="post-table">
         <thead><tr><th>형식</th><th>특징</th><th>추천 용도</th></tr></thead>
         <tbody>
           <tr>
@@ -278,11 +284,11 @@
             <td>인쇄, 고화질 보존, 투명 배경 필요 시</td>
           </tr>
         </tbody>
-      </table>
+      </table></div>
 
       <h2>기술 원리</h2>
       <p>ImageBright는 Canvas API의 <code>getImageData()</code>로 이미지의 전체 픽셀 배열을 읽어와 각 픽셀의 R, G, B 값을 직접 계산합니다. 외부 이미지 편집 라이브러리 없이 순수 JavaScript만으로 구현되어 있습니다.</p>
-      <table class="post-table">
+      <div class="post-table-wrap"><table class="post-table">
         <thead><tr><th>보정 항목</th><th>알고리즘</th></tr></thead>
         <tbody>
           <tr><td>밝기</td><td>모든 픽셀의 R, G, B에 고정값을 더하거나 뺍니다</td></tr>
@@ -291,10 +297,10 @@
           <tr><td>색온도</td><td>R 채널 값을 올리고(따뜻) B 채널 값을 내리거나(차갑게), 반대로 적용합니다</td></tr>
           <tr><td>샤프니스</td><td>4-이웃 언샤프 마스크 컨볼루션으로 경계 픽셀을 강조합니다</td></tr>
         </tbody>
-      </table>
+      </table></div>
 
       <h2>주의사항</h2>
-      <table class="post-table">
+      <div class="post-table-wrap"><table class="post-table">
         <thead><tr><th>항목</th><th>내용</th></tr></thead>
         <tbody>
           <tr><td>샤프니스 과도 적용</td><td>샤프니스를 너무 높이면 노이즈가 생기거나 가장자리가 과하게 강조될 수 있습니다. 20~40 범위를 권장합니다.</td></tr>
@@ -302,7 +308,7 @@
           <tr><td>GIF 애니메이션</td><td>GIF 업로드 시 첫 번째 프레임만 처리됩니다. 애니메이션은 보존되지 않습니다.</td></tr>
           <tr><td>JPG 손실</td><td>JPG 저장은 압축 손실이 있습니다. 원본 화질 보존이 필요하면 PNG로 저장하세요.</td></tr>
         </tbody>
-      </table>
+      </table></div>
 
       <div class="post-highlight">&#x2728; ImageBright는 모든 처리가 브라우저 내에서만 이루어집니다. 업로드한 이미지가 외부 서버로 전송되지 않으므로, 개인 사진이나 민감한 이미지도 안전하게 보정할 수 있습니다.</div>
     </div>
@@ -314,8 +320,8 @@
     <div style="margin:12px 0"><ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="9500090221"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
 
 <div class="post-nav">
-      <a href="/blog/30-markdowneditor-howto.html">&#x2190; 이전 글: MarkdownEditor 사용법 완전 가이드</a>
-      <a href="/blog/32-regextest-howto.html">다음 글: RegexTest 사용법 완전 가이드 &#x2192;</a>
+      <a href="/blog/30-markdowneditor-howto.html"><span class="nav-label">← 이전 글</span>MarkdownEditor 사용법 완전 가이드</a>
+      <a href="/blog/32-regextest-howto.html" style="text-align:right"><span class="nav-label">다음 글 →</span>RegexTest 사용법 완전 가이드</a>
     </div>
   </div>
 

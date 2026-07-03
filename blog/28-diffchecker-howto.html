@@ -87,6 +87,12 @@
   </script>  <link rel="canonical" href="https://browserkit.online/blog/28-diffchecker-howto.html" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:image" content="https://browserkit.online/img/og-browserkit.png" />
+  <style>
+    .post-table-wrap { overflow-x:auto; }
+    .post-table th, .post-table td { white-space:nowrap; }
+    .post-nav a { word-break:keep-all; }
+    .post-nav .nav-label { display:block; font-size:13px; color:var(--subtext); opacity:0.7; margin-bottom:4px; }
+  </style>
 </head>
 <body>
   <header class="header">
@@ -217,14 +223,14 @@
       </div>
 
       <h2>색상 의미</h2>
-      <table class="post-table">
+      <div class="post-table-wrap"><table class="post-table">
         <thead><tr><th>색상</th><th>기호</th><th>의미</th></tr></thead>
         <tbody>
           <tr><td>&#x1F7E2; 초록색 배경</td><td><code>+</code></td><td>수정본에 새로 추가된 줄</td></tr>
           <tr><td>&#x1F534; 빨간색 배경</td><td><code>-</code></td><td>원본에서 삭제된 줄 (수정본에 없음)</td></tr>
           <tr><td>&#x26AA; 회색 (기본)</td><td>&nbsp;&nbsp;</td><td>변경 없이 동일한 줄</td></tr>
         </tbody>
-      </table>
+      </table></div>
 
       <h2>샘플 불러오기</h2>
       <p><strong>📋 샘플 불러오기</strong> 버튼을 클릭하면 JavaScript 함수 수정 예제가 자동으로 입력되고 비교 결과까지 바로 표시됩니다. 처음 사용하거나 기능을 빠르게 확인할 때 활용하세요.</p>
@@ -268,7 +274,7 @@
       <p>외부 라이브러리 없이 순수 JavaScript로 구현되어 있으며, 모든 비교가 브라우저 내에서만 처리됩니다.</p>
 
       <h2>주의사항</h2>
-      <table class="post-table">
+      <div class="post-table-wrap"><table class="post-table">
         <thead><tr><th>항목</th><th>내용</th></tr></thead>
         <tbody>
           <tr><td>비교 단위</td><td>줄(line) 단위로 비교합니다. 한 줄 안에서 일부 단어만 바뀐 경우 줄 전체가 삭제 + 추가로 표시됩니다.</td></tr>
@@ -276,7 +282,7 @@
           <tr><td>공백 차이</td><td>들여쓰기나 줄 끝 공백이 다르면 다른 줄로 인식합니다. 공백을 정규화한 뒤 비교하려면 먼저 TextTools로 정리하세요.</td></tr>
           <tr><td>보안</td><td>비교하는 텍스트는 서버로 전송되지 않습니다. 소스 코드나 기밀 문서도 안전하게 비교할 수 있습니다.</td></tr>
         </tbody>
-      </table>
+      </table></div>
 
       <div class="post-highlight">&#x1F512; DiffChecker는 모든 처리가 브라우저 내에서만 이루어집니다. 입력한 텍스트가 외부 서버로 전송되지 않으므로, 소스 코드, 설정 파일, 기밀 문서도 안심하고 비교할 수 있습니다.</div>
     </div>
@@ -288,8 +294,8 @@
     <div style="margin:12px 0"><ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="9500090221"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
 
 <div class="post-nav">
-      <a href="/blog/27-base64tool-howto.html">&#x2190; 이전 글: Base64Tool 사용법 완전 가이드</a>
-      <a href="/blog/29-unitconvert-howto.html">다음 글: UnitConvert 사용법 완전 가이드 &#x2192;</a>
+      <a href="/blog/27-base64tool-howto.html"><span class="nav-label">← 이전 글</span>Base64Tool 사용법 완전 가이드</a>
+      <a href="/blog/29-unitconvert-howto.html" style="text-align:right"><span class="nav-label">다음 글 →</span>UnitConvert 사용법 완전 가이드</a>
     </div>
   </div>
 

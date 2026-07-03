@@ -71,6 +71,12 @@
   </script>  <link rel="canonical" href="https://browserkit.online/blog/27-base64tool-howto.html" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:image" content="https://browserkit.online/img/og-browserkit.png" />
+  <style>
+    .post-table-wrap { overflow-x:auto; }
+    .post-table th, .post-table td { white-space:nowrap; }
+    .post-nav a { word-break:keep-all; }
+    .post-nav .nav-label { display:block; font-size:13px; color:var(--subtext); opacity:0.7; margin-bottom:4px; }
+  </style>
 </head>
 <body>
   <header class="header">
@@ -200,7 +206,7 @@
       </div>
 
       <h2>Base64와 data URI의 차이</h2>
-      <table class="post-table">
+      <div class="post-table-wrap"><table class="post-table">
         <thead><tr><th>구분</th><th>형식</th><th>주로 사용하는 곳</th></tr></thead>
         <tbody>
           <tr>
@@ -214,7 +220,7 @@
             <td>HTML <code>&lt;img src&gt;</code>, CSS <code>background-image</code>, 이메일 인라인 이미지</td>
           </tr>
         </tbody>
-      </table>
+      </table></div>
 
       <h2>한글 인코딩 지원</h2>
       <p>JavaScript의 기본 <code>btoa()</code> 함수는 ASCII 문자만 처리할 수 있어 한글을 직접 입력하면 오류가 납니다. Base64Tool은 <code>encodeURIComponent()</code>를 통해 한글을 먼저 UTF-8 바이트로 변환한 뒤 Base64로 인코딩하므로 한글을 포함한 모든 유니코드 문자를 안전하게 처리합니다.</p>
@@ -263,7 +269,7 @@
       </div>
 
       <h2>Base64 사용 시 주의사항</h2>
-      <table class="post-table">
+      <div class="post-table-wrap"><table class="post-table">
         <thead><tr><th>항목</th><th>내용</th></tr></thead>
         <tbody>
           <tr><td>용량 증가</td><td>Base64는 원본보다 약 33% 크기가 늘어납니다. 대용량 파일 인라인 삽입은 성능에 영향을 줄 수 있습니다.</td></tr>
@@ -271,7 +277,7 @@
           <tr><td>JWT 패딩</td><td>JWT의 Base64 인코딩은 <code>=</code> 패딩이 생략됩니다. 디코딩이 안 될 경우 문자열 끝에 <code>=</code>를 붙여보세요.</td></tr>
           <tr><td>줄바꿈 문자</td><td>일부 시스템에서 Base64에 줄바꿈(<code>\n</code>)이 포함됩니다. 디코딩 전 줄바꿈을 제거하면 됩니다.</td></tr>
         </tbody>
-      </table>
+      </table></div>
 
       <div class="post-highlight">&#x1F512; Base64Tool은 모든 처리가 브라우저 내에서만 이루어집니다. 입력한 텍스트와 업로드한 이미지가 외부 서버로 전송되지 않으므로, 민감한 설정값이나 내부 시스템 이미지도 안전하게 변환할 수 있습니다.</div>
     </div>
@@ -283,8 +289,8 @@
     <div style="margin:12px 0"><ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="9500090221"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
 
 <div class="post-nav">
-      <a href="/blog/26-passwordgen-howto.html">&#x2190; 이전 글: PasswordGen 사용법 완전 가이드</a>
-      <a href="/blog/28-diffchecker-howto.html">다음 글: DiffChecker 사용법 완전 가이드 &#x2192;</a>
+      <a href="/blog/26-passwordgen-howto.html"><span class="nav-label">← 이전 글</span>PasswordGen 사용법 완전 가이드</a>
+      <a href="/blog/28-diffchecker-howto.html" style="text-align:right"><span class="nav-label">다음 글 →</span>DiffChecker 사용법 완전 가이드</a>
     </div>
   </div>
 

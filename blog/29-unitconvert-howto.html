@@ -75,6 +75,12 @@
   </script>  <link rel="canonical" href="https://browserkit.online/blog/29-unitconvert-howto.html" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:image" content="https://browserkit.online/img/og-browserkit.png" />
+  <style>
+    .post-table-wrap { overflow-x:auto; }
+    .post-table th, .post-table td { white-space:nowrap; }
+    .post-nav a { word-break:keep-all; }
+    .post-nav .nav-label { display:block; font-size:13px; color:var(--subtext); opacity:0.7; margin-bottom:4px; }
+  </style>
 </head>
 <body>
   <header class="header">
@@ -171,7 +177,7 @@
       </table>
 
       <h3>&#x2696;&#xFE0F; 무게 (7개 단위)</h3>
-      <table class="post-table">
+      <div class="post-table-wrap"><table class="post-table">
         <thead><tr><th>단위명</th><th>기호</th><th>비고</th></tr></thead>
         <tbody>
           <tr><td>밀리그램</td><td><code>mg</code></td><td>약품 용량 측정에 사용</td></tr>
@@ -182,22 +188,22 @@
           <tr><td>파운드</td><td><code>lb</code></td><td>체중 측정 (미국·영국)</td></tr>
           <tr><td>스톤</td><td><code>st</code></td><td>체중 측정 (영국)</td></tr>
         </tbody>
-      </table>
+      </table></div>
 
       <h3>&#x1F321;&#xFE0F; 온도 (3개 단위)</h3>
       <p>온도는 단순 비율 변환이 아닌 공식을 사용해 정확하게 변환합니다.</p>
-      <table class="post-table">
+      <div class="post-table-wrap"><table class="post-table">
         <thead><tr><th>단위명</th><th>기호</th><th>변환 공식 (섭씨 기준)</th></tr></thead>
         <tbody>
           <tr><td>섭씨</td><td><code>°C</code></td><td>기준 단위</td></tr>
           <tr><td>화씨</td><td><code>°F</code></td><td>°F = °C × 9/5 + 32</td></tr>
           <tr><td>켈빈</td><td><code>K</code></td><td>K = °C + 273.15</td></tr>
         </tbody>
-      </table>
+      </table></div>
       <div class="post-highlight">&#x1F321;&#xFE0F; 온도 변환 예시: 100°C = 212°F = 373.15K. 섭씨 0°C는 화씨 32°F, 켈빈 273.15K입니다. 절대영도는 -273.15°C = 0K입니다.</div>
 
       <h3>&#x1F4D0; 넓이 (8개 단위)</h3>
-      <table class="post-table">
+      <div class="post-table-wrap"><table class="post-table">
         <thead><tr><th>단위명</th><th>기호</th><th>주요 용도</th></tr></thead>
         <tbody>
           <tr><td>제곱밀리미터</td><td><code>mm²</code></td><td>정밀 부품, 단면적</td></tr>
@@ -209,10 +215,10 @@
           <tr><td>제곱피트</td><td><code>ft²</code></td><td>미국 부동산</td></tr>
           <tr><td>에이커</td><td><code>acre</code></td><td>영미 농지 단위</td></tr>
         </tbody>
-      </table>
+      </table></div>
 
       <h3>&#x1F3CE;&#xFE0F; 속도 (5개 단위)</h3>
-      <table class="post-table">
+      <div class="post-table-wrap"><table class="post-table">
         <thead><tr><th>단위명</th><th>기호</th><th>주요 용도</th></tr></thead>
         <tbody>
           <tr><td>미터/초</td><td><code>m/s</code></td><td>물리학, 과학 계산 (기본 단위)</td></tr>
@@ -221,7 +227,7 @@
           <tr><td>노트</td><td><code>kn</code></td><td>선박, 항공기 속도</td></tr>
           <tr><td>마하</td><td><code>Mach</code></td><td>음속 대비 속도 (1 Mach ≈ 340.29 m/s)</td></tr>
         </tbody>
-      </table>
+      </table></div>
 
       <h2>활용 예시</h2>
       <div class="use-case-grid">
@@ -267,8 +273,8 @@
     <div style="margin:12px 0"><ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="9500090221"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
 
 <div class="post-nav">
-      <a href="/blog/28-diffchecker-howto.html">&#x2190; 이전 글: DiffChecker 사용법 완전 가이드</a>
-      <a href="/blog/30-markdowneditor-howto.html">다음 글: MarkdownEditor 사용법 완전 가이드 &#x2192;</a>
+      <a href="/blog/28-diffchecker-howto.html"><span class="nav-label">← 이전 글</span>DiffChecker 사용법 완전 가이드</a>
+      <a href="/blog/30-markdowneditor-howto.html" style="text-align:right"><span class="nav-label">다음 글 →</span>MarkdownEditor 사용법 완전 가이드</a>
     </div>
   </div>
 

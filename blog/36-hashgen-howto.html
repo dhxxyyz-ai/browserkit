@@ -97,6 +97,12 @@
   </script>  <link rel="canonical" href="https://browserkit.online/blog/36-hashgen-howto.html" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:image" content="https://browserkit.online/img/og-browserkit.png" />
+  <style>
+    .post-table-wrap { overflow-x:auto; }
+    .post-table th, .post-table td { white-space:nowrap; }
+    .post-nav a { word-break:keep-all; }
+    .post-nav .nav-label { display:block; font-size:13px; color:var(--subtext); opacity:0.7; margin-bottom:4px; }
+  </style>
 </head>
 <body>
   <header class="header">
@@ -264,7 +270,7 @@
       </div>
 
       <h2>알고리즘별 특징 및 용도</h2>
-      <table class="post-table">
+      <div class="post-table-wrap"><table class="post-table">
         <thead>
           <tr><th>알고리즘</th><th>해시 길이</th><th>속도</th><th>보안 수준</th><th>주요 용도</th></tr>
         </thead>
@@ -298,7 +304,7 @@
             <td>최고 보안 요구 환경, 비밀번호 해시, 전자서명</td>
           </tr>
         </tbody>
-      </table>
+      </table></div>
 
       <p>파일 무결성 검증에는 <strong>SHA-256</strong>을 사용하는 것이 일반적입니다. 대부분의 소프트웨어 배포 사이트(Linux ISO, Python 설치 파일, 오픈소스 도구 등)에서 SHA-256 또는 SHA-512 해시를 제공합니다.</p>
 
@@ -338,14 +344,14 @@
 
       <h2>기술 원리</h2>
       <p>HashGen은 SHA 계열 해시를 브라우저에 내장된 <code>Web Crypto API</code>로 계산하고, MD5는 Web Crypto API에서 지원하지 않아 경량 오픈소스 라이브러리 <code>js-md5</code>를 CDN으로 불러와 처리합니다.</p>
-      <table class="post-table">
+      <div class="post-table-wrap"><table class="post-table">
         <thead><tr><th>알고리즘</th><th>처리 방식</th><th>특징</th></tr></thead>
         <tbody>
           <tr><td>MD5</td><td>js-md5 (CDN)</td><td>Web Crypto API가 MD5 미지원 — 경량 라이브러리 사용</td></tr>
           <tr><td>SHA-1, SHA-256, SHA-512</td><td>Web Crypto API (내장)</td><td>브라우저 네이티브 지원, 추가 라이브러리 없음</td></tr>
           <tr><td>파일 처리</td><td>file.arrayBuffer()</td><td>파일 전체를 메모리에서 직접 처리, 서버 전송 없음</td></tr>
         </tbody>
-      </table>
+      </table></div>
 
       <div class="post-highlight">&#x1F512; HashGen은 모든 해시 계산이 내 PC 브라우저에서만 실행됩니다. 입력한 텍스트와 업로드한 파일이 외부 서버로 전송되지 않아 기밀 문서, 개인 파일도 안심하고 사용할 수 있습니다.</div>
     </div>
@@ -357,7 +363,7 @@
     <div style="margin:12px 0"><ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="9500090221"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
 
 <div class="post-nav">
-      <a href="/blog/35-worldclock-howto.html">&#x2190; 이전 글: WorldClock 사용법 완전 가이드</a>
+      <a href="/blog/35-worldclock-howto.html"><span class="nav-label">← 이전 글</span>WorldClock 사용법 완전 가이드</a>
       <span></span>
     </div>
   </div>

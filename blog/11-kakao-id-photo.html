@@ -48,6 +48,12 @@
   </script>  <link rel="canonical" href="https://browserkit.online/blog/11-kakao-id-photo.html" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:image" content="https://browserkit.online/img/og-browserkit.png" />
+  <style>
+    .post-table-wrap { overflow-x:auto; }
+    .post-table th, .post-table td { white-space:nowrap; }
+    .post-nav a { word-break:keep-all; }
+    .post-nav .nav-label { display:block; font-size:13px; color:var(--subtext); opacity:0.7; margin-bottom:4px; }
+  </style>
 </head>
 <body>
   <header class="header">
@@ -77,7 +83,7 @@
             
       <div style="margin:12px 0"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
       <h2>메신저별 보안 비교</h2>
-      <table class="post-table">
+      <div class="post-table-wrap"><table class="post-table">
         <thead><tr><th>메신저</th><th>종단간 암호화</th><th>서버 저장</th><th>권장 여부</th></tr></thead>
         <tbody>
           <tr><td>카카오톡</td><td>일반 채팅 미적용</td><td>저장됨</td><td>마스킹 후 전송</td></tr>
@@ -85,7 +91,7 @@
           <tr><td>Signal</td><td>적용</td><td>미저장</td><td>마스킹 후 전송</td></tr>
           <tr><td>이메일</td><td>미적용</td><td>저장됨</td><td>마스킹 필수</td></tr>
         </tbody>
-      </table>
+      </table></div>
       <h2>안전하게 신분증을 전송하는 방법</h2>
       <ol>
         <li>신분증을 촬영합니다.</li>
@@ -103,8 +109,8 @@
     </div>
     <div style="margin:12px 0"><ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="9500090221"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
     <div class="post-nav">
-      <a href="/blog/10-contract-masking.html">← 이전 글: 계약서 개인정보 마스킹하는 법</a>
-      <a href="/blog/12-privacy-policy-guide.html">다음 글: 개인정보 처리방침 어떻게 만드나요? →</a>
+      <a href="/blog/10-contract-masking.html"><span class="nav-label">← 이전 글</span>계약서 개인정보 마스킹하는 법</a>
+      <a href="/blog/12-privacy-policy-guide.html" style="text-align:right"><span class="nav-label">다음 글 →</span>개인정보 처리방침 어떻게 만드나요?</a>
     </div>
   </article>
   <footer class="footer"><div class="container"><p class="footer-copy">© 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p><nav class="footer-nav"><a href="/privacy.html">개인정보 처리방침</a><a href="/terms.html">이용약관</a><a href="/about.html">서비스 소개</a><a href="/blog/">블로그</a></nav></div></footer>

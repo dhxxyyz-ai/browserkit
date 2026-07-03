@@ -68,6 +68,12 @@
   </script>  <link rel="canonical" href="https://browserkit.online/blog/24-qrcode-howto.html" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:image" content="https://browserkit.online/img/og-browserkit.png" />
+  <style>
+    .post-table-wrap { overflow-x:auto; }
+    .post-table th, .post-table td { white-space:nowrap; }
+    .post-nav a { word-break:keep-all; }
+    .post-nav .nav-label { display:block; font-size:13px; color:var(--subtext); opacity:0.7; margin-bottom:4px; }
+  </style>
 </head>
 <body>
   <header class="header">
@@ -152,7 +158,7 @@
 
       <h3>👤 연락처 탭</h3>
       <p>스마트폰 카메라로 스캔하면 바로 연락처에 저장할 수 있는 vCard 형식으로 자동 변환됩니다.</p>
-      <table class="post-table">
+      <div class="post-table-wrap"><table class="post-table">
         <thead><tr><th>입력 항목</th><th>필수 여부</th><th>예시</th></tr></thead>
         <tbody>
           <tr><td>이름</td><td>필수 *</td><td>홍길동</td></tr>
@@ -161,20 +167,20 @@
           <tr><td>소속/회사</td><td>선택</td><td>BrowserKit</td></tr>
           <tr><td>웹사이트</td><td>선택</td><td>https://browserkit.online</td></tr>
         </tbody>
-      </table>
+      </table></div>
       <p>이름은 필수 항목이며, 나머지는 선택입니다. 이름이 없으면 QR 코드가 생성되지 않습니다.</p>
 
       <h2>크기 및 색상 설정</h2>
 
       <h3>크기 선택</h3>
-      <table class="post-table">
+      <div class="post-table-wrap"><table class="post-table">
         <thead><tr><th>크기</th><th>용도</th></tr></thead>
         <tbody>
           <tr><td>128px</td><td>소형 인쇄물, 명함, 스티커</td></tr>
           <tr><td>256px (기본값)</td><td>일반적인 용도, 웹 게시, 문서 삽입</td></tr>
           <tr><td>512px</td><td>대형 포스터, 현수막, 고해상도 인쇄</td></tr>
         </tbody>
-      </table>
+      </table></div>
 
       <h3>색상 설정</h3>
       <p>전경색(QR 코드 패턴)과 배경색을 자유롭게 설정할 수 있습니다. 단, 스캔 인식률을 위해 전경색과 배경색의 명도 차이가 충분해야 합니다.</p>
@@ -221,14 +227,14 @@
       <div class="post-highlight" style="font-family:'Inter',monospace;font-size:14px;">
         WIFI:T:WPA;S:내_네트워크_이름;P:내_비밀번호;;
       </div>
-      <table class="post-table">
+      <div class="post-table-wrap"><table class="post-table">
         <thead><tr><th>항목</th><th>설명</th><th>예시</th></tr></thead>
         <tbody>
           <tr><td><code>T:WPA</code></td><td>보안 방식 (WPA/WPA2는 WPA, 없으면 nopass)</td><td><code>T:WPA</code></td></tr>
           <tr><td><code>S:이름</code></td><td>Wi-Fi 네트워크 이름 (SSID)</td><td><code>S:MyWifi</code></td></tr>
           <tr><td><code>P:비밀번호</code></td><td>Wi-Fi 비밀번호</td><td><code>P:mypassword123</code></td></tr>
         </tbody>
-      </table>
+      </table></div>
 
       <div class="post-highlight">💡 QRCode는 모든 처리가 브라우저 내에서만 이루어집니다. 입력한 URL, 텍스트, 연락처 정보가 외부 서버로 전송되지 않으므로 개인 정보나 내부 URL도 안전하게 QR 코드로 만들 수 있습니다.</div>
     </div>
@@ -240,8 +246,8 @@
     <div style="margin:12px 0"><ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="9500090221"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
 
 <div class="post-nav">
-      <a href="/blog/23-colorpicker-howto.html">← 이전 글: ColorPicker 사용법 완전 가이드</a>
-      <a href="/blog/25-jsonformat-howto.html">다음 글: JSONFormat 사용법 완전 가이드 →</a>
+      <a href="/blog/23-colorpicker-howto.html"><span class="nav-label">← 이전 글</span>ColorPicker 사용법 완전 가이드</a>
+      <a href="/blog/25-jsonformat-howto.html" style="text-align:right"><span class="nav-label">다음 글 →</span>JSONFormat 사용법 완전 가이드</a>
     </div>
   </div>
 

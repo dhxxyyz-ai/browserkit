@@ -48,6 +48,12 @@
   </script>  <link rel="canonical" href="https://browserkit.online/blog/09-hospital-privacy.html" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:image" content="https://browserkit.online/img/og-browserkit.png" />
+  <style>
+    .post-table-wrap { overflow-x:auto; }
+    .post-table th, .post-table td { white-space:nowrap; }
+    .post-nav a { word-break:keep-all; }
+    .post-nav .nav-label { display:block; font-size:13px; color:var(--subtext); opacity:0.7; margin-bottom:4px; }
+  </style>
 </head>
 <body>
   <header class="header">
@@ -84,7 +90,7 @@
             
       <div style="margin:12px 0"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
       <h2>상황별 마스킹 가이드</h2>
-      <table class="post-table">
+      <div class="post-table-wrap"><table class="post-table">
         <thead><tr><th>제출 상황</th><th>마스킹 권장 항목</th></tr></thead>
         <tbody>
           <tr><td>보험사 제출</td><td>주민번호 뒷자리, 주소 상세번지</td></tr>
@@ -93,7 +99,7 @@
           <tr><td>이메일 제출</td><td>주민번호 뒷자리, 상세 주소</td></tr>
           <tr><td>SNS 공유</td><td>모든 개인정보 전부</td></tr>
         </tbody>
-      </table>
+      </table></div>
       <h2>병원 서류 안전하게 공유하는 방법</h2>
       <h3>1. 꼭 필요한 정보만 제공</h3>
       <p>보험 청구에는 진단서와 영수증이면 충분한 경우가 많습니다. 요구하지 않은 서류까지 첨부하지 않도록 합니다.</p>
@@ -111,8 +117,8 @@
     </div>
     <div style="margin:12px 0"><ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="9500090221"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
     <div class="post-nav">
-      <a href="/blog/08-worker-privacy-law.html">← 이전 글: 직장인이 꼭 알아야 할 개인정보보호법 5가지</a>
-      <a href="/blog/10-contract-masking.html">다음 글: 계약서 개인정보 마스킹하는 법 →</a>
+      <a href="/blog/08-worker-privacy-law.html"><span class="nav-label">← 이전 글</span>직장인이 꼭 알아야 할 개인정보보호법 5가지</a>
+      <a href="/blog/10-contract-masking.html" style="text-align:right"><span class="nav-label">다음 글 →</span>계약서 개인정보 마스킹하는 법</a>
     </div>
   </article>
   <footer class="footer"><div class="container"><p class="footer-copy">© 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p><nav class="footer-nav"><a href="/privacy.html">개인정보 처리방침</a><a href="/terms.html">이용약관</a><a href="/about.html">서비스 소개</a><a href="/blog/">블로그</a></nav></div></footer>
