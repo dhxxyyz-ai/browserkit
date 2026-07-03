@@ -200,6 +200,16 @@ a:hover { color: var(--text); }
 }
 .hero-guide-link:hover { color: var(--point-hover); }
 
+@media (max-width: 640px) {
+  .hero-guide-link {
+    position: static;
+    display: block;
+    margin-left: 0;
+    margin-top: 6px;
+    transform: none;
+  }
+}
+
 /* ============================
    신뢰 뱃지
 ============================ */
