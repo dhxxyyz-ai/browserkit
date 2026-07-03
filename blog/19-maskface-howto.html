@@ -50,7 +50,7 @@
     "headline": "MaskFace 사용법 완전 가이드",
     "description": "MaskFace의 모든 기능을 단계별로 설명하는 공식 사용 가이드입니다. 얼굴 자동 탐지, 모자이크 처리, 수동 드래그 마스킹까지 쉽게 따라할 수 있습니다.",
     "datePublished": "2026-06-17T00:00:00+09:00",
-    "dateModified": "2026-06-17T00:00:00+09:00",
+    "dateModified": "2026-07-03T00:00:00+09:00",
     "author": { "@type": "Organization", "name": "BrowserKit", "url": "https://browserkit.online" },
     "publisher": { "@type": "Organization", "name": "BrowserKit", "url": "https://browserkit.online", "logo": { "@type": "ImageObject", "url": "https://browserkit.online/img/og-browserkit.png" } },
     "mainEntityOfPage": { "@type": "WebPage", "@id": "https://browserkit.online/blog/19-maskface-howto.html" },
@@ -134,6 +134,15 @@
           <p>업로드 영역에 이미지를 드래그하거나 클릭해서 파일을 선택합니다. JPG, PNG, WEBP 형식을 지원합니다.</p>
         </div>
       </div>
+      <figure style="margin:12px 0 24px; text-align:center;">
+        <img src="/img/blog/maskface/01-upload.png"
+             alt="MaskFace 이미지 업로드 화면"
+             style="width:100%; max-width:640px; border:1px solid var(--border); border-radius:var(--radius);"
+             loading="lazy" />
+        <figcaption style="font-size:13px; color:var(--subtext); margin-top:6px;">
+          이미지 업로드 화면 — JPG, PNG, WEBP 형식을 지원하며 파일은 서버로 전송되지 않습니다
+        </figcaption>
+      </figure>
       <div class="step-card">
         <div class="step-num">3</div>
         <div class="step-content">
@@ -141,6 +150,15 @@
           <p>이미지가 업로드되면 AI 모델이 자동으로 얼굴을 탐지하고 결과 영역에 탐지된 얼굴 수를 표시합니다.</p>
         </div>
       </div>
+      <figure style="margin:12px 0 24px; text-align:center;">
+        <img src="/img/blog/maskface/02-detection.png"
+             alt="MaskFace 얼굴 자동 탐지 및 마스킹 완료 화면"
+             style="width:100%; max-width:640px; border:1px solid var(--border); border-radius:var(--radius);"
+             loading="lazy" />
+        <figcaption style="font-size:13px; color:var(--subtext); margin-top:6px;">
+          얼굴 탐지 결과 — 탐지된 얼굴 수와 함께 자동으로 마스킹이 적용됩니다
+        </figcaption>
+      </figure>
       <div class="step-card">
         <div class="step-num">4</div>
         <div class="step-content">
@@ -148,6 +166,15 @@
           <p><strong>모자이크</strong> 또는 <strong>검정 박스</strong> 중 원하는 방식을 선택하고, 모자이크 강도 슬라이더로 블록 크기를 조정합니다. 옵션 변경 시 결과 이미지가 실시간으로 업데이트됩니다.</p>
         </div>
       </div>
+      <figure style="margin:12px 0 24px; text-align:center;">
+        <img src="/img/blog/maskface/03-mask-options.png"
+             alt="MaskFace 마스킹 방식 선택 버튼과 모자이크 강도 슬라이더"
+             style="width:100%; max-width:640px; border:1px solid var(--border); border-radius:var(--radius);"
+             loading="lazy" />
+        <figcaption style="font-size:13px; color:var(--subtext); margin-top:6px;">
+          마스킹 옵션 — 모자이크·검정 박스 선택 및 강도 슬라이더 조정
+        </figcaption>
+      </figure>
       <div class="step-card">
         <div class="step-num">5</div>
         <div class="step-content">
@@ -155,6 +182,24 @@
           <p>자동 탐지가 누락된 얼굴이 있다면 결과 이미지 위에서 드래그해 수동으로 추가 마스킹합니다. 완료되면 <strong>PNG 다운로드</strong> 버튼을 클릭해 <code>maskface_result.png</code>로 저장합니다.</p>
         </div>
       </div>
+      <figure style="margin:12px 0 24px; text-align:center;">
+        <img src="/img/blog/maskface/04-manual-mask.png"
+             alt="MaskFace 수동 드래그 마스킹 화면"
+             style="width:100%; max-width:640px; border:1px solid var(--border); border-radius:var(--radius);"
+             loading="lazy" />
+        <figcaption style="font-size:13px; color:var(--subtext); margin-top:6px;">
+          수동 마스킹 — 결과 이미지 위에서 드래그해 놓친 얼굴을 추가로 가립니다
+        </figcaption>
+      </figure>
+      <figure style="margin:12px 0 24px; text-align:center;">
+        <img src="/img/blog/maskface/05-result.png"
+             alt="MaskFace 마스킹 완료 결과와 다운로드 버튼"
+             style="width:100%; max-width:640px; border:1px solid var(--border); border-radius:var(--radius);"
+             loading="lazy" />
+        <figcaption style="font-size:13px; color:var(--subtext); margin-top:6px;">
+          마스킹 완료 화면 — 다운로드 버튼으로 결과 이미지를 PNG로 저장합니다
+        </figcaption>
+      </figure>
 
       <h2>자동 탐지가 어려운 경우</h2>
       <p>AI 모델은 정면 얼굴 위주로 학습되어 다음 상황에서는 탐지가 되지 않거나 정확도가 낮아질 수 있습니다. 이 경우 수동 드래그 마스킹으로 보완하세요.</p>
