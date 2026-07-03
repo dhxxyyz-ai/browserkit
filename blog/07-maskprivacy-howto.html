@@ -49,7 +49,7 @@
     "headline": "MaskPrivacy 사용법 완전 가이드",
     "description": "MaskPrivacy의 모든 기능을 단계별로 설명하는 공식 사용 가이드입니다. 자동 마스킹부터 수동 마스킹까지 쉽게 따라할 수 있습니다.",
     "datePublished": "2026-06-10T00:00:00+09:00",
-    "dateModified": "2026-06-10T00:00:00+09:00",
+    "dateModified": "2026-07-03T00:00:00+09:00",
     "author": { "@type": "Organization", "name": "BrowserKit", "url": "https://browserkit.online" },
     "publisher": { "@type": "Organization", "name": "BrowserKit", "url": "https://browserkit.online", "logo": { "@type": "ImageObject", "url": "https://browserkit.online/img/og-browserkit.png" } },
     "mainEntityOfPage": { "@type": "WebPage", "@id": "https://browserkit.online/blog/07-maskprivacy-howto.html" },
@@ -76,7 +76,7 @@
       <p>MaskPrivacy는 이미지 속 개인정보를 브라우저에서 자동으로 감지·마스킹해주는 무료 온라인 도구입니다. 설치 없이 바로 사용할 수 있으며, 모든 처리가 브라우저 내에서만 이루어져 개인정보 유출 걱정이 없습니다.</p>
       <h2>주요 기능</h2>
       <div class="feature-grid">
-        <div class="feature-card"><div class="feature-icon">🔍</div><div class="feature-title">자동 개인정보 탐지</div><div class="feature-desc">주민번호, 전화번호, 이메일, 계좌번호를 OCR로 자동 탐지합니다.</div></div>
+        <div class="feature-card"><div class="feature-icon">🔍</div><div class="feature-title">자동 개인정보 탐지</div><div class="feature-desc">주민등록번호, 전화번호, 이메일, 계좌번호, 주소를 OCR로 자동 탐지합니다.</div></div>
         <div class="feature-card"><div class="feature-icon">✏️</div><div class="feature-title">수동 마스킹</div><div class="feature-desc">드래그(모바일은 두 번 탭)로 원하는 영역을 직접 지정해 마스킹할 수 있습니다.</div></div>
         <div class="feature-card"><div class="feature-icon">⚙️</div><div class="feature-title">마스킹 방식 선택</div><div class="feature-desc">주민번호·전화번호는 전체 또는 부분 마스킹을 선택할 수 있습니다.</div></div>
         <div class="feature-card"><div class="feature-icon">📥</div><div class="feature-title">PNG 다운로드</div><div class="feature-desc">마스킹 완료된 이미지를 즉시 PNG로 다운로드할 수 있습니다.</div></div>
@@ -85,11 +85,65 @@
       <div style="margin:12px 0 0"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
       <h2>기본 사용법</h2>
       <div class="step-card"><div class="step-num">1</div><div class="step-content"><h3>이미지 업로드</h3><p>업로드 영역에 이미지를 드래그하거나 클릭해서 파일을 선택합니다. PNG, JPG, WEBP 형식을 지원합니다.</p></div></div>
+      <figure style="margin:12px 0 24px; text-align:center;">
+        <img src="/img/blog/maskprivacy/01-upload.png"
+             alt="MaskPrivacy 이미지 업로드 화면"
+             style="width:100%; max-width:640px; border:1px solid var(--border); border-radius:var(--radius);"
+             loading="lazy" />
+        <figcaption style="font-size:13px; color:var(--subtext); margin-top:6px;">
+          이미지 업로드 화면 — PNG, JPG, WEBP 형식을 지원하며 파일은 서버로 전송되지 않습니다
+        </figcaption>
+      </figure>
       <div class="step-card"><div class="step-num">2</div><div class="step-content"><h3>자동 탐지 대기</h3><p>업로드 후 OCR 엔진이 이미지를 분석합니다. 보통 10~30초 정도 소요됩니다.</p></div></div>
-      <div class="step-card"><div class="step-num">3</div><div class="step-content"><h3>탐지 결과 확인</h3><p>탐지된 개인정보 항목이 목록으로 표시됩니다. 각 항목 옆의 토글로 마스킹 여부를 개별적으로 조정할 수 있고, 드롭다운으로 항목별 마스킹 스타일(검정/모자이크/블러)을 바꿀 수 있습니다.</p></div></div>
+      <div class="step-card"><div class="step-num">3</div><div class="step-content"><h3>탐지 결과 확인</h3><p>탐지된 개인정보 항목(주민등록번호·전화번호·이메일·계좌번호·주소)이 목록으로 표시됩니다. 각 항목 옆의 토글로 마스킹 여부를 개별적으로 조정할 수 있고, 드롭다운으로 항목별 마스킹 스타일(검정/모자이크/블러)을 바꿀 수 있습니다.</p></div></div>
+      <figure style="margin:12px 0 24px; text-align:center;">
+        <img src="/img/blog/maskprivacy/02-ocr-result.png"
+             alt="MaskPrivacy OCR 분석 완료 후 탐지된 개인정보 목록 화면"
+             style="width:100%; max-width:640px; border:1px solid var(--border); border-radius:var(--radius);"
+             loading="lazy" />
+        <figcaption style="font-size:13px; color:var(--subtext); margin-top:6px;">
+          탐지 결과 목록 — 항목별 토글로 마스킹 여부를 켜고 끌 수 있습니다
+        </figcaption>
+      </figure>
+      <figure style="margin:12px 0 24px; text-align:center;">
+        <img src="/img/blog/maskprivacy/06-style-select.png"
+             alt="MaskPrivacy 항목별 마스킹 스타일 드롭다운 (검정, 모자이크, 블러)"
+             style="width:100%; max-width:640px; border:1px solid var(--border); border-radius:var(--radius);"
+             loading="lazy" />
+        <figcaption style="font-size:13px; color:var(--subtext); margin-top:6px;">
+          항목별 스타일 드롭다운 — 검정·모자이크·블러 중 선택할 수 있습니다
+        </figcaption>
+      </figure>
       <div class="step-card"><div class="step-num">4</div><div class="step-content"><h3>마스킹 방식 선택</h3><p>주민번호는 전체 가리기 / 뒷자리 전체 / 뒷자리 6자리 중 선택할 수 있습니다. 전화번호는 전체 / 뒷 8자리 / 뒷 4자리 중 선택 가능합니다.</p></div></div>
-      <div class="step-card"><div class="step-num">5</div><div class="step-content"><h3>수동 마스킹 보완</h3><p>자동으로 탐지되지 않은 영역은 마스킹 결과 이미지에서 직접 가릴 수 있습니다. PC에서는 마우스로 드래그하고, 모바일에서는 시작점과 끝점을 두 번 탭하면 됩니다. 툴바에서 검정·모자이크·블러 스타일을 고를 수 있고, 되돌리기 버튼으로 마지막 수동 마스킹을 취소할 수 있습니다.</p></div></div>
+      <figure style="margin:12px 0 24px; text-align:center;">
+        <img src="/img/blog/maskprivacy/03-mask-options.png"
+             alt="MaskPrivacy 주민등록번호·전화번호 마스킹 방식 선택 버튼"
+             style="width:100%; max-width:640px; border:1px solid var(--border); border-radius:var(--radius);"
+             loading="lazy" />
+        <figcaption style="font-size:13px; color:var(--subtext); margin-top:6px;">
+          마스킹 방식 선택 — 주민등록번호·전화번호는 전체 또는 부분 가리기를 고를 수 있습니다
+        </figcaption>
+      </figure>
+      <div class="step-card"><div class="step-num">5</div><div class="step-content"><h3>수동 마스킹 보완</h3><p>자동으로 탐지되지 않은 영역은 마스킹 결과 이미지에서 직접 가릴 수 있습니다. PC에서는 마우스로 드래그하고, 모바일에서는 시작점과 끝점을 두 번 탭하면 됩니다. 툴바에서 검정·모자이크·블러 스타일을 고를 수 있고, 되돌리기 버튼으로 마지막 수동 마스킹을 취소할 수 있습니다(PC는 Ctrl+Z도 가능).</p></div></div>
+      <figure style="margin:12px 0 24px; text-align:center;">
+        <img src="/img/blog/maskprivacy/04-manual-mask.png"
+             alt="MaskPrivacy 수동 마스킹 화면 — 스타일 툴바와 드래그로 영역 지정"
+             style="width:100%; max-width:640px; border:1px solid var(--border); border-radius:var(--radius);"
+             loading="lazy" />
+        <figcaption style="font-size:13px; color:var(--subtext); margin-top:6px;">
+          수동 마스킹 — 툴바에서 검정·모자이크·블러 스타일을 고르고 원하는 영역을 직접 지정합니다
+        </figcaption>
+      </figure>
       <div class="step-card"><div class="step-num">6</div><div class="step-content"><h3>다운로드</h3><p>마스킹 완료 후 다운로드 버튼을 클릭하면 PNG 파일로 저장됩니다.</p></div></div>
+      <figure style="margin:12px 0 24px; text-align:center;">
+        <img src="/img/blog/maskprivacy/05-result.png"
+             alt="MaskPrivacy 마스킹 완료 결과 이미지와 다운로드 버튼"
+             style="width:100%; max-width:640px; border:1px solid var(--border); border-radius:var(--radius);"
+             loading="lazy" />
+        <figcaption style="font-size:13px; color:var(--subtext); margin-top:6px;">
+          마스킹 완료 화면 — 다운로드 버튼으로 결과 이미지를 PNG로 저장합니다
+        </figcaption>
+      </figure>
       <h2>마스킹 방식 비교</h2>
       <table class="post-table">
         <thead><tr><th>항목</th><th>옵션</th><th>결과 예시</th></tr></thead>
@@ -100,6 +154,7 @@
           <tr><td>전화번호 전체</td><td>전체 가리기</td><td>███-████-████</td></tr>
           <tr><td>전화번호 뒷 8자리</td><td>뒷 번호 8자리</td><td>010-████-████</td></tr>
           <tr><td>전화번호 뒷 4자리</td><td>뒷 번호 4자리</td><td>010-1234-████</td></tr>
+          <tr><td>이메일 · 계좌번호 · 주소</td><td>전체 가리기</td><td>████████████</td></tr>
         </tbody>
       </table>
       <div class="post-highlight">💡 OCR 특성상 이미지 품질이 낮거나 손글씨, 특수 폰트의 경우 자동 탐지 정확도가 낮을 수 있습니다. 탐지 결과를 반드시 육안으로 확인하고 수동 마스킹으로 보완하세요.</div>
