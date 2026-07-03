@@ -66,6 +66,23 @@
     .preview-label { font-size:13px; color:var(--subtext); margin-bottom:12px; text-align:center; }
     .preview-panel canvas { width:100%; height:auto; border-radius:8px; display:block; cursor:crosshair; touch-action:none; -webkit-user-select:none; user-select:none; }
     .canvas-hint { font-size:12px; color:var(--subtext); text-align:center; margin-top:8px; }
+    .mask-toolbar { display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:12px; padding:8px 12px; background:rgba(123,108,255,0.08); border:1.5px solid var(--point); border-radius:10px; }
+    .mask-toolbar-label { font-size:13px; color:var(--subtext); font-weight:600; }
+    .mask-style-btns { display:flex; gap:6px; }
+    .mask-style-btn, .mask-undo-btn { -webkit-appearance:none; appearance:none; padding:4px 12px; border:2px solid var(--border); border-radius:8px; background:var(--bg); font-size:13px; font-weight:700; font-family:'Gowun Dodum',sans-serif; cursor:pointer; color:var(--text); -webkit-tap-highlight-color:transparent; }
+    .mask-style-btn.active { background:var(--point); color:#fff; border-color:var(--point); }
+    .mask-style-btn:hover:not(.active), .mask-undo-btn:hover { background:rgba(123,108,255,0.12); }
+    .mask-undo-btn { white-space:nowrap; }
+    .detected-item-right { display:flex; align-items:center; gap:8px; flex-shrink:0; }
+    .detected-style-select { -webkit-appearance:none; appearance:none; padding:3px 8px; border:2px solid var(--border); border-radius:8px; background:var(--bg); font-size:12px; font-weight:700; font-family:'Gowun Dodum',sans-serif; color:var(--text); cursor:pointer; }
+    .detected-delete { width:26px; height:26px; border:2px solid var(--border); border-radius:7px; background:transparent; color:var(--subtext); font-size:13px; cursor:pointer; display:flex; align-items:center; justify-content:center; padding:0; line-height:1; font-family:sans-serif; flex-shrink:0; }
+    .detected-delete:hover { background:#ff4d4d; color:#fff; border-color:#ff4d4d; }
+    @media (max-width:640px) {
+      .detected-item { flex-wrap:wrap; row-gap:8px; }
+      .detected-item-left { width:100%; }
+      .detected-type { white-space:nowrap; }
+      .detected-item-right { width:100%; justify-content:flex-end; }
+    }
     .detected-wrap { display:none; background:var(--card); border-radius:var(--radius); padding:24px; margin:0 0 20px; border:1px solid var(--border); }
     .detected-title { font-size:16px; font-weight:600; margin-bottom:16px; color:var(--text); }
     .detected-list { list-style:none; display:flex; flex-direction:column; gap:10px; }
@@ -171,6 +188,15 @@
         </div>
         <div class="preview-panel">
           <div class="preview-label">마스킹 결과 (드래그로 수동 마스킹 가능)</div>
+          <div class="mask-toolbar" id="maskToolbar">
+            <span class="mask-toolbar-label">수동 마스킹</span>
+            <div class="mask-style-btns">
+              <button class="mask-style-btn active" data-style="black">■ 검정</button>
+              <button class="mask-style-btn" data-style="mosaic">⊞ 모자이크</button>
+              <button class="mask-style-btn" data-style="blur">◌ 블러</button>
+            </div>
+            <button class="mask-undo-btn" id="undoBtn">↩ 되돌리기</button>
+          </div>
           <canvas id="maskedCanvas"></canvas>
           <p class="canvas-hint" id="canvasHint">위 이미지를 드래그하여 영역 추가</p>
         </div>
@@ -254,6 +280,8 @@
   const downloadBtn     = document.getElementById('downloadBtn');
   const resetBtn        = document.getElementById('resetBtn');
   const canvasHint      = document.getElementById('canvasHint');
+  const maskToolbar     = document.getElementById('maskToolbar');
+  const undoBtn         = document.getElementById('undoBtn');
 
   const isTouch = navigator.maxTouchPoints > 0;
   if (isTouch) canvasHint.textContent = '이미지를 두 번 탭하여 영역 추가 (1번째 탭: 시작점, 2번째 탭: 끝점)';
@@ -270,6 +298,7 @@
   let isDrawing        = false;
   let dragStart        = { x: 0, y: 0 };
   let tapStart         = null;
+  let manualMaskStyle  = 'black'; // black | mosaic | blur
 
   const DISPLAY_MAX = 1200; // 캔버스 최대 표시 크기(px) — 모바일 성능
 
@@ -307,6 +336,42 @@
     if (file && file.type === 'application/pdf') handleFile(file);
   });
 
+  // 수동 마스킹 스타일 버튼
+  document.querySelectorAll('.mask-style-btn').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.mask-style-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      manualMaskStyle = btn.dataset.style;
+    });
+  });
+
+  // 되돌리기: 현재 페이지의 마지막 수동 마스킹 제거
+  function undoLastManual() {
+    if (!pdfDoc) return;
+    const regions = pageMaskRegions[currentPage];
+    if (!regions) return;
+    for (let i = regions.length - 1; i >= 0; i--) {
+      if (regions[i].manual) {
+        regions.splice(i, 1);
+        maskedCanvases[currentPage] = createMaskedCanvas(currentPage);
+        maskedCanvas.getContext('2d').clearRect(0, 0, maskedCanvas.width, maskedCanvas.height);
+        maskedCanvas.getContext('2d').drawImage(maskedCanvases[currentPage], 0, 0);
+        renderDetectedList(currentPage);
+        renderSummary();
+        break;
+      }
+    }
+  }
+
+  undoBtn.addEventListener('click', undoLastManual);
+
+  document.addEventListener('keydown', (e) => {
+    if ((e.ctrlKey || e.metaKey) && e.key === 'z') {
+      e.preventDefault();
+      undoLastManual();
+    }
+  });
+
   async function handleFile(file) {
     uploadZone.style.display = 'none';
     showProgress(0, 'PDF 불러오는 중...');
@@ -335,6 +400,7 @@
         progressWrap.style.display = 'none';
         pageNav.style.display      = 'flex';
         previewWrap.style.display  = 'grid';
+        maskToolbar.style.display  = 'flex';
         actionWrap.style.display   = 'flex';
         updatePageNav();
         const hasAny = pageMaskRegions.some(p => p && p.length > 0);
@@ -454,17 +520,55 @@
     canvas.height = Math.round(src.height * scale);
     const ctx = canvas.getContext('2d');
     ctx.drawImage(src, 0, 0, canvas.width, canvas.height);
-    applyMaskToCanvas(ctx, pageMaskRegions[pageNum]);
+    applyMaskToCanvas(ctx, pageMaskRegions[pageNum], pageNum);
     return canvas;
   }
 
-  function applyMaskToCanvas(ctx, regions) {
-    ctx.fillStyle = '#000000';
+  function applyMaskToCanvas(ctx, regions, pageNum) {
     regions.forEach(r => {
       if (!r.active) return;
-      const region = computeRegionRect(r);
-      ctx.fillRect(region.x, region.y, region.w, region.h);
+      applyMask(ctx, computeRegionRect(r), r.style, pageNum);
     });
+  }
+
+  function applyMask(ctx, region, style, pageNum) {
+    if (style === 'mosaic') applyMosaicMask(ctx, region);
+    else if (style === 'blur') applyBlurMask(ctx, region, pageNum);
+    else { ctx.fillStyle = '#000000'; ctx.fillRect(region.x, region.y, region.w, region.h); }
+  }
+
+  function applyMosaicMask(ctx, region) {
+    const { x, y, w, h } = region;
+    const size = Math.max(8, Math.floor(Math.min(w, h) / 8));
+    const x0 = Math.max(0, Math.floor(x));
+    const y0 = Math.max(0, Math.floor(y));
+    const x1 = Math.min(ctx.canvas.width,  Math.ceil(x + w));
+    const y1 = Math.min(ctx.canvas.height, Math.ceil(y + h));
+    for (let px = x0; px < x1; px += size) {
+      for (let py = y0; py < y1; py += size) {
+        const bw = Math.min(size, x1 - px);
+        const bh = Math.min(size, y1 - py);
+        if (bw <= 0 || bh <= 0) continue;
+        const d = ctx.getImageData(px, py, bw, bh);
+        let r = 0, g = 0, b = 0;
+        const n = d.data.length / 4;
+        for (let i = 0; i < d.data.length; i += 4) { r += d.data[i]; g += d.data[i+1]; b += d.data[i+2]; }
+        ctx.fillStyle = `rgb(${Math.round(r/n)},${Math.round(g/n)},${Math.round(b/n)})`;
+        ctx.fillRect(px, py, bw, bh);
+      }
+    }
+  }
+
+  function applyBlurMask(ctx, region, pageNum) {
+    const { x, y, w, h } = region;
+    ctx.save();
+    ctx.beginPath();
+    ctx.rect(x, y, w, h);
+    ctx.clip();
+    ctx.filter = 'blur(14px)';
+    ctx.drawImage(originalCanvases[pageNum], 0, 0, ctx.canvas.width, ctx.canvas.height);
+    ctx.filter = 'none';
+    ctx.restore();
   }
 
   function computeRegionRect(r) {
@@ -529,13 +633,45 @@
     regions.forEach((region, index) => {
       const li = document.createElement('li');
       li.className = 'detected-item';
-      li.innerHTML = `<div class="detected-item-left"><span class="detected-type">${region.type}</span><span class="detected-value">${maskValue(region.value)}</span></div><label class="toggle"><input type="checkbox" ${region.active ? 'checked' : ''} data-index="${index}" /><span class="toggle-slider"></span></label>`;
+      li.innerHTML = `
+        <div class="detected-item-left">
+          <span class="detected-type">${region.type}</span>
+          <span class="detected-value">${maskValue(region.value)}</span>
+        </div>
+        <div class="detected-item-right">
+          <select class="detected-style-select" data-index="${index}" title="마스킹 스타일">
+            <option value="black"  ${(region.style || 'black') === 'black'  ? 'selected' : ''}>■ 검정</option>
+            <option value="mosaic" ${region.style === 'mosaic' ? 'selected' : ''}>⊞ 모자이크</option>
+            <option value="blur"   ${region.style === 'blur'   ? 'selected' : ''}>◌ 블러</option>
+          </select>
+          <label class="toggle">
+            <input type="checkbox" ${region.active ? 'checked' : ''} data-index="${index}" />
+            <span class="toggle-slider"></span>
+          </label>
+          <button class="detected-delete" data-index="${index}" title="삭제">✕</button>
+        </div>
+      `;
       detectedList.appendChild(li);
     });
     detectedList.querySelectorAll('input[type="checkbox"]').forEach(cb => {
       cb.addEventListener('change', (e) => {
         pageMaskRegions[currentPage][parseInt(e.target.dataset.index)].active = e.target.checked;
         redrawCurrentPage();
+      });
+    });
+    detectedList.querySelectorAll('.detected-style-select').forEach(sel => {
+      sel.addEventListener('change', (e) => {
+        pageMaskRegions[currentPage][parseInt(e.target.dataset.index)].style = e.target.value;
+        redrawCurrentPage();
+      });
+    });
+    detectedList.querySelectorAll('.detected-delete').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const idx = parseInt(e.currentTarget.dataset.index);
+        pageMaskRegions[currentPage].splice(idx, 1);
+        redrawCurrentPage();
+        renderDetectedList(currentPage);
+        renderSummary();
       });
     });
   }
@@ -575,7 +711,7 @@
     const ctx = maskedCanvas.getContext('2d');
     ctx.clearRect(0, 0, maskedCanvas.width, maskedCanvas.height);
     ctx.drawImage(originalCanvases[currentPage], 0, 0, maskedCanvas.width, maskedCanvas.height);
-    applyMaskToCanvas(ctx, pageMaskRegions[currentPage]);
+    applyMaskToCanvas(ctx, pageMaskRegions[currentPage], currentPage);
     maskedCanvases[currentPage] = createMaskedCanvas(currentPage);
   }
 
@@ -597,7 +733,7 @@
   function finishDraw(pos) {
     const w = pos.x - dragStart.x, h = pos.y - dragStart.y;
     if (Math.abs(w) < 5 || Math.abs(h) < 5) return;
-    pageMaskRegions[currentPage].push({ x: Math.min(dragStart.x,pos.x), y: Math.min(dragStart.y,pos.y), w: Math.abs(w), h: Math.abs(h), type: '수동 마스킹', value: '직접 지정', active: true, maskMode: 'full' });
+    pageMaskRegions[currentPage].push({ x: Math.min(dragStart.x,pos.x), y: Math.min(dragStart.y,pos.y), w: Math.abs(w), h: Math.abs(h), type: '수동 마스킹', value: '직접 지정', active: true, maskMode: 'full', style: manualMaskStyle, manual: true });
     maskedCanvases[currentPage] = createMaskedCanvas(currentPage);
     maskedCanvas.getContext('2d').clearRect(0,0,maskedCanvas.width,maskedCanvas.height);
     maskedCanvas.getContext('2d').drawImage(maskedCanvases[currentPage], 0, 0);
@@ -681,13 +817,15 @@
   resetBtn.addEventListener('click', () => {
     pdfDoc = null; totalPages = 0; currentPage = 1;
     originalCanvases = []; maskedCanvases = []; pageMaskRegions = []; pageDisplayScale = [];
-    rrnMode = 'full'; phoneMode = 'full'; isDrawing = false; tapStart = null;
+    rrnMode = 'full'; phoneMode = 'full'; isDrawing = false; tapStart = null; manualMaskStyle = 'black';
     fileInput.value = '';
-    [progressWrap, summaryWrap, pageNav, previewWrap, detectedWrap, rrnOptionWrap, phoneOptionWrap, actionWrap].forEach(el => el.style.display = 'none');
+    [progressWrap, summaryWrap, pageNav, previewWrap, maskToolbar, detectedWrap, rrnOptionWrap, phoneOptionWrap, actionWrap].forEach(el => el.style.display = 'none');
     [originalCanvas, maskedCanvas].forEach(c => c.getContext('2d').clearRect(0, 0, c.width, c.height));
     uploadZone.style.display = 'block'; summaryList.innerHTML = ''; detectedList.innerHTML = '';
     document.querySelector('#rrnOptionWrap .option-btn[data-mode="full"]').classList.add('active');
     document.querySelector('#phoneOptionWrap .option-btn[data-mode="full"]').classList.add('active');
+    document.querySelectorAll('.mask-style-btn').forEach(b => b.classList.remove('active'));
+    document.querySelector('.mask-style-btn[data-style="black"]').classList.add('active');
   });
   </script>
 
