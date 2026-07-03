@@ -64,7 +64,8 @@
     .preview-wrap { display:none; grid-template-columns:1fr 1fr; gap:20px; margin:0 0 24px; }
     .preview-panel { background:var(--card); border-radius:var(--radius); padding:16px; border:1px solid var(--border); }
     .preview-label { font-size:13px; color:var(--subtext); margin-bottom:12px; text-align:center; }
-    .preview-panel canvas { width:100%; height:auto; border-radius:8px; display:block; cursor:crosshair; }
+    .preview-panel canvas { width:100%; height:auto; border-radius:8px; display:block; cursor:crosshair; touch-action:none; -webkit-user-select:none; user-select:none; }
+    .canvas-hint { font-size:12px; color:var(--subtext); text-align:center; margin-top:8px; }
     .detected-wrap { display:none; background:var(--card); border-radius:var(--radius); padding:24px; margin:0 0 20px; border:1px solid var(--border); }
     .detected-title { font-size:16px; font-weight:600; margin-bottom:16px; color:var(--text); }
     .detected-list { list-style:none; display:flex; flex-direction:column; gap:10px; }
@@ -171,6 +172,7 @@
         <div class="preview-panel">
           <div class="preview-label">마스킹 결과 (드래그로 수동 마스킹 가능)</div>
           <canvas id="maskedCanvas"></canvas>
+          <p class="canvas-hint" id="canvasHint">위 이미지를 드래그하여 영역 추가</p>
         </div>
       </div>
 
@@ -251,6 +253,10 @@
   const actionWrap      = document.getElementById('actionWrap');
   const downloadBtn     = document.getElementById('downloadBtn');
   const resetBtn        = document.getElementById('resetBtn');
+  const canvasHint      = document.getElementById('canvasHint');
+
+  const isTouch = navigator.maxTouchPoints > 0;
+  if (isTouch) canvasHint.textContent = '이미지를 두 번 탭하여 영역 추가 (1번째 탭: 시작점, 2번째 탭: 끝점)';
 
   let pdfDoc           = null;
   let totalPages       = 0;
@@ -258,10 +264,14 @@
   let originalCanvases = [];
   let maskedCanvases   = [];
   let pageMaskRegions  = [];
+  let pageDisplayScale = [];
   let rrnMode          = 'full';
   let phoneMode        = 'full';
   let isDrawing        = false;
   let dragStart        = { x: 0, y: 0 };
+  let tapStart         = null;
+
+  const DISPLAY_MAX = 1200; // 캔버스 최대 표시 크기(px) — 모바일 성능
 
   const PATTERNS = [
     { type: '주민등록번호', regex: /\d{6}-[1-4]\d{6}/g },
@@ -308,6 +318,7 @@
       for (let i = 1; i <= totalPages; i++) {
         showProgress(Math.floor(5 + (i / totalPages) * 20), `페이지 렌더링 중... ${i} / ${totalPages}`);
         originalCanvases[i] = await renderPageToCanvas(pdfDoc, i);
+        pageDisplayScale[i] = Math.min(1, DISPLAY_MAX / Math.max(originalCanvases[i].width, originalCanvases[i].height));
         pageMaskRegions[i]  = [];
       }
       for (let i = 1; i <= totalPages; i++) {
@@ -372,10 +383,11 @@
           const matchedText  = match[0];
           const matchedWords = lineWords.filter(w => matchedText.includes(w.text.trim()) && w.text.trim().length > 0);
           if (matchedWords.length === 0) return;
-          const x0 = Math.min(...matchedWords.map(w => w.bbox.x0));
-          const y0 = Math.min(...matchedWords.map(w => w.bbox.y0));
-          const x1 = Math.max(...matchedWords.map(w => w.bbox.x1));
-          const y1 = Math.max(...matchedWords.map(w => w.bbox.y1));
+          const scale = pageDisplayScale[pageNum];
+          const x0 = Math.min(...matchedWords.map(w => w.bbox.x0)) * scale;
+          const y0 = Math.min(...matchedWords.map(w => w.bbox.y0)) * scale;
+          const x1 = Math.max(...matchedWords.map(w => w.bbox.x1)) * scale;
+          const y1 = Math.max(...matchedWords.map(w => w.bbox.y1)) * scale;
           const p  = 4;
           let maskMode = 'full';
           if (pattern.type === '주민등록번호') maskMode = rrnMode;
@@ -420,10 +432,11 @@
         mergedLines.push(nw); usedLineIdx.add(next);
       }
       const allWords = mergedLines.flat();
-      const x0 = Math.min(...allWords.map(w => w.bbox.x0));
-      const y0 = Math.min(...allWords.map(w => w.bbox.y0));
-      const x1 = Math.max(...allWords.map(w => w.bbox.x1));
-      const y1 = Math.max(...allWords.map(w => w.bbox.y1));
+      const scale = pageDisplayScale[pageNum];
+      const x0 = Math.min(...allWords.map(w => w.bbox.x0)) * scale;
+      const y0 = Math.min(...allWords.map(w => w.bbox.y0)) * scale;
+      const x1 = Math.max(...allWords.map(w => w.bbox.x1)) * scale;
+      const y1 = Math.max(...allWords.map(w => w.bbox.y1)) * scale;
       const p  = 4;
       pageMaskRegions[pageNum].push({
         x: x0-p, y: y0-p, w: (x1-x0)+p*2, h: (y1-y0)+p*2,
@@ -434,11 +447,13 @@
   }
 
   function createMaskedCanvas(pageNum) {
-    const src = originalCanvases[pageNum];
+    const src   = originalCanvases[pageNum];
+    const scale = pageDisplayScale[pageNum];
     const canvas = document.createElement('canvas');
-    canvas.width = src.width; canvas.height = src.height;
+    canvas.width  = Math.round(src.width * scale);
+    canvas.height = Math.round(src.height * scale);
     const ctx = canvas.getContext('2d');
-    ctx.drawImage(src, 0, 0);
+    ctx.drawImage(src, 0, 0, canvas.width, canvas.height);
     applyMaskToCanvas(ctx, pageMaskRegions[pageNum]);
     return canvas;
   }
@@ -468,12 +483,16 @@
 
   async function showPagePreview(pageNum) {
     currentPage = pageNum;
-    const src = originalCanvases[pageNum];
-    originalCanvas.width = src.width; originalCanvas.height = src.height;
-    originalCanvas.getContext('2d').drawImage(src, 0, 0);
-    const msrc = maskedCanvases[pageNum] || src;
-    maskedCanvas.width = msrc.width; maskedCanvas.height = msrc.height;
-    maskedCanvas.getContext('2d').drawImage(msrc, 0, 0);
+    const src   = originalCanvases[pageNum];
+    const scale = pageDisplayScale[pageNum];
+    const dw = Math.round(src.width * scale), dh = Math.round(src.height * scale);
+    originalCanvas.width = dw; originalCanvas.height = dh;
+    originalCanvas.getContext('2d').drawImage(src, 0, 0, dw, dh);
+    const msrc = maskedCanvases[pageNum];
+    maskedCanvas.width  = msrc ? msrc.width  : dw;
+    maskedCanvas.height = msrc ? msrc.height : dh;
+    if (msrc) maskedCanvas.getContext('2d').drawImage(msrc, 0, 0);
+    else maskedCanvas.getContext('2d').drawImage(src, 0, 0, dw, dh);
     pageInfo.textContent      = `${pageNum} / ${totalPages} 페이지`;
     detectedTitle.textContent = `${pageNum}페이지 탐지된 개인정보`;
     renderDetectedList(pageNum);
@@ -555,7 +574,7 @@
   function redrawCurrentPage() {
     const ctx = maskedCanvas.getContext('2d');
     ctx.clearRect(0, 0, maskedCanvas.width, maskedCanvas.height);
-    ctx.drawImage(originalCanvases[currentPage], 0, 0);
+    ctx.drawImage(originalCanvases[currentPage], 0, 0, maskedCanvas.width, maskedCanvas.height);
     applyMaskToCanvas(ctx, pageMaskRegions[currentPage]);
     maskedCanvases[currentPage] = createMaskedCanvas(currentPage);
   }
@@ -569,27 +588,67 @@
   prevPageBtn.addEventListener('click', async () => { if (currentPage > 1) { await showPagePreview(currentPage-1); updatePageNav(); } });
   nextPageBtn.addEventListener('click', async () => { if (currentPage < totalPages) { await showPagePreview(currentPage+1); updatePageNav(); } });
 
-  maskedCanvas.addEventListener('mousedown', (e) => { isDrawing = true; dragStart = getCanvasPos(maskedCanvas, e); });
-  maskedCanvas.addEventListener('mousemove', (e) => {
-    if (!isDrawing) return;
-    const pos = getCanvasPos(maskedCanvas, e);
-    const ctx = maskedCanvas.getContext('2d');
+  function drawPreviewBase(ctx) {
     ctx.clearRect(0, 0, maskedCanvas.width, maskedCanvas.height);
-    ctx.drawImage(maskedCanvases[currentPage] || originalCanvases[currentPage], 0, 0);
-    ctx.fillStyle = 'rgba(0,0,0,0.5)';
-    ctx.fillRect(dragStart.x, dragStart.y, pos.x-dragStart.x, pos.y-dragStart.y);
-  });
-  maskedCanvas.addEventListener('mouseup', (e) => {
-    if (!isDrawing) return;
-    isDrawing = false;
-    const pos = getCanvasPos(maskedCanvas, e);
-    const w = pos.x-dragStart.x; const h = pos.y-dragStart.y;
+    if (maskedCanvases[currentPage]) ctx.drawImage(maskedCanvases[currentPage], 0, 0);
+    else ctx.drawImage(originalCanvases[currentPage], 0, 0, maskedCanvas.width, maskedCanvas.height);
+  }
+
+  function finishDraw(pos) {
+    const w = pos.x - dragStart.x, h = pos.y - dragStart.y;
     if (Math.abs(w) < 5 || Math.abs(h) < 5) return;
     pageMaskRegions[currentPage].push({ x: Math.min(dragStart.x,pos.x), y: Math.min(dragStart.y,pos.y), w: Math.abs(w), h: Math.abs(h), type: '수동 마스킹', value: '직접 지정', active: true, maskMode: 'full' });
     maskedCanvases[currentPage] = createMaskedCanvas(currentPage);
     maskedCanvas.getContext('2d').clearRect(0,0,maskedCanvas.width,maskedCanvas.height);
     maskedCanvas.getContext('2d').drawImage(maskedCanvases[currentPage], 0, 0);
     renderDetectedList(currentPage); detectedWrap.style.display = 'block'; renderSummary();
+  }
+
+  // 마우스 이벤트 (데스크톱)
+  maskedCanvas.addEventListener('mousedown', (e) => { isDrawing = true; dragStart = getCanvasPos(maskedCanvas, e); });
+  maskedCanvas.addEventListener('mousemove', (e) => {
+    if (!isDrawing) return;
+    const pos = getCanvasPos(maskedCanvas, e);
+    const ctx = maskedCanvas.getContext('2d');
+    drawPreviewBase(ctx);
+    ctx.fillStyle = 'rgba(0,0,0,0.5)';
+    ctx.fillRect(dragStart.x, dragStart.y, pos.x-dragStart.x, pos.y-dragStart.y);
+  });
+  maskedCanvas.addEventListener('mouseup', (e) => {
+    if (!isDrawing) return;
+    isDrawing = false;
+    finishDraw(getCanvasPos(maskedCanvas, e));
+  });
+  maskedCanvas.addEventListener('mouseleave', () => {
+    if (isDrawing) { isDrawing = false; drawPreviewBase(maskedCanvas.getContext('2d')); }
+  });
+
+  // 터치 이벤트 (모바일) — 탭 2번으로 영역 지정
+  maskedCanvas.addEventListener('touchstart', (e) => { e.preventDefault(); }, { passive: false });
+  maskedCanvas.addEventListener('touchend', (e) => {
+    e.preventDefault();
+    if (!originalCanvases[currentPage]) return;
+    const pos = getCanvasPos(maskedCanvas, e.changedTouches[0]);
+    if (!tapStart) {
+      tapStart = pos;
+      const ctx = maskedCanvas.getContext('2d');
+      drawPreviewBase(ctx);
+      ctx.save();
+      ctx.strokeStyle = 'rgba(123,108,255,0.9)';
+      ctx.lineWidth = 2;
+      ctx.setLineDash([4, 4]);
+      ctx.strokeRect(pos.x - 12, pos.y - 12, 24, 24);
+      ctx.setLineDash([]);
+      ctx.restore();
+    } else {
+      dragStart = tapStart;
+      finishDraw(pos);
+      tapStart = null;
+    }
+  }, { passive: false });
+  maskedCanvas.addEventListener('touchcancel', () => {
+    tapStart = null;
+    drawPreviewBase(maskedCanvas.getContext('2d'));
   });
 
   function getCanvasPos(canvas, e) {
@@ -621,8 +680,8 @@
 
   resetBtn.addEventListener('click', () => {
     pdfDoc = null; totalPages = 0; currentPage = 1;
-    originalCanvases = []; maskedCanvases = []; pageMaskRegions = [];
-    rrnMode = 'full'; phoneMode = 'full'; isDrawing = false;
+    originalCanvases = []; maskedCanvases = []; pageMaskRegions = []; pageDisplayScale = [];
+    rrnMode = 'full'; phoneMode = 'full'; isDrawing = false; tapStart = null;
     fileInput.value = '';
     [progressWrap, summaryWrap, pageNav, previewWrap, detectedWrap, rrnOptionWrap, phoneOptionWrap, actionWrap].forEach(el => el.style.display = 'none');
     [originalCanvas, maskedCanvas].forEach(c => c.getContext('2d').clearRect(0, 0, c.width, c.height));
