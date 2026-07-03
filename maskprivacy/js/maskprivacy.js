@@ -639,6 +639,10 @@ maskedCanvas.addEventListener('touchend', (e) => {
   isDrawing = false;
   finishDraw(getCanvasPos(maskedCanvas, e.changedTouches[0]));
 }, { passive: false });
+maskedCanvas.addEventListener('touchcancel', () => {
+  isDrawing = false;
+  if (originalImage) redrawMasked();
+});
 
 function finishDraw(pos) {
   const w = pos.x - dragStart.x;
