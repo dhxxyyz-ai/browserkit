@@ -28,6 +28,8 @@
     .blog-card-date { font-size:13px; color:var(--subtext); margin-top:auto; font-family:'Gowun Dodum',sans-serif; }
     @media (max-width:768px) { .blog-grid { grid-template-columns:1fr; } .blog-hero h1 { font-size:26px; } }
     @media (min-width:769px) and (max-width:1024px) { .blog-grid { grid-template-columns:repeat(2,1fr); } }
+    .blog-intro-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:24px; }
+    @media (max-width:768px) { .blog-intro-grid { grid-template-columns:1fr; } }
   </style>
   <meta property="og:image" content="https://browserkit.online/img/og-browserkit.png" />
   <link rel="canonical" href="https://browserkit.online/blog/" />
@@ -54,7 +56,7 @@
         <p>개인정보 보호, 마스킹 방법, 브라우저 도구 활용법까지 유용한 정보를 제공합니다.</p>
       </div>
 
-      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:28px 32px;margin:0 0 32px;display:grid;grid-template-columns:repeat(3,1fr);gap:24px;">
+      <div class="blog-intro-grid" style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:28px 32px;margin:0 0 32px;">
         <div>
           <div style="font-size:22px;margin-bottom:8px;">🔒</div>
           <div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:6px;font-family:'Gowun Dodum',sans-serif;">개인정보 보호 실천법</div>
