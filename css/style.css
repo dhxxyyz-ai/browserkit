@@ -137,9 +137,15 @@ a:hover { color: var(--text); }
    히어로 섹션 (도구 페이지 공통)
 ============================ */
 .hero {
-  position: relative;
   text-align: center;
   padding: 40px 0 20px;
+}
+
+.hero-title-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 10px;
 }
 
 .hero-icon { font-size: 52px; margin-bottom: 16px; }
@@ -182,13 +188,12 @@ a:hover { color: var(--text); }
 }
 
 .hero-guide-link {
-  position: absolute;
-  top: 16px;
-  right: 0;
   font-size: 13px;
+  font-weight: 400;
   color: var(--subtext);
   text-decoration: underline;
   text-underline-offset: 3px;
+  white-space: nowrap;
 }
 .hero-guide-link:hover { color: var(--point-hover); }
 
