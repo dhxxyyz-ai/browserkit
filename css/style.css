@@ -204,13 +204,17 @@ a:hover { color: var(--text); }
   .hero-title-wrap {
     display: block;
   }
+  .hero-title-wrap .hero-title {
+    margin-bottom: 0;
+  }
   .hero-guide-link {
     position: static;
     display: block;
     width: 100%;
     text-align: center;
     margin-left: 0;
-    margin-top: 6px;
+    margin-top: 8px;
+    margin-bottom: 8px;
     transform: none;
   }
 }
