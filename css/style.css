@@ -141,11 +141,9 @@ a:hover { color: var(--text); }
   padding: 40px 0 20px;
 }
 
-.hero-title-row {
-  display: flex;
-  align-items: baseline;
-  justify-content: center;
-  gap: 10px;
+.hero-title-wrap {
+  position: relative;
+  display: inline-block;
 }
 
 .hero-icon { font-size: 52px; margin-bottom: 16px; }
@@ -188,6 +186,11 @@ a:hover { color: var(--text); }
 }
 
 .hero-guide-link {
+  position: absolute;
+  left: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+  margin-left: 12px;
   font-size: 13px;
   font-weight: 400;
   color: var(--subtext);
