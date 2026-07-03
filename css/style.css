@@ -180,6 +180,16 @@ a:hover { color: var(--text); }
   font-family: 'Gowun Dodum', sans-serif;
 }
 
+.hero-guide-link {
+  display: inline-block;
+  margin-top: 14px;
+  font-size: 13px;
+  color: var(--subtext);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.hero-guide-link:hover { color: var(--point-hover); }
+
 /* ============================
    신뢰 뱃지
 ============================ */
