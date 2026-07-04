@@ -48,7 +48,7 @@
     "headline": "FitImage 사용법 완전 가이드",
     "description": "FitImage의 모든 기능을 단계별로 설명하는 공식 사용 가이드입니다. 크기 조정, 형식 변환, 용량 압축까지 쉽게 따라할 수 있습니다.",
     "datePublished": "2026-06-16T00:00:00+09:00",
-    "dateModified": "2026-06-16T00:00:00+09:00",
+    "dateModified": "2026-07-04T00:00:00+09:00",
     "author": { "@type": "Organization", "name": "BrowserKit", "url": "https://browserkit.online" },
     "publisher": { "@type": "Organization", "name": "BrowserKit", "url": "https://browserkit.online", "logo": { "@type": "ImageObject", "url": "https://browserkit.online/img/og-browserkit.png" } },
     "mainEntityOfPage": { "@type": "WebPage", "@id": "https://browserkit.online/blog/17-fitimage-howto.html" },
@@ -76,7 +76,7 @@
     <a href="/blog/" class="back-link">← 블로그 목록</a>
     <span class="post-tag">가이드</span>
     <h1 class="post-title">FitImage 사용법 완전 가이드</h1>
-    <div class="post-date">2026년 6월 16일</div>
+    <div class="post-date">2026년 6월 16일 (2026년 7월 4일 수정)</div>
     <div style="margin:12px 0"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
 
     <div class="post-body">
@@ -125,6 +125,15 @@
           <p>업로드 영역에 이미지를 드래그하거나 클릭해서 파일을 선택합니다. PNG, JPG, WEBP, GIF 형식을 지원합니다.</p>
         </div>
       </div>
+      <figure style="margin:12px 0 24px; text-align:center;">
+        <img src="/img/blog/fitimage/01-upload.png"
+             alt="FitImage 이미지 업로드 화면"
+             style="width:100%; max-width:640px; border:1px solid var(--border); border-radius:var(--radius);"
+             loading="lazy" />
+        <figcaption style="font-size:13px; color:var(--subtext); margin-top:6px;">
+          이미지 업로드 화면 — PNG, JPG, WEBP, GIF 형식을 지원하며 파일은 서버로 전송되지 않습니다
+        </figcaption>
+      </figure>
       <div class="step-card">
         <div class="step-num">2</div>
         <div class="step-content">
@@ -153,9 +162,27 @@
           <p>다운로드 버튼을 클릭하면 처리된 이미지가 저장됩니다. 파일명은 탭에 따라 자동 생성됩니다 (예: fitimage_800x450.png, fitimage_converted.jpg, fitimage_compressed.webp).</p>
         </div>
       </div>
+      <figure style="margin:12px 0 24px; text-align:center;">
+        <img src="/img/blog/fitimage/05-result.png"
+             alt="FitImage 원본·결과 미리보기와 다운로드 버튼"
+             style="width:100%; max-width:640px; border:1px solid var(--border); border-radius:var(--radius);"
+             loading="lazy" />
+        <figcaption style="font-size:13px; color:var(--subtext); margin-top:6px;">
+          원본·결과 미리보기 — 다운로드 버튼으로 처리된 이미지를 저장합니다
+        </figcaption>
+      </figure>
 
       <h2>📐 크기 조정 상세 안내</h2>
       <p>가로/세로 px 입력 필드에 원하는 크기를 입력합니다. 비율 유지 체크박스를 선택하면 가로를 입력할 때 세로가 자동으로 계산됩니다. 자주 쓰는 크기는 단축 버튼으로 빠르게 설정할 수 있습니다.</p>
+      <figure style="margin:12px 0 24px; text-align:center;">
+        <img src="/img/blog/fitimage/02-resize-options.png"
+             alt="FitImage 크기 조정 탭 — 가로세로 입력과 단축 버튼"
+             style="width:100%; max-width:640px; border:1px solid var(--border); border-radius:var(--radius);"
+             loading="lazy" />
+        <figcaption style="font-size:13px; color:var(--subtext); margin-top:6px;">
+          크기 조정 — 가로/세로 입력, 비율 유지 체크, 단축 버튼(50%/75%/1280px 등)
+        </figcaption>
+      </figure>
       <div class="post-table-wrap"><table class="post-table">
         <thead><tr><th>단축 버튼</th><th>설명</th></tr></thead>
         <tbody>
@@ -169,6 +196,15 @@
 
       <h2>🔄 형식 변환 상세 안내</h2>
       <p>PNG, JPG, WEBP 중 원하는 출력 형식을 선택합니다. 용도에 따라 적합한 형식이 다릅니다.</p>
+      <figure style="margin:12px 0 24px; text-align:center;">
+        <img src="/img/blog/fitimage/03-format.png"
+             alt="FitImage 형식 변환 탭 — PNG, JPG, WEBP 선택 버튼"
+             style="width:100%; max-width:640px; border:1px solid var(--border); border-radius:var(--radius);"
+             loading="lazy" />
+        <figcaption style="font-size:13px; color:var(--subtext); margin-top:6px;">
+          형식 변환 — PNG·JPG·WEBP 중 선택하면 형식별 안내 문구가 표시됩니다
+        </figcaption>
+      </figure>
       <div class="post-table-wrap"><table class="post-table">
         <thead><tr><th>형식</th><th>특징</th><th>권장 용도</th></tr></thead>
         <tbody>
@@ -180,6 +216,15 @@
 
       <h2>📦 용량 압축 상세 안내</h2>
       <p>품질 슬라이더(1~100%)로 출력 품질을 조정합니다. 수치가 낮을수록 파일 크기는 작아지지만 화질이 저하됩니다. 결과 영역에서 압축 전후 용량과 감소율을 실시간으로 확인할 수 있습니다.</p>
+      <figure style="margin:12px 0 24px; text-align:center;">
+        <img src="/img/blog/fitimage/04-compress.png"
+             alt="FitImage 용량 압축 탭 — 품질 슬라이더와 단축 버튼"
+             style="width:100%; max-width:640px; border:1px solid var(--border); border-radius:var(--radius);"
+             loading="lazy" />
+        <figcaption style="font-size:13px; color:var(--subtext); margin-top:6px;">
+          용량 압축 — 품질 슬라이더와 단축 버튼(고화질/표준/최소)으로 조정합니다
+        </figcaption>
+      </figure>
       <div class="post-table-wrap"><table class="post-table">
         <thead><tr><th>단축 버튼</th><th>품질</th><th>설명</th></tr></thead>
         <tbody>
