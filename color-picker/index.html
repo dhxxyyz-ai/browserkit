@@ -24,7 +24,7 @@
 
     /* 작업 영역 */
     .work-area{display:grid;grid-template-columns:1fr 340px;gap:24px;margin-bottom:24px;align-items:start;}
-    .canvas-wrap{position:relative;background:repeating-conic-gradient(#1e1e2a 0% 25%,#26263a 0% 50%) 0 0/16px 16px;border-radius:var(--radius);overflow:hidden;cursor:crosshair;}
+    .canvas-wrap{position:relative;background:repeating-conic-gradient(#1e1e2a 0% 25%,#26263a 0% 50%) 0 0/16px 16px;border-radius:var(--radius);overflow:hidden;cursor:crosshair;width:fit-content;max-width:100%;justify-self:start;}
     .canvas-wrap canvas{display:block;max-width:100%;height:auto;}
     .canvas-wrap .magnifier{position:absolute;pointer-events:none;width:120px;height:120px;border-radius:50%;border:3px solid var(--point);box-shadow:0 4px 20px rgba(0,0,0,0.5);overflow:hidden;display:none;}
     .canvas-wrap .magnifier canvas{position:absolute;top:0;left:0;}
