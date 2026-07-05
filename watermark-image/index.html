@@ -298,6 +298,7 @@
         oc.getContext('2d').drawImage(img, 0, 0);
         document.getElementById('originalInfo').textContent = img.width+'×'+img.height+' / '+formatBytes(file.size);
         // UI 표시
+        uploadZone.style.display = 'none';
         document.getElementById('tabWrap').style.display = 'flex';
         showTab(currentTab);
         document.getElementById('outputPanel').style.display = 'block';
@@ -487,6 +488,7 @@
     originalImg = null; originalFile = null; wmImg = null; applied = false;
     fileInput.value = ''; wmImgInput.value = '';
     document.getElementById('wmImgPreview').style.display = 'none';
+    uploadZone.style.display = '';
     document.getElementById('tabWrap').style.display = 'none';
     document.getElementById('panel-text').style.display = 'none';
     document.getElementById('panel-image').style.display = 'none';
