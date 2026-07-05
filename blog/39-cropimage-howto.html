@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="CropImage의 모든 기능을 단계별로 설명하는 공식 사용 가이드입니다. 이미지 자르기, 회전, 반전까지 쉽게 따라할 수 있습니다." />
+  <meta property="og:title" content="CropImage 사용법 완전 가이드 — BrowserKit" />
+  <meta property="og:description" content="CropImage의 모든 기능을 단계별로 설명하는 공식 사용 가이드입니다." />
+  <meta property="og:type" content="article" />
+  <title>CropImage 사용법 완전 가이드 — BrowserKit</title>
+  <link rel="stylesheet" href="/css/style.css?v=20260704c" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506"
+     crossorigin="anonymous"></script>
+  <style>
+    .feature-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:20px 0; }
+    .feature-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px; }
+    .feature-card:hover { border-color:var(--point); }
+    .feature-icon { font-size:24px; margin-bottom:10px; }
+    .feature-title { font-size:14px; font-weight:600; color:var(--text); margin-bottom:6px; }
+    .feature-desc { font-size:13px; color:var(--subtext); line-height:1.7; }
+    .step-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px 24px; margin:16px 0; display:flex; gap:16px; align-items:flex-start; }
+    .step-num { min-width:36px; height:36px; background:linear-gradient(135deg,var(--point),var(--point-hover)); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:700; color:white; flex-shrink:0; font-family:'Gowun Dodum',sans-serif; }
+    .step-content h3 { font-size:15px; font-weight:600; margin-bottom:6px; color:var(--text); }
+    .step-content p { font-size:14px; color:var(--subtext); line-height:1.7; margin:0; }
+    .post-table { width:100%; border-collapse:collapse; margin:20px 0; font-size:15px; }
+    .post-table th { background:var(--card); padding:12px 16px; text-align:left; font-weight:600; border:1px solid var(--border); color:var(--text); }
+    .post-table td { padding:11px 16px; border:1px solid var(--border); color:var(--subtext); line-height:1.7; }
+    .post-table tr:hover td { background:rgba(123,108,255,0.04); }
+    .post-nav { display:flex; justify-content:space-between; margin-top:28px; padding-top:24px; border-top:1px solid var(--border); gap:12px; }
+    .post-nav a { font-size:15px; color:var(--subtext); word-break:keep-all; }
+    .post-nav a:hover { color:var(--text); }
+    .post-nav .nav-label { display:block; font-size:13px; color:var(--subtext); opacity:0.7; margin-bottom:4px; }
+    .post-table-wrap { overflow-x:auto; }
+    .post-table th, .post-table td { white-space:nowrap; }
+    .cta-box { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:28px; text-align:center; margin:48px 0 0; }
+    .cta-box p { font-size:17px; color:var(--subtext); margin-bottom:16px; }
+    .cta-btn { display:inline-block; background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border-radius:10px; padding:12px 28px; font-size:14px; font-weight:600; text-decoration:none; }
+    .cta-btn:hover { transform:translateY(-2px); box-shadow:0 8px 24px var(--glow); color:white; }
+    .back-link:hover { color:var(--text); }
+    @media (max-width:640px) {
+      .feature-grid { grid-template-columns:1fr; }
+    }
+  </style>
+<meta property="og:image" content="https://browserkit.online/img/og-browserkit.png" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "CropImage 사용법 완전 가이드",
+    "description": "CropImage의 모든 기능을 단계별로 설명하는 공식 사용 가이드입니다. 이미지 자르기, 회전, 반전까지 쉽게 따라할 수 있습니다.",
+    "datePublished": "2026-07-04T00:00:00+09:00",
+    "dateModified": "2026-07-04T00:00:00+09:00",
+    "author": { "@type": "Organization", "name": "BrowserKit", "url": "https://browserkit.online" },
+    "publisher": { "@type": "Organization", "name": "BrowserKit", "url": "https://browserkit.online", "logo": { "@type": "ImageObject", "url": "https://browserkit.online/img/og-browserkit.png" } },
+    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://browserkit.online/blog/39-cropimage-howto.html" },
+    "image": "https://browserkit.online/img/og-browserkit.png"
+  }
+  </script>  <link rel="canonical" href="https://browserkit.online/blog/39-cropimage-howto.html" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://browserkit.online/img/og-browserkit.png" />
+</head>
+<body>
+  <header class="header">
+    <div class="container">
+      <a href="/" class="header-brand"><div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Gowun Dodum,sans-serif;flex-shrink:0">B</div><span class="header-brand-text"><span style="color:var(--text)">Browser</span><span style="color:var(--point)">Kit</span></span></a>
+      <a href="/" class="header-back">← BrowserKit 홈으로</a>
+    </div>
+  </header>
+
+  <article class="post-wrap">
+    <a href="/blog/" class="back-link">← 블로그 목록</a>
+    <span class="post-tag">가이드</span>
+    <h1 class="post-title">CropImage 사용법 완전 가이드</h1>
+    <div class="post-date">2026년 7월 4일</div>
+    <div style="margin:12px 0"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+
+    <div class="post-body">
+      <p>CropImage는 이미지 자르기, 회전, 반전을 브라우저에서 바로 처리해주는 무료 온라인 도구입니다. 설치 없이 바로 사용할 수 있으며, 모든 처리가 브라우저 내에서만 이루어져 이미지 파일이 외부 서버로 전송되지 않습니다.</p>
+
+      <h2>주요 기능</h2>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <div class="feature-icon">✂️</div>
+          <div class="feature-title">이미지 자르기</div>
+          <div class="feature-desc">이미지 위에서 드래그해 원하는 영역을 직접 선택합니다. 자유 비율 또는 프리셋 비율을 선택할 수 있습니다.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🪪</div>
+          <div class="feature-title">증명사진 비율</div>
+          <div class="feature-desc">3:4 비율 단축 버튼으로 증명사진에 맞는 비율을 빠르게 선택할 수 있습니다.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🔄</div>
+          <div class="feature-title">회전</div>
+          <div class="feature-desc">90° 시계 방향 또는 반시계 방향으로 회전합니다. 가로·세로 사진 방향을 바로 바꿀 수 있습니다.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">↔️</div>
+          <div class="feature-title">반전</div>
+          <div class="feature-desc">좌우 반전(거울 효과) 또는 상하 반전을 적용합니다.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🖥️</div>
+          <div class="feature-title">완전 로컬 처리</div>
+          <div class="feature-desc">이미지가 서버로 전송되지 않아 민감한 사진도 안심하고 처리할 수 있습니다.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">📥</div>
+          <div class="feature-title">즉시 다운로드</div>
+          <div class="feature-desc">처리 완료된 이미지를 PNG 파일로 즉시 다운로드할 수 있습니다.</div>
+        </div>
+      </div>
+
+      <div style="margin:12px 0 0"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+      <h2>기본 사용법</h2>
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <h3>이미지 업로드</h3>
+          <p>업로드 영역에 이미지를 드래그하거나 클릭해서 파일을 선택합니다. JPG, PNG, WEBP, GIF 형식을 지원합니다.</p>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <h3>기능 탭 선택</h3>
+          <p>✂️ 자르기 또는 🔄 회전 / 반전 탭 중 원하는 기능을 선택합니다. 탭을 전환하면 해당 편집 영역이 나타납니다.</p>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <h3>편집 적용</h3>
+          <p>자르기 탭에서는 비율을 선택한 뒤 이미지 위에서 드래그로 영역을 지정하고 <strong>자르기 적용</strong> 버튼을 클릭합니다. 회전/반전 탭에서는 원하는 버튼을 클릭하면 즉시 적용됩니다.</p>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <h3>미리보기 확인</h3>
+          <p>원본과 결과를 나란히 비교하며 해상도를 확인합니다. 자르기와 회전/반전은 누적으로 적용되므로 두 탭을 오가며 여러 번 편집할 수 있습니다.</p>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">5</div>
+        <div class="step-content">
+          <h3>이미지 다운로드</h3>
+          <p><strong>PNG 다운로드</strong> 버튼을 클릭하면 편집된 이미지가 <code>cropimage_result.png</code> 파일로 저장됩니다.</p>
+        </div>
+      </div>
+
+      <h2>✂️ 자르기 상세 안내</h2>
+      <p>이미지 위에서 드래그하면 선택 영역이 점선 테두리와 코너 핸들로 표시됩니다. 비율 버튼을 먼저 선택하면 드래그 중 가로세로 비율이 고정됩니다.</p>
+      <div class="post-table-wrap"><table class="post-table">
+        <thead><tr><th>비율 버튼</th><th>설명</th></tr></thead>
+        <tbody>
+          <tr><td>자유</td><td>가로세로 비율 제한 없이 원하는 크기로 자유롭게 선택</td></tr>
+          <tr><td>1:1</td><td>정방형 — SNS 프로필 사진 등에 적합</td></tr>
+          <tr><td>4:3</td><td>일반적인 사진 비율</td></tr>
+          <tr><td>3:4</td><td>증명사진 비율</td></tr>
+          <tr><td>16:9</td><td>와이드 화면 비율</td></tr>
+          <tr><td>9:16</td><td>세로형 — 스토리, 쇼츠 등에 적합</td></tr>
+        </tbody>
+      </table></div>
+
+      <h2>🔄 회전 / 반전 상세 안내</h2>
+      <p>회전과 반전은 클릭 즉시 적용되며, 여러 번 눌러 누적으로 조정할 수 있습니다.</p>
+      <div class="post-table-wrap"><table class="post-table">
+        <thead><tr><th>버튼</th><th>효과</th></tr></thead>
+        <tbody>
+          <tr><td>90° 시계 방향</td><td>이미지를 시계 방향으로 90° 회전 (가로 ↔ 세로 전환)</td></tr>
+          <tr><td>90° 반시계 방향</td><td>이미지를 반시계 방향으로 90° 회전 (가로 ↔ 세로 전환)</td></tr>
+          <tr><td>좌우 반전</td><td>이미지를 좌우로 뒤집는 거울 효과</td></tr>
+          <tr><td>상하 반전</td><td>이미지를 상하로 뒤집기</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="post-highlight">💡 자르기와 회전/반전은 하나의 작업 캔버스에 누적으로 적용됩니다. 예를 들어 회전한 뒤 자르거나, 자른 뒤 다시 회전하는 것도 가능합니다. 다운로드는 PNG 형식만 지원하므로 다른 형식이 필요하면 FitImage로 추가 변환하세요.</div>
+    </div>
+
+    <div class="cta-box">
+      <p>증명사진 비율로 자르거나, 가로·세로 사진을 바로 회전하세요.<br />서버 전송 없이 브라우저에서 안전하게 처리됩니다.</p>
+      <a href="/crop-image/" class="cta-btn" style="display:inline-flex;align-items:center;gap:8px">
+        <span style="display:inline-block;width:26px;height:26px;overflow:hidden;flex-shrink:0">
+          <span style="display:block;transform:scale(0.565);transform-origin:top left">
+            <div style="width:46px;height:46px;background:#ffb3c7;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="position:relative;width:30px;height:30px"><div style="position:absolute;left:4px;top:0;width:3px;height:26px;background:#2a2433;border-radius:2px"></div><div style="position:absolute;left:0;top:4px;width:26px;height:3px;background:#2a2433;border-radius:2px"></div><div style="position:absolute;right:4px;bottom:0;width:3px;height:26px;background:#2a2433;border-radius:2px"></div><div style="position:absolute;left:0;bottom:4px;width:26px;height:3px;background:#2a2433;border-radius:2px"></div></div></div>
+          </span>
+        </span>
+        무료로 이미지 자르기 시작하기
+      </a>
+    </div>
+    <div style="margin:12px 0"><ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="9500090221"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+
+<div class="post-nav">
+      <a href="/blog/38-chartmaker-howto.html"><span class="nav-label">← 이전 글</span>ChartMaker 사용법 완전 가이드</a>
+      <span></span>
+    </div>
+  </article>
+  <footer class="footer">
+    <div class="container">
+      <p class="footer-copy">© 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p>
+      <nav class="footer-nav">
+        <a href="/privacy.html">개인정보 처리방침</a>
+        <a href="/terms.html">이용약관</a>
+        <a href="/about.html">서비스 소개</a>
+        <a href="/blog/">블로그</a>
+      </nav>
+    </div>
+  </footer>
+</body>
+</html>
