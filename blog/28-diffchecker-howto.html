@@ -36,6 +36,7 @@
     .diff-line.del { background:rgba(248,113,113,0.10); }
     .diff-line.del .diff-num { background:rgba(248,113,113,0.18); color:#F87171; }
     .diff-line.del .diff-content { color:#F87171; }
+    .diff-line.empty { opacity:0.3; }
 
     /* 요약 배지 */
     .summary-demo { display:flex; gap:10px; flex-wrap:wrap; margin:16px 0; }
@@ -174,6 +175,10 @@
             <div class="diff-num">2</div>
             <div class="diff-content">-   console.log("Hello");</div>
           </div>
+          <div class="diff-line empty">
+            <div class="diff-num">&nbsp;</div>
+            <div class="diff-content">&nbsp;</div>
+          </div>
           <div class="diff-line">
             <div class="diff-num">3</div>
             <div class="diff-content">&nbsp;&nbsp;  return name;</div>
@@ -181,6 +186,10 @@
           <div class="diff-line del">
             <div class="diff-num">4</div>
             <div class="diff-content">-   var user = "World";</div>
+          </div>
+          <div class="diff-line empty">
+            <div class="diff-num">&nbsp;</div>
+            <div class="diff-content">&nbsp;</div>
           </div>
           <div class="diff-line">
             <div class="diff-num">5</div>
@@ -194,6 +203,10 @@
             <div class="diff-num">1</div>
             <div class="diff-content">&nbsp;&nbsp;function greet(name) {</div>
           </div>
+          <div class="diff-line empty">
+            <div class="diff-num">&nbsp;</div>
+            <div class="diff-content">&nbsp;</div>
+          </div>
           <div class="diff-line add">
             <div class="diff-num">2</div>
             <div class="diff-content">+   console.log("Hi, " + name);</div>
@@ -201,6 +214,10 @@
           <div class="diff-line">
             <div class="diff-num">3</div>
             <div class="diff-content">&nbsp;&nbsp;  return name;</div>
+          </div>
+          <div class="diff-line empty">
+            <div class="diff-num">&nbsp;</div>
+            <div class="diff-content">&nbsp;</div>
           </div>
           <div class="diff-line add">
             <div class="diff-num">4</div>
@@ -212,6 +229,7 @@
           </div>
         </div>
       </div>
+      <p style="font-size:13px;color:var(--subtext);margin-top:-4px;">※ 삭제된 줄과 추가된 줄은 같은 줄 번호를 공유하지 않으며, 반대쪽 패널에는 빈 줄로 자리를 맞춥니다. 그래서 원본은 2번째 줄에 삭제 표시가, 수정본은 그 다음 칸을 비우고 2번째 줄에 추가 표시가 나타납니다.</p>
 
       <h3>차이 요약 배지</h3>
       <p>비교 결과 상단에 아래와 같이 요약 배지가 표시됩니다.</p>
