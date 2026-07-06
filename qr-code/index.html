@@ -241,6 +241,15 @@
   <div class="toast" id="toast">✓ 다운로드가 시작되었습니다</div>
 
   <script>
+  // qrcode-generator의 기본 stringToBytes는 charCode & 0xff로 잘라내 한글 등 멀티바이트 문자를 깨뜨린다.
+  // 올바른 UTF-8 바이트 배열로 교체한다.
+  qrcode.stringToBytes = function(s) {
+    var utf8 = unescape(encodeURIComponent(s));
+    var bytes = [];
+    for (var i = 0; i < utf8.length; i++) bytes.push(utf8.charCodeAt(i) & 0xff);
+    return bytes;
+  };
+
   // ── 상태 ──
   let currentTab = 'url';
   let currentSize = 256;
