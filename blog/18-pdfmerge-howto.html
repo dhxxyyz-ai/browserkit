@@ -15,6 +15,8 @@
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506"
      crossorigin="anonymous"></script>
   <style>
+    .post-warn { background:rgba(248,113,113,0.08); border-left:3px solid #F87171; border-radius:8px; padding:16px 20px; margin:24px 0; font-size:15px; color:var(--subtext); line-height:1.8; }
+    .post-warn strong { color:#F87171; }
     .feature-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:20px 0; }
     .feature-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px; }
     .feature-card:hover { border-color:var(--point); }
@@ -179,6 +181,10 @@
           <tr><td>서버 전송</td><td>없음 (완전 로컬 처리)</td><td>없음 (완전 로컬 처리)</td></tr>
         </tbody>
       </table></div>
+
+      <div class="post-warn">
+        <strong>⚠️ 텍스트 선택 불가 안내:</strong> PDFMerge는 각 페이지를 이미지로 다시 렌더링해 합치는 방식입니다. 그 결과 원본 PDF의 텍스트는 <strong>선택·검색·복사가 가능한 텍스트가 아닌 이미지</strong>로 변환됩니다. 텍스트를 그대로 유지해야 하는 문서(계약서 원문 검색, 텍스트 복사가 필요한 자료 등)에는 적합하지 않을 수 있습니다. 스캔본이나 이미지 위주의 PDF를 합치는 용도에 적합합니다.
+      </div>
 
       <div class="post-highlight">&#x1F4A1; 대용량 PDF 또는 파일 수가 많을 경우 브라우저 메모리 부족이 발생할 수 있습니다. 파일 5개 이하, 총 페이지 수 50페이지 이하를 권장합니다. 처리 중 다른 탭을 여러 개 열면 속도가 느려질 수 있습니다.</div>
     </div>
