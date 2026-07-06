@@ -327,14 +327,7 @@
   document.getElementById('downloadHtmlBtn').addEventListener('click', function() {
     var val = mdInput.value;
     if (!val.trim()) { showToast('\uc800\uc7a5\ud560 \ub0b4\uc6a9\uc774 \uc5c6\uc2b5\ub2c8\ub2e4'); return; }
-    var fullHtml = '<!DOCTYPE html>\n<html lang="ko">\n<head>\n<meta charset="UTF-8">\n<meta name="viewport" content="width=device-width, initial-scale=1.0">\n<title>Markdown Export</title>\n<style>\nbody{font-family:\'Pretendard\',\'Noto Sans KR\',sans-serif;max-width:800px;margin:40px auto;padding:0 24px;color:#222;line-height:1.7;}\nh1,h2,h3{border-bottom:1px solid #eee;padding-bottom:6px;}\ncode{background:#f5f5f5;padding:2px 6px;border-radius:4px;font-family:monospace;}\npre{background:#f5f5f5;padding:16px;border-radius:8px;overflow-x:auto;}\npre code{background:none;}\nblockquote{border-left:3px solid #6C63FF;margin:0;padding:10px 16px;background:#f8f7ff;}\ntable{border-collapse:collapse;width:100%;}\nth,td{border:1px solid #ddd;padding:8px 12px;text-align:left;}\nth{background:#f5f5f5;}\n</style>\n  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
-  <meta property="og:image" content="https://browserkit.online/img/og-browserkit.png" />
-  <link rel="canonical" href="https://browserkit.online/markdown-editor/" />
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:image" content="https://browserkit.online/img/og-browserkit.png" />
-</head>
-\n<body>\n' + DOMPurify.sanitize(marked.parse(val)) + '\n</body>\n</html>';
+    var fullHtml = '<!DOCTYPE html>\n<html lang="ko">\n<head>\n<meta charset="UTF-8">\n<meta name="viewport" content="width=device-width, initial-scale=1.0">\n<title>Markdown Export</title>\n<style>\nbody{font-family:\'Pretendard\',\'Noto Sans KR\',sans-serif;max-width:800px;margin:40px auto;padding:0 24px;color:#222;line-height:1.7;}\nh1,h2,h3{border-bottom:1px solid #eee;padding-bottom:6px;}\ncode{background:#f5f5f5;padding:2px 6px;border-radius:4px;font-family:monospace;}\npre{background:#f5f5f5;padding:16px;border-radius:8px;overflow-x:auto;}\npre code{background:none;}\nblockquote{border-left:3px solid #6C63FF;margin:0;padding:10px 16px;background:#f8f7ff;}\ntable{border-collapse:collapse;width:100%;}\nth,td{border:1px solid #ddd;padding:8px 12px;text-align:left;}\nth{background:#f5f5f5;}\n</style>\n</head>\n<body>\n' + DOMPurify.sanitize(marked.parse(val)) + '\n</body>\n</html>';
     download('markdown_export.html', fullHtml, 'text/html');
     showToast('\u2713 HTML \ud30c\uc77c\uc774 \uc800\uc7a5\ub429\ub2c8\ub2e4');
   });
