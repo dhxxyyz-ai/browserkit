@@ -347,7 +347,9 @@
       qr.make();
 
       const moduleCount = qr.getModuleCount();
-      const cellSize = currentSize / moduleCount;
+      const quietZone = 4; // QR 표준 권장 여백(모듈 단위) — 스캔 인식률을 위해 필수
+      const cellSize = currentSize / (moduleCount + quietZone * 2);
+      const margin = quietZone * cellSize;
       const canvas = document.createElement('canvas');
       canvas.width = currentSize;
       canvas.height = currentSize;
@@ -355,10 +357,13 @@
       const colorDark = document.getElementById('color-dark').value;
       const colorLight = document.getElementById('color-light').value;
 
+      ctx.fillStyle = colorLight;
+      ctx.fillRect(0, 0, currentSize, currentSize);
+
       for (let row = 0; row < moduleCount; row++) {
         for (let col = 0; col < moduleCount; col++) {
           ctx.fillStyle = qr.isDark(row, col) ? colorDark : colorLight;
-          ctx.fillRect(col * cellSize, row * cellSize, cellSize, cellSize);
+          ctx.fillRect(margin + col * cellSize, margin + row * cellSize, cellSize, cellSize);
         }
       }
 
