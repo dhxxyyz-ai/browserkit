@@ -10,7 +10,7 @@
   <meta property="og:url" content="https://browserkit.online/qr-code/" />
   <title>QRCode — QR 코드 생성기</title>
   <link rel="stylesheet" href="/css/style.css?v=20260704c" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.js"></script>
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506"
      crossorigin="anonymous"></script>
   <style>
@@ -342,14 +342,27 @@
     // 기존 QR 제거 후 재생성
     container.innerHTML = '';
     try {
-      new QRCode(container, {
-        text: content,
-        width: currentSize,
-        height: currentSize,
-        colorDark: document.getElementById('color-dark').value,
-        colorLight: document.getElementById('color-light').value,
-        correctLevel: QRCode.CorrectLevel.M
-      });
+      const qr = qrcode(0, 'M'); // typeNumber 0 = 자동 선택
+      qr.addData(content);
+      qr.make();
+
+      const moduleCount = qr.getModuleCount();
+      const cellSize = currentSize / moduleCount;
+      const canvas = document.createElement('canvas');
+      canvas.width = currentSize;
+      canvas.height = currentSize;
+      const ctx = canvas.getContext('2d');
+      const colorDark = document.getElementById('color-dark').value;
+      const colorLight = document.getElementById('color-light').value;
+
+      for (let row = 0; row < moduleCount; row++) {
+        for (let col = 0; col < moduleCount; col++) {
+          ctx.fillStyle = qr.isDark(row, col) ? colorDark : colorLight;
+          ctx.fillRect(col * cellSize, row * cellSize, cellSize, cellSize);
+        }
+      }
+
+      container.appendChild(canvas);
       document.getElementById('qr-info').textContent =
         currentSize + ' × ' + currentSize + 'px • ' + content.length + '자';
       document.getElementById('download-btn').disabled = false;
