@@ -60,6 +60,16 @@
       <div style="margin:12px 0 0"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
       <h2>화면 구성</h2>
 <p>상단의 차트 타입 버튼에서 원하는 종류를 선택한 뒤, 좌측 설정 패널에서 데이터와 옵션을 입력하고 우측에서 차트를 확인합니다.</p>
+
+<figure style="margin:12px 0 24px; text-align:center;">
+  <img src="/img/blog/chartmaker/01-overview.png"
+       alt="ChartMaker 전체 화면 — 상단 차트 타입 바, 왼쪽 설정 패널, 오른쪽 차트 패널이 함께 보이는 화면"
+       style="width:100%; max-width:640px; border:1px solid var(--border); border-radius:var(--radius);"
+       loading="lazy" />
+  <figcaption style="font-size:13px; color:var(--subtext); margin-top:6px;">
+    전체 레이아웃 — 설정 패널과 차트 패널이 좌우로 함께 보이는 화면
+  </figcaption>
+</figure>
 <div class="layout-demo">
 <div class="layout-top">&#x1F4CA; 차트 타입 선택 바 — 막대 · 선형 · 원형 · 도넛 · 레이더 · 폴라</div>
 <div class="layout-cols">
@@ -73,9 +83,29 @@
 <div class="type-chip active">&#x1F4CA; 막대</div><div class="type-chip">&#x1F4C8; 선형</div><div class="type-chip">&#x2B55; 원형</div><div class="type-chip">&#x1F369; 도넛</div><div class="type-chip">&#x1F578;&#xFE0F; 레이더</div><div class="type-chip">&#x1F3AF; 폴라</div>
 </div>
 <div class="step-card"><div class="step-num">2</div><div class="step-content"><h3>데이터 입력</h3><p>데이터 입력 테이블에서 색상 피커로 각 항목 색상을 지정하고, 레이블과 값을 입력합니다. 기본으로 1~6월 샘플 데이터 6개가 입력되어 있으며, <strong>+ 행 추가</strong> 버튼으로 항목을 늘릴 수 있습니다.</p></div></div>
+
+<figure style="margin:12px 0 24px; text-align:center;">
+  <img src="/img/blog/chartmaker/02-data-input.png"
+       alt="ChartMaker 데이터 입력 테이블 확대 — 색상 피커, 레이블, 값 열과 행 추가 버튼이 보이는 화면"
+       style="width:100%; max-width:640px; border:1px solid var(--border); border-radius:var(--radius);"
+       loading="lazy" />
+  <figcaption style="font-size:13px; color:var(--subtext); margin-top:6px;">
+    데이터 입력 테이블 — 색상·레이블·값이 채워진 상태
+  </figcaption>
+</figure>
 <div class="step-card"><div class="step-num">3</div><div class="step-content"><h3>차트 제목 입력 (선택)</h3><p>차트 제목 입력창에 원하는 제목을 입력합니다. 제목은 차트 상단에 표시되며 PNG 저장 시 파일명으로도 사용됩니다.</p></div></div>
 <div class="step-card"><div class="step-num">4</div><div class="step-content"><h3>옵션 설정 (선택)</h3><p>범례, 데이터 레이블, 격자선, 배경색 등을 설정합니다. 막대와 선형 차트에서는 X축·Y축 레이블을, 막대 차트에서는 누적 차트 옵션도 추가로 사용할 수 있습니다.</p></div></div>
 <div class="step-card"><div class="step-num">5</div><div class="step-content"><h3>차트 생성</h3><p><strong>&#x1F4CA; 차트 생성</strong> 버튼을 클릭하면 오른쪽 패널에 차트가 렌더링됩니다.</p></div></div>
+
+<figure style="margin:12px 0 24px; text-align:center;">
+  <img src="/img/blog/chartmaker/04-result.png"
+       alt="ChartMaker 차트 생성 버튼 클릭 후 오른쪽 패널에 렌더링된 차트가 표시된 화면"
+       style="width:100%; max-width:640px; border:1px solid var(--border); border-radius:var(--radius);"
+       loading="lazy" />
+  <figcaption style="font-size:13px; color:var(--subtext); margin-top:6px;">
+    차트 생성 결과 — 오른쪽 패널에 렌더링된 차트
+  </figcaption>
+</figure>
 <div class="step-card"><div class="step-num">6</div><div class="step-content"><h3>저장</h3><p><strong>PNG 저장</strong>으로 이미지를 다운로드하거나, <strong>SVG 저장</strong>으로 벡터 파일을 저장합니다.</p></div></div>
 <div class="btn-demo-row"><div class="btn-demo primary">&#x1F4CA; 차트 생성</div><div class="btn-demo">&#x1F5BC;&#xFE0F; PNG 저장</div><div class="btn-demo">&#x1F4C4; SVG 저장</div><div class="btn-demo">&#x21BA; 초기화</div></div>
 <h2>CSV 파일 업로드</h2>
@@ -83,6 +113,16 @@
 <h3>CSV 파일 형식 예시</h3>
 <div class="csv-demo">카테고리,판매량<br>1월,120<br>2월,190<br>3월,170<br>4월,250<br>5월,310<br>6월,280</div>
 <p>첫 번째 행이 헤더(숫자가 아닌 텍스트)이면 자동으로 건너뜁니다. 드래그&amp;드롭 또는 클릭으로 파일을 업로드하면 즉시 데이터가 불러와지고 차트가 자동 생성됩니다.</p>
+
+<figure style="margin:12px 0 24px; text-align:center;">
+  <img src="/img/blog/chartmaker/03-csv.png"
+       alt="ChartMaker CSV 업로드 존 확대 화면"
+       style="width:100%; max-width:640px; border:1px solid var(--border); border-radius:var(--radius);"
+       loading="lazy" />
+  <figcaption style="font-size:13px; color:var(--subtext); margin-top:6px;">
+    CSV 업로드 존 — 드래그&amp;드롭 또는 클릭으로 파일을 올릴 수 있는 영역
+  </figcaption>
+</figure>
 <h2>차트 타입별 특징</h2>
 <div class="post-table-wrap"><table class="post-table"><thead><tr><th>타입</th><th>아이콘</th><th>적합한 데이터</th><th>특징</th></tr></thead><tbody>
 <tr><td><strong>막대</strong></td><td>&#x1F4CA;</td><td>항목 간 수치 비교</td><td>누적 차트 옵션 지원. 가장 범용적인 차트.</td></tr>
