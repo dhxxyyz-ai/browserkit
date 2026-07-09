@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="이미지를 블록 단위 픽셀 아트 스타일로 변환하는 무료 온라인 도구. 서버 전송 없이 브라우저에서 바로 처리합니다." />
+  <meta property="og:title" content="PixelArt — 픽셀 아트 변환 도구" />
+  <meta property="og:description" content="이미지를 블록 단위 픽셀 아트 스타일로 변환하는 무료 온라인 도구입니다." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://browserkit.online/pixel-art/" />
+  <title>PixelArt — 픽셀 아트 변환 도구</title>
+  <link rel="stylesheet" href="/css/style.css?v=20260704c" />
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506"
+     crossorigin="anonymous"></script>
+  <style>
+    .upload-zone { background:var(--card); border:2px dashed var(--border); border-radius:var(--radius); padding:48px 32px; text-align:center; cursor:pointer; margin-bottom:24px; transition:all 0.2s; }
+    .upload-zone:hover, .upload-zone.drag-over { border-color:var(--point); box-shadow:0 0 24px var(--glow); }
+    .upload-icon { font-size:40px; margin-bottom:12px; }
+    .upload-title { font-size:16px; font-weight:600; margin-bottom:6px; }
+    .upload-sub { color:var(--subtext); font-size:13px; }
+
+    .work-area { display:none; }
+    .work-area.show { display:block; }
+
+    .preview-wrap { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:24px; }
+    .preview-pane { display:flex; flex-direction:column; gap:8px; }
+    .pane-label { font-size:12px; font-weight:600; color:var(--subtext); padding:6px 0; }
+    .canvas-wrap { background:repeating-conic-gradient(#1e1e2a 0% 25%,#26263a 0% 50%) 0 0/16px 16px; border-radius:12px; overflow:hidden; display:flex; align-items:center; justify-content:center; min-height:200px; }
+    .canvas-wrap canvas { max-width:100%; max-height:400px; display:block; image-rendering:pixelated; }
+    .file-info { font-size:12px; color:var(--subtext); font-family:'Gowun Dodum',sans-serif; }
+
+    .slider-panel { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:24px; margin-bottom:20px; }
+    .slider-panel-title { font-size:14px; font-weight:700; color:var(--text); margin-bottom:20px; display:flex; align-items:center; gap:8px; }
+    .slider-row { display:grid; grid-template-columns:90px 1fr 60px; align-items:center; gap:12px; margin-bottom:16px; }
+    .slider-row:last-child { margin-bottom:0; }
+    .slider-label { font-size:13px; font-weight:600; color:var(--subtext); }
+    .range-slider { -webkit-appearance:none; height:6px; border-radius:3px; background:var(--border); outline:none; width:100%; }
+    .range-slider::-webkit-slider-thumb { -webkit-appearance:none; width:18px; height:18px; border-radius:50%; background:var(--point); cursor:pointer; box-shadow:0 0 0 3px rgba(123,108,255,0.2); }
+    .range-slider::-moz-range-thumb { width:18px; height:18px; border-radius:50%; background:var(--point); cursor:pointer; border:none; }
+    .slider-val { font-size:13px; font-weight:600; color:var(--point-hover); font-family:'Gowun Dodum',sans-serif; text-align:right; }
+
+    .preset-wrap { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:16px; }
+    .preset-btn { background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:7px 14px; font-size:12px; font-weight:600; color:var(--subtext); cursor:pointer; font-family:'Gowun Dodum',sans-serif; transition:all 0.2s; }
+    .preset-btn:hover { border-color:var(--point); color:var(--text); }
+    .preset-btn.active { background:rgba(123,108,255,0.15); border-color:var(--point); color:var(--point-hover); }
+
+    .toggle-row { display:flex; align-items:center; gap:10px; margin-top:16px; }
+    .toggle-row label { display:flex; align-items:center; gap:8px; font-size:13px; color:var(--subtext); cursor:pointer; }
+    .toggle-row input { accent-color:var(--point); cursor:pointer; width:16px; height:16px; }
+
+    .action-bar { display:flex; gap:10px; margin-bottom:48px; flex-wrap:wrap; }
+    .btn-primary { background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border:none; border-radius:10px; padding:12px 24px; font-size:14px; font-weight:700; cursor:pointer; font-family:'Gowun Dodum',sans-serif; transition:all 0.2s; white-space:nowrap; }
+    .btn-primary:hover { transform:translateY(-2px); box-shadow:0 8px 24px var(--glow); }
+    .btn-sub { background:var(--card); color:var(--subtext); border:1px solid var(--border); border-radius:10px; padding:12px 20px; font-size:14px; cursor:pointer; font-family:'Gowun Dodum',sans-serif; transition:all 0.2s; white-space:nowrap; }
+    .btn-sub:hover { color:var(--text); border-color:var(--point); }
+    .btn-danger { background:var(--card); color:#F87171; border:1px solid var(--border); border-radius:10px; padding:12px 20px; font-size:14px; cursor:pointer; font-family:'Gowun Dodum',sans-serif; transition:all 0.2s; white-space:nowrap; }
+    .btn-danger:hover { border-color:#F87171; }
+
+    .toast { position:fixed; bottom:32px; left:50%; transform:translateX(-50%) translateY(80px); background:var(--success); color:#fff; border-radius:999px; padding:10px 24px; font-size:14px; font-weight:600; opacity:0; pointer-events:none; z-index:999; transition:all 0.3s ease; }
+    .toast.show { transform:translateX(-50%) translateY(0); opacity:1; }
+
+    .footer { border-top:1px solid var(--border); padding:32px 0; text-align:center; }
+    .footer-copy { color:var(--subtext); font-size:13px; margin-bottom:12px; }
+    .footer-nav { display:flex; justify-content:center; gap:20px; flex-wrap:wrap; }
+    .footer-nav a { color:var(--subtext); font-size:13px; text-decoration:none; }
+    .footer-nav a:hover { color:var(--text); }
+
+    @media (max-width:768px) {
+      .preview-wrap { grid-template-columns:1fr; }
+      .hero-title { font-size:24px; }
+      .slider-row { grid-template-columns:70px 1fr 50px; }
+    }
+  </style>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+  <meta property="og:image" content="https://browserkit.online/img/og-browserkit.png" />
+  <link rel="canonical" href="https://browserkit.online/pixel-art/" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://browserkit.online/img/og-browserkit.png" />
+</head>
+
+<body>
+  <header class="header">
+    <div class="container">
+      <a href="/" class="header-brand">
+        <div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Gowun Dodum,sans-serif;flex-shrink:0">B</div>
+        <span class="header-brand-text"><span style="color:var(--text)">Browser</span><span style="color:var(--point)">Kit</span></span>
+      </a>
+      <a href="/" class="header-back">&#x2190; BrowserKit 홈으로</a>
+    </div>
+  </header>
+
+  <main><div class="container">
+    <div class="hero">
+      <div class="hero-icon" style="height:78px;display:flex;justify-content:center;align-items:center"><div style="transform:scale(1.7);transform-origin:center"><div style="width:46px;height:46px;background:#ffb3c7;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="display:grid;grid-template-columns:repeat(3,6px);grid-template-rows:repeat(3,6px);gap:2px"><div style="background:#fffdf9;border-radius:1px"></div><div style="background:#2a2433;border-radius:1px"></div><div style="background:#fffdf9;border-radius:1px"></div><div style="background:#2a2433;border-radius:1px"></div><div style="background:#fffdf9;border-radius:1px"></div><div style="background:#2a2433;border-radius:1px"></div><div style="background:#fffdf9;border-radius:1px"></div><div style="background:#2a2433;border-radius:1px"></div><div style="background:#fffdf9;border-radius:1px"></div></div></div></div></div>
+      <div class="hero-title-wrap"><h1 class="hero-title">PixelArt</h1><a href="/blog/44-pixelart-howto.html" class="hero-guide-link">사용법 가이드 보기</a></div>
+      <p class="hero-desc">이미지를 블록 단위 픽셀 아트 스타일로 변환하세요. 브라우저에서 바로, 서버 전송 없이</p>
+      <div class="hero-badges">
+        <span class="badge">🔒 완전 로컬 처리</span>
+        <span class="badge">⚡ 무료 사용</span>
+        <span class="badge">🛡️ 서버 전송 없음</span>
+        <span class="badge">📦 설치 불필요</span>
+      </div>
+    </div>
+    <div style="margin:0 0 12px"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+
+    <!-- 업로드 존 -->
+    <div class="upload-zone" id="uploadZone">
+      <input type="file" id="fileInput" accept="image/*" style="display:none" />
+      <div class="upload-icon" style="height:64px;display:flex;justify-content:center;align-items:center"><div style="transform:scale(1.4);transform-origin:center"><div style="width:46px;height:46px;background:#ffb3c7;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="display:grid;grid-template-columns:repeat(3,6px);grid-template-rows:repeat(3,6px);gap:2px"><div style="background:#fffdf9;border-radius:1px"></div><div style="background:#2a2433;border-radius:1px"></div><div style="background:#fffdf9;border-radius:1px"></div><div style="background:#2a2433;border-radius:1px"></div><div style="background:#fffdf9;border-radius:1px"></div><div style="background:#2a2433;border-radius:1px"></div><div style="background:#fffdf9;border-radius:1px"></div><div style="background:#2a2433;border-radius:1px"></div><div style="background:#fffdf9;border-radius:1px"></div></div></div></div></div>
+      <div class="upload-title">이미지를 업로드하세요</div>
+      <div class="upload-sub">클릭하거나 드래그하세요 (JPG, PNG, WEBP)</div>
+    </div>
+
+    <!-- 작업 영역 -->
+    <div class="work-area" id="workArea">
+
+      <!-- 미리보기 -->
+      <div class="preview-wrap">
+        <div class="preview-pane">
+          <div class="pane-label">&#x1F4F7; 원본</div>
+          <div class="canvas-wrap"><canvas id="originalCanvas" style="image-rendering:auto"></canvas></div>
+          <div class="file-info" id="fileInfo"></div>
+        </div>
+        <div class="preview-pane">
+          <div class="pane-label">&#x1F47E; 픽셀 아트 결과</div>
+          <div class="canvas-wrap"><canvas id="resultCanvas"></canvas></div>
+          <div class="file-info" id="resultInfo"></div>
+        </div>
+      </div>
+
+      <!-- 슬라이더 패널 -->
+      <div class="slider-panel">
+        <div class="slider-panel-title">&#x1F47E; 픽셀 아트 설정</div>
+
+        <div class="preset-wrap">
+          <button class="preset-btn" data-size="6">&#x1F50E; 세밀하게</button>
+          <button class="preset-btn active" data-size="12">&#x1F3AE; 기본</button>
+          <button class="preset-btn" data-size="24">&#x1F9F1; 큼직하게</button>
+          <button class="preset-btn" data-size="32">&#x1F47E; 도트 감성</button>
+        </div>
+
+        <div class="slider-row">
+          <span class="slider-label">&#x1F9CA; 블록 크기</span>
+          <input type="range" class="range-slider" id="slBlock" min="4" max="32" value="12" />
+          <span class="slider-val" id="valBlock">12px</span>
+        </div>
+
+        <div class="toggle-row">
+          <label><input type="checkbox" id="chkGrid" /> 격자선 표시</label>
+        </div>
+      </div>
+
+      <!-- 액션 바 -->
+      <div class="action-bar">
+        <button class="btn-primary" id="downloadPng">&#x2B07; PNG 저장</button>
+        <button class="btn-sub" id="resetBtn">&#x21BA; 초기화</button>
+        <button class="btn-danger" id="newImageBtn">&#x1F5BC;&#xFE0F; 다른 이미지</button>
+      </div>
+    </div>
+
+<div style="margin:12px 0"><ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="9500090221"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+  </div></main>
+
+  <footer class="footer">
+    <div class="container">
+      <p class="footer-copy">&#xa9; 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p>
+      <nav class="footer-nav">
+        <a href="/privacy.html">개인정보 처리방침</a>
+        <a href="/terms.html">이용약관</a>
+        <a href="/about.html">서비스 소개</a>
+        <a href="/blog/">블로그</a>
+      </nav>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+  // ── 상태 ──
+  var originalImage = null;
+  var originalFile  = null;
+
+  function clamp(v) { return Math.max(0, Math.min(255, Math.round(v))); }
+  function formatBytes(b) { if (b < 1024) return b + ' B'; if (b < 1048576) return (b/1024).toFixed(1) + ' KB'; return (b/1048576).toFixed(2) + ' MB'; }
+
+  // ── 블록 평균값 픽셀레이트 (ImageBright getImageData 패턴 재사용) ──
+  function pixelate(ctx, w, h, block) {
+    var imgData = ctx.getImageData(0, 0, w, h);
+    var d = imgData.data;
+    for (var y = 0; y < h; y += block) {
+      var bh = Math.min(block, h - y);
+      for (var x = 0; x < w; x += block) {
+        var bw = Math.min(block, w - x);
+        var rSum = 0, gSum = 0, bSum = 0, count = bw * bh;
+        for (var yy = y; yy < y + bh; yy++) {
+          for (var xx = x; xx < x + bw; xx++) {
+            var idx = (yy * w + xx) * 4;
+            rSum += d[idx]; gSum += d[idx+1]; bSum += d[idx+2];
+          }
+        }
+        var rAvg = clamp(rSum / count), gAvg = clamp(gSum / count), bAvg = clamp(bSum / count);
+        for (var yy2 = y; yy2 < y + bh; yy2++) {
+          for (var xx2 = x; xx2 < x + bw; xx2++) {
+            var idx2 = (yy2 * w + xx2) * 4;
+            d[idx2] = rAvg; d[idx2+1] = gAvg; d[idx2+2] = bAvg;
+          }
+        }
+      }
+    }
+    ctx.putImageData(imgData, 0, 0);
+  }
+
+  function drawGrid(ctx, w, h, block) {
+    ctx.save();
+    ctx.strokeStyle = 'rgba(0,0,0,0.18)';
+    ctx.lineWidth = 1;
+    for (var x = block; x < w; x += block) {
+      ctx.beginPath(); ctx.moveTo(x + 0.5, 0); ctx.lineTo(x + 0.5, h); ctx.stroke();
+    }
+    for (var y = block; y < h; y += block) {
+      ctx.beginPath(); ctx.moveTo(0, y + 0.5); ctx.lineTo(w, y + 0.5); ctx.stroke();
+    }
+    ctx.restore();
+  }
+
+  // ── 렌더링 ──
+  function render() {
+    if (!originalImage) return;
+    var block = parseInt(document.getElementById('slBlock').value);
+    var showGrid = document.getElementById('chkGrid').checked;
+    var rc = document.getElementById('resultCanvas');
+    var ctx = rc.getContext('2d');
+
+    ctx.drawImage(originalImage, 0, 0, rc.width, rc.height);
+    pixelate(ctx, rc.width, rc.height, block);
+    if (showGrid) drawGrid(ctx, rc.width, rc.height, block);
+
+    updateResultInfo(rc);
+  }
+
+  function updateResultInfo(canvas) {
+    try {
+      var dataUrl = canvas.toDataURL('image/jpeg', 0.92);
+      var bytes = Math.round(dataUrl.length * 0.75);
+      document.getElementById('resultInfo').textContent = canvas.width + ' × ' + canvas.height + ' px · ≈' + formatBytes(bytes);
+    } catch(e) {}
+  }
+
+  // ── 슬라이더 / 프리셋 ──
+  document.getElementById('slBlock').addEventListener('input', function() {
+    document.getElementById('valBlock').textContent = this.value + 'px';
+    document.querySelectorAll('.preset-btn').forEach(function(b) { b.classList.toggle('active', b.dataset.size === document.getElementById('slBlock').value); });
+    render();
+  });
+  document.getElementById('chkGrid').addEventListener('change', render);
+  document.querySelectorAll('.preset-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      document.getElementById('slBlock').value = btn.dataset.size;
+      document.getElementById('valBlock').textContent = btn.dataset.size + 'px';
+      document.querySelectorAll('.preset-btn').forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      render();
+    });
+  });
+
+  // ── 업로드 ──
+  var uploadZone = document.getElementById('uploadZone');
+  var fileInput  = document.getElementById('fileInput');
+
+  uploadZone.addEventListener('click', function() { fileInput.click(); });
+  uploadZone.addEventListener('dragover', function(e) { e.preventDefault(); uploadZone.classList.add('drag-over'); });
+  uploadZone.addEventListener('dragleave', function() { uploadZone.classList.remove('drag-over'); });
+  uploadZone.addEventListener('drop', function(e) {
+    e.preventDefault(); uploadZone.classList.remove('drag-over');
+    if (e.dataTransfer.files[0]) loadImage(e.dataTransfer.files[0]);
+  });
+  fileInput.addEventListener('change', function() {
+    if (fileInput.files[0]) loadImage(fileInput.files[0]);
+  });
+
+  function loadImage(file) {
+    originalFile = file;
+    var reader = new FileReader();
+    reader.onload = function(e) {
+      var img = new Image();
+      img.onload = function() {
+        originalImage = img;
+
+        var maxW = 1400, maxH = 1400;
+        var w = img.width, h = img.height;
+        if (w > maxW) { h = Math.round(h * maxW / w); w = maxW; }
+        if (h > maxH) { w = Math.round(w * maxH / h); h = maxH; }
+
+        var oc = document.getElementById('originalCanvas');
+        oc.width = w; oc.height = h;
+        oc.getContext('2d').drawImage(img, 0, 0, w, h);
+
+        var rc = document.getElementById('resultCanvas');
+        rc.width = w; rc.height = h;
+
+        document.getElementById('fileInfo').textContent = file.name + ' · ' + w + ' × ' + h + ' px · ' + formatBytes(file.size);
+
+        resetControls();
+        render();
+
+        document.getElementById('uploadZone').style.display = 'none';
+        document.getElementById('workArea').classList.add('show');
+      };
+      img.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  }
+
+  function resetControls() {
+    document.getElementById('slBlock').value = 12;
+    document.getElementById('valBlock').textContent = '12px';
+    document.getElementById('chkGrid').checked = false;
+    document.querySelectorAll('.preset-btn').forEach(function(b) { b.classList.toggle('active', b.dataset.size === '12'); });
+  }
+
+  // ── 다운로드 ──
+  document.getElementById('downloadPng').addEventListener('click', function() {
+    var rc = document.getElementById('resultCanvas');
+    rc.toBlob(function(blob) {
+      var a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'pixelart_result.png';
+      a.click();
+      URL.revokeObjectURL(a.href);
+      showToast('✓ PNG 파일이 저장됩니다');
+    }, 'image/png');
+  });
+
+  // ── 초기화 ──
+  document.getElementById('resetBtn').addEventListener('click', function() {
+    resetControls();
+    render();
+    showToast('↺ 초기화되었습니다');
+  });
+
+  // ── 다른 이미지 ──
+  document.getElementById('newImageBtn').addEventListener('click', function() {
+    originalImage = null; originalFile = null;
+    fileInput.value = '';
+    document.getElementById('workArea').classList.remove('show');
+    document.getElementById('uploadZone').style.display = '';
+    resetControls();
+  });
+
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(function() { t.classList.remove('show'); }, 2000);
+  }
+  </script>
+</body>
+</html>

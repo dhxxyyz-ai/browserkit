@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="PixelArt의 모든 기능을 단계별로 설명하는 공식 사용 가이드입니다. 이미지를 블록 단위 픽셀 아트 스타일로 변환하는 방법을 알아보세요." />
+  <meta property="og:title" content="PixelArt 사용법 완전 가이드 — BrowserKit" />
+  <meta property="og:description" content="이미지를 블록 단위 픽셀 아트 스타일로 변환하는 PixelArt 공식 가이드입니다. 서버 전송 없이 브라우저에서 바로 처리합니다." />
+  <meta property="og:type" content="article" />
+  <title>PixelArt 사용법 완전 가이드 — BrowserKit</title>
+  <link rel="stylesheet" href="/css/style.css?v=20260704c" />
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506"
+     crossorigin="anonymous"></script>
+  <style>
+    .feature-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:20px 0; }
+    .feature-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px; }
+    .feature-card:hover { border-color:var(--point); }
+    .feature-icon { font-size:24px; margin-bottom:10px; }
+    .feature-title { font-size:14px; font-weight:600; color:var(--text); margin-bottom:6px; }
+    .feature-desc { font-size:13px; color:var(--subtext); line-height:1.7; }
+    .step-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px 24px; margin:16px 0; display:flex; gap:16px; align-items:flex-start; }
+    .step-num { min-width:36px; height:36px; background:linear-gradient(135deg,var(--point),var(--point-hover)); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:700; color:white; flex-shrink:0; font-family:'Gowun Dodum',sans-serif; }
+    .step-content h3 { font-size:15px; font-weight:600; margin-bottom:6px; color:var(--text); }
+    .step-content p { font-size:14px; color:var(--subtext); line-height:1.7; margin:0; }
+    .preset-demo-grid { display:flex; gap:8px; flex-wrap:wrap; margin:16px 0; }
+    .preset-demo-chip { background:var(--card); border:1px solid var(--border); border-radius:10px; padding:8px 14px; font-size:13px; font-weight:600; color:var(--subtext); }
+    .preset-demo-chip.on { background:rgba(123,108,255,0.15); border-color:var(--point); color:var(--point-hover); }
+    .post-table { width:100%; border-collapse:collapse; margin:20px 0; font-size:15px; }
+    .post-table th { background:var(--card); padding:12px 16px; text-align:left; font-weight:600; border:1px solid var(--border); color:var(--text); }
+    .post-table td { padding:11px 16px; border:1px solid var(--border); color:var(--subtext); line-height:1.7; }
+    .post-table tr:hover td { background:rgba(123,108,255,0.04); }
+    .use-case-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:20px 0; }
+    .use-case-card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:18px; }
+    .use-case-icon { font-size:28px; margin-bottom:8px; }
+    .use-case-title { font-size:13px; font-weight:600; color:var(--text); margin-bottom:6px; }
+    .use-case-desc { font-size:12px; color:var(--subtext); line-height:1.7; }
+    .post-nav { display:flex; justify-content:space-between; margin-top:28px; padding-top:24px; border-top:1px solid var(--border); gap:12px; }
+    .post-nav a { font-size:15px; color:var(--subtext); text-decoration:none; }
+    .post-nav a:hover { color:var(--text); }
+    .cta-box { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:28px; text-align:center; margin:48px 0 0; }
+    .cta-box p { font-size:17px; color:var(--subtext); margin-bottom:16px; }
+    .cta-btn { display:inline-block; background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border-radius:10px; padding:12px 28px; font-size:14px; font-weight:600; text-decoration:none; }
+    .cta-btn:hover { transform:translateY(-2px); box-shadow:0 8px 24px var(--glow); color:white; }
+    .back-link:hover { color:var(--text); }
+    @media (max-width:640px) {
+      .feature-grid { grid-template-columns:1fr; }
+      .use-case-grid { grid-template-columns:1fr; }
+    }
+  </style>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+<meta property="og:image" content="https://browserkit.online/img/og-browserkit.png" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "PixelArt 사용법 완전 가이드",
+    "description": "PixelArt의 모든 기능을 단계별로 설명하는 공식 사용 가이드입니다. 이미지를 블록 단위 픽셀 아트 스타일로 변환하는 방법을 알아보세요.",
+    "datePublished": "2026-07-09T00:00:00+09:00",
+    "dateModified": "2026-07-09T00:00:00+09:00",
+    "author": { "@type": "Organization", "name": "BrowserKit", "url": "https://browserkit.online" },
+    "publisher": { "@type": "Organization", "name": "BrowserKit", "url": "https://browserkit.online", "logo": { "@type": "ImageObject", "url": "https://browserkit.online/img/og-browserkit.png" } },
+    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://browserkit.online/blog/44-pixelart-howto.html" },
+    "image": "https://browserkit.online/img/og-browserkit.png"
+  }
+  </script>  <link rel="canonical" href="https://browserkit.online/blog/44-pixelart-howto.html" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://browserkit.online/img/og-browserkit.png" />
+  <style>
+    .post-table-wrap { overflow-x:auto; }
+    .post-table th, .post-table td { white-space:nowrap; }
+    .post-nav a { word-break:keep-all; }
+    .post-nav .nav-label { display:block; font-size:13px; color:var(--subtext); opacity:0.7; margin-bottom:4px; }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="container">
+      <a href="/" class="header-brand"><div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Gowun Dodum,sans-serif;flex-shrink:0">B</div><span class="header-brand-text"><span style="color:var(--text)">Browser</span><span style="color:var(--point)">Kit</span></span></a>
+      <a href="/" class="header-back">&#x2190; BrowserKit 홈으로</a>
+    </div>
+  </header>
+
+  <article class="post-wrap">
+    <a href="/blog/" class="back-link">&#x2190; 블로그 목록</a>
+    <span class="post-tag">가이드</span>
+    <h1 class="post-title">PixelArt 사용법 완전 가이드</h1>
+    <div class="post-date">2026년 7월 9일</div>
+    <div style="margin:12px 0"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+
+    <div class="post-body">
+      <p>PixelArt는 이미지를 블록 단위로 평균화해 도트 게임 그래픽 같은 픽셀 아트 스타일로 변환하는 무료 온라인 도구입니다. 블록 크기를 조절해 세밀함을 정하고, 격자선을 표시해 픽셀 하나하나가 도드라지는 느낌을 살릴 수 있습니다. 모든 처리가 브라우저 내에서만 이루어지므로 업로드한 이미지가 외부 서버로 전송되지 않습니다.</p>
+
+      <h2>주요 기능</h2>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F9CA;</div>
+          <div class="feature-title">블록 크기 조절</div>
+          <div class="feature-desc">4px~32px 범위에서 블록 크기를 조절합니다. 값이 클수록 도트가 굵어지고 원본 형태는 단순해집니다.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F3AE;</div>
+          <div class="feature-title">빠른 프리셋</div>
+          <div class="feature-desc">세밀하게(6px) / 기본(12px) / 큼직하게(24px) / 도트 감성(32px) 4가지 프리셋으로 원클릭 적용합니다.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F53A;</div>
+          <div class="feature-title">격자선 표시</div>
+          <div class="feature-desc">체크박스를 켜면 각 블록 사이에 옅은 격자선이 표시되어 픽셀 단위가 더 또렷하게 보입니다.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F5BC;&#xFE0F;</div>
+          <div class="feature-title">실시간 미리보기</div>
+          <div class="feature-desc">슬라이더나 프리셋을 조작하는 즉시 오른쪽 결과 캔버스에 반영됩니다.</div>
+        </div>
+      </div>
+
+      <div style="margin:12px 0 0"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+      <h2>사용법</h2>
+
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <h3>이미지 업로드</h3>
+          <p>업로드 존을 클릭하거나 이미지를 드래그해 불러옵니다. JPG, PNG, WEBP 형식을 지원합니다. 업로드하면 기본값(블록 12px)으로 즉시 변환 결과가 표시됩니다.</p>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <h3>블록 크기 조절</h3>
+          <p>프리셋 버튼을 클릭하거나 슬라이더를 직접 움직여 블록 크기를 조절합니다. 블록이 클수록 이미지 하나하나의 도트가 커지고 형태가 더 단순해집니다.</p>
+        </div>
+      </div>
+
+      <h3>빠른 프리셋</h3>
+      <div class="preset-demo-grid">
+        <span class="preset-demo-chip">&#x1F50E; 세밀하게 (6px)</span>
+        <span class="preset-demo-chip on">&#x1F3AE; 기본 (12px)</span>
+        <span class="preset-demo-chip">&#x1F9F1; 큼직하게 (24px)</span>
+        <span class="preset-demo-chip">&#x1F47E; 도트 감성 (32px)</span>
+      </div>
+
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <h3>격자선 표시 (선택)</h3>
+          <p><strong>격자선 표시</strong> 체크박스를 켜면 블록 사이에 옅은 선이 그려져 픽셀 하나하나가 분리되어 보입니다. 레트로 게임 스프라이트 느낌을 강조하고 싶을 때 유용합니다.</p>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <h3>다운로드</h3>
+          <p><strong>⬇ PNG 저장</strong> 버튼을 클릭해 완성된 픽셀 아트 이미지를 다운로드합니다.</p>
+        </div>
+      </div>
+
+      <h2>블록 크기별 느낌 비교</h2>
+      <div class="post-table-wrap"><table class="post-table">
+        <thead><tr><th>블록 크기</th><th>느낌</th><th>추천 상황</th></tr></thead>
+        <tbody>
+          <tr><td><strong>6px (세밀하게)</strong></td><td>원본 형태가 많이 남아 은은한 도트 질감만 더해집니다.</td><td>인물 사진에 살짝 레트로 느낌만 추가하고 싶을 때</td></tr>
+          <tr><td><strong>12px (기본)</strong></td><td>형태를 알아볼 수 있으면서도 확실한 픽셀 아트 느낌을 줍니다.</td><td>대부분의 사진에 무난하게 적용</td></tr>
+          <tr><td><strong>24px (큼직하게)</strong></td><td>색상 덩어리가 커지고 형태가 단순화됩니다.</td><td>아이콘, 프로필 사진 등 단순한 이미지</td></tr>
+          <tr><td><strong>32px (도트 감성)</strong></td><td>완전히 추상화된 도트 그래픽이 됩니다.</td><td>8비트 게임풍 아이콘, 아바타 제작</td></tr>
+        </tbody>
+      </table></div>
+
+      <h2>활용 예시</h2>
+      <div class="use-case-grid">
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F47E;</div>
+          <div class="use-case-title">레트로 게임 아이콘 제작</div>
+          <div class="use-case-desc">사진을 8비트 게임풍 도트 아이콘으로 변환해 프로필이나 아바타로 사용합니다.</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F4F1;</div>
+          <div class="use-case-title">SNS 프로필 사진 꾸미기</div>
+          <div class="use-case-desc">평범한 사진에 픽셀 아트 필터를 적용해 개성 있는 프로필 사진을 만듭니다.</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F3A8;</div>
+          <div class="use-case-title">스티커·이모티콘 제작</div>
+          <div class="use-case-desc">단순화된 도트 이미지를 스티커나 이모티콘 소스로 활용합니다.</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F3AF;</div>
+          <div class="use-case-title">모자이크 대용 장식 효과</div>
+          <div class="use-case-desc">얼굴이나 특정 부분을 가리는 용도가 아닌, 재미로 이미지 전체를 도트화할 때 사용합니다.</div>
+        </div>
+      </div>
+
+      <div class="post-highlight">&#x1F512; PixelArt는 모든 처리가 브라우저 내에서만 이루어집니다. 업로드한 이미지가 외부 서버로 전송되지 않으므로, 아직 공개하지 않은 사진도 안전하게 변환할 수 있습니다.</div>
+    </div>
+
+    <div class="cta-box">
+      <p>이미지를 블록 단위 픽셀 아트 스타일로 변환해보세요.<br />프리셋 4종으로 원하는 느낌을 바로 찾을 수 있습니다.</p>
+      <a href="/pixel-art/" class="cta-btn" style="display:inline-flex;align-items:center;gap:8px">
+        <span style="display:inline-block;width:26px;height:26px;overflow:hidden;flex-shrink:0"><span style="display:block;transform:scale(0.565);transform-origin:top left"><div style="width:46px;height:46px;background:#ffb3c7;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="display:grid;grid-template-columns:repeat(3,6px);grid-template-rows:repeat(3,6px);gap:2px"><div style="background:#fffdf9;border-radius:1px"></div><div style="background:#2a2433;border-radius:1px"></div><div style="background:#fffdf9;border-radius:1px"></div><div style="background:#2a2433;border-radius:1px"></div><div style="background:#fffdf9;border-radius:1px"></div><div style="background:#2a2433;border-radius:1px"></div><div style="background:#fffdf9;border-radius:1px"></div><div style="background:#2a2433;border-radius:1px"></div><div style="background:#fffdf9;border-radius:1px"></div></div></div></span></span>
+        무료로 픽셀 아트 만들기
+      </a>
+    </div>
+    <div style="margin:12px 0"><ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="9500090221"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+
+<div class="post-nav">
+      <a href="/blog/43-imagecollage-howto.html"><span class="nav-label">← 이전 글</span>ImageCollage 사용법 완전 가이드</a>
+      <a href="/blog/18-pdfmerge-howto.html" style="text-align:right"><span class="nav-label">다음 글 →</span>PDFMerge 사용법 완전 가이드</a>
+    </div></div>
+
+  </article>
+  <footer class="footer">
+    <div class="container">
+      <p class="footer-copy">© 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p>
+      <nav class="footer-nav">
+        <a href="/privacy.html">개인정보 처리방침</a>
+        <a href="/terms.html">이용약관</a>
+        <a href="/about.html">서비스 소개</a>
+        <a href="/blog/">블로그</a>
+      </nav>
+    </div>
+  </footer>
+</body>
+</html>
