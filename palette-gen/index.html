@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <link rel="icon" href="/favicon.ico" sizes="32x32">
+  <link rel="icon" href="/favicon-16.png" sizes="16x16" type="image/png">
+  <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="/favicon-192.png" sizes="192x192" type="image/png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="색상 1개를 입력하면 보색, 유사색, 트리아드 등 색상 조화 팔레트를 자동 생성하는 무료 온라인 도구. CSS 변수로 내보내기 지원. 서버 전송 없이 브라우저에서 바로 처리합니다." />
+  <meta property="og:title" content="PaletteGen — 색상 팔레트 생성기" />
+  <meta property="og:description" content="색상 1개로 보색, 유사색, 트리아드 등 조화로운 팔레트를 즉시 생성하는 무료 온라인 도구입니다." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://browserkit.online/palette-gen/" />
+  <title>PaletteGen — 색상 팔레트 생성기</title>
+  <link rel="stylesheet" href="/css/style.css?v=20260704c" />
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506"
+     crossorigin="anonymous"></script>
+  <style>
+    /* 입력 */
+    .input-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:24px; margin-bottom:20px; }
+    .input-row { display:flex; gap:12px; align-items:center; flex-wrap:wrap; }
+    .color-swatch-input { width:56px; height:56px; border-radius:12px; border:2px solid var(--border); cursor:pointer; padding:0; background:none; flex-shrink:0; }
+    .color-swatch-input::-webkit-color-swatch-wrapper { padding:0; }
+    .color-swatch-input::-webkit-color-swatch { border:none; border-radius:10px; }
+    .hex-input { background:var(--bg); border:1px solid var(--border); border-radius:10px; padding:14px 16px; font-size:18px; font-weight:600; color:var(--text); font-family:'Fira Code',monospace; flex:1; min-width:160px; outline:none; text-transform:uppercase; }
+    .hex-input:focus { border-color:var(--point); }
+    .error-msg { color:#F87171; font-size:13px; margin-top:8px; display:none; }
+    .error-msg.show { display:block; }
+
+    /* 하모니 탭 */
+    .harmony-wrap { display:flex; gap:8px; margin-bottom:20px; flex-wrap:wrap; }
+    .harmony-btn { background:var(--card); color:var(--subtext); border:1px solid var(--border); border-radius:10px; padding:10px 18px; font-size:13px; font-weight:600; cursor:pointer; font-family:'Gowun Dodum',sans-serif; transition:all 0.2s; white-space:nowrap; }
+    .harmony-btn:hover { border-color:var(--point); color:var(--text); }
+    .harmony-btn.active { background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border-color:transparent; }
+    .harmony-desc { font-size:12px; color:var(--subtext); margin-bottom:20px; line-height:1.6; }
+
+    /* 팔레트 결과 */
+    .palette-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:14px; margin-bottom:20px; }
+    .color-card { background:var(--card); border:1px solid var(--border); border-radius:12px; overflow:hidden; }
+    .color-card-swatch { height:90px; cursor:pointer; position:relative; }
+    .color-card-swatch .base-badge { position:absolute; top:8px; left:8px; font-size:10px; font-weight:700; background:rgba(255,255,255,.85); color:#2a2433; padding:2px 8px; border-radius:999px; }
+    .color-card-body { padding:12px 14px; display:flex; flex-direction:column; gap:6px; }
+    .color-card-row { display:flex; align-items:center; justify-content:space-between; gap:8px; }
+    .color-card-code { font-size:12px; font-family:'Fira Code',monospace; color:var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .color-card-copy { background:var(--bg); border:1px solid var(--border); border-radius:6px; padding:3px 9px; font-size:11px; color:var(--subtext); cursor:pointer; flex-shrink:0; }
+    .color-card-copy:hover { border-color:var(--point); color:var(--text); }
+
+    /* CSS 내보내기 */
+    .export-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px 24px; margin-bottom:48px; }
+    .export-title { font-size:13px; font-weight:600; color:var(--subtext); margin-bottom:12px; }
+    .export-code { background:#0a0a12; border:1px solid var(--border); border-radius:10px; padding:16px; font-family:'Fira Code',monospace; font-size:13px; line-height:1.8; color:#68d391; overflow-x:auto; white-space:pre; margin-bottom:12px; }
+    .btn-primary { background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border:none; border-radius:10px; padding:10px 20px; font-size:13px; font-weight:600; cursor:pointer; font-family:'Gowun Dodum',sans-serif; transition:all 0.2s; }
+    .btn-primary:hover { transform:translateY(-1px); box-shadow:0 6px 20px var(--glow); }
+
+    .toast { position:fixed; bottom:32px; left:50%; transform:translateX(-50%) translateY(80px); background:var(--success); color:#fff; border-radius:999px; padding:10px 24px; font-size:14px; font-weight:600; opacity:0; pointer-events:none; z-index:999; transition:all 0.3s ease; }
+    .toast.show { transform:translateX(-50%) translateY(0); opacity:1; }
+
+    .footer { border-top:1px solid var(--border); padding:32px 0; text-align:center; }
+    .footer-copy { color:var(--subtext); font-size:13px; margin-bottom:12px; }
+    .footer-nav { display:flex; justify-content:center; gap:20px; flex-wrap:wrap; }
+    .footer-nav a { color:var(--subtext); font-size:13px; text-decoration:none; }
+    .footer-nav a:hover { color:var(--text); }
+
+    @media (max-width:640px) {
+      .hero-title { font-size:24px; }
+      .input-row { flex-direction:column; align-items:stretch; }
+      .hex-input { width:100%; }
+    }
+  </style>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+  <meta property="og:image" content="https://browserkit.online/img/og-browserkit.png" />
+  <link rel="canonical" href="https://browserkit.online/palette-gen/" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://browserkit.online/img/og-browserkit.png" />
+</head>
+
+<body>
+  <header class="header">
+    <div class="container">
+      <a href="/" class="header-brand">
+        <div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Gowun Dodum,sans-serif;flex-shrink:0">B</div>
+        <span class="header-brand-text"><span style="color:var(--text)">Browser</span><span style="color:var(--point)">Kit</span></span>
+      </a>
+      <a href="/" class="header-back">&#x2190; BrowserKit 홈으로</a>
+    </div>
+  </header>
+
+  <main><div class="container">
+    <div class="hero">
+      <div class="hero-icon" style="height:78px;display:flex;justify-content:center;align-items:center"><div style="transform:scale(1.7);transform-origin:center"><div style="width:46px;height:46px;background:#ffd9a8;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="display:flex;gap:3px"><div style="width:11px;height:11px;border-radius:50%;background:#ff8a5e;border:2px solid #2a2433;box-sizing:border-box"></div><div style="width:11px;height:11px;border-radius:50%;background:#5dffb0;border:2px solid #2a2433;box-sizing:border-box;margin-top:8px"></div><div style="width:11px;height:11px;border-radius:50%;background:#6aa8ff;border:2px solid #2a2433;box-sizing:border-box"></div></div></div></div></div>
+      <div class="hero-title-wrap"><h1 class="hero-title">PaletteGen</h1><a href="/blog/53-palettegen-howto.html" class="hero-guide-link">사용법 가이드 보기</a></div>
+      <p class="hero-desc">색상 1개로 보색, 유사색, 트리아드 등 조화로운 팔레트를 즉시 생성하세요</p>
+      <div class="hero-badges">
+        <span class="badge">🔒 완전 로컬 처리</span>
+        <span class="badge">⚡ 무료 사용</span>
+        <span class="badge">🛡️ 서버 전송 없음</span>
+        <span class="badge">📦 설치 불필요</span>
+      </div>
+    </div>
+    <div style="margin:0 0 12px"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+
+    <!-- 입력 -->
+    <div class="input-card">
+      <div class="input-row">
+        <input type="color" class="color-swatch-input" id="colorSwatch" value="#7b6cff" />
+        <input type="text" class="hex-input" id="hexInput" value="#7B6CFF" maxlength="7" />
+      </div>
+      <div class="error-msg" id="errorMsg">올바른 HEX 색상 코드를 입력해주세요 (예: #7B6CFF).</div>
+    </div>
+
+    <!-- 하모니 선택 -->
+    <div class="harmony-wrap">
+      <button class="harmony-btn active" data-type="complementary">보색</button>
+      <button class="harmony-btn" data-type="analogous">유사색</button>
+      <button class="harmony-btn" data-type="triad">트리아드</button>
+      <button class="harmony-btn" data-type="split">스플릿 보색</button>
+      <button class="harmony-btn" data-type="monochromatic">모노크로매틱</button>
+    </div>
+    <div class="harmony-desc" id="harmonyDesc"></div>
+
+    <!-- 팔레트 결과 -->
+    <div class="palette-grid" id="paletteGrid"></div>
+
+    <!-- CSS 변수 내보내기 -->
+    <div class="export-card">
+      <div class="export-title">📤 CSS 변수로 내보내기</div>
+      <div class="export-code" id="exportCode"></div>
+      <button class="btn-primary" id="copyExportBtn">📋 CSS 변수 복사</button>
+    </div>
+
+    <div style="margin:0 0 12px"><ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="9500090221"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+  </div></main>
+
+  <footer class="footer">
+    <div class="container">
+      <p class="footer-copy">&#xa9; 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p>
+      <nav class="footer-nav">
+        <a href="/privacy.html">개인정보 처리방침</a>
+        <a href="/terms.html">이용약관</a>
+        <a href="/about.html">서비스 소개</a>
+        <a href="/blog/">블로그</a>
+      </nav>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+  var colorSwatch = document.getElementById('colorSwatch');
+  var hexInput    = document.getElementById('hexInput');
+  var errorMsg    = document.getElementById('errorMsg');
+  var paletteGrid = document.getElementById('paletteGrid');
+  var exportCode  = document.getElementById('exportCode');
+  var harmonyDesc = document.getElementById('harmonyDesc');
+  var currentType = 'complementary';
+
+  var HARMONY_DESC = {
+    complementary: '색상환에서 정반대(180도)에 있는 색을 조합합니다. 강한 대비와 생동감이 필요할 때 사용합니다.',
+    analogous: '색상환에서 서로 인접한(±30도) 색을 조합합니다. 자연스럽고 편안한 느낌을 줍니다.',
+    triad: '색상환을 3등분(120도 간격)한 색을 조합합니다. 균형 잡힌 대비와 다채로움을 줍니다.',
+    split: '기준색의 보색 양옆(150도, 210도) 색을 조합합니다. 보색만큼 강하지 않으면서도 대비가 있습니다.',
+    monochromatic: '기준색의 색상(H)은 유지하고 명도(L)만 다르게 5단계로 조합합니다. 통일감 있는 팔레트에 적합합니다.'
+  };
+
+  // ── 색 변환 유틸 ──
+  function hexToRgb(hex) {
+    hex = hex.replace('#', '');
+    if (hex.length === 3) hex = hex.split('').map(function(c) { return c + c; }).join('');
+    var num = parseInt(hex, 16);
+    return { r: (num >> 16) & 255, g: (num >> 8) & 255, b: num & 255 };
+  }
+
+  function rgbToHex(r, g, b) {
+    return '#' + [r, g, b].map(function(v) { return Math.max(0, Math.min(255, Math.round(v))).toString(16).padStart(2, '0'); }).join('').toUpperCase();
+  }
+
+  function rgbToHsl(r, g, b) {
+    r /= 255; g /= 255; b /= 255;
+    var max = Math.max(r, g, b), min = Math.min(r, g, b);
+    var h, s, l = (max + min) / 2;
+    if (max === min) { h = s = 0; }
+    else {
+      var d = max - min;
+      s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+      switch (max) {
+        case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+        case g: h = (b - r) / d + 2; break;
+        case b: h = (r - g) / d + 4; break;
+      }
+      h /= 6;
+    }
+    return { h: h * 360, s: s * 100, l: l * 100 };
+  }
+
+  function hslToRgb(h, s, l) {
+    h = ((h % 360) + 360) % 360; h /= 360; s /= 100; l /= 100;
+    var r, g, b;
+    if (s === 0) { r = g = b = l; }
+    else {
+      var hue2rgb = function(p, q, t) {
+        if (t < 0) t += 1;
+        if (t > 1) t -= 1;
+        if (t < 1 / 6) return p + (q - p) * 6 * t;
+        if (t < 1 / 2) return q;
+        if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
+        return p;
+      };
+      var q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+      var p = 2 * l - q;
+      r = hue2rgb(p, q, h + 1 / 3);
+      g = hue2rgb(p, q, h);
+      b = hue2rgb(p, q, h - 1 / 3);
+    }
+    return { r: r * 255, g: g * 255, b: b * 255 };
+  }
+
+  function isValidHex(hex) {
+    return /^#([0-9A-Fa-f]{6}|[0-9A-Fa-f]{3})$/.test(hex);
+  }
+
+  // ── 하모니별 색상 생성 ──
+  function buildPalette(hex, type) {
+    var rgb = hexToRgb(hex);
+    var hsl = rgbToHsl(rgb.r, rgb.g, rgb.b);
+    var colors = [];
+
+    function fromH(h, s, l, isBase) {
+      var c = hslToRgb(h, s == null ? hsl.s : s, l == null ? hsl.l : l);
+      return { hex: rgbToHex(c.r, c.g, c.b), h: h, s: s == null ? hsl.s : s, l: l == null ? hsl.l : l, isBase: !!isBase };
+    }
+
+    if (type === 'complementary') {
+      colors = [fromH(hsl.h, null, null, true), fromH(hsl.h + 180)];
+    } else if (type === 'analogous') {
+      colors = [fromH(hsl.h - 30), fromH(hsl.h, null, null, true), fromH(hsl.h + 30)];
+    } else if (type === 'triad') {
+      colors = [fromH(hsl.h, null, null, true), fromH(hsl.h + 120), fromH(hsl.h + 240)];
+    } else if (type === 'split') {
+      colors = [fromH(hsl.h, null, null, true), fromH(hsl.h + 150), fromH(hsl.h + 210)];
+    } else if (type === 'monochromatic') {
+      var levels = [20, 35, 50, 65, 80];
+      colors = levels.map(function(l) {
+        return fromH(hsl.h, hsl.s, l, Math.abs(l - hsl.l) < 7.5);
+      });
+    }
+    return colors;
+  }
+
+  // ── 렌더링 ──
+  function render() {
+    var hex = hexInput.value.trim();
+    if (!isValidHex(hex)) {
+      errorMsg.classList.add('show');
+      return;
+    }
+    errorMsg.classList.remove('show');
+    if (hex.length === 4) hex = '#' + hex.slice(1).split('').map(function(c) { return c + c; }).join('');
+    colorSwatch.value = hex;
+    harmonyDesc.textContent = HARMONY_DESC[currentType];
+
+    var palette = buildPalette(hex, currentType);
+    var labels = ['기준색', '보조색 1', '보조색 2', '보조색 3', '보조색 4'];
+
+    paletteGrid.innerHTML = palette.map(function(c, i) {
+      var rgb = hexToRgb(c.hex);
+      var hsl = 'hsl(' + Math.round(c.h < 0 ? c.h + 360 : c.h % 360) + ', ' + Math.round(c.s) + '%, ' + Math.round(c.l) + '%)';
+      var rgbStr = 'rgb(' + rgb.r + ', ' + rgb.g + ', ' + rgb.b + ')';
+      return '<div class="color-card">' +
+        '<div class="color-card-swatch" style="background:' + c.hex + '" data-copy="' + c.hex + '">' +
+          (c.isBase ? '<span class="base-badge">기준색</span>' : '') +
+        '</div>' +
+        '<div class="color-card-body">' +
+          '<div class="color-card-row"><span class="color-card-code">' + c.hex + '</span><span class="color-card-copy" data-copy="' + c.hex + '">복사</span></div>' +
+          '<div class="color-card-row"><span class="color-card-code">' + rgbStr + '</span><span class="color-card-copy" data-copy="' + rgbStr + '">복사</span></div>' +
+          '<div class="color-card-row"><span class="color-card-code">' + hsl + '</span><span class="color-card-copy" data-copy="' + hsl + '">복사</span></div>' +
+        '</div>' +
+      '</div>';
+    }).join('');
+
+    paletteGrid.querySelectorAll('[data-copy]').forEach(function(el) {
+      el.addEventListener('click', function() {
+        var val = el.dataset.copy;
+        navigator.clipboard.writeText(val).then(function() {
+          showToast('✓ ' + val + ' 복사됨');
+        });
+      });
+    });
+
+    var varNames = ['primary', 'secondary', 'tertiary', 'quaternary', 'quinary'];
+    var cssLines = palette.map(function(c, i) {
+      return '  --color-' + (varNames[i] || 'color-' + (i + 1)) + ': ' + c.hex + ';';
+    });
+    exportCode.textContent = ':root {\n' + cssLines.join('\n') + '\n}';
+  }
+
+  document.querySelectorAll('.harmony-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.harmony-btn').forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      currentType = btn.dataset.type;
+      render();
+    });
+  });
+
+  colorSwatch.addEventListener('input', function() {
+    hexInput.value = colorSwatch.value.toUpperCase();
+    render();
+  });
+
+  hexInput.addEventListener('input', function() {
+    hexInput.value = hexInput.value.toUpperCase();
+    render();
+  });
+
+  document.getElementById('copyExportBtn').addEventListener('click', function() {
+    navigator.clipboard.writeText(exportCode.textContent).then(function() {
+      showToast('✓ CSS 변수가 클립보드에 복사되었습니다');
+    });
+  });
+
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(function() { t.classList.remove('show'); }, 2000);
+  }
+
+  render();
+  </script>
+</body>
+</html>

@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <link rel="icon" href="/favicon.ico" sizes="32x32">
+  <link rel="icon" href="/favicon-16.png" sizes="16x16" type="image/png">
+  <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="/favicon-192.png" sizes="192x192" type="image/png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="PaletteGen의 모든 기능을 단계별로 설명하는 공식 사용 가이드입니다. 색상 1개로 보색, 유사색, 트리아드 등 조화로운 팔레트를 생성하는 방법을 알아보세요." />
+  <meta property="og:title" content="PaletteGen 사용법 완전 가이드 — BrowserKit" />
+  <meta property="og:description" content="색상 1개로 보색, 유사색, 트리아드 등 조화로운 팔레트를 즉시 생성하는 PaletteGen 공식 가이드입니다." />
+  <meta property="og:type" content="article" />
+  <title>PaletteGen 사용법 완전 가이드 — BrowserKit</title>
+  <link rel="stylesheet" href="/css/style.css?v=20260704c" />
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506"
+     crossorigin="anonymous"></script>
+  <style>
+    .post-warn { background:rgba(248,113,113,0.08); border-left:3px solid #F87171; border-radius:8px; padding:16px 20px; margin:24px 0; font-size:15px; color:var(--subtext); line-height:1.8; }
+    .feature-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:20px 0; }
+    .feature-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px; }
+    .feature-card:hover { border-color:var(--point); }
+    .feature-icon { font-size:24px; margin-bottom:10px; }
+    .feature-title { font-size:14px; font-weight:600; color:var(--text); margin-bottom:6px; }
+    .feature-desc { font-size:13px; color:var(--subtext); line-height:1.7; }
+    .step-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px 24px; margin:16px 0; display:flex; gap:16px; align-items:flex-start; }
+    .step-num { min-width:36px; height:36px; background:linear-gradient(135deg,var(--point),var(--point-hover)); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:700; color:white; flex-shrink:0; font-family:'Gowun Dodum',sans-serif; }
+    .step-content h3 { font-size:15px; font-weight:600; margin-bottom:6px; color:var(--text); }
+    .step-content p { font-size:14px; color:var(--subtext); line-height:1.7; margin:0; }
+
+    .harmony-demo { display:flex; gap:6px; flex-wrap:wrap; margin:16px 0; }
+    .harmony-chip { background:var(--card); border:1px solid var(--border); border-radius:10px; padding:8px 14px; font-size:12px; font-weight:600; color:var(--subtext); }
+    .harmony-chip.on { background:rgba(123,108,255,0.15); border-color:var(--point); color:var(--point-hover); }
+
+    .swatch-demo { display:flex; gap:10px; margin:16px 0; flex-wrap:wrap; }
+    .swatch-demo-item { text-align:center; }
+    .swatch-demo-color { width:64px; height:64px; border-radius:10px; border:1px solid var(--border); margin-bottom:6px; }
+    .swatch-demo-code { font-size:11px; font-family:'Fira Code',monospace; color:var(--subtext); }
+
+    .code-block { background:#0a0a12; border:1px solid var(--border); border-radius:10px; padding:16px; font-family:'Fira Code',monospace; font-size:13px; line-height:1.8; color:#68d391; margin:16px 0; overflow-x:auto; white-space:pre; }
+
+    .post-table { width:100%; border-collapse:collapse; margin:20px 0; font-size:15px; }
+    .post-table th { background:var(--card); padding:12px 16px; text-align:left; font-weight:600; border:1px solid var(--border); color:var(--text); }
+    .post-table td { padding:11px 16px; border:1px solid var(--border); color:var(--subtext); line-height:1.7; }
+    .post-table td code { background:var(--bg); border-radius:4px; padding:1px 6px; font-size:13px; color:var(--point-hover); font-family:'Fira Code',monospace; }
+    .post-table tr:hover td { background:rgba(123,108,255,0.04); }
+    .use-case-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:20px 0; }
+    .use-case-card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:18px; }
+    .use-case-icon { font-size:28px; margin-bottom:8px; }
+    .use-case-title { font-size:13px; font-weight:600; color:var(--text); margin-bottom:6px; }
+    .use-case-desc { font-size:12px; color:var(--subtext); line-height:1.7; }
+    .post-nav { display:flex; justify-content:space-between; margin-top:28px; padding-top:24px; border-top:1px solid var(--border); gap:12px; }
+    .post-nav a { font-size:15px; color:var(--subtext); text-decoration:none; }
+    .post-nav a:hover { color:var(--text); }
+    .cta-box { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:28px; text-align:center; margin:48px 0 0; }
+    .cta-box p { font-size:17px; color:var(--subtext); margin-bottom:16px; }
+    .cta-btn { display:inline-block; background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border-radius:10px; padding:12px 28px; font-size:14px; font-weight:600; text-decoration:none; }
+    .cta-btn:hover { transform:translateY(-2px); box-shadow:0 8px 24px var(--glow); color:white; }
+    .back-link:hover { color:var(--text); }
+    @media (max-width:640px) {
+      .feature-grid { grid-template-columns:1fr; }
+      .use-case-grid { grid-template-columns:1fr; }
+    }
+  </style>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+<meta property="og:image" content="https://browserkit.online/img/og-browserkit.png" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "PaletteGen 사용법 완전 가이드",
+    "description": "PaletteGen의 모든 기능을 단계별로 설명하는 공식 사용 가이드입니다. 색상 1개로 보색, 유사색, 트리아드 등 조화로운 팔레트를 생성하는 방법을 알아보세요.",
+    "datePublished": "2026-07-10T00:00:00+09:00",
+    "dateModified": "2026-07-10T00:00:00+09:00",
+    "author": { "@type": "Organization", "name": "BrowserKit", "url": "https://browserkit.online" },
+    "publisher": { "@type": "Organization", "name": "BrowserKit", "url": "https://browserkit.online", "logo": { "@type": "ImageObject", "url": "https://browserkit.online/img/og-browserkit.png" } },
+    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://browserkit.online/blog/53-palettegen-howto.html" },
+    "image": "https://browserkit.online/img/og-browserkit.png"
+  }
+  </script>  <link rel="canonical" href="https://browserkit.online/blog/53-palettegen-howto.html" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://browserkit.online/img/og-browserkit.png" />
+  <style>
+    .post-table-wrap { overflow-x:auto; }
+    .post-table th, .post-table td { white-space:nowrap; }
+    .post-nav a { word-break:keep-all; }
+    .post-nav .nav-label { display:block; font-size:13px; color:var(--subtext); opacity:0.7; margin-bottom:4px; }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="container">
+      <a href="/" class="header-brand"><div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Gowun Dodum,sans-serif;flex-shrink:0">B</div><span class="header-brand-text"><span style="color:var(--text)">Browser</span><span style="color:var(--point)">Kit</span></span></a>
+      <a href="/" class="header-back">&#x2190; BrowserKit 홈으로</a>
+    </div>
+  </header>
+
+  <article class="post-wrap">
+    <a href="/blog/" class="back-link">&#x2190; 블로그 목록</a>
+    <span class="post-tag">가이드</span>
+    <h1 class="post-title">PaletteGen 사용법 완전 가이드</h1>
+    <div class="post-date">2026년 7월 10일</div>
+    <div style="margin:12px 0"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+
+    <div class="post-body">
+      <p>PaletteGen은 색상 1개만 입력하면 보색, 유사색, 트리아드, 스플릿 보색, 모노크로매틱 5가지 색상 조화 팔레트를 자동으로 생성하는 무료 온라인 도구입니다. 각 색상을 HEX, RGB, HSL로 확인하고 바로 복사할 수 있으며, 완성한 팔레트를 CSS 변수로 한 번에 내보낼 수 있습니다. 모든 계산이 브라우저 내에서만 이루어지므로 입력한 색상이 외부 서버로 전송되지 않습니다.</p>
+
+      <h2>주요 기능</h2>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F3A8;</div>
+          <div class="feature-title">5가지 색상 조화</div>
+          <div class="feature-desc">보색, 유사색, 트리아드, 스플릿 보색, 모노크로매틱 중 원하는 조화 방식을 선택합니다.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F522;</div>
+          <div class="feature-title">HEX/RGB/HSL 동시 표시</div>
+          <div class="feature-desc">각 색상 카드에서 세 가지 표기법을 모두 확인하고 개별적으로 클립보드에 복사할 수 있습니다.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F4E4;</div>
+          <div class="feature-title">CSS 변수 내보내기</div>
+          <div class="feature-desc">생성된 팔레트를 <code>:root { --color-primary: ... }</code> 형태의 CSS 변수 코드로 즉시 복사합니다.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F512;</div>
+          <div class="feature-title">완전 로컬 처리</div>
+          <div class="feature-desc">모든 색상 계산이 브라우저 안에서 실행됩니다. 입력한 색상이 서버로 전송되지 않습니다.</div>
+        </div>
+      </div>
+
+      <div style="margin:12px 0 0"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+
+      <h2>사용법</h2>
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <h3>기준 색상 입력</h3>
+          <p>색상 선택기를 클릭하거나 HEX 입력창에 직접 코드를 입력합니다 (예: <code>#7B6CFF</code>). 3자리 축약형(<code>#F0A</code>)도 인식합니다.</p>
+        </div>
+      </div>
+
+      <figure style="margin:12px 0 24px; text-align:center;">
+        <img src="/img/blog/palettegen/01-input.png"
+             alt="PaletteGen 색상 선택기와 HEX 입력창에 기준 색상을 입력한 화면"
+             style="width:100%; max-width:640px; border:1px solid var(--border); border-radius:var(--radius);"
+             loading="lazy" />
+        <figcaption style="font-size:13px; color:var(--subtext); margin-top:6px;">
+          색상 선택기 + HEX 입력창
+        </figcaption>
+      </figure>
+
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <h3>색상 조화 방식 선택</h3>
+          <p>5가지 버튼 중 원하는 조화 방식을 클릭합니다. 선택한 방식에 따라 팔레트가 즉시 다시 생성됩니다.</p>
+        </div>
+      </div>
+
+      <div class="harmony-demo">
+        <span class="harmony-chip on">보색</span>
+        <span class="harmony-chip">유사색</span>
+        <span class="harmony-chip">트리아드</span>
+        <span class="harmony-chip">스플릿 보색</span>
+        <span class="harmony-chip">모노크로매틱</span>
+      </div>
+
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <h3>팔레트 확인 및 복사</h3>
+          <p>생성된 색상 카드에서 스와치를 클릭하거나 HEX/RGB/HSL 옆 <strong>복사</strong> 버튼을 눌러 원하는 값을 클립보드에 복사합니다. 기준색으로 사용한 카드에는 "기준색" 배지가 표시됩니다.</p>
+        </div>
+      </div>
+
+      <figure style="margin:12px 0 24px; text-align:center;">
+        <img src="/img/blog/palettegen/02-palette.png"
+             alt="PaletteGen 트리아드 팔레트가 3개의 색상 카드로 생성되고 각 카드에 HEX, RGB, HSL 값과 복사 버튼이 표시된 화면"
+             style="width:100%; max-width:640px; border:1px solid var(--border); border-radius:var(--radius);"
+             loading="lazy" />
+        <figcaption style="font-size:13px; color:var(--subtext); margin-top:6px;">
+          트리아드 팔레트 — 색상 카드 3개 (기준색 + 보조색 2)
+        </figcaption>
+      </figure>
+
+      <div class="step-card">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <h3>CSS 변수로 내보내기</h3>
+          <p>하단 <strong>📤 CSS 변수로 내보내기</strong> 카드에서 <code>--color-primary</code>부터 순서대로 자동 생성된 CSS 변수 코드를 확인하고, <strong>📋 CSS 변수 복사</strong> 버튼으로 바로 복사해 스타일시트에 붙여넣습니다.</p>
+        </div>
+      </div>
+
+      <figure style="margin:12px 0 24px; text-align:center;">
+        <img src="/img/blog/palettegen/03-export.png"
+             alt="PaletteGen CSS 변수로 내보내기 카드에 :root 블록 코드와 복사 버튼이 표시된 화면"
+             style="width:100%; max-width:640px; border:1px solid var(--border); border-radius:var(--radius);"
+             loading="lazy" />
+        <figcaption style="font-size:13px; color:var(--subtext); margin-top:6px;">
+          CSS 변수 내보내기 — :root 블록 자동 생성
+        </figcaption>
+      </figure>
+
+      <h2>색상 조화 방식별 설명</h2>
+      <div class="post-table-wrap"><table class="post-table">
+        <thead><tr><th>방식</th><th>구성</th><th>느낌</th></tr></thead>
+        <tbody>
+          <tr><td>보색</td><td>기준색 + H+180°</td><td>강한 대비, 생동감</td></tr>
+          <tr><td>유사색</td><td>기준색, H±30°</td><td>자연스럽고 편안함</td></tr>
+          <tr><td>트리아드</td><td>기준색, H+120°, H+240°</td><td>균형 잡힌 대비와 다채로움</td></tr>
+          <tr><td>스플릿 보색</td><td>기준색, H+150°, H+210°</td><td>보색만큼 강하지 않은 대비</td></tr>
+          <tr><td>모노크로매틱</td><td>동일 H, 명도(L) 5단계(20/35/50/65/80%)</td><td>통일감 있는 단색 그러데이션</td></tr>
+        </tbody>
+      </table></div>
+
+      <h3>기준색 #7B6CFF 예시</h3>
+      <div class="swatch-demo">
+        <div class="swatch-demo-item"><div class="swatch-demo-color" style="background:#7B6CFF"></div><div class="swatch-demo-code">#7B6CFF</div></div>
+        <div class="swatch-demo-item"><div class="swatch-demo-color" style="background:#F0FF6C"></div><div class="swatch-demo-code">#F0FF6C (보색)</div></div>
+      </div>
+
+      <h3>CSS 변수 출력 예시</h3>
+      <div class="code-block">:root {
+  --color-primary: #7B6CFF;
+  --color-secondary: #F0FF6C;
+}</div>
+
+      <div class="post-warn">
+        <strong>⚠️ 참고:</strong> "유사색"과 "모노크로매틱"을 헷갈리기 쉬운데, 유사색은 색상(H)만 조금씩 다르고 채도·명도는 동일하게 유지하는 반면, 모노크로매틱은 색상(H)은 완전히 고정하고 명도(L)만 단계적으로 바꿉니다. 웹사이트 배경/텍스트처럼 톤을 통일해야 할 때는 모노크로매틱을, 포인트 컬러를 다양화하고 싶을 때는 유사색을 활용하세요.
+      </div>
+
+      <h2>활용 예시</h2>
+      <div class="use-case-grid">
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F3A8;</div>
+          <div class="use-case-title">브랜드 컬러 확장</div>
+          <div class="use-case-desc">메인 브랜드 컬러 하나로 보조색, 강조색을 자동 생성해 디자인 시스템의 색상 팔레트를 빠르게 구성합니다.</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F4BB;</div>
+          <div class="use-case-title">CSS 변수 초기 세팅</div>
+          <div class="use-case-desc">새 프로젝트 시작 시 CSS 변수 내보내기로 <code>:root</code> 컬러 토큰을 즉시 만들어 스타일시트에 붙여넣습니다.</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F4CA;</div>
+          <div class="use-case-title">차트/그래프 배색</div>
+          <div class="use-case-desc">트리아드나 스플릿 보색으로 데이터 시각화에 쓸 구분되는 색상 세트를 빠르게 생성합니다.</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F393;</div>
+          <div class="use-case-title">색채 이론 학습</div>
+          <div class="use-case-desc">색상환에서 보색, 트리아드 등이 실제로 어떤 색 조합을 만드는지 직접 입력해보며 학습합니다.</div>
+        </div>
+      </div>
+
+      <div class="post-highlight">&#x1F512; PaletteGen은 모든 색상 계산이 내 PC 브라우저에서만 실행됩니다. 입력한 색상이 외부 서버로 전송되지 않습니다.</div>
+    </div>
+
+    <div class="cta-box">
+      <p>색상 1개로 보색, 유사색, 트리아드 등 조화로운 팔레트를 생성해보세요.<br />CSS 변수로 바로 내보내 프로젝트에 사용할 수 있습니다.</p>
+      <a href="/palette-gen/" class="cta-btn" style="display:inline-flex;align-items:center;gap:8px">
+        <span style="display:inline-block;width:26px;height:26px;overflow:hidden;flex-shrink:0"><span style="display:block;transform:scale(0.565);transform-origin:top left"><div style="width:46px;height:46px;background:#ffd9a8;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="display:flex;gap:3px"><div style="width:11px;height:11px;border-radius:50%;background:#ff8a5e;border:2px solid #2a2433;box-sizing:border-box"></div><div style="width:11px;height:11px;border-radius:50%;background:#5dffb0;border:2px solid #2a2433;box-sizing:border-box;margin-top:8px"></div><div style="width:11px;height:11px;border-radius:50%;background:#6aa8ff;border:2px solid #2a2433;box-sizing:border-box"></div></div></div></span></span>
+        무료로 팔레트 생성하기
+      </a>
+    </div>
+    <div style="margin:12px 0"><ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="9500090221"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+
+<div class="post-nav">
+      <a href="/blog/52-diagrammaker-howto.html"><span class="nav-label">← 이전 글</span>DiagramMaker 사용법 완전 가이드</a>
+      <span></span>
+    </div></div>
+
+  </article>
+  <footer class="footer">
+    <div class="container">
+      <p class="footer-copy">© 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p>
+      <nav class="footer-nav">
+        <a href="/privacy.html">개인정보 처리방침</a>
+        <a href="/terms.html">이용약관</a>
+        <a href="/about.html">서비스 소개</a>
+        <a href="/blog/">블로그</a>
+      </nav>
+    </div>
+  </footer>
+</body>
+</html>
