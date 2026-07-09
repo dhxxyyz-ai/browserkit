@@ -149,6 +149,16 @@
           <p><strong>🔐 인코딩 (텍스트 → Base64)</strong> 버튼을 클릭합니다. 오른쪽 결과창에 Base64 문자열이 표시됩니다.</p>
         </div>
       </div>
+
+      <figure style="margin:12px 0 24px; text-align:center;">
+        <img src="/img/blog/base64tool/01-encode.png"
+             alt="Base64Tool 텍스트 탭에서 인코딩 버튼을 클릭해 결과창에 Base64 문자열이 표시된 화면"
+             style="width:100%; max-width:640px; border:1px solid var(--border); border-radius:var(--radius);"
+             loading="lazy" />
+        <figcaption style="font-size:13px; color:var(--subtext); margin-top:6px;">
+          텍스트 탭 — 인코딩 결과가 오른쪽 결과창에 표시된 화면
+        </figcaption>
+      </figure>
       <div class="step-card">
         <div class="step-num">3</div>
         <div class="step-content">
@@ -173,6 +183,16 @@
         </div>
       </div>
 
+      <figure style="margin:12px 0 24px; text-align:center;">
+        <img src="/img/blog/base64tool/02-decode.png"
+             alt="Base64Tool 텍스트 탭에서 디코딩 버튼을 클릭해 결과창에 원문이 표시된 화면"
+             style="width:100%; max-width:640px; border:1px solid var(--border); border-radius:var(--radius);"
+             loading="lazy" />
+        <figcaption style="font-size:13px; color:var(--subtext); margin-top:6px;">
+          텍스트 탭 — 디코딩 결과가 오른쪽 결과창에 표시된 화면
+        </figcaption>
+      </figure>
+
       <h3>입출력 교환 버튼</h3>
       <p><strong>⇄ 입출력 교환</strong> 버튼을 클릭하면 입력창과 결과창의 내용이 서로 바뀝니다. 인코딩 결과를 다시 디코딩해 검증하거나, 디코딩 결과를 재가공해 다시 인코딩할 때 유용합니다.</p>
 
@@ -196,6 +216,16 @@
           <p>파일명, 형식, 원본 크기, Base64 변환 크기와 함께 Base64 문자열이 자동으로 표시됩니다.</p>
         </div>
       </div>
+
+      <figure style="margin:12px 0 24px; text-align:center;">
+        <img src="/img/blog/base64tool/03-image.png"
+             alt="Base64Tool 이미지 탭에서 업로드한 이미지의 미리보기와 메타 정보, Base64 결과가 표시된 화면"
+             style="width:100%; max-width:640px; border:1px solid var(--border); border-radius:var(--radius);"
+             loading="lazy" />
+        <figcaption style="font-size:13px; color:var(--subtext); margin-top:6px;">
+          이미지 탭 — 업로드한 이미지의 미리보기, 메타 정보, Base64 결과가 표시된 화면
+        </figcaption>
+      </figure>
       <div class="step-card">
         <div class="step-num">3</div>
         <div class="step-content">
@@ -225,12 +255,12 @@
       <p>JavaScript의 기본 <code>btoa()</code> 함수는 ASCII 문자만 처리할 수 있어 한글을 직접 입력하면 오류가 납니다. Base64Tool은 <code>encodeURIComponent()</code>를 통해 한글을 먼저 UTF-8 바이트로 변환한 뒤 Base64로 인코딩하므로 한글을 포함한 모든 유니코드 문자를 안전하게 처리합니다.</p>
 
       <div class="code-block">
-        <div class="code-label">한글 "BrowserKit" → Base64 인코딩 예시</div>
+        <div class="code-label">영문 "BrowserKit" → Base64 인코딩 예시</div>
         <span class="code-b64">QnJvd3NlcktpdA==</span>
       </div>
       <div class="code-block">
         <div class="code-label">한글 "브라우저킷" → Base64 인코딩 예시</div>
-        <span class="code-b64">67Cv65ik7Ja07Iuc7Y+s</span>
+        <span class="code-b64">67iM65287Jqw7KCA7YK3</span>
       </div>
 
       <h2>활용 예시</h2>
@@ -282,7 +312,7 @@
     </div>
 
     <div class="cta-box">
-      <p>텍스트나 파일을 Base64로 인코딩·디코딩하세요.<br />이미지를 Data URI로 변환하거나 URL-safe 인코딩도 지원합니다.</p>
+      <p>텍스트나 파일을 Base64로 인코딩·디코딩하세요.<br />이미지를 Data URI로 변환하는 기능도 함께 제공합니다.</p>
       <a href="/base64-tool/" class="cta-btn" style="display:inline-flex;align-items:center;gap:8px">
         <span style="display:inline-block;width:26px;height:26px;overflow:hidden;flex-shrink:0"><span style="display:block;transform:scale(0.565);transform-origin:top left"><div style="width:46px;height:46px;background:#e0c3ff;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="font:700 16px Gowun Dodum,sans-serif;color:#2a2433;line-height:1;letter-spacing:-.5px;white-space:nowrap">64</div></div></span></span>
         무료로 Base64 변환 시작하기
