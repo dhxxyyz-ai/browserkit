@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="ImageText의 모든 기능을 단계별로 설명하는 공식 사용 가이드입니다. 이미지 위에 여러 개의 텍스트를 배치하고 드래그로 위치를 조절하는 방법을 알아보세요." />
+  <meta property="og:title" content="ImageText 사용법 완전 가이드 — BrowserKit" />
+  <meta property="og:description" content="이미지 위에 텍스트를 자유롭게 배치하는 ImageText 공식 가이드입니다. 서버 전송 없이 브라우저에서 바로 처리합니다." />
+  <meta property="og:type" content="article" />
+  <title>ImageText 사용법 완전 가이드 — BrowserKit</title>
+  <link rel="stylesheet" href="/css/style.css?v=20260704c" />
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506"
+     crossorigin="anonymous"></script>
+  <style>
+    .feature-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:20px 0; }
+    .feature-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px; }
+    .feature-card:hover { border-color:var(--point); }
+    .feature-icon { font-size:24px; margin-bottom:10px; }
+    .feature-title { font-size:14px; font-weight:600; color:var(--text); margin-bottom:6px; }
+    .feature-desc { font-size:13px; color:var(--subtext); line-height:1.7; }
+    .step-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px 24px; margin:16px 0; display:flex; gap:16px; align-items:flex-start; }
+    .step-num { min-width:36px; height:36px; background:linear-gradient(135deg,var(--point),var(--point-hover)); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:700; color:white; flex-shrink:0; font-family:'Gowun Dodum',sans-serif; }
+    .step-content h3 { font-size:15px; font-weight:600; margin-bottom:6px; color:var(--text); }
+    .step-content p { font-size:14px; color:var(--subtext); line-height:1.7; margin:0; }
+    .post-table { width:100%; border-collapse:collapse; margin:20px 0; font-size:15px; }
+    .post-table th { background:var(--card); padding:12px 16px; text-align:left; font-weight:600; border:1px solid var(--border); color:var(--text); }
+    .post-table td { padding:11px 16px; border:1px solid var(--border); color:var(--subtext); line-height:1.7; }
+    .post-table tr:hover td { background:rgba(123,108,255,0.04); }
+    .use-case-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:20px 0; }
+    .use-case-card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:18px; }
+    .use-case-icon { font-size:28px; margin-bottom:8px; }
+    .use-case-title { font-size:13px; font-weight:600; color:var(--text); margin-bottom:6px; }
+    .use-case-desc { font-size:12px; color:var(--subtext); line-height:1.7; }
+    .post-nav { display:flex; justify-content:space-between; margin-top:28px; padding-top:24px; border-top:1px solid var(--border); gap:12px; }
+    .post-nav a { font-size:15px; color:var(--subtext); text-decoration:none; }
+    .post-nav a:hover { color:var(--text); }
+    .cta-box { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:28px; text-align:center; margin:48px 0 0; }
+    .cta-box p { font-size:17px; color:var(--subtext); margin-bottom:16px; }
+    .cta-btn { display:inline-block; background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border-radius:10px; padding:12px 28px; font-size:14px; font-weight:600; text-decoration:none; }
+    .cta-btn:hover { transform:translateY(-2px); box-shadow:0 8px 24px var(--glow); color:white; }
+    .back-link:hover { color:var(--text); }
+    @media (max-width:640px) {
+      .feature-grid { grid-template-columns:1fr; }
+      .use-case-grid { grid-template-columns:1fr; }
+    }
+  </style>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+<meta property="og:image" content="https://browserkit.online/img/og-browserkit.png" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "ImageText 사용법 완전 가이드",
+    "description": "ImageText의 모든 기능을 단계별로 설명하는 공식 사용 가이드입니다. 이미지 위에 여러 개의 텍스트를 배치하고 드래그로 위치를 조절하는 방법을 알아보세요.",
+    "datePublished": "2026-07-09T00:00:00+09:00",
+    "dateModified": "2026-07-09T00:00:00+09:00",
+    "author": { "@type": "Organization", "name": "BrowserKit", "url": "https://browserkit.online" },
+    "publisher": { "@type": "Organization", "name": "BrowserKit", "url": "https://browserkit.online", "logo": { "@type": "ImageObject", "url": "https://browserkit.online/img/og-browserkit.png" } },
+    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://browserkit.online/blog/41-imagetext-howto.html" },
+    "image": "https://browserkit.online/img/og-browserkit.png"
+  }
+  </script>  <link rel="canonical" href="https://browserkit.online/blog/41-imagetext-howto.html" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://browserkit.online/img/og-browserkit.png" />
+  <style>
+    .post-table-wrap { overflow-x:auto; }
+    .post-table th, .post-table td { white-space:nowrap; }
+    .post-nav a { word-break:keep-all; }
+    .post-nav .nav-label { display:block; font-size:13px; color:var(--subtext); opacity:0.7; margin-bottom:4px; }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="container">
+      <a href="/" class="header-brand"><div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Gowun Dodum,sans-serif;flex-shrink:0">B</div><span class="header-brand-text"><span style="color:var(--text)">Browser</span><span style="color:var(--point)">Kit</span></span></a>
+      <a href="/" class="header-back">&#x2190; BrowserKit 홈으로</a>
+    </div>
+  </header>
+
+  <article class="post-wrap">
+    <a href="/blog/" class="back-link">&#x2190; 블로그 목록</a>
+    <span class="post-tag">가이드</span>
+    <h1 class="post-title">ImageText 사용법 완전 가이드</h1>
+    <div class="post-date">2026년 7월 9일</div>
+    <div style="margin:12px 0"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+
+    <div class="post-body">
+      <p>ImageText는 이미지 위에 원하는 텍스트를 여러 개 자유롭게 배치할 수 있는 무료 온라인 도구입니다. 캔버스에서 텍스트를 직접 클릭하고 드래그해 위치를 조절할 수 있어, 정해진 9방향 위치에만 넣을 수 있는 일반적인 워터마크 도구보다 자유도가 높습니다. 모든 처리가 브라우저 내에서만 이루어지므로 업로드한 이미지가 외부 서버로 전송되지 않습니다.</p>
+
+      <h2>주요 기능</h2>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F5A8;&#xFE0F;</div>
+          <div class="feature-title">다중 텍스트 레이어</div>
+          <div class="feature-desc">＋ 텍스트 추가 버튼으로 여러 개의 텍스트 레이어를 만들고, 목록에서 각각 선택해 개별적으로 편집할 수 있습니다.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F5B1;&#xFE0F;</div>
+          <div class="feature-title">드래그로 위치 조절</div>
+          <div class="feature-desc">캔버스 위에서 텍스트를 클릭한 채로 드래그하면 원하는 위치로 자유롭게 옮길 수 있습니다.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F520;</div>
+          <div class="feature-title">폰트·크기·색상 설정</div>
+          <div class="feature-desc">4가지 폰트, 크기, 색상, 투명도, 굵게 여부를 텍스트 레이어별로 각각 다르게 지정할 수 있습니다.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F5BC;&#xFE0F;</div>
+          <div class="feature-title">PNG / JPG / WEBP 저장</div>
+          <div class="feature-desc">완성된 이미지를 원하는 형식으로 다운로드합니다. JPG/WEBP는 투명 배경이 흰색으로 자동 변환됩니다.</div>
+        </div>
+      </div>
+
+      <div style="margin:12px 0 0"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+      <h2>사용법</h2>
+
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <h3>이미지 업로드</h3>
+          <p>업로드 존을 클릭하거나 이미지를 드래그해 불러옵니다. JPG, PNG, WEBP 형식을 지원합니다. 업로드하면 기본 텍스트 레이어 1개가 이미지 중앙에 자동으로 생성됩니다.</p>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <h3>텍스트 추가 및 선택</h3>
+          <p><strong>＋ 텍스트 추가</strong> 버튼을 클릭하면 새 텍스트 레이어가 생깁니다. 왼쪽 텍스트 레이어 목록에서 항목을 클릭하면 해당 텍스트가 선택되고, 캔버스에는 보라색 점선 테두리로 표시됩니다.</p>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <h3>내용 및 스타일 편집</h3>
+          <p>오른쪽 편집 패널에서 텍스트 내용, 폰트, 크기, 투명도, 색상, 굵게 여부를 조절합니다. 값을 바꾸는 즉시 캔버스에 실시간으로 반영됩니다.</p>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <h3>드래그로 위치 이동</h3>
+          <p>캔버스에서 텍스트를 마우스(또는 손가락)로 누른 채 원하는 위치로 끌어다 놓습니다. 클릭한 지점이 어떤 텍스트에도 해당하지 않으면 드래그가 시작되지 않습니다.</p>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">5</div>
+        <div class="step-content">
+          <h3>불필요한 텍스트 삭제</h3>
+          <p>텍스트 레이어 목록의 <strong>✕</strong> 버튼을 클릭하면 해당 레이어가 삭제됩니다.</p>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">6</div>
+        <div class="step-content">
+          <h3>출력 형식 선택 및 다운로드</h3>
+          <p>PNG / JPG / WEBP 중 원하는 형식을 선택한 뒤 <strong>⬇ 이미지 다운로드</strong> 버튼을 클릭합니다. 다운로드된 이미지에는 편집 중 보이던 점선 선택 테두리가 표시되지 않습니다.</p>
+        </div>
+      </div>
+
+      <h2>WatermarkImage와 무엇이 다른가요?</h2>
+      <p>BrowserKit에는 이미지에 문구를 넣는 도구가 두 가지 있습니다. 용도에 맞게 선택하세요.</p>
+      <div class="post-table-wrap"><table class="post-table">
+        <thead><tr><th>구분</th><th>ImageText</th><th>WatermarkImage</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>목적</td>
+            <td>이미지 안에 자유롭게 문구/설명 텍스트 삽입</td>
+            <td>저작권 표시용 워터마크 삽입</td>
+          </tr>
+          <tr>
+            <td>텍스트 개수</td>
+            <td>여러 개 동시 배치 가능</td>
+            <td>1개 (필요 시 타일 반복)</td>
+          </tr>
+          <tr>
+            <td>위치 지정 방식</td>
+            <td>캔버스에서 자유 드래그</td>
+            <td>9방향 프리셋 버튼</td>
+          </tr>
+          <tr>
+            <td>반복 배치</td>
+            <td>지원하지 않음</td>
+            <td>타일 반복 배치 지원</td>
+          </tr>
+        </tbody>
+      </table></div>
+
+      <h2>활용 예시</h2>
+      <div class="use-case-grid">
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F4F8;</div>
+          <div class="use-case-title">SNS 카드뉴스 제작</div>
+          <div class="use-case-desc">배경 이미지 위에 제목, 부제목, 출처 등 여러 텍스트를 각각 원하는 위치에 배치해 카드뉴스를 만듭니다.</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F3F7;&#xFE0F;</div>
+          <div class="use-case-title">상품 사진 라벨링</div>
+          <div class="use-case-desc">중고거래·쇼핑몰 상품 사진에 가격, 사이즈, 연락처 등의 정보를 이미지에 직접 적어 넣습니다.</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F4C5;</div>
+          <div class="use-case-title">밈·짤 제작</div>
+          <div class="use-case-desc">사진 위·아래에 자막 형태의 문구를 넣어 재미있는 이미지를 빠르게 만듭니다.</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F5FA;&#xFE0F;</div>
+          <div class="use-case-title">여행 사진 설명 추가</div>
+          <div class="use-case-desc">여행 사진에 장소명, 날짜 등의 캡션을 여러 위치에 넣어 기록용 이미지를 만듭니다.</div>
+        </div>
+      </div>
+
+      <div class="post-highlight">&#x1F512; ImageText는 모든 처리가 브라우저 내에서만 이루어집니다. 업로드한 이미지가 외부 서버로 전송되지 않으므로, 아직 공개하지 않은 이미지도 안전하게 편집할 수 있습니다.</div>
+    </div>
+
+    <div class="cta-box">
+      <p>이미지 위에 원하는 텍스트를 자유롭게 배치해보세요.<br />드래그 한 번으로 위치를 조절하고 바로 다운로드할 수 있습니다.</p>
+      <a href="/image-text/" class="cta-btn" style="display:inline-flex;align-items:center;gap:8px">
+        <span style="display:inline-block;width:26px;height:26px;overflow:hidden;flex-shrink:0"><span style="display:block;transform:scale(0.565);transform-origin:top left"><div style="width:46px;height:46px;background:#ffb3c7;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="font:700 18px Gowun Dodum,sans-serif;color:#2a2433;line-height:1">T</div></div></span></span>
+        무료로 텍스트 추가하기
+      </a>
+    </div>
+    <div style="margin:12px 0"><ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="9500090221"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+
+<div class="post-nav">
+      <a href="/blog/33-bgremove-howto.html"><span class="nav-label">← 이전 글</span>BGRemove 사용법 완전 가이드</a>
+      <a href="/blog/18-pdfmerge-howto.html" style="text-align:right"><span class="nav-label">다음 글 →</span>PDFMerge 사용법 완전 가이드</a>
+    </div></div>
+
+  </article>
+  <footer class="footer">
+    <div class="container">
+      <p class="footer-copy">© 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p>
+      <nav class="footer-nav">
+        <a href="/privacy.html">개인정보 처리방침</a>
+        <a href="/terms.html">이용약관</a>
+        <a href="/about.html">서비스 소개</a>
+        <a href="/blog/">블로그</a>
+      </nav>
+    </div>
+  </footer>
+</body>
+</html>

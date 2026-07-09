@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="BrowserKit — 설치 없이 브라우저에서 바로 쓰는 무료 도구 25가지. 개인정보 마스킹, 얼굴 블러, PDF 편집, QR 코드, JSON 포맷터, 차트 생성까지. 서버 전송 없이 완전 로컬 처리합니다.">
+  <meta name="description" content="BrowserKit — 설치 없이 브라우저에서 바로 쓰는 무료 도구 26가지. 개인정보 마스킹, 얼굴 블러, PDF 편집, QR 코드, JSON 포맷터, 차트 생성까지. 서버 전송 없이 완전 로컬 처리합니다.">
   <meta property="og:title" content="BrowserKit — 브라우저 기반 무료 도구 모음">
   <meta property="og:description" content="서버 전송 없이 브라우저에서 바로 쓰는 무료 도구 모음. 개인정보 마스킹, 이미지 편집, PDF 처리.">
   <meta property="og:type" content="website">
@@ -71,7 +71,7 @@ const TOOL_URLS = {
   DiffChecker:'/diff-checker/', MarkdownEditor:'/markdown-editor/', FindReplace:'/find-replace/',
   QRCode:'/qr-code/', PasswordGen:'/password-gen/', UnitConvert:'/unit-convert/', DateCalc:'/date-calc/',
   WorldClock:'/world-clock/', JSONFormat:'/json-format/', RegexTest:'/regex-test/', Base64Tool:'/base64-tool/',
-  HashGen:'/hash-gen/', ChartMaker:'/chart-maker/'
+  HashGen:'/hash-gen/', ChartMaker:'/chart-maker/', ImageText:'/image-text/'
 };
 
 const BLOG_URLS = {
@@ -112,7 +112,8 @@ const BLOG_URLS = {
   'WorldClock 사용법 완전 가이드':'/blog/35-worldclock-howto.html',
   'HashGen 사용법 완전 가이드':'/blog/36-hashgen-howto.html',
   'FindReplace 사용법 완전 가이드':'/blog/37-findreplace-howto.html',
-  'ChartMaker 사용법 완전 가이드':'/blog/38-chartmaker-howto.html'
+  'ChartMaker 사용법 완전 가이드':'/blog/38-chartmaker-howto.html',
+  'ImageText 사용법 완전 가이드':'/blog/41-imagetext-howto.html'
 };
 
 const INFO_URLS = {
@@ -158,7 +159,7 @@ function glyphInfo(code) {
     FindReplace:'search', ImageBright:'sun', BGRemove:'token:BG',
     QRCode:'qr', PasswordGen:'key', UnitConvert:'token:↔', DateCalc:'calendar', WorldClock:'clock',
     JSONFormat:'token:{ }', RegexTest:'token:.*', Base64Tool:'token:64', HashGen:'token:#',
-    ChartMaker:'chart'
+    ChartMaker:'chart', ImageText:'token:T'
   };
   const v = m[code];
   if (!v) return { glyph: 'token', token: '+' };
@@ -217,13 +218,13 @@ const SEARCH_TOOLS = [
   {code:'DateCalc',name:'날짜 계산기'},{code:'WorldClock',name:'세계 시간'},
   {code:'JSONFormat',name:'JSON 포맷터'},{code:'RegexTest',name:'정규식 테스터'},
   {code:'Base64Tool',name:'Base64 변환'},{code:'HashGen',name:'해시 생성기'},
-  {code:'ChartMaker',name:'차트 생성기'}
+  {code:'ChartMaker',name:'차트 생성기'},{code:'ImageText',name:'이미지 텍스트 추가'}
 ];
 
 // ── Toolbox categories (desktop widget) ──────────────────────────────────────
 const TOOLBOX_CATS = [
   { label: '개인정보',     keys: ['MaskPrivacy','MaskPDF','MaskFace','MaskDoc'] },
-  { label: '이미지 편집',  keys: ['FitImage','CropImage','WatermarkImage','ColorPicker','ImageBright','BGRemove'] },
+  { label: '이미지 편집',  keys: ['FitImage','CropImage','WatermarkImage','ColorPicker','ImageBright','BGRemove','ImageText'] },
   { label: '문서·텍스트',  keys: ['PDFMerge','TextTools','DiffChecker','MarkdownEditor','FindReplace'] },
   { label: '유틸리티',     keys: ['QRCode','PasswordGen','UnitConvert','DateCalc','WorldClock'] },
   { label: '개발자',       keys: ['JSONFormat','RegexTest','Base64Tool','HashGen'] },
@@ -240,7 +241,7 @@ function buildTree() {
   return {
     '도구':{type:'folder',label:'도구',children:{
       '개인정보':{type:'folder',label:'개인정보',children:{MaskPrivacy:t('개인정보 마스킹'),MaskPDF:t('PDF 마스킹'),MaskFace:t('얼굴 블러'),MaskDoc:t('텍스트 마스킹')}},
-      '이미지 편집':{type:'folder',label:'이미지 편집',children:{FitImage:t('이미지 변환'),CropImage:t('이미지 자르기'),WatermarkImage:t('워터마크 추가'),ColorPicker:t('색상 추출'),ImageBright:t('이미지 보정'),BGRemove:t('AI 배경 제거')}},
+      '이미지 편집':{type:'folder',label:'이미지 편집',children:{FitImage:t('이미지 변환'),CropImage:t('이미지 자르기'),WatermarkImage:t('워터마크 추가'),ColorPicker:t('색상 추출'),ImageBright:t('이미지 보정'),BGRemove:t('AI 배경 제거'),ImageText:t('이미지 텍스트 추가')}},
       '문서\xb7텍스트':{type:'folder',label:'문서\xb7텍스트',children:{PDFMerge:t('PDF 합치기'),TextTools:t('텍스트 변환'),DiffChecker:t('텍스트 비교'),MarkdownEditor:t('마크다운 편집기'),FindReplace:t('찾아 바꾸기')}},
       '유틸리티':{type:'folder',label:'유틸리티',children:{QRCode:t('QR 코드 생성'),PasswordGen:t('비밀번호 생성기'),UnitConvert:t('단위 변환기'),DateCalc:t('날짜 계산기'),WorldClock:t('세계 시간')}},
       '개발자':{type:'folder',label:'개발자',children:{JSONFormat:t('JSON 포맷터'),RegexTest:t('정규식 테스터'),Base64Tool:t('Base64 변환'),HashGen:t('해시 생성기')}},
@@ -264,7 +265,7 @@ function buildTree() {
         h2:{type:'header',label:'이미지 편집'},
         b6:a('FitImage 사용법 완전 가이드'),b11:a('WatermarkImage 사용법 완전 가이드'),
         b12:a('ColorPicker 사용법 완전 가이드'),b20:a('ImageBright 사용법 완전 가이드'),
-        b22:a('BGRemove 사용법 완전 가이드'),
+        b22:a('BGRemove 사용법 완전 가이드'),b28:a('ImageText 사용법 완전 가이드'),
         h3:{type:'header',label:'문서\xb7텍스트'},
         b7:a('PDFMerge 사용법 완전 가이드'),b9:a('TextTools 사용법 완전 가이드'),
         b17:a('DiffChecker 사용법 완전 가이드'),b19:a('MarkdownEditor 사용법 완전 가이드'),
@@ -389,7 +390,8 @@ function fileBodyHtml(win,pal) {
     RegexTest:   '정규식을 입력하고 텍스트에 실시간으로 매칭 결과를 확인합니다.',
     Base64Tool:  '텍스트나 파일을 Base64로 인코딩하거나 디코딩합니다.',
     HashGen:     '텍스트의 MD5, SHA-1, SHA-256 등 해시값을 생성합니다.',
-    ChartMaker:  '데이터를 입력하면 막대, 선, 원형 차트를 즉시 생성합니다.'
+    ChartMaker:  '데이터를 입력하면 막대, 선, 원형 차트를 즉시 생성합니다.',
+    ImageText:   '이미지 위에 여러 개의 텍스트를 자유롭게 배치하고 드래그로 위치를 조절합니다.'
   };
   if(file.kind==='tool'){
     fi='tool';ff=accent;fc=file.code;fm='무료 온라인 도구';
