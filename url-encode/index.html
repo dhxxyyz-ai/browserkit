@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <link rel="icon" href="/favicon.ico" sizes="32x32">
+  <link rel="icon" href="/favicon-16.png" sizes="16x16" type="image/png">
+  <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="/favicon-192.png" sizes="192x192" type="image/png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="텍스트를 URL 인코딩/디코딩하고, URL 쿼리 파라미터를 파싱하거나 조립하는 무료 온라인 도구. 서버 전송 없이 브라우저에서 바로 처리합니다." />
+  <meta property="og:title" content="URLEncode — URL 인코더/디코더" />
+  <meta property="og:description" content="텍스트를 URL 인코딩/디코딩하고 쿼리 파라미터를 파싱·조립하는 무료 온라인 도구입니다." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://browserkit.online/url-encode/" />
+  <title>URLEncode — URL 인코더/디코더</title>
+  <link rel="stylesheet" href="/css/style.css?v=20260704c" />
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506"
+     crossorigin="anonymous"></script>
+  <style>
+    /* 탭 */
+    .tab-wrap { display:flex; gap:8px; margin-bottom:24px; flex-wrap:wrap; }
+    .tab-btn { background:var(--card); color:var(--subtext); border:1px solid var(--border); border-radius:10px; padding:10px 24px; font-size:14px; font-weight:600; cursor:pointer; font-family:'Gowun Dodum',sans-serif; transition:all 0.2s; }
+    .tab-btn:hover { border-color:var(--point); color:var(--text); }
+    .tab-btn.active { background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border-color:transparent; }
+
+    .panel { display:none; }
+    .panel.active { display:block; }
+
+    /* 텍스트 탭 */
+    .mode-wrap { display:flex; gap:8px; margin-bottom:16px; }
+    .mode-btn { background:var(--card); color:var(--subtext); border:1px solid var(--border); border-radius:8px; padding:8px 16px; font-size:13px; font-weight:600; cursor:pointer; font-family:'Fira Code',monospace; }
+    .mode-btn:hover { border-color:var(--point); color:var(--text); }
+    .mode-btn.active { background:rgba(123,108,255,0.15); border-color:var(--point); color:var(--point-hover); }
+    .mode-desc { font-size:12px; color:var(--subtext); margin-bottom:16px; line-height:1.6; }
+
+    .text-layout { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:16px; }
+    .pane { display:flex; flex-direction:column; gap:8px; }
+    .pane-label { font-size:13px; font-weight:600; color:var(--subtext); display:flex; align-items:center; justify-content:space-between; }
+    .pane-info { font-size:11px; color:var(--subtext); font-family:'Gowun Dodum',sans-serif; }
+    .code-area { background:#0a0a12; border:1px solid var(--border); border-radius:12px; padding:16px; font-family:'Fira Code','JetBrains Mono',monospace; font-size:13px; line-height:1.7; color:#e2e8f0; resize:vertical; min-height:180px; width:100%; outline:none; transition:border-color 0.2s; }
+    .code-area:focus { border-color:var(--point); }
+    .code-area::placeholder { color:#4a5568; font-style:italic; font-family:'Gowun Dodum',sans-serif; }
+
+    .text-actions { display:flex; justify-content:center; gap:10px; margin-bottom:24px; flex-wrap:wrap; }
+    .btn-primary { background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border:none; border-radius:10px; padding:11px 24px; font-size:14px; font-weight:600; cursor:pointer; font-family:'Gowun Dodum',sans-serif; transition:all 0.2s; white-space:nowrap; }
+    .btn-primary:hover { transform:translateY(-1px); box-shadow:0 6px 20px var(--glow); }
+    .btn-sub { background:var(--card); color:var(--subtext); border:1px solid var(--border); border-radius:10px; padding:11px 20px; font-size:14px; cursor:pointer; font-family:'Gowun Dodum',sans-serif; transition:all 0.2s; white-space:nowrap; }
+    .btn-sub:hover { color:var(--text); border-color:var(--point); }
+    .btn-danger { background:var(--card); color:#F87171; border:1px solid var(--border); border-radius:10px; padding:11px 20px; font-size:14px; cursor:pointer; font-family:'Gowun Dodum',sans-serif; transition:all 0.2s; white-space:nowrap; }
+    .btn-danger:hover { border-color:#F87171; }
+
+    .error-box { background:rgba(248,113,113,0.08); border:1px solid rgba(248,113,113,0.3); border-radius:10px; padding:12px 16px; font-size:13px; color:#F87171; margin-bottom:16px; display:none; }
+    .error-box.show { display:block; }
+
+    /* 쿼리 파싱 탭 */
+    .parse-input { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:14px 16px; font-family:'Fira Code',monospace; font-size:13px; color:var(--text); width:100%; outline:none; margin-bottom:16px; }
+    .parse-input:focus { border-color:var(--point); }
+    .parse-result { background:var(--card); border:1px solid var(--border); border-radius:12px; overflow:hidden; margin-bottom:16px; }
+    .parse-row { padding:12px 16px; display:grid; grid-template-columns:1fr 1fr auto; gap:12px; align-items:center; border-bottom:1px solid var(--border); }
+    .parse-row:last-child { border-bottom:none; }
+    .parse-key { font-size:13px; font-weight:700; color:var(--point-hover); font-family:'Fira Code',monospace; word-break:break-all; }
+    .parse-val { font-size:13px; color:var(--text); font-family:'Fira Code',monospace; word-break:break-all; }
+    .parse-copy { font-size:11px; background:var(--bg); border:1px solid var(--border); border-radius:6px; padding:4px 10px; color:var(--subtext); white-space:nowrap; cursor:pointer; }
+    .parse-copy:hover { border-color:var(--point); color:var(--text); }
+    .parse-empty { padding:24px 16px; text-align:center; font-size:13px; color:var(--subtext); }
+
+    /* 쿼리 빌더 탭 */
+    .builder-base { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:14px 16px; font-family:'Fira Code',monospace; font-size:13px; color:var(--text); width:100%; outline:none; margin-bottom:16px; }
+    .builder-base:focus { border-color:var(--point); }
+    .builder-rows { display:flex; flex-direction:column; gap:8px; margin-bottom:12px; }
+    .builder-row { display:grid; grid-template-columns:1fr 1fr auto; gap:8px; }
+    .builder-input { background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:9px 12px; font-size:13px; color:var(--text); font-family:'Fira Code',monospace; outline:none; width:100%; }
+    .builder-input:focus { border-color:var(--point); }
+    .builder-remove { background:var(--card); border:1px solid var(--border); border-radius:8px; color:#F87171; cursor:pointer; width:38px; font-size:15px; }
+    .builder-remove:hover { border-color:#F87171; }
+    .builder-add { background:var(--card); border:1px dashed var(--border); border-radius:8px; padding:9px; font-size:13px; color:var(--subtext); cursor:pointer; margin-bottom:16px; text-align:center; }
+    .builder-add:hover { border-color:var(--point); color:var(--text); }
+    .builder-result { background:#0a0a12; border:1px solid var(--border); border-radius:12px; padding:14px 16px; font-family:'Fira Code',monospace; font-size:13px; color:#68d391; word-break:break-all; margin-bottom:16px; min-height:48px; display:flex; align-items:center; }
+
+    .toast { position:fixed; bottom:32px; left:50%; transform:translateX(-50%) translateY(80px); background:var(--success); color:#fff; border-radius:999px; padding:10px 24px; font-size:14px; font-weight:600; opacity:0; pointer-events:none; z-index:999; transition:all 0.3s ease; }
+    .toast.show { transform:translateX(-50%) translateY(0); opacity:1; }
+
+    .footer { border-top:1px solid var(--border); padding:32px 0; text-align:center; }
+    .footer-copy { color:var(--subtext); font-size:13px; margin-bottom:12px; }
+    .footer-nav { display:flex; justify-content:center; gap:20px; flex-wrap:wrap; }
+    .footer-nav a { color:var(--subtext); font-size:13px; text-decoration:none; }
+    .footer-nav a:hover { color:var(--text); }
+
+    @media (max-width:768px) {
+      .text-layout { grid-template-columns:1fr; }
+      .hero-title { font-size:24px; }
+      .parse-row { grid-template-columns:1fr; }
+      .builder-row { grid-template-columns:1fr; }
+    }
+  </style>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+  <meta property="og:image" content="https://browserkit.online/img/og-browserkit.png" />
+  <link rel="canonical" href="https://browserkit.online/url-encode/" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://browserkit.online/img/og-browserkit.png" />
+</head>
+
+<body>
+  <header class="header">
+    <div class="container">
+      <a href="/" class="header-brand">
+        <div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Gowun Dodum,sans-serif;flex-shrink:0">B</div>
+        <span class="header-brand-text"><span style="color:var(--text)">Browser</span><span style="color:var(--point)">Kit</span></span>
+      </a>
+      <a href="/" class="header-back">&#x2190; BrowserKit 홈으로</a>
+    </div>
+  </header>
+
+  <main><div class="container">
+    <div class="hero">
+      <div class="hero-icon" style="height:78px;display:flex;justify-content:center;align-items:center"><div style="transform:scale(1.7);transform-origin:center"><div style="width:46px;height:46px;background:#e0c3ff;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="font:700 15px Gowun Dodum,sans-serif;color:#2a2433;line-height:1;letter-spacing:-.5px;white-space:nowrap">%20</div></div></div></div>
+      <div class="hero-title-wrap"><h1 class="hero-title">URLEncode</h1><a href="/blog/50-urlencode-howto.html" class="hero-guide-link">사용법 가이드 보기</a></div>
+      <p class="hero-desc">텍스트를 URL 인코딩/디코딩하고 쿼리 파라미터를 파싱·조립하세요</p>
+      <div class="hero-badges">
+        <span class="badge">🔒 완전 로컬 처리</span>
+        <span class="badge">⚡ 무료 사용</span>
+        <span class="badge">🛡️ 서버 전송 없음</span>
+        <span class="badge">📦 설치 불필요</span>
+      </div>
+    </div>
+    <div style="margin:0 0 12px"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+
+    <div class="tab-wrap">
+      <button class="tab-btn active" data-tab="text">&#x1F510; 인코딩/디코딩</button>
+      <button class="tab-btn" data-tab="parse">&#x1F50D; 쿼리 파싱</button>
+      <button class="tab-btn" data-tab="build">&#x1F527; 쿼리 빌더</button>
+    </div>
+
+    <!-- ── 텍스트 인코딩/디코딩 탭 ── -->
+    <div class="panel active" id="panel-text">
+      <div class="mode-wrap">
+        <button class="mode-btn active" data-mode="component">encodeURIComponent</button>
+        <button class="mode-btn" data-mode="uri">encodeURI</button>
+      </div>
+      <div class="mode-desc" id="mode-desc">쿼리 파라미터 값, 폼 데이터 등 URL의 한 조각을 인코딩할 때 사용합니다. <code>&amp; = ? / : #</code> 등 URL 구분자까지 모두 인코딩합니다.</div>
+
+      <div class="text-layout">
+        <div class="pane">
+          <div class="pane-label">
+            <span>입력</span>
+            <span class="pane-info" id="input-info"></span>
+          </div>
+          <textarea class="code-area" id="text-input" placeholder="인코딩할 텍스트 또는 디코딩할 URL 인코딩 문자열을 입력하세요"></textarea>
+        </div>
+        <div class="pane">
+          <div class="pane-label">
+            <span>결과</span>
+            <span class="pane-info" id="output-info"></span>
+          </div>
+          <textarea class="code-area" id="text-output" placeholder="결과가 여기에 표시됩니다" readonly></textarea>
+        </div>
+      </div>
+
+      <div class="error-box" id="text-error"></div>
+
+      <div class="text-actions">
+        <button class="btn-primary" id="btn-encode">&#x1F510; 인코딩</button>
+        <button class="btn-primary" id="btn-decode">&#x1F513; 디코딩</button>
+        <button class="btn-sub" id="btn-copy-output">&#x1F4CB; 결과 복사</button>
+        <button class="btn-sub" id="btn-swap">&#x21C4; 입출력 교환</button>
+        <button class="btn-danger" id="btn-clear-text">&#x21BA; 초기화</button>
+      </div>
+    </div>
+
+    <!-- ── 쿼리 파싱 탭 ── -->
+    <div class="panel" id="panel-parse">
+      <div class="pane-label" style="margin-bottom:8px;"><span>URL 또는 쿼리 문자열</span></div>
+      <input type="text" class="parse-input" id="parse-input" placeholder="https://example.com/search?q=hello+world&page=2 또는 q=hello&page=2" />
+      <div class="parse-result" id="parse-result">
+        <div class="parse-empty">URL이나 쿼리 문자열을 입력하면 파라미터가 표 형태로 표시됩니다</div>
+      </div>
+      <div class="text-actions">
+        <button class="btn-sub" id="btn-copy-json">&#x1F4CB; JSON으로 복사</button>
+        <button class="btn-danger" id="btn-clear-parse">&#x21BA; 초기화</button>
+      </div>
+    </div>
+
+    <!-- ── 쿼리 빌더 탭 ── -->
+    <div class="panel" id="panel-build">
+      <div class="pane-label" style="margin-bottom:8px;"><span>기본 URL (선택사항)</span></div>
+      <input type="text" class="builder-base" id="builder-base" placeholder="https://example.com/search" />
+
+      <div class="pane-label" style="margin-bottom:8px;"><span>파라미터</span></div>
+      <div class="builder-rows" id="builder-rows"></div>
+      <div class="builder-add" id="builder-add">+ 파라미터 추가</div>
+
+      <div class="pane-label" style="margin-bottom:8px;"><span>조립된 URL</span></div>
+      <div class="builder-result" id="builder-result">—</div>
+
+      <div class="text-actions">
+        <button class="btn-primary" id="btn-copy-build">&#x1F4CB; URL 복사</button>
+        <button class="btn-danger" id="btn-clear-build">&#x21BA; 초기화</button>
+      </div>
+    </div>
+
+    <div style="margin:12px 0"><ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="9500090221"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+  </div></main>
+
+  <footer class="footer">
+    <div class="container">
+      <p class="footer-copy">&#xa9; 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p>
+      <nav class="footer-nav">
+        <a href="/privacy.html">개인정보 처리방침</a>
+        <a href="/terms.html">이용약관</a>
+        <a href="/about.html">서비스 소개</a>
+        <a href="/blog/">블로그</a>
+      </nav>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+  // ── 탭 전환 ──
+  document.querySelectorAll('.tab-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.tab-btn').forEach(function(b) { b.classList.remove('active'); });
+      document.querySelectorAll('.panel').forEach(function(p) { p.classList.remove('active'); });
+      btn.classList.add('active');
+      document.getElementById('panel-' + btn.dataset.tab).classList.add('active');
+    });
+  });
+
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(function() { t.classList.remove('show'); }, 2000);
+  }
+
+  // ── 인코딩/디코딩 탭 ──
+  var textInput  = document.getElementById('text-input');
+  var textOutput = document.getElementById('text-output');
+  var textError  = document.getElementById('text-error');
+  var inputInfo  = document.getElementById('input-info');
+  var outputInfo = document.getElementById('output-info');
+  var modeDesc   = document.getElementById('mode-desc');
+  var currentMode = 'component';
+
+  var MODE_DESC = {
+    component: '쿼리 파라미터 값, 폼 데이터 등 URL의 한 조각을 인코딩할 때 사용합니다. <code>& = ? / : #</code> 등 URL 구분자까지 모두 인코딩합니다.',
+    uri: '완전한 URL 전체를 인코딩할 때 사용합니다. <code>: / ? # &amp; =</code> 등 URL 구조에 필요한 구분자는 그대로 유지합니다.'
+  };
+
+  document.querySelectorAll('.mode-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.mode-btn').forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      currentMode = btn.dataset.mode;
+      modeDesc.innerHTML = MODE_DESC[currentMode];
+    });
+  });
+
+  function updateInfo(inputEl, infoEl) {
+    var val = inputEl.value;
+    infoEl.textContent = val ? val.length.toLocaleString() + '자' : '';
+  }
+  textInput.addEventListener('input', function() { updateInfo(textInput, inputInfo); });
+
+  document.getElementById('btn-encode').addEventListener('click', function() {
+    var val = textInput.value;
+    if (!val) { showError('인코딩할 텍스트를 입력해주세요.'); return; }
+    clearError();
+    try {
+      var encoded = currentMode === 'component' ? encodeURIComponent(val) : encodeURI(val);
+      textOutput.value = encoded;
+      updateInfo(textOutput, outputInfo);
+      showToast('✓ 인코딩 완료');
+    } catch (e) {
+      showError('인코딩 중 오류가 발생했습니다: ' + e.message);
+    }
+  });
+
+  document.getElementById('btn-decode').addEventListener('click', function() {
+    var val = textInput.value;
+    if (!val) { showError('디코딩할 문자열을 입력해주세요.'); return; }
+    clearError();
+    try {
+      var decoded = currentMode === 'component' ? decodeURIComponent(val) : decodeURI(val);
+      textOutput.value = decoded;
+      updateInfo(textOutput, outputInfo);
+      showToast('✓ 디코딩 완료');
+    } catch (e) {
+      showError('올바른 URL 인코딩 형식이 아닙니다. 입력값을 확인해주세요.');
+    }
+  });
+
+  document.getElementById('btn-copy-output').addEventListener('click', function() {
+    var val = textOutput.value;
+    if (!val) { showToast('복사할 결과가 없습니다'); return; }
+    navigator.clipboard.writeText(val).then(function() {
+      showToast('✓ 결과가 클립보드에 복사되었습니다');
+    });
+  });
+
+  document.getElementById('btn-swap').addEventListener('click', function() {
+    var tmp = textInput.value;
+    textInput.value = textOutput.value;
+    textOutput.value = tmp;
+    updateInfo(textInput, inputInfo);
+    updateInfo(textOutput, outputInfo);
+  });
+
+  document.getElementById('btn-clear-text').addEventListener('click', function() {
+    textInput.value = '';
+    textOutput.value = '';
+    inputInfo.textContent = '';
+    outputInfo.textContent = '';
+    clearError();
+  });
+
+  function showError(msg) {
+    textError.textContent = msg;
+    textError.classList.add('show');
+  }
+  function clearError() {
+    textError.classList.remove('show');
+    textError.textContent = '';
+  }
+
+  // ── 쿼리 파싱 탭 ──
+  var parseInput  = document.getElementById('parse-input');
+  var parseResult = document.getElementById('parse-result');
+  var currentParsed = [];
+
+  parseInput.addEventListener('input', renderParse);
+
+  function renderParse() {
+    var val = parseInput.value.trim();
+    if (!val) {
+      parseResult.innerHTML = '<div class="parse-empty">URL이나 쿼리 문자열을 입력하면 파라미터가 표 형태로 표시됩니다</div>';
+      currentParsed = [];
+      return;
+    }
+    var queryPart = val;
+    var qIdx = val.indexOf('?');
+    if (qIdx !== -1) queryPart = val.slice(qIdx + 1);
+    queryPart = queryPart.split('#')[0];
+
+    var params = new URLSearchParams(queryPart);
+    var entries = Array.from(params.entries());
+    currentParsed = entries;
+
+    if (!entries.length) {
+      parseResult.innerHTML = '<div class="parse-empty">인식된 파라미터가 없습니다</div>';
+      return;
+    }
+
+    parseResult.innerHTML = entries.map(function(pair) {
+      return '<div class="parse-row"><span class="parse-key">' + escapeHtml(pair[0]) + '</span><span class="parse-val">' + escapeHtml(pair[1]) + '</span><span class="parse-copy" data-val="' + escapeHtml(pair[1]) + '">복사</span></div>';
+    }).join('');
+
+    parseResult.querySelectorAll('.parse-copy').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        navigator.clipboard.writeText(btn.dataset.val).then(function() {
+          showToast('✓ 값이 복사되었습니다');
+        });
+      });
+    });
+  }
+
+  function escapeHtml(s) {
+    return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+
+  document.getElementById('btn-copy-json').addEventListener('click', function() {
+    if (!currentParsed.length) { showToast('복사할 파라미터가 없습니다'); return; }
+    var obj = {};
+    currentParsed.forEach(function(pair) { obj[pair[0]] = pair[1]; });
+    navigator.clipboard.writeText(JSON.stringify(obj, null, 2)).then(function() {
+      showToast('✓ JSON으로 복사되었습니다');
+    });
+  });
+
+  document.getElementById('btn-clear-parse').addEventListener('click', function() {
+    parseInput.value = '';
+    renderParse();
+  });
+
+  // ── 쿼리 빌더 탭 ──
+  var builderBase   = document.getElementById('builder-base');
+  var builderRows   = document.getElementById('builder-rows');
+  var builderResult = document.getElementById('builder-result');
+  var currentBuildURL = '';
+
+  function addBuilderRow(key, val) {
+    var row = document.createElement('div');
+    row.className = 'builder-row';
+    row.innerHTML = '<input type="text" class="builder-input builder-key" placeholder="키" value="' + escapeHtml(key || '') + '" />' +
+                     '<input type="text" class="builder-input builder-val" placeholder="값" value="' + escapeHtml(val || '') + '" />' +
+                     '<button class="builder-remove">&#x2715;</button>';
+    row.querySelector('.builder-key').addEventListener('input', renderBuild);
+    row.querySelector('.builder-val').addEventListener('input', renderBuild);
+    row.querySelector('.builder-remove').addEventListener('click', function() {
+      row.remove();
+      renderBuild();
+    });
+    builderRows.appendChild(row);
+  }
+
+  document.getElementById('builder-add').addEventListener('click', function() {
+    addBuilderRow('', '');
+  });
+
+  builderBase.addEventListener('input', renderBuild);
+
+  function renderBuild() {
+    var base = builderBase.value.trim();
+    var params = new URLSearchParams();
+    var hasAny = false;
+    builderRows.querySelectorAll('.builder-row').forEach(function(row) {
+      var k = row.querySelector('.builder-key').value;
+      var v = row.querySelector('.builder-val').value;
+      if (k) { params.append(k, v); hasAny = true; }
+    });
+    var qs = params.toString();
+    var url = base;
+    if (hasAny) url += (base.indexOf('?') !== -1 ? '&' : '?') + qs;
+    currentBuildURL = url;
+    builderResult.textContent = url || '—';
+  }
+
+  document.getElementById('btn-copy-build').addEventListener('click', function() {
+    if (!currentBuildURL) { showToast('복사할 URL이 없습니다'); return; }
+    navigator.clipboard.writeText(currentBuildURL).then(function() {
+      showToast('✓ URL이 복사되었습니다');
+    });
+  });
+
+  document.getElementById('btn-clear-build').addEventListener('click', function() {
+    builderBase.value = '';
+    builderRows.innerHTML = '';
+    addBuilderRow('', '');
+    renderBuild();
+  });
+
+  // 초기 빌더 행 2개
+  addBuilderRow('q', 'hello world');
+  addBuilderRow('page', '2');
+  renderBuild();
+  </script>
+</body>
+</html>

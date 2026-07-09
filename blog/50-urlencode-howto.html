@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <link rel="icon" href="/favicon.ico" sizes="32x32">
+  <link rel="icon" href="/favicon-16.png" sizes="16x16" type="image/png">
+  <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="/favicon-192.png" sizes="192x192" type="image/png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="URLEncode의 모든 기능을 단계별로 설명하는 공식 사용 가이드입니다. URL 인코딩/디코딩, 쿼리 파라미터 파싱, 쿼리 빌더 사용법을 알아보세요." />
+  <meta property="og:title" content="URLEncode 사용법 완전 가이드 — BrowserKit" />
+  <meta property="og:description" content="텍스트를 URL 인코딩/디코딩하고 쿼리 파라미터를 파싱·조립하는 URLEncode 공식 가이드입니다." />
+  <meta property="og:type" content="article" />
+  <title>URLEncode 사용법 완전 가이드 — BrowserKit</title>
+  <link rel="stylesheet" href="/css/style.css?v=20260704c" />
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506"
+     crossorigin="anonymous"></script>
+  <style>
+    .post-warn { background:rgba(248,113,113,0.08); border-left:3px solid #F87171; border-radius:8px; padding:16px 20px; margin:24px 0; font-size:15px; color:var(--subtext); line-height:1.8; }
+    .feature-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:20px 0; }
+    .feature-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px; }
+    .feature-card:hover { border-color:var(--point); }
+    .feature-icon { font-size:24px; margin-bottom:10px; }
+    .feature-title { font-size:14px; font-weight:600; color:var(--text); margin-bottom:6px; }
+    .feature-desc { font-size:13px; color:var(--subtext); line-height:1.7; }
+    .step-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px 24px; margin:16px 0; display:flex; gap:16px; align-items:flex-start; }
+    .step-num { min-width:36px; height:36px; background:linear-gradient(135deg,var(--point),var(--point-hover)); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:700; color:white; flex-shrink:0; font-family:'Gowun Dodum',sans-serif; }
+    .step-content h3 { font-size:15px; font-weight:600; margin-bottom:6px; color:var(--text); }
+    .step-content p { font-size:14px; color:var(--subtext); line-height:1.7; margin:0; }
+
+    .tab-demo { display:flex; gap:4px; background:var(--card); border:1px solid var(--border); border-radius:12px; padding:4px; margin:16px 0; }
+    .tab-demo-btn { flex:1; padding:8px; font-size:12px; font-weight:600; border-radius:9px; text-align:center; color:var(--subtext); }
+    .tab-demo-btn.on { background:linear-gradient(135deg,var(--point),var(--point-hover)); color:#fff; }
+
+    .code-compare { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:16px 0; }
+    .code-compare-box { background:var(--card); border:1px solid var(--border); border-radius:12px; overflow:hidden; }
+    .code-compare-label { font-size:12px; font-weight:700; color:var(--subtext); padding:10px 14px; border-bottom:1px solid var(--border); }
+    .code-compare-body { font-size:12px; font-family:'Fira Code',monospace; color:var(--text); padding:14px; line-height:1.7; white-space:pre-wrap; word-break:break-all; }
+
+    .post-table { width:100%; border-collapse:collapse; margin:20px 0; font-size:15px; }
+    .post-table th { background:var(--card); padding:12px 16px; text-align:left; font-weight:600; border:1px solid var(--border); color:var(--text); }
+    .post-table td { padding:11px 16px; border:1px solid var(--border); color:var(--subtext); line-height:1.7; }
+    .post-table td code { background:var(--bg); border-radius:4px; padding:1px 6px; font-size:13px; color:var(--point-hover); font-family:'Fira Code',monospace; }
+    .post-table tr:hover td { background:rgba(123,108,255,0.04); }
+    .use-case-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:20px 0; }
+    .use-case-card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:18px; }
+    .use-case-icon { font-size:28px; margin-bottom:8px; }
+    .use-case-title { font-size:13px; font-weight:600; color:var(--text); margin-bottom:6px; }
+    .use-case-desc { font-size:12px; color:var(--subtext); line-height:1.7; }
+    .post-nav { display:flex; justify-content:space-between; margin-top:28px; padding-top:24px; border-top:1px solid var(--border); gap:12px; }
+    .post-nav a { font-size:15px; color:var(--subtext); text-decoration:none; }
+    .post-nav a:hover { color:var(--text); }
+    .cta-box { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:28px; text-align:center; margin:48px 0 0; }
+    .cta-box p { font-size:17px; color:var(--subtext); margin-bottom:16px; }
+    .cta-btn { display:inline-block; background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border-radius:10px; padding:12px 28px; font-size:14px; font-weight:600; text-decoration:none; }
+    .cta-btn:hover { transform:translateY(-2px); box-shadow:0 8px 24px var(--glow); color:white; }
+    .back-link:hover { color:var(--text); }
+    @media (max-width:640px) {
+      .feature-grid { grid-template-columns:1fr; }
+      .use-case-grid { grid-template-columns:1fr; }
+      .code-compare { grid-template-columns:1fr; }
+    }
+  </style>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+<meta property="og:image" content="https://browserkit.online/img/og-browserkit.png" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "URLEncode 사용법 완전 가이드",
+    "description": "URLEncode의 모든 기능을 단계별로 설명하는 공식 사용 가이드입니다. URL 인코딩/디코딩, 쿼리 파라미터 파싱, 쿼리 빌더 사용법을 알아보세요.",
+    "datePublished": "2026-07-09T00:00:00+09:00",
+    "dateModified": "2026-07-09T00:00:00+09:00",
+    "author": { "@type": "Organization", "name": "BrowserKit", "url": "https://browserkit.online" },
+    "publisher": { "@type": "Organization", "name": "BrowserKit", "url": "https://browserkit.online", "logo": { "@type": "ImageObject", "url": "https://browserkit.online/img/og-browserkit.png" } },
+    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://browserkit.online/blog/50-urlencode-howto.html" },
+    "image": "https://browserkit.online/img/og-browserkit.png"
+  }
+  </script>  <link rel="canonical" href="https://browserkit.online/blog/50-urlencode-howto.html" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://browserkit.online/img/og-browserkit.png" />
+  <style>
+    .post-table-wrap { overflow-x:auto; }
+    .post-table th, .post-table td { white-space:nowrap; }
+    .post-nav a { word-break:keep-all; }
+    .post-nav .nav-label { display:block; font-size:13px; color:var(--subtext); opacity:0.7; margin-bottom:4px; }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="container">
+      <a href="/" class="header-brand"><div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Gowun Dodum,sans-serif;flex-shrink:0">B</div><span class="header-brand-text"><span style="color:var(--text)">Browser</span><span style="color:var(--point)">Kit</span></span></a>
+      <a href="/" class="header-back">&#x2190; BrowserKit 홈으로</a>
+    </div>
+  </header>
+
+  <article class="post-wrap">
+    <a href="/blog/" class="back-link">&#x2190; 블로그 목록</a>
+    <span class="post-tag">가이드</span>
+    <h1 class="post-title">URLEncode 사용법 완전 가이드</h1>
+    <div class="post-date">2026년 7월 9일</div>
+    <div style="margin:12px 0"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+
+    <div class="post-body">
+      <p>URLEncode는 텍스트를 URL 인코딩/디코딩하고, URL의 쿼리 파라미터를 표 형태로 파싱하거나 키-값을 입력해 쿼리 URL을 조립하는 무료 온라인 도구입니다. 한글이나 특수문자가 섞인 텍스트를 URL에 안전하게 넣거나, 복잡한 쿼리스트링을 한눈에 읽고 싶을 때 바로 사용할 수 있습니다. 모든 처리가 브라우저 내에서만 이루어지므로 텍스트가 외부 서버로 전송되지 않습니다.</p>
+
+      <h2>주요 기능</h2>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F510;</div>
+          <div class="feature-title">URL 인코딩/디코딩</div>
+          <div class="feature-desc"><code>encodeURIComponent</code>와 <code>encodeURI</code> 두 방식 중 선택해 텍스트를 인코딩하거나 디코딩합니다.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F50D;</div>
+          <div class="feature-title">쿼리 파라미터 파싱</div>
+          <div class="feature-desc">전체 URL이나 쿼리 문자열을 붙여넣으면 각 파라미터를 키-값 표로 정리해 보여줍니다.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F527;</div>
+          <div class="feature-title">쿼리 빌더</div>
+          <div class="feature-desc">기본 URL과 키-값을 입력하면 인코딩까지 자동으로 처리된 완성 URL을 조립합니다.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F512;</div>
+          <div class="feature-title">완전 로컬 처리</div>
+          <div class="feature-desc">모든 변환이 브라우저 안에서 실행됩니다. 텍스트가 서버로 전송되지 않아 비공개 데이터도 안심하고 사용할 수 있습니다.</div>
+        </div>
+      </div>
+
+      <div style="margin:12px 0 0"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+
+      <h2>탭 구성</h2>
+      <div class="tab-demo">
+        <div class="tab-demo-btn on">&#x1F510; 인코딩/디코딩</div>
+        <div class="tab-demo-btn">&#x1F50D; 쿼리 파싱</div>
+        <div class="tab-demo-btn">&#x1F527; 쿼리 빌더</div>
+      </div>
+      <p>인코딩/디코딩 탭에서는 텍스트 조각을 변환하고, 쿼리 파싱 탭에서는 완성된 URL을 분석하고, 쿼리 빌더 탭에서는 새 URL을 조립합니다.</p>
+
+      <h2>인코딩/디코딩 사용법</h2>
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <h3>인코딩 방식 선택</h3>
+          <p><code>encodeURIComponent</code> 또는 <code>encodeURI</code> 중 하나를 선택합니다. 아래 <strong>인코딩 방식 비교</strong> 표를 참고해 상황에 맞는 방식을 고르세요.</p>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <h3>텍스트 입력</h3>
+          <p>왼쪽 입력창에 인코딩할 텍스트 또는 디코딩할 URL 인코딩 문자열을 입력합니다.</p>
+        </div>
+      </div>
+
+      <figure style="margin:12px 0 24px; text-align:center;">
+        <img src="/img/blog/urlencode/01-encode.png"
+             alt="URLEncode 인코딩/디코딩 탭에서 한글이 섞인 텍스트를 encodeURIComponent 방식으로 인코딩한 결과 화면"
+             style="width:100%; max-width:640px; border:1px solid var(--border); border-radius:var(--radius);"
+             loading="lazy" />
+        <figcaption style="font-size:13px; color:var(--subtext); margin-top:6px;">
+          텍스트 입력 후 인코딩 결과가 표시된 화면
+        </figcaption>
+      </figure>
+
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <h3>결과 확인 및 복사</h3>
+          <p><strong>📋 결과 복사</strong> 버튼으로 클립보드에 복사하거나, <strong>⇄ 입출력 교환</strong> 버튼으로 결과를 다시 입력값으로 옮겨 반대로 변환할 수 있습니다.</p>
+        </div>
+      </div>
+
+      <h3>인코딩 방식 비교</h3>
+      <div class="post-table-wrap"><table class="post-table">
+        <thead><tr><th>방식</th><th>인코딩 범위</th><th>사용 상황</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><code>encodeURIComponent</code></td>
+            <td><code>& = ? / : # ; , +</code> 등 URL 구분자까지 모두 인코딩</td>
+            <td>쿼리 파라미터 값, 폼 데이터 등 URL의 한 조각을 인코딩할 때</td>
+          </tr>
+          <tr>
+            <td><code>encodeURI</code></td>
+            <td><code>: / ? # &amp; =</code> 등 URL 구조에 필요한 구분자는 유지</td>
+            <td>완전한 URL 전체(경로+쿼리)를 통째로 인코딩할 때</td>
+          </tr>
+        </tbody>
+      </table></div>
+
+      <h3>인코딩 결과 예시</h3>
+      <div class="code-compare">
+        <div class="code-compare-box">
+          <div class="code-compare-label">입력</div>
+          <div class="code-compare-body">https://example.com/검색?q=hello world</div>
+        </div>
+        <div class="code-compare-box">
+          <div class="code-compare-label">encodeURIComponent</div>
+          <div class="code-compare-body">https%3A%2F%2Fexample.com%2F%EA%B2%80%EC%83%89%3Fq%3Dhello%20world</div>
+        </div>
+      </div>
+      <div class="code-compare">
+        <div class="code-compare-box">
+          <div class="code-compare-label">입력</div>
+          <div class="code-compare-body">https://example.com/검색?q=hello world</div>
+        </div>
+        <div class="code-compare-box">
+          <div class="code-compare-label">encodeURI</div>
+          <div class="code-compare-body">https://example.com/%EA%B2%80%EC%83%89?q=hello%20world</div>
+        </div>
+      </div>
+      <p style="font-size:14px;color:var(--subtext)"><code>encodeURI</code>는 <code>:</code>, <code>/</code>, <code>?</code>, <code>=</code> 같은 URL 구조 문자를 그대로 남기고, 한글이나 공백처럼 URL에 그대로 쓸 수 없는 문자만 인코딩합니다.</p>
+
+      <h2>쿼리 파싱 사용법</h2>
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <h3>URL 또는 쿼리 문자열 붙여넣기</h3>
+          <p>전체 URL(<code>https://...?a=1&b=2</code>)이나 쿼리 문자열(<code>a=1&b=2</code>)만 붙여넣어도 됩니다. <code>?</code> 앞의 도메인·경로 부분은 자동으로 제외하고 분석합니다.</p>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <h3>파라미터 표 확인</h3>
+          <p>각 파라미터가 키-값 표로 정리되어 표시됩니다. <code>+</code> 기호는 공백으로 자동 디코딩되고, 값이 없는 파라미터도 빈 값으로 표시됩니다.</p>
+        </div>
+      </div>
+
+      <figure style="margin:12px 0 24px; text-align:center;">
+        <img src="/img/blog/urlencode/02-parse.png"
+             alt="URLEncode 쿼리 파싱 탭에서 URL을 붙여넣어 파라미터가 키-값 표로 정리된 화면"
+             style="width:100%; max-width:640px; border:1px solid var(--border); border-radius:var(--radius);"
+             loading="lazy" />
+        <figcaption style="font-size:13px; color:var(--subtext); margin-top:6px;">
+          URL 붙여넣기 후 파라미터가 표로 정리된 화면
+        </figcaption>
+      </figure>
+
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <h3>값 복사 또는 JSON 내보내기</h3>
+          <p>각 행의 <strong>복사</strong> 버튼으로 개별 값을 복사하거나, <strong>📋 JSON으로 복사</strong> 버튼으로 전체 파라미터를 JSON 객체 형태로 한 번에 복사할 수 있습니다.</p>
+        </div>
+      </div>
+
+      <h2>쿼리 빌더 사용법</h2>
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <h3>기본 URL 입력 (선택사항)</h3>
+          <p>도메인과 경로만 입력합니다. 비워두면 쿼리 문자열(<code>?key=value&...</code>)만 조립됩니다.</p>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <h3>키-값 입력</h3>
+          <p><strong>+ 파라미터 추가</strong> 버튼으로 행을 늘리고, 각 행에 키와 값을 입력합니다. 값은 자동으로 URL 인코딩되어 조립됩니다.</p>
+        </div>
+      </div>
+
+      <figure style="margin:12px 0 24px; text-align:center;">
+        <img src="/img/blog/urlencode/03-build.png"
+             alt="URLEncode 쿼리 빌더 탭에서 기본 URL과 키-값 파라미터를 입력해 조립된 URL이 표시된 화면"
+             style="width:100%; max-width:640px; border:1px solid var(--border); border-radius:var(--radius);"
+             loading="lazy" />
+        <figcaption style="font-size:13px; color:var(--subtext); margin-top:6px;">
+          키-값 입력 후 조립된 URL이 표시된 화면
+        </figcaption>
+      </figure>
+
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <h3>URL 복사</h3>
+          <p>하단에 조립된 URL이 실시간으로 표시됩니다. <strong>📋 URL 복사</strong> 버튼으로 바로 사용할 수 있습니다.</p>
+        </div>
+      </div>
+
+      <div class="post-warn">
+        <strong>⚠️ 참고:</strong> 쿼리 빌더는 <code>URLSearchParams</code>를 사용해 값을 자동으로 인코딩합니다. 이미 인코딩된 값을 다시 입력하면 이중으로 인코딩될 수 있으니, 원본(디코딩된) 값을 그대로 입력하세요.
+      </div>
+
+      <h2>활용 예시</h2>
+      <div class="use-case-grid">
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F517;</div>
+          <div class="use-case-title">공유 링크 파라미터 확인</div>
+          <div class="use-case-desc">친구가 보낸 긴 URL에 어떤 추적 파라미터나 옵션이 들어있는지 쿼리 파싱으로 빠르게 확인합니다.</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F4E1;</div>
+          <div class="use-case-title">API 테스트 URL 조립</div>
+          <div class="use-case-desc">쿼리 빌더로 여러 파라미터가 포함된 API 요청 URL을 실수 없이 조립해 Postman이나 브라우저에서 바로 테스트합니다.</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F1F0;&#xFE0F;</div>
+          <div class="use-case-title">다국어 URL 인코딩</div>
+          <div class="use-case-desc">한글, 일본어 등이 포함된 경로나 검색어를 URL에 안전하게 넣기 위해 인코딩합니다.</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F41B;</div>
+          <div class="use-case-title">깨진 URL 디버깅</div>
+          <div class="use-case-desc">이중 인코딩되었거나 깨진 URL을 디코딩해 원래 값이 무엇이었는지 역추적합니다.</div>
+        </div>
+      </div>
+
+      <h2>기술 원리</h2>
+      <div class="post-table-wrap"><table class="post-table">
+        <thead><tr><th>기능</th><th>사용 API</th><th>특징</th></tr></thead>
+        <tbody>
+          <tr><td>인코딩/디코딩</td><td><code>encodeURIComponent</code> / <code>encodeURI</code> / <code>decodeURIComponent</code> / <code>decodeURI</code></td><td>브라우저 내장 함수, 추가 라이브러리 없음</td></tr>
+          <tr><td>쿼리 파싱</td><td><code>URLSearchParams</code></td><td>중복 키, 빈 값, <code>+</code> 공백 변환을 표준에 맞게 자동 처리</td></tr>
+          <tr><td>쿼리 빌더</td><td><code>URLSearchParams.append</code> + <code>toString()</code></td><td>입력한 값을 자동으로 인코딩해 조립</td></tr>
+        </tbody>
+      </table></div>
+      <p>외부 라이브러리나 CDN 없이 브라우저 내장 API만으로 동작하며, 모든 변환이 내 PC 브라우저 안에서 실행됩니다.</p>
+
+      <div class="post-highlight">&#x1F512; URLEncode는 모든 변환이 내 PC 브라우저에서만 실행됩니다. 입력한 텍스트나 URL이 외부 서버로 전송되지 않아 비공개 링크나 내부 API 주소도 안심하고 사용할 수 있습니다.</div>
+    </div>
+
+    <div class="cta-box">
+      <p>텍스트를 URL 인코딩/디코딩하고 쿼리 파라미터를 파싱·조립해보세요.<br />복잡한 URL도 표로 한눈에 파악할 수 있습니다.</p>
+      <a href="/url-encode/" class="cta-btn" style="display:inline-flex;align-items:center;gap:8px">
+        <span style="display:inline-block;width:26px;height:26px;overflow:hidden;flex-shrink:0"><span style="display:block;transform:scale(0.565);transform-origin:top left"><div style="width:46px;height:46px;background:#e0c3ff;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="font:700 15px Gowun Dodum,sans-serif;color:#2a2433;line-height:1;letter-spacing:-.5px;white-space:nowrap">%20</div></div></span></span>
+        무료로 URL 인코딩하기
+      </a>
+    </div>
+    <div style="margin:12px 0"><ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="9500090221"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+
+<div class="post-nav">
+      <a href="/blog/49-minifier-howto.html"><span class="nav-label">← 이전 글</span>Minifier 사용법 완전 가이드</a>
+      <a href="/blog/38-chartmaker-howto.html" style="text-align:right"><span class="nav-label">다음 글 →</span>ChartMaker 사용법 완전 가이드</a>
+    </div></div>
+
+  </article>
+  <footer class="footer">
+    <div class="container">
+      <p class="footer-copy">© 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p>
+      <nav class="footer-nav">
+        <a href="/privacy.html">개인정보 처리방침</a>
+        <a href="/terms.html">이용약관</a>
+        <a href="/about.html">서비스 소개</a>
+        <a href="/blog/">블로그</a>
+      </nav>
+    </div>
+  </footer>
+</body>
+</html>
