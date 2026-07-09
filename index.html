@@ -371,7 +371,7 @@ function folderItems(win,pal) {
 
 function fileBodyHtml(win,pal) {
   const {file}=win, {ink,accent,folders}=pal;
-  let fi,ff,fc='',fm,fn='',fp=[],fct='',fu='#';
+  let fi,ff,fc='',fm,fn='',fp=[],fct='',fu='#',btnColor=accent;
   const TOOL_DESC = {
     MaskPrivacy: '이미지·문서에서 주민번호, 전화번호, 이름 등 개인정보를 자동으로 감지해 가려줍니다.',
     MaskPDF:     'PDF 파일을 열어 개인정보 영역을 직접 선택하거나 자동 감지로 마스킹합니다.',
@@ -403,7 +403,8 @@ function fileBodyHtml(win,pal) {
     ImageCollage: '여러 장의 이미지를 격자 레이아웃으로 합쳐 한 장의 콜라주로 만듭니다.'
   };
   if(file.kind==='tool'){
-    fi='tool';ff=accent;fc=file.code;fm='무료 온라인 도구';
+    const catColor = TOOL_CAT_IDX[file.code]!=null ? folders[TOOL_CAT_IDX[file.code]%folders.length] : accent;
+    fi='tool';ff=catColor;fc=file.code;fm='무료 온라인 도구';btnColor=catColor;
     fn='모든 처리는 내 브라우저 안에서 끝나요. 파일이 서버로 전송되지 않습니다.';
     fp=[TOOL_DESC[file.code] || '설치도, 회원가입도 필요 없어요. 파일을 올리면 바로 결과가 나옵니다.'];
     fct='도구 열기';fu=BASE_URL+(TOOL_URLS[file.code]||'/');
@@ -423,14 +424,14 @@ function fileBodyHtml(win,pal) {
       <div style="min-width:0">
         <div style="font:700 26px Gowun Dodum,sans-serif;color:${ink};line-height:1.1">${esc(win.title)}</div>
         <div style="display:flex;align-items:center;gap:8px;margin-top:5px">
-          ${fc?`<span style="font:400 13px ui-monospace,monospace;color:#fff;background:${accent};border:2px solid ${ink};padding:1px 8px;border-radius:7px">${esc(fc)}</span>`:''}
+          ${fc?`<span style="font:400 13px ui-monospace,monospace;color:#fff;background:${btnColor};border:2px solid ${ink};padding:1px 8px;border-radius:7px">${esc(fc)}</span>`:''}
           <span style="font:400 15px Gowun Dodum,sans-serif;color:rgba(42,36,51,.62)">${esc(fm)}</span>
         </div>
       </div>
     </div>
     ${fn?`<div style="background:rgba(255,255,255,.6);border:2.5px solid ${ink};border-radius:13px 11px 12px 10px;padding:14px 16px;display:flex;gap:10px;align-items:flex-start"><span style="width:22px;height:22px;flex:0 0 auto;border-radius:50%;background:${accent};border:2px solid ${ink};color:#fff;font:700 14px Gowun Dodum,sans-serif;display:flex;align-items:center;justify-content:center">!</span><span style="font:400 17px Gowun Dodum,sans-serif;color:${ink};line-height:1.45">${esc(fn)}</span></div>`:''}
     ${fp.map(p=>`<div style="font:400 18px Gowun Dodum,sans-serif;color:${ink};line-height:1.55">${esc(p)}</div>`).join('')}
-    ${fct?`<a href="${esc(fu)}" class="bk-cta" style="align-self:flex-start;background:${accent};border:2.5px solid ${ink};color:#fff;font:700 19px Gowun Dodum,sans-serif;padding:8px 22px;border-radius:13px 11px 12px 10px;box-shadow:0 4px 0 ${ink};display:inline-block">${esc(fct)} →</a>`:''}
+    ${fct?`<a href="${esc(fu)}" class="bk-cta" style="align-self:flex-start;background:${btnColor};border:2.5px solid ${ink};color:#fff;font:700 19px Gowun Dodum,sans-serif;padding:8px 22px;border-radius:13px 11px 12px 10px;box-shadow:0 4px 0 ${ink};display:inline-block">${esc(fct)} →</a>`:''}
     ${SHOW_ADSENSE ? `<div style="height:100px;overflow:hidden"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins></div>` : ''}
   </div>`;
 }
