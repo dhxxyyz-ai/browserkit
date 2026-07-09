@@ -202,24 +202,18 @@
   }
 
   // Mermaid가 계산한 viewBox가 실제 렌더링된 내용(라벨/역방향 화살표 등)보다
-  // 작아 하단/우측이 잘리는 경우가 있어, 렌더 직후 실제 bbox에 맞춰 확장한다.
+  // 작아 하단/우측이 잘리는 경우가 있어, 렌더 직후 실제 bbox를 기준으로
+  // 상하좌우 동일한 여백을 갖는 viewBox를 새로 만든다. (넘치는 쪽만 넓히면
+  // 여백이 비대칭해져 다이어그램이 한쪽으로 치우쳐 보이는 문제가 있었음)
   function fitViewBox(svg) {
     if (!svg) return;
-    var vb = svg.viewBox && svg.viewBox.baseVal;
     var bbox;
     try { bbox = svg.getBBox(); } catch (e) { return; }
     if (!bbox || !isFinite(bbox.width) || !isFinite(bbox.height) || (bbox.width === 0 && bbox.height === 0)) return;
 
-    var pad = 6;
+    var pad = 20;
     var left = bbox.x - pad, top = bbox.y - pad;
-    var right = bbox.x + bbox.width + pad, bottom = bbox.y + bbox.height + pad;
-    if (vb && vb.width) {
-      left = Math.min(left, vb.x);
-      top = Math.min(top, vb.y);
-      right = Math.max(right, vb.x + vb.width);
-      bottom = Math.max(bottom, vb.y + vb.height);
-    }
-    var w = right - left, h = bottom - top;
+    var w = bbox.width + pad * 2, h = bbox.height + pad * 2;
     svg.setAttribute('viewBox', left + ' ' + top + ' ' + w + ' ' + h);
     if (svg.hasAttribute('width') && svg.getAttribute('width') !== '100%') svg.setAttribute('width', w);
     if (svg.hasAttribute('height') && svg.getAttribute('height') !== '100%') svg.setAttribute('height', h);
