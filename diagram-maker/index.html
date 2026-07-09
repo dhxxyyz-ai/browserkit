@@ -142,7 +142,10 @@
   <div class="toast" id="toast"></div>
 
   <script>
-  mermaid.initialize({ startOnLoad: false, theme: 'default' });
+  // htmlLabels:false — 라벨을 <foreignObject> 대신 순수 SVG <text>로 렌더링.
+  // foreignObject가 섞인 SVG는 Canvas로 그리는 순간 "tainted canvas"가 되어
+  // PNG 내보내기(toBlob)가 조용히 실패하므로, PNG 다운로드를 위해 비활성화.
+  mermaid.initialize({ startOnLoad: false, theme: 'default', flowchart: { htmlLabels: false } });
 
   var PRESETS = {
     flowchart: 'flowchart TD\n    A[시작] --> B{로그인 여부}\n    B -- 예 --> C[대시보드 이동]\n    B -- 아니오 --> D[로그인 페이지]\n    D --> E[로그인 시도]\n    E -- 성공 --> C\n    E -- 실패 --> D\n    C --> F[종료]',
@@ -242,10 +245,13 @@
     if (!svg) { showToast('다운로드할 다이어그램이 없습니다'); return; }
 
     var svgClone = svg.cloneNode(true);
-    var bbox = svg.getBBox ? svg.getBBox() : null;
+    // viewBox 크기(전체 다이어그램 좌표계)를 기준으로 삼는다 — svg.width/height는
+    // CSS(max-width:100%)로 화면에 축소 렌더링된 크기라 이걸 그대로 쓰면
+    // 실제보다 작고 흐릿한 PNG가 만들어진다.
     var vb = svg.getAttribute('viewBox');
-    var w = svg.width && svg.width.baseVal ? svg.width.baseVal.value : (vb ? parseFloat(vb.split(' ')[2]) : 800);
-    var h = svg.height && svg.height.baseVal ? svg.height.baseVal.value : (vb ? parseFloat(vb.split(' ')[3]) : 600);
+    var vbParts = vb ? vb.split(/\s+/).map(parseFloat) : null;
+    var w = vbParts && isFinite(vbParts[2]) ? vbParts[2] : (svg.width && svg.width.baseVal ? svg.width.baseVal.value : 800);
+    var h = vbParts && isFinite(vbParts[3]) ? vbParts[3] : (svg.height && svg.height.baseVal ? svg.height.baseVal.value : 600);
     if (!w || !isFinite(w)) w = 800;
     if (!h || !isFinite(h)) h = 600;
 
@@ -265,16 +271,22 @@
       ctx.fillStyle = '#ffffff';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
       ctx.scale(scale, scale);
-      ctx.drawImage(img, 0, 0, w, h);
-      URL.revokeObjectURL(url);
-      canvas.toBlob(function(blob) {
-        var a = document.createElement('a');
-        a.href = URL.createObjectURL(blob);
-        a.download = 'diagram.png';
-        a.click();
-        URL.revokeObjectURL(a.href);
-        showToast('✓ PNG 파일이 저장됩니다');
-      }, 'image/png');
+      try {
+        ctx.drawImage(img, 0, 0, w, h);
+        canvas.toBlob(function(blob) {
+          URL.revokeObjectURL(url);
+          if (!blob) { showToast('PNG 변환 중 오류가 발생했습니다. SVG 다운로드를 이용해주세요.'); return; }
+          var a = document.createElement('a');
+          a.href = URL.createObjectURL(blob);
+          a.download = 'diagram.png';
+          a.click();
+          URL.revokeObjectURL(a.href);
+          showToast('✓ PNG 파일이 저장됩니다');
+        }, 'image/png');
+      } catch (e) {
+        URL.revokeObjectURL(url);
+        showToast('PNG 변환 중 오류가 발생했습니다. SVG 다운로드를 이용해주세요.');
+      }
     };
     img.onerror = function() {
       URL.revokeObjectURL(url);
