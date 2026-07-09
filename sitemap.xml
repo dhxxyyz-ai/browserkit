@@ -194,6 +194,12 @@
     <changefreq>weekly</changefreq>
     <priority>0.90</priority>
   </url>
+  <url>
+    <loc>https://browserkit.online/pdf-split/</loc>
+    <lastmod>2026-07-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+  </url>
 
   <!-- 일반 페이지 -->
   <url>
@@ -488,6 +494,12 @@
   </url>
   <url>
     <loc>https://browserkit.online/blog/45-mosaicmaker-howto.html</loc>
+    <lastmod>2026-07-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.70</priority>
+  </url>
+  <url>
+    <loc>https://browserkit.online/blog/46-pdfsplit-howto.html</loc>
     <lastmod>2026-07-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.70</priority>

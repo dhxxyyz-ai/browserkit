@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="PDFSplit의 모든 기능을 단계별로 설명하는 공식 사용 가이드입니다. PDF를 페이지별로 분할하거나 원하는 범위만 추출하는 방법을 알아보세요." />
+  <meta property="og:title" content="PDFSplit 사용법 완전 가이드 — BrowserKit" />
+  <meta property="og:description" content="PDF를 페이지별로 분할하거나 원하는 범위만 추출하는 PDFSplit 공식 가이드입니다. 서버 전송 없이 브라우저에서 바로 처리합니다." />
+  <meta property="og:type" content="article" />
+  <title>PDFSplit 사용법 완전 가이드 — BrowserKit</title>
+  <link rel="stylesheet" href="/css/style.css?v=20260704c" />
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506"
+     crossorigin="anonymous"></script>
+  <style>
+    .feature-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:20px 0; }
+    .feature-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px; }
+    .feature-card:hover { border-color:var(--point); }
+    .feature-icon { font-size:24px; margin-bottom:10px; }
+    .feature-title { font-size:14px; font-weight:600; color:var(--text); margin-bottom:6px; }
+    .feature-desc { font-size:13px; color:var(--subtext); line-height:1.7; }
+    .step-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px 24px; margin:16px 0; display:flex; gap:16px; align-items:flex-start; }
+    .step-num { min-width:36px; height:36px; background:linear-gradient(135deg,var(--point),var(--point-hover)); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:700; color:white; flex-shrink:0; font-family:'Gowun Dodum',sans-serif; }
+    .step-content h3 { font-size:15px; font-weight:600; margin-bottom:6px; color:var(--text); }
+    .step-content p { font-size:14px; color:var(--subtext); line-height:1.7; margin:0; }
+    .tab-demo { display:flex; gap:8px; margin:16px 0; flex-wrap:wrap; }
+    .tab-demo-btn { background:var(--card); border:1px solid var(--border); border-radius:10px; padding:8px 20px; font-size:13px; font-weight:600; color:var(--subtext); }
+    .tab-demo-btn.active { background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border-color:transparent; }
+    .post-table { width:100%; border-collapse:collapse; margin:20px 0; font-size:15px; }
+    .post-table th { background:var(--card); padding:12px 16px; text-align:left; font-weight:600; border:1px solid var(--border); color:var(--text); }
+    .post-table td { padding:11px 16px; border:1px solid var(--border); color:var(--subtext); line-height:1.7; }
+    .post-table tr:hover td { background:rgba(123,108,255,0.04); }
+    .use-case-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:20px 0; }
+    .use-case-card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:18px; }
+    .use-case-icon { font-size:28px; margin-bottom:8px; }
+    .use-case-title { font-size:13px; font-weight:600; color:var(--text); margin-bottom:6px; }
+    .use-case-desc { font-size:12px; color:var(--subtext); line-height:1.7; }
+    .post-nav { display:flex; justify-content:space-between; margin-top:28px; padding-top:24px; border-top:1px solid var(--border); gap:12px; }
+    .post-nav a { font-size:15px; color:var(--subtext); text-decoration:none; }
+    .post-nav a:hover { color:var(--text); }
+    .cta-box { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:28px; text-align:center; margin:48px 0 0; }
+    .cta-box p { font-size:17px; color:var(--subtext); margin-bottom:16px; }
+    .cta-btn { display:inline-block; background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border-radius:10px; padding:12px 28px; font-size:14px; font-weight:600; text-decoration:none; }
+    .cta-btn:hover { transform:translateY(-2px); box-shadow:0 8px 24px var(--glow); color:white; }
+    .back-link:hover { color:var(--text); }
+    @media (max-width:640px) {
+      .feature-grid { grid-template-columns:1fr; }
+      .use-case-grid { grid-template-columns:1fr; }
+    }
+  </style>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+<meta property="og:image" content="https://browserkit.online/img/og-browserkit.png" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "PDFSplit 사용법 완전 가이드",
+    "description": "PDFSplit의 모든 기능을 단계별로 설명하는 공식 사용 가이드입니다. PDF를 페이지별로 분할하거나 원하는 범위만 추출하는 방법을 알아보세요.",
+    "datePublished": "2026-07-09T00:00:00+09:00",
+    "dateModified": "2026-07-09T00:00:00+09:00",
+    "author": { "@type": "Organization", "name": "BrowserKit", "url": "https://browserkit.online" },
+    "publisher": { "@type": "Organization", "name": "BrowserKit", "url": "https://browserkit.online", "logo": { "@type": "ImageObject", "url": "https://browserkit.online/img/og-browserkit.png" } },
+    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://browserkit.online/blog/46-pdfsplit-howto.html" },
+    "image": "https://browserkit.online/img/og-browserkit.png"
+  }
+  </script>  <link rel="canonical" href="https://browserkit.online/blog/46-pdfsplit-howto.html" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://browserkit.online/img/og-browserkit.png" />
+  <style>
+    .post-table-wrap { overflow-x:auto; }
+    .post-table th, .post-table td { white-space:nowrap; }
+    .post-nav a { word-break:keep-all; }
+    .post-nav .nav-label { display:block; font-size:13px; color:var(--subtext); opacity:0.7; margin-bottom:4px; }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="container">
+      <a href="/" class="header-brand"><div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Gowun Dodum,sans-serif;flex-shrink:0">B</div><span class="header-brand-text"><span style="color:var(--text)">Browser</span><span style="color:var(--point)">Kit</span></span></a>
+      <a href="/" class="header-back">&#x2190; BrowserKit 홈으로</a>
+    </div>
+  </header>
+
+  <article class="post-wrap">
+    <a href="/blog/" class="back-link">&#x2190; 블로그 목록</a>
+    <span class="post-tag">가이드</span>
+    <h1 class="post-title">PDFSplit 사용법 완전 가이드</h1>
+    <div class="post-date">2026년 7월 9일</div>
+    <div style="margin:12px 0"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+
+    <div class="post-body">
+      <p>PDFSplit은 하나의 PDF 파일을 페이지별로 분할하거나, 원하는 범위만 골라 추출하는 무료 온라인 도구입니다. PDFMerge와 동일한 PDF.js·jsPDF 엔진을 사용하며, 여러 페이지를 개별 파일로 나눌 때는 ZIP으로 한 번에 다운로드할 수 있습니다. 모든 처리가 브라우저 내에서만 이루어지므로 업로드한 PDF가 외부 서버로 전송되지 않습니다.</p>
+
+      <h2>주요 기능</h2>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F4C4;</div>
+          <div class="feature-title">페이지별 분할</div>
+          <div class="feature-desc">모든 페이지를 개별 PDF 파일로 만들어 ZIP 하나로 묶어 다운로드합니다. 원하는 페이지만 선택해서 분할할 수도 있습니다.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x2702;&#xFE0F;</div>
+          <div class="feature-title">범위 지정 분할</div>
+          <div class="feature-desc">"1-3, 5"처럼 원하는 페이지 범위만 입력하면 그 페이지들만 모아 하나의 PDF로 추출합니다.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F5BC;&#xFE0F;</div>
+          <div class="feature-title">페이지 미리보기</div>
+          <div class="feature-desc">업로드하면 모든 페이지의 썸네일이 그리드로 표시되어, 몇 번째 페이지인지 직접 보면서 선택할 수 있습니다.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F512;</div>
+          <div class="feature-title">완전 로컬 처리</div>
+          <div class="feature-desc">PDF 렌더링부터 분할, 압축까지 전부 브라우저 안에서 처리되어 파일이 서버로 전송되지 않습니다.</div>
+        </div>
+      </div>
+
+      <div style="margin:12px 0 0"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+      <h2>사용법</h2>
+
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <h3>PDF 업로드</h3>
+          <p>업로드 존을 클릭하거나 PDF 파일을 드래그해 불러옵니다. 파일 하나만 업로드할 수 있습니다. 업로드하면 모든 페이지의 썸네일이 자동으로 생성됩니다.</p>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <h3>분할 방식 선택</h3>
+          <p>상단 탭에서 원하는 방식을 선택합니다.</p>
+        </div>
+      </div>
+
+      <div class="tab-demo">
+        <span class="tab-demo-btn active">&#x1F4C4; 페이지별 분할</span>
+        <span class="tab-demo-btn">&#x2702;&#xFE0F; 범위 지정 분할</span>
+      </div>
+
+      <h3>페이지별 분할</h3>
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <h3>분할할 페이지 선택</h3>
+          <p>기본적으로 모든 페이지가 선택되어 있습니다. 썸네일을 클릭하면 선택/해제되고, <strong>전체 선택</strong> / <strong>선택 해제</strong> 버튼으로 한 번에 조정할 수도 있습니다. 선택된 페이지 각각이 개별 PDF 파일이 됩니다.</p>
+        </div>
+      </div>
+
+      <h3>범위 지정 분할</h3>
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <h3>페이지 범위 입력</h3>
+          <p>입력창에 원하는 페이지 범위를 입력합니다 (예: <code>1-3, 5</code>). 비워두면 전체 페이지가 하나의 PDF로 추출됩니다.</p>
+        </div>
+      </div>
+
+      <div class="step-card">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <h3>분할하고 다운로드</h3>
+          <p><strong>⬇ 분할하고 다운로드</strong> 버튼을 클릭합니다. 페이지별 분할 모드에서는 <code>pdfsplit_pages.zip</code> 파일이, 범위 지정 분할 모드에서는 <code>pdfsplit_range.pdf</code> 파일이 다운로드됩니다.</p>
+        </div>
+      </div>
+
+      <h2>페이지별 분할 vs 범위 지정 분할, 언제 쓰나요?</h2>
+      <div class="post-table-wrap"><table class="post-table">
+        <thead><tr><th>방식</th><th>결과물</th><th>추천 상황</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><strong>페이지별 분할</strong></td>
+            <td>선택한 페이지 수만큼의 개별 PDF (ZIP 1개)</td>
+            <td>각 페이지를 완전히 독립된 파일로 나눠 각각 전달·보관하고 싶을 때</td>
+          </tr>
+          <tr>
+            <td><strong>범위 지정 분할</strong></td>
+            <td>지정한 페이지들만 모은 PDF 1개</td>
+            <td>전체 문서 중 필요한 부분만 발췌해 하나의 파일로 공유하고 싶을 때</td>
+          </tr>
+        </tbody>
+      </table></div>
+
+      <h2>활용 예시</h2>
+      <div class="use-case-grid">
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F4D1;</div>
+          <div class="use-case-title">계약서 조항별 분리</div>
+          <div class="use-case-desc">긴 계약서에서 특정 조항이 담긴 페이지만 골라 별도 PDF로 공유합니다.</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F4DA;</div>
+          <div class="use-case-title">스캔 문서 페이지 분리</div>
+          <div class="use-case-desc">여러 문서를 한 번에 스캔해 만든 PDF를 페이지별로 분할해 각 문서로 되돌립니다.</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F4CA;</div>
+          <div class="use-case-title">보고서 요약본 추출</div>
+          <div class="use-case-desc">전체 보고서에서 요약·결론 페이지만 추출해 짧은 버전으로 공유합니다.</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F4E4;</div>
+          <div class="use-case-title">용량 제한 우회</div>
+          <div class="use-case-desc">첨부 용량 제한이 있는 경우, 필요한 페이지만 추출해 파일 크기를 줄여 전송합니다.</div>
+        </div>
+      </div>
+
+      <div class="post-highlight">&#x1F512; PDFSplit은 모든 처리가 브라우저 내에서만 이루어집니다. 업로드한 PDF가 외부 서버로 전송되지 않으므로, 계약서·보고서 등 민감한 문서도 안전하게 분할할 수 있습니다.</div>
+    </div>
+
+    <div class="cta-box">
+      <p>PDF를 페이지별로 분할하거나 원하는 범위만 추출해보세요.<br />ZIP 또는 PDF 파일로 바로 다운로드할 수 있습니다.</p>
+      <a href="/pdf-split/" class="cta-btn" style="display:inline-flex;align-items:center;gap:8px">
+        <span style="display:inline-block;width:26px;height:26px;overflow:hidden;flex-shrink:0"><span style="display:block;transform:scale(0.565);transform-origin:top left"><div style="width:46px;height:46px;background:#a8e6cf;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="position:relative;width:34px;height:32px"><div style="position:absolute;left:0;top:0;width:16px;height:26px;background:#a8e6cf;border:2.5px solid #2a2433;border-radius:3px;box-sizing:border-box"></div><div style="position:absolute;right:0;top:3px;width:16px;height:26px;background:#a8e6cf;border:2.5px solid #2a2433;border-radius:3px;box-sizing:border-box"></div><div style="position:absolute;left:15px;top:8px;width:4px;height:16px;background:#fffdf9;border-left:2px dashed #2a2433;border-right:2px dashed #2a2433;box-sizing:border-box"></div></div></div></span></span>
+        무료로 PDF 분할하기
+      </a>
+    </div>
+    <div style="margin:12px 0"><ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="9500090221"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+
+<div class="post-nav">
+      <a href="/blog/18-pdfmerge-howto.html"><span class="nav-label">← 이전 글</span>PDFMerge 사용법 완전 가이드</a>
+      <a href="/blog/20-texttools-howto.html" style="text-align:right"><span class="nav-label">다음 글 →</span>TextTools 사용법 완전 가이드</a>
+    </div></div>
+
+  </article>
+  <footer class="footer">
+    <div class="container">
+      <p class="footer-copy">© 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p>
+      <nav class="footer-nav">
+        <a href="/privacy.html">개인정보 처리방침</a>
+        <a href="/terms.html">이용약관</a>
+        <a href="/about.html">서비스 소개</a>
+        <a href="/blog/">블로그</a>
+      </nav>
+    </div>
+  </footer>
+</body>
+</html>
