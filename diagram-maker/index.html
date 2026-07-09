@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <link rel="icon" href="/favicon.ico" sizes="32x32">
+  <link rel="icon" href="/favicon-16.png" sizes="16x16" type="image/png">
+  <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="/favicon-192.png" sizes="192x192" type="image/png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Mermaid 문법으로 플로우차트, 시퀀스, ER, 간트, 파이 다이어그램을 그리는 무료 온라인 다이어그램 생성기. SVG/PNG로 다운로드. 서버 전송 없이 브라우저에서 바로 처리합니다." />
+  <meta property="og:title" content="DiagramMaker — 다이어그램 생성기" />
+  <meta property="og:description" content="Mermaid 문법으로 플로우차트, 시퀀스, ER, 간트, 파이 다이어그램을 즉시 그리는 무료 온라인 도구입니다." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://browserkit.online/diagram-maker/" />
+  <title>DiagramMaker — 다이어그램 생성기</title>
+  <link rel="stylesheet" href="/css/style.css?v=20260704c" />
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506"
+     crossorigin="anonymous"></script>
+  <style>
+    /* 프리셋 */
+    .preset-wrap { display:flex; gap:8px; margin-bottom:16px; flex-wrap:wrap; }
+    .preset-btn { background:var(--card); color:var(--subtext); border:1px solid var(--border); border-radius:10px; padding:9px 18px; font-size:13px; font-weight:600; cursor:pointer; font-family:'Gowun Dodum',sans-serif; transition:all 0.2s; white-space:nowrap; }
+    .preset-btn:hover { border-color:var(--point); color:var(--text); }
+    .preset-btn.active { background:rgba(123,108,255,0.15); border-color:var(--point); color:var(--point-hover); }
+
+    /* 에디터 레이아웃 */
+    .editor-wrap { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:16px; }
+    .editor-pane { display:flex; flex-direction:column; gap:8px; }
+    .pane-label { font-size:13px; font-weight:600; color:var(--subtext); }
+    .code-input { background:#0f0f18; border:1px solid var(--border); border-radius:12px; padding:16px; font-family:'Fira Code','JetBrains Mono',monospace; font-size:13px; line-height:1.8; color:#e2e8f0; resize:none; width:100%; min-height:380px; outline:none; tab-size:2; }
+    .code-input:focus { border-color:var(--point); }
+
+    .diagram-preview { background:#fff; border:1px solid var(--border); border-radius:12px; padding:20px; min-height:380px; overflow:auto; display:flex; align-items:center; justify-content:center; }
+    .diagram-preview svg { max-width:100%; height:auto; }
+    .diagram-empty { color:var(--subtext); font-size:13px; font-family:'Gowun Dodum',sans-serif; }
+    .diagram-error { color:#F87171; font-size:13px; font-family:'Gowun Dodum',sans-serif; line-height:1.7; text-align:left; white-space:pre-wrap; word-break:break-word; padding:8px; }
+
+    /* 액션 바 */
+    .action-bar { display:flex; gap:10px; margin-bottom:48px; flex-wrap:wrap; }
+    .btn-primary { background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border:none; border-radius:10px; padding:11px 22px; font-size:14px; font-weight:600; cursor:pointer; font-family:'Gowun Dodum',sans-serif; transition:all 0.2s; white-space:nowrap; }
+    .btn-primary:hover { transform:translateY(-1px); box-shadow:0 6px 20px var(--glow); }
+    .btn-sub { background:var(--card); color:var(--subtext); border:1px solid var(--border); border-radius:10px; padding:11px 20px; font-size:14px; cursor:pointer; font-family:'Gowun Dodum',sans-serif; transition:all 0.2s; white-space:nowrap; }
+    .btn-sub:hover { color:var(--text); border-color:var(--point); }
+    .btn-danger { background:var(--card); color:#F87171; border:1px solid var(--border); border-radius:10px; padding:11px 20px; font-size:14px; cursor:pointer; font-family:'Gowun Dodum',sans-serif; transition:all 0.2s; white-space:nowrap; }
+    .btn-danger:hover { border-color:#F87171; }
+
+    .toast { position:fixed; bottom:32px; left:50%; transform:translateX(-50%) translateY(80px); background:var(--success); color:#fff; border-radius:999px; padding:10px 24px; font-size:14px; font-weight:600; opacity:0; pointer-events:none; z-index:999; transition:all 0.3s ease; }
+    .toast.show { transform:translateX(-50%) translateY(0); opacity:1; }
+
+    .footer { border-top:1px solid var(--border); padding:32px 0; text-align:center; }
+    .footer-copy { color:var(--subtext); font-size:13px; margin-bottom:12px; }
+    .footer-nav { display:flex; justify-content:center; gap:20px; flex-wrap:wrap; }
+    .footer-nav a { color:var(--subtext); font-size:13px; text-decoration:none; }
+    .footer-nav a:hover { color:var(--text); }
+
+    @media (max-width:768px) {
+      .editor-wrap { grid-template-columns:1fr; }
+      .hero-title { font-size:24px; }
+    }
+  </style>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+  <meta property="og:image" content="https://browserkit.online/img/og-browserkit.png" />
+  <link rel="canonical" href="https://browserkit.online/diagram-maker/" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://browserkit.online/img/og-browserkit.png" />
+</head>
+
+<body>
+  <header class="header">
+    <div class="container">
+      <a href="/" class="header-brand">
+        <div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Gowun Dodum,sans-serif;flex-shrink:0">B</div>
+        <span class="header-brand-text"><span style="color:var(--text)">Browser</span><span style="color:var(--point)">Kit</span></span>
+      </a>
+      <a href="/" class="header-back">&#x2190; BrowserKit 홈으로</a>
+    </div>
+  </header>
+
+  <main><div class="container">
+    <div class="hero">
+      <div class="hero-icon" style="height:78px;display:flex;justify-content:center;align-items:center"><div style="transform:scale(1.7);transform-origin:center"><div style="width:46px;height:46px;background:#ffd9a8;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="position:relative;width:30px;height:26px"><div style="position:absolute;left:0;top:0;width:11px;height:8px;background:#fffdf9;border:2px solid #2a2433;border-radius:2px;box-sizing:border-box"></div><div style="position:absolute;right:0;top:0;width:11px;height:8px;background:#fffdf9;border:2px solid #2a2433;border-radius:2px;box-sizing:border-box"></div><div style="position:absolute;left:9px;bottom:0;width:11px;height:8px;background:#fffdf9;border:2px solid #2a2433;border-radius:2px;box-sizing:border-box"></div><div style="position:absolute;left:5px;top:8px;width:2px;height:6px;background:#2a2433"></div><div style="position:absolute;right:5px;top:8px;width:2px;height:6px;background:#2a2433"></div></div></div></div></div>
+      <div class="hero-title-wrap"><h1 class="hero-title">DiagramMaker</h1><a href="/blog/52-diagrammaker-howto.html" class="hero-guide-link">사용법 가이드 보기</a></div>
+      <p class="hero-desc">Mermaid 문법으로 플로우차트, 시퀀스, ER, 간트, 파이 다이어그램을 즉시 그려보세요</p>
+      <div class="hero-badges">
+        <span class="badge">🔒 완전 로컬 처리</span>
+        <span class="badge">⚡ 무료 사용</span>
+        <span class="badge">🛡️ 서버 전송 없음</span>
+        <span class="badge">📦 설치 불필요</span>
+      </div>
+    </div>
+    <div style="margin:0 0 12px"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+
+    <!-- 프리셋 -->
+    <div class="preset-wrap">
+      <button class="preset-btn active" data-preset="flowchart">&#x1F500; 플로우차트</button>
+      <button class="preset-btn" data-preset="sequence">&#x1F501; 시퀀스</button>
+      <button class="preset-btn" data-preset="er">&#x1F5C3;&#xFE0F; ER 다이어그램</button>
+      <button class="preset-btn" data-preset="gantt">&#x1F4C5; 간트차트</button>
+      <button class="preset-btn" data-preset="pie">&#x1F967; 파이차트</button>
+    </div>
+
+    <!-- 에디터 -->
+    <div class="editor-wrap">
+      <div class="editor-pane">
+        <div class="pane-label">&#x270F;&#xFE0F; Mermaid 문법 입력</div>
+        <textarea class="code-input" id="codeInput" spellcheck="false"></textarea>
+      </div>
+      <div class="editor-pane">
+        <div class="pane-label">&#x1F441;&#xFE0F; 미리보기</div>
+        <div class="diagram-preview" id="diagramPreview">
+          <div class="diagram-empty">다이어그램이 여기에 표시됩니다</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 액션 버튼 -->
+    <div class="action-bar">
+      <button class="btn-primary" id="downloadSvgBtn">&#x2B07; SVG 다운로드</button>
+      <button class="btn-primary" id="downloadPngBtn">&#x2B07; PNG 다운로드</button>
+      <button class="btn-sub" id="copyCodeBtn">&#x1F4CB; 코드 복사</button>
+      <button class="btn-danger" id="resetBtn">&#x21BA; 초기화</button>
+    </div>
+
+    <div style="margin:12px 0"><ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="9500090221"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+  </div></main>
+
+  <footer class="footer">
+    <div class="container">
+      <p class="footer-copy">&#xa9; 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p>
+      <nav class="footer-nav">
+        <a href="/privacy.html">개인정보 처리방침</a>
+        <a href="/terms.html">이용약관</a>
+        <a href="/about.html">서비스 소개</a>
+        <a href="/blog/">블로그</a>
+      </nav>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+  mermaid.initialize({ startOnLoad: false, theme: 'default' });
+
+  var PRESETS = {
+    flowchart: 'flowchart TD\n    A[시작] --> B{로그인 여부}\n    B -- 예 --> C[대시보드 이동]\n    B -- 아니오 --> D[로그인 페이지]\n    D --> E[로그인 시도]\n    E -- 성공 --> C\n    E -- 실패 --> D\n    C --> F[종료]',
+    sequence: 'sequenceDiagram\n    participant U as 사용자\n    participant B as 브라우저\n    participant S as 서버\n    U->>B: 로그인 버튼 클릭\n    B->>S: 로그인 요청\n    S-->>B: 인증 토큰 응답\n    B-->>U: 대시보드 표시',
+    er: 'erDiagram\n    CUSTOMER ||--o{ ORDER : places\n    ORDER ||--|{ ORDER_ITEM : contains\n    PRODUCT ||--o{ ORDER_ITEM : "included in"\n    CUSTOMER {\n        string name\n        string email\n    }\n    ORDER {\n        int id\n        date orderDate\n    }',
+    gantt: 'gantt\n    title 프로젝트 일정\n    dateFormat YYYY-MM-DD\n    section 기획\n    요구사항 정의   :a1, 2026-07-01, 5d\n    설계            :a2, after a1, 4d\n    section 개발\n    프론트엔드       :b1, after a2, 8d\n    백엔드           :b2, after a2, 8d\n    section 배포\n    테스트           :c1, after b1, 3d\n    배포             :c2, after c1, 1d',
+    pie: 'pie title 브라우저 점유율\n    "Chrome" : 65\n    "Safari" : 18\n    "Edge" : 10\n    "기타" : 7'
+  };
+
+  var codeInput = document.getElementById('codeInput');
+  var preview = document.getElementById('diagramPreview');
+  var currentPreset = 'flowchart';
+  var renderSeq = 0;
+
+  document.querySelectorAll('.preset-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.preset-btn').forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      currentPreset = btn.dataset.preset;
+      codeInput.value = PRESETS[currentPreset];
+      render();
+    });
+  });
+
+  var renderTimer = null;
+  codeInput.addEventListener('input', function() {
+    clearTimeout(renderTimer);
+    renderTimer = setTimeout(render, 400);
+  });
+
+  function render() {
+    var code = codeInput.value.trim();
+    if (!code) {
+      preview.innerHTML = '<div class="diagram-empty">다이어그램이 여기에 표시됩니다</div>';
+      return;
+    }
+    var seq = ++renderSeq;
+    var id = 'bk-mermaid-' + Date.now();
+    mermaid.render(id, code).then(function(result) {
+      if (seq !== renderSeq) return;
+      preview.innerHTML = result.svg;
+    }).catch(function(err) {
+      if (seq !== renderSeq) return;
+      var msg = (err && err.message) ? err.message : String(err);
+      preview.innerHTML = '<div class="diagram-error">⚠️ 문법 오류가 있습니다:<br>' + escapeHtml(msg) + '</div>';
+      var stray = document.getElementById(id);
+      if (stray) stray.remove();
+    });
+  }
+
+  function escapeHtml(s) {
+    return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  }
+
+  // ── SVG 다운로드 ──
+  document.getElementById('downloadSvgBtn').addEventListener('click', function() {
+    var svg = preview.querySelector('svg');
+    if (!svg) { showToast('다운로드할 다이어그램이 없습니다'); return; }
+    var svgData = new XMLSerializer().serializeToString(svg);
+    var blob = new Blob([svgData], { type: 'image/svg+xml;charset=utf-8' });
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'diagram.svg';
+    a.click();
+    URL.revokeObjectURL(a.href);
+    showToast('✓ SVG 파일이 저장됩니다');
+  });
+
+  // ── PNG 다운로드 ──
+  document.getElementById('downloadPngBtn').addEventListener('click', function() {
+    var svg = preview.querySelector('svg');
+    if (!svg) { showToast('다운로드할 다이어그램이 없습니다'); return; }
+
+    var svgClone = svg.cloneNode(true);
+    var bbox = svg.getBBox ? svg.getBBox() : null;
+    var vb = svg.getAttribute('viewBox');
+    var w = svg.width && svg.width.baseVal ? svg.width.baseVal.value : (vb ? parseFloat(vb.split(' ')[2]) : 800);
+    var h = svg.height && svg.height.baseVal ? svg.height.baseVal.value : (vb ? parseFloat(vb.split(' ')[3]) : 600);
+    if (!w || !isFinite(w)) w = 800;
+    if (!h || !isFinite(h)) h = 600;
+
+    svgClone.setAttribute('width', w);
+    svgClone.setAttribute('height', h);
+    var svgData = new XMLSerializer().serializeToString(svgClone);
+    var svgBlob = new Blob([svgData], { type: 'image/svg+xml;charset=utf-8' });
+    var url = URL.createObjectURL(svgBlob);
+
+    var img = new Image();
+    img.onload = function() {
+      var scale = 2;
+      var canvas = document.createElement('canvas');
+      canvas.width = w * scale;
+      canvas.height = h * scale;
+      var ctx = canvas.getContext('2d');
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.scale(scale, scale);
+      ctx.drawImage(img, 0, 0, w, h);
+      URL.revokeObjectURL(url);
+      canvas.toBlob(function(blob) {
+        var a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = 'diagram.png';
+        a.click();
+        URL.revokeObjectURL(a.href);
+        showToast('✓ PNG 파일이 저장됩니다');
+      }, 'image/png');
+    };
+    img.onerror = function() {
+      URL.revokeObjectURL(url);
+      showToast('PNG 변환 중 오류가 발생했습니다');
+    };
+    img.src = url;
+  });
+
+  // ── 코드 복사 ──
+  document.getElementById('copyCodeBtn').addEventListener('click', function() {
+    var val = codeInput.value;
+    if (!val.trim()) { showToast('복사할 코드가 없습니다'); return; }
+    navigator.clipboard.writeText(val).then(function() {
+      showToast('✓ Mermaid 코드가 복사되었습니다');
+    });
+  });
+
+  // ── 초기화 ──
+  document.getElementById('resetBtn').addEventListener('click', function() {
+    codeInput.value = PRESETS[currentPreset];
+    render();
+  });
+
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(function() { t.classList.remove('show'); }, 2000);
+  }
+
+  // ── 초기화 ──
+  codeInput.value = PRESETS[currentPreset];
+  render();
+  </script>
+</body>
+</html>
