@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <link rel="icon" href="/favicon.ico" sizes="32x32">
+  <link rel="icon" href="/favicon-16.png" sizes="16x16" type="image/png">
+  <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="/favicon-192.png" sizes="192x192" type="image/png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Minifier의 모든 기능을 단계별로 설명하는 공식 사용 가이드입니다. HTML, CSS, JS 코드의 주석과 공백을 제거해 용량을 줄이는 방법을 알아보세요." />
+  <meta property="og:title" content="Minifier 사용법 완전 가이드 — BrowserKit" />
+  <meta property="og:description" content="HTML, CSS, JS 코드의 주석과 공백을 제거해 용량을 줄이는 Minifier 공식 가이드입니다." />
+  <meta property="og:type" content="article" />
+  <title>Minifier 사용법 완전 가이드 — BrowserKit</title>
+  <link rel="stylesheet" href="/css/style.css?v=20260704c" />
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506"
+     crossorigin="anonymous"></script>
+  <style>
+    .post-warn { background:rgba(248,113,113,0.08); border-left:3px solid #F87171; border-radius:8px; padding:16px 20px; margin:24px 0; font-size:15px; color:var(--subtext); line-height:1.8; }
+    .feature-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:20px 0; }
+    .feature-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px; }
+    .feature-card:hover { border-color:var(--point); }
+    .feature-icon { font-size:24px; margin-bottom:10px; }
+    .feature-title { font-size:14px; font-weight:600; color:var(--text); margin-bottom:6px; }
+    .feature-desc { font-size:13px; color:var(--subtext); line-height:1.7; }
+    .step-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px 24px; margin:16px 0; display:flex; gap:16px; align-items:flex-start; }
+    .step-num { min-width:36px; height:36px; background:linear-gradient(135deg,var(--point),var(--point-hover)); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:700; color:white; flex-shrink:0; font-family:'Gowun Dodum',sans-serif; }
+    .step-content h3 { font-size:15px; font-weight:600; margin-bottom:6px; color:var(--text); }
+    .step-content p { font-size:14px; color:var(--subtext); line-height:1.7; margin:0; }
+
+    .tab-demo { display:flex; gap:4px; background:var(--card); border:1px solid var(--border); border-radius:12px; padding:4px; margin:16px 0; }
+    .tab-demo-btn { flex:1; padding:8px; font-size:13px; font-weight:600; border-radius:9px; text-align:center; color:var(--subtext); }
+    .tab-demo-btn.on { background:linear-gradient(135deg,var(--point),var(--point-hover)); color:#fff; }
+
+    .code-compare { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:16px 0; }
+    .code-compare-box { background:var(--card); border:1px solid var(--border); border-radius:12px; overflow:hidden; }
+    .code-compare-label { font-size:12px; font-weight:700; color:var(--subtext); padding:10px 14px; border-bottom:1px solid var(--border); }
+    .code-compare-body { font-size:12px; font-family:'Fira Code',monospace; color:var(--text); padding:14px; line-height:1.7; white-space:pre-wrap; word-break:break-all; }
+
+    .stats-demo { display:flex; align-items:center; justify-content:center; gap:14px; background:rgba(123,108,255,0.08); border:1px solid var(--border); border-radius:12px; padding:14px 20px; margin:16px 0; font-size:14px; font-family:'Fira Code',monospace; color:var(--text); flex-wrap:wrap; }
+    .stats-demo .arrow { color:var(--subtext); }
+    .stats-demo .reduce { color:var(--success); font-weight:700; }
+
+    .post-table { width:100%; border-collapse:collapse; margin:20px 0; font-size:15px; }
+    .post-table th { background:var(--card); padding:12px 16px; text-align:left; font-weight:600; border:1px solid var(--border); color:var(--text); }
+    .post-table td { padding:11px 16px; border:1px solid var(--border); color:var(--subtext); line-height:1.7; }
+    .post-table td code { background:var(--bg); border-radius:4px; padding:1px 6px; font-size:13px; color:var(--point-hover); font-family:'Fira Code',monospace; }
+    .post-table tr:hover td { background:rgba(123,108,255,0.04); }
+    .use-case-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:20px 0; }
+    .use-case-card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:18px; }
+    .use-case-icon { font-size:28px; margin-bottom:8px; }
+    .use-case-title { font-size:13px; font-weight:600; color:var(--text); margin-bottom:6px; }
+    .use-case-desc { font-size:12px; color:var(--subtext); line-height:1.7; }
+    .post-nav { display:flex; justify-content:space-between; margin-top:28px; padding-top:24px; border-top:1px solid var(--border); gap:12px; }
+    .post-nav a { font-size:15px; color:var(--subtext); text-decoration:none; }
+    .post-nav a:hover { color:var(--text); }
+    .cta-box { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:28px; text-align:center; margin:48px 0 0; }
+    .cta-box p { font-size:17px; color:var(--subtext); margin-bottom:16px; }
+    .cta-btn { display:inline-block; background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border-radius:10px; padding:12px 28px; font-size:14px; font-weight:600; text-decoration:none; }
+    .cta-btn:hover { transform:translateY(-2px); box-shadow:0 8px 24px var(--glow); color:white; }
+    .back-link:hover { color:var(--text); }
+    @media (max-width:640px) {
+      .feature-grid { grid-template-columns:1fr; }
+      .use-case-grid { grid-template-columns:1fr; }
+      .code-compare { grid-template-columns:1fr; }
+    }
+  </style>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+<meta property="og:image" content="https://browserkit.online/img/og-browserkit.png" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Minifier 사용법 완전 가이드",
+    "description": "Minifier의 모든 기능을 단계별로 설명하는 공식 사용 가이드입니다. HTML, CSS, JS 코드의 주석과 공백을 제거해 용량을 줄이는 방법을 알아보세요.",
+    "datePublished": "2026-07-09T00:00:00+09:00",
+    "dateModified": "2026-07-09T00:00:00+09:00",
+    "author": { "@type": "Organization", "name": "BrowserKit", "url": "https://browserkit.online" },
+    "publisher": { "@type": "Organization", "name": "BrowserKit", "url": "https://browserkit.online", "logo": { "@type": "ImageObject", "url": "https://browserkit.online/img/og-browserkit.png" } },
+    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://browserkit.online/blog/49-minifier-howto.html" },
+    "image": "https://browserkit.online/img/og-browserkit.png"
+  }
+  </script>  <link rel="canonical" href="https://browserkit.online/blog/49-minifier-howto.html" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://browserkit.online/img/og-browserkit.png" />
+  <style>
+    .post-table-wrap { overflow-x:auto; }
+    .post-table th, .post-table td { white-space:nowrap; }
+    .post-nav a { word-break:keep-all; }
+    .post-nav .nav-label { display:block; font-size:13px; color:var(--subtext); opacity:0.7; margin-bottom:4px; }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="container">
+      <a href="/" class="header-brand"><div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Gowun Dodum,sans-serif;flex-shrink:0">B</div><span class="header-brand-text"><span style="color:var(--text)">Browser</span><span style="color:var(--point)">Kit</span></span></a>
+      <a href="/" class="header-back">&#x2190; BrowserKit 홈으로</a>
+    </div>
+  </header>
+
+  <article class="post-wrap">
+    <a href="/blog/" class="back-link">&#x2190; 블로그 목록</a>
+    <span class="post-tag">가이드</span>
+    <h1 class="post-title">Minifier 사용법 완전 가이드</h1>
+    <div class="post-date">2026년 7월 9일</div>
+    <div style="margin:12px 0"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+
+    <div class="post-body">
+      <p>Minifier는 HTML, CSS, JS 코드에서 주석과 불필요한 공백을 제거해 용량을 줄여주는 무료 온라인 코드 압축기입니다. 코드를 붙여넣으면 즉시 압축된 결과와 절감율을 확인할 수 있습니다. 모든 처리가 브라우저 내에서만 이루어지므로 코드가 외부 서버로 전송되지 않습니다.</p>
+
+      <h2>주요 기능</h2>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F4C4;</div>
+          <div class="feature-title">HTML / CSS / JS 3종 지원</div>
+          <div class="feature-desc">탭을 전환해 세 가지 언어를 각각 압축할 수 있습니다. 언어별로 맞는 규칙을 적용합니다.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F9F9;</div>
+          <div class="feature-title">주석 제거</div>
+          <div class="feature-desc">HTML 주석, CSS 블록 주석, JS 한 줄/블록 주석을 제거합니다. 문자열 안의 유사 패턴은 건드리지 않습니다.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x2696;&#xFE0F;</div>
+          <div class="feature-title">용량 절감율 표시</div>
+          <div class="feature-desc">원본과 결과의 바이트 크기를 비교해 절감율을 퍼센트로 바로 보여줍니다.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F512;</div>
+          <div class="feature-title">완전 로컬 처리</div>
+          <div class="feature-desc">모든 압축이 브라우저 안에서 실행됩니다. 코드가 서버로 전송되지 않아 비공개 코드도 안심하고 사용할 수 있습니다.</div>
+        </div>
+      </div>
+
+      <div style="margin:12px 0 0"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+
+      <h2>탭 구성</h2>
+      <div class="tab-demo">
+        <div class="tab-demo-btn on">HTML</div>
+        <div class="tab-demo-btn">CSS</div>
+        <div class="tab-demo-btn">JS</div>
+      </div>
+      <p>상단 탭에서 압축할 코드의 언어를 선택합니다. 탭을 바꾸면 입력창의 안내 문구가 바뀌고, 해당 언어에 맞는 압축 규칙이 적용됩니다.</p>
+
+      <h2>사용법</h2>
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <h3>언어 탭 선택</h3>
+          <p>압축하려는 코드가 HTML, CSS, JS 중 무엇인지 상단 탭에서 선택합니다.</p>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <h3>코드 입력</h3>
+          <p>왼쪽 입력창에 압축할 코드를 붙여넣습니다. 입력하는 즉시 오른쪽 결과창에 압축된 코드가 표시됩니다.</p>
+        </div>
+      </div>
+
+      <figure style="margin:12px 0 24px; text-align:center;">
+        <img src="/img/blog/minifier/01-input.png"
+             alt="Minifier HTML 탭에 주석과 공백이 섞인 코드를 입력하고 압축 결과가 표시된 화면"
+             style="width:100%; max-width:640px; border:1px solid var(--border); border-radius:var(--radius);"
+             loading="lazy" />
+        <figcaption style="font-size:13px; color:var(--subtext); margin-top:6px;">
+          코드 입력 후 오른쪽에 압축 결과가 표시된 화면
+        </figcaption>
+      </figure>
+
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <h3>옵션 조절</h3>
+          <p><strong>주석 제거</strong>와 <strong>공백 정리</strong> 체크박스를 각각 켜고 끌 수 있습니다. 둘 다 기본값은 켜짐입니다.</p>
+        </div>
+      </div>
+
+      <figure style="margin:12px 0 24px; text-align:center;">
+        <img src="/img/blog/minifier/02-options.png"
+             alt="Minifier 주석 제거와 공백 정리 옵션 체크박스 확대 화면"
+             style="width:100%; max-width:640px; border:1px solid var(--border); border-radius:var(--radius);"
+             loading="lazy" />
+        <figcaption style="font-size:13px; color:var(--subtext); margin-top:6px;">
+          주석 제거 / 공백 정리 옵션
+        </figcaption>
+      </figure>
+
+      <div class="step-card">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <h3>결과 확인 및 저장</h3>
+          <p>중앙의 절감율 표시줄에서 원본 대비 줄어든 용량을 확인합니다. <strong>📋 결과 복사</strong> 버튼으로 클립보드에 복사하거나, <strong>⬇ 파일 다운로드</strong> 버튼으로 파일로 저장합니다.</p>
+        </div>
+      </div>
+
+      <figure style="margin:12px 0 24px; text-align:center;">
+        <img src="/img/blog/minifier/03-stats.png"
+             alt="Minifier 원본 크기, 결과 크기, 절감율이 표시된 통계 표시줄 확대 화면"
+             style="width:100%; max-width:640px; border:1px solid var(--border); border-radius:var(--radius);"
+             loading="lazy" />
+        <figcaption style="font-size:13px; color:var(--subtext); margin-top:6px;">
+          원본 → 결과 용량과 절감율이 표시된 통계 표시줄
+        </figcaption>
+      </figure>
+
+      <h2>압축 예시</h2>
+      <h3>HTML</h3>
+      <div class="code-compare">
+        <div class="code-compare-box">
+          <div class="code-compare-label">원본</div>
+          <div class="code-compare-body">&lt;!-- 주석 --&gt;
+&lt;div class="box"&gt;
+  &lt;p&gt;  안녕하세요  &lt;/p&gt;
+&lt;/div&gt;</div>
+        </div>
+        <div class="code-compare-box">
+          <div class="code-compare-label">압축 결과</div>
+          <div class="code-compare-body">&lt;div class="box"&gt;&lt;p&gt;  안녕하세요  &lt;/p&gt;&lt;/div&gt;</div>
+        </div>
+      </div>
+      <div class="stats-demo">
+        <span>66바이트</span><span class="arrow">→</span><span>47바이트</span><span class="reduce">(28.8% 절감)</span>
+      </div>
+      <p style="font-size:14px;color:var(--subtext)"><code>&lt;pre&gt;</code>, <code>&lt;textarea&gt;</code>, <code>&lt;script&gt;</code>, <code>&lt;style&gt;</code> 태그 내부의 내용은 공백이 결과에 영향을 주기 때문에 압축 대상에서 제외하고 그대로 보존합니다.</p>
+
+      <h3>CSS</h3>
+      <div class="code-compare">
+        <div class="code-compare-box">
+          <div class="code-compare-label">원본</div>
+          <div class="code-compare-body">/* 주석 */
+.box {
+  color: #333;
+  padding: 10px ;
+}</div>
+        </div>
+        <div class="code-compare-box">
+          <div class="code-compare-label">압축 결과</div>
+          <div class="code-compare-body">.box{color:#333;padding:10px}</div>
+        </div>
+      </div>
+
+      <h3>JS</h3>
+      <div class="code-compare">
+        <div class="code-compare-box">
+          <div class="code-compare-label">원본</div>
+          <div class="code-compare-body">// 주석
+function hello() {
+  var x = 1;
+  return x;
+}</div>
+        </div>
+        <div class="code-compare-box">
+          <div class="code-compare-label">압축 결과</div>
+          <div class="code-compare-body">function hello() {
+var x = 1;
+return x;
+}</div>
+        </div>
+      </div>
+      <p style="font-size:14px;color:var(--subtext)">JS는 줄바꿈을 유지한 채 각 줄의 앞뒤 공백과 주석만 제거합니다. 문법 특성상 줄바꿈을 억지로 합치면 자동 세미콜론 삽입(ASI) 규칙 때문에 코드 의미가 바뀔 수 있어, Minifier는 안전하게 줄 구조를 보존합니다.</p>
+
+      <div class="post-warn">
+        <strong>⚠️ 주의:</strong> Minifier는 정규식 기반의 가벼운 압축기이며 완전한 코드 파서가 아닙니다. 복잡한 문자열이나 특수한 구문에서는 예상과 다르게 동작할 수 있으므로 압축 결과를 반드시 확인한 뒤 사용하세요. 프로덕션 배포용 코드에는 Terser(JS), cssnano(CSS), html-minifier(HTML) 같은 전용 빌드 도구 사용을 권장합니다.
+      </div>
+
+      <h2>기술 원리</h2>
+      <div class="post-table-wrap"><table class="post-table">
+        <thead><tr><th>언어</th><th>처리 방식</th><th>특징</th></tr></thead>
+        <tbody>
+          <tr><td>HTML</td><td>순수 JS 정규식</td><td><code>&lt;pre&gt;</code>/<code>&lt;script&gt;</code>/<code>&lt;style&gt;</code>/<code>&lt;textarea&gt;</code> 내부는 보존 후 태그 사이 공백만 축소</td></tr>
+          <tr><td>CSS</td><td>순수 JS 정규식</td><td>블록 주석 제거, 선택자·속성 구분자 주변 공백 축소</td></tr>
+          <tr><td>JS</td><td>문자열을 인식하는 문자 단위 스캐너</td><td>문자열(<code>'</code>/<code>"</code>/<code>`</code>) 내부의 <code>//</code>, <code>/* */</code> 유사 패턴은 주석으로 오인하지 않음</td></tr>
+        </tbody>
+      </table></div>
+      <p>외부 라이브러리나 CDN 없이 순수 JavaScript만으로 동작하며, 모든 압축이 내 PC 브라우저 안에서 실행됩니다.</p>
+
+      <h2>활용 예시</h2>
+      <div class="use-case-grid">
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F4E6;</div>
+          <div class="use-case-title">간단한 배포 전 압축</div>
+          <div class="use-case-desc">빌드 도구를 설정하기 부담스러운 작은 정적 페이지나 스니펫을 배포하기 전 빠르게 용량을 줄입니다.</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F4CB;</div>
+          <div class="use-case-title">코드 공유 시 정리</div>
+          <div class="use-case-desc">이메일이나 메신저로 코드를 공유하기 전 주석과 불필요한 공백을 제거해 간결하게 만듭니다.</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F4CA;</div>
+          <div class="use-case-title">용량 비교 확인</div>
+          <div class="use-case-desc">압축 전후 용량과 절감율을 확인해 코드가 얼마나 무거운지, 압축이 얼마나 효과적인지 가늠합니다.</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F393;</div>
+          <div class="use-case-title">학습용 코드 정리</div>
+          <div class="use-case-desc">예제 코드나 CodePen 스니펫을 붙여넣어 순수 로직만 남기고 학습 노트에 정리할 때 사용합니다.</div>
+        </div>
+      </div>
+
+      <div class="post-highlight">&#x1F512; Minifier는 모든 압축 처리가 내 PC 브라우저에서만 실행됩니다. 입력한 코드가 외부 서버로 전송되지 않아 비공개 프로젝트 코드도 안심하고 사용할 수 있습니다.</div>
+    </div>
+
+    <div class="cta-box">
+      <p>HTML, CSS, JS 코드의 주석과 공백을 제거해 용량을 줄여보세요.<br />압축 전후 용량과 절감율을 바로 확인할 수 있습니다.</p>
+      <a href="/minifier/" class="cta-btn" style="display:inline-flex;align-items:center;gap:8px">
+        <span style="display:inline-block;width:26px;height:26px;overflow:hidden;flex-shrink:0"><span style="display:block;transform:scale(0.565);transform-origin:top left"><div style="width:46px;height:46px;background:#e0c3ff;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="font:700 16px Gowun Dodum,sans-serif;color:#2a2433;line-height:1;letter-spacing:-.5px;white-space:nowrap">&lt;&gt;</div></div></span></span>
+        무료로 코드 압축하기
+      </a>
+    </div>
+    <div style="margin:12px 0"><ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="9500090221"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+
+<div class="post-nav">
+      <a href="/blog/36-hashgen-howto.html"><span class="nav-label">← 이전 글</span>HashGen 사용법 완전 가이드</a>
+      <a href="/blog/38-chartmaker-howto.html" style="text-align:right"><span class="nav-label">다음 글 →</span>ChartMaker 사용법 완전 가이드</a>
+    </div></div>
+
+  </article>
+  <footer class="footer">
+    <div class="container">
+      <p class="footer-copy">© 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p>
+      <nav class="footer-nav">
+        <a href="/privacy.html">개인정보 처리방침</a>
+        <a href="/terms.html">이용약관</a>
+        <a href="/about.html">서비스 소개</a>
+        <a href="/blog/">블로그</a>
+      </nav>
+    </div>
+  </footer>
+</body>
+</html>
