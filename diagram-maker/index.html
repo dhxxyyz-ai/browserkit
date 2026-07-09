@@ -184,6 +184,7 @@
     mermaid.render(id, code).then(function(result) {
       if (seq !== renderSeq) return;
       preview.innerHTML = result.svg;
+      fitViewBox(preview.querySelector('svg'));
     }).catch(function(err) {
       if (seq !== renderSeq) return;
       var msg = (err && err.message) ? err.message : String(err);
@@ -195,6 +196,30 @@
 
   function escapeHtml(s) {
     return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  }
+
+  // Mermaid가 계산한 viewBox가 실제 렌더링된 내용(라벨/역방향 화살표 등)보다
+  // 작아 하단/우측이 잘리는 경우가 있어, 렌더 직후 실제 bbox에 맞춰 확장한다.
+  function fitViewBox(svg) {
+    if (!svg) return;
+    var vb = svg.viewBox && svg.viewBox.baseVal;
+    var bbox;
+    try { bbox = svg.getBBox(); } catch (e) { return; }
+    if (!bbox || !isFinite(bbox.width) || !isFinite(bbox.height) || (bbox.width === 0 && bbox.height === 0)) return;
+
+    var pad = 6;
+    var left = bbox.x - pad, top = bbox.y - pad;
+    var right = bbox.x + bbox.width + pad, bottom = bbox.y + bbox.height + pad;
+    if (vb && vb.width) {
+      left = Math.min(left, vb.x);
+      top = Math.min(top, vb.y);
+      right = Math.max(right, vb.x + vb.width);
+      bottom = Math.max(bottom, vb.y + vb.height);
+    }
+    var w = right - left, h = bottom - top;
+    svg.setAttribute('viewBox', left + ' ' + top + ' ' + w + ' ' + h);
+    if (svg.hasAttribute('width') && svg.getAttribute('width') !== '100%') svg.setAttribute('width', w);
+    if (svg.hasAttribute('height') && svg.getAttribute('height') !== '100%') svg.setAttribute('height', h);
   }
 
   // ── SVG 다운로드 ──
