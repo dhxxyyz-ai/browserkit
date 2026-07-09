@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <link rel="icon" href="/favicon.ico" sizes="32x32">
+  <link rel="icon" href="/favicon-16.png" sizes="16x16" type="image/png">
+  <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="/favicon-192.png" sizes="192x192" type="image/png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="CSSUnit의 모든 기능을 단계별로 설명하는 공식 사용 가이드입니다. px, rem, em, vw, vh, % 단위를 기준값에 맞춰 변환하는 방법을 알아보세요." />
+  <meta property="og:title" content="CSSUnit 사용법 완전 가이드 — BrowserKit" />
+  <meta property="og:description" content="px, rem, em, vw, vh, % 단위를 기준값에 맞춰 실시간으로 변환하는 CSSUnit 공식 가이드입니다." />
+  <meta property="og:type" content="article" />
+  <title>CSSUnit 사용법 완전 가이드 — BrowserKit</title>
+  <link rel="stylesheet" href="/css/style.css?v=20260704c" />
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506"
+     crossorigin="anonymous"></script>
+  <style>
+    .post-warn { background:rgba(248,113,113,0.08); border-left:3px solid #F87171; border-radius:8px; padding:16px 20px; margin:24px 0; font-size:15px; color:var(--subtext); line-height:1.8; }
+    .feature-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:20px 0; }
+    .feature-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px; }
+    .feature-card:hover { border-color:var(--point); }
+    .feature-icon { font-size:24px; margin-bottom:10px; }
+    .feature-title { font-size:14px; font-weight:600; color:var(--text); margin-bottom:6px; }
+    .feature-desc { font-size:13px; color:var(--subtext); line-height:1.7; }
+    .step-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px 24px; margin:16px 0; display:flex; gap:16px; align-items:flex-start; }
+    .step-num { min-width:36px; height:36px; background:linear-gradient(135deg,var(--point),var(--point-hover)); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:700; color:white; flex-shrink:0; font-family:'Gowun Dodum',sans-serif; }
+    .step-content h3 { font-size:15px; font-weight:600; margin-bottom:6px; color:var(--text); }
+    .step-content p { font-size:14px; color:var(--subtext); line-height:1.7; margin:0; }
+
+    .post-table { width:100%; border-collapse:collapse; margin:20px 0; font-size:15px; }
+    .post-table th { background:var(--card); padding:12px 16px; text-align:left; font-weight:600; border:1px solid var(--border); color:var(--text); }
+    .post-table td { padding:11px 16px; border:1px solid var(--border); color:var(--subtext); line-height:1.7; }
+    .post-table td code { background:var(--bg); border-radius:4px; padding:1px 6px; font-size:13px; color:var(--point-hover); font-family:'Fira Code',monospace; }
+    .post-table tr:hover td { background:rgba(123,108,255,0.04); }
+    .use-case-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:20px 0; }
+    .use-case-card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:18px; }
+    .use-case-icon { font-size:28px; margin-bottom:8px; }
+    .use-case-title { font-size:13px; font-weight:600; color:var(--text); margin-bottom:6px; }
+    .use-case-desc { font-size:12px; color:var(--subtext); line-height:1.7; }
+    .post-nav { display:flex; justify-content:space-between; margin-top:28px; padding-top:24px; border-top:1px solid var(--border); gap:12px; }
+    .post-nav a { font-size:15px; color:var(--subtext); text-decoration:none; }
+    .post-nav a:hover { color:var(--text); }
+    .cta-box { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:28px; text-align:center; margin:48px 0 0; }
+    .cta-box p { font-size:17px; color:var(--subtext); margin-bottom:16px; }
+    .cta-btn { display:inline-block; background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border-radius:10px; padding:12px 28px; font-size:14px; font-weight:600; text-decoration:none; }
+    .cta-btn:hover { transform:translateY(-2px); box-shadow:0 8px 24px var(--glow); color:white; }
+    .back-link:hover { color:var(--text); }
+    @media (max-width:640px) {
+      .feature-grid { grid-template-columns:1fr; }
+      .use-case-grid { grid-template-columns:1fr; }
+    }
+  </style>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+<meta property="og:image" content="https://browserkit.online/img/og-browserkit.png" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "CSSUnit 사용법 완전 가이드",
+    "description": "CSSUnit의 모든 기능을 단계별로 설명하는 공식 사용 가이드입니다. px, rem, em, vw, vh, % 단위를 기준값에 맞춰 변환하는 방법을 알아보세요.",
+    "datePublished": "2026-07-09T00:00:00+09:00",
+    "dateModified": "2026-07-09T00:00:00+09:00",
+    "author": { "@type": "Organization", "name": "BrowserKit", "url": "https://browserkit.online" },
+    "publisher": { "@type": "Organization", "name": "BrowserKit", "url": "https://browserkit.online", "logo": { "@type": "ImageObject", "url": "https://browserkit.online/img/og-browserkit.png" } },
+    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://browserkit.online/blog/51-cssunit-howto.html" },
+    "image": "https://browserkit.online/img/og-browserkit.png"
+  }
+  </script>  <link rel="canonical" href="https://browserkit.online/blog/51-cssunit-howto.html" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://browserkit.online/img/og-browserkit.png" />
+  <style>
+    .post-table-wrap { overflow-x:auto; }
+    .post-table th, .post-table td { white-space:nowrap; }
+    .post-nav a { word-break:keep-all; }
+    .post-nav .nav-label { display:block; font-size:13px; color:var(--subtext); opacity:0.7; margin-bottom:4px; }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="container">
+      <a href="/" class="header-brand"><div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Gowun Dodum,sans-serif;flex-shrink:0">B</div><span class="header-brand-text"><span style="color:var(--text)">Browser</span><span style="color:var(--point)">Kit</span></span></a>
+      <a href="/" class="header-back">&#x2190; BrowserKit 홈으로</a>
+    </div>
+  </header>
+
+  <article class="post-wrap">
+    <a href="/blog/" class="back-link">&#x2190; 블로그 목록</a>
+    <span class="post-tag">가이드</span>
+    <h1 class="post-title">CSSUnit 사용법 완전 가이드</h1>
+    <div class="post-date">2026년 7월 9일</div>
+    <div style="margin:12px 0"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+
+    <div class="post-body">
+      <p>CSSUnit은 px, rem, em, vw, vh, % 단위를 기준 폰트 크기와 뷰포트 크기에 맞춰 실시간으로 변환하는 무료 온라인 CSS 단위 변환기입니다. 값을 입력하면 6개 단위로 환산한 결과를 한 번에 확인할 수 있습니다. 모든 계산이 브라우저 내에서만 이루어지므로 입력한 값이 외부 서버로 전송되지 않습니다.</p>
+
+      <h2>주요 기능</h2>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F522;</div>
+          <div class="feature-title">6종 단위 동시 변환</div>
+          <div class="feature-desc">px, rem, em, vw, vh, %를 한 번에 계산해 표로 보여줍니다. 값을 바꾸면 즉시 재계산됩니다.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x2699;&#xFE0F;</div>
+          <div class="feature-title">기준값 커스텀</div>
+          <div class="feature-desc">기준 폰트 크기, 부모 폰트 크기, 뷰포트 너비/높이를 직접 입력해 실제 프로젝트 환경에 맞춘 변환 결과를 얻습니다.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F504;</div>
+          <div class="feature-title">양방향 변환</div>
+          <div class="feature-desc">어느 단위로 입력해도 나머지 5개 단위로 자동 환산됩니다. px에서 rem으로, rem에서 vw로 자유롭게 전환합니다.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F512;</div>
+          <div class="feature-title">완전 로컬 처리</div>
+          <div class="feature-desc">모든 계산이 브라우저 안에서 실행됩니다. 값이 서버로 전송되지 않습니다.</div>
+        </div>
+      </div>
+
+      <div style="margin:12px 0 0"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+
+      <h2>사용법</h2>
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <h3>기준값 설정</h3>
+          <p>상단 <strong>기준값 설정</strong> 카드에서 기준 폰트 크기(rem 기준), 부모 폰트 크기(em/% 기준), 뷰포트 너비/높이(vw/vh 기준)를 실제 사용 중인 CSS 환경에 맞게 입력합니다. 기본값은 각각 16px, 16px, 1920px, 1080px입니다.</p>
+        </div>
+      </div>
+
+      <figure style="margin:12px 0 24px; text-align:center;">
+        <img src="/img/blog/cssunit/01-base.png"
+             alt="CSSUnit 기준값 설정 카드에서 기준 폰트 크기, 부모 폰트 크기, 뷰포트 너비/높이를 입력하는 화면"
+             style="width:100%; max-width:640px; border:1px solid var(--border); border-radius:var(--radius);"
+             loading="lazy" />
+        <figcaption style="font-size:13px; color:var(--subtext); margin-top:6px;">
+          기준값 설정 — 프로젝트 환경에 맞춰 4개 기준값 입력
+        </figcaption>
+      </figure>
+
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <h3>값과 단위 입력</h3>
+          <p>변환할 값을 입력하고, 드롭다운에서 그 값의 단위(px/rem/em/vw/vh/%)를 선택합니다.</p>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <h3>결과 확인 및 복사</h3>
+          <p>아래 표에 6개 단위로 환산된 결과가 모두 표시됩니다. 입력한 단위 행은 강조 표시됩니다. 각 행의 <strong>복사</strong> 버튼으로 값+단위를 바로 클립보드에 복사할 수 있습니다.</p>
+        </div>
+      </div>
+
+      <figure style="margin:12px 0 24px; text-align:center;">
+        <img src="/img/blog/cssunit/02-result.png"
+             alt="CSSUnit 값과 단위를 입력해 px, rem, em, vw, vh, % 6개 단위로 변환된 결과 표가 표시된 화면"
+             style="width:100%; max-width:640px; border:1px solid var(--border); border-radius:var(--radius);"
+             loading="lazy" />
+        <figcaption style="font-size:13px; color:var(--subtext); margin-top:6px;">
+          값 입력 후 6개 단위로 변환된 결과 표
+        </figcaption>
+      </figure>
+
+      <h2>단위별 계산 방식</h2>
+      <div class="post-table-wrap"><table class="post-table">
+        <thead><tr><th>단위</th><th>기준</th><th>px 환산 공식</th></tr></thead>
+        <tbody>
+          <tr><td><code>rem</code></td><td>기준 폰트 크기(root)</td><td><code>값 × 기준 폰트 크기</code></td></tr>
+          <tr><td><code>em</code></td><td>부모 폰트 크기</td><td><code>값 × 부모 폰트 크기</code></td></tr>
+          <tr><td><code>vw</code></td><td>뷰포트 너비</td><td><code>값 × 뷰포트 너비 ÷ 100</code></td></tr>
+          <tr><td><code>vh</code></td><td>뷰포트 높이</td><td><code>값 × 뷰포트 높이 ÷ 100</code></td></tr>
+          <tr><td><code>%</code></td><td>부모 폰트 크기</td><td><code>값 × 부모 폰트 크기 ÷ 100</code></td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="post-warn">
+        <strong>⚠️ 주의:</strong> <code>em</code>과 <code>%</code>는 실제 CSS에서 요소마다 부모의 폰트 크기가 다를 수 있어 계산 결과가 달라집니다. CSSUnit은 입력한 "부모 폰트 크기" 기준값 하나로 통일해 계산하므로, 중첩된 요소에서 <code>em</code>이 누적 적용되는 경우(부모의 부모까지 영향을 주는 경우)는 반영하지 않습니다. 정확한 값이 필요하다면 실제 DOM 구조를 기준으로 직접 확인하세요.
+      </div>
+
+      <h2>활용 예시</h2>
+      <div class="use-case-grid">
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F4D0;</div>
+          <div class="use-case-title">반응형 디자인 값 환산</div>
+          <div class="use-case-desc">디자인 시안의 px 값을 rem이나 vw로 빠르게 환산해 반응형 CSS에 바로 적용합니다.</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F4D6;</div>
+          <div class="use-case-title">타이포그래피 스케일 확인</div>
+          <div class="use-case-desc">기준 폰트 크기를 바꿔가며 rem 기반 폰트 크기 체계가 px로 얼마인지 미리 확인합니다.</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F5A5;&#xFE0F;</div>
+          <div class="use-case-title">뷰포트 단위 계산</div>
+          <div class="use-case-desc">특정 해상도에서 vw/vh 값이 실제 몇 px인지 계산해 히어로 섹션이나 풀스크린 레이아웃을 설계합니다.</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F393;</div>
+          <div class="use-case-title">CSS 단위 학습</div>
+          <div class="use-case-desc">rem, em, vw, vh, % 단위가 서로 어떻게 관계되는지 실제 숫자로 비교하며 학습합니다.</div>
+        </div>
+      </div>
+
+      <div class="post-highlight">&#x1F512; CSSUnit은 모든 계산이 내 PC 브라우저에서만 실행됩니다. 입력한 값이 외부 서버로 전송되지 않습니다.</div>
+    </div>
+
+    <div class="cta-box">
+      <p>px, rem, em, vw, vh, % 단위를 기준값에 맞춰 실시간으로 변환해보세요.<br />값을 입력하면 6개 단위가 한 번에 표시됩니다.</p>
+      <a href="/css-unit/" class="cta-btn" style="display:inline-flex;align-items:center;gap:8px">
+        <span style="display:inline-block;width:26px;height:26px;overflow:hidden;flex-shrink:0"><span style="display:block;transform:scale(0.565);transform-origin:top left"><div style="width:46px;height:46px;background:#bcd4ff;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="font:700 14px Gowun Dodum,sans-serif;color:#2a2433;line-height:1;letter-spacing:-.5px;white-space:nowrap">rem</div></div></span></span>
+        무료로 CSS 단위 변환하기
+      </a>
+    </div>
+    <div style="margin:12px 0"><ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="9500090221"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+
+<div class="post-nav">
+      <a href="/blog/50-urlencode-howto.html"><span class="nav-label">← 이전 글</span>URLEncode 사용법 완전 가이드</a>
+      <a href="/blog/38-chartmaker-howto.html" style="text-align:right"><span class="nav-label">다음 글 →</span>ChartMaker 사용법 완전 가이드</a>
+    </div></div>
+
+  </article>
+  <footer class="footer">
+    <div class="container">
+      <p class="footer-copy">© 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p>
+      <nav class="footer-nav">
+        <a href="/privacy.html">개인정보 처리방침</a>
+        <a href="/terms.html">이용약관</a>
+        <a href="/about.html">서비스 소개</a>
+        <a href="/blog/">블로그</a>
+      </nav>
+    </div>
+  </footer>
+</body>
+</html>

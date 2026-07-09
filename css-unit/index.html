@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <link rel="icon" href="/favicon.ico" sizes="32x32">
+  <link rel="icon" href="/favicon-16.png" sizes="16x16" type="image/png">
+  <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="/favicon-192.png" sizes="192x192" type="image/png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="px, rem, em, vw, vh, % 단위를 기준값에 맞춰 실시간으로 변환하는 무료 온라인 CSS 단위 변환기. 서버 전송 없이 브라우저에서 바로 처리합니다." />
+  <meta property="og:title" content="CSSUnit — CSS 단위 변환기" />
+  <meta property="og:description" content="px, rem, em, vw, vh, % 단위를 기준값에 맞춰 실시간으로 변환하는 무료 온라인 도구입니다." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://browserkit.online/css-unit/" />
+  <title>CSSUnit — CSS 단위 변환기</title>
+  <link rel="stylesheet" href="/css/style.css?v=20260704c" />
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506"
+     crossorigin="anonymous"></script>
+  <style>
+    /* 기준값 설정 */
+    .base-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px 24px; margin-bottom:20px; }
+    .base-card-title { font-size:13px; font-weight:600; color:var(--subtext); margin-bottom:14px; }
+    .base-row { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; }
+    .base-field { display:flex; flex-direction:column; gap:6px; }
+    .base-field label { font-size:12px; color:var(--subtext); }
+    .base-input { background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:9px 12px; font-size:14px; color:var(--text); font-family:'Fira Code',monospace; outline:none; width:100%; }
+    .base-input:focus { border-color:var(--point); }
+
+    /* 입력 영역 */
+    .input-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:24px; margin-bottom:20px; }
+    .input-row { display:flex; gap:12px; align-items:center; flex-wrap:wrap; }
+    .value-input { background:var(--bg); border:1px solid var(--border); border-radius:10px; padding:12px 16px; font-size:20px; font-weight:600; color:var(--text); font-family:'Gowun Dodum',sans-serif; flex:1; min-width:160px; outline:none; transition:border-color 0.2s; }
+    .value-input:focus { border-color:var(--point); }
+    .unit-select { background:var(--bg); border:1px solid var(--border); border-radius:10px; padding:12px 16px; font-size:15px; color:var(--text); font-family:'Gowun Dodum',sans-serif; min-width:120px; outline:none; cursor:pointer; transition:border-color 0.2s; }
+    .unit-select:focus { border-color:var(--point); }
+    .input-label { font-size:13px; color:var(--subtext); margin-bottom:10px; }
+
+    /* 결과 테이블 */
+    .result-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); overflow:hidden; margin-bottom:48px; }
+    .result-table { width:100%; border-collapse:collapse; }
+    .result-table th { background:var(--bg); padding:12px 16px; text-align:left; font-size:12px; font-weight:600; color:var(--subtext); border-bottom:1px solid var(--border); }
+    .result-table td { padding:13px 16px; border-bottom:1px solid var(--border); font-size:14px; color:var(--text); }
+    .result-table tr:last-child td { border-bottom:none; }
+    .result-table tr:hover td { background:rgba(123,108,255,0.04); }
+    .result-table tr.highlight td { background:rgba(123,108,255,0.08); }
+    .result-table tr.highlight .val-cell { color:var(--point-hover); font-weight:700; font-size:15px; }
+    .unit-name { color:var(--subtext); font-size:13px; }
+    .unit-sym { font-family:'Fira Code',monospace; font-weight:600; color:var(--text); }
+    .val-cell { font-family:'Fira Code',monospace; font-weight:500; }
+    .copy-btn { background:rgba(123,108,255,0.1); border:1px solid var(--border); border-radius:6px; padding:4px 10px; font-size:11px; color:var(--point-hover); cursor:pointer; font-family:'Gowun Dodum',sans-serif; transition:all 0.2s; white-space:nowrap; }
+    .copy-btn:hover { background:rgba(123,108,255,0.22); }
+    .copy-btn.copied { background:rgba(52,211,153,0.12); color:var(--success); border-color:var(--success); }
+
+    .notice { margin:0 0 20px; padding:12px 16px; background:rgba(123,108,255,0.07); border:1px solid var(--border); border-radius:10px; font-size:13px; color:var(--subtext); line-height:1.7; }
+
+    .error-msg { color:#F87171; font-size:13px; margin-top:8px; display:none; }
+    .error-msg.show { display:block; }
+
+    .toast { position:fixed; bottom:32px; left:50%; transform:translateX(-50%) translateY(80px); background:var(--success); color:#fff; border-radius:999px; padding:10px 24px; font-size:14px; font-weight:600; opacity:0; pointer-events:none; z-index:999; transition:all 0.3s ease; }
+    .toast.show { transform:translateX(-50%) translateY(0); opacity:1; }
+
+    .footer { border-top:1px solid var(--border); padding:32px 0; text-align:center; }
+    .footer-copy { color:var(--subtext); font-size:13px; margin-bottom:12px; }
+    .footer-nav { display:flex; justify-content:center; gap:20px; flex-wrap:wrap; }
+    .footer-nav a { color:var(--subtext); font-size:13px; text-decoration:none; }
+    .footer-nav a:hover { color:var(--text); }
+
+    @media (max-width:640px) {
+      .hero-title { font-size:24px; }
+      .base-row { grid-template-columns:1fr 1fr; }
+      .input-row { flex-direction:column; align-items:stretch; }
+      .value-input, .unit-select { width:100%; }
+    }
+  </style>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+  <meta property="og:image" content="https://browserkit.online/img/og-browserkit.png" />
+  <link rel="canonical" href="https://browserkit.online/css-unit/" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://browserkit.online/img/og-browserkit.png" />
+</head>
+
+<body>
+  <header class="header">
+    <div class="container">
+      <a href="/" class="header-brand">
+        <div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Gowun Dodum,sans-serif;flex-shrink:0">B</div>
+        <span class="header-brand-text"><span style="color:var(--text)">Browser</span><span style="color:var(--point)">Kit</span></span>
+      </a>
+      <a href="/" class="header-back">&#x2190; BrowserKit 홈으로</a>
+    </div>
+  </header>
+
+  <main><div class="container">
+    <div class="hero">
+      <div class="hero-icon" style="height:78px;display:flex;justify-content:center;align-items:center"><div style="transform:scale(1.7);transform-origin:center"><div style="width:46px;height:46px;background:#bcd4ff;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="font:700 14px Gowun Dodum,sans-serif;color:#2a2433;line-height:1;letter-spacing:-.5px;white-space:nowrap">rem</div></div></div></div>
+      <div class="hero-title-wrap"><h1 class="hero-title">CSSUnit</h1><a href="/blog/51-cssunit-howto.html" class="hero-guide-link">사용법 가이드 보기</a></div>
+      <p class="hero-desc">px, rem, em, vw, vh, % 단위를 기준값에 맞춰 실시간으로 변환하세요</p>
+      <div class="hero-badges">
+        <span class="badge">🔒 완전 로컬 처리</span>
+        <span class="badge">⚡ 무료 사용</span>
+        <span class="badge">🛡️ 서버 전송 없음</span>
+        <span class="badge">📦 설치 불필요</span>
+      </div>
+    </div>
+    <div style="margin:0 0 12px"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+
+    <p class="notice">💡 <code>em</code>과 <code>%</code>는 부모 요소의 폰트 크기(또는 기준 크기)에 따라 실제 값이 달라집니다. 아래 기준값을 실제 사용 중인 CSS 환경에 맞춰 입력하면 더 정확한 결과를 볼 수 있습니다.</p>
+
+    <!-- 기준값 설정 -->
+    <div class="base-card">
+      <div class="base-card-title">⚙️ 기준값 설정</div>
+      <div class="base-row">
+        <div class="base-field">
+          <label>기준 폰트 크기 (rem 기준, px)</label>
+          <input type="number" class="base-input" id="base-root" value="16" min="1" />
+        </div>
+        <div class="base-field">
+          <label>부모 폰트 크기 (em/% 기준, px)</label>
+          <input type="number" class="base-input" id="base-parent" value="16" min="1" />
+        </div>
+        <div class="base-field">
+          <label>뷰포트 너비 (vw 기준, px)</label>
+          <input type="number" class="base-input" id="base-vpw" value="1920" min="1" />
+        </div>
+        <div class="base-field">
+          <label>뷰포트 높이 (vh 기준, px)</label>
+          <input type="number" class="base-input" id="base-vph" value="1080" min="1" />
+        </div>
+      </div>
+    </div>
+
+    <!-- 입력 -->
+    <div class="input-card">
+      <div class="input-label">변환할 값과 단위를 선택하세요</div>
+      <div class="input-row">
+        <input type="number" class="value-input" id="value-input" placeholder="0" value="16" />
+        <select class="unit-select" id="unit-select">
+          <option value="px">px</option>
+          <option value="rem">rem</option>
+          <option value="em">em</option>
+          <option value="vw">vw</option>
+          <option value="vh">vh</option>
+          <option value="%">%</option>
+        </select>
+      </div>
+      <div class="error-msg" id="error-msg">올바른 숫자를 입력해주세요.</div>
+    </div>
+
+    <!-- 결과 -->
+    <div class="result-card">
+      <table class="result-table">
+        <thead>
+          <tr>
+            <th>단위</th>
+            <th>변환 결과</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="result-body"></tbody>
+      </table>
+    </div>
+
+    <div style="margin:12px 0"><ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="9500090221"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+  </div></main>
+
+  <footer class="footer">
+    <div class="container">
+      <p class="footer-copy">&#xa9; 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p>
+      <nav class="footer-nav">
+        <a href="/privacy.html">개인정보 처리방침</a>
+        <a href="/terms.html">이용약관</a>
+        <a href="/about.html">서비스 소개</a>
+        <a href="/blog/">블로그</a>
+      </nav>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+  var UNITS = [
+    { key: 'px',  name: '픽셀',       sym: 'px' },
+    { key: 'rem', name: '루트 em',    sym: 'rem' },
+    { key: 'em',  name: '부모 em',    sym: 'em' },
+    { key: 'vw',  name: '뷰포트 너비', sym: 'vw' },
+    { key: 'vh',  name: '뷰포트 높이', sym: 'vh' },
+    { key: '%',   name: '퍼센트',     sym: '%' }
+  ];
+
+  var baseRoot   = document.getElementById('base-root');
+  var baseParent = document.getElementById('base-parent');
+  var baseVpw    = document.getElementById('base-vpw');
+  var baseVph    = document.getElementById('base-vph');
+  var valueInput = document.getElementById('value-input');
+  var unitSelect = document.getElementById('unit-select');
+  var errorMsg   = document.getElementById('error-msg');
+  var resultBody = document.getElementById('result-body');
+
+  function bases() {
+    return {
+      root: parseFloat(baseRoot.value) || 16,
+      parent: parseFloat(baseParent.value) || 16,
+      vpw: parseFloat(baseVpw.value) || 1920,
+      vph: parseFloat(baseVph.value) || 1080
+    };
+  }
+
+  // 각 단위 → px 변환
+  function toPx(value, unit, b) {
+    if (unit === 'px') return value;
+    if (unit === 'rem') return value * b.root;
+    if (unit === 'em') return value * b.parent;
+    if (unit === 'vw') return value * b.vpw / 100;
+    if (unit === 'vh') return value * b.vph / 100;
+    if (unit === '%') return value * b.parent / 100;
+    return value;
+  }
+
+  // px → 각 단위 변환
+  function fromPx(px, unit, b) {
+    if (unit === 'px') return px;
+    if (unit === 'rem') return px / b.root;
+    if (unit === 'em') return px / b.parent;
+    if (unit === 'vw') return px / (b.vpw / 100);
+    if (unit === 'vh') return px / (b.vph / 100);
+    if (unit === '%') return px / (b.parent / 100);
+    return px;
+  }
+
+  function formatNum(v) {
+    if (v === null || v === undefined || isNaN(v)) return '—';
+    var abs = Math.abs(v);
+    if (abs === 0) return '0';
+    if (abs >= 1e12 || (abs < 1e-6 && abs > 0)) {
+      return v.toExponential(6).replace(/\.?0+e/, 'e');
+    }
+    var s = parseFloat(v.toPrecision(8)).toString();
+    if (s.indexOf('.') > -1) s = s.replace(/\.?0+$/, '');
+    return s;
+  }
+
+  function convert() {
+    var raw = valueInput.value.trim();
+    if (raw === '') {
+      resultBody.innerHTML = '<tr><td colspan="3" style="text-align:center;color:var(--subtext);padding:32px;">값을 입력하면 변환 결과가 표시됩니다.</td></tr>';
+      errorMsg.classList.remove('show');
+      return;
+    }
+    var val = parseFloat(raw);
+    if (isNaN(val)) {
+      errorMsg.classList.add('show');
+      resultBody.innerHTML = '';
+      return;
+    }
+    errorMsg.classList.remove('show');
+
+    var b = bases();
+    var fromUnit = unitSelect.value;
+    var px = toPx(val, fromUnit, b);
+
+    var rows = UNITS.map(function(u) {
+      var result = fromPx(px, u.key, b);
+      var isActive = u.key === fromUnit;
+      return '<tr class="' + (isActive ? 'highlight' : '') + '">' +
+        '<td><span class="unit-sym">' + u.sym + '</span> <span class="unit-name">' + u.name + '</span></td>' +
+        '<td class="val-cell">' + formatNum(result) + '</td>' +
+        '<td><button class="copy-btn" data-val="' + formatNum(result) + '" data-unit="' + u.sym + '">복사</button></td>' +
+        '</tr>';
+    }).join('');
+    resultBody.innerHTML = rows;
+
+    resultBody.querySelectorAll('.copy-btn').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var text = btn.dataset.val + btn.dataset.unit;
+        navigator.clipboard.writeText(text).then(function() {
+          btn.textContent = '✓';
+          btn.classList.add('copied');
+          setTimeout(function() { btn.textContent = '복사'; btn.classList.remove('copied'); }, 1500);
+          showToast('✓ ' + text + ' 복사됨');
+        });
+      });
+    });
+  }
+
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(function() { t.classList.remove('show'); }, 2000);
+  }
+
+  [valueInput, unitSelect, baseRoot, baseParent, baseVpw, baseVph].forEach(function(el) {
+    el.addEventListener('input', convert);
+  });
+
+  convert();
+  </script>
+</body>
+</html>

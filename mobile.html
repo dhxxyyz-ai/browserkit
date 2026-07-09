@@ -59,7 +59,8 @@ const TOOL_URLS = {
   WorldClock:'/world-clock/', JSONFormat:'/json-format/', RegexTest:'/regex-test/', Base64Tool:'/base64-tool/',
   HashGen:'/hash-gen/', ChartMaker:'/chart-maker/', ImageText:'/image-text/', ImageFilter:'/image-filter/',
   ImageCollage:'/image-collage/', PixelArt:'/pixel-art/', MosaicMaker:'/mosaic-maker/', PDFSplit:'/pdf-split/',
-  LineNumber:'/line-number/', CurrencyCalc:'/currency-calc/', Minifier:'/minifier/', URLEncode:'/url-encode/'
+  LineNumber:'/line-number/', CurrencyCalc:'/currency-calc/', Minifier:'/minifier/', URLEncode:'/url-encode/',
+  CSSUnit:'/css-unit/'
 };
 
 const BLOG_URLS = {
@@ -110,7 +111,8 @@ const BLOG_URLS = {
   'LineNumber 사용법 완전 가이드':'/blog/47-linenumber-howto.html',
   'CurrencyCalc 사용법 완전 가이드':'/blog/48-currencycalc-howto.html',
   'Minifier 사용법 완전 가이드':'/blog/49-minifier-howto.html',
-  'URLEncode 사용법 완전 가이드':'/blog/50-urlencode-howto.html'
+  'URLEncode 사용법 완전 가이드':'/blog/50-urlencode-howto.html',
+  'CSSUnit 사용법 완전 가이드':'/blog/51-cssunit-howto.html'
 };
 
 const INFO_URLS = {
@@ -130,7 +132,7 @@ const TOOLBOX_CATS = [
   { label:'이미지 편집',   keys:['FitImage','CropImage','WatermarkImage','ColorPicker','ImageBright','BGRemove','ImageText','ImageFilter','ImageCollage','PixelArt','MosaicMaker'] },
   { label:'문서·텍스트',   keys:['PDFMerge','PDFSplit','TextTools','DiffChecker','MarkdownEditor','FindReplace','LineNumber'] },
   { label:'유틸리티',      keys:['QRCode','PasswordGen','UnitConvert','DateCalc','WorldClock','CurrencyCalc'] },
-  { label:'개발자',        keys:['JSONFormat','RegexTest','Base64Tool','HashGen','Minifier','URLEncode'] },
+  { label:'개발자',        keys:['JSONFormat','RegexTest','Base64Tool','HashGen','Minifier','URLEncode','CSSUnit'] },
   { label:'데이터·시각화', keys:['ChartMaker'] }
 ];
 
@@ -152,7 +154,7 @@ const SEARCH_TOOLS = [
   {code:'PixelArt',name:'픽셀 아트 변환'},{code:'MosaicMaker',name:'모자이크 생성기'},
   {code:'PDFSplit',name:'PDF 분할'},{code:'LineNumber',name:'줄 번호 추가'},
   {code:'CurrencyCalc',name:'환율 계산기'},{code:'Minifier',name:'코드 압축기'},
-  {code:'URLEncode',name:'URL 인코더'}
+  {code:'URLEncode',name:'URL 인코더'},{code:'CSSUnit',name:'CSS 단위 변환기'}
 ];
 
 const TOOL_LABEL   = Object.fromEntries(SEARCH_TOOLS.map(t => [t.code, t.name]));
@@ -170,7 +172,7 @@ function glyphInfo(code) {
     JSONFormat:'token:{ }', RegexTest:'token:.*', Base64Tool:'token:64', HashGen:'token:#',
     ChartMaker:'chart', ImageText:'token:T', ImageFilter:'halfcircle', ImageCollage:'collage', PixelArt:'pixelart',
     MosaicMaker:'mosaic', PDFSplit:'split', LineNumber:'linenum', CurrencyCalc:'currency', Minifier:'token:<>',
-    URLEncode:'token:%20'
+    URLEncode:'token:%20', CSSUnit:'token:rem'
   };
   const v = m[code];
   if (!v) return { glyph:'token', token:'+' };
