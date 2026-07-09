@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="ImageFilter의 모든 기능을 단계별로 설명하는 공식 사용 가이드입니다. 흑백, 세피아, 빈티지 등 12가지 필터를 원클릭으로 적용하는 방법을 알아보세요." />
+  <meta property="og:title" content="ImageFilter 사용법 완전 가이드 — BrowserKit" />
+  <meta property="og:description" content="흑백, 세피아, 빈티지 등 12가지 필터를 원클릭으로 적용하는 ImageFilter 공식 가이드입니다. 서버 전송 없이 브라우저에서 바로 처리합니다." />
+  <meta property="og:type" content="article" />
+  <title>ImageFilter 사용법 완전 가이드 — BrowserKit</title>
+  <link rel="stylesheet" href="/css/style.css?v=20260704c" />
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506"
+     crossorigin="anonymous"></script>
+  <style>
+    .feature-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:20px 0; }
+    .feature-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px; }
+    .feature-card:hover { border-color:var(--point); }
+    .feature-icon { font-size:24px; margin-bottom:10px; }
+    .feature-title { font-size:14px; font-weight:600; color:var(--text); margin-bottom:6px; }
+    .feature-desc { font-size:13px; color:var(--subtext); line-height:1.7; }
+    .step-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px 24px; margin:16px 0; display:flex; gap:16px; align-items:flex-start; }
+    .step-num { min-width:36px; height:36px; background:linear-gradient(135deg,var(--point),var(--point-hover)); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:700; color:white; flex-shrink:0; font-family:'Gowun Dodum',sans-serif; }
+    .step-content h3 { font-size:15px; font-weight:600; margin-bottom:6px; color:var(--text); }
+    .step-content p { font-size:14px; color:var(--subtext); line-height:1.7; margin:0; }
+    .filter-demo-grid { display:flex; gap:8px; flex-wrap:wrap; margin:16px 0; }
+    .filter-demo-chip { background:var(--card); border:1px solid var(--border); border-radius:10px; padding:8px 14px; font-size:13px; font-weight:600; color:var(--subtext); }
+    .filter-demo-chip.on { background:rgba(123,108,255,0.15); border-color:var(--point); color:var(--point-hover); }
+    .post-table { width:100%; border-collapse:collapse; margin:20px 0; font-size:15px; }
+    .post-table th { background:var(--card); padding:12px 16px; text-align:left; font-weight:600; border:1px solid var(--border); color:var(--text); }
+    .post-table td { padding:11px 16px; border:1px solid var(--border); color:var(--subtext); line-height:1.7; }
+    .post-table tr:hover td { background:rgba(123,108,255,0.04); }
+    .use-case-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:20px 0; }
+    .use-case-card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:18px; }
+    .use-case-icon { font-size:28px; margin-bottom:8px; }
+    .use-case-title { font-size:13px; font-weight:600; color:var(--text); margin-bottom:6px; }
+    .use-case-desc { font-size:12px; color:var(--subtext); line-height:1.7; }
+    .post-nav { display:flex; justify-content:space-between; margin-top:28px; padding-top:24px; border-top:1px solid var(--border); gap:12px; }
+    .post-nav a { font-size:15px; color:var(--subtext); text-decoration:none; }
+    .post-nav a:hover { color:var(--text); }
+    .cta-box { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:28px; text-align:center; margin:48px 0 0; }
+    .cta-box p { font-size:17px; color:var(--subtext); margin-bottom:16px; }
+    .cta-btn { display:inline-block; background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border-radius:10px; padding:12px 28px; font-size:14px; font-weight:600; text-decoration:none; }
+    .cta-btn:hover { transform:translateY(-2px); box-shadow:0 8px 24px var(--glow); color:white; }
+    .back-link:hover { color:var(--text); }
+    @media (max-width:640px) {
+      .feature-grid { grid-template-columns:1fr; }
+      .use-case-grid { grid-template-columns:1fr; }
+    }
+  </style>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+<meta property="og:image" content="https://browserkit.online/img/og-browserkit.png" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "ImageFilter 사용법 완전 가이드",
+    "description": "ImageFilter의 모든 기능을 단계별로 설명하는 공식 사용 가이드입니다. 흑백, 세피아, 빈티지 등 12가지 필터를 원클릭으로 적용하는 방법을 알아보세요.",
+    "datePublished": "2026-07-09T00:00:00+09:00",
+    "dateModified": "2026-07-09T00:00:00+09:00",
+    "author": { "@type": "Organization", "name": "BrowserKit", "url": "https://browserkit.online" },
+    "publisher": { "@type": "Organization", "name": "BrowserKit", "url": "https://browserkit.online", "logo": { "@type": "ImageObject", "url": "https://browserkit.online/img/og-browserkit.png" } },
+    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://browserkit.online/blog/42-imagefilter-howto.html" },
+    "image": "https://browserkit.online/img/og-browserkit.png"
+  }
+  </script>  <link rel="canonical" href="https://browserkit.online/blog/42-imagefilter-howto.html" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://browserkit.online/img/og-browserkit.png" />
+  <style>
+    .post-table-wrap { overflow-x:auto; }
+    .post-table th, .post-table td { white-space:nowrap; }
+    .post-nav a { word-break:keep-all; }
+    .post-nav .nav-label { display:block; font-size:13px; color:var(--subtext); opacity:0.7; margin-bottom:4px; }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="container">
+      <a href="/" class="header-brand"><div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Gowun Dodum,sans-serif;flex-shrink:0">B</div><span class="header-brand-text"><span style="color:var(--text)">Browser</span><span style="color:var(--point)">Kit</span></span></a>
+      <a href="/" class="header-back">&#x2190; BrowserKit 홈으로</a>
+    </div>
+  </header>
+
+  <article class="post-wrap">
+    <a href="/blog/" class="back-link">&#x2190; 블로그 목록</a>
+    <span class="post-tag">가이드</span>
+    <h1 class="post-title">ImageFilter 사용법 완전 가이드</h1>
+    <div class="post-date">2026년 7월 9일</div>
+    <div style="margin:12px 0"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+
+    <div class="post-body">
+      <p>ImageFilter는 이미지에 흑백, 세피아, 빈티지 등 인스타그램 스타일 필터를 원클릭으로 적용하는 무료 온라인 도구입니다. 필터를 적용한 뒤 밝기, 대비, 선명도를 세밀하게 추가 조절할 수 있어 원하는 느낌을 정확히 맞출 수 있습니다. 모든 처리가 브라우저 내에서만 이루어지므로 업로드한 이미지가 외부 서버로 전송되지 않습니다.</p>
+
+      <h2>주요 기능</h2>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F3A8;</div>
+          <div class="feature-title">필터 12종</div>
+          <div class="feature-desc">흑백, 세피아, 빈티지, 블러, 샤프화, 네거티브, 비네트, 대비 강화, 안개 효과, 스케치, 만화, 밤 풍경 필터를 클릭 한 번으로 적용합니다.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x2728;</div>
+          <div class="feature-title">실시간 미리보기</div>
+          <div class="feature-desc">필터를 클릭하는 즉시 오른쪽 결과 캔버스에 반영되어 여러 필터를 빠르게 비교할 수 있습니다.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x2699;&#xFE0F;</div>
+          <div class="feature-title">세부 조절 슬라이더</div>
+          <div class="feature-desc">필터 적용 후 밝기, 대비, 선명도를 추가로 조절해 원하는 느낌으로 미세 보정할 수 있습니다.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F5BC;&#xFE0F;</div>
+          <div class="feature-title">JPG / PNG 저장</div>
+          <div class="feature-desc">완성된 이미지를 JPG 또는 PNG 형식으로 다운로드합니다.</div>
+        </div>
+      </div>
+
+      <div style="margin:12px 0 0"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+      <h2>사용법</h2>
+
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <h3>이미지 업로드</h3>
+          <p>업로드 존을 클릭하거나 이미지를 드래그해 불러옵니다. JPG, PNG, WEBP 형식을 지원합니다. 업로드하면 왼쪽에 원본, 오른쪽에 필터 결과가 나란히 표시됩니다.</p>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <h3>필터 선택</h3>
+          <p>필터 그리드에서 원하는 필터를 클릭합니다. 클릭 즉시 오른쪽 결과 캔버스에 필터가 적용되며, 다른 필터를 클릭하면 이전 필터는 자동으로 해제됩니다.</p>
+        </div>
+      </div>
+
+      <h3>필터 목록</h3>
+      <div class="filter-demo-grid">
+        <span class="filter-demo-chip on">원본</span>
+        <span class="filter-demo-chip">흑백</span>
+        <span class="filter-demo-chip">세피아</span>
+        <span class="filter-demo-chip">빈티지</span>
+        <span class="filter-demo-chip">블러</span>
+        <span class="filter-demo-chip">샤프화</span>
+        <span class="filter-demo-chip">네거티브</span>
+        <span class="filter-demo-chip">비네트</span>
+        <span class="filter-demo-chip">대비 강화</span>
+        <span class="filter-demo-chip">안개 효과</span>
+        <span class="filter-demo-chip">스케치</span>
+        <span class="filter-demo-chip">만화</span>
+        <span class="filter-demo-chip">밤 풍경</span>
+      </div>
+
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <h3>세부 조절 (선택)</h3>
+          <p>필터를 적용한 상태에서 밝기, 대비, 선명도 슬라이더를 조절하면 필터 효과 위에 추가로 보정이 적용됩니다. 슬라이더 값은 필터를 바꿔도 유지되므로, 마음에 드는 밝기·대비를 먼저 잡아두고 여러 필터를 비교해볼 수도 있습니다.</p>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <h3>저장</h3>
+          <p><strong>⬇ JPG 저장</strong> 또는 <strong>⬇ PNG 저장</strong> 버튼을 클릭해 완성된 이미지를 다운로드합니다.</p>
+        </div>
+      </div>
+
+      <h2>필터별 특징</h2>
+      <div class="post-table-wrap"><table class="post-table">
+        <thead><tr><th>필터</th><th>효과</th><th>추천 사진</th></tr></thead>
+        <tbody>
+          <tr><td><strong>흑백</strong></td><td>색상을 제거하고 명암만 남깁니다.</td><td>인물, 건축 사진</td></tr>
+          <tr><td><strong>세피아</strong></td><td>갈색 톤의 옛날 사진 느낌을 줍니다.</td><td>추억 사진, 기록물</td></tr>
+          <tr><td><strong>빈티지</strong></td><td>세피아 톤 + 대비 감소 + 가장자리 어둡게 처리를 함께 적용합니다.</td><td>필름 감성 사진</td></tr>
+          <tr><td><strong>블러</strong></td><td>이미지 전체를 부드럽게 흐리게 처리합니다.</td><td>배경 사진, 텍스처</td></tr>
+          <tr><td><strong>샤프화</strong></td><td>가장자리를 또렷하게 강조합니다.</td><td>흐릿한 사진 보정</td></tr>
+          <tr><td><strong>네거티브</strong></td><td>모든 색상을 반전시킵니다.</td><td>실험적인 편집</td></tr>
+          <tr><td><strong>비네트</strong></td><td>가장자리를 어둡게 해 시선을 중앙으로 모읍니다.</td><td>인물, 제품 사진</td></tr>
+          <tr><td><strong>대비 강화</strong></td><td>밝은 곳은 더 밝게, 어두운 곳은 더 어둡게 만듭니다.</td><td>흐릿하고 밋밋한 사진</td></tr>
+          <tr><td><strong>안개 효과</strong></td><td>흰색을 섞어 뿌옇고 몽환적인 느낌을 줍니다.</td><td>풍경, 감성 사진</td></tr>
+          <tr><td><strong>스케치</strong></td><td>경계선만 남겨 연필 스케치처럼 변환합니다.</td><td>인물 라인 드로잉</td></tr>
+          <tr><td><strong>만화</strong></td><td>색상 단계를 줄이고 채도를 높여 카툰 느낌을 줍니다.</td><td>일러스트풍 편집</td></tr>
+          <tr><td><strong>밤 풍경</strong></td><td>어둡게 낮추고 푸른 톤을 더해 야간 분위기를 만듭니다.</td><td>도시 야경, 밤하늘</td></tr>
+        </tbody>
+      </table></div>
+
+      <h2>활용 예시</h2>
+      <div class="use-case-grid">
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F4F8;</div>
+          <div class="use-case-title">SNS 게시물 보정</div>
+          <div class="use-case-desc">인스타그램, 블로그에 올릴 사진에 원하는 감성의 필터를 빠르게 적용합니다.</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F3AC;</div>
+          <div class="use-case-title">필름 감성 연출</div>
+          <div class="use-case-desc">빈티지·세피아 필터로 옛날 필름 카메라로 찍은 듯한 분위기를 냅니다.</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F5BC;&#xFE0F;</div>
+          <div class="use-case-title">발표 자료용 이미지</div>
+          <div class="use-case-desc">흑백·스케치 필터로 발표 슬라이드에 어울리는 톤을 통일합니다.</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F4DD;</div>
+          <div class="use-case-title">블로그 대표 이미지</div>
+          <div class="use-case-desc">안개 효과, 대비 강화 필터로 글의 분위기에 맞는 썸네일을 빠르게 만듭니다.</div>
+        </div>
+      </div>
+
+      <div class="post-highlight">&#x1F512; ImageFilter는 모든 처리가 브라우저 내에서만 이루어집니다. 업로드한 이미지가 외부 서버로 전송되지 않으므로, 아직 공개하지 않은 이미지도 안전하게 편집할 수 있습니다.</div>
+    </div>
+
+    <div class="cta-box">
+      <p>흑백, 세피아, 빈티지 등 12가지 필터를 원클릭으로 적용해보세요.<br />밝기·대비·선명도까지 세밀하게 조절할 수 있습니다.</p>
+      <a href="/image-filter/" class="cta-btn" style="display:inline-flex;align-items:center;gap:8px">
+        <span style="display:inline-block;width:26px;height:26px;overflow:hidden;flex-shrink:0"><span style="display:block;transform:scale(0.565);transform-origin:top left"><div style="width:46px;height:46px;background:#ffb3c7;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="font:700 18px Gowun Dodum,sans-serif;color:#2a2433;line-height:1">F</div></div></span></span>
+        무료로 필터 적용하기
+      </a>
+    </div>
+    <div style="margin:12px 0"><ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="9500090221"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+
+<div class="post-nav">
+      <a href="/blog/41-imagetext-howto.html"><span class="nav-label">← 이전 글</span>ImageText 사용법 완전 가이드</a>
+      <a href="/blog/18-pdfmerge-howto.html" style="text-align:right"><span class="nav-label">다음 글 →</span>PDFMerge 사용법 완전 가이드</a>
+    </div></div>
+
+  </article>
+  <footer class="footer">
+    <div class="container">
+      <p class="footer-copy">© 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p>
+      <nav class="footer-nav">
+        <a href="/privacy.html">개인정보 처리방침</a>
+        <a href="/terms.html">이용약관</a>
+        <a href="/about.html">서비스 소개</a>
+        <a href="/blog/">블로그</a>
+      </nav>
+    </div>
+  </footer>
+</body>
+</html>

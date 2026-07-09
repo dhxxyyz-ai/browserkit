@@ -52,7 +52,7 @@ const TOOL_URLS = {
   DiffChecker:'/diff-checker/', MarkdownEditor:'/markdown-editor/', FindReplace:'/find-replace/',
   QRCode:'/qr-code/', PasswordGen:'/password-gen/', UnitConvert:'/unit-convert/', DateCalc:'/date-calc/',
   WorldClock:'/world-clock/', JSONFormat:'/json-format/', RegexTest:'/regex-test/', Base64Tool:'/base64-tool/',
-  HashGen:'/hash-gen/', ChartMaker:'/chart-maker/', ImageText:'/image-text/'
+  HashGen:'/hash-gen/', ChartMaker:'/chart-maker/', ImageText:'/image-text/', ImageFilter:'/image-filter/'
 };
 
 const BLOG_URLS = {
@@ -94,7 +94,8 @@ const BLOG_URLS = {
   'HashGen 사용법 완전 가이드':'/blog/36-hashgen-howto.html',
   'FindReplace 사용법 완전 가이드':'/blog/37-findreplace-howto.html',
   'ChartMaker 사용법 완전 가이드':'/blog/38-chartmaker-howto.html',
-  'ImageText 사용법 완전 가이드':'/blog/41-imagetext-howto.html'
+  'ImageText 사용법 완전 가이드':'/blog/41-imagetext-howto.html',
+  'ImageFilter 사용법 완전 가이드':'/blog/42-imagefilter-howto.html'
 };
 
 const INFO_URLS = {
@@ -111,7 +112,7 @@ const PAL = {
 
 const TOOLBOX_CATS = [
   { label:'개인정보',      keys:['MaskPrivacy','MaskPDF','MaskFace','MaskDoc'] },
-  { label:'이미지 편집',   keys:['FitImage','CropImage','WatermarkImage','ColorPicker','ImageBright','BGRemove','ImageText'] },
+  { label:'이미지 편집',   keys:['FitImage','CropImage','WatermarkImage','ColorPicker','ImageBright','BGRemove','ImageText','ImageFilter'] },
   { label:'문서·텍스트',   keys:['PDFMerge','TextTools','DiffChecker','MarkdownEditor','FindReplace'] },
   { label:'유틸리티',      keys:['QRCode','PasswordGen','UnitConvert','DateCalc','WorldClock'] },
   { label:'개발자',        keys:['JSONFormat','RegexTest','Base64Tool','HashGen'] },
@@ -131,7 +132,8 @@ const SEARCH_TOOLS = [
   {code:'DateCalc',name:'날짜 계산기'},{code:'WorldClock',name:'세계 시간'},
   {code:'JSONFormat',name:'JSON 포맷터'},{code:'RegexTest',name:'정규식 테스터'},
   {code:'Base64Tool',name:'Base64 변환'},{code:'HashGen',name:'해시 생성기'},
-  {code:'ChartMaker',name:'차트 생성기'},{code:'ImageText',name:'이미지 텍스트 추가'}
+  {code:'ChartMaker',name:'차트 생성기'},{code:'ImageText',name:'이미지 텍스트 추가'},
+  {code:'ImageFilter',name:'이미지 필터'}
 ];
 
 const TOOL_LABEL   = Object.fromEntries(SEARCH_TOOLS.map(t => [t.code, t.name]));
@@ -147,7 +149,7 @@ function glyphInfo(code) {
     FindReplace:'search', ImageBright:'sun', BGRemove:'token:BG',
     QRCode:'qr', PasswordGen:'key', UnitConvert:'token:↔', DateCalc:'calendar', WorldClock:'clock',
     JSONFormat:'token:{ }', RegexTest:'token:.*', Base64Tool:'token:64', HashGen:'token:#',
-    ChartMaker:'chart', ImageText:'token:T'
+    ChartMaker:'chart', ImageText:'token:T', ImageFilter:'token:F'
   };
   const v = m[code];
   if (!v) return { glyph:'token', token:'+' };
