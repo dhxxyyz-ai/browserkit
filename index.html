@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="BrowserKit — 설치 없이 브라우저에서 바로 쓰는 무료 도구 27가지. 개인정보 마스킹, 얼굴 블러, PDF 편집, QR 코드, JSON 포맷터, 차트 생성까지. 서버 전송 없이 완전 로컬 처리합니다.">
+  <meta name="description" content="BrowserKit — 설치 없이 브라우저에서 바로 쓰는 무료 도구 28가지. 개인정보 마스킹, 얼굴 블러, PDF 편집, QR 코드, JSON 포맷터, 차트 생성까지. 서버 전송 없이 완전 로컬 처리합니다.">
   <meta property="og:title" content="BrowserKit — 브라우저 기반 무료 도구 모음">
   <meta property="og:description" content="서버 전송 없이 브라우저에서 바로 쓰는 무료 도구 모음. 개인정보 마스킹, 이미지 편집, PDF 처리.">
   <meta property="og:type" content="website">
@@ -71,7 +71,8 @@ const TOOL_URLS = {
   DiffChecker:'/diff-checker/', MarkdownEditor:'/markdown-editor/', FindReplace:'/find-replace/',
   QRCode:'/qr-code/', PasswordGen:'/password-gen/', UnitConvert:'/unit-convert/', DateCalc:'/date-calc/',
   WorldClock:'/world-clock/', JSONFormat:'/json-format/', RegexTest:'/regex-test/', Base64Tool:'/base64-tool/',
-  HashGen:'/hash-gen/', ChartMaker:'/chart-maker/', ImageText:'/image-text/', ImageFilter:'/image-filter/'
+  HashGen:'/hash-gen/', ChartMaker:'/chart-maker/', ImageText:'/image-text/', ImageFilter:'/image-filter/',
+  ImageCollage:'/image-collage/'
 };
 
 const BLOG_URLS = {
@@ -114,7 +115,8 @@ const BLOG_URLS = {
   'FindReplace 사용법 완전 가이드':'/blog/37-findreplace-howto.html',
   'ChartMaker 사용법 완전 가이드':'/blog/38-chartmaker-howto.html',
   'ImageText 사용법 완전 가이드':'/blog/41-imagetext-howto.html',
-  'ImageFilter 사용법 완전 가이드':'/blog/42-imagefilter-howto.html'
+  'ImageFilter 사용법 완전 가이드':'/blog/42-imagefilter-howto.html',
+  'ImageCollage 사용법 완전 가이드':'/blog/43-imagecollage-howto.html'
 };
 
 const INFO_URLS = {
@@ -160,7 +162,7 @@ function glyphInfo(code) {
     FindReplace:'search', ImageBright:'sun', BGRemove:'token:BG',
     QRCode:'qr', PasswordGen:'key', UnitConvert:'token:↔', DateCalc:'calendar', WorldClock:'clock',
     JSONFormat:'token:{ }', RegexTest:'token:.*', Base64Tool:'token:64', HashGen:'token:#',
-    ChartMaker:'chart', ImageText:'token:T', ImageFilter:'token:F'
+    ChartMaker:'chart', ImageText:'token:T', ImageFilter:'token:F', ImageCollage:'collage'
   };
   const v = m[code];
   if (!v) return { glyph: 'token', token: '+' };
@@ -187,6 +189,7 @@ function icon(type, fill, ink, glyph, token) {
     else if (gl === 'watermark') inner = `<div style="position:relative;width:32px;height:28px;background:#fffdf9;border:2.5px solid ${k};border-radius:4px;box-sizing:border-box;overflow:hidden;display:flex;align-items:center;justify-content:center"><div style="position:absolute;left:4px;bottom:4px;width:9px;height:9px;border-radius:50%;background:${f};border:2px solid ${k};box-sizing:border-box"></div><div style="font:700 14px Gowun Dodum,sans-serif;color:rgba(42,36,51,.55)">W</div></div>`;
     else if (gl === 'droplet') inner = `<div style="width:20px;height:20px;background:#fffdf9;border:2.5px solid ${k};box-sizing:border-box;border-radius:50% 50% 50% 0;transform:rotate(45deg)"><div style="width:7px;height:7px;border-radius:50%;background:${f};margin:4px 0 0 4px;transform:rotate(-45deg)"></div></div>`;
     else if (gl === 'qr') inner = `<div style="display:grid;grid-template-columns:repeat(3,7px);grid-template-rows:repeat(3,7px);gap:2px"><div style="background:${k};border-radius:1px"></div><div style="background:transparent"></div><div style="background:${k};border-radius:1px"></div><div style="background:transparent"></div><div style="background:${k};border-radius:1px"></div><div style="background:transparent"></div><div style="background:${k};border-radius:1px"></div><div style="background:${k};border-radius:1px"></div><div style="background:${k};border-radius:1px"></div></div>`;
+    else if (gl === 'collage') inner = `<div style="display:grid;grid-template-columns:12px 12px;grid-template-rows:12px 12px;gap:3px"><div style="background:#fffdf9;border-radius:2px"></div><div style="background:#fffdf9;border-radius:2px"></div><div style="background:#fffdf9;border-radius:2px"></div><div style="background:#fffdf9;border-radius:2px"></div></div>`;
     else if (gl === 'calendar') inner = `<div style="position:relative;width:30px;height:30px;background:#fffdf9;border:2.5px solid ${k};border-radius:4px;box-sizing:border-box;overflow:hidden"><div style="position:absolute;top:0;left:0;width:100%;height:8px;background:${f};border-bottom:2.5px solid ${k}"></div><div style="position:absolute;top:13px;left:4px;width:4px;height:4px;background:${k};border-radius:1px"></div><div style="position:absolute;top:13px;left:13px;width:4px;height:4px;background:rgba(42,36,51,.3);border-radius:1px"></div><div style="position:absolute;top:13px;left:22px;width:4px;height:4px;background:rgba(42,36,51,.3);border-radius:1px"></div><div style="position:absolute;top:21px;left:4px;width:4px;height:4px;background:rgba(42,36,51,.3);border-radius:1px"></div><div style="position:absolute;top:21px;left:13px;width:4px;height:4px;background:${k};border-radius:1px"></div></div>`;
     else if (gl === 'clock') inner = `<div style="position:relative;width:28px;height:28px;border-radius:50%;background:#fffdf9;border:2.5px solid ${k};box-sizing:border-box"><div style="position:absolute;left:50%;top:50%;width:2.5px;height:9px;background:${k};border-radius:2px;transform-origin:bottom center;transform:translate(-50%,-100%)"></div><div style="position:absolute;left:50%;top:50%;width:2.5px;height:7px;background:${k};border-radius:2px;transform-origin:bottom center;transform:translate(-50%,-100%) rotate(90deg)"></div></div>`;
     else if (gl === 'chart') inner = `<div style="display:flex;align-items:flex-end;gap:3px;height:28px"><div style="width:6px;height:13px;background:#fffdf9;border:2px solid ${k};border-radius:2px 2px 0 0;box-sizing:border-box"></div><div style="width:6px;height:22px;background:#fffdf9;border:2px solid ${k};border-radius:2px 2px 0 0;box-sizing:border-box"></div><div style="width:6px;height:17px;background:#fffdf9;border:2px solid ${k};border-radius:2px 2px 0 0;box-sizing:border-box"></div></div>`;
@@ -220,13 +223,13 @@ const SEARCH_TOOLS = [
   {code:'JSONFormat',name:'JSON 포맷터'},{code:'RegexTest',name:'정규식 테스터'},
   {code:'Base64Tool',name:'Base64 변환'},{code:'HashGen',name:'해시 생성기'},
   {code:'ChartMaker',name:'차트 생성기'},{code:'ImageText',name:'이미지 텍스트 추가'},
-  {code:'ImageFilter',name:'이미지 필터'}
+  {code:'ImageFilter',name:'이미지 필터'},{code:'ImageCollage',name:'이미지 콜라주'}
 ];
 
 // ── Toolbox categories (desktop widget) ──────────────────────────────────────
 const TOOLBOX_CATS = [
   { label: '개인정보',     keys: ['MaskPrivacy','MaskPDF','MaskFace','MaskDoc'] },
-  { label: '이미지 편집',  keys: ['FitImage','CropImage','WatermarkImage','ColorPicker','ImageBright','BGRemove','ImageText','ImageFilter'] },
+  { label: '이미지 편집',  keys: ['FitImage','CropImage','WatermarkImage','ColorPicker','ImageBright','BGRemove','ImageText','ImageFilter','ImageCollage'] },
   { label: '문서·텍스트',  keys: ['PDFMerge','TextTools','DiffChecker','MarkdownEditor','FindReplace'] },
   { label: '유틸리티',     keys: ['QRCode','PasswordGen','UnitConvert','DateCalc','WorldClock'] },
   { label: '개발자',       keys: ['JSONFormat','RegexTest','Base64Tool','HashGen'] },
@@ -243,7 +246,7 @@ function buildTree() {
   return {
     '도구':{type:'folder',label:'도구',children:{
       '개인정보':{type:'folder',label:'개인정보',children:{MaskPrivacy:t('개인정보 마스킹'),MaskPDF:t('PDF 마스킹'),MaskFace:t('얼굴 블러'),MaskDoc:t('텍스트 마스킹')}},
-      '이미지 편집':{type:'folder',label:'이미지 편집',children:{FitImage:t('이미지 변환'),CropImage:t('이미지 자르기'),WatermarkImage:t('워터마크 추가'),ColorPicker:t('색상 추출'),ImageBright:t('이미지 보정'),BGRemove:t('AI 배경 제거'),ImageText:t('이미지 텍스트 추가'),ImageFilter:t('이미지 필터')}},
+      '이미지 편집':{type:'folder',label:'이미지 편집',children:{FitImage:t('이미지 변환'),CropImage:t('이미지 자르기'),WatermarkImage:t('워터마크 추가'),ColorPicker:t('색상 추출'),ImageBright:t('이미지 보정'),BGRemove:t('AI 배경 제거'),ImageText:t('이미지 텍스트 추가'),ImageFilter:t('이미지 필터'),ImageCollage:t('이미지 콜라주')}},
       '문서\xb7텍스트':{type:'folder',label:'문서\xb7텍스트',children:{PDFMerge:t('PDF 합치기'),TextTools:t('텍스트 변환'),DiffChecker:t('텍스트 비교'),MarkdownEditor:t('마크다운 편집기'),FindReplace:t('찾아 바꾸기')}},
       '유틸리티':{type:'folder',label:'유틸리티',children:{QRCode:t('QR 코드 생성'),PasswordGen:t('비밀번호 생성기'),UnitConvert:t('단위 변환기'),DateCalc:t('날짜 계산기'),WorldClock:t('세계 시간')}},
       '개발자':{type:'folder',label:'개발자',children:{JSONFormat:t('JSON 포맷터'),RegexTest:t('정규식 테스터'),Base64Tool:t('Base64 변환'),HashGen:t('해시 생성기')}},
@@ -268,7 +271,7 @@ function buildTree() {
         b6:a('FitImage 사용법 완전 가이드'),b11:a('WatermarkImage 사용법 완전 가이드'),
         b12:a('ColorPicker 사용법 완전 가이드'),b20:a('ImageBright 사용법 완전 가이드'),
         b22:a('BGRemove 사용법 완전 가이드'),b28:a('ImageText 사용법 완전 가이드'),
-        b29:a('ImageFilter 사용법 완전 가이드'),
+        b29:a('ImageFilter 사용법 완전 가이드'),b30:a('ImageCollage 사용법 완전 가이드'),
         h3:{type:'header',label:'문서\xb7텍스트'},
         b7:a('PDFMerge 사용법 완전 가이드'),b9:a('TextTools 사용법 완전 가이드'),
         b17:a('DiffChecker 사용법 완전 가이드'),b19:a('MarkdownEditor 사용법 완전 가이드'),
@@ -395,7 +398,8 @@ function fileBodyHtml(win,pal) {
     HashGen:     '텍스트의 MD5, SHA-1, SHA-256 등 해시값을 생성합니다.',
     ChartMaker:  '데이터를 입력하면 막대, 선, 원형 차트를 즉시 생성합니다.',
     ImageText:   '이미지 위에 여러 개의 텍스트를 자유롭게 배치하고 드래그로 위치를 조절합니다.',
-    ImageFilter: '흑백, 세피아, 빈티지 등 12가지 필터를 원클릭으로 적용하고 밝기·대비·선명도를 세밀하게 조절합니다.'
+    ImageFilter: '흑백, 세피아, 빈티지 등 12가지 필터를 원클릭으로 적용하고 밝기·대비·선명도를 세밀하게 조절합니다.',
+    ImageCollage: '여러 장의 이미지를 격자 레이아웃으로 합쳐 한 장의 콜라주로 만듭니다.'
   };
   if(file.kind==='tool'){
     fi='tool';ff=accent;fc=file.code;fm='무료 온라인 도구';
