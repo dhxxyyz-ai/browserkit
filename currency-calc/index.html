@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="실시간 환율로 주요 통화를 즉시 변환하는 무료 온라인 환율 계산기. 원화, 달러, 엔화 등 주요 통화를 한눈에 비교하세요." />
+  <meta property="og:title" content="CurrencyCalc — 환율 계산기" />
+  <meta property="og:description" content="실시간 환율로 주요 통화를 즉시 변환하는 무료 온라인 환율 계산기입니다." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://browserkit.online/currency-calc/" />
+  <title>CurrencyCalc — 환율 계산기</title>
+  <link rel="stylesheet" href="/css/style.css?v=20260704c" />
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506"
+     crossorigin="anonymous"></script>
+  <style>
+    .input-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:24px; margin-bottom:20px; }
+    .input-row { display:flex; gap:12px; flex-wrap:wrap; align-items:flex-end; }
+    .input-group { flex:1; min-width:160px; display:flex; flex-direction:column; gap:8px; }
+    .input-label { font-size:12px; font-weight:600; color:var(--subtext); }
+    .amount-input { background:var(--bg); border:1px solid var(--border); border-radius:10px; padding:13px 16px; font-size:18px; font-weight:700; color:var(--text); font-family:'Fira Code',monospace; outline:none; width:100%; }
+    .amount-input:focus { border-color:var(--point); }
+    .base-select { background:var(--bg); border:1px solid var(--border); border-radius:10px; padding:13px 16px; font-size:15px; font-weight:600; color:var(--text); font-family:'Gowun Dodum',sans-serif; outline:none; width:100%; cursor:pointer; }
+    .base-select:focus { border-color:var(--point); }
+
+    .status-row { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-top:14px; flex-wrap:wrap; font-size:12px; color:var(--subtext); font-family:'Gowun Dodum',sans-serif; }
+    .refresh-btn { background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:6px 14px; font-size:12px; color:var(--subtext); cursor:pointer; font-family:'Gowun Dodum',sans-serif; }
+    .refresh-btn:hover { border-color:var(--point); color:var(--text); }
+
+    .warn-banner { background:rgba(248,113,113,0.08); border:1px solid rgba(248,113,113,0.3); border-radius:10px; padding:12px 16px; font-size:13px; color:#F87171; margin-bottom:16px; display:none; }
+    .warn-banner.show { display:block; }
+
+    .result-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:12px; margin-bottom:20px; }
+    .result-card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:16px 18px; display:flex; align-items:center; justify-content:space-between; gap:10px; }
+    .result-card.loading { opacity:0.5; }
+    .result-info { min-width:0; }
+    .result-code { font-size:12px; font-weight:700; color:var(--subtext); font-family:'Fira Code',monospace; letter-spacing:0.05em; }
+    .result-name { font-size:12px; color:var(--subtext); margin-top:1px; }
+    .result-value { font-size:18px; font-weight:700; color:var(--point-hover); font-family:'Fira Code',monospace; margin-top:4px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+    .copy-btn { background:var(--bg); border:1px solid var(--border); border-radius:7px; padding:6px 10px; font-size:12px; color:var(--subtext); cursor:pointer; flex-shrink:0; }
+    .copy-btn:hover { border-color:var(--point); color:var(--text); }
+
+    .notice { margin:0 0 20px; padding:12px 16px; background:rgba(123,108,255,0.07); border:1px solid var(--border); border-radius:10px; font-size:13px; color:var(--subtext); line-height:1.7; }
+
+    .toast { position:fixed; bottom:32px; left:50%; transform:translateX(-50%) translateY(80px); background:var(--success); color:#fff; border-radius:999px; padding:10px 24px; font-size:14px; font-weight:600; opacity:0; pointer-events:none; z-index:999; transition:all 0.3s ease; }
+    .toast.show { transform:translateX(-50%) translateY(0); opacity:1; }
+
+    .footer { border-top:1px solid var(--border); padding:32px 0; text-align:center; }
+    .footer-copy { color:var(--subtext); font-size:13px; margin-bottom:12px; }
+    .footer-nav { display:flex; justify-content:center; gap:20px; flex-wrap:wrap; }
+    .footer-nav a { color:var(--subtext); font-size:13px; text-decoration:none; }
+    .footer-nav a:hover { color:var(--text); }
+
+    @media (max-width:640px) {
+      .hero-title { font-size:24px; }
+      .input-row { flex-direction:column; align-items:stretch; }
+    }
+  </style>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+  <meta property="og:image" content="https://browserkit.online/img/og-browserkit.png" />
+  <link rel="canonical" href="https://browserkit.online/currency-calc/" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://browserkit.online/img/og-browserkit.png" />
+</head>
+
+<body>
+  <header class="header">
+    <div class="container">
+      <a href="/" class="header-brand">
+        <div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Gowun Dodum,sans-serif;flex-shrink:0">B</div>
+        <span class="header-brand-text"><span style="color:var(--text)">Browser</span><span style="color:var(--point)">Kit</span></span>
+      </a>
+      <a href="/" class="header-back">&#x2190; BrowserKit 홈으로</a>
+    </div>
+  </header>
+
+  <main><div class="container">
+    <div class="hero">
+      <div class="hero-icon" style="height:78px;display:flex;justify-content:center;align-items:center"><div style="transform:scale(1.7);transform-origin:center"><div style="width:46px;height:46px;background:#bcd4ff;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="position:relative;width:30px;height:30px"><div style="position:absolute;left:0;top:2px;width:22px;height:22px;border-radius:50%;background:#fffdf9;border:2.5px solid #2a2433;box-sizing:border-box;display:flex;align-items:center;justify-content:center;font:700 11px Gowun Dodum,sans-serif;color:#2a2433">$</div><div style="position:absolute;right:0;bottom:2px;width:14px;height:14px;border-radius:50%;background:#bcd4ff;border:2px solid #2a2433;box-sizing:border-box"></div></div></div></div></div>
+      <div class="hero-title-wrap"><h1 class="hero-title">CurrencyCalc</h1><a href="/blog/48-currencycalc-howto.html" class="hero-guide-link">사용법 가이드 보기</a></div>
+      <p class="hero-desc">실시간 환율로 주요 통화를 즉시 변환하세요</p>
+      <div class="hero-badges">
+        <span class="badge">⚡ 무료 사용</span>
+        <span class="badge">🔄 실시간 환율</span>
+        <span class="badge">📦 설치 불필요</span>
+      </div>
+    </div>
+    <div style="margin:0 0 12px"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+
+    <p class="notice">💡 CurrencyCalc는 BrowserKit에서 유일하게 <strong>환율 데이터 조회를 위해 외부 API와 통신하는 도구</strong>입니다. 입력한 금액이나 계산 결과는 전송되지 않으며, 최신 환율 숫자만 <a href="https://www.exchangerate-api.com/" target="_blank" rel="noopener">ExchangeRate-API</a>에서 받아옵니다.</p>
+
+    <div class="input-card">
+      <div class="input-row">
+        <div class="input-group">
+          <span class="input-label">금액</span>
+          <input type="number" class="amount-input" id="amountInput" value="1" min="0" />
+        </div>
+        <div class="input-group">
+          <span class="input-label">기준 통화</span>
+          <select class="base-select" id="baseSelect"></select>
+        </div>
+      </div>
+      <div class="status-row">
+        <span id="statusText">환율 불러오는 중...</span>
+        <button class="refresh-btn" id="refreshBtn">🔄 환율 새로고침</button>
+      </div>
+    </div>
+
+    <div class="warn-banner" id="warnBanner"></div>
+
+    <div class="result-grid" id="resultGrid"></div>
+
+    <div style="margin:0 0 12px"><ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="9500090221"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+  </div></main>
+
+  <footer class="footer">
+    <div class="container">
+      <p class="footer-copy">&#xa9; 2026 BrowserKit.</p>
+      <nav class="footer-nav">
+        <a href="/privacy.html">개인정보 처리방침</a>
+        <a href="/terms.html">이용약관</a>
+        <a href="/about.html">서비스 소개</a>
+        <a href="/blog/">블로그</a>
+      </nav>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+  var CURRENCIES = [
+    { code: 'KRW', name: '대한민국 원' },
+    { code: 'USD', name: '미국 달러' },
+    { code: 'EUR', name: '유로' },
+    { code: 'JPY', name: '일본 엔' },
+    { code: 'CNY', name: '중국 위안' },
+    { code: 'GBP', name: '영국 파운드' },
+    { code: 'AUD', name: '호주 달러' },
+    { code: 'CAD', name: '캐나다 달러' },
+    { code: 'CHF', name: '스위스 프랑' },
+    { code: 'HKD', name: '홍콩 달러' },
+    { code: 'SGD', name: '싱가포르 달러' },
+    { code: 'THB', name: '태국 바트' },
+    { code: 'VND', name: '베트남 동' }
+  ];
+
+  var CACHE_TTL = 60 * 60 * 1000; // 1시간
+  var amountInput = document.getElementById('amountInput');
+  var baseSelect  = document.getElementById('baseSelect');
+  var statusText  = document.getElementById('statusText');
+  var warnBanner  = document.getElementById('warnBanner');
+  var resultGrid  = document.getElementById('resultGrid');
+  var refreshBtn  = document.getElementById('refreshBtn');
+
+  var currentRates = null;
+  var currentBase  = 'KRW';
+  var currentUpdated = null;
+
+  baseSelect.innerHTML = CURRENCIES.map(function(c) {
+    return '<option value="' + c.code + '">' + c.code + ' — ' + c.name + '</option>';
+  }).join('');
+  baseSelect.value = currentBase;
+
+  function cacheKey(base) { return 'currencycalc_rates_' + base; }
+
+  function loadCache(base) {
+    try {
+      var raw = localStorage.getItem(cacheKey(base));
+      if (!raw) return null;
+      var parsed = JSON.parse(raw);
+      return parsed;
+    } catch (e) { return null; }
+  }
+
+  function saveCache(base, rates, updatedAt) {
+    try {
+      localStorage.setItem(cacheKey(base), JSON.stringify({ rates: rates, fetchedAt: Date.now(), updatedAt: updatedAt }));
+    } catch (e) {}
+  }
+
+  function formatUpdated(ts) {
+    if (!ts) return '';
+    var d = new Date(ts);
+    return d.getFullYear() + '.' + String(d.getMonth()+1).padStart(2,'0') + '.' + String(d.getDate()).padStart(2,'0') + ' ' +
+      String(d.getHours()).padStart(2,'0') + ':' + String(d.getMinutes()).padStart(2,'0');
+  }
+
+  async function fetchRates(base, forceRefresh) {
+    var cached = loadCache(base);
+    var fresh = cached && (Date.now() - cached.fetchedAt < CACHE_TTL);
+
+    if (cached && fresh && !forceRefresh) {
+      applyRates(cached.rates, cached.updatedAt, false);
+      return;
+    }
+
+    statusText.textContent = '환율 불러오는 중...';
+    try {
+      var res = await fetch('https://api.exchangerate-api.com/v4/latest/' + base);
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      var data = await res.json();
+      var updatedAt = data.time_last_updated ? data.time_last_updated * 1000 : Date.now();
+      saveCache(base, data.rates, updatedAt);
+      applyRates(data.rates, updatedAt, false);
+    } catch (e) {
+      console.error('환율 조회 실패:', e);
+      if (cached) {
+        applyRates(cached.rates, cached.updatedAt, true);
+      } else {
+        warnBanner.textContent = '⚠️ 환율 정보를 불러오지 못했습니다. 인터넷 연결을 확인하고 새로고침 버튼을 눌러주세요.';
+        warnBanner.classList.add('show');
+        statusText.textContent = '환율 정보 없음';
+        resultGrid.innerHTML = '';
+      }
+    }
+  }
+
+  function applyRates(rates, updatedAt, stale) {
+    currentRates = rates;
+    currentUpdated = updatedAt;
+    if (stale) {
+      warnBanner.textContent = '⚠️ 최신 환율을 불러오지 못해 이전에 저장된 환율(' + formatUpdated(updatedAt) + ' 기준)을 표시합니다.';
+      warnBanner.classList.add('show');
+    } else {
+      warnBanner.classList.remove('show');
+    }
+    statusText.textContent = '마지막 업데이트: ' + formatUpdated(updatedAt) + (stale ? ' (오프라인 캐시)' : '');
+    renderGrid();
+  }
+
+  function renderGrid() {
+    var amount = parseFloat(amountInput.value);
+    if (isNaN(amount)) amount = 0;
+    resultGrid.innerHTML = CURRENCIES.filter(function(c) { return c.code !== currentBase; }).map(function(c) {
+      var rate = currentRates ? currentRates[c.code] : null;
+      var value = (rate != null) ? (amount * rate) : null;
+      var display = value != null ? value.toLocaleString(undefined, { maximumFractionDigits: value < 10 ? 4 : 2 }) : '—';
+      return '<div class="result-card">' +
+        '<div class="result-info">' +
+          '<div class="result-code">' + c.code + '</div>' +
+          '<div class="result-name">' + c.name + '</div>' +
+          '<div class="result-value">' + display + '</div>' +
+        '</div>' +
+        '<button class="copy-btn" data-value="' + (value != null ? value : '') + '">📋</button>' +
+      '</div>';
+    }).join('');
+
+    resultGrid.querySelectorAll('.copy-btn').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        if (!btn.dataset.value) return;
+        navigator.clipboard.writeText(btn.dataset.value).then(function() {
+          showToast('✓ 값이 복사되었습니다');
+        });
+      });
+    });
+  }
+
+  amountInput.addEventListener('input', renderGrid);
+  baseSelect.addEventListener('change', function() {
+    currentBase = baseSelect.value;
+    fetchRates(currentBase, false);
+  });
+  refreshBtn.addEventListener('click', function() {
+    fetchRates(currentBase, true);
+  });
+
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(function() { t.classList.remove('show'); }, 2000);
+  }
+
+  fetchRates(currentBase, false);
+  </script>
+</body>
+</html>

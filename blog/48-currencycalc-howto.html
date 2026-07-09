@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="CurrencyCalc의 모든 기능을 단계별로 설명하는 공식 사용 가이드입니다. 실시간 환율로 주요 통화를 즉시 변환하는 방법을 알아보세요." />
+  <meta property="og:title" content="CurrencyCalc 사용법 완전 가이드 — BrowserKit" />
+  <meta property="og:description" content="실시간 환율로 주요 통화를 즉시 변환하는 CurrencyCalc 공식 가이드입니다." />
+  <meta property="og:type" content="article" />
+  <title>CurrencyCalc 사용법 완전 가이드 — BrowserKit</title>
+  <link rel="stylesheet" href="/css/style.css?v=20260704c" />
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506"
+     crossorigin="anonymous"></script>
+  <style>
+    .post-warn { background:rgba(248,113,113,0.08); border-left:3px solid #F87171; border-radius:8px; padding:16px 20px; margin:24px 0; font-size:15px; color:var(--subtext); line-height:1.8; }
+    .feature-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:20px 0; }
+    .feature-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px; }
+    .feature-card:hover { border-color:var(--point); }
+    .feature-icon { font-size:24px; margin-bottom:10px; }
+    .feature-title { font-size:14px; font-weight:600; color:var(--text); margin-bottom:6px; }
+    .feature-desc { font-size:13px; color:var(--subtext); line-height:1.7; }
+    .step-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px 24px; margin:16px 0; display:flex; gap:16px; align-items:flex-start; }
+    .step-num { min-width:36px; height:36px; background:linear-gradient(135deg,var(--point),var(--point-hover)); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:700; color:white; flex-shrink:0; font-family:'Gowun Dodum',sans-serif; }
+    .step-content h3 { font-size:15px; font-weight:600; margin-bottom:6px; color:var(--text); }
+    .step-content p { font-size:14px; color:var(--subtext); line-height:1.7; margin:0; }
+    .post-table { width:100%; border-collapse:collapse; margin:20px 0; font-size:15px; }
+    .post-table th { background:var(--card); padding:12px 16px; text-align:left; font-weight:600; border:1px solid var(--border); color:var(--text); }
+    .post-table td { padding:11px 16px; border:1px solid var(--border); color:var(--subtext); line-height:1.7; }
+    .post-table td code { background:var(--bg); border-radius:4px; padding:1px 6px; font-size:13px; color:var(--point-hover); font-family:'Fira Code',monospace; }
+    .post-table tr:hover td { background:rgba(123,108,255,0.04); }
+    .use-case-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:20px 0; }
+    .use-case-card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:18px; }
+    .use-case-icon { font-size:28px; margin-bottom:8px; }
+    .use-case-title { font-size:13px; font-weight:600; color:var(--text); margin-bottom:6px; }
+    .use-case-desc { font-size:12px; color:var(--subtext); line-height:1.7; }
+    .post-nav { display:flex; justify-content:space-between; margin-top:28px; padding-top:24px; border-top:1px solid var(--border); gap:12px; }
+    .post-nav a { font-size:15px; color:var(--subtext); text-decoration:none; }
+    .post-nav a:hover { color:var(--text); }
+    .cta-box { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:28px; text-align:center; margin:48px 0 0; }
+    .cta-box p { font-size:17px; color:var(--subtext); margin-bottom:16px; }
+    .cta-btn { display:inline-block; background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border-radius:10px; padding:12px 28px; font-size:14px; font-weight:600; text-decoration:none; }
+    .cta-btn:hover { transform:translateY(-2px); box-shadow:0 8px 24px var(--glow); color:white; }
+    .back-link:hover { color:var(--text); }
+    @media (max-width:640px) {
+      .feature-grid { grid-template-columns:1fr; }
+      .use-case-grid { grid-template-columns:1fr; }
+    }
+  </style>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+<meta property="og:image" content="https://browserkit.online/img/og-browserkit.png" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "CurrencyCalc 사용법 완전 가이드",
+    "description": "CurrencyCalc의 모든 기능을 단계별로 설명하는 공식 사용 가이드입니다. 실시간 환율로 주요 통화를 즉시 변환하는 방법을 알아보세요.",
+    "datePublished": "2026-07-09T00:00:00+09:00",
+    "dateModified": "2026-07-09T00:00:00+09:00",
+    "author": { "@type": "Organization", "name": "BrowserKit", "url": "https://browserkit.online" },
+    "publisher": { "@type": "Organization", "name": "BrowserKit", "url": "https://browserkit.online", "logo": { "@type": "ImageObject", "url": "https://browserkit.online/img/og-browserkit.png" } },
+    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://browserkit.online/blog/48-currencycalc-howto.html" },
+    "image": "https://browserkit.online/img/og-browserkit.png"
+  }
+  </script>  <link rel="canonical" href="https://browserkit.online/blog/48-currencycalc-howto.html" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://browserkit.online/img/og-browserkit.png" />
+  <style>
+    .post-table-wrap { overflow-x:auto; }
+    .post-table th, .post-table td { white-space:nowrap; }
+    .post-nav a { word-break:keep-all; }
+    .post-nav .nav-label { display:block; font-size:13px; color:var(--subtext); opacity:0.7; margin-bottom:4px; }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="container">
+      <a href="/" class="header-brand"><div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Gowun Dodum,sans-serif;flex-shrink:0">B</div><span class="header-brand-text"><span style="color:var(--text)">Browser</span><span style="color:var(--point)">Kit</span></span></a>
+      <a href="/" class="header-back">&#x2190; BrowserKit 홈으로</a>
+    </div>
+  </header>
+
+  <article class="post-wrap">
+    <a href="/blog/" class="back-link">&#x2190; 블로그 목록</a>
+    <span class="post-tag">가이드</span>
+    <h1 class="post-title">CurrencyCalc 사용법 완전 가이드</h1>
+    <div class="post-date">2026년 7월 9일</div>
+    <div style="margin:12px 0"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+
+    <div class="post-body">
+      <p>CurrencyCalc는 실시간 환율로 원화, 달러, 엔화 등 주요 통화를 즉시 변환하는 무료 온라인 환율 계산기입니다. 금액을 입력하면 기준 통화 대비 13개 주요 통화 환산 금액을 한 번에 확인할 수 있습니다. BrowserKit의 다른 도구들과 달리, 최신 환율 숫자를 가져오기 위해 외부 API와 통신하는 유일한 도구입니다.</p>
+
+      <h2>주요 기능</h2>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F4B1;</div>
+          <div class="feature-title">주요 통화 13종 동시 변환</div>
+          <div class="feature-desc">KRW, USD, EUR, JPY, CNY, GBP 등 13개 주요 통화로 동시에 환산한 금액을 카드 형태로 보여줍니다.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F504;</div>
+          <div class="feature-title">기준 통화 자유 변경</div>
+          <div class="feature-desc">원화 기준뿐 아니라 달러, 엔화 등 어떤 통화든 기준으로 설정해 나머지를 환산할 수 있습니다.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F4BE;</div>
+          <div class="feature-title">1시간 캐시</div>
+          <div class="feature-desc">한 번 불러온 환율은 1시간 동안 브라우저에 저장되어, 같은 통화를 반복 조회해도 매번 새로 요청하지 않습니다.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F4F6;</div>
+          <div class="feature-title">오프라인 대비 캐시 폴백</div>
+          <div class="feature-desc">환율 새로고침에 실패해도 마지막으로 저장된 환율을 안내 문구와 함께 계속 보여줍니다.</div>
+        </div>
+      </div>
+
+      <div style="margin:12px 0 0"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+      <h2>사용법</h2>
+
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <h3>금액 입력</h3>
+          <p>상단 입력창에 변환하고 싶은 금액을 입력합니다. 값을 바꾸는 즉시 아래 결과 카드들이 실시간으로 다시 계산됩니다.</p>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <h3>기준 통화 선택</h3>
+          <p>기준 통화 드롭다운에서 원하는 통화를 선택합니다. 기준 통화를 바꾸면 새로운 환율을 자동으로 불러오고(또는 1시간 이내 저장된 캐시가 있으면 그대로 사용), 선택한 통화를 제외한 나머지 12개 통화의 환산 금액이 표시됩니다.</p>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <h3>결과 확인 및 복사</h3>
+          <p>각 통화 카드에 통화 코드, 통화명, 환산 금액이 표시됩니다. 카드의 <strong>📋</strong> 버튼을 클릭하면 해당 금액이 클립보드에 복사됩니다.</p>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <h3>환율 새로고침</h3>
+          <p><strong>🔄 환율 새로고침</strong> 버튼을 클릭하면 캐시를 무시하고 최신 환율을 다시 불러옵니다. 하단 상태 표시줄에서 마지막 업데이트 시각을 확인할 수 있습니다.</p>
+        </div>
+      </div>
+
+      <h2>왜 CurrencyCalc만 외부 서버와 통신하나요?</h2>
+      <p>BrowserKit의 모든 도구는 "서버 전송 없음"을 원칙으로 하지만, 환율은 실시간으로 계속 바뀌는 정보라 브라우저만으로는 최신 값을 알 수 없습니다. 그래서 CurrencyCalc는 <a href="https://www.exchangerate-api.com/" target="_blank" rel="noopener">ExchangeRate-API</a>에서 환율 숫자만 받아옵니다.</p>
+      <div class="post-warn">
+        <strong>⚠️ 전송되는 정보:</strong> 요청 시 기준 통화 코드(예: <code>KRW</code>)만 전송됩니다. 입력하신 금액이나 계산 결과, 그 외 어떤 개인 정보도 외부로 전송되지 않습니다.
+      </div>
+
+      <h2>기술 원리</h2>
+      <div class="post-table-wrap"><table class="post-table">
+        <thead><tr><th>항목</th><th>동작 방식</th></tr></thead>
+        <tbody>
+          <tr><td>환율 조회</td><td>ExchangeRate-API 무료 엔드포인트에서 기준 통화 대비 전체 환율을 가져옵니다.</td></tr>
+          <tr><td>캐시</td><td>브라우저 <code>localStorage</code>에 통화별로 1시간 동안 저장해 불필요한 재요청을 줄입니다.</td></tr>
+          <tr><td>환산 계산</td><td>저장된 환율에 입력 금액을 곱하는 계산은 브라우저 내에서 즉시 처리됩니다.</td></tr>
+          <tr><td>오류 처리</td><td>요청이 실패하면 캐시된 마지막 환율을 안내 문구와 함께 표시하고, 캐시조차 없으면 오류 메시지를 표시합니다.</td></tr>
+        </tbody>
+      </table></div>
+
+      <h2>활용 예시</h2>
+      <div class="use-case-grid">
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x2708;&#xFE0F;</div>
+          <div class="use-case-title">해외여행 경비 계산</div>
+          <div class="use-case-desc">여행 전 예산을 현지 통화로 미리 환산해 대략적인 지출 규모를 파악합니다.</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F6D2;</div>
+          <div class="use-case-title">해외직구 가격 비교</div>
+          <div class="use-case-desc">해외 쇼핑몰의 달러·유로 표시 가격을 원화로 즉시 환산해 국내가와 비교합니다.</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F4BC;</div>
+          <div class="use-case-title">해외 거래처 견적 확인</div>
+          <div class="use-case-desc">외화로 받은 견적서 금액을 원화 기준으로 빠르게 환산해 검토합니다.</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F4B8;</div>
+          <div class="use-case-title">해외 송금 전 금액 확인</div>
+          <div class="use-case-desc">송금하려는 금액이 받는 쪽 통화로 얼마인지 미리 계산해봅니다.</div>
+        </div>
+      </div>
+
+      <div class="post-highlight">&#x1F512; CurrencyCalc는 환율 숫자 조회를 위해서만 외부 API와 통신하며, 입력한 금액과 계산 결과는 브라우저 밖으로 전송되지 않습니다.</div>
+    </div>
+
+    <div class="cta-box">
+      <p>실시간 환율로 주요 통화를 즉시 변환해보세요.<br />13개 통화를 한 번에 비교하고 필요한 값만 복사할 수 있습니다.</p>
+      <a href="/currency-calc/" class="cta-btn" style="display:inline-flex;align-items:center;gap:8px">
+        <span style="display:inline-block;width:26px;height:26px;overflow:hidden;flex-shrink:0"><span style="display:block;transform:scale(0.565);transform-origin:top left"><div style="width:46px;height:46px;background:#bcd4ff;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="position:relative;width:30px;height:30px"><div style="position:absolute;left:0;top:2px;width:22px;height:22px;border-radius:50%;background:#fffdf9;border:2.5px solid #2a2433;box-sizing:border-box;display:flex;align-items:center;justify-content:center;font:700 11px Gowun Dodum,sans-serif;color:#2a2433">$</div><div style="position:absolute;right:0;bottom:2px;width:14px;height:14px;border-radius:50%;background:#bcd4ff;border:2px solid #2a2433;box-sizing:border-box"></div></div></div></span></span>
+        무료로 환율 계산하기
+      </a>
+    </div>
+    <div style="margin:12px 0"><ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="9500090221"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+
+<div class="post-nav">
+      <a href="/blog/35-worldclock-howto.html"><span class="nav-label">← 이전 글</span>WorldClock 사용법 완전 가이드</a>
+      <a href="/blog/25-jsonformat-howto.html" style="text-align:right"><span class="nav-label">다음 글 →</span>JSONFormat 사용법 완전 가이드</a>
+    </div></div>
+
+  </article>
+  <footer class="footer">
+    <div class="container">
+      <p class="footer-copy">© 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p>
+      <nav class="footer-nav">
+        <a href="/privacy.html">개인정보 처리방침</a>
+        <a href="/terms.html">이용약관</a>
+        <a href="/about.html">서비스 소개</a>
+        <a href="/blog/">블로그</a>
+      </nav>
+    </div>
+  </footer>
+</body>
+</html>
