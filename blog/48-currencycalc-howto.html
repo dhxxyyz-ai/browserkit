@@ -124,6 +124,17 @@
           <p>상단 입력창에 변환하고 싶은 금액을 입력합니다. 값을 바꾸는 즉시 아래 결과 카드들이 실시간으로 다시 계산됩니다.</p>
         </div>
       </div>
+
+      <figure style="margin:12px 0 24px; text-align:center;">
+        <img src="/img/blog/currencycalc/01-input.png"
+             alt="CurrencyCalc 금액 입력 후 기준 통화 KRW로 13개 통화 환산 결과가 카드 그리드에 표시된 화면"
+             style="width:100%; max-width:640px; border:1px solid var(--border); border-radius:var(--radius);"
+             loading="lazy" />
+        <figcaption style="font-size:13px; color:var(--subtext); margin-top:6px;">
+          금액 입력 후 13개 통화로 환산된 결과 카드 그리드
+        </figcaption>
+      </figure>
+
       <div class="step-card">
         <div class="step-num">2</div>
         <div class="step-content">
@@ -131,6 +142,17 @@
           <p>기준 통화 드롭다운에서 원하는 통화를 선택합니다. 기준 통화를 바꾸면 새로운 환율을 자동으로 불러오고(또는 1시간 이내 저장된 캐시가 있으면 그대로 사용), 선택한 통화를 제외한 나머지 12개 통화의 환산 금액이 표시됩니다.</p>
         </div>
       </div>
+
+      <figure style="margin:12px 0 24px; text-align:center;">
+        <img src="/img/blog/currencycalc/02-base.png"
+             alt="CurrencyCalc 기준 통화를 USD로 변경한 뒤 결과 카드가 갱신된 화면"
+             style="width:100%; max-width:640px; border:1px solid var(--border); border-radius:var(--radius);"
+             loading="lazy" />
+        <figcaption style="font-size:13px; color:var(--subtext); margin-top:6px;">
+          기준 통화를 변경하면 결과 카드가 새 환율로 갱신됩니다
+        </figcaption>
+      </figure>
+
       <div class="step-card">
         <div class="step-num">3</div>
         <div class="step-content">
@@ -145,6 +167,16 @@
           <p><strong>🔄 환율 새로고침</strong> 버튼을 클릭하면 캐시를 무시하고 최신 환율을 다시 불러옵니다. 하단 상태 표시줄에서 마지막 업데이트 시각을 확인할 수 있습니다.</p>
         </div>
       </div>
+
+      <figure style="margin:12px 0 24px; text-align:center;">
+        <img src="/img/blog/currencycalc/03-status.png"
+             alt="CurrencyCalc 하단 상태 표시줄의 마지막 업데이트 시각과 환율 새로고침 버튼 확대 화면"
+             style="width:100%; max-width:640px; border:1px solid var(--border); border-radius:var(--radius);"
+             loading="lazy" />
+        <figcaption style="font-size:13px; color:var(--subtext); margin-top:6px;">
+          마지막 업데이트 시각과 🔄 환율 새로고침 버튼
+        </figcaption>
+      </figure>
 
       <h2>왜 CurrencyCalc만 외부 서버와 통신하나요?</h2>
       <p>BrowserKit의 모든 도구는 "서버 전송 없음"을 원칙으로 하지만, 환율은 매일 바뀌는 정보라 브라우저만으로는 최신 값을 알 수 없습니다. 그래서 CurrencyCalc는 <a href="https://www.exchangerate-api.com/" target="_blank" rel="noopener">ExchangeRate-API</a>에서 환율 숫자만 받아옵니다.</p>
