@@ -225,7 +225,8 @@
         lo = hi = parseInt(rangePart, 10);
       }
       if (isNaN(lo) || isNaN(hi)) throw new Error('"' + part + '" 값을 숫자로 해석할 수 없습니다');
-      if (lo < min || hi > max || lo > hi) throw new Error('"' + part + '" 값이 허용 범위(' + min + '~' + max + ')를 벗어났습니다');
+      if (lo > hi) throw new Error('"' + part + '" 범위의 시작값이 끝값보다 큽니다');
+      if (lo < min || hi > max) throw new Error('"' + part + '" 값이 허용 범위(' + min + '~' + max + ')를 벗어났습니다');
       for (var v = lo; v <= hi; v += step) result.add(v);
     }
     return result;
@@ -259,13 +260,10 @@
     var monthFull = isFull(p.month, 1, 12);
     var weekdayFull = isFull(p.weekday, 0, 6);
 
-    // 매 N분/N시간 반복 패턴 감지 (다른 필드는 모두 전체일 때)
-    if (hourFull && dayFull && monthFull && weekdayFull && p.raw.minute.indexOf('/') !== -1 && !minuteFull) {
+    // 매 N분 반복 패턴 감지 ("*/N" 형태이고 다른 필드는 모두 전체일 때만)
+    if (hourFull && dayFull && monthFull && weekdayFull && p.raw.minute.indexOf('*/') === 0 && !minuteFull) {
       var step = p.raw.minute.split('/')[1];
       return step + '분마다 실행';
-    }
-    if (minuteFull === false && p.minute.size === 1 && hourFull === false && p.hour.size === 0) {
-      // unreachable guard
     }
 
     var sortedList = function(set) { return Array.from(set).sort(function(a, b) { return a - b; }); };
@@ -466,6 +464,7 @@
       });
     });
     var stepInput = document.querySelector('[data-step-input="' + f.key + '"]');
+    builderState[f.key].step = Math.max(1, parseInt(stepInput.value, 10) || 1);
     stepInput.addEventListener('input', function() {
       builderState[f.key].step = Math.max(1, parseInt(stepInput.value, 10) || 1);
       rebuildExpr();
