@@ -591,7 +591,7 @@ function render() {
             const fd=JSON.stringify({title:nm,code:key,kind:'tool',glyph:gi.glyph,token:gi.token});
             return `<div class="bk-folder-item" data-act="file" data-file="${esc(fd)}" style="display:flex;flex-direction:column;align-items:center;gap:4px;padding:6px 7px;cursor:pointer;min-width:92px;flex:0 0 auto">${iconWrap('tool',F[ci%F.length],ink,gi.glyph,gi.token)}<div style="font:400 15px Gowun Dodum,sans-serif;text-align:center;color:${ink};line-height:1.2;white-space:nowrap">${esc(nm)}</div></div>`;
           }).join('');
-          return `<fieldset style="border:2px dashed rgba(42,36,51,.28);border-radius:13px 11px 12px 10px;margin:0;padding:0px 8px 4px;flex:0 0 auto"><legend style="font:700 14px Gowun Dodum,sans-serif;color:${ink};padding:0px 8px;background:rgba(255,255,255,.68);border:1.5px solid ${ink};border-radius:8px 6px 7px 5px">${esc(cat.label)}</legend><div style="display:flex;flex-wrap:nowrap;overflow-x:auto;gap:0;padding:1px 0">${items}</div></fieldset>`;
+          return `<fieldset style="border:2px dashed rgba(42,36,51,.28);border-radius:13px 11px 12px 10px;margin:0;padding:0px 8px 4px;flex:0 0 auto"><legend style="font:700 14px Gowun Dodum,sans-serif;color:${ink};padding:0px 8px;background:rgba(255,255,255,.68);border:1.5px solid ${ink};border-radius:8px 6px 7px 5px">${esc(cat.label)}</legend><div style="display:flex;flex-wrap:wrap;gap:0;padding:1px 0">${items}</div></fieldset>`;
         }).join('')}
       </div>
     </fieldset>
