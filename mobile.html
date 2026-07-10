@@ -62,7 +62,8 @@ const TOOL_URLS = {
   LineNumber:'/line-number/', CurrencyCalc:'/currency-calc/', Minifier:'/minifier/', URLEncode:'/url-encode/',
   CSSUnit:'/css-unit/', DiagramMaker:'/diagram-maker/', PaletteGen:'/palette-gen/', ExifRemover:'/exif-remover/',
   RandomPicker:'/random-picker/', WordCloudGen:'/word-cloud/', FaviconGen:'/favicon-gen/', SVGtoPNG:'/svg-to-png/',
-  PomodoroTimer:'/pomodoro-timer/', UUIDGen:'/uuid-gen/', JWTDecoder:'/jwt-decoder/', CronHelper:'/cron-helper/'
+  PomodoroTimer:'/pomodoro-timer/', UUIDGen:'/uuid-gen/', JWTDecoder:'/jwt-decoder/', CronHelper:'/cron-helper/',
+  SQLFormatter:'/sql-formatter/'
 };
 
 const BLOG_URLS = {
@@ -125,7 +126,8 @@ const BLOG_URLS = {
   'PomodoroTimer 사용법 완전 가이드':'/blog/59-pomodorotimer-howto.html',
   'UUIDGen 사용법 완전 가이드':'/blog/60-uuidgen-howto.html',
   'JWTDecoder 사용법 완전 가이드':'/blog/61-jwtdecoder-howto.html',
-  'CronHelper 사용법 완전 가이드':'/blog/62-cronhelper-howto.html'
+  'CronHelper 사용법 완전 가이드':'/blog/62-cronhelper-howto.html',
+  'SQLFormatter 사용법 완전 가이드':'/blog/63-sqlformatter-howto.html'
 };
 
 const INFO_URLS = {
@@ -145,7 +147,7 @@ const TOOLBOX_CATS = [
   { label:'이미지 편집',   keys:['FitImage','CropImage','WatermarkImage','ColorPicker','ImageBright','BGRemove','ImageText','ImageFilter','ImageCollage','PixelArt','MosaicMaker','FaviconGen','SVGtoPNG'] },
   { label:'문서·텍스트',   keys:['PDFMerge','PDFSplit','TextTools','DiffChecker','MarkdownEditor','FindReplace','LineNumber'] },
   { label:'유틸리티',      keys:['QRCode','PasswordGen','UnitConvert','DateCalc','WorldClock','CurrencyCalc','RandomPicker','PomodoroTimer'] },
-  { label:'개발자',        keys:['JSONFormat','RegexTest','Base64Tool','HashGen','Minifier','URLEncode','CSSUnit','UUIDGen','JWTDecoder','CronHelper'] },
+  { label:'개발자',        keys:['JSONFormat','RegexTest','Base64Tool','HashGen','Minifier','URLEncode','CSSUnit','UUIDGen','JWTDecoder','CronHelper','SQLFormatter'] },
   { label:'데이터·시각화', keys:['ChartMaker','DiagramMaker','PaletteGen','WordCloudGen'] }
 ];
 
@@ -173,7 +175,7 @@ const SEARCH_TOOLS = [
   {code:'WordCloudGen',name:'워드클라우드 생성기'},{code:'FaviconGen',name:'파비콘 생성기'},
   {code:'SVGtoPNG',name:'SVG → PNG 변환기'},{code:'PomodoroTimer',name:'뽀모도로 타이머'},
   {code:'UUIDGen',name:'UUID 생성기'},{code:'JWTDecoder',name:'JWT 디코더'},
-  {code:'CronHelper',name:'Cron 표현식 도우미'}
+  {code:'CronHelper',name:'Cron 표현식 도우미'},{code:'SQLFormatter',name:'SQL 포맷터'}
 ];
 
 const TOOL_LABEL   = Object.fromEntries(SEARCH_TOOLS.map(t => [t.code, t.name]));
@@ -192,7 +194,7 @@ function glyphInfo(code) {
     ChartMaker:'chart', ImageText:'token:T', ImageFilter:'halfcircle', ImageCollage:'collage', PixelArt:'pixelart',
     MosaicMaker:'mosaic', PDFSplit:'split', LineNumber:'linenum', CurrencyCalc:'currency', Minifier:'token:<>',
     URLEncode:'token:%20', CSSUnit:'token:rem', DiagramMaker:'diagram', PaletteGen:'palette', ExifRemover:'exif',
-    RandomPicker:'roulette', WordCloudGen:'wordcloud', FaviconGen:'favicon', SVGtoPNG:'token:SVG', PomodoroTimer:'pomodoro', UUIDGen:'token:UUID', JWTDecoder:'token:JWT', CronHelper:'token:CRON'
+    RandomPicker:'roulette', WordCloudGen:'wordcloud', FaviconGen:'favicon', SVGtoPNG:'token:SVG', PomodoroTimer:'pomodoro', UUIDGen:'token:UUID', JWTDecoder:'token:JWT', CronHelper:'token:CRON', SQLFormatter:'token:SQL'
   };
   const v = m[code];
   if (!v) return { glyph:'token', token:'+' };

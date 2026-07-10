@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <link rel="icon" href="/favicon.ico" sizes="32x32">
+  <link rel="icon" href="/favicon-16.png" sizes="16x16" type="image/png">
+  <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="/favicon-192.png" sizes="192x192" type="image/png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="SQL 쿼리를 읽기 쉽게 들여쓰기하고 줄바꿈해주는 무료 온라인 SQL 포맷터. 키워드 대문자 통일, 들여쓰기 크기 선택을 지원합니다. 서버 전송 없이 브라우저에서 바로 처리합니다." />
+  <meta property="og:title" content="SQLFormatter — SQL 포맷터" />
+  <meta property="og:description" content="SQL 쿼리를 읽기 쉽게 들여쓰기하고 정렬하는 무료 온라인 도구입니다." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://browserkit.online/sql-formatter/" />
+  <title>SQLFormatter — SQL 포맷터</title>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506"
+     crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="/css/style.css?v=20260704c" />
+  <style>
+    .editor-wrap { display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-bottom:20px; }
+    .editor-box { display:flex; flex-direction:column; gap:8px; }
+    .editor-label { font-size:13px; color:var(--subtext); font-weight:600; }
+    .editor-textarea { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:16px; color:var(--text); font-size:13px; font-family:'Fira Code','JetBrains Mono',monospace; line-height:1.7; resize:none; min-height:340px; width:100%; white-space:pre; overflow:auto; box-sizing:border-box; }
+    .editor-textarea:focus { outline:none; border-color:var(--point); }
+    .editor-textarea::placeholder { color:var(--subtext); font-family:'Gowun Dodum',sans-serif; }
+    .editor-info { font-size:12px; color:var(--subtext); font-family:'Gowun Dodum',sans-serif; }
+
+    .option-group { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:16px 20px; margin-bottom:16px; display:flex; align-items:center; gap:20px; flex-wrap:wrap; }
+    .toggle-row { display:flex; align-items:center; gap:8px; font-size:13px; color:var(--subtext); cursor:pointer; }
+    .toggle-row input { accent-color:var(--point); cursor:pointer; width:16px; height:16px; }
+    .select-row { display:flex; align-items:center; gap:8px; font-size:13px; color:var(--subtext); }
+    .select-row select { background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:6px 10px; color:var(--text); font-size:13px; outline:none; cursor:pointer; }
+
+    .error-box { background:rgba(248,113,113,0.08); border:1px solid #F87171; border-radius:10px; padding:14px 18px; margin-bottom:20px; color:#F87171; font-size:14px; display:none; }
+    .error-box.show { display:block; }
+
+    .notice { margin:0 0 20px; padding:12px 16px; background:rgba(123,108,255,0.07); border:1px solid var(--border); border-radius:10px; font-size:13px; color:var(--subtext); line-height:1.7; }
+
+    .quick-fill { display:flex; gap:8px; margin-bottom:16px; flex-wrap:wrap; }
+    .quick-fill-btn { background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:6px 14px; font-size:12px; color:var(--subtext); cursor:pointer; }
+    .quick-fill-btn:hover { border-color:var(--point); color:var(--text); }
+
+    .action-wrap { display:flex; justify-content:center; gap:12px; margin:0 0 48px; flex-wrap:wrap; }
+    .btn-copy { background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border:none; border-radius:12px; padding:13px 28px; font-size:15px; font-weight:600; cursor:pointer; font-family:'Gowun Dodum',sans-serif; }
+    .btn-copy:hover { transform:translateY(-2px); box-shadow:0 8px 24px var(--glow); }
+    .btn-copy:disabled { opacity:0.4; cursor:default; transform:none; box-shadow:none; }
+    .btn-sub { background:var(--card); color:var(--subtext); border:1px solid var(--border); border-radius:12px; padding:13px 22px; font-size:15px; cursor:pointer; font-family:'Gowun Dodum',sans-serif; }
+    .btn-sub:hover { transform:translateY(-2px); color:var(--text); border-color:var(--point); }
+
+    .toast { position:fixed; bottom:32px; left:50%; transform:translateX(-50%) translateY(80px); background:var(--success); color:#fff; border-radius:999px; padding:10px 24px; font-size:14px; font-weight:600; opacity:0; pointer-events:none; z-index:999; }
+    .toast.show { transform:translateX(-50%) translateY(0); opacity:1; }
+
+    .footer { border-top:1px solid var(--border); padding:32px 0; text-align:center; }
+    .footer-copy { color:var(--subtext); font-size:13px; margin-bottom:12px; }
+    .footer-nav { display:flex; justify-content:center; gap:20px; flex-wrap:wrap; }
+    .footer-nav a { color:var(--subtext); font-size:13px; }
+    .footer-nav a:hover { color:var(--text); }
+
+    @media (max-width:640px) {
+      .editor-wrap { grid-template-columns:1fr; }
+      .hero-title { font-size:24px; }
+    }
+  </style>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+  <meta property="og:image" content="https://browserkit.online/img/og-browserkit.png" />
+  <link rel="canonical" href="https://browserkit.online/sql-formatter/" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://browserkit.online/img/og-browserkit.png" />
+</head>
+<body>
+  <header class="header">
+    <div class="container">
+      <a href="/" class="header-brand"><div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Gowun Dodum,sans-serif;flex-shrink:0">B</div><span class="header-brand-text"><span style="color:var(--text)">Browser</span><span style="color:var(--point)">Kit</span></span></a>
+      <a href="/" class="header-back">← BrowserKit 홈으로</a>
+    </div>
+  </header>
+  <main><div class="container">
+    <div class="hero">
+      <div class="hero-icon" style="height:78px;display:flex;justify-content:center;align-items:center"><div style="transform:scale(1.7);transform-origin:center"><div style="width:46px;height:46px;background:#e0c3ff;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="font:700 15px Gowun Dodum,sans-serif;color:#2a2433;line-height:1;letter-spacing:-.5px;white-space:nowrap">SQL</div></div></div></div>
+      <div class="hero-title-wrap"><h1 class="hero-title">SQLFormatter</h1><a href="/blog/63-sqlformatter-howto.html" class="hero-guide-link">사용법 가이드 보기</a></div>
+      <p class="hero-desc">SQL 쿼리를 읽기 쉽게 들여쓰기하고 정렬하세요</p>
+      <div class="hero-badges">
+        <span class="badge">🔒 완전 로컬 처리</span>
+        <span class="badge">⚡ 무료 사용</span>
+        <span class="badge">🛡️ 서버 전송 없음</span>
+        <span class="badge">📦 설치 불필요</span>
+      </div>
+    </div>
+    <div style="margin:0 0 12px"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+
+    <p class="notice">💡 완전한 SQL 파서가 아니라 토큰 기반의 가벼운 포맷터입니다. 괄호(서브쿼리·함수 인자) 안쪽은 줄바꿈 없이 한 줄로 유지되며, 매우 복잡한 쿼리에서는 예상과 다르게 정렬될 수 있습니다. 결과를 확인한 뒤 사용하세요. 모든 처리는 브라우저에서만 이루어집니다.</p>
+
+    <div class="quick-fill">
+      <button class="quick-fill-btn" id="sampleBtn">📋 예시 쿼리 채우기</button>
+      <button class="quick-fill-btn" id="clearBtn">↺ 비우기</button>
+    </div>
+
+    <div class="editor-wrap">
+      <div class="editor-box">
+        <div class="editor-label">✏️ 입력 SQL</div>
+        <textarea class="editor-textarea" id="inputSql" placeholder="포맷팅할 SQL 쿼리를 입력하거나 붙여넣으세요..." spellcheck="false"></textarea>
+        <div class="editor-info" id="inputInfo">0자</div>
+      </div>
+      <div class="editor-box">
+        <div class="editor-label">📋 포맷팅 결과</div>
+        <textarea class="editor-textarea" id="outputSql" placeholder="포맷팅 결과가 여기에 표시됩니다" readonly spellcheck="false"></textarea>
+        <div class="editor-info" id="outputInfo"></div>
+      </div>
+    </div>
+
+    <div class="error-box" id="errorBox"></div>
+
+    <div class="option-group">
+      <label class="toggle-row"><input type="checkbox" id="uppercaseOpt" checked /> 키워드 대문자로 통일</label>
+      <div class="select-row">
+        <label for="indentSelect">들여쓰기</label>
+        <select id="indentSelect">
+          <option value="2">2칸 공백</option>
+          <option value="4">4칸 공백</option>
+          <option value="tab">탭(Tab)</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="action-wrap">
+      <button class="btn-copy" id="copyBtn" disabled>📋 결과 복사</button>
+      <button class="btn-sub" id="downloadBtn" disabled>⬇ SQL 파일 다운로드</button>
+    </div>
+
+    <div style="margin:0 0 12px"><ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="9500090221"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+  </div></main>
+
+  <footer class="footer">
+    <div class="container">
+      <p class="footer-copy">© 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p>
+      <nav class="footer-nav">
+        <a href="/privacy.html">개인정보 처리방침</a>
+        <a href="/terms.html">이용약관</a>
+        <a href="/about.html">서비스 소개</a>
+        <a href="/blog/">블로그</a>
+      </nav>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+  var SAMPLE_SQL = "select o.id, c.name, sum(oi.qty*oi.price) as total from orders o join customers c on o.customer_id = c.id join order_items oi on oi.order_id = o.id where o.status = 'paid' and o.created_at >= '2026-01-01' group by o.id, c.name having sum(oi.qty*oi.price) > 100 order by total desc limit 20;";
+
+  // ── 토큰화 ──
+  function tokenize(sql) {
+    var tokens = [];
+    var i = 0, n = sql.length;
+    while (i < n) {
+      var c = sql[i];
+      if (/\s/.test(c)) { i++; continue; }
+      if (c === '-' && sql[i + 1] === '-') {
+        var end = sql.indexOf('\n', i);
+        if (end === -1) end = n;
+        tokens.push({ type: 'comment', value: sql.slice(i, end).trim() });
+        i = end;
+        continue;
+      }
+      if (c === '/' && sql[i + 1] === '*') {
+        var end2 = sql.indexOf('*/', i + 2);
+        end2 = end2 === -1 ? n : end2 + 2;
+        tokens.push({ type: 'comment', value: sql.slice(i, end2) });
+        i = end2;
+        continue;
+      }
+      if (c === "'" || c === '"' || c === '`') {
+        var quote = c, j = i + 1;
+        while (j < n) {
+          if (sql[j] === quote && sql[j + 1] === quote) { j += 2; continue; }
+          if (sql[j] === quote) { j++; break; }
+          j++;
+        }
+        tokens.push({ type: 'string', value: sql.slice(i, j) });
+        i = j;
+        continue;
+      }
+      if (c === '(' || c === ')' || c === ',' || c === ';') {
+        tokens.push({ type: 'punct', value: c });
+        i++;
+        continue;
+      }
+      if (/[0-9]/.test(c)) {
+        var j2 = i;
+        while (j2 < n && /[0-9.]/.test(sql[j2])) j2++;
+        tokens.push({ type: 'number', value: sql.slice(i, j2) });
+        i = j2;
+        continue;
+      }
+      if (/[=<>!+\-*\/%|]/.test(c)) {
+        var j3 = i;
+        while (j3 < n && /[=<>!+\-*\/%|]/.test(sql[j3])) j3++;
+        tokens.push({ type: 'op', value: sql.slice(i, j3) });
+        i = j3;
+        continue;
+      }
+      if (/[A-Za-z_]/.test(c)) {
+        var j4 = i;
+        while (j4 < n && /[A-Za-z0-9_$.]/.test(sql[j4])) j4++;
+        tokens.push({ type: 'word', value: sql.slice(i, j4) });
+        i = j4;
+        continue;
+      }
+      tokens.push({ type: 'punct', value: c });
+      i++;
+    }
+    return tokens;
+  }
+
+  var MULTIWORD_PHRASES = [
+    ['LEFT', 'OUTER', 'JOIN'], ['RIGHT', 'OUTER', 'JOIN'], ['FULL', 'OUTER', 'JOIN'],
+    ['LEFT', 'JOIN'], ['RIGHT', 'JOIN'], ['INNER', 'JOIN'], ['FULL', 'JOIN'], ['CROSS', 'JOIN'],
+    ['GROUP', 'BY'], ['ORDER', 'BY'], ['INSERT', 'INTO'], ['DELETE', 'FROM'], ['UNION', 'ALL']
+  ];
+
+  function combineMultiword(tokens) {
+    var result = [], i = 0;
+    while (i < tokens.length) {
+      var matched = null;
+      for (var m = 0; m < MULTIWORD_PHRASES.length; m++) {
+        var phrase = MULTIWORD_PHRASES[m];
+        if (i + phrase.length > tokens.length) continue;
+        var ok = true;
+        for (var k = 0; k < phrase.length; k++) {
+          var t = tokens[i + k];
+          if (t.type !== 'word' || t.value.toUpperCase() !== phrase[k]) { ok = false; break; }
+        }
+        if (ok) { matched = phrase; break; }
+      }
+      if (matched) {
+        var joined = tokens.slice(i, i + matched.length).map(function(t) { return t.value; }).join(' ');
+        result.push({ type: 'word', value: joined });
+        i += matched.length;
+      } else {
+        result.push(tokens[i]);
+        i++;
+      }
+    }
+    return result;
+  }
+
+  var TOP_CLAUSE_SET = new Set(['SELECT', 'FROM', 'WHERE', 'GROUP BY', 'ORDER BY', 'HAVING', 'LIMIT', 'OFFSET', 'UNION', 'UNION ALL', 'INSERT INTO', 'VALUES', 'UPDATE', 'SET', 'DELETE FROM', 'WITH', 'RETURNING']);
+  var JOIN_SET = new Set(['JOIN', 'LEFT JOIN', 'RIGHT JOIN', 'INNER JOIN', 'FULL JOIN', 'CROSS JOIN', 'LEFT OUTER JOIN', 'RIGHT OUTER JOIN', 'FULL OUTER JOIN']);
+  var LOGICAL_SET = new Set(['AND', 'OR']);
+  var SPACE_BEFORE_PAREN = new Set(['IN', 'VALUES', 'EXISTS', 'NOT', 'ON', 'WHERE', 'AND', 'OR', 'SELECT', 'FROM', 'HAVING', 'SET']);
+  var KEYWORD_SET = new Set([
+    'SELECT', 'FROM', 'WHERE', 'AND', 'OR', 'NOT', 'IN', 'EXISTS', 'BETWEEN', 'LIKE', 'IS', 'NULL', 'AS',
+    'ON', 'JOIN', 'INNER', 'LEFT', 'RIGHT', 'FULL', 'OUTER', 'CROSS', 'GROUP', 'BY', 'GROUP BY', 'ORDER',
+    'ORDER BY', 'HAVING', 'LIMIT', 'OFFSET', 'UNION', 'ALL', 'UNION ALL', 'INSERT', 'INTO', 'INSERT INTO',
+    'VALUES', 'UPDATE', 'SET', 'DELETE', 'DELETE FROM', 'CREATE', 'TABLE', 'ALTER', 'DROP', 'DISTINCT',
+    'CASE', 'WHEN', 'THEN', 'ELSE', 'END', 'ASC', 'DESC', 'PRIMARY', 'KEY', 'FOREIGN', 'REFERENCES',
+    'DEFAULT', 'WITH', 'RETURNING', 'TOP', 'TRUNCATE', 'LEFT JOIN', 'RIGHT JOIN', 'INNER JOIN', 'FULL JOIN',
+    'CROSS JOIN', 'LEFT OUTER JOIN', 'RIGHT OUTER JOIN', 'FULL OUTER JOIN',
+    'COUNT', 'SUM', 'AVG', 'MIN', 'MAX', 'COALESCE', 'CAST', 'CONVERT', 'IFNULL', 'ISNULL', 'NOW'
+  ]);
+
+  function formatSql(sql, opts) {
+    var indentUnit = opts.indentUnit;
+    var uppercase = opts.uppercase;
+    var tokens = combineMultiword(tokenize(sql));
+    if (!tokens.length) return '';
+
+    var lines = [];
+    var currentLine = '';
+    var parenDepth = 0;
+    var continuationIndent = 0;
+    var prev = null;
+    var pendingAfterClause = false;
+
+    function flush() { if (currentLine.length) { lines.push(currentLine); currentLine = ''; } }
+    function startNewLine(indentLevel) {
+      flush();
+      currentLine = indentUnit.repeat(Math.max(0, indentLevel));
+      prev = null;
+    }
+
+    tokens.forEach(function(tok) {
+      var upper = tok.type === 'word' ? tok.value.toUpperCase() : tok.value;
+      var display = tok.value;
+      if (tok.type === 'word' && uppercase && KEYWORD_SET.has(upper)) display = upper;
+
+      if (tok.type === 'punct' && tok.value === '(') {
+        var needSpace = !prev ? false : (prev.value === '(' ? false : (prev.type === 'word' && !SPACE_BEFORE_PAREN.has(prev.upper) && !prev.afterClause ? false : true));
+        currentLine += (needSpace ? ' ' : '') + '(';
+        parenDepth++;
+        prev = { type: 'punct', value: '(', upper: '(' };
+        return;
+      }
+      if (tok.type === 'punct' && tok.value === ')') {
+        currentLine += ')';
+        parenDepth = Math.max(0, parenDepth - 1);
+        prev = { type: 'punct', value: ')', upper: ')' };
+        return;
+      }
+      if (tok.type === 'punct' && tok.value === ';') {
+        currentLine += ';';
+        flush();
+        continuationIndent = 0;
+        prev = null;
+        return;
+      }
+      if (tok.type === 'punct' && tok.value === ',') {
+        currentLine += ',';
+        if (parenDepth === 0) { startNewLine(continuationIndent); }
+        else { prev = { type: 'punct', value: ',', upper: ',' }; }
+        return;
+      }
+      if (tok.type === 'word' && parenDepth === 0 && TOP_CLAUSE_SET.has(upper)) {
+        startNewLine(0);
+        currentLine += display;
+        continuationIndent = 1;
+        prev = { type: 'word', value: display, upper: upper };
+        pendingAfterClause = (upper === 'INSERT INTO' || upper === 'UPDATE');
+        return;
+      }
+      if (tok.type === 'word' && parenDepth === 0 && JOIN_SET.has(upper)) {
+        startNewLine(0);
+        currentLine += display;
+        continuationIndent = 1;
+        prev = { type: 'word', value: display, upper: upper };
+        pendingAfterClause = false;
+        return;
+      }
+      if (tok.type === 'word' && parenDepth === 0 && LOGICAL_SET.has(upper)) {
+        startNewLine(continuationIndent);
+        currentLine += display;
+        prev = { type: 'word', value: display, upper: upper };
+        return;
+      }
+      if (tok.type === 'comment') {
+        startNewLine(continuationIndent);
+        currentLine += display;
+        startNewLine(continuationIndent);
+        return;
+      }
+
+      var needSpaceDefault = !prev ? false : (prev.value === '(' ? false : true);
+      currentLine += (needSpaceDefault ? ' ' : '') + display;
+      prev = { type: tok.type, value: display, upper: upper, afterClause: pendingAfterClause };
+      pendingAfterClause = false;
+    });
+    flush();
+    return lines.join('\n');
+  }
+
+  var inputSql = document.getElementById('inputSql');
+  var outputSql = document.getElementById('outputSql');
+  var inputInfo = document.getElementById('inputInfo');
+  var outputInfo = document.getElementById('outputInfo');
+  var errorBox = document.getElementById('errorBox');
+  var uppercaseOpt = document.getElementById('uppercaseOpt');
+  var indentSelect = document.getElementById('indentSelect');
+  var copyBtn = document.getElementById('copyBtn');
+  var downloadBtn = document.getElementById('downloadBtn');
+
+  function getIndentUnit() {
+    var v = indentSelect.value;
+    if (v === 'tab') return '\t';
+    return ' '.repeat(parseInt(v, 10));
+  }
+
+  function runFormat() {
+    var src = inputSql.value;
+    inputInfo.textContent = src.length.toLocaleString() + '자';
+    if (!src.trim()) {
+      outputSql.value = '';
+      outputInfo.textContent = '';
+      errorBox.classList.remove('show');
+      copyBtn.disabled = true;
+      downloadBtn.disabled = true;
+      return;
+    }
+    try {
+      var result = formatSql(src, { indentUnit: getIndentUnit(), uppercase: uppercaseOpt.checked });
+      outputSql.value = result;
+      outputInfo.textContent = result.length.toLocaleString() + '자, ' + result.split('\n').length.toLocaleString() + '줄';
+      errorBox.classList.remove('show');
+      copyBtn.disabled = false;
+      downloadBtn.disabled = false;
+    } catch (e) {
+      errorBox.textContent = '⚠️ 포맷팅 중 오류가 발생했습니다: ' + e.message;
+      errorBox.classList.add('show');
+      outputSql.value = '';
+      outputInfo.textContent = '';
+      copyBtn.disabled = true;
+      downloadBtn.disabled = true;
+    }
+  }
+
+  inputSql.addEventListener('input', runFormat);
+  uppercaseOpt.addEventListener('change', runFormat);
+  indentSelect.addEventListener('change', runFormat);
+
+  document.getElementById('sampleBtn').addEventListener('click', function() {
+    inputSql.value = SAMPLE_SQL;
+    runFormat();
+  });
+  document.getElementById('clearBtn').addEventListener('click', function() {
+    inputSql.value = '';
+    runFormat();
+  });
+
+  copyBtn.addEventListener('click', function() {
+    if (!outputSql.value) return;
+    navigator.clipboard.writeText(outputSql.value).then(function() {
+      showToast('✓ 결과가 클립보드에 복사되었습니다');
+    });
+  });
+
+  downloadBtn.addEventListener('click', function() {
+    if (!outputSql.value) return;
+    var blob = new Blob([outputSql.value], { type: 'text/plain;charset=utf-8' });
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'formatted.sql';
+    a.click();
+    URL.revokeObjectURL(a.href);
+    showToast('✓ SQL 파일이 저장됩니다');
+  });
+
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(function() { t.classList.remove('show'); }, 2000);
+  }
+
+  runFormat();
+  </script>
+</body>
+</html>

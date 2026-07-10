@@ -8,11 +8,11 @@
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="CronHelper의 모든 기능을 단계별로 설명하는 공식 사용 가이드입니다. Cron 표현식을 해석하거나 클릭 몇 번으로 직접 만드는 방법을 알아보세요." />
-  <meta property="og:title" content="CronHelper 사용법 완전 가이드 — BrowserKit" />
-  <meta property="og:description" content="Cron 표현식을 해석하거나 시각적으로 만들고 다음 실행 시각을 미리 계산하는 CronHelper 공식 가이드입니다." />
+  <meta name="description" content="SQLFormatter의 모든 기능을 단계별로 설명하는 공식 사용 가이드입니다. SQL 쿼리를 읽기 쉽게 들여쓰기하고 정렬하는 방법을 알아보세요." />
+  <meta property="og:title" content="SQLFormatter 사용법 완전 가이드 — BrowserKit" />
+  <meta property="og:description" content="SQL 쿼리를 읽기 쉽게 들여쓰기하고 정렬하는 SQLFormatter 공식 가이드입니다." />
   <meta property="og:type" content="article" />
-  <title>CronHelper 사용법 완전 가이드 — BrowserKit</title>
+  <title>SQLFormatter 사용법 완전 가이드 — BrowserKit</title>
   <link rel="stylesheet" href="/css/style.css?v=20260704c" />
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506"
      crossorigin="anonymous"></script>
@@ -59,16 +59,16 @@
   {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
-    "headline": "CronHelper 사용법 완전 가이드",
-    "description": "CronHelper의 모든 기능을 단계별로 설명하는 공식 사용 가이드입니다. Cron 표현식을 해석하거나 클릭 몇 번으로 직접 만드는 방법을 알아보세요.",
+    "headline": "SQLFormatter 사용법 완전 가이드",
+    "description": "SQLFormatter의 모든 기능을 단계별로 설명하는 공식 사용 가이드입니다. SQL 쿼리를 읽기 쉽게 들여쓰기하고 정렬하는 방법을 알아보세요.",
     "datePublished": "2026-07-10T00:00:00+09:00",
     "dateModified": "2026-07-10T00:00:00+09:00",
     "author": { "@type": "Organization", "name": "BrowserKit", "url": "https://browserkit.online" },
     "publisher": { "@type": "Organization", "name": "BrowserKit", "url": "https://browserkit.online", "logo": { "@type": "ImageObject", "url": "https://browserkit.online/img/og-browserkit.png" } },
-    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://browserkit.online/blog/62-cronhelper-howto.html" },
+    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://browserkit.online/blog/63-sqlformatter-howto.html" },
     "image": "https://browserkit.online/img/og-browserkit.png"
   }
-  </script>  <link rel="canonical" href="https://browserkit.online/blog/62-cronhelper-howto.html" />
+  </script>  <link rel="canonical" href="https://browserkit.online/blog/63-sqlformatter-howto.html" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:image" content="https://browserkit.online/img/og-browserkit.png" />
   <style>
@@ -89,149 +89,136 @@
   <article class="post-wrap">
     <a href="/blog/" class="back-link">&#x2190; 블로그 목록</a>
     <span class="post-tag">가이드</span>
-    <h1 class="post-title">CronHelper 사용법 완전 가이드</h1>
+    <h1 class="post-title">SQLFormatter 사용법 완전 가이드</h1>
     <div class="post-date">2026년 7월 10일</div>
     <div style="margin:12px 0"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
 
     <div class="post-body">
-      <p>CronHelper는 서버 작업 예약에 흔히 쓰이는 Cron 표현식을 사람이 읽는 문장으로 해석하거나, 반대로 분·시·일·월·요일을 클릭 몇 번으로 선택해 Cron 표현식을 직접 만드는 무료 온라인 도구입니다. 표현식을 입력하면 다음 실행 시각을 5회까지 미리 계산해 보여주므로, 의도한 스케줄이 맞는지 실행 전에 바로 확인할 수 있습니다. 모든 파싱과 계산은 브라우저에서만 처리됩니다.</p>
+      <p>SQLFormatter는 한 줄로 압축되거나 들여쓰기가 뒤섞인 SQL 쿼리를 읽기 쉽게 정렬해주는 무료 온라인 도구입니다. SELECT, FROM, WHERE, JOIN, GROUP BY 같은 주요 절마다 줄바꿈하고, AND/OR 조건과 컬럼 목록도 보기 좋게 들여씁니다. 키워드를 대문자로 통일하거나 들여쓰기 크기(2칸/4칸/탭)를 선택할 수 있고, 모든 처리는 브라우저에서만 이루어집니다.</p>
 
       <h2>주요 기능</h2>
       <div class="feature-grid">
         <div class="feature-card">
-          <div class="feature-icon">&#x1F50D;</div>
-          <div class="feature-title">표현식 해석</div>
-          <div class="feature-desc">Cron 표현식을 붙여넣으면 사람이 읽는 문장으로 즉시 변환합니다.</div>
+          <div class="feature-icon">&#x1F4D0;</div>
+          <div class="feature-title">절 단위 자동 줄바꿈</div>
+          <div class="feature-desc">SELECT, FROM, WHERE, JOIN, GROUP BY 등 주요 절마다 새 줄로 정리합니다.</div>
         </div>
         <div class="feature-card">
-          <div class="feature-icon">&#x23F1;&#xFE0F;</div>
-          <div class="feature-title">다음 실행 시각 5회</div>
-          <div class="feature-desc">지금 시각 기준으로 실제 실행될 다음 5개 시각을 정확히 계산해 보여줍니다.</div>
+          <div class="feature-icon">&#x1F517;</div>
+          <div class="feature-title">AND/OR·컬럼 목록 들여쓰기</div>
+          <div class="feature-desc">조건절의 AND/OR와 SELECT 컬럼 목록을 한 단계 들여써 가독성을 높입니다.</div>
         </div>
         <div class="feature-card">
-          <div class="feature-icon">&#x1F528;</div>
-          <div class="feature-title">시각적으로 만들기</div>
-          <div class="feature-desc">각 필드에서 매/N마다/특정 값을 선택하면 Cron 표현식이 실시간으로 조립됩니다.</div>
+          <div class="feature-icon">&#x1F520;</div>
+          <div class="feature-title">키워드 대문자 통일</div>
+          <div class="feature-desc">SELECT, FROM, JOIN 같은 키워드를 대문자로 통일할지 선택할 수 있습니다.</div>
         </div>
         <div class="feature-card">
           <div class="feature-icon">&#x1F512;</div>
           <div class="feature-title">완전 로컬 처리</div>
-          <div class="feature-desc">모든 파싱과 계산이 브라우저 안에서 실행됩니다. 서버로 전송되지 않습니다.</div>
+          <div class="feature-desc">모든 포맷팅이 브라우저 안에서 실행됩니다. 쿼리가 서버로 전송되지 않습니다.</div>
         </div>
       </div>
 
       <div style="margin:12px 0 0"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
 
-      <h2>사용법 — 표현식 해석하기</h2>
+      <h2>사용법</h2>
       <div class="step-card">
         <div class="step-num">1</div>
         <div class="step-content">
-          <h3>Cron 표현식 입력</h3>
-          <p><strong>🔍 표현식 해석하기</strong> 탭에서 <code>분 시 일 월 요일</code> 순서의 5필드 Cron 표현식을 입력합니다. 자주 쓰는 패턴은 하단 프리셋 버튼(매분, 평일 오전 9시 등)으로 바로 채울 수 있습니다.</p>
+          <h3>SQL 쿼리 입력</h3>
+          <p>왼쪽 <strong>입력 SQL</strong> 칸에 정리할 쿼리를 붙여넣습니다. 예시가 필요하면 <strong>📋 예시 쿼리 채우기</strong> 버튼을 사용합니다.</p>
         </div>
       </div>
 
       <figure style="margin:12px 0 24px; text-align:center;">
-        <img src="/img/blog/cronhelper/01-parse.png"
-             alt="CronHelper 표현식 해석 탭에 Cron 표현식을 입력하고 사람이 읽는 설명과 다음 실행 시각 5회가 표시된 화면"
+        <img src="/img/blog/sqlformatter/01-input.png"
+             alt="SQLFormatter 왼쪽에 압축된 SQL을 입력하고 오른쪽에 절 단위로 줄바꿈된 결과가 표시된 화면"
              style="width:100%; max-width:640px; border:1px solid var(--border); border-radius:var(--radius);"
              loading="lazy" />
         <figcaption style="font-size:13px; color:var(--subtext); margin-top:6px;">
-          표현식 입력 후 설명과 다음 실행 시각이 표시된 화면
+          입력 즉시 오른쪽에 포맷팅 결과가 표시되는 화면
         </figcaption>
       </figure>
 
       <div class="step-card">
         <div class="step-num">2</div>
         <div class="step-content">
-          <h3>설명과 다음 실행 시각 확인</h3>
-          <p>입력 즉시 <strong>사람이 읽는 설명</strong>과 <strong>다음 실행 시각(5회)</strong>이 갱신됩니다. 문장 설명은 근사 표현이므로, 정확한 스케줄은 다음 실행 시각 목록으로 확인하세요.</p>
+          <h3>옵션으로 스타일 조정</h3>
+          <p><strong>키워드 대문자로 통일</strong> 체크박스와 <strong>들여쓰기</strong>(2칸/4칸/탭) 선택으로 원하는 스타일을 즉시 적용해볼 수 있습니다. 입력이나 옵션을 바꿀 때마다 오른쪽 결과가 실시간으로 갱신됩니다.</p>
         </div>
       </div>
 
-      <h2>사용법 — 선택해서 만들기</h2>
       <div class="step-card">
         <div class="step-num">3</div>
         <div class="step-content">
-          <h3>필드별로 값 선택</h3>
-          <p><strong>🔨 선택해서 만들기</strong> 탭에서 분·시·일·월·요일 각각 <strong>매 ○○</strong>, <strong>N○○마다</strong>, <strong>특정 값 선택</strong> 중 하나를 고릅니다. 특정 값은 원하는 숫자(또는 요일)를 여러 개 클릭해 선택할 수 있습니다.</p>
+          <h3>결과 복사 또는 다운로드</h3>
+          <p><strong>📋 결과 복사</strong>로 클립보드에 바로 담거나, <strong>⬇ SQL 파일 다운로드</strong>로 <code>.sql</code> 파일로 저장할 수 있습니다.</p>
         </div>
       </div>
 
       <figure style="margin:12px 0 24px; text-align:center;">
-        <img src="/img/blog/cronhelper/02-build.png"
-             alt="CronHelper 선택해서 만들기 탭에서 분, 시, 요일 값을 선택하고 상단에 완성된 Cron 표현식이 표시된 화면"
+        <img src="/img/blog/sqlformatter/02-options.png"
+             alt="SQLFormatter 키워드 대문자 통일 체크박스와 들여쓰기 선택 옵션, 결과 복사 다운로드 버튼이 표시된 화면"
              style="width:100%; max-width:640px; border:1px solid var(--border); border-radius:var(--radius);"
              loading="lazy" />
         <figcaption style="font-size:13px; color:var(--subtext); margin-top:6px;">
-          시각적 빌더로 조립된 Cron 표현식
+          옵션 영역과 결과 복사/다운로드 버튼
         </figcaption>
       </figure>
 
-      <div class="step-card">
-        <div class="step-num">4</div>
-        <div class="step-content">
-          <h3>완성된 표현식 복사 또는 해석 확인</h3>
-          <p>상단 카드에 실시간으로 조립되는 표현식을 <strong>📋 복사</strong> 버튼으로 바로 복사하거나, <strong>🔍 이 표현식 해석하기</strong> 버튼으로 해석 탭으로 넘어가 설명과 다음 실행 시각을 바로 확인할 수 있습니다.</p>
-        </div>
-      </div>
-
       <div class="post-warn">
-        <strong>⚠️ 참고:</strong> 문장 설명은 표현식을 기계적으로 요약한 <strong>근사 표현</strong>입니다. 복잡한 조합(일과 요일을 동시에 지정하는 경우 등)에서는 문장이 다소 부자연스러울 수 있으니, 실제 스케줄이 의도한 대로인지는 반드시 <strong>다음 실행 시각</strong> 목록으로 재확인하세요. 또한 이 도구는 표준 5필드 Cron만 지원하며, 초(seconds) 필드가 있는 6필드 확장 문법(Quartz 등)은 지원하지 않습니다.
+        <strong>⚠️ 참고:</strong> SQLFormatter는 완전한 SQL 파서가 아니라 <strong>토큰 기반의 가벼운 포맷터</strong>입니다. 괄호(서브쿼리·함수 인자) 안쪽은 줄바꿈 없이 한 줄로 유지되며, 매우 복잡하거나 방언(dialect)에 특화된 쿼리에서는 예상과 다르게 정렬될 수 있습니다. 결과를 반드시 확인한 뒤 사용하고, 프로덕션 파이프라인의 자동 포맷팅에는 sqlfluff 같은 전용 도구 사용을 권장합니다.
       </div>
 
-      <h2>자주 쓰는 Cron 패턴</h2>
+      <h2>포맷팅 전후 비교</h2>
       <div class="post-table-wrap"><table class="post-table">
-        <thead><tr><th>표현식</th><th>의미</th></tr></thead>
+        <thead><tr><th>구분</th><th>내용</th></tr></thead>
         <tbody>
-          <tr><td><code>* * * * *</code></td><td>매분마다 실행</td></tr>
-          <tr><td><code>*/10 * * * *</code></td><td>10분마다 실행</td></tr>
-          <tr><td><code>0 * * * *</code></td><td>매시 정각에 실행</td></tr>
-          <tr><td><code>0 0 * * *</code></td><td>매일 자정에 실행</td></tr>
-          <tr><td><code>0 9 * * 1-5</code></td><td>평일(월~금) 오전 9시에 실행</td></tr>
-          <tr><td><code>0 0 1 * *</code></td><td>매월 1일 자정에 실행</td></tr>
+          <tr><td>입력(한 줄)</td><td><code>select id,name from users where age &gt;= 20 and status = 'active' order by id;</code></td></tr>
+          <tr><td>출력(포맷팅 후)</td><td><code>SELECT id, name → FROM users → WHERE age &gt;= 20 → &nbsp;&nbsp;AND status = 'active' → ORDER BY id;</code> (→ 는 줄바꿈)</td></tr>
         </tbody>
       </table></div>
 
       <h2>활용 예시</h2>
       <div class="use-case-grid">
         <div class="use-case-card">
-          <div class="use-case-icon">&#x1F5A5;&#xFE0F;</div>
-          <div class="use-case-title">서버 배치 작업 예약</div>
-          <div class="use-case-desc">crontab이나 CI/CD 스케줄러에 등록할 표현식을 미리 검증합니다.</div>
-        </div>
-        <div class="use-case-card">
-          <div class="use-case-icon">&#x2601;&#xFE0F;</div>
-          <div class="use-case-title">클라우드 스케줄러 설정</div>
-          <div class="use-case-desc">AWS EventBridge, GCP Cloud Scheduler 등에 입력할 Cron을 미리 만들고 확인합니다.</div>
-        </div>
-        <div class="use-case-card">
           <div class="use-case-icon">&#x1F41B;</div>
-          <div class="use-case-title">기존 표현식 디버깅</div>
-          <div class="use-case-desc">동료가 작성한 Cron이 의도한 대로 동작하는지 다음 실행 시각으로 검증합니다.</div>
+          <div class="use-case-title">쿼리 디버깅</div>
+          <div class="use-case-desc">한 줄로 압축된 로그의 SQL을 정리해 조건절과 조인 구조를 빠르게 파악합니다.</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F4DD;</div>
+          <div class="use-case-title">코드 리뷰 준비</div>
+          <div class="use-case-desc">PR에 올리기 전 쿼리를 일관된 스타일로 정리해 가독성을 높입니다.</div>
         </div>
         <div class="use-case-card">
           <div class="use-case-icon">&#x1F4DA;</div>
-          <div class="use-case-title">Cron 문법 학습</div>
-          <div class="use-case-desc">각 필드가 어떤 값을 의미하는지 시각적 빌더로 직접 만져보며 익힙니다.</div>
+          <div class="use-case-title">SQL 학습·문서화</div>
+          <div class="use-case-desc">복잡한 쿼리를 절 단위로 나눠 보며 구조를 이해하거나 문서에 정리합니다.</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F504;</div>
+          <div class="use-case-title">스타일 통일</div>
+          <div class="use-case-desc">팀원마다 제각각인 키워드 대소문자와 들여쓰기를 한 스타일로 맞춥니다.</div>
         </div>
       </div>
 
-      <div class="post-highlight">&#x1F512; CronHelper는 모든 파싱과 계산이 내 PC 브라우저에서만 실행됩니다. 입력한 표현식이 외부 서버로 전송되지 않습니다.</div>
+      <div class="post-highlight">&#x1F512; SQLFormatter는 모든 포맷팅이 내 PC 브라우저에서만 실행됩니다. 입력한 쿼리가 외부 서버로 전송되지 않습니다.</div>
     </div>
 
     <div class="cta-box">
-      <p>Cron 표현식을 해석하거나 클릭 몇 번으로 직접 만들어보세요.<br />다음 실행 시각까지 바로 확인할 수 있습니다.</p>
-      <a href="/cron-helper/" class="cta-btn" style="display:inline-flex;align-items:center;gap:8px">
-        <span style="display:inline-block;width:26px;height:26px;overflow:hidden;flex-shrink:0"><span style="display:block;transform:scale(0.565);transform-origin:top left"><div style="width:46px;height:46px;background:#e0c3ff;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="font:700 13px Gowun Dodum,sans-serif;color:#2a2433;line-height:1;letter-spacing:-.5px;white-space:nowrap">CRON</div></div></span></span>
-        무료로 Cron 표현식 만들기
+      <p>복잡한 SQL 쿼리를 읽기 쉽게 정리해보세요.<br />키워드 대문자 통일과 들여쓰기 옵션까지 자유롭게 선택할 수 있습니다.</p>
+      <a href="/sql-formatter/" class="cta-btn" style="display:inline-flex;align-items:center;gap:8px">
+        <span style="display:inline-block;width:26px;height:26px;overflow:hidden;flex-shrink:0"><span style="display:block;transform:scale(0.565);transform-origin:top left"><div style="width:46px;height:46px;background:#e0c3ff;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="font:700 15px Gowun Dodum,sans-serif;color:#2a2433;line-height:1;letter-spacing:-.5px;white-space:nowrap">SQL</div></div></span></span>
+        무료로 SQL 정리하기
       </a>
     </div>
     <div style="margin:12px 0"><ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="9500090221"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
 
 <div class="post-nav">
-      <a href="/blog/61-jwtdecoder-howto.html"><span class="nav-label">← 이전 글</span>JWTDecoder 사용법 완전 가이드</a>
-      <a href="/blog/63-sqlformatter-howto.html" style="text-align:right"><span class="nav-label">다음 글 →</span>SQLFormatter 사용법 완전 가이드</a>
+      <a href="/blog/62-cronhelper-howto.html"><span class="nav-label">← 이전 글</span>CronHelper 사용법 완전 가이드</a>
+      <a href="/blog/38-chartmaker-howto.html" style="text-align:right"><span class="nav-label">다음 글 →</span>ChartMaker 사용법 완전 가이드</a>
     </div></div>
 
   </article>
