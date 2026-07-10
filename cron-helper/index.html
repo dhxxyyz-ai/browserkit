@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <link rel="icon" href="/favicon.ico" sizes="32x32">
+  <link rel="icon" href="/favicon-16.png" sizes="16x16" type="image/png">
+  <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="/favicon-192.png" sizes="192x192" type="image/png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Cron 표현식을 사람이 읽는 문장으로 해석하거나, 분/시/일/월/요일을 선택해 Cron 표현식을 직접 만드는 무료 온라인 도구. 다음 실행 시각 5회를 미리 계산해 보여줍니다. 서버 전송 없이 브라우저에서 바로 처리합니다." />
+  <meta property="og:title" content="CronHelper — Cron 표현식 도우미" />
+  <meta property="og:description" content="Cron 표현식을 해석하거나 시각적으로 만들고, 다음 실행 시각을 미리 계산하는 무료 온라인 도구입니다." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://browserkit.online/cron-helper/" />
+  <title>CronHelper — Cron 표현식 도우미</title>
+  <link rel="stylesheet" href="/css/style.css?v=20260704c" />
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506"
+     crossorigin="anonymous"></script>
+  <style>
+    .tab-bar { display:flex; gap:4px; background:var(--card); border:1px solid var(--border); border-radius:14px; padding:5px; margin-bottom:20px; }
+    .tab-btn { flex:1; padding:10px; font-size:14px; font-weight:600; border:none; border-radius:10px; cursor:pointer; font-family:'Gowun Dodum',sans-serif; background:transparent; color:var(--subtext); transition:all 0.2s; }
+    .tab-btn.active { background:linear-gradient(135deg,var(--point),var(--point-hover)); color:#fff; }
+    .tab-btn:hover:not(.active) { color:var(--text); background:rgba(123,108,255,0.08); }
+    .panel { display:none; }
+    .panel.show { display:block; }
+
+    .input-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:24px; margin-bottom:20px; }
+    .field-label { font-size:13px; font-weight:600; color:var(--subtext); margin-bottom:8px; }
+    .cron-input { width:100%; background:var(--bg); border:1px solid var(--border); border-radius:10px; padding:13px 16px; font-size:16px; color:var(--text); font-family:'Fira Code','JetBrains Mono',monospace; outline:none; box-sizing:border-box; }
+    .cron-input:focus { border-color:var(--point); }
+    .quick-fill { display:flex; gap:8px; margin-top:12px; flex-wrap:wrap; }
+    .quick-fill-btn { background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:6px 14px; font-size:12px; color:var(--subtext); cursor:pointer; }
+    .quick-fill-btn:hover { border-color:var(--point); color:var(--text); }
+
+    .field-cols { display:grid; grid-template-columns:repeat(5,1fr); gap:4px; margin-top:14px; text-align:center; }
+    .field-col-label { font-size:11px; color:var(--subtext); font-weight:600; }
+
+    .error-box { background:rgba(248,113,113,0.08); border:1px solid #F87171; border-radius:10px; padding:14px 18px; margin-bottom:20px; color:#F87171; font-size:14px; display:none; }
+    .error-box.show { display:block; }
+
+    .result-wrap { display:none; }
+    .result-wrap.show { display:block; }
+
+    .human-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:22px 24px; margin-bottom:20px; }
+    .human-title { font-size:12px; font-weight:600; color:var(--subtext); margin-bottom:8px; }
+    .human-text { font-size:18px; font-weight:700; color:var(--point-hover); font-family:'Gowun Dodum',sans-serif; line-height:1.6; }
+    .human-approx { font-size:12px; color:var(--subtext); margin-top:8px; }
+
+    .next-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px 24px; margin-bottom:20px; }
+    .next-title { font-size:13px; font-weight:600; color:var(--subtext); margin-bottom:12px; }
+    .next-list { display:flex; flex-direction:column; gap:8px; }
+    .next-row { display:flex; align-items:center; gap:10px; font-size:14px; }
+    .next-num { min-width:22px; height:22px; background:var(--bg); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:var(--subtext); }
+    .next-date { font-family:'Fira Code',monospace; color:var(--text); }
+
+    .builder-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px 24px; margin-bottom:16px; }
+    .builder-title { font-size:14px; font-weight:700; color:var(--text); margin-bottom:12px; }
+    .builder-mode-row { display:flex; gap:16px; margin-bottom:12px; flex-wrap:wrap; }
+    .builder-mode-row label { display:flex; align-items:center; gap:6px; font-size:13px; color:var(--subtext); cursor:pointer; }
+    .builder-mode-row input[type=radio] { accent-color:var(--point); width:15px; height:15px; cursor:pointer; }
+    .step-row { display:flex; align-items:center; gap:8px; margin-bottom:10px; font-size:13px; color:var(--subtext); }
+    .step-row input { width:70px; background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:7px 10px; color:var(--text); font-size:13px; outline:none; }
+    .value-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(42px,1fr)); gap:6px; }
+    .value-chip { background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:6px 0; font-size:12px; color:var(--subtext); cursor:pointer; text-align:center; user-select:none; }
+    .value-chip.active { background:rgba(123,108,255,0.15); border-color:var(--point); color:var(--point-hover); font-weight:700; }
+    .value-grid.weekday { grid-template-columns:repeat(7,1fr); }
+
+    .output-card { background:var(--card); border:2px solid var(--point); border-radius:var(--radius); padding:20px 24px; margin-bottom:20px; display:flex; align-items:center; gap:16px; flex-wrap:wrap; }
+    .output-expr { flex:1; min-width:180px; font-family:'Fira Code','JetBrains Mono',monospace; font-size:20px; font-weight:700; color:var(--text); }
+    .copy-btn { background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:8px 16px; font-size:13px; font-weight:600; color:var(--subtext); cursor:pointer; }
+    .copy-btn:hover { border-color:var(--point); color:var(--text); }
+
+    .action-bar { display:flex; gap:10px; margin-bottom:48px; flex-wrap:wrap; }
+    .btn-sub { background:var(--card); color:var(--subtext); border:1px solid var(--border); border-radius:10px; padding:10px 18px; font-size:13px; cursor:pointer; font-family:'Gowun Dodum',sans-serif; }
+    .btn-sub:hover { color:var(--text); border-color:var(--point); }
+
+    .toast { position:fixed; bottom:32px; left:50%; transform:translateX(-50%) translateY(80px); background:var(--success); color:#fff; border-radius:999px; padding:10px 24px; font-size:14px; font-weight:600; opacity:0; pointer-events:none; z-index:999; transition:all 0.3s ease; }
+    .toast.show { transform:translateX(-50%) translateY(0); opacity:1; }
+
+    .footer { border-top:1px solid var(--border); padding:32px 0; text-align:center; }
+    .footer-copy { color:var(--subtext); font-size:13px; margin-bottom:12px; }
+    .footer-nav { display:flex; justify-content:center; gap:20px; flex-wrap:wrap; }
+    .footer-nav a { color:var(--subtext); font-size:13px; text-decoration:none; }
+    .footer-nav a:hover { color:var(--text); }
+
+    @media (max-width:640px) {
+      .hero-title { font-size:24px; }
+      .field-cols { grid-template-columns:1fr; }
+      .value-grid { grid-template-columns:repeat(auto-fill,minmax(36px,1fr)); }
+    }
+  </style>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+  <meta property="og:image" content="https://browserkit.online/img/og-browserkit.png" />
+  <link rel="canonical" href="https://browserkit.online/cron-helper/" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://browserkit.online/img/og-browserkit.png" />
+</head>
+
+<body>
+  <header class="header">
+    <div class="container">
+      <a href="/" class="header-brand">
+        <div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Gowun Dodum,sans-serif;flex-shrink:0">B</div>
+        <span class="header-brand-text"><span style="color:var(--text)">Browser</span><span style="color:var(--point)">Kit</span></span>
+      </a>
+      <a href="/" class="header-back">&#x2190; BrowserKit 홈으로</a>
+    </div>
+  </header>
+
+  <main><div class="container">
+    <div class="hero">
+      <div class="hero-icon" style="height:78px;display:flex;justify-content:center;align-items:center"><div style="transform:scale(1.7);transform-origin:center"><div style="width:46px;height:46px;background:#e0c3ff;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="font:700 13px Gowun Dodum,sans-serif;color:#2a2433;line-height:1;letter-spacing:-.5px;white-space:nowrap">CRON</div></div></div></div>
+      <div class="hero-title-wrap"><h1 class="hero-title">CronHelper</h1><a href="/blog/62-cronhelper-howto.html" class="hero-guide-link">사용법 가이드 보기</a></div>
+      <p class="hero-desc">Cron 표현식을 해석하거나, 클릭 몇 번으로 직접 만들어보세요</p>
+      <div class="hero-badges">
+        <span class="badge">🔒 완전 로컬 처리</span>
+        <span class="badge">⚡ 무료 사용</span>
+        <span class="badge">🛡️ 서버 전송 없음</span>
+        <span class="badge">📦 설치 불필요</span>
+      </div>
+    </div>
+    <div style="margin:0 0 12px"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+
+    <p class="notice">💡 이 도구는 표준 5필드 Cron(분 시 일 월 요일)을 지원합니다. 문장 설명은 근사 표현이므로, 정확한 스케줄은 아래 <strong>다음 실행 시각</strong> 목록으로 확인하는 것이 가장 정확합니다. 모든 계산은 브라우저에서만 처리됩니다.</p>
+
+    <div class="tab-bar">
+      <button class="tab-btn active" data-tab="parse">&#x1F50D; 표현식 해석하기</button>
+      <button class="tab-btn" data-tab="build">&#x1F528; 선택해서 만들기</button>
+    </div>
+
+    <!-- ─── 해석 탭 ─── -->
+    <div class="panel show" id="panel-parse">
+      <div class="input-card">
+        <div class="field-label">&#x23F0; Cron 표현식 (분 시 일 월 요일)</div>
+        <input type="text" class="cron-input" id="cronInput" placeholder="0 9 * * 1-5" value="0 9 * * 1-5" />
+        <div class="field-cols">
+          <div class="field-col-label">분</div><div class="field-col-label">시</div><div class="field-col-label">일</div><div class="field-col-label">월</div><div class="field-col-label">요일</div>
+        </div>
+        <div class="quick-fill">
+          <button class="quick-fill-btn" data-preset="* * * * *">매분</button>
+          <button class="quick-fill-btn" data-preset="0 * * * *">매시 정각</button>
+          <button class="quick-fill-btn" data-preset="0 0 * * *">매일 자정</button>
+          <button class="quick-fill-btn" data-preset="0 9 * * 1-5">평일 오전 9시</button>
+          <button class="quick-fill-btn" data-preset="*/10 * * * *">10분마다</button>
+          <button class="quick-fill-btn" data-preset="0 0 1 * *">매월 1일 0시</button>
+        </div>
+      </div>
+
+      <div class="error-box" id="parseError"></div>
+
+      <div class="result-wrap" id="parseResult">
+        <div class="human-card">
+          <div class="human-title">📝 사람이 읽는 설명</div>
+          <div class="human-text" id="humanText">—</div>
+          <div class="human-approx">※ 근사 표현입니다. 정확한 일정은 아래 다음 실행 시각을 참고하세요.</div>
+        </div>
+        <div class="next-card">
+          <div class="next-title">⏭️ 다음 실행 시각 (5회)</div>
+          <div class="next-list" id="nextList"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── 만들기 탭 ─── -->
+    <div class="panel" id="panel-build">
+      <div class="output-card">
+        <div class="output-expr" id="builtExpr">* * * * *</div>
+        <button class="copy-btn" id="copyBuiltBtn">📋 복사</button>
+      </div>
+
+      <div id="builderFields"></div>
+    </div>
+
+    <div class="action-bar">
+      <button class="btn-sub" id="switchToParseBtn" style="display:none">🔍 이 표현식 해석하기</button>
+    </div>
+
+    <div style="margin:0 0 12px"><ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="9500090221"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+  </div></main>
+
+  <footer class="footer">
+    <div class="container">
+      <p class="footer-copy">&#xa9; 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p>
+      <nav class="footer-nav">
+        <a href="/privacy.html">개인정보 처리방침</a>
+        <a href="/terms.html">이용약관</a>
+        <a href="/about.html">서비스 소개</a>
+        <a href="/blog/">블로그</a>
+      </nav>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+  var WEEKDAY_NAMES = ['일', '월', '화', '수', '목', '금', '토'];
+
+  // ── 필드 파서: "*", "*/n", "a-b", "a-b/n", "a,b,c" 지원, 유효 값들의 Set 반환 ──
+  function parseField(spec, min, max) {
+    var result = new Set();
+    var parts = spec.split(',');
+    for (var i = 0; i < parts.length; i++) {
+      var part = parts[i].trim();
+      if (!part) throw new Error('빈 필드가 있습니다');
+      var step = 1;
+      var rangePart = part;
+      if (part.indexOf('/') !== -1) {
+        var stepSplit = part.split('/');
+        if (stepSplit.length !== 2) throw new Error('"' + part + '" 형식이 올바르지 않습니다');
+        rangePart = stepSplit[0];
+        step = parseInt(stepSplit[1], 10);
+        if (!(step > 0)) throw new Error('스텝 값은 1 이상이어야 합니다: ' + part);
+      }
+      var lo, hi;
+      if (rangePart === '*') {
+        lo = min; hi = max;
+      } else if (rangePart.indexOf('-') !== -1) {
+        var rangeSplit = rangePart.split('-');
+        if (rangeSplit.length !== 2) throw new Error('"' + part + '" 범위 형식이 올바르지 않습니다');
+        lo = parseInt(rangeSplit[0], 10);
+        hi = parseInt(rangeSplit[1], 10);
+      } else {
+        lo = hi = parseInt(rangePart, 10);
+      }
+      if (isNaN(lo) || isNaN(hi)) throw new Error('"' + part + '" 값을 숫자로 해석할 수 없습니다');
+      if (lo < min || hi > max || lo > hi) throw new Error('"' + part + '" 값이 허용 범위(' + min + '~' + max + ')를 벗어났습니다');
+      for (var v = lo; v <= hi; v += step) result.add(v);
+    }
+    return result;
+  }
+
+  function parseCron(expr) {
+    var fields = expr.trim().split(/\s+/);
+    if (fields.length !== 5) throw new Error('Cron 표현식은 "분 시 일 월 요일" 5개 필드여야 합니다 (입력: ' + fields.length + '개)');
+    var minute = parseField(fields[0], 0, 59);
+    var hour = parseField(fields[1], 0, 23);
+    var day = parseField(fields[2], 1, 31);
+    var month = parseField(fields[3], 1, 12);
+    var weekday = parseField(fields[4], 0, 6);
+    return {
+      raw: { minute: fields[0], hour: fields[1], day: fields[2], month: fields[3], weekday: fields[4] },
+      minute: minute, hour: hour, day: day, month: month, weekday: weekday
+    };
+  }
+
+  function isFull(set, min, max) {
+    if (set.size !== (max - min + 1)) return false;
+    for (var v = min; v <= max; v++) if (!set.has(v)) return false;
+    return true;
+  }
+
+  // ── 사람이 읽는 문장 생성 (근사) ──
+  function humanize(p) {
+    var minuteFull = isFull(p.minute, 0, 59);
+    var hourFull = isFull(p.hour, 0, 23);
+    var dayFull = isFull(p.day, 1, 31);
+    var monthFull = isFull(p.month, 1, 12);
+    var weekdayFull = isFull(p.weekday, 0, 6);
+
+    // 매 N분/N시간 반복 패턴 감지 (다른 필드는 모두 전체일 때)
+    if (hourFull && dayFull && monthFull && weekdayFull && p.raw.minute.indexOf('/') !== -1 && !minuteFull) {
+      var step = p.raw.minute.split('/')[1];
+      return step + '분마다 실행';
+    }
+    if (minuteFull === false && p.minute.size === 1 && hourFull === false && p.hour.size === 0) {
+      // unreachable guard
+    }
+
+    var sortedList = function(set) { return Array.from(set).sort(function(a, b) { return a - b; }); };
+
+    var timePhrase;
+    if (minuteFull && hourFull) {
+      timePhrase = '매분';
+    } else {
+      var hourList = hourFull ? ['매시'] : sortedList(p.hour).map(function(h) { return h + '시'; });
+      var minuteList = minuteFull ? ['매분'] : sortedList(p.minute).map(function(m) { return m + '분'; });
+      if (hourFull) {
+        timePhrase = minuteList.join(', ') + '마다';
+      } else {
+        timePhrase = hourList.join(', ') + ' ' + minuteList.join(', ');
+      }
+    }
+
+    var dayPhrase = '';
+    var monthPhrase = monthFull ? '' : ('매년 ' + sortedList(p.month).join(', ') + '월 ');
+
+    if (!dayFull && !weekdayFull) {
+      dayPhrase = sortedList(p.day).join(', ') + '일 또는 ' + sortedList(p.weekday).map(function(w) { return WEEKDAY_NAMES[w] + '요일'; }).join(', ') + '에';
+    } else if (!dayFull) {
+      dayPhrase = sortedList(p.day).join(', ') + '일에';
+    } else if (!weekdayFull) {
+      dayPhrase = sortedList(p.weekday).map(function(w) { return WEEKDAY_NAMES[w] + '요일'; }).join(', ') + '에';
+    } else {
+      dayPhrase = '매일';
+    }
+
+    return (monthPhrase + dayPhrase + ' ' + timePhrase + ' 실행').replace(/\s+/g, ' ').trim();
+  }
+
+  // ── 다음 실행 시각 계산 (분 단위 브루트포스, 최대 1년) ──
+  function computeNextRuns(p, count, fromDate) {
+    var results = [];
+    var dt = new Date(fromDate.getTime());
+    dt.setSeconds(0, 0);
+    dt.setMinutes(dt.getMinutes() + 1);
+
+    var dayRestricted = !isFull(p.day, 1, 31);
+    var weekdayRestricted = !isFull(p.weekday, 0, 6);
+
+    var maxIter = 60 * 24 * 366; // 최대 1년
+    for (var i = 0; i < maxIter && results.length < count; i++) {
+      var mon = dt.getMonth() + 1;
+      if (!p.month.has(mon)) {
+        dt.setMonth(dt.getMonth() + 1, 1);
+        dt.setHours(0, 0, 0, 0);
+        continue;
+      }
+      var dom = dt.getDate();
+      var dow = dt.getDay();
+      var dayOk;
+      if (dayRestricted && weekdayRestricted) {
+        dayOk = p.day.has(dom) || p.weekday.has(dow);
+      } else if (dayRestricted) {
+        dayOk = p.day.has(dom);
+      } else if (weekdayRestricted) {
+        dayOk = p.weekday.has(dow);
+      } else {
+        dayOk = true;
+      }
+      if (!dayOk) {
+        dt.setDate(dt.getDate() + 1);
+        dt.setHours(0, 0, 0, 0);
+        continue;
+      }
+      var hr = dt.getHours();
+      if (!p.hour.has(hr)) {
+        dt.setHours(dt.getHours() + 1, 0, 0, 0);
+        continue;
+      }
+      var min = dt.getMinutes();
+      if (!p.minute.has(min)) {
+        dt.setMinutes(dt.getMinutes() + 1);
+        continue;
+      }
+      results.push(new Date(dt.getTime()));
+      dt.setMinutes(dt.getMinutes() + 1);
+    }
+    return results;
+  }
+
+  function fmtDate(d) {
+    var pad = function(n) { return String(n).padStart(2, '0'); };
+    var wd = WEEKDAY_NAMES[d.getDay()];
+    return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()) + ' (' + wd + ') ' + pad(d.getHours()) + ':' + pad(d.getMinutes());
+  }
+
+  // ══════════════════════════
+  // 탭 전환
+  // ══════════════════════════
+  document.querySelectorAll('.tab-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.tab-btn').forEach(function(b) { b.classList.remove('active'); });
+      document.querySelectorAll('.panel').forEach(function(p) { p.classList.remove('show'); });
+      btn.classList.add('active');
+      document.getElementById('panel-' + btn.dataset.tab).classList.add('show');
+      document.getElementById('switchToParseBtn').style.display = btn.dataset.tab === 'build' ? '' : 'none';
+    });
+  });
+
+  // ══════════════════════════
+  // 탭 1: 해석하기
+  // ══════════════════════════
+  var cronInput = document.getElementById('cronInput');
+  var parseError = document.getElementById('parseError');
+  var parseResult = document.getElementById('parseResult');
+  var humanText = document.getElementById('humanText');
+  var nextList = document.getElementById('nextList');
+
+  function runParse() {
+    var expr = cronInput.value.trim();
+    if (!expr) {
+      parseError.classList.remove('show');
+      parseResult.classList.remove('show');
+      return;
+    }
+    try {
+      var p = parseCron(expr);
+      parseError.classList.remove('show');
+      humanText.textContent = humanize(p);
+      var runs = computeNextRuns(p, 5, new Date());
+      if (!runs.length) {
+        nextList.innerHTML = '<div style="color:var(--subtext);font-size:13px">1년 이내에 실행될 시각을 찾지 못했습니다. 표현식을 확인해주세요.</div>';
+      } else {
+        nextList.innerHTML = runs.map(function(d, i) {
+          return '<div class="next-row"><span class="next-num">' + (i + 1) + '</span><span class="next-date">' + fmtDate(d) + '</span></div>';
+        }).join('');
+      }
+      parseResult.classList.add('show');
+    } catch (e) {
+      parseError.textContent = '⚠️ ' + e.message;
+      parseError.classList.add('show');
+      parseResult.classList.remove('show');
+    }
+  }
+
+  cronInput.addEventListener('input', runParse);
+  document.querySelectorAll('[data-preset]').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      cronInput.value = btn.dataset.preset;
+      runParse();
+    });
+  });
+
+  // ══════════════════════════
+  // 탭 2: 시각적으로 만들기
+  // ══════════════════════════
+  var FIELD_DEFS = [
+    { key: 'minute', label: '분', min: 0, max: 59, everyWord: '매 분' },
+    { key: 'hour', label: '시', min: 0, max: 23, everyWord: '매 시간' },
+    { key: 'day', label: '일', min: 1, max: 31, everyWord: '매일' },
+    { key: 'month', label: '월', min: 1, max: 12, everyWord: '매월' },
+    { key: 'weekday', label: '요일', min: 0, max: 6, everyWord: '매일(요일 무관)', names: WEEKDAY_NAMES }
+  ];
+
+  var builderState = {};
+  FIELD_DEFS.forEach(function(f) {
+    builderState[f.key] = { mode: 'every', step: 1, selected: new Set() };
+  });
+
+  var builderFieldsEl = document.getElementById('builderFields');
+  builderFieldsEl.innerHTML = FIELD_DEFS.map(function(f) {
+    var valueGridHtml;
+    if (f.names) {
+      valueGridHtml = '<div class="value-grid weekday" data-field="' + f.key + '">' +
+        f.names.map(function(name, v) { return '<div class="value-chip" data-value="' + v + '">' + name + '</div>'; }).join('') +
+        '</div>';
+    } else {
+      var chips = '';
+      for (var v = f.min; v <= f.max; v++) chips += '<div class="value-chip" data-value="' + v + '">' + v + '</div>';
+      valueGridHtml = '<div class="value-grid" data-field="' + f.key + '">' + chips + '</div>';
+    }
+    return '<div class="builder-card">' +
+      '<div class="builder-title">' + f.label + '</div>' +
+      '<div class="builder-mode-row">' +
+        '<label><input type="radio" name="mode-' + f.key + '" value="every" checked> ' + f.everyWord + '</label>' +
+        '<label><input type="radio" name="mode-' + f.key + '" value="step"> N' + f.label + '마다</label>' +
+        '<label><input type="radio" name="mode-' + f.key + '" value="specific"> 특정 값 선택</label>' +
+      '</div>' +
+      '<div class="step-row" data-step-row="' + f.key + '" style="display:none">매 <input type="number" min="1" max="' + f.max + '" value="2" data-step-input="' + f.key + '" /> ' + f.label + '마다</div>' +
+      '<div data-value-wrap="' + f.key + '" style="display:none">' + valueGridHtml + '</div>' +
+      '</div>';
+  }).join('');
+
+  FIELD_DEFS.forEach(function(f) {
+    var radios = document.querySelectorAll('input[name="mode-' + f.key + '"]');
+    var stepRow = document.querySelector('[data-step-row="' + f.key + '"]');
+    var valueWrap = document.querySelector('[data-value-wrap="' + f.key + '"]');
+    radios.forEach(function(r) {
+      r.addEventListener('change', function() {
+        builderState[f.key].mode = r.value;
+        stepRow.style.display = r.value === 'step' ? 'flex' : 'none';
+        valueWrap.style.display = r.value === 'specific' ? 'block' : 'none';
+        rebuildExpr();
+      });
+    });
+    var stepInput = document.querySelector('[data-step-input="' + f.key + '"]');
+    stepInput.addEventListener('input', function() {
+      builderState[f.key].step = Math.max(1, parseInt(stepInput.value, 10) || 1);
+      rebuildExpr();
+    });
+    var grid = document.querySelector('.value-grid[data-field="' + f.key + '"]');
+    grid.querySelectorAll('.value-chip').forEach(function(chip) {
+      chip.addEventListener('click', function() {
+        var v = parseInt(chip.dataset.value, 10);
+        var sel = builderState[f.key].selected;
+        if (sel.has(v)) { sel.delete(v); chip.classList.remove('active'); }
+        else { sel.add(v); chip.classList.add('active'); }
+        rebuildExpr();
+      });
+    });
+  });
+
+  function fieldToExprPart(f) {
+    var st = builderState[f.key];
+    if (st.mode === 'every') return '*';
+    if (st.mode === 'step') return '*/' + st.step;
+    if (st.mode === 'specific') {
+      if (!st.selected.size) return '*';
+      return Array.from(st.selected).sort(function(a, b) { return a - b; }).join(',');
+    }
+    return '*';
+  }
+
+  var builtExprEl = document.getElementById('builtExpr');
+  function rebuildExpr() {
+    var parts = FIELD_DEFS.map(fieldToExprPart);
+    builtExprEl.textContent = parts.join(' ');
+  }
+  rebuildExpr();
+
+  document.getElementById('copyBuiltBtn').addEventListener('click', function() {
+    navigator.clipboard.writeText(builtExprEl.textContent).then(function() {
+      showToast('✓ Cron 표현식이 복사되었습니다');
+    });
+  });
+
+  document.getElementById('switchToParseBtn').addEventListener('click', function() {
+    cronInput.value = builtExprEl.textContent;
+    document.querySelector('.tab-btn[data-tab="parse"]').click();
+    runParse();
+  });
+
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(function() { t.classList.remove('show'); }, 2000);
+  }
+
+  runParse();
+  </script>
+</body>
+</html>

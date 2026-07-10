@@ -290,6 +290,12 @@
     <changefreq>weekly</changefreq>
     <priority>0.90</priority>
   </url>
+  <url>
+    <loc>https://browserkit.online/cron-helper/</loc>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+  </url>
 
   <!-- 일반 페이지 -->
   <url>
@@ -680,6 +686,12 @@
   </url>
   <url>
     <loc>https://browserkit.online/blog/61-jwtdecoder-howto.html</loc>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.70</priority>
+  </url>
+  <url>
+    <loc>https://browserkit.online/blog/62-cronhelper-howto.html</loc>
     <lastmod>2026-07-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.70</priority>
