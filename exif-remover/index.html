@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <link rel="icon" href="/favicon.ico" sizes="32x32">
+  <link rel="icon" href="/favicon-16.png" sizes="16x16" type="image/png">
+  <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="/favicon-192.png" sizes="192x192" type="image/png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="사진 속 GPS 위치, 촬영 기기, 촬영 시각 등 EXIF 메타데이터를 확인하고 제거하는 무료 온라인 도구. 서버 전송 없이 브라우저에서 바로 처리합니다." />
+  <meta property="og:title" content="ExifRemover — EXIF 제거기" />
+  <meta property="og:description" content="사진 속 GPS 위치, 촬영 기기 등 EXIF 메타데이터를 확인하고 제거하는 무료 온라인 도구입니다." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://browserkit.online/exif-remover/" />
+  <title>ExifRemover — EXIF 제거기</title>
+  <link rel="stylesheet" href="/css/style.css?v=20260704c" />
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506"
+     crossorigin="anonymous"></script>
+  <style>
+    /* 업로드 존 */
+    .upload-zone { background:var(--card); border:2px dashed var(--border); border-radius:var(--radius); padding:56px 40px; text-align:center; cursor:pointer; margin-bottom:16px; transition:all 0.2s; }
+    .upload-zone:hover, .upload-zone.drag-over { border-color:var(--point); box-shadow:0 0 24px var(--glow); background:rgba(123,108,255,0.05); }
+    .upload-icon { font-size:48px; margin-bottom:20px; }
+    .upload-title { font-size:18px; font-weight:600; margin-bottom:8px; }
+    .upload-sub { color:var(--subtext); font-size:14px; margin-bottom:8px; }
+    .upload-safe { color:var(--success); font-size:13px; }
+
+    .result-wrap { display:none; }
+    .result-wrap.show { display:block; }
+
+    .preview-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px; margin-bottom:20px; display:grid; grid-template-columns:180px 1fr; gap:20px; align-items:start; }
+    .preview-img-wrap { background:repeating-conic-gradient(#1e1e2a 0% 25%,#26263a 0% 50%) 0 0/16px 16px; border-radius:10px; overflow:hidden; display:flex; align-items:center; justify-content:center; min-height:140px; }
+    .preview-img-wrap img { max-width:100%; max-height:180px; display:block; }
+    .file-meta { display:flex; flex-direction:column; gap:6px; }
+    .file-meta-row { display:flex; gap:8px; font-size:13px; }
+    .file-meta-label { color:var(--subtext); min-width:56px; flex-shrink:0; }
+    .file-meta-value { color:var(--text); word-break:break-all; }
+
+    .gps-warn { background:rgba(248,113,113,0.1); border:1px solid rgba(248,113,113,0.3); border-radius:10px; padding:14px 18px; margin-bottom:20px; display:none; }
+    .gps-warn.show { display:block; }
+    .gps-warn-title { font-size:14px; font-weight:700; color:#F87171; margin-bottom:6px; }
+    .gps-warn-desc { font-size:13px; color:var(--subtext); line-height:1.7; }
+    .gps-warn a { color:#F87171; text-decoration:underline; }
+
+    .exif-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); overflow:hidden; margin-bottom:20px; }
+    .exif-row { padding:12px 18px; display:grid; grid-template-columns:140px 1fr; gap:12px; border-bottom:1px solid var(--border); font-size:13px; }
+    .exif-row:last-child { border-bottom:none; }
+    .exif-key { color:var(--subtext); font-weight:600; }
+    .exif-val { color:var(--text); font-family:'Fira Code',monospace; word-break:break-all; }
+    .exif-empty { padding:32px; text-align:center; color:var(--subtext); font-size:14px; }
+
+    .action-wrap { display:flex; justify-content:center; gap:12px; margin-bottom:48px; flex-wrap:wrap; }
+    .btn-download { background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border:none; border-radius:12px; padding:14px 32px; font-size:15px; font-weight:600; cursor:pointer; font-family:'Gowun Dodum',sans-serif; }
+    .btn-download:hover { transform:translateY(-2px); box-shadow:0 8px 24px var(--glow); }
+    .btn-reset { background:var(--card); color:var(--subtext); border:1px solid var(--border); border-radius:12px; padding:14px 24px; font-size:15px; cursor:pointer; font-family:'Gowun Dodum',sans-serif; }
+    .btn-reset:hover { transform:translateY(-2px); color:var(--text); border-color:var(--point); }
+
+    .notice { margin:0 0 20px; padding:12px 16px; background:rgba(123,108,255,0.07); border:1px solid var(--border); border-radius:10px; font-size:13px; color:var(--subtext); line-height:1.7; }
+
+    .toast { position:fixed; bottom:32px; left:50%; transform:translateX(-50%) translateY(80px); background:var(--success); color:#fff; border-radius:999px; padding:10px 24px; font-size:14px; font-weight:600; opacity:0; pointer-events:none; z-index:999; transition:all 0.3s ease; }
+    .toast.show { transform:translateX(-50%) translateY(0); opacity:1; }
+
+    .footer { border-top:1px solid var(--border); padding:32px 0; text-align:center; }
+    .footer-copy { color:var(--subtext); font-size:13px; margin-bottom:12px; }
+    .footer-nav { display:flex; justify-content:center; gap:20px; flex-wrap:wrap; }
+    .footer-nav a { color:var(--subtext); font-size:13px; text-decoration:none; }
+    .footer-nav a:hover { color:var(--text); }
+
+    @media (max-width:640px) {
+      .hero-title { font-size:24px; }
+      .upload-zone { padding:40px 20px; }
+      .preview-card { grid-template-columns:1fr; }
+      .exif-row { grid-template-columns:1fr; }
+    }
+  </style>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+  <meta property="og:image" content="https://browserkit.online/img/og-browserkit.png" />
+  <link rel="canonical" href="https://browserkit.online/exif-remover/" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://browserkit.online/img/og-browserkit.png" />
+</head>
+
+<body>
+  <header class="header">
+    <div class="container">
+      <a href="/" class="header-brand">
+        <div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Gowun Dodum,sans-serif;flex-shrink:0">B</div>
+        <span class="header-brand-text"><span style="color:var(--text)">Browser</span><span style="color:var(--point)">Kit</span></span>
+      </a>
+      <a href="/" class="header-back">&#x2190; BrowserKit 홈으로</a>
+    </div>
+  </header>
+
+  <main><div class="container">
+    <div class="hero">
+      <div class="hero-icon" style="height:78px;display:flex;justify-content:center;align-items:center"><div style="transform:scale(1.7);transform-origin:center"><div style="width:46px;height:46px;background:#ffd36e;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="position:relative;width:26px;height:30px"><div style="width:20px;height:20px;border-radius:50% 50% 50% 0;background:#fffdf9;border:2.5px solid #2a2433;box-sizing:border-box;transform:rotate(-45deg);margin:0 auto"></div><div style="position:absolute;left:50%;top:6px;transform:translateX(-50%);width:6px;height:6px;border-radius:50%;background:#2a2433"></div></div></div></div></div>
+      <div class="hero-title-wrap"><h1 class="hero-title">ExifRemover</h1><a href="/blog/54-exifremover-howto.html" class="hero-guide-link">사용법 가이드 보기</a></div>
+      <p class="hero-desc">사진 속 GPS 위치, 촬영 기기, 촬영 시각 등 EXIF 정보를 확인하고 제거하세요</p>
+      <div class="hero-badges">
+        <span class="badge">🔒 완전 로컬 처리</span>
+        <span class="badge">⚡ 무료 사용</span>
+        <span class="badge">🛡️ 서버 전송 없음</span>
+        <span class="badge">📦 설치 불필요</span>
+      </div>
+    </div>
+    <div style="margin:0 0 12px"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+
+    <p class="notice">💡 사진을 업로드하면 그 안에 저장된 촬영 위치, 기기 정보, 촬영 시각 등을 먼저 보여드립니다. 확인 후 <strong>EXIF 제거하고 다운로드</strong> 버튼을 누르면 이 정보를 모두 지운 새 이미지를 받을 수 있습니다. JPEG가 아닌 형식은 EXIF가 없거나 매우 적을 수 있습니다.</p>
+
+    <!-- 업로드 존 -->
+    <div class="upload-zone" id="uploadZone">
+      <input type="file" id="fileInput" accept="image/*" style="display:none" />
+      <div class="upload-icon">📷</div>
+      <div class="upload-title">사진을 업로드하세요</div>
+      <div class="upload-sub">클릭하거나 파일을 드래그하세요 (JPG, PNG, WEBP)</div>
+      <div class="upload-safe">🔒 파일은 서버로 전송되지 않습니다</div>
+    </div>
+
+    <!-- 결과 -->
+    <div class="result-wrap" id="resultWrap">
+      <div class="preview-card">
+        <div class="preview-img-wrap"><img id="previewImg" src="" alt="업로드한 이미지 미리보기" /></div>
+        <div class="file-meta">
+          <div class="file-meta-row"><span class="file-meta-label">파일명</span><span class="file-meta-value" id="fileName">—</span></div>
+          <div class="file-meta-row"><span class="file-meta-label">형식</span><span class="file-meta-value" id="fileType">—</span></div>
+          <div class="file-meta-row"><span class="file-meta-label">크기</span><span class="file-meta-value" id="fileSize">—</span></div>
+          <div class="file-meta-row"><span class="file-meta-label">해상도</span><span class="file-meta-value" id="fileDim">—</span></div>
+        </div>
+      </div>
+
+      <div class="gps-warn" id="gpsWarn">
+        <div class="gps-warn-title">⚠️ 이 사진에 촬영 위치(GPS) 정보가 남아있습니다</div>
+        <div class="gps-warn-desc">이대로 SNS나 온라인에 공유하면 촬영 장소가 그대로 노출될 수 있습니다. <span id="gpsCoord"></span> — <a id="gpsMapLink" href="#" target="_blank" rel="noopener">지도에서 보기</a></div>
+      </div>
+
+      <div class="exif-card" id="exifCard">
+        <div class="exif-empty">분석 중...</div>
+      </div>
+
+      <div class="action-wrap">
+        <button class="btn-download" id="downloadBtn">&#x2B07; EXIF 제거하고 다운로드</button>
+        <button class="btn-reset" id="resetBtn">&#x21BA; 새 이미지 선택</button>
+      </div>
+    </div>
+
+    <div style="margin:0 0 12px"><ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="9500090221"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+  </div></main>
+
+  <footer class="footer">
+    <div class="container">
+      <p class="footer-copy">&#xa9; 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p>
+      <nav class="footer-nav">
+        <a href="/privacy.html">개인정보 처리방침</a>
+        <a href="/terms.html">이용약관</a>
+        <a href="/about.html">서비스 소개</a>
+        <a href="/blog/">블로그</a>
+      </nav>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+  var uploadZone = document.getElementById('uploadZone');
+  var fileInput  = document.getElementById('fileInput');
+  var resultWrap = document.getElementById('resultWrap');
+  var previewImg = document.getElementById('previewImg');
+  var exifCard   = document.getElementById('exifCard');
+  var gpsWarn    = document.getElementById('gpsWarn');
+  var currentFile = null;
+  var currentObjectUrl = null;
+
+  uploadZone.addEventListener('click', function() { fileInput.click(); });
+  uploadZone.addEventListener('dragover', function(e) { e.preventDefault(); uploadZone.classList.add('drag-over'); });
+  uploadZone.addEventListener('dragleave', function() { uploadZone.classList.remove('drag-over'); });
+  uploadZone.addEventListener('drop', function(e) {
+    e.preventDefault();
+    uploadZone.classList.remove('drag-over');
+    if (e.dataTransfer.files[0]) loadFile(e.dataTransfer.files[0]);
+  });
+  fileInput.addEventListener('change', function() {
+    if (fileInput.files[0]) loadFile(fileInput.files[0]);
+  });
+
+  function formatBytes(bytes) {
+    if (bytes === 0) return '0 B';
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / (1024 * 1024)).toFixed(2) + ' MB';
+  }
+
+  function loadFile(file) {
+    if (!file.type.startsWith('image/')) { showToast('이미지 파일을 선택해주세요'); return; }
+    currentFile = file;
+    if (currentObjectUrl) URL.revokeObjectURL(currentObjectUrl);
+    currentObjectUrl = URL.createObjectURL(file);
+    previewImg.src = currentObjectUrl;
+
+    document.getElementById('fileName').textContent = file.name;
+    document.getElementById('fileType').textContent = file.type || '알 수 없음';
+    document.getElementById('fileSize').textContent = formatBytes(file.size);
+    document.getElementById('fileDim').textContent = '측정 중...';
+
+    previewImg.onload = function() {
+      document.getElementById('fileDim').textContent = previewImg.naturalWidth + ' × ' + previewImg.naturalHeight + 'px';
+    };
+
+    uploadZone.style.display = 'none';
+    resultWrap.classList.add('show');
+    gpsWarn.classList.remove('show');
+    exifCard.innerHTML = '<div class="exif-empty">분석 중...</div>';
+
+    var reader = new FileReader();
+    reader.onload = function(e) {
+      try {
+        var tags = parseExif(e.target.result);
+        renderExif(tags);
+      } catch (err) {
+        exifCard.innerHTML = '<div class="exif-empty">EXIF 정보를 읽는 중 오류가 발생했습니다.</div>';
+      }
+    };
+    reader.readAsArrayBuffer(file);
+  }
+
+  // ── 최소 EXIF 파서 (JPEG APP1 세그먼트 → TIFF 구조) ──
+  var TAG_NAMES = {
+    0x010F: 'Make', 0x0110: 'Model', 0x0112: 'Orientation', 0x0132: 'DateTime',
+    0x829A: 'ExposureTime', 0x829D: 'FNumber', 0x8827: 'ISO', 0x920A: 'FocalLength',
+    0x9003: 'DateTimeOriginal', 0xA434: 'LensModel'
+  };
+  var GPS_TAG_NAMES = {
+    1: 'GPSLatitudeRef', 2: 'GPSLatitude', 3: 'GPSLongitudeRef', 4: 'GPSLongitude',
+    5: 'GPSAltitudeRef', 6: 'GPSAltitude'
+  };
+  var TYPE_SIZE = { 1:1, 2:1, 3:2, 4:4, 5:8, 7:1, 9:4, 10:8 };
+
+  function parseExif(buffer) {
+    var view = new DataView(buffer);
+    if (view.getUint16(0) !== 0xFFD8) return {}; // JPEG 아님
+
+    var offset = 2;
+    while (offset < view.byteLength - 1) {
+      if (view.getUint8(offset) !== 0xFF) break;
+      var marker = view.getUint8(offset + 1);
+      if (marker === 0xD8 || marker === 0xD9) { offset += 2; continue; }
+      if (marker === 0xDA) break; // SOS: 스캔 데이터 시작, 더 이상 마커 없음
+      var segLen = view.getUint16(offset + 2);
+      if (marker === 0xE1) {
+        var segStart = offset + 4;
+        var header = readAscii(view, segStart, 6);
+        if (header.indexOf('Exif') === 0) {
+          return parseTiff(view, segStart + 6);
+        }
+      }
+      offset += 2 + segLen;
+    }
+    return {};
+  }
+
+  function readAscii(view, start, len) {
+    var s = '';
+    for (var i = 0; i < len; i++) {
+      var c = view.getUint8(start + i);
+      if (c === 0) break;
+      s += String.fromCharCode(c);
+    }
+    return s;
+  }
+
+  function parseTiff(view, tiffStart) {
+    var byteOrder = view.getUint16(tiffStart);
+    var little = byteOrder === 0x4949; // 'II'
+    var ifd0Offset = view.getUint32(tiffStart + 4, little);
+    var result = { tags: {}, gps: {} };
+    var ifd0 = readIfd(view, tiffStart, tiffStart + ifd0Offset, little, TAG_NAMES);
+    result.tags = ifd0.tags;
+
+    if (ifd0.raw[0x8769]) { // Exif SubIFD
+      var exifIfd = readIfd(view, tiffStart, tiffStart + ifd0.raw[0x8769], little, TAG_NAMES);
+      Object.assign(result.tags, exifIfd.tags);
+    }
+    if (ifd0.raw[0x8825]) { // GPS IFD
+      var gpsIfd = readIfd(view, tiffStart, tiffStart + ifd0.raw[0x8825], little, GPS_TAG_NAMES);
+      result.gps = gpsIfd.tags;
+    }
+    return result;
+  }
+
+  function readIfd(view, tiffStart, ifdStart, little, nameMap) {
+    var count = view.getUint16(ifdStart, little);
+    var tags = {}, raw = {};
+    for (var i = 0; i < count; i++) {
+      var entryOffset = ifdStart + 2 + i * 12;
+      var tag = view.getUint16(entryOffset, little);
+      var type = view.getUint16(entryOffset + 2, little);
+      var num = view.getUint32(entryOffset + 4, little);
+      var size = (TYPE_SIZE[type] || 1) * num;
+      var valueOffset = size > 4 ? tiffStart + view.getUint32(entryOffset + 8, little) : entryOffset + 8;
+      var value = readValue(view, valueOffset, type, num, little);
+      raw[tag] = (type === 4 && num === 1) ? value : (typeof value === 'number' ? value : undefined);
+      if (typeof raw[tag] !== 'number') raw[tag] = view.getUint32(entryOffset + 8, little);
+      if (nameMap[tag]) tags[nameMap[tag]] = value;
+    }
+    return { tags: tags, raw: raw };
+  }
+
+  function readValue(view, offset, type, num, little) {
+    if (type === 2) return readAscii(view, offset, num); // ASCII
+    if (type === 3) return num === 1 ? view.getUint16(offset, little) : readArray(view, offset, num, 2, little); // SHORT
+    if (type === 4) return num === 1 ? view.getUint32(offset, little) : readArray(view, offset, num, 4, little); // LONG
+    if (type === 5) { // RATIONAL
+      if (num === 1) return readRational(view, offset, little);
+      var arr = [];
+      for (var i = 0; i < num; i++) arr.push(readRational(view, offset + i * 8, little));
+      return arr;
+    }
+    if (type === 1) return view.getUint8(offset); // BYTE
+    return null;
+  }
+
+  function readArray(view, offset, num, size, little) {
+    var arr = [];
+    for (var i = 0; i < num; i++) {
+      arr.push(size === 2 ? view.getUint16(offset + i * size, little) : view.getUint32(offset + i * size, little));
+    }
+    return arr;
+  }
+
+  function readRational(view, offset, little) {
+    var num = view.getUint32(offset, little);
+    var den = view.getUint32(offset + 4, little);
+    return den === 0 ? 0 : num / den;
+  }
+
+  function dmsToDecimal(dms, ref) {
+    if (!dms || dms.length !== 3) return null;
+    var dec = dms[0] + dms[1] / 60 + dms[2] / 3600;
+    if (ref === 'S' || ref === 'W') dec = -dec;
+    return dec;
+  }
+
+  function renderExif(result) {
+    var tags = result.tags || {};
+    var gps = result.gps || {};
+    var rows = [];
+
+    if (tags.Make || tags.Model) rows.push(['촬영 기기', [tags.Make, tags.Model].filter(Boolean).join(' ')]);
+    if (tags.LensModel) rows.push(['렌즈', tags.LensModel]);
+    if (tags.DateTimeOriginal || tags.DateTime) rows.push(['촬영 일시', (tags.DateTimeOriginal || tags.DateTime).replace(/^(\d{4}):(\d{2}):(\d{2})/, '$1-$2-$3')]);
+    if (tags.FNumber) rows.push(['조리개', 'f/' + tags.FNumber.toFixed(1)]);
+    if (tags.ExposureTime) rows.push(['셔터 속도', tags.ExposureTime < 1 ? '1/' + Math.round(1 / tags.ExposureTime) + '초' : tags.ExposureTime + '초']);
+    if (tags.ISO) rows.push(['ISO', tags.ISO]);
+    if (tags.FocalLength) rows.push(['초점 거리', Math.round(tags.FocalLength) + 'mm']);
+    if (tags.Orientation) rows.push(['방향(Orientation)', tags.Orientation]);
+
+    gpsWarn.classList.remove('show');
+    var lat = dmsToDecimal(gps.GPSLatitude, gps.GPSLatitudeRef);
+    var lon = dmsToDecimal(gps.GPSLongitude, gps.GPSLongitudeRef);
+    if (lat != null && lon != null) {
+      rows.push(['GPS 위치', lat.toFixed(6) + ', ' + lon.toFixed(6)]);
+      gpsWarn.classList.add('show');
+      document.getElementById('gpsCoord').textContent = '위도 ' + lat.toFixed(6) + ', 경도 ' + lon.toFixed(6);
+      document.getElementById('gpsMapLink').href = 'https://www.google.com/maps?q=' + lat + ',' + lon;
+    }
+
+    if (!rows.length) {
+      exifCard.innerHTML = '<div class="exif-empty">✓ 이 사진에서 EXIF 메타데이터를 찾을 수 없습니다.</div>';
+      return;
+    }
+    exifCard.innerHTML = rows.map(function(r) {
+      return '<div class="exif-row"><span class="exif-key">' + r[0] + '</span><span class="exif-val">' + escapeHtml(String(r[1])) + '</span></div>';
+    }).join('');
+  }
+
+  function escapeHtml(s) {
+    return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  }
+
+  // ── EXIF 제거: Canvas로 다시 그려서 내보내면 메타데이터가 자동으로 사라짐 ──
+  document.getElementById('downloadBtn').addEventListener('click', function() {
+    if (!currentFile) return;
+    var img = new Image();
+    img.onload = function() {
+      var canvas = document.createElement('canvas');
+      canvas.width = img.naturalWidth;
+      canvas.height = img.naturalHeight;
+      var ctx = canvas.getContext('2d');
+      ctx.drawImage(img, 0, 0);
+
+      var mime = currentFile.type === 'image/png' ? 'image/png' : (currentFile.type === 'image/webp' ? 'image/webp' : 'image/jpeg');
+      var quality = mime === 'image/png' ? undefined : 0.95;
+      canvas.toBlob(function(blob) {
+        if (!blob) { showToast('변환 중 오류가 발생했습니다'); return; }
+        var ext = mime === 'image/png' ? 'png' : (mime === 'image/webp' ? 'webp' : 'jpg');
+        var baseName = currentFile.name.replace(/\.[^.]+$/, '');
+        var a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = baseName + '_no-exif.' + ext;
+        a.click();
+        URL.revokeObjectURL(a.href);
+        showToast('✓ EXIF가 제거된 이미지가 저장됩니다');
+      }, mime, quality);
+    };
+    img.src = currentObjectUrl;
+  });
+
+  document.getElementById('resetBtn').addEventListener('click', function() {
+    currentFile = null;
+    if (currentObjectUrl) { URL.revokeObjectURL(currentObjectUrl); currentObjectUrl = null; }
+    previewImg.src = '';
+    fileInput.value = '';
+    resultWrap.classList.remove('show');
+    gpsWarn.classList.remove('show');
+    uploadZone.style.display = '';
+  });
+
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(function() { t.classList.remove('show'); }, 2000);
+  }
+  </script>
+</body>
+</html>

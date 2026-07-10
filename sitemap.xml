@@ -242,6 +242,12 @@
     <changefreq>weekly</changefreq>
     <priority>0.90</priority>
   </url>
+  <url>
+    <loc>https://browserkit.online/exif-remover/</loc>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+  </url>
 
   <!-- 일반 페이지 -->
   <url>
@@ -584,6 +590,12 @@
   </url>
   <url>
     <loc>https://browserkit.online/blog/53-palettegen-howto.html</loc>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.70</priority>
+  </url>
+  <url>
+    <loc>https://browserkit.online/blog/54-exifremover-howto.html</loc>
     <lastmod>2026-07-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.70</priority>

@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <link rel="icon" href="/favicon.ico" sizes="32x32">
+  <link rel="icon" href="/favicon-16.png" sizes="16x16" type="image/png">
+  <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="/favicon-192.png" sizes="192x192" type="image/png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="ExifRemover의 모든 기능을 단계별로 설명하는 공식 사용 가이드입니다. 사진 속 GPS 위치, 촬영 기기 등 EXIF 메타데이터를 확인하고 제거하는 방법을 알아보세요." />
+  <meta property="og:title" content="ExifRemover 사용법 완전 가이드 — BrowserKit" />
+  <meta property="og:description" content="사진 속 GPS 위치, 촬영 기기 등 EXIF 메타데이터를 확인하고 제거하는 ExifRemover 공식 가이드입니다." />
+  <meta property="og:type" content="article" />
+  <title>ExifRemover 사용법 완전 가이드 — BrowserKit</title>
+  <link rel="stylesheet" href="/css/style.css?v=20260704c" />
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506"
+     crossorigin="anonymous"></script>
+  <style>
+    .post-warn { background:rgba(248,113,113,0.08); border-left:3px solid #F87171; border-radius:8px; padding:16px 20px; margin:24px 0; font-size:15px; color:var(--subtext); line-height:1.8; }
+    .feature-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:20px 0; }
+    .feature-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px; }
+    .feature-card:hover { border-color:var(--point); }
+    .feature-icon { font-size:24px; margin-bottom:10px; }
+    .feature-title { font-size:14px; font-weight:600; color:var(--text); margin-bottom:6px; }
+    .feature-desc { font-size:13px; color:var(--subtext); line-height:1.7; }
+    .step-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px 24px; margin:16px 0; display:flex; gap:16px; align-items:flex-start; }
+    .step-num { min-width:36px; height:36px; background:linear-gradient(135deg,var(--point),var(--point-hover)); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:700; color:white; flex-shrink:0; font-family:'Gowun Dodum',sans-serif; }
+    .step-content h3 { font-size:15px; font-weight:600; margin-bottom:6px; color:var(--text); }
+    .step-content p { font-size:14px; color:var(--subtext); line-height:1.7; margin:0; }
+
+    .exif-demo { background:var(--card); border:1px solid var(--border); border-radius:12px; overflow:hidden; margin:16px 0; }
+    .exif-demo-row { padding:11px 16px; display:grid; grid-template-columns:130px 1fr; gap:12px; border-bottom:1px solid var(--border); font-size:13px; }
+    .exif-demo-row:last-child { border-bottom:none; }
+    .exif-demo-key { color:var(--subtext); font-weight:600; }
+    .exif-demo-val { color:var(--text); font-family:'Fira Code',monospace; }
+
+    .post-table { width:100%; border-collapse:collapse; margin:20px 0; font-size:15px; }
+    .post-table th { background:var(--card); padding:12px 16px; text-align:left; font-weight:600; border:1px solid var(--border); color:var(--text); }
+    .post-table td { padding:11px 16px; border:1px solid var(--border); color:var(--subtext); line-height:1.7; }
+    .post-table td code { background:var(--bg); border-radius:4px; padding:1px 6px; font-size:13px; color:var(--point-hover); font-family:'Fira Code',monospace; }
+    .post-table tr:hover td { background:rgba(123,108,255,0.04); }
+    .use-case-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:20px 0; }
+    .use-case-card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:18px; }
+    .use-case-icon { font-size:28px; margin-bottom:8px; }
+    .use-case-title { font-size:13px; font-weight:600; color:var(--text); margin-bottom:6px; }
+    .use-case-desc { font-size:12px; color:var(--subtext); line-height:1.7; }
+    .post-nav { display:flex; justify-content:space-between; margin-top:28px; padding-top:24px; border-top:1px solid var(--border); gap:12px; }
+    .post-nav a { font-size:15px; color:var(--subtext); text-decoration:none; }
+    .post-nav a:hover { color:var(--text); }
+    .cta-box { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:28px; text-align:center; margin:48px 0 0; }
+    .cta-box p { font-size:17px; color:var(--subtext); margin-bottom:16px; }
+    .cta-btn { display:inline-block; background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border-radius:10px; padding:12px 28px; font-size:14px; font-weight:600; text-decoration:none; }
+    .cta-btn:hover { transform:translateY(-2px); box-shadow:0 8px 24px var(--glow); color:white; }
+    .back-link:hover { color:var(--text); }
+    @media (max-width:640px) {
+      .feature-grid { grid-template-columns:1fr; }
+      .use-case-grid { grid-template-columns:1fr; }
+    }
+  </style>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+<meta property="og:image" content="https://browserkit.online/img/og-browserkit.png" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "ExifRemover 사용법 완전 가이드",
+    "description": "ExifRemover의 모든 기능을 단계별로 설명하는 공식 사용 가이드입니다. 사진 속 GPS 위치, 촬영 기기 등 EXIF 메타데이터를 확인하고 제거하는 방법을 알아보세요.",
+    "datePublished": "2026-07-10T00:00:00+09:00",
+    "dateModified": "2026-07-10T00:00:00+09:00",
+    "author": { "@type": "Organization", "name": "BrowserKit", "url": "https://browserkit.online" },
+    "publisher": { "@type": "Organization", "name": "BrowserKit", "url": "https://browserkit.online", "logo": { "@type": "ImageObject", "url": "https://browserkit.online/img/og-browserkit.png" } },
+    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://browserkit.online/blog/54-exifremover-howto.html" },
+    "image": "https://browserkit.online/img/og-browserkit.png"
+  }
+  </script>  <link rel="canonical" href="https://browserkit.online/blog/54-exifremover-howto.html" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://browserkit.online/img/og-browserkit.png" />
+  <style>
+    .post-table-wrap { overflow-x:auto; }
+    .post-table th, .post-table td { white-space:nowrap; }
+    .post-nav a { word-break:keep-all; }
+    .post-nav .nav-label { display:block; font-size:13px; color:var(--subtext); opacity:0.7; margin-bottom:4px; }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="container">
+      <a href="/" class="header-brand"><div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Gowun Dodum,sans-serif;flex-shrink:0">B</div><span class="header-brand-text"><span style="color:var(--text)">Browser</span><span style="color:var(--point)">Kit</span></span></a>
+      <a href="/" class="header-back">&#x2190; BrowserKit 홈으로</a>
+    </div>
+  </header>
+
+  <article class="post-wrap">
+    <a href="/blog/" class="back-link">&#x2190; 블로그 목록</a>
+    <span class="post-tag">가이드</span>
+    <h1 class="post-title">ExifRemover 사용법 완전 가이드</h1>
+    <div class="post-date">2026년 7월 10일</div>
+    <div style="margin:12px 0"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+
+    <div class="post-body">
+      <p>스마트폰이나 카메라로 찍은 사진에는 눈에 보이지 않는 <strong>EXIF 메타데이터</strong>가 함께 저장됩니다. 촬영 기기 모델, 촬영 시각은 물론, 위치 서비스가 켜져 있었다면 <strong>정확한 GPS 좌표</strong>까지 포함될 수 있습니다. ExifRemover는 이 정보를 사진을 업로드하는 즉시 확인시켜주고, 원클릭으로 모두 제거한 새 이미지를 만들어주는 무료 온라인 도구입니다. 모든 처리가 브라우저 내에서만 이루어지므로 사진이 외부 서버로 전송되지 않습니다.</p>
+
+      <h2>주요 기능</h2>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F4CD;</div>
+          <div class="feature-title">GPS 위치 확인</div>
+          <div class="feature-desc">사진에 촬영 위치 정보가 있으면 위도/경도로 변환해 보여주고, 지도에서 바로 확인할 수 있는 링크를 제공합니다.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F4F7;</div>
+          <div class="feature-title">촬영 정보 확인</div>
+          <div class="feature-desc">카메라 제조사·모델, 렌즈, 촬영 일시, 조리개·셔터 속도·ISO·초점 거리 등을 표로 정리해 보여줍니다.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F9F9;</div>
+          <div class="feature-title">원클릭 EXIF 제거</div>
+          <div class="feature-desc">버튼 한 번으로 모든 메타데이터가 제거된 새 이미지 파일을 다운로드합니다.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F512;</div>
+          <div class="feature-title">완전 로컬 처리</div>
+          <div class="feature-desc">모든 분석과 제거가 브라우저 안에서 실행됩니다. 사진이 서버로 전송되지 않아 민감한 사진도 안심하고 사용할 수 있습니다.</div>
+        </div>
+      </div>
+
+      <div style="margin:12px 0 0"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+
+      <h2>사용법</h2>
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <h3>사진 업로드</h3>
+          <p>업로드 존을 클릭하거나 사진을 드래그해 올립니다. JPG, PNG, WEBP 형식을 지원합니다.</p>
+        </div>
+      </div>
+
+      <figure style="margin:12px 0 24px; text-align:center;">
+        <img src="/img/blog/exifremover/01-upload.png"
+             alt="ExifRemover 사진 업로드 후 파일명, 형식, 크기, 해상도가 표시된 화면"
+             style="width:100%; max-width:640px; border:1px solid var(--border); border-radius:var(--radius);"
+             loading="lazy" />
+        <figcaption style="font-size:13px; color:var(--subtext); margin-top:6px;">
+          사진 업로드 후 파일 정보가 표시된 화면
+        </figcaption>
+      </figure>
+
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <h3>EXIF 정보 확인</h3>
+          <p>업로드 즉시 사진에 담긴 EXIF 정보가 자동으로 분석되어 표로 표시됩니다. GPS 위치가 있으면 상단에 별도 경고 배너로 강조되고, "지도에서 보기" 링크로 실제 위치를 바로 확인할 수 있습니다.</p>
+        </div>
+      </div>
+
+      <figure style="margin:12px 0 24px; text-align:center;">
+        <img src="/img/blog/exifremover/02-exif.png"
+             alt="ExifRemover GPS 위치 경고 배너와 촬영 기기, 촬영 일시 등 EXIF 정보 표가 표시된 화면"
+             style="width:100%; max-width:640px; border:1px solid var(--border); border-radius:var(--radius);"
+             loading="lazy" />
+        <figcaption style="font-size:13px; color:var(--subtext); margin-top:6px;">
+          GPS 위치 경고 + EXIF 정보 표
+        </figcaption>
+      </figure>
+
+      <h3>EXIF 정보 표시 예시</h3>
+      <div class="exif-demo">
+        <div class="exif-demo-row"><span class="exif-demo-key">촬영 기기</span><span class="exif-demo-val">Apple iPhone 15 Pro</span></div>
+        <div class="exif-demo-row"><span class="exif-demo-key">촬영 일시</span><span class="exif-demo-val">2026-05-12 14:30:00</span></div>
+        <div class="exif-demo-row"><span class="exif-demo-key">조리개</span><span class="exif-demo-val">f/1.8</span></div>
+        <div class="exif-demo-row"><span class="exif-demo-key">GPS 위치</span><span class="exif-demo-val">37.557000, 126.977667</span></div>
+      </div>
+
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <h3>EXIF 제거하고 다운로드</h3>
+          <p><strong>⬇ EXIF 제거하고 다운로드</strong> 버튼을 클릭하면 모든 메타데이터가 제거된 이미지가 <code>원본이름_no-exif</code> 파일명으로 저장됩니다.</p>
+        </div>
+      </div>
+
+      <figure style="margin:12px 0 24px; text-align:center;">
+        <img src="/img/blog/exifremover/03-download.png"
+             alt="ExifRemover EXIF 제거하고 다운로드 버튼과 새 이미지 선택 버튼이 있는 액션 영역 확대 화면"
+             style="width:100%; max-width:640px; border:1px solid var(--border); border-radius:var(--radius);"
+             loading="lazy" />
+        <figcaption style="font-size:13px; color:var(--subtext); margin-top:6px;">
+          EXIF 제거 및 다운로드 버튼
+        </figcaption>
+      </figure>
+
+      <div class="post-warn">
+        <strong>⚠️ 참고:</strong> EXIF 제거는 이미지를 Canvas에 다시 그려서 내보내는 방식으로 동작합니다. JPEG는 재압축 과정에서 미세한 화질 손실이 있을 수 있지만(품질 95% 기준), 육안으로는 거의 구분되지 않는 수준입니다. PNG는 무손실로 처리됩니다.
+      </div>
+
+      <h2>EXIF에 담기는 정보</h2>
+      <div class="post-table-wrap"><table class="post-table">
+        <thead><tr><th>분류</th><th>포함 정보</th><th>위험성</th></tr></thead>
+        <tbody>
+          <tr><td>위치</td><td>GPS 위도/경도, 고도</td><td>집, 직장 등 실제 위치가 그대로 노출될 수 있음</td></tr>
+          <tr><td>기기</td><td>제조사, 모델명, 렌즈 정보</td><td>사용 중인 기기 특정 가능</td></tr>
+          <tr><td>시간</td><td>촬영 일시</td><td>언제, 어떤 순서로 활동했는지 추적 가능</td></tr>
+          <tr><td>촬영 설정</td><td>조리개, 셔터 속도, ISO, 초점 거리</td><td>비교적 낮은 위험, 사진 편집 참고용</td></tr>
+        </tbody>
+      </table></div>
+
+      <h2>활용 예시</h2>
+      <div class="use-case-grid">
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F4F1;</div>
+          <div class="use-case-title">SNS 업로드 전 확인</div>
+          <div class="use-case-desc">인스타그램, 블로그 등에 사진을 올리기 전 GPS 위치가 포함되어 있는지 확인하고 제거합니다.</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F3E0;</div>
+          <div class="use-case-title">중고거래 사진 정리</div>
+          <div class="use-case-desc">중고 물품 판매 사진에서 집 위치가 추정될 수 있는 GPS 정보를 제거합니다.</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F4BC;</div>
+          <div class="use-case-title">업무용 자료 공유</div>
+          <div class="use-case-desc">외부에 공유하는 사진에서 촬영 기기, 시각 등 불필요한 정보를 제거해 깔끔하게 만듭니다.</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F50D;</div>
+          <div class="use-case-title">받은 사진 위치 확인</div>
+          <div class="use-case-desc">전달받은 사진에 위치 정보가 남아있는지 역으로 확인해 개인정보 노출 여부를 점검합니다.</div>
+        </div>
+      </div>
+
+      <div class="post-highlight">&#x1F512; ExifRemover는 모든 분석과 제거가 내 PC 브라우저에서만 실행됩니다. 업로드한 사진이 외부 서버로 전송되지 않습니다.</div>
+    </div>
+
+    <div class="cta-box">
+      <p>사진 속 GPS 위치, 촬영 기기 등 EXIF 정보를 확인하고 제거해보세요.<br />SNS 업로드 전 위치 노출을 미리 막을 수 있습니다.</p>
+      <a href="/exif-remover/" class="cta-btn" style="display:inline-flex;align-items:center;gap:8px">
+        <span style="display:inline-block;width:26px;height:26px;overflow:hidden;flex-shrink:0"><span style="display:block;transform:scale(0.565);transform-origin:top left"><div style="width:46px;height:46px;background:#ffd36e;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="position:relative;width:26px;height:30px"><div style="width:20px;height:20px;border-radius:50% 50% 50% 0;background:#fffdf9;border:2.5px solid #2a2433;box-sizing:border-box;transform:rotate(-45deg);margin:0 auto"></div><div style="position:absolute;left:50%;top:6px;transform:translateX(-50%);width:6px;height:6px;border-radius:50%;background:#2a2433"></div></div></div></span></span>
+        무료로 EXIF 확인하기
+      </a>
+    </div>
+    <div style="margin:12px 0"><ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="9500090221"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+
+<div class="post-nav">
+      <a href="/blog/21-maskdoc-howto.html"><span class="nav-label">← 이전 글</span>MaskDoc 사용법 완전 가이드</a>
+      <a href="/blog/17-fitimage-howto.html" style="text-align:right"><span class="nav-label">다음 글 →</span>FitImage 사용법 완전 가이드</a>
+    </div></div>
+
+  </article>
+  <footer class="footer">
+    <div class="container">
+      <p class="footer-copy">© 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p>
+      <nav class="footer-nav">
+        <a href="/privacy.html">개인정보 처리방침</a>
+        <a href="/terms.html">이용약관</a>
+        <a href="/about.html">서비스 소개</a>
+        <a href="/blog/">블로그</a>
+      </nav>
+    </div>
+  </footer>
+</body>
+</html>
