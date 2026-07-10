@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <link rel="icon" href="/favicon.ico" sizes="32x32">
+  <link rel="icon" href="/favicon-16.png" sizes="16x16" type="image/png">
+  <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="/favicon-192.png" sizes="192x192" type="image/png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="이름 목록을 입력하면 룰렛을 돌려 당첨자를 뽑거나 팀을 랜덤하게 나눠주는 무료 온라인 추첨기. 서버 전송 없이 브라우저에서 바로 처리합니다." />
+  <meta property="og:title" content="RandomPicker — 랜덤 추첨기" />
+  <meta property="og:description" content="이름 목록으로 룰렛 추첨하거나 팀을 랜덤하게 나누는 무료 온라인 도구입니다." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://browserkit.online/random-picker/" />
+  <title>RandomPicker — 랜덤 추첨기</title>
+  <link rel="stylesheet" href="/css/style.css?v=20260704c" />
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506"
+     crossorigin="anonymous"></script>
+  <style>
+    /* 탭 */
+    .tab-wrap { display:flex; gap:8px; margin-bottom:20px; }
+    .tab-btn { background:var(--card); color:var(--subtext); border:1px solid var(--border); border-radius:10px; padding:10px 24px; font-size:14px; font-weight:600; cursor:pointer; font-family:'Gowun Dodum',sans-serif; transition:all 0.2s; }
+    .tab-btn:hover { border-color:var(--point); color:var(--text); }
+    .tab-btn.active { background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border-color:transparent; }
+    .panel { display:none; }
+    .panel.active { display:block; }
+
+    /* 입력 */
+    .input-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px 24px; margin-bottom:20px; }
+    .input-label { font-size:13px; font-weight:600; color:var(--subtext); margin-bottom:10px; display:flex; align-items:center; justify-content:space-between; }
+    .name-textarea { background:var(--bg); border:1px solid var(--border); border-radius:10px; padding:14px 16px; font-size:14px; color:var(--text); font-family:'Gowun Dodum',sans-serif; width:100%; min-height:120px; resize:vertical; outline:none; line-height:1.8; }
+    .name-textarea:focus { border-color:var(--point); }
+    .name-count { font-size:12px; color:var(--subtext); }
+    .quick-fill { display:flex; gap:8px; margin-top:10px; flex-wrap:wrap; }
+    .quick-fill-btn { background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:6px 14px; font-size:12px; color:var(--subtext); cursor:pointer; }
+    .quick-fill-btn:hover { border-color:var(--point); color:var(--text); }
+
+    /* 룰렛 */
+    .wheel-wrap { display:flex; flex-direction:column; align-items:center; margin-bottom:20px; }
+    .wheel-outer { position:relative; width:320px; height:320px; max-width:100%; }
+    .wheel-pointer { position:absolute; top:-6px; left:50%; transform:translateX(-50%); width:0; height:0; border-left:14px solid transparent; border-right:14px solid transparent; border-top:26px solid #2a2433; z-index:5; filter:drop-shadow(0 2px 2px rgba(0,0,0,.2)); }
+    .wheel-canvas { width:320px; height:320px; max-width:100%; border-radius:50%; box-shadow:0 4px 20px rgba(0,0,0,.15); transition:transform 4s cubic-bezier(0.15,0.85,0.25,1); }
+    .wheel-empty { width:320px; height:320px; max-width:100%; border-radius:50%; background:var(--card); border:2px dashed var(--border); display:flex; align-items:center; justify-content:center; color:var(--subtext); font-size:14px; text-align:center; padding:20px; box-sizing:border-box; }
+
+    .spin-btn { background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border:none; border-radius:14px; padding:16px 40px; font-size:17px; font-weight:700; cursor:pointer; font-family:'Gowun Dodum',sans-serif; margin-top:24px; }
+    .spin-btn:hover:not(:disabled) { transform:translateY(-2px); box-shadow:0 8px 24px var(--glow); }
+    .spin-btn:disabled { opacity:0.5; cursor:default; }
+
+    .winner-card { background:var(--card); border:2px solid var(--point); border-radius:var(--radius); padding:24px; text-align:center; margin:24px 0; display:none; }
+    .winner-card.show { display:block; }
+    .winner-label { font-size:13px; color:var(--subtext); margin-bottom:6px; }
+    .winner-name { font-size:28px; font-weight:700; color:var(--point-hover); font-family:'Gowun Dodum',sans-serif; }
+
+    .history-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:16px 20px; margin-bottom:20px; display:none; }
+    .history-card.show { display:block; }
+    .history-title { font-size:13px; font-weight:600; color:var(--subtext); margin-bottom:10px; }
+    .history-list { display:flex; gap:8px; flex-wrap:wrap; }
+    .history-chip { background:var(--bg); border:1px solid var(--border); border-radius:999px; padding:5px 14px; font-size:13px; color:var(--text); }
+
+    .option-row { display:flex; align-items:center; gap:8px; font-size:13px; color:var(--subtext); cursor:pointer; margin-top:12px; }
+    .option-row input { accent-color:var(--point); width:16px; height:16px; cursor:pointer; }
+
+    /* 팀 나누기 */
+    .team-count-row { display:flex; align-items:center; gap:12px; margin-bottom:16px; }
+    .team-count-input { background:var(--bg); border:1px solid var(--border); border-radius:10px; padding:10px 14px; font-size:16px; font-weight:600; color:var(--text); width:80px; text-align:center; outline:none; }
+    .team-count-input:focus { border-color:var(--point); }
+    .team-btn { background:var(--card); border:1px solid var(--border); border-radius:8px; width:36px; height:36px; font-size:16px; color:var(--text); cursor:pointer; }
+    .team-btn:hover { border-color:var(--point); }
+    .team-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:14px; margin-bottom:20px; }
+    .team-card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:16px; }
+    .team-card-title { font-size:13px; font-weight:700; color:var(--point-hover); margin-bottom:10px; }
+    .team-card-member { font-size:14px; color:var(--text); padding:4px 0; }
+
+    .action-wrap { display:flex; justify-content:center; gap:12px; margin-bottom:48px; flex-wrap:wrap; }
+    .btn-primary { background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border:none; border-radius:12px; padding:13px 28px; font-size:15px; font-weight:600; cursor:pointer; font-family:'Gowun Dodum',sans-serif; }
+    .btn-primary:hover { transform:translateY(-2px); box-shadow:0 8px 24px var(--glow); }
+    .btn-sub { background:var(--card); color:var(--subtext); border:1px solid var(--border); border-radius:12px; padding:13px 22px; font-size:15px; cursor:pointer; font-family:'Gowun Dodum',sans-serif; }
+    .btn-sub:hover { transform:translateY(-2px); color:var(--text); border-color:var(--point); }
+
+    .toast { position:fixed; bottom:32px; left:50%; transform:translateX(-50%) translateY(80px); background:var(--success); color:#fff; border-radius:999px; padding:10px 24px; font-size:14px; font-weight:600; opacity:0; pointer-events:none; z-index:999; transition:all 0.3s ease; }
+    .toast.show { transform:translateX(-50%) translateY(0); opacity:1; }
+
+    .footer { border-top:1px solid var(--border); padding:32px 0; text-align:center; }
+    .footer-copy { color:var(--subtext); font-size:13px; margin-bottom:12px; }
+    .footer-nav { display:flex; justify-content:center; gap:20px; flex-wrap:wrap; }
+    .footer-nav a { color:var(--subtext); font-size:13px; text-decoration:none; }
+    .footer-nav a:hover { color:var(--text); }
+
+    @media (max-width:640px) {
+      .hero-title { font-size:24px; }
+      .wheel-outer, .wheel-canvas, .wheel-empty { width:260px; height:260px; }
+    }
+  </style>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+  <meta property="og:image" content="https://browserkit.online/img/og-browserkit.png" />
+  <link rel="canonical" href="https://browserkit.online/random-picker/" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://browserkit.online/img/og-browserkit.png" />
+</head>
+
+<body>
+  <header class="header">
+    <div class="container">
+      <a href="/" class="header-brand">
+        <div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Gowun Dodum,sans-serif;flex-shrink:0">B</div>
+        <span class="header-brand-text"><span style="color:var(--text)">Browser</span><span style="color:var(--point)">Kit</span></span>
+      </a>
+      <a href="/" class="header-back">&#x2190; BrowserKit 홈으로</a>
+    </div>
+  </header>
+
+  <main><div class="container">
+    <div class="hero">
+      <div class="hero-icon" style="height:78px;display:flex;justify-content:center;align-items:center"><div style="transform:scale(1.7);transform-origin:center"><div style="width:46px;height:46px;background:#bcd4ff;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="position:relative;width:28px;height:28px;border-radius:50%;background:#fffdf9;border:2.5px solid #2a2433;box-sizing:border-box;overflow:hidden"><div style="position:absolute;left:0;top:0;width:14px;height:14px;background:#ff8a5e"></div><div style="position:absolute;right:0;top:0;width:14px;height:14px;background:#5dffb0"></div><div style="position:absolute;left:0;bottom:0;width:14px;height:14px;background:#6aa8ff"></div><div style="position:absolute;right:0;bottom:0;width:14px;height:14px;background:#ffe14d"></div></div></div></div></div>
+      <div class="hero-title-wrap"><h1 class="hero-title">RandomPicker</h1><a href="/blog/55-randompicker-howto.html" class="hero-guide-link">사용법 가이드 보기</a></div>
+      <p class="hero-desc">이름 목록으로 룰렛을 돌려 당첨자를 뽑거나 팀을 랜덤하게 나눠보세요</p>
+      <div class="hero-badges">
+        <span class="badge">🔒 완전 로컬 처리</span>
+        <span class="badge">⚡ 무료 사용</span>
+        <span class="badge">🛡️ 서버 전송 없음</span>
+        <span class="badge">📦 설치 불필요</span>
+      </div>
+    </div>
+    <div style="margin:0 0 12px"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+
+    <div class="tab-wrap">
+      <button class="tab-btn active" data-tab="roulette">&#x1F3A1; 룰렛 뽑기</button>
+      <button class="tab-btn" data-tab="team">&#x1F465; 팀 나누기</button>
+    </div>
+
+    <!-- ── 룰렛 뽑기 탭 ── -->
+    <div class="panel active" id="panel-roulette">
+      <div class="input-card">
+        <div class="input-label">
+          <span>참가자 이름 (한 줄에 한 명씩)</span>
+          <span class="name-count" id="rouletteCount">0명</span>
+        </div>
+        <textarea class="name-textarea" id="rouletteInput" placeholder="홍길동&#10;김철수&#10;이영희"></textarea>
+        <div class="quick-fill">
+          <button class="quick-fill-btn" id="sampleBtn">📋 예시 이름 채우기</button>
+          <button class="quick-fill-btn" id="clearNamesBtn">↺ 비우기</button>
+        </div>
+        <label class="option-row"><input type="checkbox" id="removeWinnerOpt" /> 당첨자는 다음 추첨에서 제외</label>
+      </div>
+
+      <div class="history-card" id="historyCard">
+        <div class="history-title">🏆 당첨 이력</div>
+        <div class="history-list" id="historyList"></div>
+      </div>
+
+      <div class="wheel-wrap">
+        <div class="wheel-outer" id="wheelOuter">
+          <div class="wheel-pointer"></div>
+          <canvas class="wheel-canvas" id="wheelCanvas" width="320" height="320"></canvas>
+        </div>
+        <button class="spin-btn" id="spinBtn">🎯 추첨 시작</button>
+      </div>
+
+      <div class="winner-card" id="winnerCard">
+        <div class="winner-label">당첨자</div>
+        <div class="winner-name" id="winnerName">—</div>
+      </div>
+    </div>
+
+    <!-- ── 팀 나누기 탭 ── -->
+    <div class="panel" id="panel-team">
+      <div class="input-card">
+        <div class="input-label">
+          <span>참가자 이름 (한 줄에 한 명씩)</span>
+          <span class="name-count" id="teamCount">0명</span>
+        </div>
+        <textarea class="name-textarea" id="teamInput" placeholder="홍길동&#10;김철수&#10;이영희"></textarea>
+        <div class="quick-fill">
+          <button class="quick-fill-btn" id="teamSampleBtn">📋 예시 이름 채우기</button>
+          <button class="quick-fill-btn" id="teamClearBtn">↺ 비우기</button>
+        </div>
+      </div>
+
+      <div class="team-count-row">
+        <span style="font-size:13px;color:var(--subtext);">나눌 팀 수</span>
+        <button class="team-btn" id="teamMinusBtn">−</button>
+        <input type="number" class="team-count-input" id="teamNumInput" value="2" min="2" max="20" />
+        <button class="team-btn" id="teamPlusBtn">+</button>
+        <button class="btn-primary" id="divideBtn" style="margin-left:8px;">🔀 팀 나누기</button>
+      </div>
+
+      <div class="team-grid" id="teamGrid"></div>
+    </div>
+
+    <div class="action-wrap">
+      <button class="btn-sub" id="copyResultBtn">&#x1F4CB; 결과 복사</button>
+    </div>
+
+    <div style="margin:0 0 12px"><ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="9500090221"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+  </div></main>
+
+  <footer class="footer">
+    <div class="container">
+      <p class="footer-copy">&#xa9; 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p>
+      <nav class="footer-nav">
+        <a href="/privacy.html">개인정보 처리방침</a>
+        <a href="/terms.html">이용약관</a>
+        <a href="/about.html">서비스 소개</a>
+        <a href="/blog/">블로그</a>
+      </nav>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+  var SAMPLE_NAMES = ['홍길동', '김철수', '이영희', '박민수', '최지우', '정다은'];
+  var WHEEL_COLORS = ['#ffd36e', '#ffb3c7', '#a8e6cf', '#bcd4ff', '#e0c3ff', '#ffd9a8', '#c2f0e8', '#ffc2d6'];
+  var INK = '#2a2433';
+
+  // ── 탭 전환 ──
+  document.querySelectorAll('.tab-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.tab-btn').forEach(function(b) { b.classList.remove('active'); });
+      document.querySelectorAll('.panel').forEach(function(p) { p.classList.remove('active'); });
+      btn.classList.add('active');
+      document.getElementById('panel-' + btn.dataset.tab).classList.add('active');
+    });
+  });
+
+  function parseNames(text) {
+    return text.split('\n').map(function(s) { return s.trim(); }).filter(function(s) { return s.length > 0; });
+  }
+
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(function() { t.classList.remove('show'); }, 2000);
+  }
+
+  // ══ 룰렛 뽑기 ══
+  var rouletteInput = document.getElementById('rouletteInput');
+  var rouletteCount = document.getElementById('rouletteCount');
+  var wheelCanvas = document.getElementById('wheelCanvas');
+  var wheelOuter = document.getElementById('wheelOuter');
+  var spinBtn = document.getElementById('spinBtn');
+  var winnerCard = document.getElementById('winnerCard');
+  var winnerName = document.getElementById('winnerName');
+  var historyCard = document.getElementById('historyCard');
+  var historyList = document.getElementById('historyList');
+  var removeWinnerOpt = document.getElementById('removeWinnerOpt');
+
+  var currentNames = [];
+  var currentRotation = 0;
+  var spinning = false;
+  var winHistory = [];
+
+  function updateRouletteState() {
+    currentNames = parseNames(rouletteInput.value);
+    rouletteCount.textContent = currentNames.length + '명';
+    drawWheel(currentNames);
+    spinBtn.disabled = currentNames.length < 2;
+  }
+
+  rouletteInput.addEventListener('input', updateRouletteState);
+
+  document.getElementById('sampleBtn').addEventListener('click', function() {
+    rouletteInput.value = SAMPLE_NAMES.join('\n');
+    updateRouletteState();
+  });
+  document.getElementById('clearNamesBtn').addEventListener('click', function() {
+    rouletteInput.value = '';
+    updateRouletteState();
+    winnerCard.classList.remove('show');
+  });
+
+  function drawWheel(names) {
+    var ctx = wheelCanvas.getContext('2d');
+    var w = wheelCanvas.width, h = wheelCanvas.height;
+    var cx = w / 2, cy = h / 2, r = w / 2 - 4;
+    ctx.clearRect(0, 0, w, h);
+
+    if (!names.length) {
+      ctx.fillStyle = 'rgba(0,0,0,0.03)';
+      ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI * 2); ctx.fill();
+      return;
+    }
+
+    var n = names.length;
+    var anglePer = (Math.PI * 2) / n;
+    for (var i = 0; i < n; i++) {
+      var start = -Math.PI / 2 + i * anglePer;
+      var end = start + anglePer;
+      ctx.beginPath();
+      ctx.moveTo(cx, cy);
+      ctx.arc(cx, cy, r, start, end);
+      ctx.closePath();
+      ctx.fillStyle = WHEEL_COLORS[i % WHEEL_COLORS.length];
+      ctx.fill();
+      ctx.lineWidth = 2;
+      ctx.strokeStyle = INK;
+      ctx.stroke();
+
+      // 텍스트
+      ctx.save();
+      ctx.translate(cx, cy);
+      ctx.rotate(start + anglePer / 2);
+      ctx.textAlign = 'right';
+      ctx.textBaseline = 'middle';
+      ctx.fillStyle = INK;
+      ctx.font = '600 14px "Gowun Dodum", sans-serif';
+      var label = names[i].length > 8 ? names[i].slice(0, 7) + '…' : names[i];
+      ctx.fillText(label, r - 14, 0);
+      ctx.restore();
+    }
+
+    // 중심 원
+    ctx.beginPath();
+    ctx.arc(cx, cy, 14, 0, Math.PI * 2);
+    ctx.fillStyle = '#fffdf9';
+    ctx.strokeStyle = INK;
+    ctx.lineWidth = 2.5;
+    ctx.fill();
+    ctx.stroke();
+  }
+
+  spinBtn.addEventListener('click', function() {
+    if (spinning || currentNames.length < 2) return;
+    spinning = true;
+    spinBtn.disabled = true;
+    winnerCard.classList.remove('show');
+
+    var n = currentNames.length;
+    var winnerIndex = Math.floor(Math.random() * n);
+    var anglePerDeg = 360 / n;
+    var sliceCenterDeg = winnerIndex * anglePerDeg + anglePerDeg / 2;
+    // 약간의 무작위 오프셋(슬라이스 중심에서 ±40%)을 줘서 매번 다른 각도로 멈추게 함
+    var jitter = (Math.random() - 0.5) * anglePerDeg * 0.8;
+    var targetWithinSpin = (360 - sliceCenterDeg + jitter + 360) % 360;
+    var extraSpins = 6 * 360;
+    var currentBase = currentRotation % 360;
+    var delta = (targetWithinSpin - currentBase + 360) % 360;
+    currentRotation += extraSpins + delta;
+
+    wheelCanvas.style.transform = 'rotate(' + currentRotation + 'deg)';
+
+    setTimeout(function() {
+      spinning = false;
+      spinBtn.disabled = currentNames.length < 2;
+      var winner = currentNames[winnerIndex];
+      winnerName.textContent = winner;
+      winnerCard.classList.add('show');
+      winHistory.unshift(winner);
+      renderHistory();
+      showToast('🎉 ' + winner + '님 당첨!');
+
+      if (removeWinnerOpt.checked) {
+        var lines = parseNames(rouletteInput.value);
+        lines.splice(winnerIndex, 1);
+        rouletteInput.value = lines.join('\n');
+        updateRouletteState();
+      }
+    }, 4100);
+  });
+
+  function renderHistory() {
+    if (!winHistory.length) { historyCard.classList.remove('show'); return; }
+    historyCard.classList.add('show');
+    historyList.innerHTML = winHistory.map(function(name, i) {
+      return '<span class="history-chip">' + (winHistory.length - i) + '. ' + escapeHtml(name) + '</span>';
+    }).join('');
+  }
+
+  function escapeHtml(s) {
+    return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  }
+
+  // ══ 팀 나누기 ══
+  var teamInput = document.getElementById('teamInput');
+  var teamCount = document.getElementById('teamCount');
+  var teamNumInput = document.getElementById('teamNumInput');
+  var teamGrid = document.getElementById('teamGrid');
+  var lastTeams = [];
+
+  function updateTeamState() {
+    teamCount.textContent = parseNames(teamInput.value).length + '명';
+  }
+  teamInput.addEventListener('input', updateTeamState);
+
+  document.getElementById('teamSampleBtn').addEventListener('click', function() {
+    teamInput.value = SAMPLE_NAMES.join('\n');
+    updateTeamState();
+  });
+  document.getElementById('teamClearBtn').addEventListener('click', function() {
+    teamInput.value = '';
+    updateTeamState();
+    teamGrid.innerHTML = '';
+    lastTeams = [];
+  });
+
+  document.getElementById('teamMinusBtn').addEventListener('click', function() {
+    var v = Math.max(2, parseInt(teamNumInput.value, 10) - 1);
+    teamNumInput.value = v;
+  });
+  document.getElementById('teamPlusBtn').addEventListener('click', function() {
+    var v = Math.min(20, parseInt(teamNumInput.value, 10) + 1);
+    teamNumInput.value = v;
+  });
+
+  function shuffle(arr) {
+    var a = arr.slice();
+    for (var i = a.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var tmp = a[i]; a[i] = a[j]; a[j] = tmp;
+    }
+    return a;
+  }
+
+  document.getElementById('divideBtn').addEventListener('click', function() {
+    var names = parseNames(teamInput.value);
+    var teamN = Math.max(2, Math.min(20, parseInt(teamNumInput.value, 10) || 2));
+    if (names.length < teamN) {
+      showToast('인원(' + names.length + '명)보다 팀 수(' + teamN + '개)가 많습니다');
+      return;
+    }
+    var shuffled = shuffle(names);
+    var teams = [];
+    for (var i = 0; i < teamN; i++) teams.push([]);
+    shuffled.forEach(function(name, i) { teams[i % teamN].push(name); });
+    lastTeams = teams;
+    renderTeams(teams);
+    showToast('✓ ' + teamN + '개 팀으로 나눴습니다');
+  });
+
+  function renderTeams(teams) {
+    teamGrid.innerHTML = teams.map(function(team, i) {
+      return '<div class="team-card"><div class="team-card-title">🏷️ ' + (i + 1) + '팀 (' + team.length + '명)</div>' +
+        team.map(function(name) { return '<div class="team-card-member">' + escapeHtml(name) + '</div>'; }).join('') +
+        '</div>';
+    }).join('');
+  }
+
+  // ── 결과 복사 ──
+  document.getElementById('copyResultBtn').addEventListener('click', function() {
+    var isRoulette = document.getElementById('panel-roulette').classList.contains('active');
+    var text = '';
+    if (isRoulette) {
+      if (!winHistory.length) { showToast('복사할 당첨 결과가 없습니다'); return; }
+      text = winHistory.map(function(n, i) { return (winHistory.length - i) + '. ' + n; }).join('\n');
+    } else {
+      if (!lastTeams.length) { showToast('복사할 팀 나누기 결과가 없습니다'); return; }
+      text = lastTeams.map(function(team, i) { return (i + 1) + '팀: ' + team.join(', '); }).join('\n');
+    }
+    navigator.clipboard.writeText(text).then(function() {
+      showToast('✓ 결과가 클립보드에 복사되었습니다');
+    });
+  });
+
+  updateRouletteState();
+  updateTeamState();
+  </script>
+</body>
+</html>

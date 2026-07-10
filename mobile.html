@@ -60,7 +60,8 @@ const TOOL_URLS = {
   HashGen:'/hash-gen/', ChartMaker:'/chart-maker/', ImageText:'/image-text/', ImageFilter:'/image-filter/',
   ImageCollage:'/image-collage/', PixelArt:'/pixel-art/', MosaicMaker:'/mosaic-maker/', PDFSplit:'/pdf-split/',
   LineNumber:'/line-number/', CurrencyCalc:'/currency-calc/', Minifier:'/minifier/', URLEncode:'/url-encode/',
-  CSSUnit:'/css-unit/', DiagramMaker:'/diagram-maker/', PaletteGen:'/palette-gen/', ExifRemover:'/exif-remover/'
+  CSSUnit:'/css-unit/', DiagramMaker:'/diagram-maker/', PaletteGen:'/palette-gen/', ExifRemover:'/exif-remover/',
+  RandomPicker:'/random-picker/'
 };
 
 const BLOG_URLS = {
@@ -115,7 +116,8 @@ const BLOG_URLS = {
   'CSSUnit 사용법 완전 가이드':'/blog/51-cssunit-howto.html',
   'DiagramMaker 사용법 완전 가이드':'/blog/52-diagrammaker-howto.html',
   'PaletteGen 사용법 완전 가이드':'/blog/53-palettegen-howto.html',
-  'ExifRemover 사용법 완전 가이드':'/blog/54-exifremover-howto.html'
+  'ExifRemover 사용법 완전 가이드':'/blog/54-exifremover-howto.html',
+  'RandomPicker 사용법 완전 가이드':'/blog/55-randompicker-howto.html'
 };
 
 const INFO_URLS = {
@@ -134,7 +136,7 @@ const TOOLBOX_CATS = [
   { label:'개인정보',      keys:['MaskPrivacy','MaskPDF','MaskFace','MaskDoc','ExifRemover'] },
   { label:'이미지 편집',   keys:['FitImage','CropImage','WatermarkImage','ColorPicker','ImageBright','BGRemove','ImageText','ImageFilter','ImageCollage','PixelArt','MosaicMaker'] },
   { label:'문서·텍스트',   keys:['PDFMerge','PDFSplit','TextTools','DiffChecker','MarkdownEditor','FindReplace','LineNumber'] },
-  { label:'유틸리티',      keys:['QRCode','PasswordGen','UnitConvert','DateCalc','WorldClock','CurrencyCalc'] },
+  { label:'유틸리티',      keys:['QRCode','PasswordGen','UnitConvert','DateCalc','WorldClock','CurrencyCalc','RandomPicker'] },
   { label:'개발자',        keys:['JSONFormat','RegexTest','Base64Tool','HashGen','Minifier','URLEncode','CSSUnit'] },
   { label:'데이터·시각화', keys:['ChartMaker','DiagramMaker','PaletteGen'] }
 ];
@@ -159,7 +161,7 @@ const SEARCH_TOOLS = [
   {code:'CurrencyCalc',name:'환율 계산기'},{code:'Minifier',name:'코드 압축기'},
   {code:'URLEncode',name:'URL 인코더'},{code:'CSSUnit',name:'CSS 단위 변환기'},
   {code:'DiagramMaker',name:'다이어그램 생성기'},{code:'PaletteGen',name:'색상 팔레트 생성기'},
-  {code:'ExifRemover',name:'EXIF 제거기'}
+  {code:'ExifRemover',name:'EXIF 제거기'},{code:'RandomPicker',name:'랜덤 추첨기'}
 ];
 
 const TOOL_LABEL   = Object.fromEntries(SEARCH_TOOLS.map(t => [t.code, t.name]));
@@ -177,7 +179,8 @@ function glyphInfo(code) {
     JSONFormat:'token:{ }', RegexTest:'token:.*', Base64Tool:'token:64', HashGen:'token:#',
     ChartMaker:'chart', ImageText:'token:T', ImageFilter:'halfcircle', ImageCollage:'collage', PixelArt:'pixelart',
     MosaicMaker:'mosaic', PDFSplit:'split', LineNumber:'linenum', CurrencyCalc:'currency', Minifier:'token:<>',
-    URLEncode:'token:%20', CSSUnit:'token:rem', DiagramMaker:'diagram', PaletteGen:'palette', ExifRemover:'exif'
+    URLEncode:'token:%20', CSSUnit:'token:rem', DiagramMaker:'diagram', PaletteGen:'palette', ExifRemover:'exif',
+    RandomPicker:'roulette'
   };
   const v = m[code];
   if (!v) return { glyph:'token', token:'+' };
@@ -210,6 +213,7 @@ function toolIcon(fill, ink, glyph, token) {
   else if (glyph==='diagram') inner=`<div style="position:relative;width:30px;height:26px"><div style="position:absolute;left:0;top:0;width:11px;height:8px;background:#fffdf9;border:2px solid ${k};border-radius:2px;box-sizing:border-box"></div><div style="position:absolute;right:0;top:0;width:11px;height:8px;background:#fffdf9;border:2px solid ${k};border-radius:2px;box-sizing:border-box"></div><div style="position:absolute;left:9px;bottom:0;width:11px;height:8px;background:#fffdf9;border:2px solid ${k};border-radius:2px;box-sizing:border-box"></div><div style="position:absolute;left:5px;top:8px;width:2px;height:6px;background:${k}"></div><div style="position:absolute;right:5px;top:8px;width:2px;height:6px;background:${k}"></div></div>`;
   else if (glyph==='palette') inner=`<div style="display:flex;gap:3px"><div style="width:11px;height:11px;border-radius:50%;background:#ff8a5e;border:2px solid ${k};box-sizing:border-box"></div><div style="width:11px;height:11px;border-radius:50%;background:#5dffb0;border:2px solid ${k};box-sizing:border-box;margin-top:8px"></div><div style="width:11px;height:11px;border-radius:50%;background:#6aa8ff;border:2px solid ${k};box-sizing:border-box"></div></div>`;
   else if (glyph==='exif') inner=`<div style="position:relative;width:26px;height:30px"><div style="width:20px;height:20px;border-radius:50% 50% 50% 0;background:#fffdf9;border:2.5px solid ${k};box-sizing:border-box;transform:rotate(-45deg);margin:0 auto"></div><div style="position:absolute;left:50%;top:6px;transform:translateX(-50%);width:6px;height:6px;border-radius:50%;background:${k}"></div></div>`;
+  else if (glyph==='roulette') inner=`<div style="position:relative;width:28px;height:28px;border-radius:50%;background:#fffdf9;border:2.5px solid ${k};box-sizing:border-box;overflow:hidden"><div style="position:absolute;left:0;top:0;width:14px;height:14px;background:#ff8a5e"></div><div style="position:absolute;right:0;top:0;width:14px;height:14px;background:#5dffb0"></div><div style="position:absolute;left:0;bottom:0;width:14px;height:14px;background:#6aa8ff"></div><div style="position:absolute;right:0;bottom:0;width:14px;height:14px;background:#ffe14d"></div></div>`;
   else if (glyph==='halfcircle') inner=`<div style="width:24px;height:24px;border-radius:50%;background:#fffdf9;border:2.5px solid ${k};box-sizing:border-box;position:relative;overflow:hidden"><div style="position:absolute;left:0;top:0;width:50%;height:100%;background:${k}"></div></div>`;
   else if (glyph==='calendar') inner=`<div style="position:relative;width:30px;height:30px;background:#fffdf9;border:2.5px solid ${k};border-radius:4px;box-sizing:border-box;overflow:hidden"><div style="position:absolute;top:0;left:0;width:100%;height:8px;background:${f};border-bottom:2.5px solid ${k}"></div><div style="position:absolute;top:13px;left:4px;width:4px;height:4px;background:${k};border-radius:1px"></div><div style="position:absolute;top:13px;left:13px;width:4px;height:4px;background:rgba(42,36,51,.3);border-radius:1px"></div><div style="position:absolute;top:13px;left:22px;width:4px;height:4px;background:rgba(42,36,51,.3);border-radius:1px"></div><div style="position:absolute;top:21px;left:4px;width:4px;height:4px;background:rgba(42,36,51,.3);border-radius:1px"></div><div style="position:absolute;top:21px;left:13px;width:4px;height:4px;background:${k};border-radius:1px"></div></div>`;
   else if (glyph==='clock') inner=`<div style="position:relative;width:28px;height:28px;border-radius:50%;background:#fffdf9;border:2.5px solid ${k};box-sizing:border-box"><div style="position:absolute;left:50%;top:50%;width:2.5px;height:9px;background:${k};border-radius:2px;transform-origin:bottom center;transform:translate(-50%,-100%)"></div><div style="position:absolute;left:50%;top:50%;width:2.5px;height:7px;background:${k};border-radius:2px;transform-origin:bottom center;transform:translate(-50%,-100%) rotate(90deg)"></div></div>`;
