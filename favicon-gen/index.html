@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <link rel="icon" href="/favicon.ico" sizes="32x32">
+  <link rel="icon" href="/favicon-16.png" sizes="16x16" type="image/png">
+  <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="/favicon-192.png" sizes="192x192" type="image/png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="이미지 1장으로 16/32/48/180/192/512px 파비콘 세트와 favicon.ico를 생성하는 무료 온라인 도구. HTML 코드까지 바로 복사할 수 있습니다. 서버 전송 없이 브라우저에서 바로 처리합니다." />
+  <meta property="og:title" content="FaviconGen — 파비콘 생성기" />
+  <meta property="og:description" content="이미지 1장으로 다양한 크기의 파비콘 세트와 favicon.ico를 즉시 생성하는 무료 온라인 도구입니다." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://browserkit.online/favicon-gen/" />
+  <title>FaviconGen — 파비콘 생성기</title>
+  <link rel="stylesheet" href="/css/style.css?v=20260704c" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506"
+     crossorigin="anonymous"></script>
+  <style>
+    .upload-zone { background:var(--card); border:2px dashed var(--border); border-radius:var(--radius); padding:56px 40px; text-align:center; cursor:pointer; margin-bottom:16px; transition:all 0.2s; }
+    .upload-zone:hover, .upload-zone.drag-over { border-color:var(--point); box-shadow:0 0 24px var(--glow); background:rgba(123,108,255,0.05); }
+    .upload-icon { font-size:48px; margin-bottom:20px; }
+    .upload-title { font-size:18px; font-weight:600; margin-bottom:8px; }
+    .upload-sub { color:var(--subtext); font-size:14px; margin-bottom:8px; }
+    .upload-safe { color:var(--success); font-size:13px; }
+
+    .result-wrap { display:none; }
+    .result-wrap.show { display:block; }
+
+    .preview-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px; margin-bottom:20px; display:flex; align-items:center; gap:20px; flex-wrap:wrap; }
+    .preview-src-wrap { background:repeating-conic-gradient(#1e1e2a 0% 25%,#26263a 0% 50%) 0 0/16px 16px; border-radius:10px; overflow:hidden; width:100px; height:100px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+    .preview-src-wrap img { max-width:100%; max-height:100%; display:block; }
+    .file-meta { display:flex; flex-direction:column; gap:6px; flex:1; min-width:160px; }
+    .file-meta-row { display:flex; gap:8px; font-size:13px; }
+    .file-meta-label { color:var(--subtext); min-width:64px; flex-shrink:0; }
+    .file-meta-value { color:var(--text); word-break:break-all; }
+
+    .option-row { display:flex; align-items:center; gap:8px; font-size:13px; color:var(--subtext); cursor:pointer; }
+
+    .size-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:14px; margin-bottom:20px; }
+    .size-card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:16px; text-align:center; }
+    .size-preview-wrap { background:repeating-conic-gradient(#1e1e2a 0% 25%,#26263a 0% 50%) 0 0/12px 12px; border-radius:8px; display:flex; align-items:center; justify-content:center; margin:0 auto 10px; overflow:hidden; }
+    .size-preview-wrap canvas { display:block; }
+    .size-label { font-size:13px; font-weight:700; color:var(--text); margin-bottom:2px; }
+    .size-use { font-size:11px; color:var(--subtext); margin-bottom:10px; }
+    .size-download { background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:6px 14px; font-size:12px; color:var(--subtext); cursor:pointer; }
+    .size-download:hover { border-color:var(--point); color:var(--text); }
+
+    .snippet-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px 24px; margin-bottom:20px; }
+    .snippet-title { font-size:13px; font-weight:600; color:var(--subtext); margin-bottom:12px; }
+    .snippet-code { background:#0a0a12; border:1px solid var(--border); border-radius:10px; padding:16px; font-family:'Fira Code',monospace; font-size:12px; line-height:1.8; color:#68d391; overflow-x:auto; white-space:pre; margin-bottom:12px; }
+
+    .action-wrap { display:flex; justify-content:center; gap:12px; margin-bottom:48px; flex-wrap:wrap; }
+    .btn-primary { background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border:none; border-radius:12px; padding:13px 28px; font-size:15px; font-weight:600; cursor:pointer; font-family:'Gowun Dodum',sans-serif; }
+    .btn-primary:hover { transform:translateY(-2px); box-shadow:0 8px 24px var(--glow); }
+    .btn-sub { background:var(--card); color:var(--subtext); border:1px solid var(--border); border-radius:12px; padding:13px 22px; font-size:15px; cursor:pointer; font-family:'Gowun Dodum',sans-serif; }
+    .btn-sub:hover { transform:translateY(-2px); color:var(--text); border-color:var(--point); }
+
+    .notice { margin:0 0 20px; padding:12px 16px; background:rgba(123,108,255,0.07); border:1px solid var(--border); border-radius:10px; font-size:13px; color:var(--subtext); line-height:1.7; }
+
+    .toast { position:fixed; bottom:32px; left:50%; transform:translateX(-50%) translateY(80px); background:var(--success); color:#fff; border-radius:999px; padding:10px 24px; font-size:14px; font-weight:600; opacity:0; pointer-events:none; z-index:999; transition:all 0.3s ease; }
+    .toast.show { transform:translateX(-50%) translateY(0); opacity:1; }
+
+    .footer { border-top:1px solid var(--border); padding:32px 0; text-align:center; }
+    .footer-copy { color:var(--subtext); font-size:13px; margin-bottom:12px; }
+    .footer-nav { display:flex; justify-content:center; gap:20px; flex-wrap:wrap; }
+    .footer-nav a { color:var(--subtext); font-size:13px; text-decoration:none; }
+    .footer-nav a:hover { color:var(--text); }
+
+    @media (max-width:640px) {
+      .hero-title { font-size:24px; }
+      .upload-zone { padding:40px 20px; }
+    }
+  </style>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+  <meta property="og:image" content="https://browserkit.online/img/og-browserkit.png" />
+  <link rel="canonical" href="https://browserkit.online/favicon-gen/" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://browserkit.online/img/og-browserkit.png" />
+</head>
+
+<body>
+  <header class="header">
+    <div class="container">
+      <a href="/" class="header-brand">
+        <div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Gowun Dodum,sans-serif;flex-shrink:0">B</div>
+        <span class="header-brand-text"><span style="color:var(--text)">Browser</span><span style="color:var(--point)">Kit</span></span>
+      </a>
+      <a href="/" class="header-back">&#x2190; BrowserKit 홈으로</a>
+    </div>
+  </header>
+
+  <main><div class="container">
+    <div class="hero">
+      <div class="hero-icon" style="height:78px;display:flex;justify-content:center;align-items:center"><div style="transform:scale(1.7);transform-origin:center"><div style="width:46px;height:46px;background:#ffb3c7;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="width:24px;height:24px;border-radius:50%;background:#fffdf9;border:2.5px solid #2a2433;box-sizing:border-box;display:flex;align-items:center;justify-content:center;font:700 12px Gowun Dodum,sans-serif;color:#2a2433">B</div></div></div></div>
+      <div class="hero-title-wrap"><h1 class="hero-title">FaviconGen</h1><a href="/blog/57-favicongen-howto.html" class="hero-guide-link">사용법 가이드 보기</a></div>
+      <p class="hero-desc">이미지 1장으로 다양한 크기의 파비콘 세트와 favicon.ico를 즉시 생성하세요</p>
+      <div class="hero-badges">
+        <span class="badge">🔒 완전 로컬 처리</span>
+        <span class="badge">⚡ 무료 사용</span>
+        <span class="badge">🛡️ 서버 전송 없음</span>
+        <span class="badge">📦 설치 불필요</span>
+      </div>
+    </div>
+    <div style="margin:0 0 12px"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+
+    <p class="notice">💡 정사각형이 아닌 이미지는 가운데를 기준으로 정사각형으로 자동으로 잘라 사용합니다. 로고나 아이콘처럼 미리 정사각형으로 준비된 이미지를 사용하면 더 깔끔한 결과를 얻을 수 있습니다.</p>
+
+    <!-- 업로드 존 -->
+    <div class="upload-zone" id="uploadZone">
+      <input type="file" id="fileInput" accept="image/*" style="display:none" />
+      <div class="upload-icon">🖼️</div>
+      <div class="upload-title">이미지를 업로드하세요</div>
+      <div class="upload-sub">클릭하거나 파일을 드래그하세요 (JPG, PNG, WEBP, SVG)</div>
+      <div class="upload-safe">🔒 파일은 서버로 전송되지 않습니다</div>
+    </div>
+
+    <!-- 결과 -->
+    <div class="result-wrap" id="resultWrap">
+      <div class="preview-card">
+        <div class="preview-src-wrap"><img id="previewImg" src="" alt="업로드한 이미지 미리보기" /></div>
+        <div class="file-meta">
+          <div class="file-meta-row"><span class="file-meta-label">파일명</span><span class="file-meta-value" id="fileName">—</span></div>
+          <div class="file-meta-row"><span class="file-meta-label">원본 크기</span><span class="file-meta-value" id="fileDim">—</span></div>
+        </div>
+      </div>
+
+      <div class="size-grid" id="sizeGrid"></div>
+
+      <div class="snippet-card">
+        <div class="snippet-title">📤 HTML 코드</div>
+        <div class="snippet-code" id="snippetCode"></div>
+        <button class="btn-sub" id="copySnippetBtn">📋 HTML 코드 복사</button>
+      </div>
+
+      <div class="action-wrap">
+        <button class="btn-primary" id="downloadZipBtn">&#x2B07; 전체 ZIP 다운로드 (PNG + favicon.ico)</button>
+        <button class="btn-sub" id="resetBtn">&#x21BA; 새 이미지 선택</button>
+      </div>
+    </div>
+
+    <div style="margin:0 0 12px"><ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="9500090221"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+  </div></main>
+
+  <footer class="footer">
+    <div class="container">
+      <p class="footer-copy">&#xa9; 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p>
+      <nav class="footer-nav">
+        <a href="/privacy.html">개인정보 처리방침</a>
+        <a href="/terms.html">이용약관</a>
+        <a href="/about.html">서비스 소개</a>
+        <a href="/blog/">블로그</a>
+      </nav>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+  var uploadZone = document.getElementById('uploadZone');
+  var fileInput  = document.getElementById('fileInput');
+  var resultWrap = document.getElementById('resultWrap');
+  var previewImg = document.getElementById('previewImg');
+  var sizeGrid   = document.getElementById('sizeGrid');
+  var snippetCode = document.getElementById('snippetCode');
+  var currentFile = null;
+  var currentObjectUrl = null;
+  var generatedBlobs = {}; // size -> Blob (PNG)
+  var icoSizes = [16, 32, 48];
+  var allSizes = [
+    { size: 16, use: 'favicon-16.png' },
+    { size: 32, use: 'favicon-32.png' },
+    { size: 48, use: 'favicon-48.png' },
+    { size: 180, use: 'apple-touch-icon.png' },
+    { size: 192, use: 'favicon-192.png' },
+    { size: 512, use: 'favicon-512.png' }
+  ];
+
+  uploadZone.addEventListener('click', function() { fileInput.click(); });
+  uploadZone.addEventListener('dragover', function(e) { e.preventDefault(); uploadZone.classList.add('drag-over'); });
+  uploadZone.addEventListener('dragleave', function() { uploadZone.classList.remove('drag-over'); });
+  uploadZone.addEventListener('drop', function(e) {
+    e.preventDefault();
+    uploadZone.classList.remove('drag-over');
+    if (e.dataTransfer.files[0]) loadFile(e.dataTransfer.files[0]);
+  });
+  fileInput.addEventListener('change', function() {
+    if (fileInput.files[0]) loadFile(fileInput.files[0]);
+  });
+
+  function loadFile(file) {
+    if (!file.type.startsWith('image/')) { showToast('이미지 파일을 선택해주세요'); return; }
+    currentFile = file;
+    if (currentObjectUrl) URL.revokeObjectURL(currentObjectUrl);
+    currentObjectUrl = URL.createObjectURL(file);
+    previewImg.src = currentObjectUrl;
+
+    document.getElementById('fileName').textContent = file.name;
+    document.getElementById('fileDim').textContent = '측정 중...';
+
+    var img = new Image();
+    img.onload = function() {
+      document.getElementById('fileDim').textContent = img.naturalWidth + ' × ' + img.naturalHeight + 'px';
+      uploadZone.style.display = 'none';
+      resultWrap.classList.add('show');
+      generateAll(img);
+    };
+    img.onerror = function() { showToast('이미지를 불러올 수 없습니다'); };
+    img.src = currentObjectUrl;
+  }
+
+  // 정사각형으로 가운데 크롭한 소스 캔버스 생성
+  function makeSquareSource(img) {
+    var side = Math.min(img.naturalWidth, img.naturalHeight);
+    var sx = (img.naturalWidth - side) / 2;
+    var sy = (img.naturalHeight - side) / 2;
+    var c = document.createElement('canvas');
+    c.width = side; c.height = side;
+    var ctx = c.getContext('2d');
+    ctx.drawImage(img, sx, sy, side, side, 0, 0, side, side);
+    return c;
+  }
+
+  function resizeCanvas(srcCanvas, size) {
+    var c = document.createElement('canvas');
+    c.width = size; c.height = size;
+    var ctx = c.getContext('2d');
+    ctx.imageSmoothingEnabled = true;
+    ctx.imageSmoothingQuality = 'high';
+    ctx.drawImage(srcCanvas, 0, 0, size, size);
+    return c;
+  }
+
+  function generateAll(img) {
+    var squareSrc = makeSquareSource(img);
+    generatedBlobs = {};
+    sizeGrid.innerHTML = '';
+
+    var pending = allSizes.length;
+    allSizes.forEach(function(entry) {
+      var c = resizeCanvas(squareSrc, entry.size);
+      var displaySize = Math.min(entry.size, 96);
+
+      var card = document.createElement('div');
+      card.className = 'size-card';
+      var wrap = document.createElement('div');
+      wrap.className = 'size-preview-wrap';
+      wrap.style.width = displaySize + 'px';
+      wrap.style.height = displaySize + 'px';
+      var dispCanvas = document.createElement('canvas');
+      dispCanvas.width = displaySize; dispCanvas.height = displaySize;
+      dispCanvas.getContext('2d').drawImage(c, 0, 0, displaySize, displaySize);
+      wrap.appendChild(dispCanvas);
+
+      var label = document.createElement('div');
+      label.className = 'size-label';
+      label.textContent = entry.size + '×' + entry.size;
+      var use = document.createElement('div');
+      use.className = 'size-use';
+      use.textContent = entry.use;
+      var btn = document.createElement('button');
+      btn.className = 'size-download';
+      btn.textContent = '⬇ PNG 다운로드';
+
+      card.appendChild(wrap);
+      card.appendChild(label);
+      card.appendChild(use);
+      card.appendChild(btn);
+      sizeGrid.appendChild(card);
+
+      c.toBlob(function(blob) {
+        generatedBlobs[entry.size] = blob;
+        btn.addEventListener('click', function() {
+          downloadBlob(blob, entry.use);
+        });
+        pending--;
+        if (pending === 0) buildSnippet();
+      }, 'image/png');
+    });
+  }
+
+  function buildSnippet() {
+    snippetCode.textContent =
+      '<link rel="icon" href="/favicon.ico" sizes="32x32">\n' +
+      '<link rel="icon" href="/favicon-16.png" sizes="16x16" type="image/png">\n' +
+      '<link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">\n' +
+      '<link rel="icon" href="/favicon-192.png" sizes="192x192" type="image/png">\n' +
+      '<link rel="apple-touch-icon" href="/apple-touch-icon.png">';
+  }
+
+  function downloadBlob(blob, filename) {
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = filename;
+    a.click();
+    URL.revokeObjectURL(a.href);
+  }
+
+  // ── ICO 파일 생성 (PNG 임베드 방식, Vista 이후 표준) ──
+  async function buildIco(blobsBySize, sizes) {
+    var images = [];
+    for (var i = 0; i < sizes.length; i++) {
+      var blob = blobsBySize[sizes[i]];
+      var buf = await blob.arrayBuffer();
+      images.push({ size: sizes[i], data: new Uint8Array(buf) });
+    }
+    var headerSize = 6;
+    var dirEntrySize = 16;
+    var offset = headerSize + dirEntrySize * images.length;
+    var totalSize = offset;
+    images.forEach(function(im) { totalSize += im.data.length; });
+
+    var buf = new ArrayBuffer(totalSize);
+    var view = new DataView(buf);
+    view.setUint16(0, 0, true);
+    view.setUint16(2, 1, true); // type: icon
+    view.setUint16(4, images.length, true);
+
+    var pos = headerSize;
+    var dataPos = offset;
+    images.forEach(function(im) {
+      var wh = im.size >= 256 ? 0 : im.size;
+      view.setUint8(pos, wh);
+      view.setUint8(pos + 1, wh);
+      view.setUint8(pos + 2, 0);
+      view.setUint8(pos + 3, 0);
+      view.setUint16(pos + 4, 1, true); // color planes
+      view.setUint16(pos + 6, 32, true); // bits per pixel
+      view.setUint32(pos + 8, im.data.length, true);
+      view.setUint32(pos + 12, dataPos, true);
+      new Uint8Array(buf, dataPos, im.data.length).set(im.data);
+      dataPos += im.data.length;
+      pos += dirEntrySize;
+    });
+
+    return new Blob([buf], { type: 'image/x-icon' });
+  }
+
+  document.getElementById('copySnippetBtn').addEventListener('click', function() {
+    navigator.clipboard.writeText(snippetCode.textContent).then(function() {
+      showToast('✓ HTML 코드가 복사되었습니다');
+    });
+  });
+
+  document.getElementById('downloadZipBtn').addEventListener('click', async function() {
+    if (!Object.keys(generatedBlobs).length) { showToast('먼저 이미지를 업로드해주세요'); return; }
+    try {
+      var zip = new JSZip();
+      for (var i = 0; i < allSizes.length; i++) {
+        var entry = allSizes[i];
+        zip.file(entry.use, generatedBlobs[entry.size]);
+      }
+      var icoBlob = await buildIco(generatedBlobs, icoSizes);
+      zip.file('favicon.ico', icoBlob);
+      zip.file('snippet.html', snippetCode.textContent);
+
+      var content = await zip.generateAsync({ type: 'blob' });
+      downloadBlob(content, 'favicon-set.zip');
+      showToast('✓ ZIP 파일이 저장됩니다');
+    } catch (e) {
+      showToast('ZIP 생성 중 오류가 발생했습니다');
+    }
+  });
+
+  document.getElementById('resetBtn').addEventListener('click', function() {
+    currentFile = null;
+    if (currentObjectUrl) { URL.revokeObjectURL(currentObjectUrl); currentObjectUrl = null; }
+    previewImg.src = '';
+    fileInput.value = '';
+    generatedBlobs = {};
+    sizeGrid.innerHTML = '';
+    resultWrap.classList.remove('show');
+    uploadZone.style.display = '';
+  });
+
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(function() { t.classList.remove('show'); }, 2000);
+  }
+  </script>
+</body>
+</html>
