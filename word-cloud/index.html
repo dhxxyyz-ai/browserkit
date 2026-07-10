@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <link rel="icon" href="/favicon.ico" sizes="32x32">
+  <link rel="icon" href="/favicon-16.png" sizes="16x16" type="image/png">
+  <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="/favicon-192.png" sizes="192x192" type="image/png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="텍스트를 붙여넣으면 단어 빈도 기반 워드클라우드 이미지를 생성하는 무료 온라인 도구. PNG 다운로드 지원. 서버 전송 없이 브라우저에서 바로 처리합니다." />
+  <meta property="og:title" content="WordCloudGen — 워드클라우드 생성기" />
+  <meta property="og:description" content="텍스트를 붙여넣으면 단어 빈도 기반 워드클라우드를 즉시 생성하는 무료 온라인 도구입니다." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://browserkit.online/word-cloud/" />
+  <title>WordCloudGen — 워드클라우드 생성기</title>
+  <link rel="stylesheet" href="/css/style.css?v=20260704c" />
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506"
+     crossorigin="anonymous"></script>
+  <style>
+    .input-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px 24px; margin-bottom:16px; }
+    .input-label { font-size:13px; font-weight:600; color:var(--subtext); margin-bottom:10px; display:flex; align-items:center; justify-content:space-between; }
+    .input-textarea { background:var(--bg); border:1px solid var(--border); border-radius:10px; padding:14px 16px; font-size:14px; color:var(--text); font-family:'Gowun Dodum',sans-serif; width:100%; min-height:140px; resize:vertical; outline:none; line-height:1.8; }
+    .input-textarea:focus { border-color:var(--point); }
+    .quick-fill { display:flex; gap:8px; margin-top:10px; flex-wrap:wrap; }
+    .quick-fill-btn { background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:6px 14px; font-size:12px; color:var(--subtext); cursor:pointer; }
+    .quick-fill-btn:hover { border-color:var(--point); color:var(--text); }
+
+    .option-group { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:16px 20px; margin-bottom:20px; display:flex; align-items:center; gap:20px; flex-wrap:wrap; }
+    .option-item { display:flex; align-items:center; gap:8px; font-size:13px; color:var(--subtext); }
+    .option-item input[type="checkbox"] { accent-color:var(--point); width:16px; height:16px; cursor:pointer; }
+    .option-item input[type="number"] { background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:6px 10px; font-size:13px; color:var(--text); width:70px; outline:none; }
+    .theme-btns { display:flex; gap:6px; }
+    .theme-btn { background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:6px 14px; font-size:12px; color:var(--subtext); cursor:pointer; }
+    .theme-btn.active { background:rgba(123,108,255,0.15); border-color:var(--point); color:var(--point-hover); }
+
+    .cloud-wrap { background:#fffdf9; border:1px solid var(--border); border-radius:var(--radius); overflow:hidden; margin-bottom:20px; display:flex; align-items:center; justify-content:center; }
+    .cloud-canvas { display:block; max-width:100%; height:auto; }
+    .cloud-empty { padding:80px 20px; text-align:center; color:var(--subtext); font-size:14px; }
+
+    .action-wrap { display:flex; justify-content:center; gap:12px; margin-bottom:48px; flex-wrap:wrap; }
+    .btn-primary { background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border:none; border-radius:12px; padding:13px 28px; font-size:15px; font-weight:600; cursor:pointer; font-family:'Gowun Dodum',sans-serif; }
+    .btn-primary:hover { transform:translateY(-2px); box-shadow:0 8px 24px var(--glow); }
+    .btn-sub { background:var(--card); color:var(--subtext); border:1px solid var(--border); border-radius:12px; padding:13px 22px; font-size:15px; cursor:pointer; font-family:'Gowun Dodum',sans-serif; }
+    .btn-sub:hover { transform:translateY(-2px); color:var(--text); border-color:var(--point); }
+
+    .notice { margin:0 0 20px; padding:12px 16px; background:rgba(123,108,255,0.07); border:1px solid var(--border); border-radius:10px; font-size:13px; color:var(--subtext); line-height:1.7; }
+
+    .toast { position:fixed; bottom:32px; left:50%; transform:translateX(-50%) translateY(80px); background:var(--success); color:#fff; border-radius:999px; padding:10px 24px; font-size:14px; font-weight:600; opacity:0; pointer-events:none; z-index:999; transition:all 0.3s ease; }
+    .toast.show { transform:translateX(-50%) translateY(0); opacity:1; }
+
+    .footer { border-top:1px solid var(--border); padding:32px 0; text-align:center; }
+    .footer-copy { color:var(--subtext); font-size:13px; margin-bottom:12px; }
+    .footer-nav { display:flex; justify-content:center; gap:20px; flex-wrap:wrap; }
+    .footer-nav a { color:var(--subtext); font-size:13px; text-decoration:none; }
+    .footer-nav a:hover { color:var(--text); }
+
+    @media (max-width:640px) {
+      .hero-title { font-size:24px; }
+    }
+  </style>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+  <meta property="og:image" content="https://browserkit.online/img/og-browserkit.png" />
+  <link rel="canonical" href="https://browserkit.online/word-cloud/" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://browserkit.online/img/og-browserkit.png" />
+</head>
+
+<body>
+  <header class="header">
+    <div class="container">
+      <a href="/" class="header-brand">
+        <div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Gowun Dodum,sans-serif;flex-shrink:0">B</div>
+        <span class="header-brand-text"><span style="color:var(--text)">Browser</span><span style="color:var(--point)">Kit</span></span>
+      </a>
+      <a href="/" class="header-back">&#x2190; BrowserKit 홈으로</a>
+    </div>
+  </header>
+
+  <main><div class="container">
+    <div class="hero">
+      <div class="hero-icon" style="height:78px;display:flex;justify-content:center;align-items:center"><div style="transform:scale(1.7);transform-origin:center"><div style="width:46px;height:46px;background:#ffd9a8;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="display:flex;flex-direction:column;align-items:center;gap:3px"><div style="font:700 15px Gowun Dodum,sans-serif;color:#2a2433;line-height:1">Aa</div><div style="font:700 9px Gowun Dodum,sans-serif;color:rgba(42,36,51,.55);line-height:1">가나다</div><div style="font:700 11px Gowun Dodum,sans-serif;color:rgba(42,36,51,.75);line-height:1">Word</div></div></div></div></div>
+      <div class="hero-title-wrap"><h1 class="hero-title">WordCloudGen</h1><a href="/blog/56-wordcloud-howto.html" class="hero-guide-link">사용법 가이드 보기</a></div>
+      <p class="hero-desc">텍스트를 붙여넣으면 단어 빈도 기반 워드클라우드를 즉시 생성하세요</p>
+      <div class="hero-badges">
+        <span class="badge">🔒 완전 로컬 처리</span>
+        <span class="badge">⚡ 무료 사용</span>
+        <span class="badge">🛡️ 서버 전송 없음</span>
+        <span class="badge">📦 설치 불필요</span>
+      </div>
+    </div>
+    <div style="margin:0 0 12px"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+
+    <p class="notice">💡 공백/문장부호 기준으로 단어를 나누고 빈도를 세는 방식입니다. 한글 조사가 붙은 형태("학교를", "학교에서")는 형태소 분석 없이는 별개 단어로 집계되니, 정확한 빈도가 필요하다면 조사를 뗀 텍스트를 준비하는 것이 좋습니다.</p>
+
+    <div class="input-card">
+      <div class="input-label"><span>텍스트 입력</span></div>
+      <textarea class="input-textarea" id="textInput" placeholder="워드클라우드로 만들 텍스트를 붙여넣으세요..."></textarea>
+      <div class="quick-fill">
+        <button class="quick-fill-btn" id="sampleBtn">📋 예시 텍스트 채우기</button>
+        <button class="quick-fill-btn" id="clearBtn">↺ 비우기</button>
+      </div>
+    </div>
+
+    <div class="option-group">
+      <label class="option-item"><input type="checkbox" id="stopwordOpt" checked /> 불용어 제거</label>
+      <label class="option-item">최대 단어 수 <input type="number" id="maxWordsInput" value="60" min="10" max="150" /></label>
+      <div class="option-item">
+        <span>색상 테마</span>
+        <div class="theme-btns">
+          <button class="theme-btn active" data-theme="color">컬러</button>
+          <button class="theme-btn" data-theme="mono">모노톤</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="cloud-wrap">
+      <canvas class="cloud-canvas" id="cloudCanvas" width="800" height="500"></canvas>
+    </div>
+
+    <div class="action-wrap">
+      <button class="btn-primary" id="generateBtn">🎨 워드클라우드 생성</button>
+      <button class="btn-sub" id="downloadBtn">&#x2B07; PNG 다운로드</button>
+      <button class="btn-sub" id="resetBtn">&#x21BA; 초기화</button>
+    </div>
+
+    <div style="margin:0 0 12px"><ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="9500090221"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+  </div></main>
+
+  <footer class="footer">
+    <div class="container">
+      <p class="footer-copy">&#xa9; 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p>
+      <nav class="footer-nav">
+        <a href="/privacy.html">개인정보 처리방침</a>
+        <a href="/terms.html">이용약관</a>
+        <a href="/about.html">서비스 소개</a>
+        <a href="/blog/">블로그</a>
+      </nav>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+  var textInput = document.getElementById('textInput');
+  var canvas = document.getElementById('cloudCanvas');
+  var ctx = canvas.getContext('2d');
+  var currentTheme = 'color';
+  var lastPlaced = null;
+
+  var SAMPLE_TEXT = '브라우저킷은 설치 없이 브라우저에서 바로 쓰는 무료 도구 모음입니다. 개인정보 마스킹, 이미지 편집, PDF 처리, QR 코드 생성까지 다양한 도구를 제공합니다. 모든 처리는 브라우저 안에서 이루어지며 서버로 전송되지 않습니다. 무료로 누구나 설치 없이 바로 사용할 수 있는 온라인 도구를 지향합니다. 개인정보 보호와 편의성을 동시에 생각하는 도구, 브라우저킷입니다.';
+
+  var STOPWORDS = {};
+  ['그리고','그러나','그래서','하지만','그런데','또한','즉','그','저','것','수','등','을','를','이','가','은','는',
+   '에','에서','으로','로','와','과','도','만','까지','부터','이다','있다','하다','되다','않다','없다','합니다','입니다',
+   'the','a','an','and','or','but','is','are','was','were','of','to','in','on','for','with','this','that','it','as','be'
+  ].forEach(function(w) { STOPWORDS[w] = true; });
+
+  var COLOR_THEME = ['#ff8a5e', '#5dffb0', '#6aa8ff', '#ffe14d', '#c46aff', '#4be0d0', '#ff5e9e', '#ffd36e'];
+  var MONO_THEME = ['#2a2433', '#4a4355', '#6a6377', '#8a8399', '#5a5366'];
+
+  document.getElementById('sampleBtn').addEventListener('click', function() {
+    textInput.value = SAMPLE_TEXT;
+  });
+  document.getElementById('clearBtn').addEventListener('click', function() {
+    textInput.value = '';
+  });
+
+  document.querySelectorAll('.theme-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.theme-btn').forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      currentTheme = btn.dataset.theme;
+    });
+  });
+
+  function countWords(text, removeStop) {
+    var tokens = text
+      .toLowerCase()
+      .split(/[\s,.!?;:"'()\[\]{}<>\/\\|~`@#$%^&*_+=\n\r\t·…“”‘’,、。！？「」『』]+/)
+      .filter(function(w) { return w.length >= 1; });
+
+    var freq = {};
+    tokens.forEach(function(w) {
+      if (removeStop && STOPWORDS[w]) return;
+      if (/^\d+$/.test(w)) return;
+      freq[w] = (freq[w] || 0) + 1;
+    });
+    return freq;
+  }
+
+  function topWords(freq, max) {
+    return Object.keys(freq)
+      .map(function(w) { return { text: w, count: freq[w] }; })
+      .sort(function(a, b) { return b.count - a.count; })
+      .slice(0, max);
+  }
+
+  function rectsOverlap(a, b, pad) {
+    pad = pad || 2;
+    return !(a.x + a.w + pad < b.x || b.x + b.w + pad < a.x || a.y + a.h + pad < b.y || b.y + b.h + pad < a.y);
+  }
+
+  function layoutWordCloud(words, W, H) {
+    var placed = [];
+    var maxCount = words[0] ? words[0].count : 1;
+    var minCount = words[words.length - 1] ? words[words.length - 1].count : 1;
+    var maxFont = Math.min(72, Math.floor(W / 9));
+    var minFont = 14;
+
+    words.forEach(function(word, idx) {
+      var ratio = maxCount === minCount ? 1 : (word.count - minCount) / (maxCount - minCount);
+      var fontSize = Math.round(minFont + ratio * (maxFont - minFont));
+      ctx.font = '700 ' + fontSize + 'px "Gowun Dodum", sans-serif';
+      var textW = ctx.measureText(word.text).width;
+      var textH = fontSize * 1.15;
+
+      var cx = W / 2, cy = H / 2;
+      var angle = (idx * 0.7) % (Math.PI * 2);
+      var radius = 0;
+      var maxAttempts = 3000;
+      var found = false;
+      var rect = null;
+
+      for (var a = 0; a < maxAttempts; a++) {
+        var x = cx + radius * Math.cos(angle) - textW / 2;
+        var y = cy + radius * Math.sin(angle) - textH / 2;
+        rect = { x: x, y: y, w: textW, h: textH };
+
+        var inBounds = rect.x >= 4 && rect.y >= 4 && rect.x + rect.w <= W - 4 && rect.y + rect.h <= H - 4;
+        if (inBounds) {
+          var collision = false;
+          for (var p = 0; p < placed.length; p++) {
+            if (rectsOverlap(rect, placed[p], 3)) { collision = true; break; }
+          }
+          if (!collision) { found = true; break; }
+        }
+        angle += 0.28;
+        radius += 2.1;
+      }
+
+      if (found) {
+        placed.push({ text: word.text, count: word.count, fontSize: fontSize, x: rect.x, y: rect.y, w: rect.w, h: rect.h });
+      }
+    });
+
+    return placed;
+  }
+
+  function render() {
+    var raw = textInput.value.trim();
+    var W = canvas.width, H = canvas.height;
+    ctx.clearRect(0, 0, W, H);
+
+    if (!raw) {
+      lastPlaced = null;
+      return;
+    }
+
+    var removeStop = document.getElementById('stopwordOpt').checked;
+    var maxWords = Math.max(10, Math.min(150, parseInt(document.getElementById('maxWordsInput').value, 10) || 60));
+    var freq = countWords(raw, removeStop);
+    var words = topWords(freq, maxWords);
+
+    if (!words.length) {
+      lastPlaced = null;
+      return;
+    }
+
+    var placed = layoutWordCloud(words, W, H);
+    var palette = currentTheme === 'mono' ? MONO_THEME : COLOR_THEME;
+
+    placed.forEach(function(w, i) {
+      ctx.save();
+      ctx.translate(w.x + w.w / 2, w.y + w.h / 2);
+      ctx.font = '700 ' + w.fontSize + 'px "Gowun Dodum", sans-serif';
+      ctx.fillStyle = palette[i % palette.length];
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(w.text, 0, 0);
+      ctx.restore();
+    });
+
+    lastPlaced = placed;
+  }
+
+  document.getElementById('generateBtn').addEventListener('click', function() {
+    if (!textInput.value.trim()) { showToast('텍스트를 입력해주세요'); return; }
+    render();
+    if (!lastPlaced || !lastPlaced.length) { showToast('생성할 단어가 없습니다'); return; }
+    showToast('✓ 워드클라우드가 생성되었습니다 (' + lastPlaced.length + '개 단어)');
+  });
+
+  document.getElementById('downloadBtn').addEventListener('click', function() {
+    if (!lastPlaced || !lastPlaced.length) { showToast('먼저 워드클라우드를 생성해주세요'); return; }
+    canvas.toBlob(function(blob) {
+      if (!blob) { showToast('다운로드 중 오류가 발생했습니다'); return; }
+      var a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'wordcloud.png';
+      a.click();
+      URL.revokeObjectURL(a.href);
+      showToast('✓ PNG 파일이 저장됩니다');
+    }, 'image/png');
+  });
+
+  document.getElementById('resetBtn').addEventListener('click', function() {
+    textInput.value = '';
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    lastPlaced = null;
+  });
+
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(function() { t.classList.remove('show'); }, 2000);
+  }
+  </script>
+</body>
+</html>
