@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <link rel="icon" href="/favicon.ico" sizes="32x32">
+  <link rel="icon" href="/favicon-16.png" sizes="16x16" type="image/png">
+  <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="/favicon-192.png" sizes="192x192" type="image/png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="JWT(JSON Web Token)의 헤더와 페이로드를 즉시 디코딩해 보여주는 무료 온라인 도구. 만료 시각(exp)을 사람이 읽을 수 있는 날짜로 자동 변환하고, 서명 검증 없이 디코딩만 수행합니다. 서버 전송 없이 브라우저에서 바로 처리합니다." />
+  <meta property="og:title" content="JWTDecoder — JWT 디코더" />
+  <meta property="og:description" content="JWT 토큰의 헤더/페이로드를 즉시 디코딩해 보여주는 무료 온라인 도구입니다." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://browserkit.online/jwt-decoder/" />
+  <title>JWTDecoder — JWT 디코더</title>
+  <link rel="stylesheet" href="/css/style.css?v=20260704c" />
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506"
+     crossorigin="anonymous"></script>
+  <style>
+    .input-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:24px; margin-bottom:20px; }
+    .field-label { font-size:13px; font-weight:600; color:var(--subtext); margin-bottom:8px; display:flex; align-items:center; justify-content:space-between; }
+    .token-input { width:100%; background:var(--bg); border:1px solid var(--border); border-radius:10px; padding:14px 16px; font-size:13px; color:var(--text); font-family:'Fira Code','JetBrains Mono',monospace; resize:vertical; min-height:110px; outline:none; line-height:1.7; word-break:break-all; }
+    .token-input:focus { border-color:var(--point); }
+    .token-input::placeholder { color:var(--subtext); font-family:'Gowun Dodum',sans-serif; }
+    .quick-fill { display:flex; gap:8px; margin-top:10px; flex-wrap:wrap; }
+    .quick-fill-btn { background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:6px 14px; font-size:12px; color:var(--subtext); cursor:pointer; }
+    .quick-fill-btn:hover { border-color:var(--point); color:var(--text); }
+
+    .segment-preview { margin-top:14px; font-family:'Fira Code','JetBrains Mono',monospace; font-size:12px; word-break:break-all; line-height:1.9; padding:12px 14px; background:var(--bg); border-radius:10px; border:1px solid var(--border); }
+    .seg-header { color:#e05a86; }
+    .seg-payload { color:#8a5eea; }
+    .seg-signature { color:#3f8ee0; }
+    .seg-dot { color:var(--subtext); }
+
+    .error-box { background:rgba(248,113,113,0.08); border:1px solid #F87171; border-radius:10px; padding:14px 18px; margin-bottom:20px; color:#F87171; font-size:14px; display:none; }
+    .error-box.show { display:block; }
+
+    .result-wrap { display:none; }
+    .result-wrap.show { display:block; }
+
+    .part-card { background:var(--card); border-radius:var(--radius); margin-bottom:16px; overflow:hidden; border:1px solid var(--border); border-top:4px solid var(--part-color, var(--point)); }
+    .part-card.header { --part-color:#e05a86; }
+    .part-card.payload { --part-color:#8a5eea; }
+    .part-header { display:flex; align-items:center; justify-content:space-between; padding:14px 20px; border-bottom:1px solid var(--border); }
+    .part-title { font-size:14px; font-weight:700; color:var(--text); }
+    .part-json { padding:16px 20px; font-family:'Fira Code','JetBrains Mono',monospace; font-size:13px; line-height:1.8; color:var(--text); white-space:pre-wrap; word-break:break-all; max-height:400px; overflow:auto; }
+    .json-key { color:var(--point-hover); }
+    .json-str { color:#5dc9a3; }
+    .json-num { color:#e0a05e; }
+    .json-bool { color:#e0a05e; }
+    .copy-btn { background:var(--bg); border:1px solid var(--border); border-radius:7px; padding:5px 12px; font-size:12px; font-weight:600; color:var(--subtext); cursor:pointer; }
+    .copy-btn:hover { border-color:var(--point); color:var(--text); }
+
+    .claims-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:16px 20px; margin-bottom:20px; }
+    .claims-title { font-size:13px; font-weight:600; color:var(--subtext); margin-bottom:12px; }
+    .claim-row { display:flex; gap:10px; align-items:center; font-size:13px; padding:6px 0; flex-wrap:wrap; }
+    .claim-name { color:var(--subtext); min-width:56px; font-family:'Fira Code',monospace; }
+    .claim-value { color:var(--text); }
+    .claim-badge { font-size:11px; font-weight:700; padding:2px 9px; border-radius:999px; }
+    .claim-badge.valid { background:rgba(93,201,163,0.15); color:var(--success); }
+    .claim-badge.expired { background:rgba(248,113,113,0.15); color:#F87171; }
+
+    .sig-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:16px 20px; margin-bottom:20px; font-size:13px; color:var(--subtext); line-height:1.8; }
+    .sig-value { font-family:'Fira Code',monospace; font-size:12px; color:var(--text); word-break:break-all; margin-top:6px; }
+
+    .action-bar { display:flex; gap:10px; margin-bottom:48px; flex-wrap:wrap; }
+    .btn-sub { background:var(--card); color:var(--subtext); border:1px solid var(--border); border-radius:10px; padding:10px 18px; font-size:13px; cursor:pointer; font-family:'Gowun Dodum',sans-serif; }
+    .btn-sub:hover { color:var(--text); border-color:var(--point); }
+    .btn-danger { background:var(--card); color:#F87171; border:1px solid var(--border); border-radius:10px; padding:10px 18px; font-size:13px; cursor:pointer; font-family:'Gowun Dodum',sans-serif; }
+    .btn-danger:hover { border-color:#F87171; }
+
+    .toast { position:fixed; bottom:32px; left:50%; transform:translateX(-50%) translateY(80px); background:var(--success); color:#fff; border-radius:999px; padding:10px 24px; font-size:14px; font-weight:600; opacity:0; pointer-events:none; z-index:999; transition:all 0.3s ease; }
+    .toast.show { transform:translateX(-50%) translateY(0); opacity:1; }
+
+    .footer { border-top:1px solid var(--border); padding:32px 0; text-align:center; }
+    .footer-copy { color:var(--subtext); font-size:13px; margin-bottom:12px; }
+    .footer-nav { display:flex; justify-content:center; gap:20px; flex-wrap:wrap; }
+    .footer-nav a { color:var(--subtext); font-size:13px; text-decoration:none; }
+    .footer-nav a:hover { color:var(--text); }
+
+    @media (max-width:640px) {
+      .hero-title { font-size:24px; }
+    }
+  </style>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+  <meta property="og:image" content="https://browserkit.online/img/og-browserkit.png" />
+  <link rel="canonical" href="https://browserkit.online/jwt-decoder/" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://browserkit.online/img/og-browserkit.png" />
+</head>
+
+<body>
+  <header class="header">
+    <div class="container">
+      <a href="/" class="header-brand">
+        <div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Gowun Dodum,sans-serif;flex-shrink:0">B</div>
+        <span class="header-brand-text"><span style="color:var(--text)">Browser</span><span style="color:var(--point)">Kit</span></span>
+      </a>
+      <a href="/" class="header-back">&#x2190; BrowserKit 홈으로</a>
+    </div>
+  </header>
+
+  <main><div class="container">
+    <div class="hero">
+      <div class="hero-icon" style="height:78px;display:flex;justify-content:center;align-items:center"><div style="transform:scale(1.7);transform-origin:center"><div style="width:46px;height:46px;background:#e0c3ff;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="font:700 14px Gowun Dodum,sans-serif;color:#2a2433;line-height:1;letter-spacing:-.5px;white-space:nowrap">JWT</div></div></div></div>
+      <div class="hero-title-wrap"><h1 class="hero-title">JWTDecoder</h1><a href="/blog/61-jwtdecoder-howto.html" class="hero-guide-link">사용법 가이드 보기</a></div>
+      <p class="hero-desc">JWT 토큰을 붙여넣으면 헤더와 페이로드를 즉시 디코딩해 보여드립니다</p>
+      <div class="hero-badges">
+        <span class="badge">🔒 완전 로컬 처리</span>
+        <span class="badge">⚡ 무료 사용</span>
+        <span class="badge">🛡️ 서버 전송 없음</span>
+        <span class="badge">📦 설치 불필요</span>
+      </div>
+    </div>
+    <div style="margin:0 0 12px"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+
+    <p class="notice">💡 이 도구는 JWT를 <strong>디코딩만</strong> 합니다 — 서명(signature) 검증은 수행하지 않습니다. Base64Url로 인코딩된 헤더·페이로드는 누구나 읽을 수 있는 정보이므로, 비밀번호처럼 민감한 값을 페이로드에 직접 넣지 마세요. 모든 디코딩은 브라우저에서만 처리되며 토큰은 서버로 전송되지 않습니다.</p>
+
+    <div class="input-card">
+      <div class="field-label"><span>&#x1F511; JWT 토큰 입력</span></div>
+      <textarea class="token-input" id="tokenInput" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIn0.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"></textarea>
+      <div class="quick-fill">
+        <button class="quick-fill-btn" id="sampleBtn">📋 예시 토큰 채우기</button>
+        <button class="quick-fill-btn" id="clearInputBtn">↺ 비우기</button>
+      </div>
+      <div class="segment-preview" id="segmentPreview" style="display:none"></div>
+    </div>
+
+    <div class="error-box" id="errorBox"></div>
+
+    <div class="result-wrap" id="resultWrap">
+      <div class="claims-card" id="claimsCard" style="display:none">
+        <div class="claims-title">⏱️ 표준 시간 클레임</div>
+        <div id="claimsList"></div>
+      </div>
+
+      <div class="part-card header">
+        <div class="part-header">
+          <span class="part-title">🔴 HEADER</span>
+          <button class="copy-btn" id="copyHeaderBtn">복사</button>
+        </div>
+        <div class="part-json" id="headerJson"></div>
+      </div>
+
+      <div class="part-card payload">
+        <div class="part-header">
+          <span class="part-title">🟣 PAYLOAD</span>
+          <button class="copy-btn" id="copyPayloadBtn">복사</button>
+        </div>
+        <div class="part-json" id="payloadJson"></div>
+      </div>
+
+      <div class="sig-card">
+        <strong>🔵 SIGNATURE</strong> — 서명 검증 없이 원본 문자열만 표시합니다. 이 값이 유효한지 확인하려면 발급자의 비밀키(secret) 또는 공개키가 필요합니다.
+        <div class="sig-value" id="sigValue"></div>
+      </div>
+    </div>
+
+    <div class="action-bar">
+      <button class="btn-danger" id="clearAllBtn">&#x21BA; 초기화</button>
+    </div>
+
+    <div style="margin:0 0 12px"><ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="9500090221"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+  </div></main>
+
+  <footer class="footer">
+    <div class="container">
+      <p class="footer-copy">&#xa9; 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p>
+      <nav class="footer-nav">
+        <a href="/privacy.html">개인정보 처리방침</a>
+        <a href="/terms.html">이용약관</a>
+        <a href="/about.html">서비스 소개</a>
+        <a href="/blog/">블로그</a>
+      </nav>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+  var SAMPLE_JWT = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkJyb3dzZXJLaXQiLCJpYXQiOjE3NTIxMTIwMDAsImV4cCI6MTkwMDAwMDAwMH0.dGhpc19pc19hX2Zha2Vfc2lnbmF0dXJlX2Zvcl9kZW1v';
+
+  var tokenInput = document.getElementById('tokenInput');
+  var segmentPreview = document.getElementById('segmentPreview');
+  var errorBox = document.getElementById('errorBox');
+  var resultWrap = document.getElementById('resultWrap');
+  var claimsCard = document.getElementById('claimsCard');
+  var claimsList = document.getElementById('claimsList');
+  var headerJson = document.getElementById('headerJson');
+  var payloadJson = document.getElementById('payloadJson');
+  var sigValue = document.getElementById('sigValue');
+
+  var lastHeaderStr = '', lastPayloadStr = '';
+
+  function base64UrlDecode(str) {
+    var b64 = str.replace(/-/g, '+').replace(/_/g, '/');
+    var pad = b64.length % 4;
+    if (pad === 2) b64 += '==';
+    else if (pad === 3) b64 += '=';
+    else if (pad !== 0) throw new Error('잘못된 Base64Url 길이입니다');
+    var binary = atob(b64);
+    var bytes = new Uint8Array(binary.length);
+    for (var i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
+    return new TextDecoder('utf-8').decode(bytes);
+  }
+
+  function escapeHtml(s) {
+    return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  }
+
+  function syntaxHighlightJson(obj) {
+    var json = JSON.stringify(obj, null, 2);
+    var escaped = escapeHtml(json);
+    return escaped.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function(match) {
+      var cls = 'json-num';
+      if (/^"/.test(match)) {
+        cls = /:$/.test(match) ? 'json-key' : 'json-str';
+      } else if (/true|false/.test(match)) {
+        cls = 'json-bool';
+      }
+      return '<span class="' + cls + '">' + match + '</span>';
+    });
+  }
+
+  function fmtUnixTime(sec) {
+    var d = new Date(sec * 1000);
+    if (isNaN(d.getTime())) return String(sec);
+    var pad = function(n) { return String(n).padStart(2, '0'); };
+    return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()) + ' ' +
+      pad(d.getHours()) + ':' + pad(d.getMinutes()) + ':' + pad(d.getSeconds());
+  }
+
+  function renderClaims(payload) {
+    var rows = [];
+    var now = Math.floor(Date.now() / 1000);
+    if (typeof payload.iat === 'number') {
+      rows.push('<div class="claim-row"><span class="claim-name">iat</span><span class="claim-value">' + fmtUnixTime(payload.iat) + '</span><span style="color:var(--subtext);font-size:12px">(발급 시각)</span></div>');
+    }
+    if (typeof payload.nbf === 'number') {
+      rows.push('<div class="claim-row"><span class="claim-name">nbf</span><span class="claim-value">' + fmtUnixTime(payload.nbf) + '</span><span style="color:var(--subtext);font-size:12px">(이 시각 이전에는 무효)</span></div>');
+    }
+    if (typeof payload.exp === 'number') {
+      var expired = now > payload.exp;
+      rows.push('<div class="claim-row"><span class="claim-name">exp</span><span class="claim-value">' + fmtUnixTime(payload.exp) + '</span><span class="claim-badge ' + (expired ? 'expired' : 'valid') + '">' + (expired ? '❌ 만료됨' : '✅ 유효함') + '</span></div>');
+    }
+    if (!rows.length) {
+      claimsCard.style.display = 'none';
+      return;
+    }
+    claimsList.innerHTML = rows.join('');
+    claimsCard.style.display = 'block';
+  }
+
+  function renderSegmentPreview(parts) {
+    var html =
+      '<span class="seg-header">' + escapeHtml(parts[0]) + '</span>' +
+      '<span class="seg-dot">.</span>' +
+      '<span class="seg-payload">' + escapeHtml(parts[1]) + '</span>' +
+      (parts[2] !== undefined ? '<span class="seg-dot">.</span><span class="seg-signature">' + escapeHtml(parts[2]) + '</span>' : '');
+    segmentPreview.innerHTML = html;
+    segmentPreview.style.display = 'block';
+  }
+
+  function showError(msg) {
+    errorBox.textContent = msg;
+    errorBox.classList.add('show');
+    resultWrap.classList.remove('show');
+  }
+
+  function clearError() {
+    errorBox.classList.remove('show');
+    errorBox.textContent = '';
+  }
+
+  function decodeToken() {
+    var raw = tokenInput.value.trim();
+    if (!raw) {
+      clearError();
+      resultWrap.classList.remove('show');
+      segmentPreview.style.display = 'none';
+      return;
+    }
+
+    var parts = raw.split('.');
+    if (parts.length < 2 || parts.length > 3) {
+      showError('올바른 JWT 형식이 아닙니다. "헤더.페이로드.서명" 형태의 점(.)으로 구분된 3부분이어야 합니다.');
+      segmentPreview.style.display = 'none';
+      return;
+    }
+
+    var header, payload;
+    try {
+      var headerStr = base64UrlDecode(parts[0]);
+      header = JSON.parse(headerStr);
+    } catch (e) {
+      showError('헤더를 디코딩할 수 없습니다: ' + e.message);
+      return;
+    }
+    try {
+      var payloadStr = base64UrlDecode(parts[1]);
+      payload = JSON.parse(payloadStr);
+    } catch (e) {
+      showError('페이로드를 디코딩할 수 없습니다: ' + e.message);
+      return;
+    }
+
+    clearError();
+    renderSegmentPreview(parts);
+
+    lastHeaderStr = JSON.stringify(header, null, 2);
+    lastPayloadStr = JSON.stringify(payload, null, 2);
+    headerJson.innerHTML = syntaxHighlightJson(header);
+    payloadJson.innerHTML = syntaxHighlightJson(payload);
+    sigValue.textContent = parts[2] || '(서명 없음)';
+    renderClaims(payload);
+
+    resultWrap.classList.add('show');
+  }
+
+  tokenInput.addEventListener('input', decodeToken);
+
+  document.getElementById('sampleBtn').addEventListener('click', function() {
+    tokenInput.value = SAMPLE_JWT;
+    decodeToken();
+  });
+  document.getElementById('clearInputBtn').addEventListener('click', function() {
+    tokenInput.value = '';
+    decodeToken();
+  });
+  document.getElementById('clearAllBtn').addEventListener('click', function() {
+    tokenInput.value = '';
+    decodeToken();
+  });
+
+  document.getElementById('copyHeaderBtn').addEventListener('click', function() {
+    if (!lastHeaderStr) return;
+    navigator.clipboard.writeText(lastHeaderStr).then(function() { showToast('✓ 헤더가 복사되었습니다'); });
+  });
+  document.getElementById('copyPayloadBtn').addEventListener('click', function() {
+    if (!lastPayloadStr) return;
+    navigator.clipboard.writeText(lastPayloadStr).then(function() { showToast('✓ 페이로드가 복사되었습니다'); });
+  });
+
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(function() { t.classList.remove('show'); }, 2000);
+  }
+  </script>
+</body>
+</html>
