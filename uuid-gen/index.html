@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <link rel="icon" href="/favicon.ico" sizes="32x32">
+  <link rel="icon" href="/favicon-16.png" sizes="16x16" type="image/png">
+  <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="/favicon-192.png" sizes="192x192" type="image/png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="UUID(v4)를 즉시 생성하는 무료 온라인 도구. 한 번에 최대 1000개까지 대량 생성하고, 대문자·하이픈 제거·중괄호 등 형식을 선택해 복사하거나 텍스트 파일로 다운로드합니다. 서버 전송 없이 브라우저에서 바로 처리합니다." />
+  <meta property="og:title" content="UUIDGen — UUID 생성기" />
+  <meta property="og:description" content="UUID(v4)를 즉시 생성하고 대량으로 만들어 복사·다운로드하는 무료 온라인 도구입니다." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://browserkit.online/uuid-gen/" />
+  <title>UUIDGen — UUID 생성기</title>
+  <link rel="stylesheet" href="/css/style.css?v=20260704c" />
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506"
+     crossorigin="anonymous"></script>
+  <style>
+    .single-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:24px; margin-bottom:20px; display:flex; align-items:center; gap:16px; flex-wrap:wrap; }
+    .single-uuid { flex:1; min-width:240px; font-family:'Fira Code','JetBrains Mono',monospace; font-size:19px; font-weight:600; color:var(--text); word-break:break-all; }
+    .single-btns { display:flex; gap:8px; }
+    .icon-btn { background:var(--bg); border:1px solid var(--border); border-radius:10px; width:42px; height:42px; font-size:17px; cursor:pointer; display:flex; align-items:center; justify-content:center; }
+    .icon-btn:hover { border-color:var(--point); }
+
+    .options-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px 24px; margin-bottom:20px; }
+    .options-title { font-size:13px; font-weight:600; color:var(--subtext); margin-bottom:14px; }
+    .options-row { display:flex; align-items:center; gap:16px; flex-wrap:wrap; }
+    .count-field { display:flex; align-items:center; gap:8px; }
+    .count-field label { font-size:13px; color:var(--subtext); }
+    .count-field input { width:90px; background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:8px 10px; color:var(--text); font-size:14px; outline:none; }
+    .count-field input:focus { border-color:var(--point); }
+    .toggle-chip { display:flex; align-items:center; gap:6px; font-size:13px; color:var(--subtext); cursor:pointer; user-select:none; }
+    .toggle-chip input { accent-color:var(--point); width:16px; height:16px; cursor:pointer; }
+    .gen-btn { background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border:none; border-radius:10px; padding:10px 22px; font-size:14px; font-weight:700; cursor:pointer; font-family:'Gowun Dodum',sans-serif; margin-left:auto; }
+    .gen-btn:hover { transform:translateY(-2px); box-shadow:0 8px 24px var(--glow); }
+
+    .result-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px 24px; margin-bottom:20px; }
+    .result-title { font-size:13px; font-weight:600; color:var(--subtext); margin-bottom:12px; display:flex; justify-content:space-between; align-items:center; }
+    .result-textarea { width:100%; min-height:280px; background:var(--bg); border:1px solid var(--border); border-radius:10px; padding:14px 16px; color:var(--text); font-family:'Fira Code','JetBrains Mono',monospace; font-size:13px; line-height:1.9; resize:vertical; outline:none; }
+    .result-textarea:focus { border-color:var(--point); }
+    .result-empty { color:var(--subtext); font-style:italic; font-family:'Gowun Dodum',sans-serif; text-align:center; padding:40px 0; }
+
+    .action-bar { display:flex; gap:10px; margin-bottom:48px; flex-wrap:wrap; }
+    .btn-sub { background:var(--card); color:var(--subtext); border:1px solid var(--border); border-radius:10px; padding:10px 18px; font-size:13px; cursor:pointer; font-family:'Gowun Dodum',sans-serif; }
+    .btn-sub:hover { color:var(--text); border-color:var(--point); }
+    .btn-danger { background:var(--card); color:#F87171; border:1px solid var(--border); border-radius:10px; padding:10px 18px; font-size:13px; cursor:pointer; font-family:'Gowun Dodum',sans-serif; }
+    .btn-danger:hover { border-color:#F87171; }
+
+    .toast { position:fixed; bottom:32px; left:50%; transform:translateX(-50%) translateY(80px); background:var(--success); color:#fff; border-radius:999px; padding:10px 24px; font-size:14px; font-weight:600; opacity:0; pointer-events:none; z-index:999; transition:all 0.3s ease; }
+    .toast.show { transform:translateX(-50%) translateY(0); opacity:1; }
+
+    .footer { border-top:1px solid var(--border); padding:32px 0; text-align:center; }
+    .footer-copy { color:var(--subtext); font-size:13px; margin-bottom:12px; }
+    .footer-nav { display:flex; justify-content:center; gap:20px; flex-wrap:wrap; }
+    .footer-nav a { color:var(--subtext); font-size:13px; text-decoration:none; }
+    .footer-nav a:hover { color:var(--text); }
+
+    @media (max-width:640px) {
+      .hero-title { font-size:24px; }
+      .single-uuid { font-size:15px; }
+      .gen-btn { margin-left:0; width:100%; }
+    }
+  </style>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+  <meta property="og:image" content="https://browserkit.online/img/og-browserkit.png" />
+  <link rel="canonical" href="https://browserkit.online/uuid-gen/" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://browserkit.online/img/og-browserkit.png" />
+</head>
+
+<body>
+  <header class="header">
+    <div class="container">
+      <a href="/" class="header-brand">
+        <div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Gowun Dodum,sans-serif;flex-shrink:0">B</div>
+        <span class="header-brand-text"><span style="color:var(--text)">Browser</span><span style="color:var(--point)">Kit</span></span>
+      </a>
+      <a href="/" class="header-back">&#x2190; BrowserKit 홈으로</a>
+    </div>
+  </header>
+
+  <main><div class="container">
+    <div class="hero">
+      <div class="hero-icon" style="height:78px;display:flex;justify-content:center;align-items:center"><div style="transform:scale(1.7);transform-origin:center"><div style="width:46px;height:46px;background:#e0c3ff;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="font:700 14px Gowun Dodum,sans-serif;color:#2a2433;line-height:1;letter-spacing:-.5px;white-space:nowrap">UUID</div></div></div></div>
+      <div class="hero-title-wrap"><h1 class="hero-title">UUIDGen</h1><a href="/blog/60-uuidgen-howto.html" class="hero-guide-link">사용법 가이드 보기</a></div>
+      <p class="hero-desc">UUID(v4)를 즉시 생성하고, 필요한 만큼 대량으로 만들어 복사·다운로드하세요</p>
+      <div class="hero-badges">
+        <span class="badge">🔒 완전 로컬 처리</span>
+        <span class="badge">⚡ 무료 사용</span>
+        <span class="badge">🛡️ 서버 전송 없음</span>
+        <span class="badge">📦 설치 불필요</span>
+      </div>
+    </div>
+    <div style="margin:0 0 12px"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+
+    <p class="notice">💡 브라우저의 <code>crypto.randomUUID()</code>(RFC 4122 버전 4)를 사용해 암호학적으로 안전한 난수 기반 UUID를 생성합니다. 서버로 전송되지 않으며, 개발용 더미 ID, DB 기본키, 테스트 데이터 등에 자유롭게 사용할 수 있습니다.</p>
+
+    <div class="single-card">
+      <div class="single-uuid" id="singleUuid">—</div>
+      <div class="single-btns">
+        <button class="icon-btn" id="singleRefreshBtn" title="새로 생성">&#x21BA;</button>
+        <button class="icon-btn" id="singleCopyBtn" title="복사">&#x1F4CB;</button>
+      </div>
+    </div>
+
+    <div class="options-card">
+      <div class="options-title">⚙️ 대량 생성 옵션</div>
+      <div class="options-row">
+        <div class="count-field">
+          <label>생성 개수</label>
+          <input type="number" id="countInput" min="1" max="1000" value="5" />
+        </div>
+        <label class="toggle-chip"><input type="checkbox" id="uppercaseOpt" /> 대문자</label>
+        <label class="toggle-chip"><input type="checkbox" id="noHyphenOpt" /> 하이픈(-) 제거</label>
+        <label class="toggle-chip"><input type="checkbox" id="bracesOpt" /> 중괄호 {} 감싸기</label>
+        <button class="gen-btn" id="genBtn">&#x1F3B2; 생성하기</button>
+      </div>
+    </div>
+
+    <div class="result-card">
+      <div class="result-title">
+        <span>생성 결과 (<span id="resultCount">0</span>개)</span>
+      </div>
+      <textarea class="result-textarea" id="resultTextarea" readonly placeholder="생성하기 버튼을 누르면 UUID 목록이 여기에 표시됩니다."></textarea>
+    </div>
+
+    <div class="action-bar">
+      <button class="btn-sub" id="copyAllBtn">&#x1F4CB; 전체 복사</button>
+      <button class="btn-sub" id="downloadBtn">&#x2B07; TXT 다운로드</button>
+      <button class="btn-danger" id="clearBtn">&#x21BA; 초기화</button>
+    </div>
+
+    <div style="margin:0 0 12px"><ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="9500090221"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+  </div></main>
+
+  <footer class="footer">
+    <div class="container">
+      <p class="footer-copy">&#xa9; 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p>
+      <nav class="footer-nav">
+        <a href="/privacy.html">개인정보 처리방침</a>
+        <a href="/terms.html">이용약관</a>
+        <a href="/about.html">서비스 소개</a>
+        <a href="/blog/">블로그</a>
+      </nav>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+  var singleUuid = document.getElementById('singleUuid');
+  var countInput = document.getElementById('countInput');
+  var uppercaseOpt = document.getElementById('uppercaseOpt');
+  var noHyphenOpt = document.getElementById('noHyphenOpt');
+  var bracesOpt = document.getElementById('bracesOpt');
+  var resultTextarea = document.getElementById('resultTextarea');
+  var resultCount = document.getElementById('resultCount');
+  var currentList = [];
+
+  function rawUuid() {
+    return crypto.randomUUID();
+  }
+
+  function formatUuid(u) {
+    var v = u;
+    if (noHyphenOpt.checked) v = v.replace(/-/g, '');
+    if (uppercaseOpt.checked) v = v.toUpperCase();
+    if (bracesOpt.checked) v = '{' + v + '}';
+    return v;
+  }
+
+  function refreshSingle() {
+    singleUuid.textContent = formatUuid(rawUuid());
+  }
+
+  document.getElementById('singleRefreshBtn').addEventListener('click', refreshSingle);
+  document.getElementById('singleCopyBtn').addEventListener('click', function() {
+    if (singleUuid.textContent === '—') return;
+    navigator.clipboard.writeText(singleUuid.textContent).then(function() {
+      showToast('✓ 복사되었습니다');
+    });
+  });
+
+  [uppercaseOpt, noHyphenOpt, bracesOpt].forEach(function(el) {
+    el.addEventListener('change', refreshSingle);
+  });
+
+  document.getElementById('genBtn').addEventListener('click', function() {
+    var n = Math.max(1, Math.min(1000, parseInt(countInput.value, 10) || 1));
+    countInput.value = n;
+    currentList = [];
+    for (var i = 0; i < n; i++) currentList.push(formatUuid(rawUuid()));
+    resultTextarea.value = currentList.join('\n');
+    resultCount.textContent = currentList.length;
+    showToast('✓ UUID ' + n + '개를 생성했습니다');
+  });
+
+  document.getElementById('copyAllBtn').addEventListener('click', function() {
+    if (!currentList.length) { showToast('먼저 UUID를 생성해주세요'); return; }
+    navigator.clipboard.writeText(currentList.join('\n')).then(function() {
+      showToast('✓ 전체 복사되었습니다');
+    });
+  });
+
+  document.getElementById('downloadBtn').addEventListener('click', function() {
+    if (!currentList.length) { showToast('먼저 UUID를 생성해주세요'); return; }
+    var blob = new Blob([currentList.join('\n')], { type: 'text/plain;charset=utf-8' });
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'uuid-list.txt';
+    a.click();
+    URL.revokeObjectURL(a.href);
+    showToast('✓ TXT 파일이 저장됩니다');
+  });
+
+  document.getElementById('clearBtn').addEventListener('click', function() {
+    currentList = [];
+    resultTextarea.value = '';
+    resultCount.textContent = '0';
+  });
+
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(function() { t.classList.remove('show'); }, 2000);
+  }
+
+  refreshSingle();
+  </script>
+</body>
+</html>

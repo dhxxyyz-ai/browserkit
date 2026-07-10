@@ -8,11 +8,11 @@
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="CSSUnit의 모든 기능을 단계별로 설명하는 공식 사용 가이드입니다. px, rem, em, vw, vh, % 단위를 기준값에 맞춰 변환하는 방법을 알아보세요." />
-  <meta property="og:title" content="CSSUnit 사용법 완전 가이드 — BrowserKit" />
-  <meta property="og:description" content="px, rem, em, vw, vh, % 단위를 기준값에 맞춰 실시간으로 변환하는 CSSUnit 공식 가이드입니다." />
+  <meta name="description" content="UUIDGen의 모든 기능을 단계별로 설명하는 공식 사용 가이드입니다. UUID(v4)를 즉시 생성하고 대량으로 만들어 복사·다운로드하는 방법을 알아보세요." />
+  <meta property="og:title" content="UUIDGen 사용법 완전 가이드 — BrowserKit" />
+  <meta property="og:description" content="UUID(v4)를 즉시 생성하고 대량으로 만들어 복사·다운로드하는 UUIDGen 공식 가이드입니다." />
   <meta property="og:type" content="article" />
-  <title>CSSUnit 사용법 완전 가이드 — BrowserKit</title>
+  <title>UUIDGen 사용법 완전 가이드 — BrowserKit</title>
   <link rel="stylesheet" href="/css/style.css?v=20260704c" />
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506"
      crossorigin="anonymous"></script>
@@ -59,16 +59,16 @@
   {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
-    "headline": "CSSUnit 사용법 완전 가이드",
-    "description": "CSSUnit의 모든 기능을 단계별로 설명하는 공식 사용 가이드입니다. px, rem, em, vw, vh, % 단위를 기준값에 맞춰 변환하는 방법을 알아보세요.",
-    "datePublished": "2026-07-09T00:00:00+09:00",
-    "dateModified": "2026-07-09T00:00:00+09:00",
+    "headline": "UUIDGen 사용법 완전 가이드",
+    "description": "UUIDGen의 모든 기능을 단계별로 설명하는 공식 사용 가이드입니다. UUID(v4)를 즉시 생성하고 대량으로 만들어 복사·다운로드하는 방법을 알아보세요.",
+    "datePublished": "2026-07-10T00:00:00+09:00",
+    "dateModified": "2026-07-10T00:00:00+09:00",
     "author": { "@type": "Organization", "name": "BrowserKit", "url": "https://browserkit.online" },
     "publisher": { "@type": "Organization", "name": "BrowserKit", "url": "https://browserkit.online", "logo": { "@type": "ImageObject", "url": "https://browserkit.online/img/og-browserkit.png" } },
-    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://browserkit.online/blog/51-cssunit-howto.html" },
+    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://browserkit.online/blog/60-uuidgen-howto.html" },
     "image": "https://browserkit.online/img/og-browserkit.png"
   }
-  </script>  <link rel="canonical" href="https://browserkit.online/blog/51-cssunit-howto.html" />
+  </script>  <link rel="canonical" href="https://browserkit.online/blog/60-uuidgen-howto.html" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:image" content="https://browserkit.online/img/og-browserkit.png" />
   <style>
@@ -89,34 +89,34 @@
   <article class="post-wrap">
     <a href="/blog/" class="back-link">&#x2190; 블로그 목록</a>
     <span class="post-tag">가이드</span>
-    <h1 class="post-title">CSSUnit 사용법 완전 가이드</h1>
-    <div class="post-date">2026년 7월 9일</div>
+    <h1 class="post-title">UUIDGen 사용법 완전 가이드</h1>
+    <div class="post-date">2026년 7월 10일</div>
     <div style="margin:12px 0"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
 
     <div class="post-body">
-      <p>CSSUnit은 px, rem, em, vw, vh, % 단위를 기준 폰트 크기와 뷰포트 크기에 맞춰 실시간으로 변환하는 무료 온라인 CSS 단위 변환기입니다. 값을 입력하면 6개 단위로 환산한 결과를 한 번에 확인할 수 있습니다. 모든 계산이 브라우저 내에서만 이루어지므로 입력한 값이 외부 서버로 전송되지 않습니다.</p>
+      <p>UUIDGen은 개발할 때 자주 필요한 UUID(범용 고유 식별자)를 브라우저에서 즉시 생성하는 무료 온라인 도구입니다. 버튼 하나로 UUID 1개를 바로 만들 수 있고, 필요하면 한 번에 최대 1000개까지 대량 생성할 수 있습니다. 대문자, 하이픈 제거, 중괄호 감싸기 등 형식도 자유롭게 조합할 수 있어 다양한 개발 환경에 바로 붙여넣을 수 있습니다.</p>
 
       <h2>주요 기능</h2>
       <div class="feature-grid">
         <div class="feature-card">
-          <div class="feature-icon">&#x1F522;</div>
-          <div class="feature-title">6종 단위 동시 변환</div>
-          <div class="feature-desc">px, rem, em, vw, vh, %를 한 번에 계산해 표로 보여줍니다. 값을 바꾸면 즉시 재계산됩니다.</div>
+          <div class="feature-icon">&#x1F3B2;</div>
+          <div class="feature-title">즉시 UUID 1개 생성</div>
+          <div class="feature-desc">페이지를 열면 바로 UUID 하나가 표시되고, 새로고침 버튼으로 언제든 새로 생성합니다.</div>
         </div>
         <div class="feature-card">
-          <div class="feature-icon">&#x2699;&#xFE0F;</div>
-          <div class="feature-title">기준값 커스텀</div>
-          <div class="feature-desc">기준 폰트 크기, 부모 폰트 크기, 뷰포트 너비/높이를 직접 입력해 실제 프로젝트 환경에 맞춘 변환 결과를 얻습니다.</div>
+          <div class="feature-icon">&#x1F4E6;</div>
+          <div class="feature-title">최대 1000개 대량 생성</div>
+          <div class="feature-desc">개수를 지정하면 원하는 만큼 UUID를 한 번에 생성해 목록으로 받습니다.</div>
         </div>
         <div class="feature-card">
-          <div class="feature-icon">&#x1F504;</div>
-          <div class="feature-title">양방향 변환</div>
-          <div class="feature-desc">어느 단위로 입력해도 나머지 5개 단위로 자동 환산됩니다. px에서 rem으로, rem에서 vw로 자유롭게 전환합니다.</div>
+          <div class="feature-icon">&#x1F520;</div>
+          <div class="feature-title">형식 옵션</div>
+          <div class="feature-desc">대문자, 하이픈(-) 제거, 중괄호 {} 감싸기를 자유롭게 조합해 원하는 형식으로 만듭니다.</div>
         </div>
         <div class="feature-card">
           <div class="feature-icon">&#x1F512;</div>
           <div class="feature-title">완전 로컬 처리</div>
-          <div class="feature-desc">모든 계산이 브라우저 안에서 실행됩니다. 값이 서버로 전송되지 않습니다.</div>
+          <div class="feature-desc"><code>crypto.randomUUID()</code>로 브라우저 안에서만 생성됩니다. 서버로 전송되지 않습니다.</div>
         </div>
       </div>
 
@@ -126,101 +126,101 @@
       <div class="step-card">
         <div class="step-num">1</div>
         <div class="step-content">
-          <h3>기준값 설정</h3>
-          <p>상단 <strong>기준값 설정</strong> 카드에서 기준 폰트 크기(rem 기준), 부모 폰트 크기(em/% 기준), 뷰포트 너비/높이(vw/vh 기준)를 실제 사용 중인 CSS 환경에 맞게 입력합니다. 기본값은 각각 16px, 16px, 1920px, 1080px입니다.</p>
+          <h3>UUID 1개만 필요할 때</h3>
+          <p>페이지 상단에 UUID 하나가 자동으로 표시됩니다. <strong>↺</strong> 버튼으로 새로 생성하거나, <strong>📋</strong> 버튼으로 바로 복사할 수 있습니다.</p>
         </div>
       </div>
 
       <figure style="margin:12px 0 24px; text-align:center;">
-        <img src="/img/blog/cssunit/01-base.png"
-             alt="CSSUnit 기준값 설정 카드에서 기준 폰트 크기, 부모 폰트 크기, 뷰포트 너비/높이를 입력하는 화면"
+        <img src="/img/blog/uuidgen/01-single.png"
+             alt="UUIDGen 상단에 UUID 1개가 표시되고 새로 생성, 복사 버튼이 있는 화면"
              style="width:100%; max-width:640px; border:1px solid var(--border); border-radius:var(--radius);"
              loading="lazy" />
         <figcaption style="font-size:13px; color:var(--subtext); margin-top:6px;">
-          기준값 설정 — 프로젝트 환경에 맞춰 4개 기준값 입력
+          즉시 표시되는 UUID와 새로 생성/복사 버튼
         </figcaption>
       </figure>
 
       <div class="step-card">
         <div class="step-num">2</div>
         <div class="step-content">
-          <h3>값과 단위 입력</h3>
-          <p>변환할 값을 입력하고, 드롭다운에서 그 값의 단위(px/rem/em/vw/vh/%)를 선택합니다.</p>
+          <h3>여러 개가 필요할 때 — 대량 생성 옵션 설정</h3>
+          <p><strong>생성 개수</strong>에 원하는 수(최대 1000)를 입력하고, 필요하면 <strong>대문자</strong>, <strong>하이픈(-) 제거</strong>, <strong>중괄호 {} 감싸기</strong> 옵션을 체크합니다.</p>
         </div>
       </div>
+
       <div class="step-card">
         <div class="step-num">3</div>
         <div class="step-content">
-          <h3>결과 확인 및 복사</h3>
-          <p>아래 표에 6개 단위로 환산된 결과가 모두 표시됩니다. 입력한 단위 행은 강조 표시됩니다. 각 행의 <strong>복사</strong> 버튼으로 값+단위를 바로 클립보드에 복사할 수 있습니다.</p>
+          <h3>생성하기 → 복사 또는 다운로드</h3>
+          <p><strong>🎲 생성하기</strong> 버튼을 누르면 결과 목록이 텍스트 영역에 표시됩니다. <strong>📋 전체 복사</strong>로 클립보드에 담거나, <strong>⬇ TXT 다운로드</strong>로 파일로 저장할 수 있습니다.</p>
         </div>
       </div>
 
       <figure style="margin:12px 0 24px; text-align:center;">
-        <img src="/img/blog/cssunit/02-result.png"
-             alt="CSSUnit 값과 단위를 입력해 px, rem, em, vw, vh, % 6개 단위로 변환된 결과 표가 표시된 화면"
+        <img src="/img/blog/uuidgen/02-bulk.png"
+             alt="UUIDGen 대량 생성 옵션과 생성된 UUID 목록, 전체 복사와 TXT 다운로드 버튼이 있는 화면"
              style="width:100%; max-width:640px; border:1px solid var(--border); border-radius:var(--radius);"
              loading="lazy" />
         <figcaption style="font-size:13px; color:var(--subtext); margin-top:6px;">
-          값 입력 후 6개 단위로 변환된 결과 표
+          대량 생성 결과와 전체 복사 / TXT 다운로드
         </figcaption>
       </figure>
 
-      <h2>단위별 계산 방식</h2>
+      <div class="post-warn">
+        <strong>⚠️ 참고:</strong> UUIDGen이 생성하는 UUID는 모두 버전 4(v4, 무작위 기반)입니다. 특정 시점 순서를 보장하는 버전 1(타임스탬프 기반)이나 정렬 친화적인 ULID가 필요한 경우에는 적합하지 않을 수 있습니다. 대부분의 DB 기본키, 세션 ID, 더미 데이터 용도에는 v4로 충분합니다.
+      </div>
+
+      <h2>형식 옵션 예시</h2>
       <div class="post-table-wrap"><table class="post-table">
-        <thead><tr><th>단위</th><th>기준</th><th>px 환산 공식</th></tr></thead>
+        <thead><tr><th>옵션</th><th>결과 예시</th></tr></thead>
         <tbody>
-          <tr><td><code>rem</code></td><td>기준 폰트 크기(root)</td><td><code>값 × 기준 폰트 크기</code></td></tr>
-          <tr><td><code>em</code></td><td>부모 폰트 크기</td><td><code>값 × 부모 폰트 크기</code></td></tr>
-          <tr><td><code>vw</code></td><td>뷰포트 너비</td><td><code>값 × 뷰포트 너비 ÷ 100</code></td></tr>
-          <tr><td><code>vh</code></td><td>뷰포트 높이</td><td><code>값 × 뷰포트 높이 ÷ 100</code></td></tr>
-          <tr><td><code>%</code></td><td>부모 폰트 크기</td><td><code>값 × 부모 폰트 크기 ÷ 100</code></td></tr>
+          <tr><td>기본값</td><td><code>1c770af9-925d-4232-8cab-b6ffea98a212</code></td></tr>
+          <tr><td>대문자</td><td><code>1C770AF9-925D-4232-8CAB-B6FFEA98A212</code></td></tr>
+          <tr><td>하이픈 제거</td><td><code>1c770af9925d42328cabb6ffea98a212</code></td></tr>
+          <tr><td>중괄호 감싸기</td><td><code>{1c770af9-925d-4232-8cab-b6ffea98a212}</code></td></tr>
         </tbody>
       </table></div>
-
-      <div class="post-warn">
-        <strong>⚠️ 주의:</strong> <code>em</code>과 <code>%</code>는 실제 CSS에서 요소마다 부모의 폰트 크기가 다를 수 있어 계산 결과가 달라집니다. CSSUnit은 입력한 "부모 폰트 크기" 기준값 하나로 통일해 계산하므로, 중첩된 요소에서 <code>em</code>이 누적 적용되는 경우(부모의 부모까지 영향을 주는 경우)는 반영하지 않습니다. 정확한 값이 필요하다면 실제 DOM 구조를 기준으로 직접 확인하세요.
-      </div>
 
       <h2>활용 예시</h2>
       <div class="use-case-grid">
         <div class="use-case-card">
-          <div class="use-case-icon">&#x1F4D0;</div>
-          <div class="use-case-title">반응형 디자인 값 환산</div>
-          <div class="use-case-desc">디자인 시안의 px 값을 rem이나 vw로 빠르게 환산해 반응형 CSS에 바로 적용합니다.</div>
+          <div class="use-case-icon">&#x1F5C4;&#xFE0F;</div>
+          <div class="use-case-title">DB 기본키(Primary Key)</div>
+          <div class="use-case-desc">자동 증가 정수 대신 UUID를 기본키로 사용하는 테이블 설계에 활용합니다.</div>
         </div>
         <div class="use-case-card">
-          <div class="use-case-icon">&#x1F4D6;</div>
-          <div class="use-case-title">타이포그래피 스케일 확인</div>
-          <div class="use-case-desc">기준 폰트 크기를 바꿔가며 rem 기반 폰트 크기 체계가 px로 얼마인지 미리 확인합니다.</div>
+          <div class="use-case-icon">&#x1F9EA;</div>
+          <div class="use-case-title">테스트·더미 데이터</div>
+          <div class="use-case-desc">테스트 픽스처나 목업 데이터에 필요한 고유 ID를 대량으로 빠르게 준비합니다.</div>
         </div>
         <div class="use-case-card">
-          <div class="use-case-icon">&#x1F5A5;&#xFE0F;</div>
-          <div class="use-case-title">뷰포트 단위 계산</div>
-          <div class="use-case-desc">특정 해상도에서 vw/vh 값이 실제 몇 px인지 계산해 히어로 섹션이나 풀스크린 레이아웃을 설계합니다.</div>
+          <div class="use-case-icon">&#x1F511;</div>
+          <div class="use-case-title">세션·토큰 ID</div>
+          <div class="use-case-desc">임시 세션 식별자나 요청 추적 ID로 사용할 고유값을 즉시 만듭니다.</div>
         </div>
         <div class="use-case-card">
-          <div class="use-case-icon">&#x1F393;</div>
-          <div class="use-case-title">CSS 단위 학습</div>
-          <div class="use-case-desc">rem, em, vw, vh, % 단위가 서로 어떻게 관계되는지 실제 숫자로 비교하며 학습합니다.</div>
+          <div class="use-case-icon">&#x1F4C1;</div>
+          <div class="use-case-title">파일·리소스 이름</div>
+          <div class="use-case-desc">업로드 파일명 충돌을 피하기 위한 고유 식별자로 활용합니다.</div>
         </div>
       </div>
 
-      <div class="post-highlight">&#x1F512; CSSUnit은 모든 계산이 내 PC 브라우저에서만 실행됩니다. 입력한 값이 외부 서버로 전송되지 않습니다.</div>
+      <div class="post-highlight">&#x1F512; UUIDGen은 브라우저의 <code>crypto.randomUUID()</code>로 모든 UUID를 로컬에서 생성합니다. 서버로 전송되지 않습니다.</div>
     </div>
 
     <div class="cta-box">
-      <p>px, rem, em, vw, vh, % 단위를 기준값에 맞춰 실시간으로 변환해보세요.<br />값을 입력하면 6개 단위가 한 번에 표시됩니다.</p>
-      <a href="/css-unit/" class="cta-btn" style="display:inline-flex;align-items:center;gap:8px">
-        <span style="display:inline-block;width:26px;height:26px;overflow:hidden;flex-shrink:0"><span style="display:block;transform:scale(0.565);transform-origin:top left"><div style="width:46px;height:46px;background:#bcd4ff;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="font:700 14px Gowun Dodum,sans-serif;color:#2a2433;line-height:1;letter-spacing:-.5px;white-space:nowrap">rem</div></div></span></span>
-        무료로 CSS 단위 변환하기
+      <p>UUID(v4)를 즉시 생성하고 필요한 만큼 대량으로 만들어보세요.<br />형식 옵션과 TXT 다운로드까지 한 번에 처리할 수 있습니다.</p>
+      <a href="/uuid-gen/" class="cta-btn" style="display:inline-flex;align-items:center;gap:8px">
+        <span style="display:inline-block;width:26px;height:26px;overflow:hidden;flex-shrink:0"><span style="display:block;transform:scale(0.565);transform-origin:top left"><div style="width:46px;height:46px;background:#e0c3ff;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="font:700 14px Gowun Dodum,sans-serif;color:#2a2433;line-height:1;letter-spacing:-.5px;white-space:nowrap">UUID</div></div></span></span>
+        무료로 UUID 생성하기
       </a>
     </div>
     <div style="margin:12px 0"><ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="9500090221"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
 
 <div class="post-nav">
-      <a href="/blog/50-urlencode-howto.html"><span class="nav-label">← 이전 글</span>URLEncode 사용법 완전 가이드</a>
-      <a href="/blog/60-uuidgen-howto.html" style="text-align:right"><span class="nav-label">다음 글 →</span>UUIDGen 사용법 완전 가이드</a>
+      <a href="/blog/51-cssunit-howto.html"><span class="nav-label">← 이전 글</span>CSSUnit 사용법 완전 가이드</a>
+      <a href="/blog/38-chartmaker-howto.html" style="text-align:right"><span class="nav-label">다음 글 →</span>ChartMaker 사용법 완전 가이드</a>
     </div></div>
 
   </article>

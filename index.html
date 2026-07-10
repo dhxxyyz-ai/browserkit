@@ -8,7 +8,7 @@
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="BrowserKit — 설치 없이 브라우저에서 바로 쓰는 무료 도구 44가지. 개인정보 마스킹, 얼굴 블러, PDF 편집, QR 코드, JSON 포맷터, 차트 생성까지. 대부분 서버 전송 없이 완전 로컬 처리합니다.">
+  <meta name="description" content="BrowserKit — 설치 없이 브라우저에서 바로 쓰는 무료 도구 45가지. 개인정보 마스킹, 얼굴 블러, PDF 편집, QR 코드, JSON 포맷터, 차트 생성까지. 대부분 서버 전송 없이 완전 로컬 처리합니다.">
   <meta property="og:title" content="BrowserKit — 브라우저 기반 무료 도구 모음">
   <meta property="og:description" content="서버 전송 없이 브라우저에서 바로 쓰는 무료 도구 모음. 개인정보 마스킹, 이미지 편집, PDF 처리.">
   <meta property="og:type" content="website">
@@ -81,7 +81,7 @@ const TOOL_URLS = {
   LineNumber:'/line-number/', CurrencyCalc:'/currency-calc/', Minifier:'/minifier/', URLEncode:'/url-encode/',
   CSSUnit:'/css-unit/', DiagramMaker:'/diagram-maker/', PaletteGen:'/palette-gen/', ExifRemover:'/exif-remover/',
   RandomPicker:'/random-picker/', WordCloudGen:'/word-cloud/', FaviconGen:'/favicon-gen/', SVGtoPNG:'/svg-to-png/',
-  PomodoroTimer:'/pomodoro-timer/'
+  PomodoroTimer:'/pomodoro-timer/', UUIDGen:'/uuid-gen/'
 };
 
 const BLOG_URLS = {
@@ -141,7 +141,8 @@ const BLOG_URLS = {
   'WordCloudGen 사용법 완전 가이드':'/blog/56-wordcloud-howto.html',
   'FaviconGen 사용법 완전 가이드':'/blog/57-favicongen-howto.html',
   'SVGtoPNG 사용법 완전 가이드':'/blog/58-svgtopng-howto.html',
-  'PomodoroTimer 사용법 완전 가이드':'/blog/59-pomodorotimer-howto.html'
+  'PomodoroTimer 사용법 완전 가이드':'/blog/59-pomodorotimer-howto.html',
+  'UUIDGen 사용법 완전 가이드':'/blog/60-uuidgen-howto.html'
 };
 
 const INFO_URLS = {
@@ -190,7 +191,7 @@ function glyphInfo(code) {
     ChartMaker:'chart', ImageText:'token:T', ImageFilter:'halfcircle', ImageCollage:'collage', PixelArt:'pixelart',
     MosaicMaker:'mosaic', PDFSplit:'split', LineNumber:'linenum', CurrencyCalc:'currency', Minifier:'token:<>',
     URLEncode:'token:%20', CSSUnit:'token:rem', DiagramMaker:'diagram', PaletteGen:'palette', ExifRemover:'exif',
-    RandomPicker:'roulette', WordCloudGen:'wordcloud', FaviconGen:'favicon', SVGtoPNG:'token:SVG', PomodoroTimer:'pomodoro'
+    RandomPicker:'roulette', WordCloudGen:'wordcloud', FaviconGen:'favicon', SVGtoPNG:'token:SVG', PomodoroTimer:'pomodoro', UUIDGen:'token:UUID'
   };
   const v = m[code];
   if (!v) return { glyph: 'token', token: '+' };
@@ -272,7 +273,8 @@ const SEARCH_TOOLS = [
   {code:'DiagramMaker',name:'다이어그램 생성기'},{code:'PaletteGen',name:'색상 팔레트 생성기'},
   {code:'ExifRemover',name:'EXIF 제거기'},{code:'RandomPicker',name:'랜덤 추첨기'},
   {code:'WordCloudGen',name:'워드클라우드 생성기'},{code:'FaviconGen',name:'파비콘 생성기'},
-  {code:'SVGtoPNG',name:'SVG → PNG 변환기'},{code:'PomodoroTimer',name:'뽀모도로 타이머'}
+  {code:'SVGtoPNG',name:'SVG → PNG 변환기'},{code:'PomodoroTimer',name:'뽀모도로 타이머'},
+  {code:'UUIDGen',name:'UUID 생성기'}
 ];
 
 // ── Toolbox categories (desktop widget) ──────────────────────────────────────
@@ -281,7 +283,7 @@ const TOOLBOX_CATS = [
   { label: '이미지 편집',  keys: ['FitImage','CropImage','WatermarkImage','ColorPicker','ImageBright','BGRemove','ImageText','ImageFilter','ImageCollage','PixelArt','MosaicMaker','FaviconGen','SVGtoPNG'] },
   { label: '문서·텍스트',  keys: ['PDFMerge','PDFSplit','TextTools','DiffChecker','MarkdownEditor','FindReplace','LineNumber'] },
   { label: '유틸리티',     keys: ['QRCode','PasswordGen','UnitConvert','DateCalc','WorldClock','CurrencyCalc','RandomPicker','PomodoroTimer'] },
-  { label: '개발자',       keys: ['JSONFormat','RegexTest','Base64Tool','HashGen','Minifier','URLEncode','CSSUnit'] },
+  { label: '개발자',       keys: ['JSONFormat','RegexTest','Base64Tool','HashGen','Minifier','URLEncode','CSSUnit','UUIDGen'] },
   { label: '데이터·시각화',keys: ['ChartMaker','DiagramMaker','PaletteGen','WordCloudGen'] },
 ];
 const TOOL_LABEL   = Object.fromEntries(SEARCH_TOOLS.map(t => [t.code, t.name]));
@@ -298,7 +300,7 @@ function buildTree() {
       '이미지 편집':{type:'folder',label:'이미지 편집',children:{FitImage:t('이미지 변환'),CropImage:t('이미지 자르기'),WatermarkImage:t('워터마크 추가'),ColorPicker:t('색상 추출'),ImageBright:t('이미지 보정'),BGRemove:t('AI 배경 제거'),ImageText:t('이미지 텍스트 추가'),ImageFilter:t('이미지 필터'),ImageCollage:t('이미지 콜라주'),PixelArt:t('픽셀 아트 변환'),MosaicMaker:t('모자이크 생성기'),FaviconGen:t('파비콘 생성기'),SVGtoPNG:t('SVG → PNG 변환기')}},
       '문서\xb7텍스트':{type:'folder',label:'문서\xb7텍스트',children:{PDFMerge:t('PDF 합치기'),PDFSplit:t('PDF 분할'),TextTools:t('텍스트 변환'),DiffChecker:t('텍스트 비교'),MarkdownEditor:t('마크다운 편집기'),FindReplace:t('찾아 바꾸기'),LineNumber:t('줄 번호 추가')}},
       '유틸리티':{type:'folder',label:'유틸리티',children:{QRCode:t('QR 코드 생성'),PasswordGen:t('비밀번호 생성기'),UnitConvert:t('단위 변환기'),DateCalc:t('날짜 계산기'),WorldClock:t('세계 시간'),CurrencyCalc:t('환율 계산기'),RandomPicker:t('랜덤 추첨기'),PomodoroTimer:t('뽀모도로 타이머')}},
-      '개발자':{type:'folder',label:'개발자',children:{JSONFormat:t('JSON 포맷터'),RegexTest:t('정규식 테스터'),Base64Tool:t('Base64 변환'),HashGen:t('해시 생성기'),Minifier:t('코드 압축기'),URLEncode:t('URL 인코더'),CSSUnit:t('CSS 단위 변환기')}},
+      '개발자':{type:'folder',label:'개발자',children:{JSONFormat:t('JSON 포맷터'),RegexTest:t('정규식 테스터'),Base64Tool:t('Base64 변환'),HashGen:t('해시 생성기'),Minifier:t('코드 압축기'),URLEncode:t('URL 인코더'),CSSUnit:t('CSS 단위 변환기'),UUIDGen:t('UUID 생성기')}},
       '데이터\xb7시각화':{type:'folder',label:'데이터\xb7시각화',children:{ChartMaker:t('차트 생성기'),DiagramMaker:t('다이어그램 생성기'),PaletteGen:t('색상 팔레트 생성기'),WordCloudGen:t('워드클라우드 생성기')}}
     }},
     '블로그':{type:'folder',label:'블로그',children:{
@@ -337,7 +339,7 @@ function buildTree() {
         b14:a('JSONFormat 사용법 완전 가이드'),b21:a('RegexTest 사용법 완전 가이드'),
         b16:a('Base64Tool 사용법 완전 가이드'),b25:a('HashGen 사용법 완전 가이드'),
         b36:a('Minifier 사용법 완전 가이드'),b37:a('URLEncode 사용법 완전 가이드'),
-        b38:a('CSSUnit 사용법 완전 가이드'),
+        b38:a('CSSUnit 사용법 완전 가이드'),b47:a('UUIDGen 사용법 완전 가이드'),
         h6:{type:'header',label:'데이터\xb7시각화'},
         b27:a('ChartMaker 사용법 완전 가이드'),b39:a('DiagramMaker 사용법 완전 가이드'),
         b40:a('PaletteGen 사용법 완전 가이드'),b43:a('WordCloudGen 사용법 완전 가이드')
@@ -471,6 +473,7 @@ function fileBodyHtml(win,pal) {
     FaviconGen: '이미지 1장으로 다양한 크기의 파비콘 세트와 favicon.ico를 생성합니다.',
     SVGtoPNG: 'SVG 파일이나 코드를 원하는 해상도의 PNG 이미지로 변환합니다.',
     PomodoroTimer: '25분 집중, 5분 휴식으로 시간을 관리하는 뽀모도로 타이머입니다.',
+    UUIDGen: 'UUID(v4)를 즉시 생성하고 대량으로 만들어 복사·다운로드합니다.',
     CurrencyCalc: '최신 환율로 주요 통화를 즉시 변환합니다.'
   };
   if(file.kind==='tool'){
