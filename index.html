@@ -8,7 +8,7 @@
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="BrowserKit — 설치 없이 브라우저에서 바로 쓰는 무료 도구 42가지. 개인정보 마스킹, 얼굴 블러, PDF 편집, QR 코드, JSON 포맷터, 차트 생성까지. 대부분 서버 전송 없이 완전 로컬 처리합니다.">
+  <meta name="description" content="BrowserKit — 설치 없이 브라우저에서 바로 쓰는 무료 도구 43가지. 개인정보 마스킹, 얼굴 블러, PDF 편집, QR 코드, JSON 포맷터, 차트 생성까지. 대부분 서버 전송 없이 완전 로컬 처리합니다.">
   <meta property="og:title" content="BrowserKit — 브라우저 기반 무료 도구 모음">
   <meta property="og:description" content="서버 전송 없이 브라우저에서 바로 쓰는 무료 도구 모음. 개인정보 마스킹, 이미지 편집, PDF 처리.">
   <meta property="og:type" content="website">
@@ -80,7 +80,7 @@ const TOOL_URLS = {
   ImageCollage:'/image-collage/', PixelArt:'/pixel-art/', MosaicMaker:'/mosaic-maker/', PDFSplit:'/pdf-split/',
   LineNumber:'/line-number/', CurrencyCalc:'/currency-calc/', Minifier:'/minifier/', URLEncode:'/url-encode/',
   CSSUnit:'/css-unit/', DiagramMaker:'/diagram-maker/', PaletteGen:'/palette-gen/', ExifRemover:'/exif-remover/',
-  RandomPicker:'/random-picker/', WordCloudGen:'/word-cloud/', FaviconGen:'/favicon-gen/'
+  RandomPicker:'/random-picker/', WordCloudGen:'/word-cloud/', FaviconGen:'/favicon-gen/', SVGtoPNG:'/svg-to-png/'
 };
 
 const BLOG_URLS = {
@@ -138,7 +138,8 @@ const BLOG_URLS = {
   'ExifRemover 사용법 완전 가이드':'/blog/54-exifremover-howto.html',
   'RandomPicker 사용법 완전 가이드':'/blog/55-randompicker-howto.html',
   'WordCloudGen 사용법 완전 가이드':'/blog/56-wordcloud-howto.html',
-  'FaviconGen 사용법 완전 가이드':'/blog/57-favicongen-howto.html'
+  'FaviconGen 사용법 완전 가이드':'/blog/57-favicongen-howto.html',
+  'SVGtoPNG 사용법 완전 가이드':'/blog/58-svgtopng-howto.html'
 };
 
 const INFO_URLS = {
@@ -187,7 +188,7 @@ function glyphInfo(code) {
     ChartMaker:'chart', ImageText:'token:T', ImageFilter:'halfcircle', ImageCollage:'collage', PixelArt:'pixelart',
     MosaicMaker:'mosaic', PDFSplit:'split', LineNumber:'linenum', CurrencyCalc:'currency', Minifier:'token:<>',
     URLEncode:'token:%20', CSSUnit:'token:rem', DiagramMaker:'diagram', PaletteGen:'palette', ExifRemover:'exif',
-    RandomPicker:'roulette', WordCloudGen:'wordcloud', FaviconGen:'favicon'
+    RandomPicker:'roulette', WordCloudGen:'wordcloud', FaviconGen:'favicon', SVGtoPNG:'token:SVG'
   };
   const v = m[code];
   if (!v) return { glyph: 'token', token: '+' };
@@ -267,13 +268,14 @@ const SEARCH_TOOLS = [
   {code:'URLEncode',name:'URL 인코더'},{code:'CSSUnit',name:'CSS 단위 변환기'},
   {code:'DiagramMaker',name:'다이어그램 생성기'},{code:'PaletteGen',name:'색상 팔레트 생성기'},
   {code:'ExifRemover',name:'EXIF 제거기'},{code:'RandomPicker',name:'랜덤 추첨기'},
-  {code:'WordCloudGen',name:'워드클라우드 생성기'},{code:'FaviconGen',name:'파비콘 생성기'}
+  {code:'WordCloudGen',name:'워드클라우드 생성기'},{code:'FaviconGen',name:'파비콘 생성기'},
+  {code:'SVGtoPNG',name:'SVG → PNG 변환기'}
 ];
 
 // ── Toolbox categories (desktop widget) ──────────────────────────────────────
 const TOOLBOX_CATS = [
   { label: '개인정보',     keys: ['MaskPrivacy','MaskPDF','MaskFace','MaskDoc','ExifRemover'] },
-  { label: '이미지 편집',  keys: ['FitImage','CropImage','WatermarkImage','ColorPicker','ImageBright','BGRemove','ImageText','ImageFilter','ImageCollage','PixelArt','MosaicMaker','FaviconGen'] },
+  { label: '이미지 편집',  keys: ['FitImage','CropImage','WatermarkImage','ColorPicker','ImageBright','BGRemove','ImageText','ImageFilter','ImageCollage','PixelArt','MosaicMaker','FaviconGen','SVGtoPNG'] },
   { label: '문서·텍스트',  keys: ['PDFMerge','PDFSplit','TextTools','DiffChecker','MarkdownEditor','FindReplace','LineNumber'] },
   { label: '유틸리티',     keys: ['QRCode','PasswordGen','UnitConvert','DateCalc','WorldClock','CurrencyCalc','RandomPicker'] },
   { label: '개발자',       keys: ['JSONFormat','RegexTest','Base64Tool','HashGen','Minifier','URLEncode','CSSUnit'] },
@@ -290,7 +292,7 @@ function buildTree() {
   return {
     '도구':{type:'folder',label:'도구',children:{
       '개인정보':{type:'folder',label:'개인정보',children:{MaskPrivacy:t('개인정보 마스킹'),MaskPDF:t('PDF 마스킹'),MaskFace:t('얼굴 블러'),MaskDoc:t('텍스트 마스킹'),ExifRemover:t('EXIF 제거기')}},
-      '이미지 편집':{type:'folder',label:'이미지 편집',children:{FitImage:t('이미지 변환'),CropImage:t('이미지 자르기'),WatermarkImage:t('워터마크 추가'),ColorPicker:t('색상 추출'),ImageBright:t('이미지 보정'),BGRemove:t('AI 배경 제거'),ImageText:t('이미지 텍스트 추가'),ImageFilter:t('이미지 필터'),ImageCollage:t('이미지 콜라주'),PixelArt:t('픽셀 아트 변환'),MosaicMaker:t('모자이크 생성기'),FaviconGen:t('파비콘 생성기')}},
+      '이미지 편집':{type:'folder',label:'이미지 편집',children:{FitImage:t('이미지 변환'),CropImage:t('이미지 자르기'),WatermarkImage:t('워터마크 추가'),ColorPicker:t('색상 추출'),ImageBright:t('이미지 보정'),BGRemove:t('AI 배경 제거'),ImageText:t('이미지 텍스트 추가'),ImageFilter:t('이미지 필터'),ImageCollage:t('이미지 콜라주'),PixelArt:t('픽셀 아트 변환'),MosaicMaker:t('모자이크 생성기'),FaviconGen:t('파비콘 생성기'),SVGtoPNG:t('SVG → PNG 변환기')}},
       '문서\xb7텍스트':{type:'folder',label:'문서\xb7텍스트',children:{PDFMerge:t('PDF 합치기'),PDFSplit:t('PDF 분할'),TextTools:t('텍스트 변환'),DiffChecker:t('텍스트 비교'),MarkdownEditor:t('마크다운 편집기'),FindReplace:t('찾아 바꾸기'),LineNumber:t('줄 번호 추가')}},
       '유틸리티':{type:'folder',label:'유틸리티',children:{QRCode:t('QR 코드 생성'),PasswordGen:t('비밀번호 생성기'),UnitConvert:t('단위 변환기'),DateCalc:t('날짜 계산기'),WorldClock:t('세계 시간'),CurrencyCalc:t('환율 계산기'),RandomPicker:t('랜덤 추첨기')}},
       '개발자':{type:'folder',label:'개발자',children:{JSONFormat:t('JSON 포맷터'),RegexTest:t('정규식 테스터'),Base64Tool:t('Base64 변환'),HashGen:t('해시 생성기'),Minifier:t('코드 압축기'),URLEncode:t('URL 인코더'),CSSUnit:t('CSS 단위 변환기')}},
@@ -317,7 +319,7 @@ function buildTree() {
         b22:a('BGRemove 사용법 완전 가이드'),b28:a('ImageText 사용법 완전 가이드'),
         b29:a('ImageFilter 사용법 완전 가이드'),b30:a('ImageCollage 사용법 완전 가이드'),
         b31:a('PixelArt 사용법 완전 가이드'),b32:a('MosaicMaker 사용법 완전 가이드'),
-        b44:a('FaviconGen 사용법 완전 가이드'),
+        b44:a('FaviconGen 사용법 완전 가이드'),b45:a('SVGtoPNG 사용법 완전 가이드'),
         h3:{type:'header',label:'문서\xb7텍스트'},
         b7:a('PDFMerge 사용법 완전 가이드'),b33:a('PDFSplit 사용법 완전 가이드'),
         b9:a('TextTools 사용법 완전 가이드'),
@@ -464,6 +466,7 @@ function fileBodyHtml(win,pal) {
     RandomPicker: '이름 목록으로 룰렛 추첨을 하거나 팀을 랜덤하게 나눕니다.',
     WordCloudGen: '텍스트를 붙여넣으면 단어 빈도 기반 워드클라우드를 생성합니다.',
     FaviconGen: '이미지 1장으로 다양한 크기의 파비콘 세트와 favicon.ico를 생성합니다.',
+    SVGtoPNG: 'SVG 파일이나 코드를 원하는 해상도의 PNG 이미지로 변환합니다.',
     CurrencyCalc: '최신 환율로 주요 통화를 즉시 변환합니다.'
   };
   if(file.kind==='tool'){

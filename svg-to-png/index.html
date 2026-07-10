@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <link rel="icon" href="/favicon.ico" sizes="32x32">
+  <link rel="icon" href="/favicon-16.png" sizes="16x16" type="image/png">
+  <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="/favicon-192.png" sizes="192x192" type="image/png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="SVG 파일이나 SVG 코드를 원하는 해상도의 PNG 이미지로 변환하는 무료 온라인 도구. 배율(1x~4x)과 배경색을 선택할 수 있으며 서버 전송 없이 브라우저에서 바로 처리합니다." />
+  <meta property="og:title" content="SVGtoPNG — SVG → PNG 변환기" />
+  <meta property="og:description" content="SVG 파일이나 코드를 원하는 해상도의 PNG 이미지로 즉시 변환하는 무료 온라인 도구입니다." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://browserkit.online/svg-to-png/" />
+  <title>SVGtoPNG — SVG → PNG 변환기</title>
+  <link rel="stylesheet" href="/css/style.css?v=20260704c" />
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506"
+     crossorigin="anonymous"></script>
+  <style>
+    .mode-tabs { display:flex; gap:8px; margin-bottom:16px; }
+    .mode-tab { flex:1; background:var(--card); border:1px solid var(--border); border-radius:12px; padding:12px; text-align:center; font-size:14px; font-weight:600; color:var(--subtext); cursor:pointer; }
+    .mode-tab.active { border-color:var(--point); color:var(--text); box-shadow:0 0 0 1px var(--point) inset; }
+
+    .upload-zone { background:var(--card); border:2px dashed var(--border); border-radius:var(--radius); padding:56px 40px; text-align:center; cursor:pointer; margin-bottom:16px; transition:all 0.2s; }
+    .upload-zone:hover, .upload-zone.drag-over { border-color:var(--point); box-shadow:0 0 24px var(--glow); background:rgba(123,108,255,0.05); }
+    .upload-icon { font-size:48px; margin-bottom:20px; }
+    .upload-title { font-size:18px; font-weight:600; margin-bottom:8px; }
+    .upload-sub { color:var(--subtext); font-size:14px; margin-bottom:8px; }
+    .upload-safe { color:var(--success); font-size:13px; }
+
+    .paste-wrap { display:none; margin-bottom:16px; }
+    .paste-wrap.show { display:block; }
+    .paste-textarea { width:100%; min-height:180px; background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:16px; color:var(--text); font-family:'Fira Code',monospace; font-size:13px; line-height:1.6; resize:vertical; box-sizing:border-box; }
+    .paste-textarea:focus { outline:none; border-color:var(--point); box-shadow:0 0 0 2px var(--glow); }
+    .paste-btn-row { display:flex; justify-content:flex-end; margin-top:10px; }
+
+    .result-wrap { display:none; }
+    .result-wrap.show { display:block; }
+
+    .preview-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px; margin-bottom:20px; display:flex; align-items:center; gap:20px; flex-wrap:wrap; }
+    .preview-src-wrap { background:repeating-conic-gradient(#1e1e2a 0% 25%,#26263a 0% 50%) 0 0/16px 16px; border-radius:10px; overflow:hidden; width:120px; height:120px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+    .preview-src-wrap img { max-width:100%; max-height:100%; display:block; }
+    .file-meta { display:flex; flex-direction:column; gap:6px; flex:1; min-width:160px; }
+    .file-meta-row { display:flex; gap:8px; font-size:13px; }
+    .file-meta-label { color:var(--subtext); min-width:72px; flex-shrink:0; }
+    .file-meta-value { color:var(--text); word-break:break-all; }
+
+    .option-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px; margin-bottom:20px; }
+    .option-title { font-size:13px; font-weight:600; color:var(--subtext); margin-bottom:14px; }
+    .option-grid { display:flex; gap:14px; flex-wrap:wrap; align-items:flex-end; margin-bottom:14px; }
+    .option-field { display:flex; flex-direction:column; gap:6px; }
+    .option-field label { font-size:12px; color:var(--subtext); }
+    .option-field input[type=number] { width:100px; background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:8px 10px; color:var(--text); font-size:14px; }
+    .option-field input[type=number]:focus { outline:none; border-color:var(--point); }
+    .lock-toggle { display:flex; align-items:center; gap:6px; font-size:12px; color:var(--subtext); cursor:pointer; padding-bottom:9px; }
+
+    .scale-row { display:flex; gap:8px; margin-bottom:14px; flex-wrap:wrap; }
+    .scale-btn { background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:8px 16px; font-size:13px; color:var(--subtext); cursor:pointer; }
+    .scale-btn.active { border-color:var(--point); color:var(--text); box-shadow:0 0 0 1px var(--point) inset; }
+
+    .bg-row { display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
+    .bg-btn { width:36px; height:36px; border-radius:8px; border:1px solid var(--border); cursor:pointer; position:relative; }
+    .bg-btn.active { box-shadow:0 0 0 2px var(--point); }
+    .bg-btn.transparent { background:repeating-conic-gradient(#1e1e2a 0% 25%,#26263a 0% 50%) 0 0/9px 9px; }
+    .bg-color-input { width:36px; height:36px; border-radius:8px; border:1px solid var(--border); cursor:pointer; background:none; padding:0; }
+
+    .result-preview-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px; margin-bottom:20px; text-align:center; }
+    .result-preview-wrap { background:repeating-conic-gradient(#1e1e2a 0% 25%,#26263a 0% 50%) 0 0/16px 16px; border-radius:10px; display:inline-block; margin-bottom:12px; max-width:100%; overflow:auto; }
+    .result-preview-wrap canvas { display:block; max-width:100%; }
+    .result-dim { font-size:13px; color:var(--subtext); }
+
+    .action-wrap { display:flex; justify-content:center; gap:12px; margin-bottom:48px; flex-wrap:wrap; }
+    .btn-primary { background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border:none; border-radius:12px; padding:13px 28px; font-size:15px; font-weight:600; cursor:pointer; font-family:'Gowun Dodum',sans-serif; }
+    .btn-primary:hover { transform:translateY(-2px); box-shadow:0 8px 24px var(--glow); }
+    .btn-sub { background:var(--card); color:var(--subtext); border:1px solid var(--border); border-radius:12px; padding:13px 22px; font-size:15px; cursor:pointer; font-family:'Gowun Dodum',sans-serif; }
+    .btn-sub:hover { transform:translateY(-2px); color:var(--text); border-color:var(--point); }
+
+    .notice { margin:0 0 20px; padding:12px 16px; background:rgba(123,108,255,0.07); border:1px solid var(--border); border-radius:10px; font-size:13px; color:var(--subtext); line-height:1.7; }
+
+    .toast { position:fixed; bottom:32px; left:50%; transform:translateX(-50%) translateY(80px); background:var(--success); color:#fff; border-radius:999px; padding:10px 24px; font-size:14px; font-weight:600; opacity:0; pointer-events:none; z-index:999; transition:all 0.3s ease; }
+    .toast.show { transform:translateX(-50%) translateY(0); opacity:1; }
+
+    .footer { border-top:1px solid var(--border); padding:32px 0; text-align:center; }
+    .footer-copy { color:var(--subtext); font-size:13px; margin-bottom:12px; }
+    .footer-nav { display:flex; justify-content:center; gap:20px; flex-wrap:wrap; }
+    .footer-nav a { color:var(--subtext); font-size:13px; text-decoration:none; }
+    .footer-nav a:hover { color:var(--text); }
+
+    @media (max-width:640px) {
+      .hero-title { font-size:24px; }
+      .upload-zone { padding:40px 20px; }
+    }
+  </style>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+  <meta property="og:image" content="https://browserkit.online/img/og-browserkit.png" />
+  <link rel="canonical" href="https://browserkit.online/svg-to-png/" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://browserkit.online/img/og-browserkit.png" />
+</head>
+
+<body>
+  <header class="header">
+    <div class="container">
+      <a href="/" class="header-brand">
+        <div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Gowun Dodum,sans-serif;flex-shrink:0">B</div>
+        <span class="header-brand-text"><span style="color:var(--text)">Browser</span><span style="color:var(--point)">Kit</span></span>
+      </a>
+      <a href="/" class="header-back">&#x2190; BrowserKit 홈으로</a>
+    </div>
+  </header>
+
+  <main><div class="container">
+    <div class="hero">
+      <div class="hero-icon" style="height:78px;display:flex;justify-content:center;align-items:center"><div style="transform:scale(1.7);transform-origin:center"><div style="width:46px;height:46px;background:#ffb3c7;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden;font:700 13px Gowun Dodum,sans-serif;color:#2a2433">SVG→PNG</div></div></div>
+      <div class="hero-title-wrap"><h1 class="hero-title">SVGtoPNG</h1><a href="/blog/58-svgtopng-howto.html" class="hero-guide-link">사용법 가이드 보기</a></div>
+      <p class="hero-desc">SVG 파일이나 코드를 원하는 해상도의 PNG 이미지로 즉시 변환하세요</p>
+      <div class="hero-badges">
+        <span class="badge">🔒 완전 로컬 처리</span>
+        <span class="badge">⚡ 무료 사용</span>
+        <span class="badge">🛡️ 서버 전송 없음</span>
+        <span class="badge">📦 설치 불필요</span>
+      </div>
+    </div>
+    <div style="margin:0 0 12px"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+
+    <p class="notice">💡 외부 이미지나 폰트를 참조하는 SVG는 브라우저 보안 정책상 변환이 제한될 수 있습니다. 자체 완결형(self-contained) SVG를 사용하면 가장 안정적으로 변환됩니다.</p>
+
+    <div class="mode-tabs">
+      <div class="mode-tab active" id="tabUpload">📁 파일 업로드</div>
+      <div class="mode-tab" id="tabPaste">📝 코드 붙여넣기</div>
+    </div>
+
+    <!-- 업로드 존 -->
+    <div class="upload-zone" id="uploadZone">
+      <input type="file" id="fileInput" accept=".svg,image/svg+xml" style="display:none" />
+      <div class="upload-icon">🖼️</div>
+      <div class="upload-title">SVG 파일을 업로드하세요</div>
+      <div class="upload-sub">클릭하거나 파일을 드래그하세요 (.svg)</div>
+      <div class="upload-safe">🔒 파일은 서버로 전송되지 않습니다</div>
+    </div>
+
+    <!-- 코드 붙여넣기 -->
+    <div class="paste-wrap" id="pasteWrap">
+      <textarea class="paste-textarea" id="pasteTextarea" placeholder="&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; viewBox=&quot;0 0 100 100&quot;&gt;...&lt;/svg&gt; 형식의 SVG 코드를 붙여넣으세요"></textarea>
+      <div class="paste-btn-row"><button class="btn-primary" id="pasteConvertBtn">변환하기</button></div>
+    </div>
+
+    <!-- 결과 -->
+    <div class="result-wrap" id="resultWrap">
+      <div class="preview-card">
+        <div class="preview-src-wrap"><img id="previewImg" src="" alt="업로드한 SVG 미리보기" /></div>
+        <div class="file-meta">
+          <div class="file-meta-row"><span class="file-meta-label">파일명</span><span class="file-meta-value" id="fileName">—</span></div>
+          <div class="file-meta-row"><span class="file-meta-label">원본 크기</span><span class="file-meta-value" id="fileDim">—</span></div>
+        </div>
+      </div>
+
+      <div class="option-card">
+        <div class="option-title">⚙️ 출력 옵션</div>
+        <div class="option-grid">
+          <div class="option-field"><label>너비 (px)</label><input type="number" id="widthInput" min="1" max="8000" /></div>
+          <div class="option-field"><label>높이 (px)</label><input type="number" id="heightInput" min="1" max="8000" /></div>
+          <label class="lock-toggle"><input type="checkbox" id="lockRatio" checked /> 비율 고정</label>
+        </div>
+        <div class="option-title" style="margin-bottom:8px">배율</div>
+        <div class="scale-row">
+          <button class="scale-btn active" data-scale="1">1x</button>
+          <button class="scale-btn" data-scale="2">2x</button>
+          <button class="scale-btn" data-scale="3">3x</button>
+          <button class="scale-btn" data-scale="4">4x</button>
+        </div>
+        <div class="option-title" style="margin-bottom:8px">배경</div>
+        <div class="bg-row">
+          <button class="bg-btn transparent active" data-bg="transparent" title="투명"></button>
+          <button class="bg-btn" data-bg="#ffffff" style="background:#ffffff" title="흰색"></button>
+          <button class="bg-btn" data-bg="#000000" style="background:#000000" title="검정"></button>
+          <input type="color" class="bg-color-input" id="bgColorInput" value="#7b6cff" title="사용자 지정 색상" />
+        </div>
+      </div>
+
+      <div class="result-preview-card">
+        <div class="result-preview-wrap" id="resultPreviewWrap"><canvas id="resultCanvas"></canvas></div>
+        <div class="result-dim" id="resultDim">—</div>
+      </div>
+
+      <div class="action-wrap">
+        <button class="btn-primary" id="downloadBtn">&#x2B07; PNG 다운로드</button>
+        <button class="btn-sub" id="resetBtn">&#x21BA; 새 SVG 선택</button>
+      </div>
+    </div>
+
+    <div style="margin:0 0 12px"><ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="9500090221"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+  </div></main>
+
+  <footer class="footer">
+    <div class="container">
+      <p class="footer-copy">&#xa9; 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p>
+      <nav class="footer-nav">
+        <a href="/privacy.html">개인정보 처리방침</a>
+        <a href="/terms.html">이용약관</a>
+        <a href="/about.html">서비스 소개</a>
+        <a href="/blog/">블로그</a>
+      </nav>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+  var tabUpload = document.getElementById('tabUpload');
+  var tabPaste  = document.getElementById('tabPaste');
+  var uploadZone = document.getElementById('uploadZone');
+  var pasteWrap  = document.getElementById('pasteWrap');
+  var pasteTextarea = document.getElementById('pasteTextarea');
+  var fileInput  = document.getElementById('fileInput');
+  var resultWrap = document.getElementById('resultWrap');
+  var previewImg = document.getElementById('previewImg');
+  var resultCanvas = document.getElementById('resultCanvas');
+  var resultDim = document.getElementById('resultDim');
+  var widthInput = document.getElementById('widthInput');
+  var heightInput = document.getElementById('heightInput');
+  var lockRatio = document.getElementById('lockRatio');
+  var bgColorInput = document.getElementById('bgColorInput');
+
+  var currentObjectUrl = null;
+  var currentSvgUrl = null;
+  var currentSourceName = 'image';
+  var naturalW = 0, naturalH = 0;
+  var aspectRatio = 1;
+  var currentScale = 1;
+  var currentBg = 'transparent';
+
+  tabUpload.addEventListener('click', function() {
+    tabUpload.classList.add('active'); tabPaste.classList.remove('active');
+    uploadZone.style.display = ''; pasteWrap.classList.remove('show');
+  });
+  tabPaste.addEventListener('click', function() {
+    tabPaste.classList.add('active'); tabUpload.classList.remove('active');
+    pasteWrap.classList.add('show'); uploadZone.style.display = 'none';
+  });
+
+  uploadZone.addEventListener('click', function() { fileInput.click(); });
+  uploadZone.addEventListener('dragover', function(e) { e.preventDefault(); uploadZone.classList.add('drag-over'); });
+  uploadZone.addEventListener('dragleave', function() { uploadZone.classList.remove('drag-over'); });
+  uploadZone.addEventListener('drop', function(e) {
+    e.preventDefault();
+    uploadZone.classList.remove('drag-over');
+    if (e.dataTransfer.files[0]) loadFile(e.dataTransfer.files[0]);
+  });
+  fileInput.addEventListener('change', function() {
+    if (fileInput.files[0]) loadFile(fileInput.files[0]);
+  });
+
+  document.getElementById('pasteConvertBtn').addEventListener('click', function() {
+    var code = pasteTextarea.value.trim();
+    if (!code) { showToast('SVG 코드를 입력해주세요'); return; }
+    if (code.indexOf('<svg') === -1) { showToast('올바른 SVG 코드가 아닙니다'); return; }
+    currentSourceName = 'svg-code.svg';
+    loadSvgText(code);
+  });
+
+  function loadFile(file) {
+    if (!/\.svg$/i.test(file.name) && file.type !== 'image/svg+xml') {
+      showToast('SVG 파일을 선택해주세요'); return;
+    }
+    currentSourceName = file.name;
+    var reader = new FileReader();
+    reader.onload = function() { loadSvgText(reader.result); };
+    reader.onerror = function() { showToast('파일을 읽을 수 없습니다'); };
+    reader.readAsText(file);
+  }
+
+  function loadSvgText(svgText) {
+    if (currentSvgUrl) URL.revokeObjectURL(currentSvgUrl);
+    var blob = new Blob([svgText], { type: 'image/svg+xml' });
+    currentSvgUrl = URL.createObjectURL(blob);
+    previewImg.src = currentSvgUrl;
+
+    document.getElementById('fileName').textContent = currentSourceName;
+    document.getElementById('fileDim').textContent = '측정 중...';
+
+    var img = new Image();
+    img.onload = function() {
+      naturalW = img.naturalWidth || 300;
+      naturalH = img.naturalHeight || 300;
+
+      var vb = parseViewBox(svgText);
+      if (vb) { naturalW = vb.w; naturalH = vb.h; }
+
+      aspectRatio = naturalW / naturalH;
+      document.getElementById('fileDim').textContent = Math.round(naturalW) + ' × ' + Math.round(naturalH) + 'px';
+      widthInput.value = Math.round(naturalW);
+      heightInput.value = Math.round(naturalH);
+
+      uploadZone.style.display = 'none';
+      pasteWrap.classList.remove('show');
+      resultWrap.classList.add('show');
+      renderResult(img);
+    };
+    img.onerror = function() { showToast('SVG를 불러올 수 없습니다. 코드가 올바른지 확인해주세요'); };
+    img.src = currentSvgUrl;
+  }
+
+  function parseViewBox(svgText) {
+    var m = svgText.match(/viewBox\s*=\s*["']([^"']+)["']/i);
+    if (!m) return null;
+    var parts = m[1].trim().split(/[\s,]+/).map(Number);
+    if (parts.length !== 4 || !parts[2] || !parts[3]) return null;
+    return { w: parts[2], h: parts[3] };
+  }
+
+  function renderResult(img) {
+    var w = Math.max(1, Math.round(parseFloat(widthInput.value) || naturalW));
+    var h = Math.max(1, Math.round(parseFloat(heightInput.value) || naturalH));
+    var outW = Math.round(w * currentScale);
+    var outH = Math.round(h * currentScale);
+
+    resultCanvas.width = outW;
+    resultCanvas.height = outH;
+    var ctx = resultCanvas.getContext('2d');
+    ctx.clearRect(0, 0, outW, outH);
+    if (currentBg !== 'transparent') {
+      ctx.fillStyle = currentBg;
+      ctx.fillRect(0, 0, outW, outH);
+    }
+    ctx.imageSmoothingEnabled = true;
+    ctx.imageSmoothingQuality = 'high';
+    ctx.drawImage(img, 0, 0, outW, outH);
+
+    var displayMax = 320;
+    var scaleDisplay = Math.min(1, displayMax / outW, displayMax / outH);
+    resultCanvas.style.width = Math.round(outW * scaleDisplay) + 'px';
+    resultCanvas.style.height = Math.round(outH * scaleDisplay) + 'px';
+
+    resultDim.textContent = outW + ' × ' + outH + 'px';
+    resultCanvas._sourceImg = img;
+  }
+
+  function rerender() {
+    var img = resultCanvas._sourceImg;
+    if (img) renderResult(img);
+  }
+
+  widthInput.addEventListener('input', function() {
+    if (lockRatio.checked && aspectRatio) {
+      heightInput.value = Math.round(parseFloat(widthInput.value) / aspectRatio) || '';
+    }
+    rerender();
+  });
+  heightInput.addEventListener('input', function() {
+    if (lockRatio.checked && aspectRatio) {
+      widthInput.value = Math.round(parseFloat(heightInput.value) * aspectRatio) || '';
+    }
+    rerender();
+  });
+
+  document.querySelectorAll('.scale-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.scale-btn').forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      currentScale = parseFloat(btn.dataset.scale);
+      rerender();
+    });
+  });
+
+  document.querySelectorAll('.bg-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.bg-btn').forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      currentBg = btn.dataset.bg;
+      rerender();
+    });
+  });
+  bgColorInput.addEventListener('input', function() {
+    document.querySelectorAll('.bg-btn').forEach(function(b) { b.classList.remove('active'); });
+    currentBg = bgColorInput.value;
+    rerender();
+  });
+
+  document.getElementById('downloadBtn').addEventListener('click', function() {
+    if (!resultCanvas._sourceImg) { showToast('먼저 SVG를 불러와주세요'); return; }
+    resultCanvas.toBlob(function(blob) {
+      var a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = currentSourceName.replace(/\.svg$/i, '') + '.png';
+      a.click();
+      URL.revokeObjectURL(a.href);
+      showToast('✓ PNG 파일이 저장됩니다');
+    }, 'image/png');
+  });
+
+  document.getElementById('resetBtn').addEventListener('click', function() {
+    if (currentSvgUrl) { URL.revokeObjectURL(currentSvgUrl); currentSvgUrl = null; }
+    previewImg.src = '';
+    fileInput.value = '';
+    pasteTextarea.value = '';
+    resultCanvas._sourceImg = null;
+    resultWrap.classList.remove('show');
+    tabUpload.click();
+  });
+
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(function() { t.classList.remove('show'); }, 2000);
+  }
+  </script>
+</body>
+</html>

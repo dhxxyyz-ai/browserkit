@@ -61,7 +61,7 @@ const TOOL_URLS = {
   ImageCollage:'/image-collage/', PixelArt:'/pixel-art/', MosaicMaker:'/mosaic-maker/', PDFSplit:'/pdf-split/',
   LineNumber:'/line-number/', CurrencyCalc:'/currency-calc/', Minifier:'/minifier/', URLEncode:'/url-encode/',
   CSSUnit:'/css-unit/', DiagramMaker:'/diagram-maker/', PaletteGen:'/palette-gen/', ExifRemover:'/exif-remover/',
-  RandomPicker:'/random-picker/', WordCloudGen:'/word-cloud/', FaviconGen:'/favicon-gen/'
+  RandomPicker:'/random-picker/', WordCloudGen:'/word-cloud/', FaviconGen:'/favicon-gen/', SVGtoPNG:'/svg-to-png/'
 };
 
 const BLOG_URLS = {
@@ -119,7 +119,8 @@ const BLOG_URLS = {
   'ExifRemover 사용법 완전 가이드':'/blog/54-exifremover-howto.html',
   'RandomPicker 사용법 완전 가이드':'/blog/55-randompicker-howto.html',
   'WordCloudGen 사용법 완전 가이드':'/blog/56-wordcloud-howto.html',
-  'FaviconGen 사용법 완전 가이드':'/blog/57-favicongen-howto.html'
+  'FaviconGen 사용법 완전 가이드':'/blog/57-favicongen-howto.html',
+  'SVGtoPNG 사용법 완전 가이드':'/blog/58-svgtopng-howto.html'
 };
 
 const INFO_URLS = {
@@ -136,7 +137,7 @@ const PAL = {
 
 const TOOLBOX_CATS = [
   { label:'개인정보',      keys:['MaskPrivacy','MaskPDF','MaskFace','MaskDoc','ExifRemover'] },
-  { label:'이미지 편집',   keys:['FitImage','CropImage','WatermarkImage','ColorPicker','ImageBright','BGRemove','ImageText','ImageFilter','ImageCollage','PixelArt','MosaicMaker','FaviconGen'] },
+  { label:'이미지 편집',   keys:['FitImage','CropImage','WatermarkImage','ColorPicker','ImageBright','BGRemove','ImageText','ImageFilter','ImageCollage','PixelArt','MosaicMaker','FaviconGen','SVGtoPNG'] },
   { label:'문서·텍스트',   keys:['PDFMerge','PDFSplit','TextTools','DiffChecker','MarkdownEditor','FindReplace','LineNumber'] },
   { label:'유틸리티',      keys:['QRCode','PasswordGen','UnitConvert','DateCalc','WorldClock','CurrencyCalc','RandomPicker'] },
   { label:'개발자',        keys:['JSONFormat','RegexTest','Base64Tool','HashGen','Minifier','URLEncode','CSSUnit'] },
@@ -164,7 +165,8 @@ const SEARCH_TOOLS = [
   {code:'URLEncode',name:'URL 인코더'},{code:'CSSUnit',name:'CSS 단위 변환기'},
   {code:'DiagramMaker',name:'다이어그램 생성기'},{code:'PaletteGen',name:'색상 팔레트 생성기'},
   {code:'ExifRemover',name:'EXIF 제거기'},{code:'RandomPicker',name:'랜덤 추첨기'},
-  {code:'WordCloudGen',name:'워드클라우드 생성기'},{code:'FaviconGen',name:'파비콘 생성기'}
+  {code:'WordCloudGen',name:'워드클라우드 생성기'},{code:'FaviconGen',name:'파비콘 생성기'},
+  {code:'SVGtoPNG',name:'SVG → PNG 변환기'}
 ];
 
 const TOOL_LABEL   = Object.fromEntries(SEARCH_TOOLS.map(t => [t.code, t.name]));
@@ -183,7 +185,7 @@ function glyphInfo(code) {
     ChartMaker:'chart', ImageText:'token:T', ImageFilter:'halfcircle', ImageCollage:'collage', PixelArt:'pixelart',
     MosaicMaker:'mosaic', PDFSplit:'split', LineNumber:'linenum', CurrencyCalc:'currency', Minifier:'token:<>',
     URLEncode:'token:%20', CSSUnit:'token:rem', DiagramMaker:'diagram', PaletteGen:'palette', ExifRemover:'exif',
-    RandomPicker:'roulette', WordCloudGen:'wordcloud', FaviconGen:'favicon'
+    RandomPicker:'roulette', WordCloudGen:'wordcloud', FaviconGen:'favicon', SVGtoPNG:'token:SVG'
   };
   const v = m[code];
   if (!v) return { glyph:'token', token:'+' };
