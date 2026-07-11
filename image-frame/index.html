@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <link rel="icon" href="/favicon.ico" sizes="32x32">
+  <link rel="icon" href="/favicon-16.png" sizes="16x16" type="image/png">
+  <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="/favicon-192.png" sizes="192x192" type="image/png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="이미지에 색상 테두리, 폴라로이드 프레임, 둥근 모서리를 추가하는 무료 온라인 도구. 색상, 두께, 모서리 반경을 자유롭게 조절하고 PNG로 다운로드하세요. 서버 전송 없이 브라우저에서 바로 처리합니다." />
+  <meta property="og:title" content="ImageFrame — 이미지 프레임 추가" />
+  <meta property="og:description" content="이미지에 색상 테두리, 폴라로이드 프레임, 둥근 모서리를 추가하는 무료 온라인 도구입니다." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://browserkit.online/image-frame/" />
+  <title>ImageFrame — 이미지 프레임 추가</title>
+  <link rel="stylesheet" href="/css/style.css?v=20260704c" />
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506"
+     crossorigin="anonymous"></script>
+  <style>
+    .upload-zone { background:var(--card); border:2px dashed var(--border); border-radius:var(--radius); padding:48px 40px; text-align:center; cursor:pointer; margin-bottom:16px; transition:all 0.2s; }
+    .upload-zone:hover, .upload-zone.drag-over { border-color:var(--point); box-shadow:0 0 24px var(--glow); }
+    .upload-icon { font-size:44px; margin-bottom:16px; }
+    .upload-title { font-size:17px; font-weight:600; margin-bottom:8px; }
+    .upload-sub { color:var(--subtext); font-size:13px; }
+    .upload-safe { color:var(--success); font-size:13px; margin-top:8px; }
+
+    .result-wrap { display:none; }
+    .result-wrap.show { display:block; }
+
+    .tab-wrap { display:flex; gap:8px; margin-bottom:20px; flex-wrap:wrap; }
+    .tab-btn { flex:1; background:var(--card); color:var(--subtext); border:1px solid var(--border); border-radius:10px; padding:10px 20px; font-size:14px; font-weight:600; cursor:pointer; font-family:'Gowun Dodum',sans-serif; min-width:120px; }
+    .tab-btn:hover { border-color:var(--point); color:var(--text); }
+    .tab-btn.active { background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border-color:transparent; }
+
+    .option-panel { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:22px 24px; margin-bottom:20px; }
+    .option-row { display:flex; align-items:center; gap:12px; margin-bottom:16px; flex-wrap:wrap; }
+    .option-row:last-child { margin-bottom:0; }
+    .option-label { font-size:13px; color:var(--subtext); min-width:88px; }
+    .option-row input[type=range] { flex:1; min-width:120px; accent-color:var(--point); cursor:pointer; }
+    .option-value { font-size:13px; font-weight:600; color:var(--point-hover); min-width:44px; font-family:'Gowun Dodum',sans-serif; }
+    .option-row input[type=text] { flex:1; min-width:140px; background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:9px 12px; color:var(--text); font-size:14px; outline:none; }
+    .option-row input[type=text]:focus { border-color:var(--point); }
+
+    .color-presets { display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
+    .color-preset { width:26px; height:26px; border-radius:6px; cursor:pointer; border:2px solid var(--border); box-sizing:border-box; }
+    .color-preset:hover, .color-preset.active { border-color:var(--point); transform:scale(1.12); }
+    .color-swatch { width:30px; height:30px; border-radius:8px; border:1px solid var(--border); cursor:pointer; overflow:hidden; }
+    .color-swatch input[type=color] { width:200%; height:200%; transform:translate(-25%,-25%); border:none; cursor:pointer; padding:0; }
+
+    .toggle-row { display:flex; align-items:center; gap:8px; font-size:13px; color:var(--subtext); cursor:pointer; }
+    .toggle-row input { accent-color:var(--point); width:16px; height:16px; cursor:pointer; }
+
+    .preview-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:24px; margin-bottom:20px; text-align:center; }
+    .preview-card canvas { max-width:100%; height:auto; border-radius:8px; }
+
+    .action-wrap { display:flex; justify-content:center; gap:12px; margin-bottom:48px; flex-wrap:wrap; }
+    .btn-primary { background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border:none; border-radius:12px; padding:13px 28px; font-size:15px; font-weight:600; cursor:pointer; font-family:'Gowun Dodum',sans-serif; }
+    .btn-primary:hover { transform:translateY(-2px); box-shadow:0 8px 24px var(--glow); }
+    .btn-sub { background:var(--card); color:var(--subtext); border:1px solid var(--border); border-radius:12px; padding:13px 22px; font-size:15px; cursor:pointer; font-family:'Gowun Dodum',sans-serif; }
+    .btn-sub:hover { transform:translateY(-2px); color:var(--text); border-color:var(--point); }
+
+    .toast { position:fixed; bottom:32px; left:50%; transform:translateX(-50%) translateY(80px); background:var(--success); color:#fff; border-radius:999px; padding:10px 24px; font-size:14px; font-weight:600; opacity:0; pointer-events:none; z-index:999; transition:all 0.3s ease; }
+    .toast.show { transform:translateX(-50%) translateY(0); opacity:1; }
+
+    .footer { border-top:1px solid var(--border); padding:32px 0; text-align:center; }
+    .footer-copy { color:var(--subtext); font-size:13px; margin-bottom:12px; }
+    .footer-nav { display:flex; justify-content:center; gap:20px; flex-wrap:wrap; }
+    .footer-nav a { color:var(--subtext); font-size:13px; text-decoration:none; }
+    .footer-nav a:hover { color:var(--text); }
+
+    @media (max-width:640px) {
+      .hero-title { font-size:24px; }
+      .upload-zone { padding:36px 20px; }
+    }
+  </style>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+  <meta property="og:image" content="https://browserkit.online/img/og-browserkit.png" />
+  <link rel="canonical" href="https://browserkit.online/image-frame/" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://browserkit.online/img/og-browserkit.png" />
+</head>
+
+<body>
+  <header class="header">
+    <div class="container">
+      <a href="/" class="header-brand">
+        <div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Gowun Dodum,sans-serif;flex-shrink:0">B</div>
+        <span class="header-brand-text"><span style="color:var(--text)">Browser</span><span style="color:var(--point)">Kit</span></span>
+      </a>
+      <a href="/" class="header-back">&#x2190; BrowserKit 홈으로</a>
+    </div>
+  </header>
+
+  <main><div class="container">
+    <div class="hero">
+      <div class="hero-icon" style="height:78px;display:flex;justify-content:center;align-items:center"><div style="transform:scale(1.7);transform-origin:center"><div style="width:46px;height:46px;background:#ffb3c7;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="width:26px;height:26px;background:#fffdf9;border:3.5px solid #2a2433;border-radius:3px;box-sizing:border-box"></div></div></div></div>
+      <div class="hero-title-wrap"><h1 class="hero-title">ImageFrame</h1><a href="/blog/66-imageframe-howto.html" class="hero-guide-link">사용법 가이드 보기</a></div>
+      <p class="hero-desc">색상 테두리, 폴라로이드 프레임, 둥근 모서리를 이미지에 추가하세요</p>
+      <div class="hero-badges">
+        <span class="badge">🔒 완전 로컬 처리</span>
+        <span class="badge">⚡ 무료 사용</span>
+        <span class="badge">🛡️ 서버 전송 없음</span>
+        <span class="badge">📦 설치 불필요</span>
+      </div>
+    </div>
+    <div style="margin:0 0 12px"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+
+    <p class="notice">💡 원본 이미지 해상도를 그대로 유지한 채 프레임만 추가합니다. 이미지 크기가 클수록 처리에 시간이 조금 더 걸릴 수 있습니다. 모든 처리는 브라우저에서만 이루어집니다.</p>
+
+    <div class="upload-zone" id="uploadZone">
+      <input type="file" id="fileInput" accept="image/*" style="display:none" />
+      <div class="upload-icon">🖼️</div>
+      <div class="upload-title">이미지를 업로드하세요</div>
+      <div class="upload-sub">클릭하거나 파일을 드래그하세요 (JPG, PNG, WEBP)</div>
+      <div class="upload-safe">🔒 파일은 서버로 전송되지 않습니다</div>
+    </div>
+
+    <div class="result-wrap" id="resultWrap">
+      <div class="tab-wrap">
+        <button class="tab-btn active" data-style="border">🎨 색상 테두리</button>
+        <button class="tab-btn" data-style="polaroid">📷 폴라로이드</button>
+        <button class="tab-btn" data-style="rounded">⬜ 둥근 모서리</button>
+      </div>
+
+      <!-- 색상 테두리 옵션 -->
+      <div class="option-panel" id="panel-border">
+        <div class="option-row">
+          <span class="option-label">테두리 색상</span>
+          <div class="color-presets" id="borderColorPresets"></div>
+          <div class="color-swatch"><input type="color" id="borderColorPicker" value="#ffffff" /></div>
+        </div>
+        <div class="option-row">
+          <span class="option-label">테두리 두께</span>
+          <input type="range" id="borderWidthRange" min="2" max="60" value="16" />
+          <span class="option-value" id="borderWidthValue">16px</span>
+        </div>
+      </div>
+
+      <!-- 폴라로이드 옵션 -->
+      <div class="option-panel" id="panel-polaroid" style="display:none">
+        <div class="option-row">
+          <span class="option-label">프레임 색상</span>
+          <div class="color-presets" id="polaroidColorPresets"></div>
+          <div class="color-swatch"><input type="color" id="polaroidColorPicker" value="#fffdf6" /></div>
+        </div>
+        <div class="option-row">
+          <span class="option-label">캡션 문구</span>
+          <input type="text" id="captionInput" placeholder="2026.07.11 제주도 여행" maxlength="40" />
+        </div>
+        <div class="option-row">
+          <label class="toggle-row"><input type="checkbox" id="shadowOpt" checked /> 그림자 효과</label>
+        </div>
+      </div>
+
+      <!-- 둥근 모서리 옵션 -->
+      <div class="option-panel" id="panel-rounded" style="display:none">
+        <div class="option-row">
+          <span class="option-label">모서리 반경</span>
+          <input type="range" id="radiusRange" min="0" max="120" value="32" />
+          <span class="option-value" id="radiusValue">32px</span>
+        </div>
+        <div class="option-row">
+          <label class="toggle-row"><input type="checkbox" id="roundedBorderOpt" /> 테두리 추가</label>
+        </div>
+        <div class="option-row" id="roundedBorderColorRow" style="display:none">
+          <span class="option-label">테두리 색상</span>
+          <div class="color-presets" id="roundedColorPresets"></div>
+          <div class="color-swatch"><input type="color" id="roundedColorPicker" value="#ffffff" /></div>
+          <input type="range" id="roundedWidthRange" min="2" max="40" value="10" style="max-width:120px" />
+          <span class="option-value" id="roundedWidthValue">10px</span>
+        </div>
+      </div>
+
+      <div class="preview-card">
+        <canvas id="previewCanvas"></canvas>
+      </div>
+
+      <div class="action-wrap">
+        <button class="btn-primary" id="downloadBtn">&#x2B07; PNG 다운로드</button>
+        <button class="btn-sub" id="resetBtn">&#x21BA; 새 이미지 선택</button>
+      </div>
+    </div>
+
+    <div style="margin:0 0 12px"><ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="9500090221"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+  </div></main>
+
+  <footer class="footer">
+    <div class="container">
+      <p class="footer-copy">&#xa9; 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p>
+      <nav class="footer-nav">
+        <a href="/privacy.html">개인정보 처리방침</a>
+        <a href="/terms.html">이용약관</a>
+        <a href="/about.html">서비스 소개</a>
+        <a href="/blog/">블로그</a>
+      </nav>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+  var uploadZone = document.getElementById('uploadZone');
+  var fileInput = document.getElementById('fileInput');
+  var resultWrap = document.getElementById('resultWrap');
+  var previewCanvas = document.getElementById('previewCanvas');
+  var ctx = previewCanvas.getContext('2d');
+
+  var currentImg = null;
+  var currentStyle = 'border';
+
+  var BORDER_PRESETS = ['#ffffff', '#000000', '#7b6cff', '#ff8a5e', '#5dc9a3', '#e05a86'];
+  var POLAROID_PRESETS = ['#fffdf6', '#ffffff', '#f5ecd8', '#2a2433'];
+
+  function buildPresets(container, colors, activeColor, onPick) {
+    container.innerHTML = colors.map(function(c) {
+      return '<div class="color-preset" data-color="' + c + '" style="background:' + c + '"></div>';
+    }).join('');
+    container.querySelectorAll('.color-preset').forEach(function(el) {
+      if (el.dataset.color.toLowerCase() === activeColor.toLowerCase()) el.classList.add('active');
+      el.addEventListener('click', function() {
+        container.querySelectorAll('.color-preset').forEach(function(p) { p.classList.remove('active'); });
+        el.classList.add('active');
+        onPick(el.dataset.color);
+      });
+    });
+  }
+
+  buildPresets(document.getElementById('borderColorPresets'), BORDER_PRESETS, '#ffffff', function(c) {
+    document.getElementById('borderColorPicker').value = c;
+    render();
+  });
+  buildPresets(document.getElementById('polaroidColorPresets'), POLAROID_PRESETS, '#fffdf6', function(c) {
+    document.getElementById('polaroidColorPicker').value = c;
+    render();
+  });
+  buildPresets(document.getElementById('roundedColorPresets'), BORDER_PRESETS, '#ffffff', function(c) {
+    document.getElementById('roundedColorPicker').value = c;
+    render();
+  });
+
+  uploadZone.addEventListener('click', function() { fileInput.click(); });
+  uploadZone.addEventListener('dragover', function(e) { e.preventDefault(); uploadZone.classList.add('drag-over'); });
+  uploadZone.addEventListener('dragleave', function() { uploadZone.classList.remove('drag-over'); });
+  uploadZone.addEventListener('drop', function(e) {
+    e.preventDefault();
+    uploadZone.classList.remove('drag-over');
+    if (e.dataTransfer.files[0]) loadFile(e.dataTransfer.files[0]);
+  });
+  fileInput.addEventListener('change', function() {
+    if (fileInput.files[0]) loadFile(fileInput.files[0]);
+  });
+
+  function loadFile(file) {
+    if (!file.type.startsWith('image/')) { showToast('이미지 파일을 선택해주세요'); return; }
+    var reader = new FileReader();
+    reader.onload = function() {
+      var img = new Image();
+      img.onload = function() {
+        currentImg = img;
+        uploadZone.style.display = 'none';
+        resultWrap.classList.add('show');
+        render();
+      };
+      img.onerror = function() { showToast('이미지를 불러올 수 없습니다'); };
+      img.src = reader.result;
+    };
+    reader.readAsDataURL(file);
+  }
+
+  document.querySelectorAll('.tab-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.tab-btn').forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      currentStyle = btn.dataset.style;
+      document.getElementById('panel-border').style.display = currentStyle === 'border' ? '' : 'none';
+      document.getElementById('panel-polaroid').style.display = currentStyle === 'polaroid' ? '' : 'none';
+      document.getElementById('panel-rounded').style.display = currentStyle === 'rounded' ? '' : 'none';
+      render();
+    });
+  });
+
+  function roundRectPath(c, x, y, w, h, r) {
+    r = Math.min(r, w / 2, h / 2);
+    c.beginPath();
+    c.moveTo(x + r, y);
+    c.arcTo(x + w, y, x + w, y + h, r);
+    c.arcTo(x + w, y + h, x, y + h, r);
+    c.arcTo(x, y + h, x, y, r);
+    c.arcTo(x, y, x + w, y, r);
+    c.closePath();
+  }
+
+  function render() {
+    if (!currentImg) return;
+    var iw = currentImg.naturalWidth, ih = currentImg.naturalHeight;
+
+    if (currentStyle === 'border') {
+      var bw = parseInt(document.getElementById('borderWidthRange').value, 10);
+      var color = document.getElementById('borderColorPicker').value;
+      previewCanvas.width = iw + bw * 2;
+      previewCanvas.height = ih + bw * 2;
+      ctx.clearRect(0, 0, previewCanvas.width, previewCanvas.height);
+      ctx.fillStyle = color;
+      ctx.fillRect(0, 0, previewCanvas.width, previewCanvas.height);
+      ctx.drawImage(currentImg, bw, bw, iw, ih);
+
+    } else if (currentStyle === 'polaroid') {
+      var frameColor = document.getElementById('polaroidColorPicker').value;
+      var caption = document.getElementById('captionInput').value;
+      var withShadow = document.getElementById('shadowOpt').checked;
+      var sideMargin = Math.round(iw * 0.045);
+      var topMargin = sideMargin;
+      var bottomMargin = Math.round(ih * 0.18);
+      var padW = 40, padH = 40;
+      previewCanvas.width = iw + sideMargin * 2 + padW * 2;
+      previewCanvas.height = ih + topMargin + bottomMargin + padH * 2;
+      ctx.clearRect(0, 0, previewCanvas.width, previewCanvas.height);
+
+      var frameX = padW, frameY = padH, frameW = iw + sideMargin * 2, frameH = ih + topMargin + bottomMargin;
+      if (withShadow) {
+        ctx.save();
+        ctx.shadowColor = 'rgba(0,0,0,0.35)';
+        ctx.shadowBlur = 24;
+        ctx.shadowOffsetY = 10;
+        ctx.fillStyle = frameColor;
+        ctx.fillRect(frameX, frameY, frameW, frameH);
+        ctx.restore();
+      } else {
+        ctx.fillStyle = frameColor;
+        ctx.fillRect(frameX, frameY, frameW, frameH);
+      }
+      ctx.drawImage(currentImg, frameX + sideMargin, frameY + topMargin, iw, ih);
+
+      if (caption) {
+        var isDark = isColorDark(frameColor);
+        ctx.fillStyle = isDark ? '#fffdf6' : '#2a2433';
+        var fontSize = Math.max(16, Math.round(bottomMargin * 0.28));
+        ctx.font = fontSize + 'px "Gowun Dodum", sans-serif';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(caption, frameX + frameW / 2, frameY + topMargin + ih + bottomMargin / 2, frameW - 40);
+      }
+
+    } else if (currentStyle === 'rounded') {
+      var radius = parseInt(document.getElementById('radiusRange').value, 10);
+      var hasBorder = document.getElementById('roundedBorderOpt').checked;
+      var rColor = document.getElementById('roundedColorPicker').value;
+      var rWidth = hasBorder ? parseInt(document.getElementById('roundedWidthRange').value, 10) : 0;
+
+      previewCanvas.width = iw + rWidth * 2;
+      previewCanvas.height = ih + rWidth * 2;
+      ctx.clearRect(0, 0, previewCanvas.width, previewCanvas.height);
+
+      if (hasBorder) {
+        roundRectPath(ctx, 0, 0, previewCanvas.width, previewCanvas.height, radius + rWidth);
+        ctx.fillStyle = rColor;
+        ctx.fill();
+      }
+
+      ctx.save();
+      roundRectPath(ctx, rWidth, rWidth, iw, ih, radius);
+      ctx.clip();
+      ctx.drawImage(currentImg, rWidth, rWidth, iw, ih);
+      ctx.restore();
+    }
+  }
+
+  function isColorDark(hex) {
+    hex = hex.replace('#', '');
+    var r = parseInt(hex.substring(0, 2), 16);
+    var g = parseInt(hex.substring(2, 4), 16);
+    var b = parseInt(hex.substring(4, 6), 16);
+    var luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+    return luminance < 0.5;
+  }
+
+  document.getElementById('borderColorPicker').addEventListener('input', function() {
+    document.querySelectorAll('#borderColorPresets .color-preset').forEach(function(p) { p.classList.remove('active'); });
+    render();
+  });
+  document.getElementById('borderWidthRange').addEventListener('input', function() {
+    document.getElementById('borderWidthValue').textContent = this.value + 'px';
+    render();
+  });
+  document.getElementById('polaroidColorPicker').addEventListener('input', function() {
+    document.querySelectorAll('#polaroidColorPresets .color-preset').forEach(function(p) { p.classList.remove('active'); });
+    render();
+  });
+  document.getElementById('captionInput').addEventListener('input', render);
+  document.getElementById('shadowOpt').addEventListener('change', render);
+  document.getElementById('radiusRange').addEventListener('input', function() {
+    document.getElementById('radiusValue').textContent = this.value + 'px';
+    render();
+  });
+  document.getElementById('roundedBorderOpt').addEventListener('change', function() {
+    document.getElementById('roundedBorderColorRow').style.display = this.checked ? '' : 'none';
+    render();
+  });
+  document.getElementById('roundedColorPicker').addEventListener('input', function() {
+    document.querySelectorAll('#roundedColorPresets .color-preset').forEach(function(p) { p.classList.remove('active'); });
+    render();
+  });
+  document.getElementById('roundedWidthRange').addEventListener('input', function() {
+    document.getElementById('roundedWidthValue').textContent = this.value + 'px';
+    render();
+  });
+
+  document.getElementById('downloadBtn').addEventListener('click', function() {
+    if (!currentImg) { showToast('먼저 이미지를 업로드해주세요'); return; }
+    previewCanvas.toBlob(function(blob) {
+      var a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'framed-image.png';
+      a.click();
+      URL.revokeObjectURL(a.href);
+      showToast('✓ 이미지가 저장됩니다');
+    }, 'image/png');
+  });
+
+  document.getElementById('resetBtn').addEventListener('click', function() {
+    currentImg = null;
+    fileInput.value = '';
+    ctx.clearRect(0, 0, previewCanvas.width, previewCanvas.height);
+    previewCanvas.width = 0;
+    previewCanvas.height = 0;
+    resultWrap.classList.remove('show');
+    uploadZone.style.display = '';
+  });
+
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(function() { t.classList.remove('show'); }, 2000);
+  }
+  </script>
+</body>
+</html>

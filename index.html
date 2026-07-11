@@ -8,7 +8,7 @@
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="BrowserKit — 설치 없이 브라우저에서 바로 쓰는 무료 도구 50가지. 개인정보 마스킹, 얼굴 블러, PDF 편집, QR 코드, JSON 포맷터, 차트 생성까지. 대부분 서버 전송 없이 완전 로컬 처리합니다.">
+  <meta name="description" content="BrowserKit — 설치 없이 브라우저에서 바로 쓰는 무료 도구 51가지. 개인정보 마스킹, 얼굴 블러, PDF 편집, QR 코드, JSON 포맷터, 차트 생성까지. 대부분 서버 전송 없이 완전 로컬 처리합니다.">
   <meta property="og:title" content="BrowserKit — 브라우저 기반 무료 도구 모음">
   <meta property="og:description" content="서버 전송 없이 브라우저에서 바로 쓰는 무료 도구 모음. 개인정보 마스킹, 이미지 편집, PDF 처리.">
   <meta property="og:type" content="website">
@@ -82,7 +82,7 @@ const TOOL_URLS = {
   CSSUnit:'/css-unit/', DiagramMaker:'/diagram-maker/', PaletteGen:'/palette-gen/', ExifRemover:'/exif-remover/',
   RandomPicker:'/random-picker/', WordCloudGen:'/word-cloud/', FaviconGen:'/favicon-gen/', SVGtoPNG:'/svg-to-png/',
   PomodoroTimer:'/pomodoro-timer/', UUIDGen:'/uuid-gen/', JWTDecoder:'/jwt-decoder/', CronHelper:'/cron-helper/',
-  SQLFormatter:'/sql-formatter/', LoremGen:'/lorem-gen/', ImageCompare:'/image-compare/'
+  SQLFormatter:'/sql-formatter/', LoremGen:'/lorem-gen/', ImageCompare:'/image-compare/', ImageFrame:'/image-frame/'
 };
 
 const BLOG_URLS = {
@@ -148,7 +148,8 @@ const BLOG_URLS = {
   'CronHelper 사용법 완전 가이드':'/blog/62-cronhelper-howto.html',
   'SQLFormatter 사용법 완전 가이드':'/blog/63-sqlformatter-howto.html',
   'LoremGen 사용법 완전 가이드':'/blog/64-loremgen-howto.html',
-  'ImageCompare 사용법 완전 가이드':'/blog/65-imagecompare-howto.html'
+  'ImageCompare 사용법 완전 가이드':'/blog/65-imagecompare-howto.html',
+  'ImageFrame 사용법 완전 가이드':'/blog/66-imageframe-howto.html'
 };
 
 const INFO_URLS = {
@@ -197,7 +198,7 @@ function glyphInfo(code) {
     ChartMaker:'chart', ImageText:'token:T', ImageFilter:'halfcircle', ImageCollage:'collage', PixelArt:'pixelart',
     MosaicMaker:'mosaic', PDFSplit:'split', LineNumber:'linenum', CurrencyCalc:'currency', Minifier:'token:<>',
     URLEncode:'token:%20', CSSUnit:'token:rem', DiagramMaker:'diagram', PaletteGen:'palette', ExifRemover:'exif',
-    RandomPicker:'roulette', WordCloudGen:'wordcloud', FaviconGen:'favicon', SVGtoPNG:'token:SVG', PomodoroTimer:'pomodoro', UUIDGen:'token:UUID', JWTDecoder:'token:JWT', CronHelper:'token:CRON', SQLFormatter:'token:SQL', LoremGen:'token:Lo', ImageCompare:'compare'
+    RandomPicker:'roulette', WordCloudGen:'wordcloud', FaviconGen:'favicon', SVGtoPNG:'token:SVG', PomodoroTimer:'pomodoro', UUIDGen:'token:UUID', JWTDecoder:'token:JWT', CronHelper:'token:CRON', SQLFormatter:'token:SQL', LoremGen:'token:Lo', ImageCompare:'compare', ImageFrame:'frame'
   };
   const v = m[code];
   if (!v) return { glyph: 'token', token: '+' };
@@ -243,6 +244,7 @@ function icon(type, fill, ink, glyph, token) {
     else if (gl === 'key') inner = `<div style="position:relative;width:30px;height:18px;display:flex;align-items:center"><div style="width:15px;height:15px;border-radius:50%;background:transparent;border:3px solid ${k};box-sizing:border-box"></div><div style="position:absolute;left:13px;top:50%;transform:translateY(-50%);width:15px;height:3px;background:${k};border-radius:2px"></div><div style="position:absolute;right:1px;top:50%;width:3px;height:7px;background:${k};border-radius:2px"></div><div style="position:absolute;right:6px;top:50%;width:3px;height:7px;background:${k};border-radius:2px"></div></div>`;
     else if (gl === 'pomodoro') inner = `<div style="position:relative;width:26px;height:26px;border-radius:50%;background:#ff8a5e;border:2.5px solid ${k};box-sizing:border-box"><div style="position:absolute;left:50%;top:50%;width:2px;height:8px;background:${k};border-radius:2px;transform-origin:bottom center;transform:translate(-50%,-100%)"></div><div style="position:absolute;left:50%;top:50%;width:2px;height:6px;background:${k};border-radius:2px;transform-origin:bottom center;transform:translate(-50%,-100%) rotate(115deg)"></div></div>`;
     else if (gl === 'compare') inner = `<div style="width:24px;height:24px;border-radius:6px;background:#fffdf9;border:2.5px solid ${k};box-sizing:border-box;position:relative;overflow:hidden"><div style="position:absolute;left:0;top:0;width:50%;height:100%;background:${k}"></div><div style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:3px;height:16px;background:#fffdf9;border-radius:2px"></div></div>`;
+    else if (gl === 'frame') inner = `<div style="width:26px;height:26px;background:#fffdf9;border:3.5px solid ${k};border-radius:3px;box-sizing:border-box"></div>`;
     else inner = `<div style="font:700 16px Gowun Dodum,sans-serif;color:${k};line-height:1;letter-spacing:-.5px;white-space:nowrap">${tk}</div>`;
     return `<div style="width:46px;height:46px;background:${f};border:2.5px solid ${k};border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden">${inner}</div>`;
   }
@@ -283,13 +285,14 @@ const SEARCH_TOOLS = [
   {code:'SVGtoPNG',name:'SVG → PNG 변환기'},{code:'PomodoroTimer',name:'뽀모도로 타이머'},
   {code:'UUIDGen',name:'UUID 생성기'},{code:'JWTDecoder',name:'JWT 디코더'},
   {code:'CronHelper',name:'Cron 표현식 도우미'},{code:'SQLFormatter',name:'SQL 포맷터'},
-  {code:'LoremGen',name:'Lorem Ipsum 생성기'},{code:'ImageCompare',name:'이미지 비교 슬라이더'}
+  {code:'LoremGen',name:'Lorem Ipsum 생성기'},{code:'ImageCompare',name:'이미지 비교 슬라이더'},
+  {code:'ImageFrame',name:'이미지 프레임 추가'}
 ];
 
 // ── Toolbox categories (desktop widget) ──────────────────────────────────────
 const TOOLBOX_CATS = [
   { label: '개인정보',     keys: ['MaskPrivacy','MaskPDF','MaskFace','MaskDoc','ExifRemover'] },
-  { label: '이미지 편집',  keys: ['FitImage','CropImage','WatermarkImage','ColorPicker','ImageBright','BGRemove','ImageText','ImageFilter','ImageCollage','PixelArt','MosaicMaker','FaviconGen','SVGtoPNG','ImageCompare'] },
+  { label: '이미지 편집',  keys: ['FitImage','CropImage','WatermarkImage','ColorPicker','ImageBright','BGRemove','ImageText','ImageFilter','ImageCollage','PixelArt','MosaicMaker','FaviconGen','SVGtoPNG','ImageCompare','ImageFrame'] },
   { label: '문서·텍스트',  keys: ['PDFMerge','PDFSplit','TextTools','DiffChecker','MarkdownEditor','FindReplace','LineNumber','LoremGen'] },
   { label: '유틸리티',     keys: ['QRCode','PasswordGen','UnitConvert','DateCalc','WorldClock','CurrencyCalc','RandomPicker','PomodoroTimer'] },
   { label: '개발자',       keys: ['JSONFormat','RegexTest','Base64Tool','HashGen','Minifier','URLEncode','CSSUnit','UUIDGen','JWTDecoder','CronHelper','SQLFormatter'] },
@@ -306,7 +309,7 @@ function buildTree() {
   return {
     '도구':{type:'folder',label:'도구',children:{
       '개인정보':{type:'folder',label:'개인정보',children:{MaskPrivacy:t('개인정보 마스킹'),MaskPDF:t('PDF 마스킹'),MaskFace:t('얼굴 블러'),MaskDoc:t('텍스트 마스킹'),ExifRemover:t('EXIF 제거기')}},
-      '이미지 편집':{type:'folder',label:'이미지 편집',children:{FitImage:t('이미지 변환'),CropImage:t('이미지 자르기'),WatermarkImage:t('워터마크 추가'),ColorPicker:t('색상 추출'),ImageBright:t('이미지 보정'),BGRemove:t('AI 배경 제거'),ImageText:t('이미지 텍스트 추가'),ImageFilter:t('이미지 필터'),ImageCollage:t('이미지 콜라주'),PixelArt:t('픽셀 아트 변환'),MosaicMaker:t('모자이크 생성기'),FaviconGen:t('파비콘 생성기'),SVGtoPNG:t('SVG → PNG 변환기'),ImageCompare:t('이미지 비교 슬라이더')}},
+      '이미지 편집':{type:'folder',label:'이미지 편집',children:{FitImage:t('이미지 변환'),CropImage:t('이미지 자르기'),WatermarkImage:t('워터마크 추가'),ColorPicker:t('색상 추출'),ImageBright:t('이미지 보정'),BGRemove:t('AI 배경 제거'),ImageText:t('이미지 텍스트 추가'),ImageFilter:t('이미지 필터'),ImageCollage:t('이미지 콜라주'),PixelArt:t('픽셀 아트 변환'),MosaicMaker:t('모자이크 생성기'),FaviconGen:t('파비콘 생성기'),SVGtoPNG:t('SVG → PNG 변환기'),ImageCompare:t('이미지 비교 슬라이더'),ImageFrame:t('이미지 프레임 추가')}},
       '문서\xb7텍스트':{type:'folder',label:'문서\xb7텍스트',children:{PDFMerge:t('PDF 합치기'),PDFSplit:t('PDF 분할'),TextTools:t('텍스트 변환'),DiffChecker:t('텍스트 비교'),MarkdownEditor:t('마크다운 편집기'),FindReplace:t('찾아 바꾸기'),LineNumber:t('줄 번호 추가'),LoremGen:t('Lorem Ipsum 생성기')}},
       '유틸리티':{type:'folder',label:'유틸리티',children:{QRCode:t('QR 코드 생성'),PasswordGen:t('비밀번호 생성기'),UnitConvert:t('단위 변환기'),DateCalc:t('날짜 계산기'),WorldClock:t('세계 시간'),CurrencyCalc:t('환율 계산기'),RandomPicker:t('랜덤 추첨기'),PomodoroTimer:t('뽀모도로 타이머')}},
       '개발자':{type:'folder',label:'개발자',children:{JSONFormat:t('JSON 포맷터'),RegexTest:t('정규식 테스터'),Base64Tool:t('Base64 변환'),HashGen:t('해시 생성기'),Minifier:t('코드 압축기'),URLEncode:t('URL 인코더'),CSSUnit:t('CSS 단위 변환기'),UUIDGen:t('UUID 생성기'),JWTDecoder:t('JWT 디코더'),CronHelper:t('Cron 표현식 도우미'),SQLFormatter:t('SQL 포맷터')}},
@@ -333,7 +336,7 @@ function buildTree() {
         b22:a('BGRemove 사용법 완전 가이드'),b28:a('ImageText 사용법 완전 가이드'),
         b29:a('ImageFilter 사용법 완전 가이드'),b30:a('ImageCollage 사용법 완전 가이드'),
         b31:a('PixelArt 사용법 완전 가이드'),b32:a('MosaicMaker 사용법 완전 가이드'),
-        b44:a('FaviconGen 사용법 완전 가이드'),b45:a('SVGtoPNG 사용법 완전 가이드'),b52:a('ImageCompare 사용법 완전 가이드'),
+        b44:a('FaviconGen 사용법 완전 가이드'),b45:a('SVGtoPNG 사용법 완전 가이드'),b52:a('ImageCompare 사용법 완전 가이드'),b53:a('ImageFrame 사용법 완전 가이드'),
         h3:{type:'header',label:'문서\xb7텍스트'},
         b7:a('PDFMerge 사용법 완전 가이드'),b33:a('PDFSplit 사용법 완전 가이드'),
         b9:a('TextTools 사용법 완전 가이드'),
@@ -488,6 +491,7 @@ function fileBodyHtml(win,pal) {
     SQLFormatter: 'SQL 쿼리를 읽기 쉽게 들여쓰기하고 정렬합니다.',
     LoremGen: '문단·문장·단어 수를 지정해 더미 텍스트를 즉시 생성합니다.',
     ImageCompare: '두 이미지를 드래그로 좌우 비교하는 Before/After 슬라이더를 만듭니다.',
+    ImageFrame: '이미지에 색상 테두리, 폴라로이드, 둥근 모서리 프레임을 추가합니다.',
     CurrencyCalc: '최신 환율로 주요 통화를 즉시 변환합니다.'
   };
   if(file.kind==='tool'){

@@ -8,11 +8,11 @@
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="ImageCompare의 모든 기능을 단계별로 설명하는 공식 사용 가이드입니다. 두 이미지를 드래그로 좌우 비교하는 Before/After 슬라이더를 만드는 방법을 알아보세요." />
-  <meta property="og:title" content="ImageCompare 사용법 완전 가이드 — BrowserKit" />
-  <meta property="og:description" content="두 이미지를 드래그로 좌우 비교하는 Before/After 슬라이더를 즉시 만드는 ImageCompare 공식 가이드입니다." />
+  <meta name="description" content="ImageFrame의 모든 기능을 단계별로 설명하는 공식 사용 가이드입니다. 이미지에 색상 테두리, 폴라로이드 프레임, 둥근 모서리를 추가하는 방법을 알아보세요." />
+  <meta property="og:title" content="ImageFrame 사용법 완전 가이드 — BrowserKit" />
+  <meta property="og:description" content="이미지에 색상 테두리, 폴라로이드 프레임, 둥근 모서리를 추가하는 ImageFrame 공식 가이드입니다." />
   <meta property="og:type" content="article" />
-  <title>ImageCompare 사용법 완전 가이드 — BrowserKit</title>
+  <title>ImageFrame 사용법 완전 가이드 — BrowserKit</title>
   <link rel="stylesheet" href="/css/style.css?v=20260704c" />
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506"
      crossorigin="anonymous"></script>
@@ -59,16 +59,16 @@
   {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
-    "headline": "ImageCompare 사용법 완전 가이드",
-    "description": "ImageCompare의 모든 기능을 단계별로 설명하는 공식 사용 가이드입니다. 두 이미지를 드래그로 좌우 비교하는 Before/After 슬라이더를 만드는 방법을 알아보세요.",
+    "headline": "ImageFrame 사용법 완전 가이드",
+    "description": "ImageFrame의 모든 기능을 단계별로 설명하는 공식 사용 가이드입니다. 이미지에 색상 테두리, 폴라로이드 프레임, 둥근 모서리를 추가하는 방법을 알아보세요.",
     "datePublished": "2026-07-11T00:00:00+09:00",
     "dateModified": "2026-07-11T00:00:00+09:00",
     "author": { "@type": "Organization", "name": "BrowserKit", "url": "https://browserkit.online" },
     "publisher": { "@type": "Organization", "name": "BrowserKit", "url": "https://browserkit.online", "logo": { "@type": "ImageObject", "url": "https://browserkit.online/img/og-browserkit.png" } },
-    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://browserkit.online/blog/65-imagecompare-howto.html" },
+    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://browserkit.online/blog/66-imageframe-howto.html" },
     "image": "https://browserkit.online/img/og-browserkit.png"
   }
-  </script>  <link rel="canonical" href="https://browserkit.online/blog/65-imagecompare-howto.html" />
+  </script>  <link rel="canonical" href="https://browserkit.online/blog/66-imageframe-howto.html" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:image" content="https://browserkit.online/img/og-browserkit.png" />
   <style>
@@ -89,34 +89,34 @@
   <article class="post-wrap">
     <a href="/blog/" class="back-link">&#x2190; 블로그 목록</a>
     <span class="post-tag">가이드</span>
-    <h1 class="post-title">ImageCompare 사용법 완전 가이드</h1>
+    <h1 class="post-title">ImageFrame 사용법 완전 가이드</h1>
     <div class="post-date">2026년 7월 11일</div>
     <div style="margin:12px 0"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
 
     <div class="post-body">
-      <p>ImageCompare는 두 이미지를 나란히 올려 드래그로 좌우 비교할 수 있는 Before/After 슬라이더를 즉시 만들어주는 무료 온라인 도구입니다. 리모델링 전후, 사진 보정 전후, 디자인 시안 비교 등에 자주 쓰이는 형태의 위젯을 몇 번의 클릭만으로 만들 수 있고, 현재 슬라이더 위치 그대로의 PNG 스냅샷이나 다른 웹페이지에 붙여넣을 수 있는 임베드 코드로 내보낼 수 있습니다. 모든 처리는 브라우저에서만 이루어집니다.</p>
+      <p>ImageFrame은 업로드한 이미지에 색상 테두리, 폴라로이드 프레임, 둥근 모서리 중 원하는 스타일을 즉시 적용해주는 무료 온라인 도구입니다. 각 스타일마다 색상, 두께, 모서리 반경 같은 옵션을 실시간으로 조절하며 미리보기를 확인할 수 있고, 완성된 이미지는 원본 해상도를 유지한 PNG 파일로 바로 다운로드할 수 있습니다. 모든 처리는 브라우저에서만 이루어집니다.</p>
 
       <h2>주요 기능</h2>
       <div class="feature-grid">
         <div class="feature-card">
-          <div class="feature-icon">&#x1F5B1;&#xFE0F;</div>
-          <div class="feature-title">드래그 비교 슬라이더</div>
-          <div class="feature-desc">핸들을 드래그하거나 원하는 위치를 클릭해 Before/After 비율을 자유롭게 조절합니다.</div>
+          <div class="feature-icon">&#x1F3A8;</div>
+          <div class="feature-title">색상 테두리</div>
+          <div class="feature-desc">원하는 색상과 두께의 단색 테두리를 이미지 둘레에 추가합니다.</div>
         </div>
         <div class="feature-card">
           <div class="feature-icon">&#x1F4F7;</div>
-          <div class="feature-title">PNG 스냅샷 다운로드</div>
-          <div class="feature-desc">현재 슬라이더 위치 그대로의 정지 이미지를 고해상도 PNG로 저장합니다.</div>
+          <div class="feature-title">폴라로이드 프레임</div>
+          <div class="feature-desc">아래쪽 여백에 캡션 문구를 넣을 수 있는 폴라로이드 스타일 프레임을 만듭니다.</div>
         </div>
         <div class="feature-card">
-          <div class="feature-icon">&#x1F4E4;</div>
-          <div class="feature-title">웹페이지 임베드 코드</div>
-          <div class="feature-desc">이미지가 포함된 독립 실행형 HTML 코드를 생성해 다른 페이지에 그대로 붙여넣을 수 있습니다.</div>
+          <div class="feature-icon">&#x2B1C;</div>
+          <div class="feature-title">둥근 모서리</div>
+          <div class="feature-desc">모서리 반경을 자유롭게 조절하고, 필요하면 테두리도 함께 추가합니다.</div>
         </div>
         <div class="feature-card">
           <div class="feature-icon">&#x1F512;</div>
           <div class="feature-title">완전 로컬 처리</div>
-          <div class="feature-desc">모든 처리가 브라우저 안에서 실행됩니다. 이미지가 서버로 전송되지 않습니다.</div>
+          <div class="feature-desc">모든 프레임 합성이 브라우저 안에서 실행됩니다. 이미지가 서버로 전송되지 않습니다.</div>
         </div>
       </div>
 
@@ -126,99 +126,108 @@
       <div class="step-card">
         <div class="step-num">1</div>
         <div class="step-content">
-          <h3>BEFORE / AFTER 이미지 업로드</h3>
-          <p>각각의 업로드 칸을 클릭하거나 이미지를 드래그해 <strong>BEFORE</strong> 이미지와 <strong>AFTER</strong> 이미지를 올립니다. 두 이미지가 모두 준비되면 비교 슬라이더가 자동으로 나타납니다.</p>
+          <h3>이미지 업로드</h3>
+          <p>업로드 존을 클릭하거나 이미지를 드래그해 올립니다. 업로드가 끝나면 기본값인 색상 테두리가 적용된 미리보기가 바로 나타납니다.</p>
         </div>
       </div>
-
-      <figure style="margin:12px 0 24px; text-align:center;">
-        <img src="/img/blog/imagecompare/01-upload.png"
-             alt="ImageCompare BEFORE와 AFTER 이미지 업로드 칸과 업로드 후 나타난 비교 슬라이더가 표시된 화면"
-             style="width:100%; max-width:640px; border:1px solid var(--border); border-radius:var(--radius);"
-             loading="lazy" />
-        <figcaption style="font-size:13px; color:var(--subtext); margin-top:6px;">
-          두 이미지 업로드 후 나타나는 비교 슬라이더
-        </figcaption>
-      </figure>
 
       <div class="step-card">
         <div class="step-num">2</div>
         <div class="step-content">
-          <h3>핸들 드래그로 비교</h3>
-          <p>가운데 원형 핸들을 드래그하거나 슬라이더 영역 어디든 클릭해 Before/After 경계를 원하는 위치로 옮깁니다. <strong>BEFORE/AFTER 라벨 표시</strong> 옵션으로 라벨 노출 여부를 선택할 수 있습니다.</p>
-        </div>
-      </div>
-
-      <div class="step-card">
-        <div class="step-num">3</div>
-        <div class="step-content">
-          <h3>PNG 스냅샷 또는 임베드 코드로 내보내기</h3>
-          <p><strong>📷 PNG 스냅샷 다운로드</strong>로 현재 위치 그대로의 정지 이미지를 저장하거나, <strong>📤 임베드 코드 생성</strong>으로 다른 웹페이지에 붙여넣을 수 있는 독립 실행형 HTML 코드를 만들어 <strong>📋 코드 복사</strong>로 클립보드에 담습니다.</p>
+          <h3>프레임 스타일 선택</h3>
+          <p>상단 탭에서 <strong>🎨 색상 테두리</strong>, <strong>📷 폴라로이드</strong>, <strong>⬜ 둥근 모서리</strong> 중 원하는 스타일을 고릅니다. 스타일을 바꿀 때마다 미리보기가 즉시 갱신됩니다.</p>
         </div>
       </div>
 
       <figure style="margin:12px 0 24px; text-align:center;">
-        <img src="/img/blog/imagecompare/02-export.png"
-             alt="ImageCompare PNG 스냅샷 다운로드, 임베드 코드 생성 버튼과 생성된 임베드 코드 블록이 표시된 화면"
+        <img src="/img/blog/imageframe/01-border.png"
+             alt="ImageFrame 색상 테두리 스타일 옵션(색상 프리셋, 두께 슬라이더)과 적용된 미리보기가 표시된 화면"
              style="width:100%; max-width:640px; border:1px solid var(--border); border-radius:var(--radius);"
              loading="lazy" />
         <figcaption style="font-size:13px; color:var(--subtext); margin-top:6px;">
-          PNG 스냅샷 다운로드와 임베드 코드 생성
+          색상 테두리 스타일과 실시간 미리보기
+        </figcaption>
+      </figure>
+
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <h3>세부 옵션 조정</h3>
+          <p>색상 테두리는 색상·두께를, 폴라로이드는 프레임 색상·캡션 문구·그림자 효과를, 둥근 모서리는 반경과 테두리 추가 여부를 조절합니다. 색상은 프리셋 클릭이나 색상 피커로 직접 지정할 수 있습니다.</p>
+        </div>
+      </div>
+
+      <div class="step-card">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <h3>PNG 다운로드</h3>
+          <p><strong>⬇ PNG 다운로드</strong> 버튼으로 완성된 이미지를 저장합니다. 새 이미지로 다시 시작하려면 <strong>↺ 새 이미지 선택</strong> 버튼을 사용합니다.</p>
+        </div>
+      </div>
+
+      <figure style="margin:12px 0 24px; text-align:center;">
+        <img src="/img/blog/imageframe/02-polaroid.png"
+             alt="ImageFrame 폴라로이드 스타일의 캡션 문구 입력, 그림자 효과 옵션과 완성된 폴라로이드 프레임 미리보기가 표시된 화면"
+             style="width:100%; max-width:640px; border:1px solid var(--border); border-radius:var(--radius);"
+             loading="lazy" />
+        <figcaption style="font-size:13px; color:var(--subtext); margin-top:6px;">
+          캡션과 그림자 효과가 적용된 폴라로이드 프레임
         </figcaption>
       </figure>
 
       <div class="post-warn">
-        <strong>⚠️ 참고:</strong> ImageCompare는 애니메이션 GIF 내보내기를 지원하지 않습니다 — 현재 슬라이더 위치의 정지 이미지(PNG)와 실제로 드래그 가능한 임베드 코드만 제공합니다. 또한 임베드 코드에는 두 이미지가 base64로 그대로 인코딩되어 포함되므로, 원본 이미지 용량에 따라 코드 크기가 매우 커질 수 있습니다. 두 이미지는 비율이 달라도 가운데 기준으로 자동 크롭되어 슬라이더 영역에 꽉 차게 표시됩니다.
+        <strong>⚠️ 참고:</strong> 원본 이미지의 해상도를 그대로 유지한 채 프레임을 추가하므로, 고해상도 이미지일수록 미리보기 렌더링과 다운로드에 시간이 조금 더 걸릴 수 있습니다. 폴라로이드 캡션은 이미지에 포함된 텍스트로 렌더링되며, 이후 별도로 수정할 수 없으니 다운로드 전 문구를 다시 한번 확인하세요.
       </div>
 
-      <h2>내보내기 방식 비교</h2>
+      <h2>스타일별 조절 가능 옵션</h2>
       <div class="post-table-wrap"><table class="post-table">
-        <thead><tr><th>방식</th><th>결과물</th><th>용도</th></tr></thead>
+        <thead><tr><th>스타일</th><th>옵션</th></tr></thead>
         <tbody>
-          <tr><td>PNG 스냅샷</td><td>정지 이미지 1장</td><td>보고서, 발표 자료, SNS 공유용</td></tr>
-          <tr><td>임베드 코드</td><td>드래그 가능한 HTML 위젯</td><td>블로그, 포트폴리오 사이트에 직접 삽입</td></tr>
+          <tr><td>색상 테두리</td><td>테두리 색상(프리셋/직접 지정), 두께(2~60px)</td></tr>
+          <tr><td>폴라로이드</td><td>프레임 색상, 캡션 문구(최대 40자), 그림자 효과 On/Off</td></tr>
+          <tr><td>둥근 모서리</td><td>모서리 반경(0~120px), 테두리 추가 여부·색상·두께</td></tr>
         </tbody>
       </table></div>
 
       <h2>활용 예시</h2>
       <div class="use-case-grid">
         <div class="use-case-card">
-          <div class="use-case-icon">&#x1F3E1;</div>
-          <div class="use-case-title">인테리어·리모델링</div>
-          <div class="use-case-desc">공사 전후 사진을 슬라이더로 비교해 변화를 한눈에 보여줍니다.</div>
+          <div class="use-case-icon">&#x1F4F1;</div>
+          <div class="use-case-title">SNS 게시물</div>
+          <div class="use-case-desc">둥근 모서리나 테두리로 SNS 피드에 어울리는 이미지를 빠르게 준비합니다.</div>
         </div>
         <div class="use-case-card">
           <div class="use-case-icon">&#x1F4F8;</div>
-          <div class="use-case-title">사진 보정 비교</div>
-          <div class="use-case-desc">원본과 보정본을 나란히 비교해 편집 효과를 명확히 전달합니다.</div>
+          <div class="use-case-title">추억 사진 꾸미기</div>
+          <div class="use-case-desc">여행이나 일상 사진에 폴라로이드 프레임과 날짜 캡션을 넣어 감성을 더합니다.</div>
         </div>
         <div class="use-case-card">
-          <div class="use-case-icon">&#x1F3A8;</div>
-          <div class="use-case-title">디자인 시안 검토</div>
-          <div class="use-case-desc">리디자인 전후 화면을 비교해 팀원이나 클라이언트에게 공유합니다.</div>
+          <div class="use-case-icon">&#x1F5BC;&#xFE0F;</div>
+          <div class="use-case-title">웹사이트·블로그 삽입</div>
+          <div class="use-case-desc">테두리를 더해 배경과 자연스럽게 구분되는 이미지를 만듭니다.</div>
         </div>
         <div class="use-case-card">
-          <div class="use-case-icon">&#x1F4BB;</div>
-          <div class="use-case-title">포트폴리오 삽입</div>
-          <div class="use-case-desc">임베드 코드로 개인 사이트나 블로그에 인터랙티브 비교 위젯을 넣습니다.</div>
+          <div class="use-case-icon">&#x1F4CB;</div>
+          <div class="use-case-title">발표 자료</div>
+          <div class="use-case-desc">스크린샷에 깔끔한 테두리를 더해 발표 슬라이드에 바로 사용합니다.</div>
         </div>
       </div>
 
-      <div class="post-highlight">&#x1F512; ImageCompare는 모든 처리가 내 PC 브라우저에서만 실행됩니다. 업로드한 이미지가 외부 서버로 전송되지 않습니다.</div>
+      <div class="post-highlight">&#x1F512; ImageFrame은 모든 이미지 처리가 내 PC 브라우저에서만 실행됩니다. 업로드한 이미지가 외부 서버로 전송되지 않습니다.</div>
     </div>
 
     <div class="cta-box">
-      <p>두 이미지를 드래그로 비교하는 슬라이더를 만들어보세요.<br />PNG 스냅샷과 임베드 코드까지 바로 받을 수 있습니다.</p>
-      <a href="/image-compare/" class="cta-btn" style="display:inline-flex;align-items:center;gap:8px">
-        <span style="display:inline-block;width:26px;height:26px;overflow:hidden;flex-shrink:0"><span style="display:block;transform:scale(0.565);transform-origin:top left"><div style="width:46px;height:46px;background:#ffb3c7;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="width:24px;height:24px;border-radius:6px;background:#fffdf9;border:2.5px solid #2a2433;box-sizing:border-box;position:relative;overflow:hidden"><div style="position:absolute;left:0;top:0;width:50%;height:100%;background:#2a2433"></div><div style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:3px;height:16px;background:#fffdf9;border-radius:2px"></div></div></div></span></span>
-        무료로 비교 슬라이더 만들기
+      <p>이미지에 어울리는 프레임을 몇 초 만에 씌워보세요.<br />색상 테두리, 폴라로이드, 둥근 모서리 중 골라 바로 다운로드할 수 있습니다.</p>
+      <a href="/image-frame/" class="cta-btn" style="display:inline-flex;align-items:center;gap:8px">
+        <span style="display:inline-block;width:26px;height:26px;overflow:hidden;flex-shrink:0"><span style="display:block;transform:scale(0.565);transform-origin:top left"><div style="width:46px;height:46px;background:#ffb3c7;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="width:26px;height:26px;background:#fffdf9;border:3.5px solid #2a2433;border-radius:3px;box-sizing:border-box"></div></div></span></span>
+        무료로 프레임 만들기
       </a>
     </div>
     <div style="margin:12px 0"><ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="9500090221"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
 
 <div class="post-nav">
-      <a href="/blog/58-svgtopng-howto.html"><span class="nav-label">← 이전 글</span>SVGtoPNG 사용법 완전 가이드</a>
-      <a href="/blog/66-imageframe-howto.html" style="text-align:right"><span class="nav-label">다음 글 →</span>ImageFrame 사용법 완전 가이드</a>
+      <a href="/blog/65-imagecompare-howto.html"><span class="nav-label">← 이전 글</span>ImageCompare 사용법 완전 가이드</a>
+      <a href="/blog/18-pdfmerge-howto.html" style="text-align:right"><span class="nav-label">다음 글 →</span>PDFMerge 사용법 완전 가이드</a>
     </div></div>
 
   </article>
