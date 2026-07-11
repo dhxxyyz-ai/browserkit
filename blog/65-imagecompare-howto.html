@@ -8,11 +8,11 @@
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="SVGtoPNG의 모든 기능을 단계별로 설명하는 공식 사용 가이드입니다. SVG 파일이나 코드를 원하는 해상도의 PNG로 변환하는 방법을 알아보세요." />
-  <meta property="og:title" content="SVGtoPNG 사용법 완전 가이드 — BrowserKit" />
-  <meta property="og:description" content="SVG 파일이나 코드를 원하는 해상도의 PNG로 즉시 변환하는 SVGtoPNG 공식 가이드입니다." />
+  <meta name="description" content="ImageCompare의 모든 기능을 단계별로 설명하는 공식 사용 가이드입니다. 두 이미지를 드래그로 좌우 비교하는 Before/After 슬라이더를 만드는 방법을 알아보세요." />
+  <meta property="og:title" content="ImageCompare 사용법 완전 가이드 — BrowserKit" />
+  <meta property="og:description" content="두 이미지를 드래그로 좌우 비교하는 Before/After 슬라이더를 즉시 만드는 ImageCompare 공식 가이드입니다." />
   <meta property="og:type" content="article" />
-  <title>SVGtoPNG 사용법 완전 가이드 — BrowserKit</title>
+  <title>ImageCompare 사용법 완전 가이드 — BrowserKit</title>
   <link rel="stylesheet" href="/css/style.css?v=20260704c" />
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506"
      crossorigin="anonymous"></script>
@@ -59,16 +59,16 @@
   {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
-    "headline": "SVGtoPNG 사용법 완전 가이드",
-    "description": "SVGtoPNG의 모든 기능을 단계별로 설명하는 공식 사용 가이드입니다. SVG 파일이나 코드를 원하는 해상도의 PNG로 변환하는 방법을 알아보세요.",
-    "datePublished": "2026-07-10T00:00:00+09:00",
-    "dateModified": "2026-07-10T00:00:00+09:00",
+    "headline": "ImageCompare 사용법 완전 가이드",
+    "description": "ImageCompare의 모든 기능을 단계별로 설명하는 공식 사용 가이드입니다. 두 이미지를 드래그로 좌우 비교하는 Before/After 슬라이더를 만드는 방법을 알아보세요.",
+    "datePublished": "2026-07-11T00:00:00+09:00",
+    "dateModified": "2026-07-11T00:00:00+09:00",
     "author": { "@type": "Organization", "name": "BrowserKit", "url": "https://browserkit.online" },
     "publisher": { "@type": "Organization", "name": "BrowserKit", "url": "https://browserkit.online", "logo": { "@type": "ImageObject", "url": "https://browserkit.online/img/og-browserkit.png" } },
-    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://browserkit.online/blog/58-svgtopng-howto.html" },
+    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://browserkit.online/blog/65-imagecompare-howto.html" },
     "image": "https://browserkit.online/img/og-browserkit.png"
   }
-  </script>  <link rel="canonical" href="https://browserkit.online/blog/58-svgtopng-howto.html" />
+  </script>  <link rel="canonical" href="https://browserkit.online/blog/65-imagecompare-howto.html" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:image" content="https://browserkit.online/img/og-browserkit.png" />
   <style>
@@ -89,34 +89,34 @@
   <article class="post-wrap">
     <a href="/blog/" class="back-link">&#x2190; 블로그 목록</a>
     <span class="post-tag">가이드</span>
-    <h1 class="post-title">SVGtoPNG 사용법 완전 가이드</h1>
-    <div class="post-date">2026년 7월 10일</div>
+    <h1 class="post-title">ImageCompare 사용법 완전 가이드</h1>
+    <div class="post-date">2026년 7월 11일</div>
     <div style="margin:12px 0"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
 
     <div class="post-body">
-      <p>SVGtoPNG는 SVG 파일을 업로드하거나 SVG 코드를 직접 붙여넣어 원하는 해상도의 PNG 이미지로 변환하는 무료 온라인 도구입니다. 너비·높이를 픽셀 단위로 지정하거나 1x~4x 배율 버튼으로 간편하게 해상도를 높일 수 있고, 투명·흰색·검정·사용자 지정 색상 중 원하는 배경을 선택할 수 있습니다. 모든 변환이 브라우저 내에서만 이루어지므로 SVG 내용이 외부 서버로 전송되지 않습니다.</p>
+      <p>ImageCompare는 두 이미지를 나란히 올려 드래그로 좌우 비교할 수 있는 Before/After 슬라이더를 즉시 만들어주는 무료 온라인 도구입니다. 리모델링 전후, 사진 보정 전후, 디자인 시안 비교 등에 자주 쓰이는 형태의 위젯을 몇 번의 클릭만으로 만들 수 있고, 현재 슬라이더 위치 그대로의 PNG 스냅샷이나 다른 웹페이지에 붙여넣을 수 있는 임베드 코드로 내보낼 수 있습니다. 모든 처리는 브라우저에서만 이루어집니다.</p>
 
       <h2>주요 기능</h2>
       <div class="feature-grid">
         <div class="feature-card">
-          <div class="feature-icon">&#x1F4C1;</div>
-          <div class="feature-title">파일 업로드 / 코드 붙여넣기</div>
-          <div class="feature-desc">.svg 파일을 드래그하거나, SVG 코드를 텍스트로 직접 붙여넣어 변환할 수 있습니다.</div>
+          <div class="feature-icon">&#x1F5B1;&#xFE0F;</div>
+          <div class="feature-title">드래그 비교 슬라이더</div>
+          <div class="feature-desc">핸들을 드래그하거나 원하는 위치를 클릭해 Before/After 비율을 자유롭게 조절합니다.</div>
         </div>
         <div class="feature-card">
-          <div class="feature-icon">&#x1F4CF;</div>
-          <div class="feature-title">해상도·배율 지정</div>
-          <div class="feature-desc">너비·높이를 직접 입력하거나 1x~4x 배율 버튼으로 원하는 크기의 PNG를 만듭니다.</div>
+          <div class="feature-icon">&#x1F4F7;</div>
+          <div class="feature-title">PNG 스냅샷 다운로드</div>
+          <div class="feature-desc">현재 슬라이더 위치 그대로의 정지 이미지를 고해상도 PNG로 저장합니다.</div>
         </div>
         <div class="feature-card">
-          <div class="feature-icon">&#x1F3A8;</div>
-          <div class="feature-title">배경색 선택</div>
-          <div class="feature-desc">투명·흰색·검정 중 선택하거나 색상 피커로 원하는 배경색을 직접 지정합니다.</div>
+          <div class="feature-icon">&#x1F4E4;</div>
+          <div class="feature-title">웹페이지 임베드 코드</div>
+          <div class="feature-desc">이미지가 포함된 독립 실행형 HTML 코드를 생성해 다른 페이지에 그대로 붙여넣을 수 있습니다.</div>
         </div>
         <div class="feature-card">
           <div class="feature-icon">&#x1F512;</div>
           <div class="feature-title">완전 로컬 처리</div>
-          <div class="feature-desc">모든 변환이 브라우저 안에서 실행됩니다. SVG 내용이 서버로 전송되지 않습니다.</div>
+          <div class="feature-desc">모든 처리가 브라우저 안에서 실행됩니다. 이미지가 서버로 전송되지 않습니다.</div>
         </div>
       </div>
 
@@ -126,111 +126,99 @@
       <div class="step-card">
         <div class="step-num">1</div>
         <div class="step-content">
-          <h3>SVG 업로드 또는 코드 붙여넣기</h3>
-          <p>상단 탭에서 <strong>📁 파일 업로드</strong>를 선택해 .svg 파일을 드래그하거나, <strong>📝 코드 붙여넣기</strong> 탭에서 SVG 코드를 직접 입력한 뒤 <strong>변환하기</strong> 버튼을 누릅니다.</p>
+          <h3>BEFORE / AFTER 이미지 업로드</h3>
+          <p>각각의 업로드 칸을 클릭하거나 이미지를 드래그해 <strong>BEFORE</strong> 이미지와 <strong>AFTER</strong> 이미지를 올립니다. 두 이미지가 모두 준비되면 비교 슬라이더가 자동으로 나타납니다.</p>
         </div>
       </div>
 
       <figure style="margin:12px 0 24px; text-align:center;">
-        <img src="/img/blog/svgtopng/01-upload.png"
-             alt="SVGtoPNG 파일 업로드 또는 코드 붙여넣기 탭과 업로드 존이 표시된 초기 화면"
+        <img src="/img/blog/imagecompare/01-upload.png"
+             alt="ImageCompare BEFORE와 AFTER 이미지 업로드 칸과 업로드 후 나타난 비교 슬라이더가 표시된 화면"
              style="width:100%; max-width:640px; border:1px solid var(--border); border-radius:var(--radius);"
              loading="lazy" />
         <figcaption style="font-size:13px; color:var(--subtext); margin-top:6px;">
-          파일 업로드 / 코드 붙여넣기 두 가지 방식 지원
+          두 이미지 업로드 후 나타나는 비교 슬라이더
         </figcaption>
       </figure>
 
       <div class="step-card">
         <div class="step-num">2</div>
         <div class="step-content">
-          <h3>출력 옵션 조정</h3>
-          <p>너비·높이를 직접 입력하거나(비율 고정 체크 시 자동 계산), 1x~4x 배율 버튼으로 해상도를 높입니다. 배경은 투명·흰색·검정 중 선택하거나 색상 피커로 원하는 색을 지정합니다.</p>
+          <h3>핸들 드래그로 비교</h3>
+          <p>가운데 원형 핸들을 드래그하거나 슬라이더 영역 어디든 클릭해 Before/After 경계를 원하는 위치로 옮깁니다. <strong>BEFORE/AFTER 라벨 표시</strong> 옵션으로 라벨 노출 여부를 선택할 수 있습니다.</p>
         </div>
       </div>
-
-      <figure style="margin:12px 0 24px; text-align:center;">
-        <img src="/img/blog/svgtopng/02-options.png"
-             alt="SVGtoPNG 너비 높이 입력, 배율 버튼, 배경색 선택 옵션이 표시된 화면"
-             style="width:100%; max-width:640px; border:1px solid var(--border); border-radius:var(--radius);"
-             loading="lazy" />
-        <figcaption style="font-size:13px; color:var(--subtext); margin-top:6px;">
-          출력 옵션 카드 — 크기, 배율, 배경색 설정
-        </figcaption>
-      </figure>
 
       <div class="step-card">
         <div class="step-num">3</div>
         <div class="step-content">
-          <h3>미리보기 확인 후 PNG 다운로드</h3>
-          <p>결과 미리보기에서 실제 변환될 이미지를 확인한 뒤 <strong>⬇ PNG 다운로드</strong> 버튼을 눌러 파일을 저장합니다. 옵션을 바꾸면 미리보기가 실시간으로 갱신됩니다.</p>
+          <h3>PNG 스냅샷 또는 임베드 코드로 내보내기</h3>
+          <p><strong>📷 PNG 스냅샷 다운로드</strong>로 현재 위치 그대로의 정지 이미지를 저장하거나, <strong>📤 임베드 코드 생성</strong>으로 다른 웹페이지에 붙여넣을 수 있는 독립 실행형 HTML 코드를 만들어 <strong>📋 코드 복사</strong>로 클립보드에 담습니다.</p>
         </div>
       </div>
 
       <figure style="margin:12px 0 24px; text-align:center;">
-        <img src="/img/blog/svgtopng/03-download.png"
-             alt="SVGtoPNG 결과 미리보기와 PNG 다운로드, 새 SVG 선택 버튼이 있는 화면"
+        <img src="/img/blog/imagecompare/02-export.png"
+             alt="ImageCompare PNG 스냅샷 다운로드, 임베드 코드 생성 버튼과 생성된 임베드 코드 블록이 표시된 화면"
              style="width:100%; max-width:640px; border:1px solid var(--border); border-radius:var(--radius);"
              loading="lazy" />
         <figcaption style="font-size:13px; color:var(--subtext); margin-top:6px;">
-          결과 미리보기와 PNG 다운로드 버튼
+          PNG 스냅샷 다운로드와 임베드 코드 생성
         </figcaption>
       </figure>
 
       <div class="post-warn">
-        <strong>⚠️ 참고:</strong> 외부 이미지·폰트를 <code>&lt;image&gt;</code> 태그나 <code>@font-face</code>로 참조하는 SVG는 브라우저 보안 정책(캔버스 오염 방지)상 변환이 제한되거나 해당 요소가 비어 보일 수 있습니다. 텍스트, 도형, 경로 등으로만 구성된 자체 완결형 SVG를 사용하면 가장 안정적으로 변환됩니다.
+        <strong>⚠️ 참고:</strong> ImageCompare는 애니메이션 GIF 내보내기를 지원하지 않습니다 — 현재 슬라이더 위치의 정지 이미지(PNG)와 실제로 드래그 가능한 임베드 코드만 제공합니다. 또한 임베드 코드에는 두 이미지가 base64로 그대로 인코딩되어 포함되므로, 원본 이미지 용량에 따라 코드 크기가 매우 커질 수 있습니다. 두 이미지는 비율이 달라도 가운데 기준으로 자동 크롭되어 슬라이더 영역에 꽉 차게 표시됩니다.
       </div>
 
-      <h2>배율별 결과 크기 예시</h2>
+      <h2>내보내기 방식 비교</h2>
       <div class="post-table-wrap"><table class="post-table">
-        <thead><tr><th>배율</th><th>원본 200×100 SVG 기준</th><th>주요 용도</th></tr></thead>
+        <thead><tr><th>방식</th><th>결과물</th><th>용도</th></tr></thead>
         <tbody>
-          <tr><td><code>1x</code></td><td>200 × 100px</td><td>화면 표시용 표준 해상도</td></tr>
-          <tr><td><code>2x</code></td><td>400 × 200px</td><td>고밀도(Retina) 디스플레이 대응</td></tr>
-          <tr><td><code>3x</code></td><td>600 × 300px</td><td>인쇄물, 고해상도 출력용</td></tr>
-          <tr><td><code>4x</code></td><td>800 × 400px</td><td>대형 배너, 초고해상도 자료</td></tr>
+          <tr><td>PNG 스냅샷</td><td>정지 이미지 1장</td><td>보고서, 발표 자료, SNS 공유용</td></tr>
+          <tr><td>임베드 코드</td><td>드래그 가능한 HTML 위젯</td><td>블로그, 포트폴리오 사이트에 직접 삽입</td></tr>
         </tbody>
       </table></div>
 
       <h2>활용 예시</h2>
       <div class="use-case-grid">
         <div class="use-case-card">
-          <div class="use-case-icon">&#x1F4C4;</div>
-          <div class="use-case-title">문서·프레젠테이션 삽입</div>
-          <div class="use-case-desc">SVG를 지원하지 않는 프로그램(구버전 오피스, PDF 편집기 등)에 이미지로 삽입할 때 사용합니다.</div>
+          <div class="use-case-icon">&#x1F3E1;</div>
+          <div class="use-case-title">인테리어·리모델링</div>
+          <div class="use-case-desc">공사 전후 사진을 슬라이더로 비교해 변화를 한눈에 보여줍니다.</div>
         </div>
         <div class="use-case-card">
-          <div class="use-case-icon">&#x1F4F1;</div>
-          <div class="use-case-title">SNS·썸네일 이미지</div>
-          <div class="use-case-desc">SVG 로고나 아이콘을 SNS 프로필, 썸네일용 PNG로 변환합니다.</div>
-        </div>
-        <div class="use-case-card">
-          <div class="use-case-icon">&#x1F5A8;&#xFE0F;</div>
-          <div class="use-case-title">고해상도 인쇄 자료</div>
-          <div class="use-case-desc">벡터 로고를 3x~4x 배율로 변환해 인쇄용 고해상도 PNG를 준비합니다.</div>
+          <div class="use-case-icon">&#x1F4F8;</div>
+          <div class="use-case-title">사진 보정 비교</div>
+          <div class="use-case-desc">원본과 보정본을 나란히 비교해 편집 효과를 명확히 전달합니다.</div>
         </div>
         <div class="use-case-card">
           <div class="use-case-icon">&#x1F3A8;</div>
-          <div class="use-case-title">디자인 툴 호환</div>
-          <div class="use-case-desc">SVG를 지원하지 않는 도구에서 벡터 아이콘을 PNG로 바꿔 활용합니다.</div>
+          <div class="use-case-title">디자인 시안 검토</div>
+          <div class="use-case-desc">리디자인 전후 화면을 비교해 팀원이나 클라이언트에게 공유합니다.</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F4BB;</div>
+          <div class="use-case-title">포트폴리오 삽입</div>
+          <div class="use-case-desc">임베드 코드로 개인 사이트나 블로그에 인터랙티브 비교 위젯을 넣습니다.</div>
         </div>
       </div>
 
-      <div class="post-highlight">&#x1F512; SVGtoPNG는 모든 변환이 내 PC 브라우저에서만 실행됩니다. SVG 내용이 외부 서버로 전송되지 않습니다.</div>
+      <div class="post-highlight">&#x1F512; ImageCompare는 모든 처리가 내 PC 브라우저에서만 실행됩니다. 업로드한 이미지가 외부 서버로 전송되지 않습니다.</div>
     </div>
 
     <div class="cta-box">
-      <p>SVG 파일이나 코드를 원하는 해상도의 PNG로 변환해보세요.<br />배율과 배경색까지 자유롭게 선택할 수 있습니다.</p>
-      <a href="/svg-to-png/" class="cta-btn" style="display:inline-flex;align-items:center;gap:8px">
-        <span style="display:inline-block;width:26px;height:26px;overflow:hidden;flex-shrink:0"><span style="display:block;transform:scale(0.565);transform-origin:top left"><div style="width:46px;height:46px;background:#ffb3c7;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="font:700 16px Gowun Dodum,sans-serif;color:#2a2433;line-height:1;letter-spacing:-.5px;white-space:nowrap">SVG</div></div></span></span>
-        무료로 PNG 변환하기
+      <p>두 이미지를 드래그로 비교하는 슬라이더를 만들어보세요.<br />PNG 스냅샷과 임베드 코드까지 바로 받을 수 있습니다.</p>
+      <a href="/image-compare/" class="cta-btn" style="display:inline-flex;align-items:center;gap:8px">
+        <span style="display:inline-block;width:26px;height:26px;overflow:hidden;flex-shrink:0"><span style="display:block;transform:scale(0.565);transform-origin:top left"><div style="width:46px;height:46px;background:#ffb3c7;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="width:24px;height:24px;border-radius:6px;background:#fffdf9;border:2.5px solid #2a2433;box-sizing:border-box;position:relative;overflow:hidden"><div style="position:absolute;left:0;top:0;width:50%;height:100%;background:#2a2433"></div><div style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:3px;height:16px;background:#fffdf9;border-radius:2px"></div></div></div></span></span>
+        무료로 비교 슬라이더 만들기
       </a>
     </div>
     <div style="margin:12px 0"><ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="9500090221"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
 
 <div class="post-nav">
-      <a href="/blog/57-favicongen-howto.html"><span class="nav-label">← 이전 글</span>FaviconGen 사용법 완전 가이드</a>
-      <a href="/blog/65-imagecompare-howto.html" style="text-align:right"><span class="nav-label">다음 글 →</span>ImageCompare 사용법 완전 가이드</a>
+      <a href="/blog/58-svgtopng-howto.html"><span class="nav-label">← 이전 글</span>SVGtoPNG 사용법 완전 가이드</a>
+      <a href="/blog/18-pdfmerge-howto.html" style="text-align:right"><span class="nav-label">다음 글 →</span>PDFMerge 사용법 완전 가이드</a>
     </div></div>
 
   </article>
