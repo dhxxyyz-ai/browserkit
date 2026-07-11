@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <link rel="icon" href="/favicon.ico" sizes="32x32">
+  <link rel="icon" href="/favicon-16.png" sizes="16x16" type="image/png">
+  <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="/favicon-192.png" sizes="192x192" type="image/png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="문단, 문장, 단어 수를 지정해 Lorem Ipsum 더미 텍스트를 즉시 생성하는 무료 온라인 도구. 라틴어 Lorem Ipsum과 한글 더미 텍스트를 모두 지원합니다. 서버 전송 없이 브라우저에서 바로 처리합니다." />
+  <meta property="og:title" content="LoremGen — Lorem Ipsum 생성기" />
+  <meta property="og:description" content="문단/문장/단어 수를 지정해 라틴어 또는 한글 더미 텍스트를 즉시 생성하는 무료 온라인 도구입니다." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://browserkit.online/lorem-gen/" />
+  <title>LoremGen — Lorem Ipsum 생성기</title>
+  <link rel="stylesheet" href="/css/style.css?v=20260704c" />
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506"
+     crossorigin="anonymous"></script>
+  <style>
+    .setting-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:24px; margin-bottom:20px; }
+    .setting-row { display:flex; align-items:center; gap:16px; margin-bottom:18px; flex-wrap:wrap; }
+    .setting-row:last-child { margin-bottom:0; }
+    .setting-label { font-size:14px; font-weight:600; color:var(--text); min-width:80px; flex-shrink:0; }
+
+    .seg-btns { display:flex; gap:6px; flex-wrap:wrap; }
+    .seg-btn { background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:8px 16px; font-size:13px; color:var(--subtext); cursor:pointer; font-family:'Gowun Dodum',sans-serif; }
+    .seg-btn:hover { border-color:var(--point); color:var(--text); }
+    .seg-btn.active { background:rgba(123,108,255,0.15); border-color:var(--point); color:var(--point-hover); font-weight:700; }
+
+    .count-field { display:flex; align-items:center; gap:8px; }
+    .count-field input { width:90px; background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:8px 10px; color:var(--text); font-size:14px; outline:none; }
+    .count-field input:focus { border-color:var(--point); }
+
+    .toggle-row { display:flex; align-items:center; gap:8px; font-size:13px; color:var(--subtext); cursor:pointer; }
+    .toggle-row input { accent-color:var(--point); width:16px; height:16px; cursor:pointer; }
+
+    .btn-generate { background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border:none; border-radius:12px; padding:14px 32px; font-size:16px; font-weight:700; cursor:pointer; font-family:'Gowun Dodum',sans-serif; width:100%; margin-bottom:20px; }
+    .btn-generate:hover { transform:translateY(-2px); box-shadow:0 8px 24px var(--glow); }
+
+    .result-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px 24px; margin-bottom:20px; }
+    .result-title { font-size:13px; font-weight:600; color:var(--subtext); margin-bottom:12px; }
+    .result-textarea { width:100%; min-height:280px; background:var(--bg); border:1px solid var(--border); border-radius:10px; padding:16px; color:var(--text); font-family:'Gowun Dodum',sans-serif; font-size:14px; line-height:1.9; resize:vertical; outline:none; box-sizing:border-box; }
+    .result-textarea:focus { border-color:var(--point); }
+
+    .action-bar { display:flex; gap:10px; margin-bottom:48px; flex-wrap:wrap; }
+    .btn-sub { background:var(--card); color:var(--subtext); border:1px solid var(--border); border-radius:10px; padding:10px 18px; font-size:13px; cursor:pointer; font-family:'Gowun Dodum',sans-serif; }
+    .btn-sub:hover { color:var(--text); border-color:var(--point); }
+    .btn-danger { background:var(--card); color:#F87171; border:1px solid var(--border); border-radius:10px; padding:10px 18px; font-size:13px; cursor:pointer; font-family:'Gowun Dodum',sans-serif; }
+    .btn-danger:hover { border-color:#F87171; }
+
+    .toast { position:fixed; bottom:32px; left:50%; transform:translateX(-50%) translateY(80px); background:var(--success); color:#fff; border-radius:999px; padding:10px 24px; font-size:14px; font-weight:600; opacity:0; pointer-events:none; z-index:999; }
+    .toast.show { transform:translateX(-50%) translateY(0); opacity:1; }
+
+    .footer { border-top:1px solid var(--border); padding:32px 0; text-align:center; }
+    .footer-copy { color:var(--subtext); font-size:13px; margin-bottom:12px; }
+    .footer-nav { display:flex; justify-content:center; gap:20px; flex-wrap:wrap; }
+    .footer-nav a { color:var(--subtext); font-size:13px; text-decoration:none; }
+    .footer-nav a:hover { color:var(--text); }
+
+    @media (max-width:640px) {
+      .hero-title { font-size:24px; }
+      .setting-label { min-width:100%; margin-bottom:4px; }
+    }
+  </style>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+  <meta property="og:image" content="https://browserkit.online/img/og-browserkit.png" />
+  <link rel="canonical" href="https://browserkit.online/lorem-gen/" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://browserkit.online/img/og-browserkit.png" />
+</head>
+
+<body>
+  <header class="header">
+    <div class="container">
+      <a href="/" class="header-brand">
+        <div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Gowun Dodum,sans-serif;flex-shrink:0">B</div>
+        <span class="header-brand-text"><span style="color:var(--text)">Browser</span><span style="color:var(--point)">Kit</span></span>
+      </a>
+      <a href="/" class="header-back">&#x2190; BrowserKit 홈으로</a>
+    </div>
+  </header>
+
+  <main><div class="container">
+    <div class="hero">
+      <div class="hero-icon" style="height:78px;display:flex;justify-content:center;align-items:center"><div style="transform:scale(1.7);transform-origin:center"><div style="width:46px;height:46px;background:#a8e6cf;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="font:700 12px Gowun Dodum,sans-serif;color:#2a2433;line-height:1;letter-spacing:-.5px;white-space:nowrap">Lorem</div></div></div></div>
+      <div class="hero-title-wrap"><h1 class="hero-title">LoremGen</h1><a href="/blog/64-loremgen-howto.html" class="hero-guide-link">사용법 가이드 보기</a></div>
+      <p class="hero-desc">문단·문장·단어 수를 지정해 더미 텍스트를 즉시 생성하세요</p>
+      <div class="hero-badges">
+        <span class="badge">🔒 완전 로컬 처리</span>
+        <span class="badge">⚡ 무료 사용</span>
+        <span class="badge">🛡️ 서버 전송 없음</span>
+        <span class="badge">📦 설치 불필요</span>
+      </div>
+    </div>
+    <div style="margin:0 0 12px"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+
+    <p class="notice">💡 디자인 시안이나 레이아웃 검토용 더미 텍스트입니다. 라틴어 Lorem Ipsum과 한글 더미 텍스트 모두 실제 의미가 없는 자리 채우기용 문장이니, 실제 콘텐츠로 착각해 그대로 배포하지 않도록 주의하세요. 모든 생성은 브라우저에서만 처리됩니다.</p>
+
+    <div class="setting-card">
+      <div class="setting-row">
+        <span class="setting-label">언어</span>
+        <div class="seg-btns" id="langBtns">
+          <button class="seg-btn active" data-lang="latin">Lorem Ipsum (라틴어)</button>
+          <button class="seg-btn" data-lang="korean">한글 더미 텍스트</button>
+        </div>
+      </div>
+      <div class="setting-row">
+        <span class="setting-label">생성 단위</span>
+        <div class="seg-btns" id="unitBtns">
+          <button class="seg-btn active" data-unit="paragraph">문단</button>
+          <button class="seg-btn" data-unit="sentence">문장</button>
+          <button class="seg-btn" data-unit="word">단어</button>
+        </div>
+      </div>
+      <div class="setting-row">
+        <span class="setting-label">개수</span>
+        <div class="count-field">
+          <input type="number" id="countInput" min="1" max="100" value="3" />
+        </div>
+        <label class="toggle-row"><input type="checkbox" id="classicOpt" checked /> 고전 시작 문구로 시작 (Lorem ipsum dolor sit amet…)</label>
+      </div>
+    </div>
+
+    <button class="btn-generate" id="genBtn">&#x1F3B2; 더미 텍스트 생성</button>
+
+    <div class="result-card">
+      <div class="result-title">📄 생성 결과</div>
+      <textarea class="result-textarea" id="resultTextarea" readonly placeholder="생성 버튼을 누르면 더미 텍스트가 여기에 표시됩니다."></textarea>
+    </div>
+
+    <div class="action-bar">
+      <button class="btn-sub" id="copyBtn">&#x1F4CB; 전체 복사</button>
+      <button class="btn-sub" id="downloadBtn">&#x2B07; TXT 다운로드</button>
+      <button class="btn-danger" id="clearBtn">&#x21BA; 초기화</button>
+    </div>
+
+    <div style="margin:0 0 12px"><ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="9500090221"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+  </div></main>
+
+  <footer class="footer">
+    <div class="container">
+      <p class="footer-copy">&#xa9; 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p>
+      <nav class="footer-nav">
+        <a href="/privacy.html">개인정보 처리방침</a>
+        <a href="/terms.html">이용약관</a>
+        <a href="/about.html">서비스 소개</a>
+        <a href="/blog/">블로그</a>
+      </nav>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+  var LATIN_WORDS = ['lorem','ipsum','dolor','sit','amet','consectetur','adipiscing','elit','sed','do','eiusmod',
+    'tempor','incididunt','ut','labore','et','dolore','magna','aliqua','enim','ad','minim','veniam','quis',
+    'nostrud','exercitation','ullamco','laboris','nisi','aliquip','ex','ea','commodo','consequat','duis','aute',
+    'irure','in','reprehenderit','voluptate','velit','esse','cillum','fugiat','nulla','pariatur','excepteur',
+    'sint','occaecat','cupidatat','non','proident','sunt','culpa','qui','officia','deserunt','mollit','anim',
+    'id','est','laborum'];
+
+  var LATIN_OPENER = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.';
+
+  var KOREAN_WORDS = ['구름','하늘','바람','소리','나무','강물','여행','아침','저녁','노래','이야기','시간','공간',
+    '마음','생각','거리','창문','호수','계절','기억','풍경','발걸음','골목','햇살','파도','그림자','편지','정원',
+    '지붕','우산','기차','다리','언덕','들판','새벽','노을','자전거','책상','의자','골목길','시장','항구','산책',
+    '커피','나침반','등불','계단','벤치','우체국','서랍','창가','골목시장','정거장'];
+
+  var KOREAN_OPENER = '이것은 레이아웃 검토를 위한 한글 더미 텍스트입니다.';
+
+  function pick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+
+  function capitalize(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
+
+  function makeLatinSentence(minWords, maxWords) {
+    var n = minWords + Math.floor(Math.random() * (maxWords - minWords + 1));
+    var words = [];
+    for (var i = 0; i < n; i++) words.push(pick(LATIN_WORDS));
+    return capitalize(words.join(' ')) + '.';
+  }
+
+  function makeKoreanSentence(minWords, maxWords) {
+    var n = minWords + Math.floor(Math.random() * (maxWords - minWords + 1));
+    var words = [];
+    for (var i = 0; i < n; i++) words.push(pick(KOREAN_WORDS));
+    return words.join(' ') + '.';
+  }
+
+  function makeParagraph(lang, sentenceCount) {
+    var maker = lang === 'korean' ? makeKoreanSentence : makeLatinSentence;
+    var sentences = [];
+    for (var i = 0; i < sentenceCount; i++) sentences.push(maker(5, 12));
+    return sentences.join(' ');
+  }
+
+  function generate(opts) {
+    var lang = opts.lang, unit = opts.unit, count = opts.count, classic = opts.classic;
+
+    if (unit === 'word') {
+      var pool = lang === 'korean' ? KOREAN_WORDS : LATIN_WORDS;
+      var words = [];
+      for (var i = 0; i < count; i++) words.push(pool[Math.floor(Math.random() * pool.length)]);
+      var text = words.join(' ');
+      if (classic) {
+        var opener = lang === 'korean' ? KOREAN_OPENER : LATIN_OPENER;
+        text = opener + (text ? ' ' + text : '');
+      }
+      return text;
+    }
+
+    if (unit === 'sentence') {
+      var maker = lang === 'korean' ? makeKoreanSentence : makeLatinSentence;
+      var sentences = [];
+      var start = 0;
+      if (classic) {
+        sentences.push(lang === 'korean' ? KOREAN_OPENER : LATIN_OPENER);
+        start = 1;
+      }
+      for (var j = start; j < count; j++) sentences.push(maker(5, 12));
+      return sentences.join(' ');
+    }
+
+    // paragraph
+    var paragraphs = [];
+    for (var p = 0; p < count; p++) {
+      var sentCount = 3 + Math.floor(Math.random() * 4);
+      var para = makeParagraph(lang, sentCount);
+      if (p === 0 && classic) {
+        var opener2 = lang === 'korean' ? KOREAN_OPENER : LATIN_OPENER;
+        para = opener2 + ' ' + para;
+      }
+      paragraphs.push(para);
+    }
+    return paragraphs.join('\n\n');
+  }
+
+  var currentLang = 'latin';
+  var currentUnit = 'paragraph';
+
+  document.querySelectorAll('#langBtns .seg-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('#langBtns .seg-btn').forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      currentLang = btn.dataset.lang;
+    });
+  });
+  document.querySelectorAll('#unitBtns .seg-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('#unitBtns .seg-btn').forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      currentUnit = btn.dataset.unit;
+    });
+  });
+
+  var countInput = document.getElementById('countInput');
+  var classicOpt = document.getElementById('classicOpt');
+  var resultTextarea = document.getElementById('resultTextarea');
+
+  document.getElementById('genBtn').addEventListener('click', function() {
+    var count = Math.max(1, Math.min(100, parseInt(countInput.value, 10) || 1));
+    countInput.value = count;
+    var text = generate({ lang: currentLang, unit: currentUnit, count: count, classic: classicOpt.checked });
+    resultTextarea.value = text;
+    showToast('✓ 더미 텍스트를 생성했습니다');
+  });
+
+  document.getElementById('copyBtn').addEventListener('click', function() {
+    if (!resultTextarea.value) { showToast('먼저 텍스트를 생성해주세요'); return; }
+    navigator.clipboard.writeText(resultTextarea.value).then(function() {
+      showToast('✓ 전체 복사되었습니다');
+    });
+  });
+
+  document.getElementById('downloadBtn').addEventListener('click', function() {
+    if (!resultTextarea.value) { showToast('먼저 텍스트를 생성해주세요'); return; }
+    var blob = new Blob([resultTextarea.value], { type: 'text/plain;charset=utf-8' });
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'lorem-ipsum.txt';
+    a.click();
+    URL.revokeObjectURL(a.href);
+    showToast('✓ TXT 파일이 저장됩니다');
+  });
+
+  document.getElementById('clearBtn').addEventListener('click', function() {
+    resultTextarea.value = '';
+  });
+
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(function() { t.classList.remove('show'); }, 2000);
+  }
+
+  document.getElementById('genBtn').click();
+  </script>
+</body>
+</html>
