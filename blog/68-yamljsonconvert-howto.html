@@ -8,11 +8,11 @@
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="CSVJSONConvert의 모든 기능을 단계별로 설명하는 공식 사용 가이드입니다. CSV를 JSON으로, JSON을 CSV로 변환하고 표로 미리보는 방법을 알아보세요." />
-  <meta property="og:title" content="CSV ↔ JSON 변환기 사용법 완전 가이드 — BrowserKit" />
-  <meta property="og:description" content="CSV를 JSON으로, JSON을 CSV로 변환하고 표로 미리보는 CSVJSONConvert 공식 가이드입니다." />
+  <meta name="description" content="YAMLJSONConvert의 모든 기능을 단계별로 설명하는 공식 사용 가이드입니다. YAML 설정 파일을 JSON으로, JSON을 YAML로 변환하고 표로 미리보는 방법을 알아보세요." />
+  <meta property="og:title" content="YAML ↔ JSON 변환기 사용법 완전 가이드 — BrowserKit" />
+  <meta property="og:description" content="YAML 설정 파일을 JSON으로, JSON을 YAML로 변환하고 표로 미리보는 YAMLJSONConvert 공식 가이드입니다." />
   <meta property="og:type" content="article" />
-  <title>CSV ↔ JSON 변환기 사용법 완전 가이드 — BrowserKit</title>
+  <title>YAML ↔ JSON 변환기 사용법 완전 가이드 — BrowserKit</title>
   <link rel="stylesheet" href="/css/style.css?v=20260704c" />
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506"
      crossorigin="anonymous"></script>
@@ -59,16 +59,16 @@
   {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
-    "headline": "CSV ↔ JSON 변환기 사용법 완전 가이드",
-    "description": "CSVJSONConvert의 모든 기능을 단계별로 설명하는 공식 사용 가이드입니다. CSV를 JSON으로, JSON을 CSV로 변환하고 표로 미리보는 방법을 알아보세요.",
+    "headline": "YAML ↔ JSON 변환기 사용법 완전 가이드",
+    "description": "YAMLJSONConvert의 모든 기능을 단계별로 설명하는 공식 사용 가이드입니다. YAML 설정 파일을 JSON으로, JSON을 YAML로 변환하고 표로 미리보는 방법을 알아보세요.",
     "datePublished": "2026-07-12T00:00:00+09:00",
     "dateModified": "2026-07-12T00:00:00+09:00",
     "author": { "@type": "Organization", "name": "BrowserKit", "url": "https://browserkit.online" },
     "publisher": { "@type": "Organization", "name": "BrowserKit", "url": "https://browserkit.online", "logo": { "@type": "ImageObject", "url": "https://browserkit.online/img/og-browserkit.png" } },
-    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://browserkit.online/blog/67-csvjsonconvert-howto.html" },
+    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://browserkit.online/blog/68-yamljsonconvert-howto.html" },
     "image": "https://browserkit.online/img/og-browserkit.png"
   }
-  </script>  <link rel="canonical" href="https://browserkit.online/blog/67-csvjsonconvert-howto.html" />
+  </script>  <link rel="canonical" href="https://browserkit.online/blog/68-yamljsonconvert-howto.html" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:image" content="https://browserkit.online/img/og-browserkit.png" />
   <style>
@@ -89,29 +89,29 @@
   <article class="post-wrap">
     <a href="/blog/" class="back-link">&#x2190; 블로그 목록</a>
     <span class="post-tag">가이드</span>
-    <h1 class="post-title"><span style="color:var(--point-hover)">CSV ↔ JSON 변환기</span> 사용법 완전 가이드</h1>
+    <h1 class="post-title"><span style="color:var(--point-hover)">YAML ↔ JSON 변환기</span> 사용법 완전 가이드</h1>
     <div class="post-date">2026년 7월 12일</div>
     <div style="margin:12px 0"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
 
     <div class="post-body">
-      <p>CSVJSONConvert는 CSV 데이터를 JSON 배열로, JSON 배열을 다시 CSV로 즉시 변환해주는 무료 온라인 도구입니다. 텍스트를 직접 붙여넣거나 파일을 업로드하면 자체 구현한 파서가 큰따옴표로 감싼 필드 안의 쉼표·줄바꿈·이스케이프된 따옴표까지 정확히 처리하며, 변환 결과는 표로 미리보기할 수 있어 데이터가 의도대로 변환됐는지 바로 확인할 수 있습니다. 모든 처리는 브라우저에서만 이루어집니다.</p>
+      <p>YAMLJSONConvert는 Kubernetes, Docker Compose, GitHub Actions 같은 설정 파일에 자주 쓰이는 YAML을 JSON으로, JSON을 다시 YAML로 즉시 변환해주는 무료 온라인 도구입니다. 오픈소스 라이브러리 js-yaml로 파싱·직렬화하며, 텍스트를 직접 붙여넣거나 파일을 업로드하면 변환 결과를 표로 미리보기해 데이터가 의도대로 변환됐는지 바로 확인할 수 있습니다. 모든 처리는 브라우저에서만 이루어집니다.</p>
 
       <h2>주요 기능</h2>
       <div class="feature-grid">
         <div class="feature-card">
           <div class="feature-icon">&#x1F504;</div>
           <div class="feature-title">양방향 변환</div>
-          <div class="feature-desc">CSV → JSON, JSON → CSV 두 방향 모두 버튼 한 번으로 전환해 사용할 수 있습니다.</div>
+          <div class="feature-desc">YAML → JSON, JSON → YAML 두 방향 모두 버튼 한 번으로 전환해 사용할 수 있습니다.</div>
         </div>
         <div class="feature-card">
           <div class="feature-icon">&#x1F4CB;</div>
           <div class="feature-title">붙여넣기·업로드 지원</div>
-          <div class="feature-desc">텍스트를 직접 붙여넣거나 .csv, .json 파일을 드래그해 바로 불러올 수 있습니다.</div>
+          <div class="feature-desc">텍스트를 직접 붙여넣거나 .yaml, .yml, .json 파일을 드래그해 바로 불러올 수 있습니다.</div>
         </div>
         <div class="feature-card">
           <div class="feature-icon">&#x1F4CA;</div>
           <div class="feature-title">표 미리보기</div>
-          <div class="feature-desc">변환 결과를 표로 렌더링해 데이터가 올바르게 파싱됐는지 한눈에 확인합니다.</div>
+          <div class="feature-desc">객체 배열이나 단일 객체는 표로 렌더링해 값이 올바르게 파싱됐는지 한눈에 확인합니다.</div>
         </div>
         <div class="feature-card">
           <div class="feature-icon">&#x1F512;</div>
@@ -127,7 +127,7 @@
         <div class="step-num">1</div>
         <div class="step-content">
           <h3>변환 방향 선택</h3>
-          <p>상단에서 <strong>CSV → JSON</strong> 또는 <strong>JSON → CSV</strong> 중 원하는 방향을 선택합니다. 방향에 따라 입력·출력 라벨과 안내 문구가 자동으로 바뀝니다.</p>
+          <p>상단에서 <strong>YAML → JSON</strong> 또는 <strong>JSON → YAML</strong> 중 원하는 방향을 선택합니다. JSON → YAML 방향에서는 들여쓰기 칸 수를 조절하는 옵션이 추가로 나타납니다.</p>
         </div>
       </div>
 
@@ -135,25 +135,25 @@
         <div class="step-num">2</div>
         <div class="step-content">
           <h3>데이터 입력</h3>
-          <p>왼쪽 입력창에 CSV 또는 JSON 데이터를 직접 붙여넣거나, 업로드 영역을 클릭해 .csv/.json 파일을 선택합니다. 파일을 업로드하면 확장자에 맞춰 변환 방향도 자동으로 전환됩니다.</p>
+          <p>왼쪽 입력창에 YAML 또는 JSON 데이터를 직접 붙여넣거나, 업로드 영역을 클릭해 .yaml/.yml/.json 파일을 선택합니다. 파일을 업로드하면 확장자에 맞춰 변환 방향도 자동으로 전환됩니다.</p>
         </div>
       </div>
 
       <figure style="margin:12px 0 24px; text-align:center;">
-        <img src="/img/blog/csvjsonconvert/01-csv2json.png"
-             alt="CSVJSONConvert의 CSV 입력창, 구분자·헤더 옵션과 변환된 JSON 결과가 함께 표시된 화면"
+        <img src="/img/blog/yamljsonconvert/01-yaml2json.png"
+             alt="YAMLJSONConvert의 YAML 입력창과 변환된 JSON 결과, 표 미리보기가 함께 표시된 화면"
              style="width:100%; max-width:640px; border:1px solid var(--border); border-radius:var(--radius);"
              loading="lazy" />
         <figcaption style="font-size:13px; color:var(--subtext); margin-top:6px;">
-          CSV 입력과 변환된 JSON 결과 화면
+          YAML 입력과 변환된 JSON 결과 화면
         </figcaption>
       </figure>
 
       <div class="step-card">
         <div class="step-num">3</div>
         <div class="step-content">
-          <h3>구분자·헤더 옵션 설정</h3>
-          <p>구분자는 쉼표, 탭, 세미콜론 중 선택할 수 있고, <strong>첫 행을 헤더로 사용</strong> 옵션을 켜면 첫 번째 행을 JSON의 키(또는 CSV의 열 이름)로 사용합니다.</p>
+          <h3>들여쓰기 옵션 설정 (JSON → YAML)</h3>
+          <p>JSON을 YAML로 변환할 때는 <strong>들여쓰기</strong> 값(1~8칸)을 조절해 원하는 YAML 스타일로 출력할 수 있습니다.</p>
         </div>
       </div>
 
@@ -166,69 +166,68 @@
       </div>
 
       <figure style="margin:12px 0 24px; text-align:center;">
-        <img src="/img/blog/csvjsonconvert/02-preview.png"
-             alt="CSVJSONConvert의 표 미리보기 영역에 변환된 데이터가 헤더와 함께 테이블로 표시된 화면"
+        <img src="/img/blog/yamljsonconvert/02-json2yaml.png"
+             alt="YAMLJSONConvert의 JSON 입력, 들여쓰기 옵션과 변환된 YAML 결과가 표시된 화면"
              style="width:100%; max-width:640px; border:1px solid var(--border); border-radius:var(--radius);"
              loading="lazy" />
         <figcaption style="font-size:13px; color:var(--subtext); margin-top:6px;">
-          변환 결과를 표로 확인하는 미리보기 영역
+          JSON을 YAML로 변환한 결과 화면
         </figcaption>
       </figure>
 
       <div class="post-warn">
-        <strong>⚠️ 참고:</strong> 자체 구현한 경량 CSV 파서를 사용합니다. 큰따옴표로 감싼 필드 안의 쉼표·줄바꿈·이스케이프된 따옴표(&quot;&quot;)는 정확히 처리하지만, 필드마다 서로 다른 구분자를 섞어 쓰거나 표준을 크게 벗어난 CSV는 결과가 예상과 다를 수 있습니다. JSON → CSV 변환 시 최상위 값은 반드시 배열이어야 하며, 변환 후에는 표 미리보기로 데이터를 한 번 더 확인하는 것을 권장합니다.
+        <strong>⚠️ 참고:</strong> 오픈소스 라이브러리 js-yaml로 파싱·변환합니다. YAML의 앵커(&amp;)/별칭(*) 참조, 커스텀 태그 같은 고급 문법은 완전히 지원되지 않을 수 있으며, 매우 복잡한 설정 파일은 결과가 예상과 다를 수 있습니다. JSON → YAML 변환 시 주석은 원본 YAML에만 존재하는 정보라 JSON에는 남아있지 않으므로 변환 후 다시 추가할 수 없습니다. 변환 후에는 표 미리보기와 결과를 한 번 더 확인하는 것을 권장합니다.
       </div>
 
       <h2>지원 옵션</h2>
       <div class="post-table-wrap"><table class="post-table">
         <thead><tr><th>옵션</th><th>설명</th></tr></thead>
         <tbody>
-          <tr><td>변환 방향</td><td>CSV → JSON, JSON → CSV</td></tr>
-          <tr><td>구분자</td><td>쉼표(,), 탭, 세미콜론(;)</td></tr>
-          <tr><td>헤더 사용</td><td>첫 행을 키/열 이름으로 사용할지 여부</td></tr>
-          <tr><td>파일 업로드</td><td>.csv, .json, .txt 드래그 앤 드롭 또는 클릭 업로드</td></tr>
+          <tr><td>변환 방향</td><td>YAML → JSON, JSON → YAML</td></tr>
+          <tr><td>들여쓰기</td><td>JSON → YAML 변환 시 1~8칸 사이에서 조절</td></tr>
+          <tr><td>파일 업로드</td><td>.yaml, .yml, .json, .txt 드래그 앤 드롭 또는 클릭 업로드</td></tr>
         </tbody>
       </table></div>
 
       <h2>활용 예시</h2>
       <div class="use-case-grid">
         <div class="use-case-card">
-          <div class="use-case-icon">&#x1F4C8;</div>
-          <div class="use-case-title">스프레드시트 데이터 API 연동</div>
-          <div class="use-case-desc">엑셀·구글시트에서 내보낸 CSV를 API 테스트용 JSON으로 빠르게 바꿉니다.</div>
+          <div class="use-case-icon">&#x1F433;</div>
+          <div class="use-case-title">Kubernetes 매니페스트 확인</div>
+          <div class="use-case-desc">YAML 설정을 JSON으로 변환해 값 구조를 한눈에 파악합니다.</div>
         </div>
         <div class="use-case-card">
-          <div class="use-case-icon">&#x1F5C3;&#xFE0F;</div>
-          <div class="use-case-title">데이터베이스 마이그레이션</div>
-          <div class="use-case-desc">DB 덤프 결과를 JSON으로 변환해 스크립트나 목데이터로 활용합니다.</div>
+          <div class="use-case-icon">&#x2699;&#xFE0F;</div>
+          <div class="use-case-title">CI/CD 설정 파일 변환</div>
+          <div class="use-case-desc">GitHub Actions·GitLab CI 등의 YAML을 JSON 스키마 검증 도구에 사용합니다.</div>
         </div>
         <div class="use-case-card">
           <div class="use-case-icon">&#x1F4DD;</div>
-          <div class="use-case-title">JSON 응답을 표로 정리</div>
-          <div class="use-case-desc">API 응답 JSON을 CSV로 바꿔 엑셀에서 열어보고 정리합니다.</div>
+          <div class="use-case-title">API 응답을 YAML로 정리</div>
+          <div class="use-case-desc">JSON 응답을 YAML로 바꿔 설정 파일 초안으로 활용합니다.</div>
         </div>
         <div class="use-case-card">
           <div class="use-case-icon">&#x1F50D;</div>
           <div class="use-case-title">데이터 검증</div>
-          <div class="use-case-desc">변환 전후 표 미리보기로 필드 개수와 값이 올바른지 빠르게 검증합니다.</div>
+          <div class="use-case-desc">변환 전후 표 미리보기로 필드와 값이 올바른지 빠르게 검증합니다.</div>
         </div>
       </div>
 
-      <div class="post-highlight">&#x1F512; CSVJSONConvert는 모든 변환이 내 PC 브라우저에서만 실행됩니다. 입력한 데이터가 외부 서버로 전송되지 않습니다.</div>
+      <div class="post-highlight">&#x1F512; YAMLJSONConvert는 모든 변환이 내 PC 브라우저에서만 실행됩니다. 입력한 데이터가 외부 서버로 전송되지 않습니다.</div>
     </div>
 
     <div class="cta-box">
-      <p>CSV와 JSON, 어느 쪽에서 시작하든 몇 초 만에 서로 변환해보세요.<br />표 미리보기로 결과를 바로 확인할 수 있습니다.</p>
-      <a href="/csv-json-convert/" class="cta-btn" style="display:inline-flex;align-items:center;gap:8px">
-        <span style="display:inline-block;width:26px;height:26px;overflow:hidden;flex-shrink:0"><span style="display:block;transform:scale(0.565);transform-origin:top left"><div style="width:46px;height:46px;background:#a8e6cf;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="font:700 16px Gowun Dodum,sans-serif;color:#2a2433;line-height:1;letter-spacing:-.5px;white-space:nowrap">CSV</div></div></span></span>
+      <p>YAML과 JSON, 어느 쪽에서 시작하든 몇 초 만에 서로 변환해보세요.<br />표 미리보기로 결과를 바로 확인할 수 있습니다.</p>
+      <a href="/yaml-json-convert/" class="cta-btn" style="display:inline-flex;align-items:center;gap:8px">
+        <span style="display:inline-block;width:26px;height:26px;overflow:hidden;flex-shrink:0"><span style="display:block;transform:scale(0.565);transform-origin:top left"><div style="width:46px;height:46px;background:#a8e6cf;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="font:700 16px Gowun Dodum,sans-serif;color:#2a2433;line-height:1;letter-spacing:-.5px;white-space:nowrap">YAML</div></div></span></span>
         무료로 변환하기
       </a>
     </div>
     <div style="margin:12px 0"><ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="9500090221"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
 
 <div class="post-nav">
-      <a href="/blog/64-loremgen-howto.html"><span class="nav-label">← 이전 글</span><span style="color:var(--point-hover)">더미 텍스트 생성기</span> 사용법 완전 가이드</a>
-      <a href="/blog/68-yamljsonconvert-howto.html" style="text-align:right"><span class="nav-label">다음 글 →</span><span style="color:var(--point-hover)">YAML ↔ JSON 변환기</span> 사용법 완전 가이드</a>
+      <a href="/blog/67-csvjsonconvert-howto.html"><span class="nav-label">← 이전 글</span><span style="color:var(--point-hover)">CSV ↔ JSON 변환기</span> 사용법 완전 가이드</a>
+      <a href="/blog/24-qrcode-howto.html" style="text-align:right"><span class="nav-label">다음 글 →</span><span style="color:var(--point-hover)">QR 코드 생성</span> 사용법 완전 가이드</a>
     </div></div>
 
   </article>

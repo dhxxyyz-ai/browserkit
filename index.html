@@ -8,7 +8,7 @@
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="BrowserKit — 설치 없이 브라우저에서 바로 쓰는 무료 도구 52가지. 개인정보 마스킹, 얼굴 블러, PDF 편집, QR 코드, JSON 포맷터, 차트 생성까지. 대부분 서버 전송 없이 완전 로컬 처리합니다.">
+  <meta name="description" content="BrowserKit — 설치 없이 브라우저에서 바로 쓰는 무료 도구 53가지. 개인정보 마스킹, 얼굴 블러, PDF 편집, QR 코드, JSON 포맷터, 차트 생성까지. 대부분 서버 전송 없이 완전 로컬 처리합니다.">
   <meta property="og:title" content="BrowserKit — 브라우저 기반 무료 도구 모음">
   <meta property="og:description" content="서버 전송 없이 브라우저에서 바로 쓰는 무료 도구 모음. 개인정보 마스킹, 이미지 편집, PDF 처리.">
   <meta property="og:type" content="website">
@@ -83,7 +83,7 @@ const TOOL_URLS = {
   RandomPicker:'/random-picker/', WordCloudGen:'/word-cloud/', FaviconGen:'/favicon-gen/', SVGtoPNG:'/svg-to-png/',
   PomodoroTimer:'/pomodoro-timer/', UUIDGen:'/uuid-gen/', JWTDecoder:'/jwt-decoder/', CronHelper:'/cron-helper/',
   SQLFormatter:'/sql-formatter/', LoremGen:'/lorem-gen/', ImageCompare:'/image-compare/', ImageFrame:'/image-frame/',
-  CSVJSONConvert:'/csv-json-convert/'
+  CSVJSONConvert:'/csv-json-convert/', YAMLJSONConvert:'/yaml-json-convert/'
 };
 
 const BLOG_URLS = {
@@ -151,7 +151,8 @@ const BLOG_URLS = {
   '더미 텍스트 생성기 사용법 완전 가이드':'/blog/64-loremgen-howto.html',
   '이미지 비교 슬라이더 사용법 완전 가이드':'/blog/65-imagecompare-howto.html',
   '이미지 테두리 추가 사용법 완전 가이드':'/blog/66-imageframe-howto.html',
-  'CSV ↔ JSON 변환기 사용법 완전 가이드':'/blog/67-csvjsonconvert-howto.html'
+  'CSV ↔ JSON 변환기 사용법 완전 가이드':'/blog/67-csvjsonconvert-howto.html',
+  'YAML ↔ JSON 변환기 사용법 완전 가이드':'/blog/68-yamljsonconvert-howto.html'
 };
 
 const INFO_URLS = {
@@ -200,7 +201,7 @@ function glyphInfo(code) {
     ChartMaker:'chart', ImageText:'token:T', ImageFilter:'halfcircle', ImageCollage:'collage', PixelArt:'pixelart',
     MosaicMaker:'mosaic', PDFSplit:'split', LineNumber:'linenum', CurrencyCalc:'currency', Minifier:'token:<>',
     URLEncode:'token:%20', CSSUnit:'token:rem', DiagramMaker:'diagram', PaletteGen:'palette', ExifRemover:'exif',
-    RandomPicker:'roulette', WordCloudGen:'wordcloud', FaviconGen:'favicon', SVGtoPNG:'token:SVG', PomodoroTimer:'pomodoro', UUIDGen:'token:UUID', JWTDecoder:'token:JWT', CronHelper:'token:CRON', SQLFormatter:'token:SQL', LoremGen:'token:Lo', ImageCompare:'compare', ImageFrame:'frame', CSVJSONConvert:'token:CSV'
+    RandomPicker:'roulette', WordCloudGen:'wordcloud', FaviconGen:'favicon', SVGtoPNG:'token:SVG', PomodoroTimer:'pomodoro', UUIDGen:'token:UUID', JWTDecoder:'token:JWT', CronHelper:'token:CRON', SQLFormatter:'token:SQL', LoremGen:'token:Lo', ImageCompare:'compare', ImageFrame:'frame', CSVJSONConvert:'token:CSV', YAMLJSONConvert:'token:YML'
   };
   const v = m[code];
   if (!v) return { glyph: 'token', token: '+' };
@@ -288,14 +289,14 @@ const SEARCH_TOOLS = [
   {code:'UUIDGen',name:'UUID 생성기'},{code:'JWTDecoder',name:'JWT 디코더'},
   {code:'CronHelper',name:'Cron 표현식 도우미'},{code:'SQLFormatter',name:'SQL 포맷터'},
   {code:'LoremGen',name:'더미 텍스트 생성기'},{code:'ImageCompare',name:'이미지 비교 슬라이더'},
-  {code:'ImageFrame',name:'이미지 테두리 추가'},{code:'CSVJSONConvert',name:'CSV ↔ JSON 변환기'}
+  {code:'ImageFrame',name:'이미지 테두리 추가'},{code:'CSVJSONConvert',name:'CSV ↔ JSON 변환기'},{code:'YAMLJSONConvert',name:'YAML ↔ JSON 변환기'}
 ];
 
 // ── Toolbox categories (desktop widget) ──────────────────────────────────────
 const TOOLBOX_CATS = [
   { label: '개인정보',     keys: ['MaskPrivacy','MaskPDF','MaskFace','MaskDoc','ExifRemover'] },
   { label: '이미지 편집',  keys: ['FitImage','CropImage','WatermarkImage','ColorPicker','ImageBright','BGRemove','ImageText','ImageFilter','ImageCollage','PixelArt','MosaicMaker','FaviconGen','SVGtoPNG','ImageCompare','ImageFrame'] },
-  { label: '문서·텍스트',  keys: ['PDFMerge','PDFSplit','TextTools','DiffChecker','MarkdownEditor','FindReplace','LineNumber','LoremGen','CSVJSONConvert'] },
+  { label: '문서·텍스트',  keys: ['PDFMerge','PDFSplit','TextTools','DiffChecker','MarkdownEditor','FindReplace','LineNumber','LoremGen','CSVJSONConvert','YAMLJSONConvert'] },
   { label: '유틸리티',     keys: ['QRCode','PasswordGen','UnitConvert','DateCalc','WorldClock','CurrencyCalc','RandomPicker','PomodoroTimer'] },
   { label: '개발자',       keys: ['JSONFormat','RegexTest','Base64Tool','HashGen','Minifier','URLEncode','CSSUnit','UUIDGen','JWTDecoder','CronHelper','SQLFormatter'] },
   { label: '데이터·시각화',keys: ['ChartMaker','DiagramMaker','PaletteGen','WordCloudGen'] },
@@ -312,7 +313,7 @@ function buildTree() {
     '도구':{type:'folder',label:'도구',children:{
       '개인정보':{type:'folder',label:'개인정보',children:{MaskPrivacy:t('개인정보 마스킹'),MaskPDF:t('PDF 마스킹'),MaskFace:t('얼굴 블러'),MaskDoc:t('텍스트 마스킹'),ExifRemover:t('사진 위치정보 제거기')}},
       '이미지 편집':{type:'folder',label:'이미지 편집',children:{FitImage:t('이미지 변환'),CropImage:t('이미지 자르기'),WatermarkImage:t('워터마크 추가'),ColorPicker:t('색상 추출'),ImageBright:t('이미지 보정'),BGRemove:t('AI 배경 제거'),ImageText:t('이미지 텍스트 추가'),ImageFilter:t('이미지 필터'),ImageCollage:t('이미지 모아 붙이기'),PixelArt:t('픽셀 아트 변환'),MosaicMaker:t('모자이크 생성기'),FaviconGen:t('즐겨찾기 아이콘 생성기'),SVGtoPNG:t('SVG → PNG 변환기'),ImageCompare:t('이미지 비교 슬라이더'),ImageFrame:t('이미지 테두리 추가')}},
-      '문서\xb7텍스트':{type:'folder',label:'문서\xb7텍스트',children:{PDFMerge:t('PDF 합치기'),PDFSplit:t('PDF 분할'),TextTools:t('텍스트 변환'),DiffChecker:t('텍스트 비교'),MarkdownEditor:t('마크다운 편집기'),FindReplace:t('찾아 바꾸기'),LineNumber:t('줄 번호 추가'),LoremGen:t('더미 텍스트 생성기'),CSVJSONConvert:t('CSV ↔ JSON 변환기')}},
+      '문서\xb7텍스트':{type:'folder',label:'문서\xb7텍스트',children:{PDFMerge:t('PDF 합치기'),PDFSplit:t('PDF 분할'),TextTools:t('텍스트 변환'),DiffChecker:t('텍스트 비교'),MarkdownEditor:t('마크다운 편집기'),FindReplace:t('찾아 바꾸기'),LineNumber:t('줄 번호 추가'),LoremGen:t('더미 텍스트 생성기'),CSVJSONConvert:t('CSV ↔ JSON 변환기'),YAMLJSONConvert:t('YAML ↔ JSON 변환기')}},
       '유틸리티':{type:'folder',label:'유틸리티',children:{QRCode:t('QR 코드 생성'),PasswordGen:t('비밀번호 생성기'),UnitConvert:t('단위 변환기'),DateCalc:t('날짜 계산기'),WorldClock:t('세계 시간'),CurrencyCalc:t('환율 계산기'),RandomPicker:t('랜덤 추첨기'),PomodoroTimer:t('집중 · 휴식 타이머')}},
       '개발자':{type:'folder',label:'개발자',children:{JSONFormat:t('JSON 포맷터'),RegexTest:t('정규식 테스터'),Base64Tool:t('Base64 변환'),HashGen:t('해시 생성기'),Minifier:t('코드 압축기'),URLEncode:t('URL 인코더'),CSSUnit:t('CSS 단위 변환기'),UUIDGen:t('UUID 생성기'),JWTDecoder:t('JWT 디코더'),CronHelper:t('Cron 표현식 도우미'),SQLFormatter:t('SQL 포맷터')}},
       '데이터\xb7시각화':{type:'folder',label:'데이터\xb7시각화',children:{ChartMaker:t('차트 생성기'),DiagramMaker:t('다이어그램 생성기'),PaletteGen:t('색상 팔레트 생성기'),WordCloudGen:t('워드클라우드 생성기')}}
@@ -343,7 +344,7 @@ function buildTree() {
         b7:a('PDF 합치기 사용법 완전 가이드'),b33:a('PDF 분할 사용법 완전 가이드'),
         b9:a('텍스트 변환 사용법 완전 가이드'),
         b17:a('텍스트 비교 사용법 완전 가이드'),b19:a('마크다운 편집기 사용법 완전 가이드'),
-        b26:a('찾아 바꾸기 사용법 완전 가이드'),b34:a('줄 번호 추가 사용법 완전 가이드'),b51:a('더미 텍스트 생성기 사용법 완전 가이드'),b54:a('CSV ↔ JSON 변환기 사용법 완전 가이드'),
+        b26:a('찾아 바꾸기 사용법 완전 가이드'),b34:a('줄 번호 추가 사용법 완전 가이드'),b51:a('더미 텍스트 생성기 사용법 완전 가이드'),b54:a('CSV ↔ JSON 변환기 사용법 완전 가이드'),b55:a('YAML ↔ JSON 변환기 사용법 완전 가이드'),
         h4:{type:'header',label:'유틸리티'},
         b13:a('QR 코드 생성 사용법 완전 가이드'),b15:a('비밀번호 생성기 사용법 완전 가이드'),
         b18:a('단위 변환기 사용법 완전 가이드'),b23:a('날짜 계산기 사용법 완전 가이드'),
@@ -496,7 +497,8 @@ function fileBodyHtml(win,pal) {
     ImageCompare: '두 이미지를 드래그로 좌우 비교하는 Before/After 슬라이더를 만듭니다.',
     ImageFrame: '이미지에 색상 테두리, 폴라로이드, 둥근 모서리 프레임을 추가합니다.',
     CurrencyCalc: '최신 환율로 주요 통화를 즉시 변환합니다.',
-    CSVJSONConvert: 'CSV와 JSON을 서로 변환하고 표로 미리봅니다.'
+    CSVJSONConvert: 'CSV와 JSON을 서로 변환하고 표로 미리봅니다.',
+    YAMLJSONConvert: 'YAML 설정 파일과 JSON을 서로 변환하고 표로 미리봅니다.'
   };
   if(file.kind==='tool'){
     const catColor = TOOL_CAT_IDX[file.code]!=null ? folders[TOOL_CAT_IDX[file.code]%folders.length] : accent;
