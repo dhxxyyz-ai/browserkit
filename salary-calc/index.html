@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <link rel="icon" href="/favicon.ico" sizes="32x32">
+  <link rel="icon" href="/favicon-16.png" sizes="16x16" type="image/png">
+  <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="/favicon-192.png" sizes="192x192" type="image/png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="연봉을 입력하면 4대보험과 소득세를 공제한 월 실수령액을 계산하는 무료 온라인 도구. 부양가족 수, 비과세액을 반영해 계산합니다. 서버 전송 없이 브라우저에서 바로 처리합니다." />
+  <meta property="og:title" content="SalaryCalc — 연봉 실수령액 계산기" />
+  <meta property="og:description" content="연봉 입력만으로 4대보험·소득세 공제 후 월 실수령액을 계산하는 무료 온라인 도구입니다." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://browserkit.online/salary-calc/" />
+  <title>SalaryCalc — 연봉 실수령액 계산기</title>
+  <link rel="stylesheet" href="/css/style.css?v=20260704c" />
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506"
+     crossorigin="anonymous"></script>
+  <style>
+    .input-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:24px; margin-bottom:20px; }
+    .input-row { display:flex; gap:12px; flex-wrap:wrap; align-items:flex-end; margin-bottom:16px; }
+    .input-row:last-child { margin-bottom:0; }
+    .input-group { flex:1; min-width:160px; display:flex; flex-direction:column; gap:8px; }
+    .input-label { font-size:12px; font-weight:600; color:var(--subtext); }
+    .amount-input { background:var(--bg); border:1px solid var(--border); border-radius:10px; padding:13px 16px; font-size:18px; font-weight:700; color:var(--text); font-family:'Fira Code',monospace; outline:none; width:100%; box-sizing:border-box; }
+    .amount-input:focus { border-color:var(--point); }
+    .num-input { background:var(--bg); border:1px solid var(--border); border-radius:10px; padding:13px 16px; font-size:15px; font-weight:600; color:var(--text); font-family:'Gowun Dodum',sans-serif; outline:none; width:100%; box-sizing:border-box; }
+    .num-input:focus { border-color:var(--point); }
+
+    .btn-calc { background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border:none; border-radius:12px; padding:14px 32px; font-size:16px; font-weight:700; cursor:pointer; font-family:'Gowun Dodum',sans-serif; width:100%; margin-bottom:20px; }
+    .btn-calc:hover { transform:translateY(-2px); box-shadow:0 8px 24px var(--glow); }
+
+    .result-hero { background:var(--card); border:1px solid var(--point); border-radius:var(--radius); padding:28px; text-align:center; margin-bottom:20px; display:none; }
+    .result-hero.show { display:block; }
+    .result-hero-label { font-size:13px; color:var(--subtext); margin-bottom:8px; }
+    .result-hero-value { font-size:34px; font-weight:800; color:var(--point-hover); font-family:'Fira Code',monospace; }
+    .result-hero-sub { font-size:13px; color:var(--subtext); margin-top:8px; }
+
+    .breakdown-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px 24px; margin-bottom:20px; display:none; }
+    .breakdown-card.show { display:block; }
+    .breakdown-title { font-size:13px; font-weight:600; color:var(--subtext); margin-bottom:14px; }
+    .breakdown-row { display:flex; justify-content:space-between; align-items:center; padding:9px 0; border-bottom:1px solid var(--border); font-size:14px; }
+    .breakdown-row:last-child { border-bottom:none; }
+    .breakdown-row.total { font-weight:700; color:var(--text); padding-top:12px; }
+    .breakdown-label { color:var(--subtext); }
+    .breakdown-value { font-family:'Fira Code',monospace; color:var(--text); font-weight:600; }
+    .breakdown-value.deduct { color:#F87171; }
+
+    .bar-wrap { height:22px; border-radius:11px; overflow:hidden; display:flex; margin:16px 0; background:var(--bg); border:1px solid var(--border); }
+    .bar-take { background:linear-gradient(90deg,var(--point),var(--point-hover)); }
+    .bar-deduct { background:rgba(248,113,113,0.55); }
+    .bar-legend { display:flex; justify-content:center; gap:20px; font-size:12px; color:var(--subtext); }
+    .bar-legend span { display:flex; align-items:center; gap:6px; }
+    .bar-dot { width:9px; height:9px; border-radius:50%; display:inline-block; }
+
+    .toast { position:fixed; bottom:32px; left:50%; transform:translateX(-50%) translateY(80px); background:var(--success); color:#fff; border-radius:999px; padding:10px 24px; font-size:14px; font-weight:600; opacity:0; pointer-events:none; z-index:999; transition:all 0.3s ease; }
+    .toast.show { transform:translateX(-50%) translateY(0); opacity:1; }
+
+    .footer { border-top:1px solid var(--border); padding:32px 0; text-align:center; }
+    .footer-copy { color:var(--subtext); font-size:13px; margin-bottom:12px; }
+    .footer-nav { display:flex; justify-content:center; gap:20px; flex-wrap:wrap; }
+    .footer-nav a { color:var(--subtext); font-size:13px; text-decoration:none; }
+    .footer-nav a:hover { color:var(--text); }
+
+    @media (max-width:640px) {
+      .hero-title { font-size:24px; }
+      .input-row { flex-direction:column; align-items:stretch; }
+      .result-hero-value { font-size:26px; }
+    }
+  </style>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+  <meta property="og:image" content="https://browserkit.online/img/og-browserkit.png" />
+  <link rel="canonical" href="https://browserkit.online/salary-calc/" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://browserkit.online/img/og-browserkit.png" />
+</head>
+
+<body>
+  <header class="header">
+    <div class="container">
+      <a href="/" class="header-brand">
+        <div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Gowun Dodum,sans-serif;flex-shrink:0">B</div>
+        <span class="header-brand-text"><span style="color:var(--text)">Browser</span><span style="color:var(--point)">Kit</span></span>
+      </a>
+      <a href="/" class="header-back">&#x2190; BrowserKit 홈으로</a>
+    </div>
+  </header>
+
+  <main><div class="container">
+    <div class="hero">
+      <div class="hero-icon" style="height:78px;display:flex;justify-content:center;align-items:center"><div style="transform:scale(1.7);transform-origin:center"><div style="width:46px;height:46px;background:#a0e8e0;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="position:relative;width:26px;height:26px;border-radius:50%;background:#fffdf9;border:2.5px solid #2a2433;box-sizing:border-box;display:flex;align-items:center;justify-content:center;font:700 13px Gowun Dodum,sans-serif;color:#2a2433">₩</div></div></div></div>
+      <div class="hero-title-wrap"><h1 class="hero-title">연봉 실수령액 계산기</h1><a href="/blog/70-salarycalc-howto.html" class="hero-guide-link">사용법 가이드 보기</a></div>
+      <p class="hero-desc">연봉을 입력하면 4대보험·소득세를 공제한 월 실수령액을 계산해드려요</p>
+      <div class="hero-badges">
+        <span class="badge">🔒 완전 로컬 처리</span>
+        <span class="badge">⚡ 무료 사용</span>
+        <span class="badge">🛡️ 서버 전송 없음</span>
+        <span class="badge">📦 설치 불필요</span>
+      </div>
+    </div>
+    <div style="margin:0 0 12px"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+
+    <p class="notice">💡 2025년 세법·4대보험 요율 기준의 근사 계산입니다. 국세청이 매월 배포하는 근로소득 간이세액표(원천징수용)가 아닌, 연간 세율표를 기반으로 계산한 뒤 12개월로 나눈 값이라 실제 급여명세서와 차이가 있을 수 있습니다. 회사마다 비과세 항목·공제 구성이 달라 참고용으로만 사용하세요. 모든 계산은 브라우저에서만 처리됩니다.</p>
+
+    <div class="input-card">
+      <div class="input-row">
+        <div class="input-group" style="flex:2">
+          <span class="input-label">연봉 (세전, 만원)</span>
+          <input type="number" class="amount-input" id="salaryInput" placeholder="예: 4000" min="0" step="1" />
+        </div>
+        <div class="input-group">
+          <span class="input-label">비과세액 (월, 만원)</span>
+          <input type="number" class="num-input" id="nontaxInput" value="20" min="0" step="1" />
+        </div>
+      </div>
+      <div class="input-row">
+        <div class="input-group">
+          <span class="input-label">부양가족 수 (본인 포함)</span>
+          <input type="number" class="num-input" id="dependentsInput" value="1" min="1" step="1" />
+        </div>
+        <div class="input-group">
+          <span class="input-label">20세 이하 자녀 수</span>
+          <input type="number" class="num-input" id="childrenInput" value="0" min="0" step="1" />
+        </div>
+      </div>
+    </div>
+
+    <button class="btn-calc" id="calcBtn">💰 실수령액 계산</button>
+
+    <div class="result-hero" id="resultHero">
+      <div class="result-hero-label">예상 월 실수령액</div>
+      <div class="result-hero-value" id="monthlyTakeHome">-</div>
+      <div class="result-hero-sub" id="yearlyTakeHome"></div>
+    </div>
+
+    <div class="breakdown-card" id="breakdownCard">
+      <div class="breakdown-title">📋 월 공제 내역</div>
+      <div class="bar-wrap" id="barWrap"></div>
+      <div class="bar-legend">
+        <span><span class="bar-dot" style="background:var(--point-hover)"></span>실수령액</span>
+        <span><span class="bar-dot" style="background:rgba(248,113,113,0.55)"></span>공제액</span>
+      </div>
+      <div class="breakdown-row"><span class="breakdown-label">월 세전 급여</span><span class="breakdown-value" id="rowGross">-</span></div>
+      <div class="breakdown-row"><span class="breakdown-label">국민연금 (4.5%)</span><span class="breakdown-value deduct" id="rowPension">-</span></div>
+      <div class="breakdown-row"><span class="breakdown-label">건강보험 (3.545%)</span><span class="breakdown-value deduct" id="rowHealth">-</span></div>
+      <div class="breakdown-row"><span class="breakdown-label">장기요양보험</span><span class="breakdown-value deduct" id="rowLongterm">-</span></div>
+      <div class="breakdown-row"><span class="breakdown-label">고용보험 (0.9%)</span><span class="breakdown-value deduct" id="rowEmployment">-</span></div>
+      <div class="breakdown-row"><span class="breakdown-label">소득세</span><span class="breakdown-value deduct" id="rowIncomeTax">-</span></div>
+      <div class="breakdown-row"><span class="breakdown-label">지방소득세 (소득세의 10%)</span><span class="breakdown-value deduct" id="rowLocalTax">-</span></div>
+      <div class="breakdown-row total"><span class="breakdown-label">월 실수령액</span><span class="breakdown-value" id="rowNet">-</span></div>
+    </div>
+
+    <div style="margin:0 0 12px"><ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="9500090221"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+  </div></main>
+
+  <footer class="footer">
+    <div class="container">
+      <p class="footer-copy">&#xa9; 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p>
+      <nav class="footer-nav">
+        <a href="/privacy.html">개인정보 처리방침</a>
+        <a href="/terms.html">이용약관</a>
+        <a href="/about.html">서비스 소개</a>
+        <a href="/blog/">블로그</a>
+      </nav>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+  function won(n) {
+    return Math.round(n).toLocaleString('ko-KR') + '원';
+  }
+
+  // 근로소득공제 (연간, 총급여 기준)
+  function earnedIncomeDeduction(gross) {
+    if (gross <= 5000000) return gross * 0.7;
+    if (gross <= 15000000) return 3500000 + (gross - 5000000) * 0.4;
+    if (gross <= 45000000) return 7500000 + (gross - 15000000) * 0.15;
+    if (gross <= 100000000) return 12000000 + (gross - 45000000) * 0.05;
+    return 14750000 + (gross - 100000000) * 0.02;
+  }
+
+  // 종합소득세 누진세율표 (2025년 기준, 과세표준)
+  function incomeTaxByBracket(base) {
+    if (base <= 14000000) return base * 0.06;
+    if (base <= 50000000) return base * 0.15 - 1260000;
+    if (base <= 88000000) return base * 0.24 - 5760000;
+    if (base <= 150000000) return base * 0.35 - 15440000;
+    if (base <= 300000000) return base * 0.38 - 19940000;
+    if (base <= 500000000) return base * 0.40 - 25940000;
+    if (base <= 1000000000) return base * 0.42 - 35940000;
+    return base * 0.45 - 65940000;
+  }
+
+  // 근로소득세액공제
+  function earnedIncomeTaxCredit(calculatedTax, gross) {
+    var credit;
+    if (calculatedTax <= 1300000) credit = calculatedTax * 0.55;
+    else credit = 715000 + (calculatedTax - 1300000) * 0.3;
+
+    var limit;
+    if (gross <= 33000000) limit = 740000;
+    else if (gross <= 70000000) limit = Math.max(660000, 740000 - (gross - 33000000) * 0.008);
+    else limit = Math.max(500000, 660000 - (gross - 70000000) * 0.5);
+
+    return Math.min(credit, limit);
+  }
+
+  function calculate() {
+    var annualSalaryMan = parseFloat(document.getElementById('salaryInput').value);
+    if (!annualSalaryMan || annualSalaryMan <= 0) {
+      showToast('연봉을 입력해주세요');
+      return;
+    }
+    var nontaxMonthlyMan = parseFloat(document.getElementById('nontaxInput').value) || 0;
+    var dependents = Math.max(1, parseInt(document.getElementById('dependentsInput').value, 10) || 1);
+    var children = Math.max(0, parseInt(document.getElementById('childrenInput').value, 10) || 0);
+
+    var annualSalary = annualSalaryMan * 10000;
+    var nontaxAnnual = nontaxMonthlyMan * 10000 * 12;
+    var taxableGrossAnnual = Math.max(0, annualSalary - nontaxAnnual);
+
+    // 4대보험 (과세 대상 급여 기준, 월)
+    var monthlyTaxableGross = taxableGrossAnnual / 12;
+    var pensionMonthly = monthlyTaxableGross * 0.045;
+    var healthMonthly = monthlyTaxableGross * 0.03545;
+    var longtermMonthly = healthMonthly * 0.1295;
+    var employmentMonthly = monthlyTaxableGross * 0.009;
+    var insuranceAnnual = (pensionMonthly + healthMonthly + longtermMonthly + employmentMonthly) * 12;
+
+    // 근로소득금액
+    var deduction = earnedIncomeDeduction(taxableGrossAnnual);
+    var earnedIncomeAmount = Math.max(0, taxableGrossAnnual - deduction);
+
+    // 종합소득공제: 인적공제(1인당 150만원) + 4대보험료 전액
+    var personalDeduction = dependents * 1500000 + children * 150000;
+    var taxBase = Math.max(0, earnedIncomeAmount - personalDeduction - insuranceAnnual);
+
+    var calculatedTax = Math.max(0, incomeTaxByBracket(taxBase));
+    var credit = earnedIncomeTaxCredit(calculatedTax, taxableGrossAnnual);
+    var finalIncomeTaxAnnual = Math.max(0, calculatedTax - credit);
+    var localTaxAnnual = finalIncomeTaxAnnual * 0.1;
+
+    var incomeTaxMonthly = finalIncomeTaxAnnual / 12;
+    var localTaxMonthly = localTaxAnnual / 12;
+
+    var monthlyGrossTotal = annualSalary / 12;
+    var totalDeductionMonthly = pensionMonthly + healthMonthly + longtermMonthly + employmentMonthly + incomeTaxMonthly + localTaxMonthly;
+    var monthlyNet = monthlyGrossTotal - totalDeductionMonthly;
+
+    document.getElementById('resultHero').classList.add('show');
+    document.getElementById('breakdownCard').classList.add('show');
+    document.getElementById('monthlyTakeHome').textContent = won(monthlyNet);
+    document.getElementById('yearlyTakeHome').textContent = '연 실수령액 약 ' + won(monthlyNet * 12);
+
+    document.getElementById('rowGross').textContent = won(monthlyGrossTotal);
+    document.getElementById('rowPension').textContent = '-' + won(pensionMonthly);
+    document.getElementById('rowHealth').textContent = '-' + won(healthMonthly);
+    document.getElementById('rowLongterm').textContent = '-' + won(longtermMonthly);
+    document.getElementById('rowEmployment').textContent = '-' + won(employmentMonthly);
+    document.getElementById('rowIncomeTax').textContent = '-' + won(incomeTaxMonthly);
+    document.getElementById('rowLocalTax').textContent = '-' + won(localTaxMonthly);
+    document.getElementById('rowNet').textContent = won(monthlyNet);
+
+    var takePct = Math.max(0, Math.min(100, (monthlyNet / monthlyGrossTotal) * 100));
+    var barWrap = document.getElementById('barWrap');
+    barWrap.innerHTML = '<div class="bar-take" style="width:' + takePct + '%"></div><div class="bar-deduct" style="width:' + (100 - takePct) + '%"></div>';
+
+    document.getElementById('resultHero').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
+  document.getElementById('calcBtn').addEventListener('click', calculate);
+  document.getElementById('salaryInput').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') calculate();
+  });
+
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(function() { t.classList.remove('show'); }, 2000);
+  }
+  </script>
+</body>
+</html>
