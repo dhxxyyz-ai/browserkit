@@ -8,11 +8,11 @@
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="LoremGen의 모든 기능을 단계별로 설명하는 공식 사용 가이드입니다. 문단, 문장, 단어 수를 지정해 Lorem Ipsum 더미 텍스트를 생성하는 방법을 알아보세요." />
-  <meta property="og:title" content="더미 텍스트 생성기 사용법 완전 가이드 — BrowserKit" />
-  <meta property="og:description" content="문단/문장/단어 수를 지정해 라틴어 또는 한글 더미 텍스트를 즉시 생성하는 LoremGen 공식 가이드입니다." />
+  <meta name="description" content="CSVJSONConvert의 모든 기능을 단계별로 설명하는 공식 사용 가이드입니다. CSV를 JSON으로, JSON을 CSV로 변환하고 표로 미리보는 방법을 알아보세요." />
+  <meta property="og:title" content="CSV ↔ JSON 변환기 사용법 완전 가이드 — BrowserKit" />
+  <meta property="og:description" content="CSV를 JSON으로, JSON을 CSV로 변환하고 표로 미리보는 CSVJSONConvert 공식 가이드입니다." />
   <meta property="og:type" content="article" />
-  <title>더미 텍스트 생성기 사용법 완전 가이드 — BrowserKit</title>
+  <title>CSV ↔ JSON 변환기 사용법 완전 가이드 — BrowserKit</title>
   <link rel="stylesheet" href="/css/style.css?v=20260704c" />
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506"
      crossorigin="anonymous"></script>
@@ -59,16 +59,16 @@
   {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
-    "headline": "더미 텍스트 생성기 사용법 완전 가이드",
-    "description": "LoremGen의 모든 기능을 단계별로 설명하는 공식 사용 가이드입니다. 문단, 문장, 단어 수를 지정해 Lorem Ipsum 더미 텍스트를 생성하는 방법을 알아보세요.",
-    "datePublished": "2026-07-10T00:00:00+09:00",
-    "dateModified": "2026-07-10T00:00:00+09:00",
+    "headline": "CSV ↔ JSON 변환기 사용법 완전 가이드",
+    "description": "CSVJSONConvert의 모든 기능을 단계별로 설명하는 공식 사용 가이드입니다. CSV를 JSON으로, JSON을 CSV로 변환하고 표로 미리보는 방법을 알아보세요.",
+    "datePublished": "2026-07-12T00:00:00+09:00",
+    "dateModified": "2026-07-12T00:00:00+09:00",
     "author": { "@type": "Organization", "name": "BrowserKit", "url": "https://browserkit.online" },
     "publisher": { "@type": "Organization", "name": "BrowserKit", "url": "https://browserkit.online", "logo": { "@type": "ImageObject", "url": "https://browserkit.online/img/og-browserkit.png" } },
-    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://browserkit.online/blog/64-loremgen-howto.html" },
+    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://browserkit.online/blog/67-csvjsonconvert-howto.html" },
     "image": "https://browserkit.online/img/og-browserkit.png"
   }
-  </script>  <link rel="canonical" href="https://browserkit.online/blog/64-loremgen-howto.html" />
+  </script>  <link rel="canonical" href="https://browserkit.online/blog/67-csvjsonconvert-howto.html" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:image" content="https://browserkit.online/img/og-browserkit.png" />
   <style>
@@ -89,34 +89,34 @@
   <article class="post-wrap">
     <a href="/blog/" class="back-link">&#x2190; 블로그 목록</a>
     <span class="post-tag">가이드</span>
-    <h1 class="post-title"><span style="color:var(--point-hover)">더미 텍스트 생성기</span> 사용법 완전 가이드</h1>
-    <div class="post-date">2026년 7월 10일</div>
+    <h1 class="post-title"><span style="color:var(--point-hover)">CSV ↔ JSON 변환기</span> 사용법 완전 가이드</h1>
+    <div class="post-date">2026년 7월 12일</div>
     <div style="margin:12px 0"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
 
     <div class="post-body">
-      <p>LoremGen은 디자인 시안이나 레이아웃 검토에 필요한 더미 텍스트를 즉시 만들어주는 무료 온라인 도구입니다. 문단, 문장, 단어 중 원하는 단위와 개수를 지정하면 텍스트가 바로 생성되고, 전통적인 라틴어 Lorem Ipsum과 한글 더미 텍스트를 모두 지원합니다. 모든 생성은 브라우저에서만 처리됩니다.</p>
+      <p>CSVJSONConvert는 CSV 데이터를 JSON 배열로, JSON 배열을 다시 CSV로 즉시 변환해주는 무료 온라인 도구입니다. 텍스트를 직접 붙여넣거나 파일을 업로드하면 자체 구현한 파서가 큰따옴표로 감싼 필드 안의 쉼표·줄바꿈·이스케이프된 따옴표까지 정확히 처리하며, 변환 결과는 표로 미리보기할 수 있어 데이터가 의도대로 변환됐는지 바로 확인할 수 있습니다. 모든 처리는 브라우저에서만 이루어집니다.</p>
 
       <h2>주요 기능</h2>
       <div class="feature-grid">
         <div class="feature-card">
-          <div class="feature-icon">&#x1F310;</div>
-          <div class="feature-title">라틴어 · 한글 지원</div>
-          <div class="feature-desc">전통적인 Lorem Ipsum과 한글 더미 텍스트 중 원하는 언어를 선택합니다.</div>
+          <div class="feature-icon">&#x1F504;</div>
+          <div class="feature-title">양방향 변환</div>
+          <div class="feature-desc">CSV → JSON, JSON → CSV 두 방향 모두 버튼 한 번으로 전환해 사용할 수 있습니다.</div>
         </div>
         <div class="feature-card">
-          <div class="feature-icon">&#x1F4CF;</div>
-          <div class="feature-title">문단/문장/단어 단위</div>
-          <div class="feature-desc">필요한 단위와 개수(최대 100)를 지정해 정확한 분량의 텍스트를 만듭니다.</div>
+          <div class="feature-icon">&#x1F4CB;</div>
+          <div class="feature-title">붙여넣기·업로드 지원</div>
+          <div class="feature-desc">텍스트를 직접 붙여넣거나 .csv, .json 파일을 드래그해 바로 불러올 수 있습니다.</div>
         </div>
         <div class="feature-card">
-          <div class="feature-icon">&#x1F4DC;</div>
-          <div class="feature-title">고전 시작 문구</div>
-          <div class="feature-desc">"Lorem ipsum dolor sit amet…"로 시작하는 전통적인 형식을 선택할 수 있습니다.</div>
+          <div class="feature-icon">&#x1F4CA;</div>
+          <div class="feature-title">표 미리보기</div>
+          <div class="feature-desc">변환 결과를 표로 렌더링해 데이터가 올바르게 파싱됐는지 한눈에 확인합니다.</div>
         </div>
         <div class="feature-card">
           <div class="feature-icon">&#x1F512;</div>
           <div class="feature-title">완전 로컬 처리</div>
-          <div class="feature-desc">모든 텍스트 생성이 브라우저 안에서 실행됩니다. 서버로 전송되지 않습니다.</div>
+          <div class="feature-desc">모든 변환이 브라우저 안에서 실행됩니다. 데이터가 서버로 전송되지 않습니다.</div>
         </div>
       </div>
 
@@ -126,100 +126,109 @@
       <div class="step-card">
         <div class="step-num">1</div>
         <div class="step-content">
-          <h3>언어와 생성 단위 선택</h3>
-          <p><strong>언어</strong>에서 Lorem Ipsum(라틴어) 또는 한글 더미 텍스트를 고르고, <strong>생성 단위</strong>에서 문단·문장·단어 중 하나를 선택합니다.</p>
+          <h3>변환 방향 선택</h3>
+          <p>상단에서 <strong>CSV → JSON</strong> 또는 <strong>JSON → CSV</strong> 중 원하는 방향을 선택합니다. 방향에 따라 입력·출력 라벨과 안내 문구가 자동으로 바뀝니다.</p>
         </div>
       </div>
-
-      <figure style="margin:12px 0 24px; text-align:center;">
-        <img src="/img/blog/loremgen/01-settings.png"
-             alt="LoremGen 언어 선택, 생성 단위, 개수 입력과 고전 시작 문구 체크박스가 표시된 설정 카드 화면"
-             style="width:100%; max-width:640px; border:1px solid var(--border); border-radius:var(--radius);"
-             loading="lazy" />
-        <figcaption style="font-size:13px; color:var(--subtext); margin-top:6px;">
-          언어·단위·개수를 선택하는 설정 카드
-        </figcaption>
-      </figure>
 
       <div class="step-card">
         <div class="step-num">2</div>
         <div class="step-content">
-          <h3>개수 입력 후 생성</h3>
-          <p>원하는 개수(1~100)를 입력하고 <strong>🎲 더미 텍스트 생성</strong> 버튼을 누르면 결과 영역에 텍스트가 바로 채워집니다. 버튼을 다시 누르면 새로운 무작위 텍스트로 갱신됩니다.</p>
-        </div>
-      </div>
-
-      <div class="step-card">
-        <div class="step-num">3</div>
-        <div class="step-content">
-          <h3>복사 또는 다운로드</h3>
-          <p><strong>📋 전체 복사</strong>로 클립보드에 바로 담거나, <strong>⬇ TXT 다운로드</strong>로 파일로 저장할 수 있습니다.</p>
+          <h3>데이터 입력</h3>
+          <p>왼쪽 입력창에 CSV 또는 JSON 데이터를 직접 붙여넣거나, 업로드 영역을 클릭해 .csv/.json 파일을 선택합니다. 파일을 업로드하면 확장자에 맞춰 변환 방향도 자동으로 전환됩니다.</p>
         </div>
       </div>
 
       <figure style="margin:12px 0 24px; text-align:center;">
-        <img src="/img/blog/loremgen/02-result.png"
-             alt="LoremGen 생성 결과 텍스트 영역과 전체 복사, TXT 다운로드, 초기화 버튼이 표시된 화면"
+        <img src="/img/blog/csvjsonconvert/01-csv2json.png"
+             alt="CSVJSONConvert의 CSV 입력창, 구분자·헤더 옵션과 변환된 JSON 결과가 함께 표시된 화면"
              style="width:100%; max-width:640px; border:1px solid var(--border); border-radius:var(--radius);"
              loading="lazy" />
         <figcaption style="font-size:13px; color:var(--subtext); margin-top:6px;">
-          생성된 더미 텍스트와 복사/다운로드 버튼
+          CSV 입력과 변환된 JSON 결과 화면
+        </figcaption>
+      </figure>
+
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <h3>구분자·헤더 옵션 설정</h3>
+          <p>구분자는 쉼표, 탭, 세미콜론 중 선택할 수 있고, <strong>첫 행을 헤더로 사용</strong> 옵션을 켜면 첫 번째 행을 JSON의 키(또는 CSV의 열 이름)로 사용합니다.</p>
+        </div>
+      </div>
+
+      <div class="step-card">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <h3>변환 및 결과 확인</h3>
+          <p><strong>🔄 변환하기</strong> 버튼을 누르면 결과가 오른쪽 창과 아래 표 미리보기에 함께 표시됩니다. <strong>📋 결과 복사</strong>로 클립보드에 복사하거나 <strong>⬇ 파일 다운로드</strong>로 저장할 수 있습니다.</p>
+        </div>
+      </div>
+
+      <figure style="margin:12px 0 24px; text-align:center;">
+        <img src="/img/blog/csvjsonconvert/02-preview.png"
+             alt="CSVJSONConvert의 표 미리보기 영역에 변환된 데이터가 헤더와 함께 테이블로 표시된 화면"
+             style="width:100%; max-width:640px; border:1px solid var(--border); border-radius:var(--radius);"
+             loading="lazy" />
+        <figcaption style="font-size:13px; color:var(--subtext); margin-top:6px;">
+          변환 결과를 표로 확인하는 미리보기 영역
         </figcaption>
       </figure>
 
       <div class="post-warn">
-        <strong>⚠️ 참고:</strong> LoremGen이 생성하는 텍스트는 라틴어든 한글이든 <strong>실제로 아무 의미가 없는 자리 채우기용 문장</strong>입니다. 디자인 시안이나 레이아웃 검토 용도로만 사용하고, 실제 콘텐츠로 착각해 그대로 배포하지 않도록 주의하세요. 한글 더미 텍스트는 문법적으로 완전한 문장이 아니라 무작위로 나열된 단어 조합입니다.
+        <strong>⚠️ 참고:</strong> 자체 구현한 경량 CSV 파서를 사용합니다. 큰따옴표로 감싼 필드 안의 쉼표·줄바꿈·이스케이프된 따옴표(&quot;&quot;)는 정확히 처리하지만, 필드마다 서로 다른 구분자를 섞어 쓰거나 표준을 크게 벗어난 CSV는 결과가 예상과 다를 수 있습니다. JSON → CSV 변환 시 최상위 값은 반드시 배열이어야 하며, 변환 후에는 표 미리보기로 데이터를 한 번 더 확인하는 것을 권장합니다.
       </div>
 
-      <h2>생성 단위별 예시</h2>
+      <h2>지원 옵션</h2>
       <div class="post-table-wrap"><table class="post-table">
-        <thead><tr><th>단위</th><th>개수 3 설정 시</th></tr></thead>
+        <thead><tr><th>옵션</th><th>설명</th></tr></thead>
         <tbody>
-          <tr><td>문단</td><td>줄바꿈으로 구분된 3개의 문단</td></tr>
-          <tr><td>문장</td><td>공백으로 이어진 3개의 문장</td></tr>
-          <tr><td>단어</td><td>공백으로 구분된 3개의 단어</td></tr>
+          <tr><td>변환 방향</td><td>CSV → JSON, JSON → CSV</td></tr>
+          <tr><td>구분자</td><td>쉼표(,), 탭, 세미콜론(;)</td></tr>
+          <tr><td>헤더 사용</td><td>첫 행을 키/열 이름으로 사용할지 여부</td></tr>
+          <tr><td>파일 업로드</td><td>.csv, .json, .txt 드래그 앤 드롭 또는 클릭 업로드</td></tr>
         </tbody>
       </table></div>
 
       <h2>활용 예시</h2>
       <div class="use-case-grid">
         <div class="use-case-card">
-          <div class="use-case-icon">&#x1F3A8;</div>
-          <div class="use-case-title">디자인 시안 제작</div>
-          <div class="use-case-desc">Figma, Sketch 등에서 텍스트 영역의 실제 분량을 미리 확인합니다.</div>
+          <div class="use-case-icon">&#x1F4C8;</div>
+          <div class="use-case-title">스프레드시트 데이터 API 연동</div>
+          <div class="use-case-desc">엑셀·구글시트에서 내보낸 CSV를 API 테스트용 JSON으로 빠르게 바꿉니다.</div>
         </div>
         <div class="use-case-card">
-          <div class="use-case-icon">&#x1F4BB;</div>
-          <div class="use-case-title">퍼블리싱·개발 목업</div>
-          <div class="use-case-desc">콘텐츠가 준비되기 전 레이아웃과 줄바꿈을 미리 테스트합니다.</div>
+          <div class="use-case-icon">&#x1F5C3;&#xFE0F;</div>
+          <div class="use-case-title">데이터베이스 마이그레이션</div>
+          <div class="use-case-desc">DB 덤프 결과를 JSON으로 변환해 스크립트나 목데이터로 활용합니다.</div>
         </div>
         <div class="use-case-card">
-          <div class="use-case-icon">&#x1F1F0;&#xFE0F;</div>
-          <div class="use-case-title">한글 UI 검토</div>
-          <div class="use-case-desc">한글은 라틴어보다 글자 폭이 넓어 실제 한글 더미로 줄바꿈을 확인할 때 유용합니다.</div>
+          <div class="use-case-icon">&#x1F4DD;</div>
+          <div class="use-case-title">JSON 응답을 표로 정리</div>
+          <div class="use-case-desc">API 응답 JSON을 CSV로 바꿔 엑셀에서 열어보고 정리합니다.</div>
         </div>
         <div class="use-case-card">
-          <div class="use-case-icon">&#x1F4E6;</div>
-          <div class="use-case-title">테스트 데이터 준비</div>
-          <div class="use-case-desc">폼이나 게시판 테스트에 필요한 임시 텍스트를 빠르게 채워 넣습니다.</div>
+          <div class="use-case-icon">&#x1F50D;</div>
+          <div class="use-case-title">데이터 검증</div>
+          <div class="use-case-desc">변환 전후 표 미리보기로 필드 개수와 값이 올바른지 빠르게 검증합니다.</div>
         </div>
       </div>
 
-      <div class="post-highlight">&#x1F512; LoremGen은 모든 텍스트 생성이 내 PC 브라우저에서만 실행됩니다. 서버로 전송되지 않습니다.</div>
+      <div class="post-highlight">&#x1F512; CSVJSONConvert는 모든 변환이 내 PC 브라우저에서만 실행됩니다. 입력한 데이터가 외부 서버로 전송되지 않습니다.</div>
     </div>
 
     <div class="cta-box">
-      <p>디자인과 레이아웃 검토에 필요한 더미 텍스트를 즉시 만들어보세요.<br />라틴어와 한글, 문단·문장·단어 단위까지 자유롭게 선택할 수 있습니다.</p>
-      <a href="/lorem-gen/" class="cta-btn" style="display:inline-flex;align-items:center;gap:8px">
-        <span style="display:inline-block;width:26px;height:26px;overflow:hidden;flex-shrink:0"><span style="display:block;transform:scale(0.565);transform-origin:top left"><div style="width:46px;height:46px;background:#a8e6cf;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="font:700 12px Gowun Dodum,sans-serif;color:#2a2433;line-height:1;letter-spacing:-.5px;white-space:nowrap">Lorem</div></div></span></span>
-        무료로 더미 텍스트 생성하기
+      <p>CSV와 JSON, 어느 쪽에서 시작하든 몇 초 만에 서로 변환해보세요.<br />표 미리보기로 결과를 바로 확인할 수 있습니다.</p>
+      <a href="/csv-json-convert/" class="cta-btn" style="display:inline-flex;align-items:center;gap:8px">
+        <span style="display:inline-block;width:26px;height:26px;overflow:hidden;flex-shrink:0"><span style="display:block;transform:scale(0.565);transform-origin:top left"><div style="width:46px;height:46px;background:#a8e6cf;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="font:700 11px Gowun Dodum,sans-serif;color:#2a2433;line-height:1;letter-spacing:-.5px;white-space:nowrap">CSV⇄JSON</div></div></span></span>
+        무료로 변환하기
       </a>
     </div>
     <div style="margin:12px 0"><ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="9500090221"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
 
 <div class="post-nav">
-      <a href="/blog/47-linenumber-howto.html"><span class="nav-label">← 이전 글</span><span style="color:var(--point-hover)">줄 번호 추가</span> 사용법 완전 가이드</a>
-      <a href="/blog/67-csvjsonconvert-howto.html" style="text-align:right"><span class="nav-label">다음 글 →</span><span style="color:var(--point-hover)">CSV ↔ JSON 변환기</span> 사용법 완전 가이드</a>
+      <a href="/blog/64-loremgen-howto.html"><span class="nav-label">← 이전 글</span><span style="color:var(--point-hover)">더미 텍스트 생성기</span> 사용법 완전 가이드</a>
+      <a href="/blog/24-qrcode-howto.html" style="text-align:right"><span class="nav-label">다음 글 →</span><span style="color:var(--point-hover)">QR 코드 생성</span> 사용법 완전 가이드</a>
     </div></div>
 
   </article>
