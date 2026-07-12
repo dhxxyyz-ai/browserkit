@@ -102,7 +102,7 @@
     </div>
     <div style="margin:0 0 12px"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
 
-    <p class="notice">💡 2025년 세법·4대보험 요율 기준의 근사 계산입니다. 국세청이 매월 배포하는 근로소득 간이세액표(원천징수용)가 아닌, 연간 세율표를 기반으로 계산한 뒤 12개월로 나눈 값이라 실제 급여명세서와 차이가 있을 수 있습니다. 회사마다 비과세 항목·공제 구성이 달라 참고용으로만 사용하세요. 모든 계산은 브라우저에서만 처리됩니다.</p>
+    <p class="notice">💡 2026년 4대보험 요율(국민연금 4.75%, 건강보험 3.595%, 장기요양보험 13.14%, 고용보험 0.9%)과 2025년 세법 기준의 근사 계산입니다. 국민연금은 2026년부터 매년 0.5%p씩 인상되어 2033년 13.0%까지 오를 예정이며, 소득 상한액(2026년 6월까지 월 637만원)은 반영하지 않아 고연봉 구간에서는 실제보다 국민연금 공제액이 과대 계산될 수 있습니다. 국세청이 매월 배포하는 근로소득 간이세액표(원천징수용)가 아닌 연간 세율표를 기반으로 계산한 뒤 12개월로 나눈 값이라 실제 급여명세서와 차이가 있을 수 있습니다. 회사마다 비과세 항목·공제 구성이 달라 참고용으로만 사용하세요. 모든 계산은 브라우저에서만 처리됩니다.</p>
 
     <div class="input-card">
       <div class="input-row">
@@ -143,8 +143,8 @@
         <span><span class="bar-dot" style="background:rgba(248,113,113,0.55)"></span>공제액</span>
       </div>
       <div class="breakdown-row"><span class="breakdown-label">월 세전 급여</span><span class="breakdown-value" id="rowGross">-</span></div>
-      <div class="breakdown-row"><span class="breakdown-label">국민연금 (4.5%)</span><span class="breakdown-value deduct" id="rowPension">-</span></div>
-      <div class="breakdown-row"><span class="breakdown-label">건강보험 (3.545%)</span><span class="breakdown-value deduct" id="rowHealth">-</span></div>
+      <div class="breakdown-row"><span class="breakdown-label">국민연금 (4.75%)</span><span class="breakdown-value deduct" id="rowPension">-</span></div>
+      <div class="breakdown-row"><span class="breakdown-label">건강보험 (3.595%)</span><span class="breakdown-value deduct" id="rowHealth">-</span></div>
       <div class="breakdown-row"><span class="breakdown-label">장기요양보험</span><span class="breakdown-value deduct" id="rowLongterm">-</span></div>
       <div class="breakdown-row"><span class="breakdown-label">고용보험 (0.9%)</span><span class="breakdown-value deduct" id="rowEmployment">-</span></div>
       <div class="breakdown-row"><span class="breakdown-label">소득세</span><span class="breakdown-value deduct" id="rowIncomeTax">-</span></div>
@@ -225,9 +225,9 @@
 
     // 4대보험 (과세 대상 급여 기준, 월)
     var monthlyTaxableGross = taxableGrossAnnual / 12;
-    var pensionMonthly = monthlyTaxableGross * 0.045;
-    var healthMonthly = monthlyTaxableGross * 0.03545;
-    var longtermMonthly = healthMonthly * 0.1295;
+    var pensionMonthly = monthlyTaxableGross * 0.0475;
+    var healthMonthly = monthlyTaxableGross * 0.03595;
+    var longtermMonthly = healthMonthly * 0.1314;
     var employmentMonthly = monthlyTaxableGross * 0.009;
     var insuranceAnnual = (pensionMonthly + healthMonthly + longtermMonthly + employmentMonthly) * 12;
 
