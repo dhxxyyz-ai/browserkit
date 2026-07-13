@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <link rel="icon" href="/favicon.ico" sizes="32x32">
+  <link rel="icon" href="/favicon-16.png" sizes="16x16" type="image/png">
+  <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="/favicon-192.png" sizes="192x192" type="image/png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="텍스트를 입력하면 글자 수, 단어 수, 문장 수, 문단 수, 바이트 수, 예상 읽기 시간을 실시간으로 계산해주는 무료 온라인 텍스트 통계 분석기. 서버 전송 없이 브라우저에서 바로 처리합니다." />
+  <meta property="og:title" content="TextStats — 텍스트 통계 분석기" />
+  <meta property="og:description" content="글자 수·단어 수·문장 수·읽기 시간을 실시간으로 계산하는 무료 온라인 도구입니다." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://browserkit.online/text-stats/" />
+  <title>TextStats — 텍스트 통계 분석기</title>
+  <link rel="stylesheet" href="/css/style.css?v=20260704c" />
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506"
+     crossorigin="anonymous"></script>
+  <style>
+    .input-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px 24px; margin-bottom:20px; }
+    .input-label { font-size:13px; font-weight:600; color:var(--subtext); margin-bottom:10px; display:flex; align-items:center; justify-content:space-between; }
+    .text-input { background:var(--bg); border:1px solid var(--border); border-radius:10px; padding:16px; font-size:15px; color:var(--text); font-family:'Gowun Dodum',sans-serif; width:100%; min-height:260px; resize:vertical; outline:none; line-height:1.9; box-sizing:border-box; }
+    .text-input:focus { border-color:var(--point); }
+    .quick-fill { display:flex; gap:8px; margin-top:10px; flex-wrap:wrap; }
+    .quick-fill-btn { background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:6px 14px; font-size:12px; color:var(--subtext); cursor:pointer; }
+    .quick-fill-btn:hover { border-color:var(--point); color:var(--text); }
+
+    .stat-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-bottom:20px; }
+    .stat-card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:18px 16px; text-align:center; }
+    .stat-value { font-size:24px; font-weight:800; color:var(--point-hover); font-family:'Fira Code',monospace; line-height:1.2; }
+    .stat-label { font-size:12px; color:var(--subtext); margin-top:6px; }
+
+    .detail-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px 24px; margin-bottom:20px; }
+    .detail-title { font-size:13px; font-weight:600; color:var(--subtext); margin-bottom:12px; }
+    .detail-row { display:flex; justify-content:space-between; align-items:center; padding:9px 0; border-bottom:1px solid var(--border); font-size:14px; }
+    .detail-row:last-child { border-bottom:none; }
+    .detail-label { color:var(--subtext); }
+    .detail-value { font-family:'Fira Code',monospace; color:var(--text); font-weight:600; }
+
+    .freq-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px 24px; margin-bottom:20px; }
+    .freq-title { font-size:13px; font-weight:600; color:var(--subtext); margin-bottom:12px; }
+    .freq-list { display:flex; flex-wrap:wrap; gap:8px; }
+    .freq-chip { background:var(--bg); border:1px solid var(--border); border-radius:999px; padding:6px 14px; font-size:13px; color:var(--text); }
+    .freq-chip b { color:var(--point-hover); font-family:'Fira Code',monospace; margin-left:4px; }
+    .freq-empty { font-size:13px; color:var(--subtext); }
+
+    .action-wrap { display:flex; justify-content:center; gap:12px; margin-bottom:48px; flex-wrap:wrap; }
+    .btn-sub { background:var(--card); color:var(--subtext); border:1px solid var(--border); border-radius:12px; padding:13px 22px; font-size:15px; cursor:pointer; font-family:'Gowun Dodum',sans-serif; }
+    .btn-sub:hover { transform:translateY(-2px); color:var(--text); border-color:var(--point); }
+
+    .toast { position:fixed; bottom:32px; left:50%; transform:translateX(-50%) translateY(80px); background:var(--success); color:#fff; border-radius:999px; padding:10px 24px; font-size:14px; font-weight:600; opacity:0; pointer-events:none; z-index:999; transition:all 0.3s ease; }
+    .toast.show { transform:translateX(-50%) translateY(0); opacity:1; }
+
+    .footer { border-top:1px solid var(--border); padding:32px 0; text-align:center; }
+    .footer-copy { color:var(--subtext); font-size:13px; margin-bottom:12px; }
+    .footer-nav { display:flex; justify-content:center; gap:20px; flex-wrap:wrap; }
+    .footer-nav a { color:var(--subtext); font-size:13px; text-decoration:none; }
+    .footer-nav a:hover { color:var(--text); }
+
+    @media (max-width:640px) {
+      .hero-title { font-size:24px; }
+      .stat-grid { grid-template-columns:repeat(2,1fr); }
+    }
+  </style>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+  <meta property="og:image" content="https://browserkit.online/img/og-browserkit.png" />
+  <link rel="canonical" href="https://browserkit.online/text-stats/" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://browserkit.online/img/og-browserkit.png" />
+</head>
+
+<body>
+  <header class="header">
+    <div class="container">
+      <a href="/" class="header-brand">
+        <div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Gowun Dodum,sans-serif;flex-shrink:0">B</div>
+        <span class="header-brand-text"><span style="color:var(--text)">Browser</span><span style="color:var(--point)">Kit</span></span>
+      </a>
+      <a href="/" class="header-back">&#x2190; BrowserKit 홈으로</a>
+    </div>
+  </header>
+
+  <main><div class="container">
+    <div class="hero">
+      <div class="hero-icon" style="height:78px;display:flex;justify-content:center;align-items:center"><div style="transform:scale(1.7);transform-origin:center"><div style="width:46px;height:46px;background:#a8e6cf;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="display:flex;align-items:flex-end;gap:3px;height:28px"><div style="width:6px;height:13px;background:#fffdf9;border:2px solid #2a2433;border-radius:2px 2px 0 0;box-sizing:border-box"></div><div style="width:6px;height:22px;background:#fffdf9;border:2px solid #2a2433;border-radius:2px 2px 0 0;box-sizing:border-box"></div><div style="width:6px;height:17px;background:#fffdf9;border:2px solid #2a2433;border-radius:2px 2px 0 0;box-sizing:border-box"></div></div></div></div></div>
+      <div class="hero-title-wrap"><h1 class="hero-title">텍스트 통계 분석기</h1><a href="/blog/72-textstats-howto.html" class="hero-guide-link">사용법 가이드 보기</a></div>
+      <p class="hero-desc">텍스트를 입력하면 글자 수·단어 수·읽기 시간을 실시간으로 계산해드려요</p>
+      <div class="hero-badges">
+        <span class="badge">🔒 완전 로컬 처리</span>
+        <span class="badge">⚡ 무료 사용</span>
+        <span class="badge">🛡️ 서버 전송 없음</span>
+        <span class="badge">📦 설치 불필요</span>
+      </div>
+    </div>
+    <div style="margin:0 0 12px"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+
+    <div class="input-card">
+      <div class="input-label">
+        <span>텍스트 입력</span>
+        <span></span>
+      </div>
+      <textarea class="text-input" id="textInput" placeholder="여기에 텍스트를 입력하거나 붙여넣으면 통계가 실시간으로 계산됩니다."></textarea>
+      <div class="quick-fill">
+        <button class="quick-fill-btn" id="sampleBtn">📋 예시 텍스트 채우기</button>
+        <button class="quick-fill-btn" id="clearBtn">↺ 비우기</button>
+      </div>
+    </div>
+
+    <div class="stat-grid">
+      <div class="stat-card">
+        <div class="stat-value" id="statChars">0</div>
+        <div class="stat-label">글자 수 (공백 포함)</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="statCharsNoSpace">0</div>
+        <div class="stat-label">글자 수 (공백 제외)</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="statWords">0</div>
+        <div class="stat-label">단어 수</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="statReadTime">0분</div>
+        <div class="stat-label">예상 읽기 시간</div>
+      </div>
+    </div>
+
+    <div class="detail-card">
+      <div class="detail-title">📊 상세 통계</div>
+      <div class="detail-row"><span class="detail-label">문장 수</span><span class="detail-value" id="statSentences">0</span></div>
+      <div class="detail-row"><span class="detail-label">문단 수</span><span class="detail-value" id="statParagraphs">0</span></div>
+      <div class="detail-row"><span class="detail-label">줄 수</span><span class="detail-value" id="statLines">0</span></div>
+      <div class="detail-row"><span class="detail-label">바이트 수 (UTF-8)</span><span class="detail-value" id="statBytes">0 B</span></div>
+    </div>
+
+    <div class="freq-card">
+      <div class="freq-title">🔤 자주 나온 단어 Top 5</div>
+      <div class="freq-list" id="freqList"><span class="freq-empty">텍스트를 입력하면 표시됩니다.</span></div>
+    </div>
+
+    <div class="action-wrap">
+      <button class="btn-sub" id="copyStatsBtn">&#x1F4CB; 통계 복사</button>
+    </div>
+
+    <div style="margin:0 0 12px"><ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="9500090221"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+  </div></main>
+
+  <footer class="footer">
+    <div class="container">
+      <p class="footer-copy">&#xa9; 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p>
+      <nav class="footer-nav">
+        <a href="/privacy.html">개인정보 처리방침</a>
+        <a href="/terms.html">이용약관</a>
+        <a href="/about.html">서비스 소개</a>
+        <a href="/blog/">블로그</a>
+      </nav>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+  var SAMPLE_TEXT = 'BrowserKit은 설치나 회원가입 없이 브라우저에서 바로 쓸 수 있는 무료 도구 모음입니다.\n\n개인정보 마스킹, 이미지 편집, PDF 처리, 계산기까지 다양한 도구를 제공합니다. 모든 처리는 서버 전송 없이 여러분의 브라우저 안에서만 이루어집니다.\n\n지금 바로 필요한 도구를 찾아 사용해보세요!';
+  var STOP_WORDS = ['이', '그', '저', '것', '수', '등', '및', '을', '를', '은', '는', '이다', '있다', '하다', '의', '가', '에', '와', '과', '도', '으로', '로', 'the', 'a', 'an', 'is', 'are', 'to', 'of', 'and', 'in', 'it'];
+
+  var textInput = document.getElementById('textInput');
+
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(function() { t.classList.remove('show'); }, 2000);
+  }
+
+  function byteLength(s) {
+    return new TextEncoder().encode(s).length;
+  }
+
+  function countWords(text) {
+    var trimmed = text.trim();
+    if (!trimmed) return 0;
+    return trimmed.split(/\s+/).length;
+  }
+
+  function countSentences(text) {
+    var trimmed = text.trim();
+    if (!trimmed) return 0;
+    var matches = trimmed.match(/[^.!?。！？\n]+[.!?。！？]+|\S+$/g);
+    return matches ? matches.filter(function(s) { return s.trim().length > 0; }).length : 0;
+  }
+
+  function countParagraphs(text) {
+    var trimmed = text.trim();
+    if (!trimmed) return 0;
+    return trimmed.split(/\n\s*\n/).filter(function(p) { return p.trim().length > 0; }).length;
+  }
+
+  function countLines(text) {
+    if (!text) return 0;
+    return text.split('\n').length;
+  }
+
+  function topWords(text, n) {
+    var trimmed = text.trim();
+    if (!trimmed) return [];
+    var tokens = trimmed.toLowerCase().match(/[가-힣a-zA-Z0-9]+/g) || [];
+    var freq = {};
+    tokens.forEach(function(w) {
+      if (w.length < 2) return;
+      if (STOP_WORDS.indexOf(w) !== -1) return;
+      freq[w] = (freq[w] || 0) + 1;
+    });
+    return Object.keys(freq)
+      .map(function(w) { return { word: w, count: freq[w] }; })
+      .sort(function(a, b) { return b.count - a.count; })
+      .slice(0, n);
+  }
+
+  function formatBytes(n) {
+    if (n < 1024) return n + ' B';
+    return (n / 1024).toFixed(1) + ' KB';
+  }
+
+  function update() {
+    var text = textInput.value;
+    var chars = text.length;
+    var charsNoSpace = text.replace(/\s/g, '').length;
+    var words = countWords(text);
+    var sentences = countSentences(text);
+    var paragraphs = countParagraphs(text);
+    var lines = countLines(text);
+    var bytes = byteLength(text);
+    var readMinutes = Math.max(0, Math.ceil(charsNoSpace / 500));
+
+    document.getElementById('statChars').textContent = chars.toLocaleString();
+    document.getElementById('statCharsNoSpace').textContent = charsNoSpace.toLocaleString();
+    document.getElementById('statWords').textContent = words.toLocaleString();
+    document.getElementById('statReadTime').textContent = text.trim() ? (readMinutes < 1 ? '1분 미만' : readMinutes + '분') : '0분';
+    document.getElementById('statSentences').textContent = sentences.toLocaleString();
+    document.getElementById('statParagraphs').textContent = paragraphs.toLocaleString();
+    document.getElementById('statLines').textContent = lines.toLocaleString();
+    document.getElementById('statBytes').textContent = formatBytes(bytes);
+
+    var freqList = document.getElementById('freqList');
+    var top = topWords(text, 5);
+    if (!top.length) {
+      freqList.innerHTML = '<span class="freq-empty">텍스트를 입력하면 표시됩니다.</span>';
+    } else {
+      freqList.innerHTML = top.map(function(item) {
+        return '<span class="freq-chip">' + escapeHtml(item.word) + '<b>' + item.count + '</b></span>';
+      }).join('');
+    }
+  }
+
+  function escapeHtml(s) {
+    return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  }
+
+  textInput.addEventListener('input', update);
+
+  document.getElementById('sampleBtn').addEventListener('click', function() {
+    textInput.value = SAMPLE_TEXT;
+    update();
+  });
+  document.getElementById('clearBtn').addEventListener('click', function() {
+    textInput.value = '';
+    update();
+  });
+
+  document.getElementById('copyStatsBtn').addEventListener('click', function() {
+    if (!textInput.value.trim()) { showToast('먼저 텍스트를 입력해주세요'); return; }
+    var lines = [
+      '글자 수(공백 포함): ' + document.getElementById('statChars').textContent,
+      '글자 수(공백 제외): ' + document.getElementById('statCharsNoSpace').textContent,
+      '단어 수: ' + document.getElementById('statWords').textContent,
+      '문장 수: ' + document.getElementById('statSentences').textContent,
+      '문단 수: ' + document.getElementById('statParagraphs').textContent,
+      '줄 수: ' + document.getElementById('statLines').textContent,
+      '바이트 수: ' + document.getElementById('statBytes').textContent,
+      '예상 읽기 시간: ' + document.getElementById('statReadTime').textContent
+    ];
+    navigator.clipboard.writeText(lines.join('\n')).then(function() {
+      showToast('✓ 통계가 클립보드에 복사되었습니다');
+    });
+  });
+
+  update();
+  </script>
+</body>
+</html>

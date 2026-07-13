@@ -8,11 +8,11 @@
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="YAMLJSONConvert의 모든 기능을 단계별로 설명하는 공식 사용 가이드입니다. YAML 설정 파일을 JSON으로, JSON을 YAML로 변환하고 표로 미리보는 방법을 알아보세요." />
-  <meta property="og:title" content="YAML ↔ JSON 변환기 사용법 완전 가이드 — BrowserKit" />
-  <meta property="og:description" content="YAML 설정 파일을 JSON으로, JSON을 YAML로 변환하고 표로 미리보는 YAMLJSONConvert 공식 가이드입니다." />
+  <meta name="description" content="TextStats의 모든 기능을 단계별로 설명하는 공식 사용 가이드입니다. 글자 수, 단어 수, 문장·문단 수, 읽기 시간을 실시간으로 계산하는 방법을 알아보세요." />
+  <meta property="og:title" content="텍스트 통계 분석기 사용법 완전 가이드 — BrowserKit" />
+  <meta property="og:description" content="글자 수·단어 수·읽기 시간을 실시간으로 계산하는 TextStats 공식 가이드입니다." />
   <meta property="og:type" content="article" />
-  <title>YAML ↔ JSON 변환기 사용법 완전 가이드 — BrowserKit</title>
+  <title>텍스트 통계 분석기 사용법 완전 가이드 — BrowserKit</title>
   <link rel="stylesheet" href="/css/style.css?v=20260704c" />
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506"
      crossorigin="anonymous"></script>
@@ -59,16 +59,16 @@
   {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
-    "headline": "YAML ↔ JSON 변환기 사용법 완전 가이드",
-    "description": "YAMLJSONConvert의 모든 기능을 단계별로 설명하는 공식 사용 가이드입니다. YAML 설정 파일을 JSON으로, JSON을 YAML로 변환하고 표로 미리보는 방법을 알아보세요.",
-    "datePublished": "2026-07-12T00:00:00+09:00",
-    "dateModified": "2026-07-12T00:00:00+09:00",
+    "headline": "텍스트 통계 분석기 사용법 완전 가이드",
+    "description": "TextStats의 모든 기능을 단계별로 설명하는 공식 사용 가이드입니다. 글자 수, 단어 수, 문장·문단 수, 읽기 시간을 실시간으로 계산하는 방법을 알아보세요.",
+    "datePublished": "2026-07-13T00:00:00+09:00",
+    "dateModified": "2026-07-13T00:00:00+09:00",
     "author": { "@type": "Organization", "name": "BrowserKit", "url": "https://browserkit.online" },
     "publisher": { "@type": "Organization", "name": "BrowserKit", "url": "https://browserkit.online", "logo": { "@type": "ImageObject", "url": "https://browserkit.online/img/og-browserkit.png" } },
-    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://browserkit.online/blog/68-yamljsonconvert-howto.html" },
+    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://browserkit.online/blog/72-textstats-howto.html" },
     "image": "https://browserkit.online/img/og-browserkit.png"
   }
-  </script>  <link rel="canonical" href="https://browserkit.online/blog/68-yamljsonconvert-howto.html" />
+  </script>  <link rel="canonical" href="https://browserkit.online/blog/72-textstats-howto.html" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:image" content="https://browserkit.online/img/og-browserkit.png" />
   <style>
@@ -89,34 +89,34 @@
   <article class="post-wrap">
     <a href="/blog/" class="back-link">&#x2190; 블로그 목록</a>
     <span class="post-tag">가이드</span>
-    <h1 class="post-title"><span style="color:var(--point-hover)">YAML ↔ JSON 변환기</span> 사용법 완전 가이드</h1>
-    <div class="post-date">2026년 7월 12일</div>
+    <h1 class="post-title"><span style="color:var(--point-hover)">텍스트 통계 분석기</span> 사용법 완전 가이드</h1>
+    <div class="post-date">2026년 7월 13일</div>
     <div style="margin:12px 0"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
 
     <div class="post-body">
-      <p>YAMLJSONConvert는 Kubernetes, Docker Compose, GitHub Actions 같은 설정 파일에 자주 쓰이는 YAML을 JSON으로, JSON을 다시 YAML로 즉시 변환해주는 무료 온라인 도구입니다. 오픈소스 라이브러리 js-yaml로 파싱·직렬화하며, 텍스트를 직접 붙여넣거나 파일을 업로드하면 변환 결과를 표로 미리보기해 데이터가 의도대로 변환됐는지 바로 확인할 수 있습니다. 모든 처리는 브라우저에서만 이루어집니다.</p>
+      <p>TextStats는 텍스트를 입력하기만 하면 글자 수, 단어 수, 문장·문단 수, 바이트 수, 예상 읽기 시간까지 실시간으로 계산해주는 무료 온라인 텍스트 통계 분석기입니다. 자기소개서 글자 수 제한을 맞추거나, 블로그 글의 예상 읽기 시간을 확인하거나, 원고의 분량을 점검할 때 유용하며, 모든 계산은 브라우저에서만 이루어집니다.</p>
 
       <h2>주요 기능</h2>
       <div class="feature-grid">
         <div class="feature-card">
-          <div class="feature-icon">&#x1F504;</div>
-          <div class="feature-title">양방향 변환</div>
-          <div class="feature-desc">YAML → JSON, JSON → YAML 두 방향 모두 버튼 한 번으로 전환해 사용할 수 있습니다.</div>
+          <div class="feature-icon">&#x26A1;</div>
+          <div class="feature-title">실시간 통계</div>
+          <div class="feature-desc">버튼을 누르지 않아도 입력하는 즉시 모든 통계 값이 갱신됩니다.</div>
         </div>
         <div class="feature-card">
-          <div class="feature-icon">&#x1F4CB;</div>
-          <div class="feature-title">붙여넣기·업로드 지원</div>
-          <div class="feature-desc">텍스트를 직접 붙여넣거나 .yaml, .yml, .json 파일을 드래그해 바로 불러올 수 있습니다.</div>
+          <div class="feature-icon">&#x23F1;&#xFE0F;</div>
+          <div class="feature-title">예상 읽기 시간</div>
+          <div class="feature-desc">공백을 제외한 글자 수를 기준으로 예상 읽기 시간을 분 단위로 계산합니다.</div>
         </div>
         <div class="feature-card">
-          <div class="feature-icon">&#x1F4CA;</div>
-          <div class="feature-title">표 미리보기</div>
-          <div class="feature-desc">객체 배열이나 단일 객체는 표로 렌더링해 값이 올바르게 파싱됐는지 한눈에 확인합니다.</div>
+          <div class="feature-icon">&#x1F524;</div>
+          <div class="feature-title">단어 빈도 분석</div>
+          <div class="feature-desc">조사·불용어를 제외하고 가장 많이 등장한 단어 Top 5를 보여줍니다.</div>
         </div>
         <div class="feature-card">
           <div class="feature-icon">&#x1F512;</div>
           <div class="feature-title">완전 로컬 처리</div>
-          <div class="feature-desc">모든 변환이 브라우저 안에서 실행됩니다. 데이터가 서버로 전송되지 않습니다.</div>
+          <div class="feature-desc">입력한 텍스트가 브라우저 안에서만 분석되고 서버로 전송되지 않습니다.</div>
         </div>
       </div>
 
@@ -126,108 +126,103 @@
       <div class="step-card">
         <div class="step-num">1</div>
         <div class="step-content">
-          <h3>변환 방향 선택</h3>
-          <p>상단에서 <strong>YAML → JSON</strong> 또는 <strong>JSON → YAML</strong> 중 원하는 방향을 선택합니다. JSON → YAML 방향에서는 들여쓰기 칸 수를 조절하는 옵션이 추가로 나타납니다.</p>
+          <h3>텍스트 입력</h3>
+          <p>입력창에 텍스트를 직접 입력하거나 붙여넣습니다. <strong>📋 예시 텍스트 채우기</strong> 버튼으로 샘플 텍스트를 바로 넣어볼 수 있습니다.</p>
         </div>
       </div>
+
+      <figure style="margin:12px 0 24px; text-align:center;">
+        <img src="/img/blog/textstats/01-input.png"
+             alt="TextStats의 텍스트 입력창과 실시간으로 계산된 통계 카드가 함께 표시된 화면"
+             style="width:100%; max-width:640px; border:1px solid var(--border); border-radius:var(--radius);"
+             loading="lazy" />
+        <figcaption style="font-size:13px; color:var(--subtext); margin-top:6px;">
+          텍스트 입력과 실시간 통계 카드
+        </figcaption>
+      </figure>
 
       <div class="step-card">
         <div class="step-num">2</div>
         <div class="step-content">
-          <h3>데이터 입력</h3>
-          <p>왼쪽 입력창에 YAML 또는 JSON 데이터를 직접 붙여넣거나, 업로드 영역을 클릭해 .yaml/.yml/.json 파일을 선택합니다. 파일을 업로드하면 확장자에 맞춰 변환 방향도 자동으로 전환됩니다.</p>
+          <h3>통계 확인</h3>
+          <p>입력과 동시에 상단 카드에 글자 수(공백 포함/제외), 단어 수, 예상 읽기 시간이 표시되고, 아래 상세 통계 카드에서 문장·문단·줄 수와 바이트 수를 확인할 수 있습니다.</p>
         </div>
       </div>
-
-      <figure style="margin:12px 0 24px; text-align:center;">
-        <img src="/img/blog/yamljsonconvert/01-yaml2json.png"
-             alt="YAMLJSONConvert의 YAML 입력창과 변환된 JSON 결과, 표 미리보기가 함께 표시된 화면"
-             style="width:100%; max-width:640px; border:1px solid var(--border); border-radius:var(--radius);"
-             loading="lazy" />
-        <figcaption style="font-size:13px; color:var(--subtext); margin-top:6px;">
-          YAML 입력과 변환된 JSON 결과 화면
-        </figcaption>
-      </figure>
 
       <div class="step-card">
         <div class="step-num">3</div>
         <div class="step-content">
-          <h3>들여쓰기 옵션 설정 (JSON → YAML)</h3>
-          <p>JSON을 YAML로 변환할 때는 <strong>들여쓰기</strong> 값(1~8칸)을 조절해 원하는 YAML 스타일로 출력할 수 있습니다.</p>
-        </div>
-      </div>
-
-      <div class="step-card">
-        <div class="step-num">4</div>
-        <div class="step-content">
-          <h3>변환 및 결과 확인</h3>
-          <p><strong>🔄 변환하기</strong> 버튼을 누르면 결과가 오른쪽 창과 아래 표 미리보기에 함께 표시됩니다. <strong>📋 결과 복사</strong>로 클립보드에 복사하거나 <strong>⬇ 파일 다운로드</strong>로 저장할 수 있습니다.</p>
+          <h3>자주 나온 단어 확인 및 복사</h3>
+          <p>하단 단어 빈도 카드에서 가장 많이 등장한 단어 Top 5를 확인할 수 있습니다. <strong>📋 통계 복사</strong> 버튼으로 모든 통계 값을 텍스트로 클립보드에 복사해 문서나 메모에 붙여넣을 수 있습니다.</p>
         </div>
       </div>
 
       <figure style="margin:12px 0 24px; text-align:center;">
-        <img src="/img/blog/yamljsonconvert/02-json2yaml.png"
-             alt="YAMLJSONConvert의 JSON 입력, 들여쓰기 옵션과 변환된 YAML 결과가 표시된 화면"
+        <img src="/img/blog/textstats/02-stats.png"
+             alt="TextStats의 상세 통계 카드와 자주 나온 단어 Top 5 목록이 함께 표시된 화면"
              style="width:100%; max-width:640px; border:1px solid var(--border); border-radius:var(--radius);"
              loading="lazy" />
         <figcaption style="font-size:13px; color:var(--subtext); margin-top:6px;">
-          JSON을 YAML로 변환한 결과 화면
+          상세 통계와 자주 나온 단어 Top 5
         </figcaption>
       </figure>
 
       <div class="post-warn">
-        <strong>⚠️ 참고:</strong> 오픈소스 라이브러리 js-yaml로 파싱·변환합니다. YAML의 앵커(&amp;)/별칭(*) 참조, 커스텀 태그 같은 고급 문법은 완전히 지원되지 않을 수 있으며, 매우 복잡한 설정 파일은 결과가 예상과 다를 수 있습니다. JSON → YAML 변환 시 주석은 원본 YAML에만 존재하는 정보라 JSON에는 남아있지 않으므로 변환 후 다시 추가할 수 없습니다. 변환 후에는 표 미리보기와 결과를 한 번 더 확인하는 것을 권장합니다.
+        <strong>⚠️ 참고:</strong> 예상 읽기 시간은 공백 제외 글자 수 기준 분당 약 500자를 읽는다고 가정한 대략적인 수치이며, 실제 읽기 속도는 글의 난이도와 독자에 따라 달라질 수 있습니다. 단어 빈도 분석은 한 글자 단어와 일부 조사·불용어를 제외하고 계산합니다.
       </div>
 
-      <h2>지원 옵션</h2>
+      <h2>통계 항목 정리</h2>
       <div class="post-table-wrap"><table class="post-table">
-        <thead><tr><th>옵션</th><th>설명</th></tr></thead>
+        <thead><tr><th>항목</th><th>설명</th></tr></thead>
         <tbody>
-          <tr><td>변환 방향</td><td>YAML → JSON, JSON → YAML</td></tr>
-          <tr><td>들여쓰기</td><td>JSON → YAML 변환 시 1~8칸 사이에서 조절</td></tr>
-          <tr><td>파일 업로드</td><td>.yaml, .yml, .json, .txt 드래그 앤 드롭 또는 클릭 업로드</td></tr>
+          <tr><td>글자 수(공백 포함)</td><td>띄어쓰기와 줄바꿈을 포함한 전체 문자 수</td></tr>
+          <tr><td>글자 수(공백 제외)</td><td>공백·줄바꿈을 제외한 순수 문자 수</td></tr>
+          <tr><td>단어 수</td><td>공백 기준으로 분리한 단어(어절) 개수</td></tr>
+          <tr><td>문장 수</td><td>마침표·물음표·느낌표로 끝나는 문장 개수</td></tr>
+          <tr><td>문단 수</td><td>빈 줄로 구분된 문단 개수</td></tr>
+          <tr><td>바이트 수</td><td>UTF-8 인코딩 기준 실제 파일 용량</td></tr>
         </tbody>
       </table></div>
 
       <h2>활용 예시</h2>
       <div class="use-case-grid">
         <div class="use-case-card">
-          <div class="use-case-icon">&#x1F433;</div>
-          <div class="use-case-title">Kubernetes 매니페스트 확인</div>
-          <div class="use-case-desc">YAML 설정을 JSON으로 변환해 값 구조를 한눈에 파악합니다.</div>
+          <div class="use-case-icon">&#x1F4C4;</div>
+          <div class="use-case-title">자기소개서 글자 수 확인</div>
+          <div class="use-case-desc">공백 포함/제외 글자 수 제한을 실시간으로 확인하며 작성합니다.</div>
         </div>
         <div class="use-case-card">
-          <div class="use-case-icon">&#x2699;&#xFE0F;</div>
-          <div class="use-case-title">CI/CD 설정 파일 변환</div>
-          <div class="use-case-desc">GitHub Actions·GitLab CI 등의 YAML을 JSON 스키마 검증 도구에 사용합니다.</div>
+          <div class="use-case-icon">&#x270D;&#xFE0F;</div>
+          <div class="use-case-title">블로그 글 분량 점검</div>
+          <div class="use-case-desc">발행 전 단어 수와 예상 읽기 시간을 확인해 분량을 조절합니다.</div>
         </div>
         <div class="use-case-card">
-          <div class="use-case-icon">&#x1F4DD;</div>
-          <div class="use-case-title">API 응답을 YAML로 정리</div>
-          <div class="use-case-desc">JSON 응답을 YAML로 바꿔 설정 파일 초안으로 활용합니다.</div>
+          <div class="use-case-icon">&#x1F4E9;</div>
+          <div class="use-case-title">SNS·메일 글자 수 제한</div>
+          <div class="use-case-desc">플랫폼별 글자 수 제한에 맞춰 문구를 다듬을 때 활용합니다.</div>
         </div>
         <div class="use-case-card">
           <div class="use-case-icon">&#x1F50D;</div>
-          <div class="use-case-title">데이터 검증</div>
-          <div class="use-case-desc">변환 전후 표 미리보기로 필드와 값이 올바른지 빠르게 검증합니다.</div>
+          <div class="use-case-title">반복 단어 점검</div>
+          <div class="use-case-desc">자주 나온 단어 Top 5로 같은 표현이 과하게 반복되지 않았는지 확인합니다.</div>
         </div>
       </div>
 
-      <div class="post-highlight">&#x1F512; YAMLJSONConvert는 모든 변환이 내 PC 브라우저에서만 실행됩니다. 입력한 데이터가 외부 서버로 전송되지 않습니다.</div>
+      <div class="post-highlight">&#x1F512; TextStats는 모든 분석이 내 PC 브라우저에서만 실행됩니다. 입력한 텍스트가 외부 서버로 전송되지 않습니다.</div>
     </div>
 
     <div class="cta-box">
-      <p>YAML과 JSON, 어느 쪽에서 시작하든 몇 초 만에 서로 변환해보세요.<br />표 미리보기로 결과를 바로 확인할 수 있습니다.</p>
-      <a href="/yaml-json-convert/" class="cta-btn" style="display:inline-flex;align-items:center;gap:8px">
-        <span style="display:inline-block;width:26px;height:26px;overflow:hidden;flex-shrink:0"><span style="display:block;transform:scale(0.565);transform-origin:top left"><div style="width:46px;height:46px;background:#a8e6cf;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="font:700 16px Gowun Dodum,sans-serif;color:#2a2433;line-height:1;letter-spacing:-.5px;white-space:nowrap">YAML</div></div></span></span>
-        무료로 변환하기
+      <p>지금 바로 텍스트 통계를 실시간으로 확인해보세요.<br />설치도 회원가입도 필요 없습니다.</p>
+      <a href="/text-stats/" class="cta-btn" style="display:inline-flex;align-items:center;gap:8px">
+        <span style="display:inline-block;width:26px;height:26px;overflow:hidden;flex-shrink:0"><span style="display:block;transform:scale(0.565);transform-origin:top left"><div style="width:46px;height:46px;background:#a8e6cf;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="display:flex;align-items:flex-end;gap:3px;height:28px"><div style="width:6px;height:13px;background:#fffdf9;border:2px solid #2a2433;border-radius:2px 2px 0 0;box-sizing:border-box"></div><div style="width:6px;height:22px;background:#fffdf9;border:2px solid #2a2433;border-radius:2px 2px 0 0;box-sizing:border-box"></div><div style="width:6px;height:17px;background:#fffdf9;border:2px solid #2a2433;border-radius:2px 2px 0 0;box-sizing:border-box"></div></div></div></span></span>
+        무료로 텍스트 통계 확인하기
       </a>
     </div>
     <div style="margin:12px 0"><ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="9500090221"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
 
 <div class="post-nav">
-      <a href="/blog/67-csvjsonconvert-howto.html"><span class="nav-label">← 이전 글</span><span style="color:var(--point-hover)">CSV ↔ JSON 변환기</span> 사용법 완전 가이드</a>
-      <a href="/blog/72-textstats-howto.html" style="text-align:right"><span class="nav-label">다음 글 →</span><span style="color:var(--point-hover)">텍스트 통계 분석기</span> 사용법 완전 가이드</a>
+      <a href="/blog/68-yamljsonconvert-howto.html"><span class="nav-label">← 이전 글</span><span style="color:var(--point-hover)">YAML ↔ JSON 변환기</span> 사용법 완전 가이드</a>
+      <a href="/blog/24-qrcode-howto.html" style="text-align:right"><span class="nav-label">다음 글 →</span><span style="color:var(--point-hover)">QR 코드 생성</span> 사용법 완전 가이드</a>
     </div></div>
 
   </article>
