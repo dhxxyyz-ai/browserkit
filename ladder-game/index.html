@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <link rel="icon" href="/favicon.ico" sizes="32x32">
+  <link rel="icon" href="/favicon-16.png" sizes="16x16" type="image/png">
+  <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="/favicon-192.png" sizes="192x192" type="image/png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="참가자와 결과를 입력하면 랜덤 사다리를 만들어 결과를 배정해주는 무료 온라인 사다리타기. 서버 전송 없이 브라우저에서 바로 처리합니다." />
+  <meta property="og:title" content="LadderGame — 사다리타기" />
+  <meta property="og:description" content="참가자 이름과 결과를 입력해 랜덤 사다리를 타고 결과를 배정하는 무료 온라인 도구입니다." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://browserkit.online/ladder-game/" />
+  <title>LadderGame — 사다리타기</title>
+  <link rel="stylesheet" href="/css/style.css?v=20260704c" />
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506"
+     crossorigin="anonymous"></script>
+  <style>
+    .input-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px 24px; margin-bottom:20px; }
+    .input-row2 { display:flex; gap:16px; flex-wrap:wrap; }
+    .input-col { flex:1; min-width:200px; }
+    .input-label { font-size:13px; font-weight:600; color:var(--subtext); margin-bottom:10px; display:flex; align-items:center; justify-content:space-between; }
+    .name-textarea { background:var(--bg); border:1px solid var(--border); border-radius:10px; padding:14px 16px; font-size:14px; color:var(--text); font-family:'Gowun Dodum',sans-serif; width:100%; min-height:120px; resize:vertical; outline:none; line-height:1.8; box-sizing:border-box; }
+    .name-textarea:focus { border-color:var(--point); }
+    .name-count { font-size:12px; color:var(--subtext); }
+    .quick-fill { display:flex; gap:8px; margin-top:10px; flex-wrap:wrap; }
+    .quick-fill-btn { background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:6px 14px; font-size:12px; color:var(--subtext); cursor:pointer; }
+    .quick-fill-btn:hover { border-color:var(--point); color:var(--text); }
+
+    .start-btn { display:block; margin:24px auto; background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border:none; border-radius:14px; padding:16px 40px; font-size:17px; font-weight:700; cursor:pointer; font-family:'Gowun Dodum',sans-serif; }
+    .start-btn:hover:not(:disabled) { transform:translateY(-2px); box-shadow:0 8px 24px var(--glow); }
+    .start-btn:disabled { opacity:0.5; cursor:default; }
+
+    .ladder-wrap { overflow-x:auto; margin-bottom:20px; display:none; }
+    .ladder-wrap.show { display:block; }
+    .ladder-inner { display:inline-block; min-width:100%; box-sizing:border-box; }
+    .ladder-row { display:flex; justify-content:center; }
+    .ladder-cell { text-align:center; font-size:13px; font-weight:600; color:var(--text); padding:6px 4px; box-sizing:border-box; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .ladder-cell.result { color:var(--point-hover); }
+
+    .result-table-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:16px 20px; margin-bottom:20px; display:none; }
+    .result-table-card.show { display:block; }
+    .result-table-title { font-size:13px; font-weight:600; color:var(--subtext); margin-bottom:10px; }
+    .result-row { display:flex; justify-content:space-between; align-items:center; padding:8px 0; border-bottom:1px solid var(--border); font-size:14px; }
+    .result-row:last-child { border-bottom:none; }
+    .result-row-name { color:var(--text); font-weight:600; }
+    .result-row-value { color:var(--point-hover); font-weight:700; }
+
+    .action-wrap { display:flex; justify-content:center; gap:12px; margin-bottom:48px; flex-wrap:wrap; }
+    .btn-sub { background:var(--card); color:var(--subtext); border:1px solid var(--border); border-radius:12px; padding:13px 22px; font-size:15px; cursor:pointer; font-family:'Gowun Dodum',sans-serif; }
+    .btn-sub:hover { transform:translateY(-2px); color:var(--text); border-color:var(--point); }
+
+    .toast { position:fixed; bottom:32px; left:50%; transform:translateX(-50%) translateY(80px); background:var(--success); color:#fff; border-radius:999px; padding:10px 24px; font-size:14px; font-weight:600; opacity:0; pointer-events:none; z-index:999; transition:all 0.3s ease; }
+    .toast.show { transform:translateX(-50%) translateY(0); opacity:1; }
+
+    .footer { border-top:1px solid var(--border); padding:32px 0; text-align:center; }
+    .footer-copy { color:var(--subtext); font-size:13px; margin-bottom:12px; }
+    .footer-nav { display:flex; justify-content:center; gap:20px; flex-wrap:wrap; }
+    .footer-nav a { color:var(--subtext); font-size:13px; text-decoration:none; }
+    .footer-nav a:hover { color:var(--text); }
+
+    @media (max-width:640px) {
+      .hero-title { font-size:24px; }
+    }
+  </style>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+  <meta property="og:image" content="https://browserkit.online/img/og-browserkit.png" />
+  <link rel="canonical" href="https://browserkit.online/ladder-game/" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://browserkit.online/img/og-browserkit.png" />
+</head>
+
+<body>
+  <header class="header">
+    <div class="container">
+      <a href="/" class="header-brand">
+        <div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Gowun Dodum,sans-serif;flex-shrink:0">B</div>
+        <span class="header-brand-text"><span style="color:var(--text)">Browser</span><span style="color:var(--point)">Kit</span></span>
+      </a>
+      <a href="/" class="header-back">&#x2190; BrowserKit 홈으로</a>
+    </div>
+  </header>
+
+  <main><div class="container">
+    <div class="hero">
+      <div class="hero-icon" style="height:78px;display:flex;justify-content:center;align-items:center"><div style="transform:scale(1.7);transform-origin:center"><div style="width:46px;height:46px;background:#ffd9a8;border:2.5px solid #2a2433;border-radius:12px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="position:relative;width:26px;height:30px"><div style="position:absolute;left:0;top:0;width:3px;height:30px;background:#2a2433"></div><div style="position:absolute;right:0;top:0;width:3px;height:30px;background:#2a2433"></div><div style="position:absolute;left:0;top:6px;width:26px;height:3px;background:#2a2433"></div><div style="position:absolute;left:0;top:20px;width:26px;height:3px;background:#2a2433"></div></div></div></div></div>
+      <div class="hero-title-wrap"><h1 class="hero-title">사다리타기</h1><a href="/blog/71-laddergame-howto.html" class="hero-guide-link">사용법 가이드 보기</a></div>
+      <p class="hero-desc">참가자와 결과를 입력하고 랜덤 사다리를 타서 결과를 배정해보세요</p>
+      <div class="hero-badges">
+        <span class="badge">🔒 완전 로컬 처리</span>
+        <span class="badge">⚡ 무료 사용</span>
+        <span class="badge">🛡️ 서버 전송 없음</span>
+        <span class="badge">📦 설치 불필요</span>
+      </div>
+    </div>
+    <div style="margin:0 0 12px"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+
+    <div class="input-card">
+      <div class="input-row2">
+        <div class="input-col">
+          <div class="input-label">
+            <span>참가자 이름 (한 줄에 한 명씩)</span>
+            <span class="name-count" id="nameCount">0명</span>
+          </div>
+          <textarea class="name-textarea" id="nameInput" placeholder="홍길동&#10;김철수&#10;이영희"></textarea>
+        </div>
+        <div class="input-col">
+          <div class="input-label">
+            <span>결과 (한 줄에 한 개씩)</span>
+            <span class="name-count" id="resultCount">0개</span>
+          </div>
+          <textarea class="name-textarea" id="resultInput" placeholder="커피 쏘기&#10;청소 당번&#10;꽝"></textarea>
+        </div>
+      </div>
+      <div class="quick-fill">
+        <button class="quick-fill-btn" id="sampleBtn">📋 예시 채우기</button>
+        <button class="quick-fill-btn" id="clearBtn">↺ 비우기</button>
+      </div>
+    </div>
+
+    <button class="start-btn" id="startBtn" disabled>🪜 사다리 타기</button>
+
+    <div class="ladder-wrap" id="ladderWrap">
+      <div class="ladder-inner">
+        <div class="ladder-row" id="ladderNames"></div>
+        <canvas id="ladderCanvas"></canvas>
+        <div class="ladder-row" id="ladderResults"></div>
+      </div>
+    </div>
+
+    <div class="result-table-card" id="resultTableCard">
+      <div class="result-table-title">🎉 결과</div>
+      <div id="resultList"></div>
+    </div>
+
+    <div class="action-wrap">
+      <button class="btn-sub" id="copyResultBtn">&#x1F4CB; 결과 복사</button>
+    </div>
+
+    <div style="margin:0 0 12px"><ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="9500090221"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+  </div></main>
+
+  <footer class="footer">
+    <div class="container">
+      <p class="footer-copy">&#xa9; 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p>
+      <nav class="footer-nav">
+        <a href="/privacy.html">개인정보 처리방침</a>
+        <a href="/terms.html">이용약관</a>
+        <a href="/about.html">서비스 소개</a>
+        <a href="/blog/">블로그</a>
+      </nav>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+  var SAMPLE_NAMES = ['홍길동', '김철수', '이영희', '박민수'];
+  var SAMPLE_RESULTS = ['커피 쏘기', '청소 당번', '꽝', '설거지'];
+  var LADDER_COLORS = ['#ff8a5e', '#5dffb0', '#6aa8ff', '#ffd36e', '#e0c3ff', '#ffb3c7', '#a8e6cf', '#bcd4ff'];
+  var INK = '#2a2433';
+  var ROWS = 12;
+
+  var nameInput = document.getElementById('nameInput');
+  var resultInput = document.getElementById('resultInput');
+  var nameCount = document.getElementById('nameCount');
+  var resultCount = document.getElementById('resultCount');
+  var startBtn = document.getElementById('startBtn');
+  var ladderWrap = document.getElementById('ladderWrap');
+  var ladderNames = document.getElementById('ladderNames');
+  var ladderResults = document.getElementById('ladderResults');
+  var ladderCanvas = document.getElementById('ladderCanvas');
+  var resultTableCard = document.getElementById('resultTableCard');
+  var resultList = document.getElementById('resultList');
+
+  var lastResults = [];
+
+  function parseLines(text) {
+    return text.split('\n').map(function(s) { return s.trim(); }).filter(function(s) { return s.length > 0; });
+  }
+
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(function() { t.classList.remove('show'); }, 2000);
+  }
+
+  function updateState() {
+    var names = parseLines(nameInput.value);
+    var results = parseLines(resultInput.value);
+    nameCount.textContent = names.length + '명';
+    resultCount.textContent = results.length + '개';
+    startBtn.disabled = names.length < 2 || names.length !== results.length;
+  }
+  nameInput.addEventListener('input', updateState);
+  resultInput.addEventListener('input', updateState);
+
+  document.getElementById('sampleBtn').addEventListener('click', function() {
+    nameInput.value = SAMPLE_NAMES.join('\n');
+    resultInput.value = SAMPLE_RESULTS.join('\n');
+    updateState();
+  });
+  document.getElementById('clearBtn').addEventListener('click', function() {
+    nameInput.value = '';
+    resultInput.value = '';
+    updateState();
+    ladderWrap.classList.remove('show');
+    resultTableCard.classList.remove('show');
+    lastResults = [];
+  });
+
+  function generateRungs(n) {
+    var rungsByRow = [];
+    for (var r = 0; r < ROWS; r++) {
+      var set = {};
+      var col = 0;
+      while (col < n - 1) {
+        if (Math.random() < 0.35) { set[col] = true; col += 2; }
+        else { col += 1; }
+      }
+      rungsByRow.push(set);
+    }
+    return rungsByRow;
+  }
+
+  function traceColumn(startCol, rungsByRow) {
+    var col = startCol;
+    for (var r = 0; r < ROWS; r++) {
+      var set = rungsByRow[r];
+      if (set[col]) col = col + 1;
+      else if (set[col - 1]) col = col - 1;
+    }
+    return col;
+  }
+
+  function colX(colGap, margin, col) { return margin + col * colGap; }
+
+  function drawBaseLadder(ctx, n, colGap, margin, height, rungsByRow) {
+    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+    var rowH = (height - 40) / ROWS;
+    ctx.strokeStyle = INK;
+    ctx.lineWidth = 2;
+    for (var c = 0; c < n; c++) {
+      var x = colX(colGap, margin, c);
+      ctx.beginPath();
+      ctx.moveTo(x, 20);
+      ctx.lineTo(x, height - 20);
+      ctx.stroke();
+    }
+    for (var r = 0; r < ROWS; r++) {
+      var y = 20 + r * rowH + rowH / 2;
+      Object.keys(rungsByRow[r]).forEach(function(colStr) {
+        var c2 = parseInt(colStr, 10);
+        ctx.beginPath();
+        ctx.moveTo(colX(colGap, margin, c2), y);
+        ctx.lineTo(colX(colGap, margin, c2 + 1), y);
+        ctx.stroke();
+      });
+    }
+  }
+
+  function drawPath(ctx, startCol, rungsByRow, colGap, margin, height, color) {
+    var rowH = (height - 40) / ROWS;
+    var col = startCol;
+    ctx.strokeStyle = color;
+    ctx.lineWidth = 3.5;
+    ctx.beginPath();
+    ctx.moveTo(colX(colGap, margin, col), 20);
+    for (var r = 0; r < ROWS; r++) {
+      var y0 = 20 + r * rowH;
+      var yMid = y0 + rowH / 2;
+      var y1 = y0 + rowH;
+      var set = rungsByRow[r];
+      ctx.lineTo(colX(colGap, margin, col), yMid);
+      if (set[col]) { col = col + 1; ctx.lineTo(colX(colGap, margin, col), yMid); }
+      else if (set[col - 1]) { col = col - 1; ctx.lineTo(colX(colGap, margin, col), yMid); }
+      ctx.lineTo(colX(colGap, margin, col), y1);
+    }
+    ctx.stroke();
+    return col;
+  }
+
+  function escapeHtml(s) {
+    return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  }
+
+  startBtn.addEventListener('click', function() {
+    var names = parseLines(nameInput.value);
+    var results = parseLines(resultInput.value);
+    if (names.length < 2 || names.length !== results.length) {
+      showToast('참가자 수와 결과 수가 같아야 합니다');
+      return;
+    }
+    startBtn.disabled = true;
+    resultTableCard.classList.remove('show');
+
+    var n = names.length;
+    var colGap = Math.max(50, Math.min(110, 520 / n));
+    var margin = colGap / 2;
+    var width = margin * 2 + (n - 1) * colGap;
+    var height = 340;
+
+    ladderCanvas.width = width;
+    ladderCanvas.height = height;
+    ladderCanvas.style.width = width + 'px';
+    ladderCanvas.style.height = height + 'px';
+
+    ladderNames.style.width = width + 'px';
+    ladderResults.style.width = width + 'px';
+    ladderNames.innerHTML = names.map(function(name) {
+      return '<div class="ladder-cell" style="width:' + colGap + 'px">' + escapeHtml(name) + '</div>';
+    }).join('');
+
+    var rungsByRow = generateRungs(n);
+    var ctx = ladderCanvas.getContext('2d');
+    drawBaseLadder(ctx, n, colGap, margin, height, rungsByRow);
+
+    ladderResults.innerHTML = results.map(function() { return '<div class="ladder-cell result">?</div>'; }).join('');
+    ladderResults.querySelectorAll('.ladder-cell').forEach(function(el, i) { el.style.width = colGap + 'px'; });
+
+    ladderWrap.classList.add('show');
+    ladderWrap.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+    var mapping = [];
+    var resultCells = ladderResults.querySelectorAll('.ladder-cell');
+
+    function revealOne(i) {
+      if (i >= n) {
+        lastResults = names.map(function(name, idx) { return { name: name, result: results[mapping[idx]] }; });
+        renderResultTable(lastResults);
+        startBtn.disabled = false;
+        showToast('🎉 사다리 결과가 나왔어요!');
+        return;
+      }
+      var endCol = traceColumn(i, rungsByRow);
+      mapping[i] = endCol;
+      var color = LADDER_COLORS[i % LADDER_COLORS.length];
+      drawPath(ctx, i, rungsByRow, colGap, margin, height, color);
+      resultCells[endCol].textContent = results[endCol];
+      resultCells[endCol].style.color = color;
+      setTimeout(function() { revealOne(i + 1); }, 260);
+    }
+    revealOne(0);
+  });
+
+  function renderResultTable(items) {
+    resultList.innerHTML = items.map(function(item) {
+      return '<div class="result-row"><span class="result-row-name">' + escapeHtml(item.name) + '</span><span class="result-row-value">' + escapeHtml(item.result) + '</span></div>';
+    }).join('');
+    resultTableCard.classList.add('show');
+  }
+
+  document.getElementById('copyResultBtn').addEventListener('click', function() {
+    if (!lastResults.length) { showToast('복사할 결과가 없습니다'); return; }
+    var text = lastResults.map(function(item) { return item.name + ' → ' + item.result; }).join('\n');
+    navigator.clipboard.writeText(text).then(function() {
+      showToast('✓ 결과가 클립보드에 복사되었습니다');
+    });
+  });
+
+  updateState();
+  </script>
+</body>
+</html>
