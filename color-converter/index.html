@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <link rel="icon" href="/favicon.ico" sizes="32x32">
+  <link rel="icon" href="/favicon-16.png" sizes="16x16" type="image/png">
+  <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="/favicon-192.png" sizes="192x192" type="image/png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="HEX, RGB, HSL 색상 코드를 서로 변환하는 무료 온라인 색상 코드 변환기. 색상 선택기로 원하는 색을 고르면 모든 형식이 실시간으로 변환됩니다. 서버 전송 없이 브라우저에서 바로 처리합니다." />
+  <meta property="og:title" content="ColorConverter — 색상 코드 변환기" />
+  <meta property="og:description" content="HEX·RGB·HSL 색상 코드를 실시간으로 서로 변환하는 무료 온라인 도구입니다." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://browserkit.online/color-converter/" />
+  <title>ColorConverter — 색상 코드 변환기</title>
+  <link rel="stylesheet" href="/css/style.css?v=20260704c" />
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506"
+     crossorigin="anonymous"></script>
+  <style>
+    .preview-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:24px; margin-bottom:20px; display:flex; align-items:center; gap:20px; flex-wrap:wrap; }
+    .swatch-wrap { position:relative; width:100px; height:100px; border-radius:16px; border:2.5px solid #2a2433; overflow:hidden; flex-shrink:0; box-shadow:inset 0 -10px 0 rgba(0,0,0,.08); }
+    .swatch-input { position:absolute; inset:0; width:100%; height:100%; border:none; padding:0; cursor:pointer; opacity:0; }
+    .swatch-fill { position:absolute; inset:0; pointer-events:none; }
+    .preview-info { flex:1; min-width:180px; }
+    .preview-hex { font-size:22px; font-weight:800; color:var(--text); font-family:'Fira Code',monospace; margin-bottom:6px; }
+    .preview-desc { font-size:13px; color:var(--subtext); }
+
+    .format-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px 24px; margin-bottom:16px; }
+    .format-label { font-size:13px; font-weight:600; color:var(--subtext); margin-bottom:10px; }
+    .format-row { display:flex; align-items:center; gap:10px; }
+    .format-input { flex:1; background:var(--bg); border:1px solid var(--border); border-radius:10px; padding:12px 14px; font-size:15px; color:var(--text); font-family:'Fira Code',monospace; outline:none; box-sizing:border-box; }
+    .format-input:focus { border-color:var(--point); }
+    .format-input.error { border-color:#F87171; }
+    .copy-btn { background:var(--bg); border:1px solid var(--border); border-radius:10px; padding:12px 16px; font-size:13px; color:var(--subtext); cursor:pointer; flex-shrink:0; }
+    .copy-btn:hover { border-color:var(--point); color:var(--text); }
+
+    .rgb-fields, .hsl-fields { display:flex; gap:10px; }
+    .rgb-fields .format-input, .hsl-fields .format-input { text-align:center; }
+
+    .preset-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px 24px; margin-bottom:20px; }
+    .preset-title { font-size:13px; font-weight:600; color:var(--subtext); margin-bottom:12px; }
+    .preset-grid { display:flex; gap:10px; flex-wrap:wrap; }
+    .preset-swatch { width:36px; height:36px; border-radius:10px; border:2px solid #2a2433; cursor:pointer; box-shadow:inset 0 -5px 0 rgba(0,0,0,.08); }
+    .preset-swatch:hover { transform:translateY(-2px); }
+
+    .toast { position:fixed; bottom:32px; left:50%; transform:translateX(-50%) translateY(80px); background:var(--success); color:#fff; border-radius:999px; padding:10px 24px; font-size:14px; font-weight:600; opacity:0; pointer-events:none; z-index:999; transition:all 0.3s ease; }
+    .toast.show { transform:translateX(-50%) translateY(0); opacity:1; }
+
+    .footer { border-top:1px solid var(--border); padding:32px 0; text-align:center; }
+    .footer-copy { color:var(--subtext); font-size:13px; margin-bottom:12px; }
+    .footer-nav { display:flex; justify-content:center; gap:20px; flex-wrap:wrap; }
+    .footer-nav a { color:var(--subtext); font-size:13px; text-decoration:none; }
+    .footer-nav a:hover { color:var(--text); }
+
+    @media (max-width:640px) {
+      .hero-title { font-size:24px; }
+      .preview-card { flex-direction:column; align-items:flex-start; }
+    }
+  </style>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+  <meta property="og:image" content="https://browserkit.online/img/og-browserkit.png" />
+  <link rel="canonical" href="https://browserkit.online/color-converter/" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://browserkit.online/img/og-browserkit.png" />
+</head>
+
+<body>
+  <header class="header">
+    <div class="container">
+      <a href="/" class="header-brand">
+        <div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Gowun Dodum,sans-serif;flex-shrink:0">B</div>
+        <span class="header-brand-text"><span style="color:var(--text)">Browser</span><span style="color:var(--point)">Kit</span></span>
+      </a>
+      <a href="/" class="header-back">&#x2190; BrowserKit 홈으로</a>
+    </div>
+  </header>
+
+  <main><div class="container">
+    <div class="hero">
+      <div class="hero-icon" style="height:78px;display:flex;justify-content:center;align-items:center"><div style="transform:scale(1.7);transform-origin:center"><div style="width:46px;height:46px;background:#e0c3ff;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="width:20px;height:20px;background:#fffdf9;border:2.5px solid #2a2433;box-sizing:border-box;border-radius:50% 50% 50% 0;transform:rotate(45deg)"><div style="width:7px;height:7px;border-radius:50%;background:#ff8a5e;margin:4px 0 0 4px;transform:rotate(-45deg)"></div></div></div></div></div>
+      <div class="hero-title-wrap"><h1 class="hero-title">색상 코드 변환기</h1><a href="/blog/73-colorconverter-howto.html" class="hero-guide-link">사용법 가이드 보기</a></div>
+      <p class="hero-desc">HEX·RGB·HSL 색상 코드를 실시간으로 서로 변환해드려요</p>
+      <div class="hero-badges">
+        <span class="badge">🔒 완전 로컬 처리</span>
+        <span class="badge">⚡ 무료 사용</span>
+        <span class="badge">🛡️ 서버 전송 없음</span>
+        <span class="badge">📦 설치 불필요</span>
+      </div>
+    </div>
+    <div style="margin:0 0 12px"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+
+    <div class="preview-card">
+      <div class="swatch-wrap">
+        <div class="swatch-fill" id="swatchFill"></div>
+        <input type="color" class="swatch-input" id="colorPicker" value="#7b6cff" />
+      </div>
+      <div class="preview-info">
+        <div class="preview-hex" id="previewHex">#7B6CFF</div>
+        <div class="preview-desc">색상 견본을 클릭해 원하는 색을 고르거나, 아래 입력창에 값을 직접 입력하세요.</div>
+      </div>
+    </div>
+
+    <div class="format-card">
+      <div class="format-label">HEX</div>
+      <div class="format-row">
+        <input type="text" class="format-input" id="hexInput" value="#7B6CFF" spellcheck="false" />
+        <button class="copy-btn" data-copy="hexInput">📋 복사</button>
+      </div>
+    </div>
+
+    <div class="format-card">
+      <div class="format-label">RGB</div>
+      <div class="format-row">
+        <div class="rgb-fields" style="flex:1">
+          <input type="number" class="format-input" id="rInput" min="0" max="255" value="123" />
+          <input type="number" class="format-input" id="gInput" min="0" max="255" value="108" />
+          <input type="number" class="format-input" id="bInput" min="0" max="255" value="255" />
+        </div>
+        <button class="copy-btn" data-copy-text="rgb">📋 복사</button>
+      </div>
+    </div>
+
+    <div class="format-card">
+      <div class="format-label">HSL</div>
+      <div class="format-row">
+        <div class="hsl-fields" style="flex:1">
+          <input type="number" class="format-input" id="hInput" min="0" max="360" value="248" />
+          <input type="number" class="format-input" id="sInput" min="0" max="100" value="100" />
+          <input type="number" class="format-input" id="lInput" min="0" max="100" value="71" />
+        </div>
+        <button class="copy-btn" data-copy-text="hsl">📋 복사</button>
+      </div>
+    </div>
+
+    <div class="format-card">
+      <div class="format-label">CSS rgba()</div>
+      <div class="format-row">
+        <input type="text" class="format-input" id="rgbaInput" readonly />
+        <button class="copy-btn" data-copy="rgbaInput">📋 복사</button>
+      </div>
+    </div>
+
+    <div class="preset-card">
+      <div class="preset-title">🎨 빠른 선택</div>
+      <div class="preset-grid" id="presetGrid"></div>
+    </div>
+
+    <div style="margin:0 0 12px"><ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="9500090221"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+  </div></main>
+
+  <footer class="footer">
+    <div class="container">
+      <p class="footer-copy">&#xa9; 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p>
+      <nav class="footer-nav">
+        <a href="/privacy.html">개인정보 처리방침</a>
+        <a href="/terms.html">이용약관</a>
+        <a href="/about.html">서비스 소개</a>
+        <a href="/blog/">블로그</a>
+      </nav>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+  var PRESETS = ['#7B6CFF', '#FF8A5E', '#5DFFB0', '#6AA8FF', '#FFD36E', '#FFB3C7', '#A8E6CF', '#E0C3FF', '#2A2433', '#FFFDF9'];
+
+  function hexToRgb(hex) {
+    hex = hex.replace('#', '');
+    if (hex.length === 3) hex = hex.split('').map(function(c) { return c + c; }).join('');
+    var num = parseInt(hex, 16);
+    return { r: (num >> 16) & 255, g: (num >> 8) & 255, b: num & 255 };
+  }
+
+  function rgbToHex(r, g, b) {
+    return '#' + [r, g, b].map(function(v) { return Math.max(0, Math.min(255, Math.round(v))).toString(16).padStart(2, '0'); }).join('').toUpperCase();
+  }
+
+  function rgbToHsl(r, g, b) {
+    r /= 255; g /= 255; b /= 255;
+    var max = Math.max(r, g, b), min = Math.min(r, g, b);
+    var h, s, l = (max + min) / 2;
+    if (max === min) { h = s = 0; }
+    else {
+      var d = max - min;
+      s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+      switch (max) {
+        case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+        case g: h = (b - r) / d + 2; break;
+        case b: h = (r - g) / d + 4; break;
+      }
+      h /= 6;
+    }
+    return { h: h * 360, s: s * 100, l: l * 100 };
+  }
+
+  function hslToRgb(h, s, l) {
+    h = ((h % 360) + 360) % 360; h /= 360; s /= 100; l /= 100;
+    var r, g, b;
+    if (s === 0) { r = g = b = l; }
+    else {
+      var hue2rgb = function(p, q, t) {
+        if (t < 0) t += 1;
+        if (t > 1) t -= 1;
+        if (t < 1 / 6) return p + (q - p) * 6 * t;
+        if (t < 1 / 2) return q;
+        if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
+        return p;
+      };
+      var q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+      var p = 2 * l - q;
+      r = hue2rgb(p, q, h + 1 / 3);
+      g = hue2rgb(p, q, h);
+      b = hue2rgb(p, q, h - 1 / 3);
+    }
+    return { r: r * 255, g: g * 255, b: b * 255 };
+  }
+
+  function isValidHex(hex) {
+    return /^#([0-9A-Fa-f]{6}|[0-9A-Fa-f]{3})$/.test(hex);
+  }
+
+  function clamp(v, min, max) { return Math.max(min, Math.min(max, v)); }
+
+  var swatchFill = document.getElementById('swatchFill');
+  var colorPicker = document.getElementById('colorPicker');
+  var previewHex = document.getElementById('previewHex');
+  var hexInput = document.getElementById('hexInput');
+  var rInput = document.getElementById('rInput');
+  var gInput = document.getElementById('gInput');
+  var bInput = document.getElementById('bInput');
+  var hInput = document.getElementById('hInput');
+  var sInput = document.getElementById('sInput');
+  var lInput = document.getElementById('lInput');
+  var rgbaInput = document.getElementById('rgbaInput');
+
+  var updating = false;
+
+  function applyColor(hex, source) {
+    if (updating) return;
+    updating = true;
+
+    var rgb = hexToRgb(hex);
+    var hsl = rgbToHsl(rgb.r, rgb.g, rgb.b);
+
+    swatchFill.style.background = hex;
+    colorPicker.value = hex;
+    previewHex.textContent = hex.toUpperCase();
+    rgbaInput.value = 'rgba(' + rgb.r + ', ' + rgb.g + ', ' + rgb.b + ', 1)';
+
+    if (source !== 'hex') { hexInput.value = hex.toUpperCase(); hexInput.classList.remove('error'); }
+    if (source !== 'rgb') { rInput.value = Math.round(rgb.r); gInput.value = Math.round(rgb.g); bInput.value = Math.round(rgb.b); }
+    if (source !== 'hsl') { hInput.value = Math.round(hsl.h); sInput.value = Math.round(hsl.s); lInput.value = Math.round(hsl.l); }
+
+    updating = false;
+  }
+
+  colorPicker.addEventListener('input', function() {
+    applyColor(colorPicker.value, 'picker');
+  });
+
+  hexInput.addEventListener('input', function() {
+    var v = hexInput.value.trim();
+    if (!v.startsWith('#')) v = '#' + v;
+    if (isValidHex(v)) {
+      hexInput.classList.remove('error');
+      applyColor(v, 'hex');
+    } else {
+      hexInput.classList.add('error');
+    }
+  });
+
+  function onRgbChange() {
+    var r = clamp(parseInt(rInput.value, 10) || 0, 0, 255);
+    var g = clamp(parseInt(gInput.value, 10) || 0, 0, 255);
+    var b = clamp(parseInt(bInput.value, 10) || 0, 0, 255);
+    applyColor(rgbToHex(r, g, b), 'rgb');
+  }
+  [rInput, gInput, bInput].forEach(function(el) { el.addEventListener('input', onRgbChange); });
+
+  function onHslChange() {
+    var h = clamp(parseInt(hInput.value, 10) || 0, 0, 360);
+    var s = clamp(parseInt(sInput.value, 10) || 0, 0, 100);
+    var l = clamp(parseInt(lInput.value, 10) || 0, 0, 100);
+    var rgb = hslToRgb(h, s, l);
+    applyColor(rgbToHex(rgb.r, rgb.g, rgb.b), 'hsl');
+  }
+  [hInput, sInput, lInput].forEach(function(el) { el.addEventListener('input', onHslChange); });
+
+  var presetGrid = document.getElementById('presetGrid');
+  presetGrid.innerHTML = PRESETS.map(function(hex) {
+    return '<div class="preset-swatch" style="background:' + hex + '" data-hex="' + hex + '" title="' + hex + '"></div>';
+  }).join('');
+  presetGrid.querySelectorAll('.preset-swatch').forEach(function(el) {
+    el.addEventListener('click', function() { applyColor(el.dataset.hex, 'preset'); });
+  });
+
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(function() { t.classList.remove('show'); }, 2000);
+  }
+
+  document.querySelectorAll('[data-copy]').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var el = document.getElementById(btn.dataset.copy);
+      navigator.clipboard.writeText(el.value).then(function() { showToast('✓ 복사되었습니다'); });
+    });
+  });
+
+  document.querySelectorAll('[data-copy-text]').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var type = btn.dataset.copyText;
+      var text = type === 'rgb'
+        ? 'rgb(' + rInput.value + ', ' + gInput.value + ', ' + bInput.value + ')'
+        : 'hsl(' + hInput.value + ', ' + sInput.value + '%, ' + lInput.value + '%)';
+      navigator.clipboard.writeText(text).then(function() { showToast('✓ 복사되었습니다'); });
+    });
+  });
+
+  applyColor('#7B6CFF', 'init');
+  </script>
+</body>
+</html>
