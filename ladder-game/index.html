@@ -29,9 +29,11 @@
     .quick-fill-btn { background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:6px 14px; font-size:12px; color:var(--subtext); cursor:pointer; }
     .quick-fill-btn:hover { border-color:var(--point); color:var(--text); }
 
-    .start-btn { display:block; margin:24px auto; background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border:none; border-radius:14px; padding:16px 40px; font-size:17px; font-weight:700; cursor:pointer; font-family:'Gowun Dodum',sans-serif; }
+    .start-btn { background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border:none; border-radius:14px; padding:16px 32px; font-size:16px; font-weight:700; cursor:pointer; font-family:'Gowun Dodum',sans-serif; }
     .start-btn:hover:not(:disabled) { transform:translateY(-2px); box-shadow:0 8px 24px var(--glow); }
     .start-btn:disabled { opacity:0.5; cursor:default; }
+    .start-btn.btn-outline { background:var(--card); color:var(--text); border:1px solid var(--border); }
+    .start-btn.btn-outline:hover:not(:disabled) { border-color:var(--point); }
 
     .ladder-wrap { overflow-x:auto; margin-bottom:20px; display:none; }
     .ladder-wrap.show { display:block; }
@@ -121,7 +123,10 @@
       </div>
     </div>
 
-    <button class="start-btn" id="startBtn" disabled>🪜 사다리 타기</button>
+    <div style="display:flex; justify-content:center; gap:12px; flex-wrap:wrap; margin:24px 0;">
+      <button class="start-btn btn-outline" id="prepBtn" disabled>🪜 사다리 준비</button>
+      <button class="start-btn" id="startBtn" disabled>▶ 사다리 타기 시작</button>
+    </div>
 
     <div class="ladder-wrap" id="ladderWrap">
       <div class="ladder-inner">
@@ -168,6 +173,7 @@
   var resultInput = document.getElementById('resultInput');
   var nameCount = document.getElementById('nameCount');
   var resultCount = document.getElementById('resultCount');
+  var prepBtn = document.getElementById('prepBtn');
   var startBtn = document.getElementById('startBtn');
   var ladderWrap = document.getElementById('ladderWrap');
   var ladderNames = document.getElementById('ladderNames');
@@ -177,6 +183,7 @@
   var resultList = document.getElementById('resultList');
 
   var lastResults = [];
+  var ladderState = null; // { n, colGap, margin, height, rungsByRow, ctx }
 
   function parseLines(text) {
     return text.split('\n').map(function(s) { return s.trim(); }).filter(function(s) { return s.length > 0; });
@@ -189,12 +196,21 @@
     setTimeout(function() { t.classList.remove('show'); }, 2000);
   }
 
+  function resetLadder() {
+    ladderState = null;
+    ladderWrap.classList.remove('show');
+    resultTableCard.classList.remove('show');
+    lastResults = [];
+    startBtn.disabled = true;
+  }
+
   function updateState() {
     var names = parseLines(nameInput.value);
     var results = parseLines(resultInput.value);
     nameCount.textContent = names.length + '명';
     resultCount.textContent = results.length + '개';
-    startBtn.disabled = names.length < 2 || names.length !== results.length;
+    prepBtn.disabled = names.length < 2 || names.length !== results.length;
+    resetLadder();
   }
   nameInput.addEventListener('input', updateState);
   resultInput.addEventListener('input', updateState);
@@ -208,9 +224,6 @@
     nameInput.value = '';
     resultInput.value = '';
     updateState();
-    ladderWrap.classList.remove('show');
-    resultTableCard.classList.remove('show');
-    lastResults = [];
   });
 
   function generateRungs(n) {
@@ -263,39 +276,86 @@
     }
   }
 
-  function drawPath(ctx, startCol, rungsByRow, colGap, margin, height, color) {
+  function buildPathPoints(startCol, rungsByRow, colGap, margin, height) {
     var rowH = (height - 40) / ROWS;
     var col = startCol;
-    ctx.strokeStyle = color;
-    ctx.lineWidth = 3.5;
-    ctx.beginPath();
-    ctx.moveTo(colX(colGap, margin, col), 20);
+    var pts = [{ x: colX(colGap, margin, col), y: 20 }];
     for (var r = 0; r < ROWS; r++) {
       var y0 = 20 + r * rowH;
       var yMid = y0 + rowH / 2;
       var y1 = y0 + rowH;
       var set = rungsByRow[r];
-      ctx.lineTo(colX(colGap, margin, col), yMid);
-      if (set[col]) { col = col + 1; ctx.lineTo(colX(colGap, margin, col), yMid); }
-      else if (set[col - 1]) { col = col - 1; ctx.lineTo(colX(colGap, margin, col), yMid); }
-      ctx.lineTo(colX(colGap, margin, col), y1);
+      pts.push({ x: colX(colGap, margin, col), y: yMid });
+      if (set[col]) { col = col + 1; pts.push({ x: colX(colGap, margin, col), y: yMid }); }
+      else if (set[col - 1]) { col = col - 1; pts.push({ x: colX(colGap, margin, col), y: yMid }); }
+      pts.push({ x: colX(colGap, margin, col), y: y1 });
+    }
+    return { points: pts, endCol: col };
+  }
+
+  function pathLength(pts) {
+    var total = 0;
+    for (var i = 1; i < pts.length; i++) {
+      total += Math.hypot(pts[i].x - pts[i - 1].x, pts[i].y - pts[i - 1].y);
+    }
+    return total;
+  }
+
+  function drawFullPath(ctx, pts, color) {
+    ctx.strokeStyle = color;
+    ctx.lineWidth = 3.5;
+    ctx.beginPath();
+    ctx.moveTo(pts[0].x, pts[0].y);
+    for (var i = 1; i < pts.length; i++) ctx.lineTo(pts[i].x, pts[i].y);
+    ctx.stroke();
+  }
+
+  // dist만큼 진행된 지점까지 경로를 그리고, 그 지점 좌표를 반환
+  function drawPartialPath(ctx, pts, color, dist) {
+    ctx.strokeStyle = color;
+    ctx.lineWidth = 3.5;
+    ctx.beginPath();
+    ctx.moveTo(pts[0].x, pts[0].y);
+    var remaining = dist;
+    var tip = pts[0];
+    for (var i = 1; i < pts.length; i++) {
+      var segLen = Math.hypot(pts[i].x - pts[i - 1].x, pts[i].y - pts[i - 1].y);
+      if (remaining >= segLen) {
+        ctx.lineTo(pts[i].x, pts[i].y);
+        tip = pts[i];
+        remaining -= segLen;
+      } else {
+        var t = segLen === 0 ? 0 : remaining / segLen;
+        tip = { x: pts[i - 1].x + (pts[i].x - pts[i - 1].x) * t, y: pts[i - 1].y + (pts[i].y - pts[i - 1].y) * t };
+        ctx.lineTo(tip.x, tip.y);
+        break;
+      }
     }
     ctx.stroke();
-    return col;
+    return tip;
+  }
+
+  function drawMarker(ctx, pt, color) {
+    ctx.beginPath();
+    ctx.arc(pt.x, pt.y, 7, 0, Math.PI * 2);
+    ctx.fillStyle = color;
+    ctx.strokeStyle = INK;
+    ctx.lineWidth = 2;
+    ctx.fill();
+    ctx.stroke();
   }
 
   function escapeHtml(s) {
     return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
   }
 
-  startBtn.addEventListener('click', function() {
+  prepBtn.addEventListener('click', function() {
     var names = parseLines(nameInput.value);
     var results = parseLines(resultInput.value);
     if (names.length < 2 || names.length !== results.length) {
       showToast('참가자 수와 결과 수가 같아야 합니다');
       return;
     }
-    startBtn.disabled = true;
     resultTableCard.classList.remove('show');
 
     var n = names.length;
@@ -320,31 +380,69 @@
     drawBaseLadder(ctx, n, colGap, margin, height, rungsByRow);
 
     ladderResults.innerHTML = results.map(function() { return '<div class="ladder-cell result">?</div>'; }).join('');
-    ladderResults.querySelectorAll('.ladder-cell').forEach(function(el, i) { el.style.width = colGap + 'px'; });
+    ladderResults.querySelectorAll('.ladder-cell').forEach(function(el) { el.style.width = colGap + 'px'; });
 
     ladderWrap.classList.add('show');
     ladderWrap.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 
-    var mapping = [];
-    var resultCells = ladderResults.querySelectorAll('.ladder-cell');
+    ladderState = { names: names, results: results, n: n, colGap: colGap, margin: margin, height: height, rungsByRow: rungsByRow, ctx: ctx };
+    startBtn.disabled = false;
+    showToast('🪜 사다리가 준비됐어요! 이제 타기 시작을 눌러보세요');
+  });
 
-    function revealOne(i) {
-      if (i >= n) {
-        lastResults = names.map(function(name, idx) { return { name: name, result: results[mapping[idx]] }; });
+  startBtn.addEventListener('click', function() {
+    if (!ladderState) return;
+    prepBtn.disabled = true;
+    startBtn.disabled = true;
+
+    var st = ladderState;
+    var ctx = st.ctx;
+    var resultCells = ladderResults.querySelectorAll('.ladder-cell');
+    var mapping = [];
+    var completed = []; // { points, color }
+    var DURATION = 900; // ms per participant
+
+    function redraw(current) {
+      drawBaseLadder(ctx, st.n, st.colGap, st.margin, st.height, st.rungsByRow);
+      completed.forEach(function(c) { drawFullPath(ctx, c.points, c.color); });
+      if (current) {
+        var tip = drawPartialPath(ctx, current.points, current.color, current.dist);
+        drawMarker(ctx, tip, current.color);
+      }
+    }
+
+    function animateOne(i) {
+      if (i >= st.n) {
+        lastResults = st.names.map(function(name, idx) { return { name: name, result: st.results[mapping[idx]] }; });
         renderResultTable(lastResults);
-        startBtn.disabled = false;
+        prepBtn.disabled = false;
         showToast('🎉 사다리 결과가 나왔어요!');
         return;
       }
-      var endCol = traceColumn(i, rungsByRow);
-      mapping[i] = endCol;
+      var built = buildPathPoints(i, st.rungsByRow, st.colGap, st.margin, st.height);
+      var total = pathLength(built.points);
       var color = LADDER_COLORS[i % LADDER_COLORS.length];
-      drawPath(ctx, i, rungsByRow, colGap, margin, height, color);
-      resultCells[endCol].textContent = results[endCol];
-      resultCells[endCol].style.color = color;
-      setTimeout(function() { revealOne(i + 1); }, 260);
+      var startTime = null;
+
+      function frame(t) {
+        if (startTime === null) startTime = t;
+        var elapsed = t - startTime;
+        var dist = Math.min(total, (elapsed / DURATION) * total);
+        redraw({ points: built.points, color: color, dist: dist });
+        if (dist < total) {
+          requestAnimationFrame(frame);
+        } else {
+          mapping[i] = built.endCol;
+          completed.push({ points: built.points, color: color });
+          resultCells[built.endCol].textContent = st.results[built.endCol];
+          resultCells[built.endCol].style.color = color;
+          redraw(null);
+          animateOne(i + 1);
+        }
+      }
+      requestAnimationFrame(frame);
     }
-    revealOne(0);
+    animateOne(0);
   });
 
   function renderResultTable(items) {
