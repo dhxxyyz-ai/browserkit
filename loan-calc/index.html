@@ -62,6 +62,9 @@
     .schedule-table th { background:var(--bg); color:var(--point-hover); font-weight:700; position:sticky; top:0; }
     .schedule-table tr:last-child td { border-bottom:none; }
 
+    .btn-sub { background:var(--card); color:var(--subtext); border:1px solid var(--border); border-radius:10px; padding:10px 18px; font-size:13px; cursor:pointer; font-family:'Gowun Dodum',sans-serif; }
+    .btn-sub:hover { color:var(--text); border-color:var(--point); }
+
     .toast { position:fixed; bottom:32px; left:50%; transform:translateX(-50%) translateY(80px); background:var(--success); color:#fff; border-radius:999px; padding:10px 24px; font-size:14px; font-weight:600; opacity:0; pointer-events:none; z-index:999; transition:all 0.3s ease; }
     .toast.show { transform:translateX(-50%) translateY(0); opacity:1; }
 
@@ -155,8 +158,8 @@
 
     <div class="schedule-card" id="scheduleCard">
       <div class="schedule-title">
-        <span>🗓️ 상환 스케줄 (최근 24개월까지 표시)</span>
-        <span id="scheduleNote" style="font-weight:400;color:var(--subtext);font-size:12px;"></span>
+        <span>🗓️ 상환 스케줄 (전체 회차)</span>
+        <button class="btn-sub" id="downloadScheduleBtn" style="padding:6px 14px;font-size:12px;">&#x2B07; CSV 다운로드</button>
       </div>
       <div class="schedule-tablewrap">
         <table class="schedule-table">
@@ -231,21 +234,35 @@
     return rows;
   }
 
+  var currentSchedule = [];
+
   function renderSchedule(rows) {
     var body = document.getElementById('scheduleBody');
-    var note = document.getElementById('scheduleNote');
-    var display = rows;
-    var truncated = false;
-    if (rows.length > 24) {
-      display = rows.slice(0, 12).concat(rows.slice(-12));
-      truncated = true;
-    }
-    body.innerHTML = display.map(function(r, i) {
-      var sep = truncated && i === 12 ? '<tr><td colspan="5" style="text-align:center;color:var(--subtext);">⋯</td></tr>' : '';
-      return sep + '<tr><td>' + r.month + '회차</td><td>' + won(r.payment) + '</td><td>' + won(r.principal) + '</td><td>' + won(r.interest) + '</td><td>' + won(r.balance) + '</td></tr>';
+    body.innerHTML = rows.map(function(r) {
+      return '<tr><td>' + r.month + '회차</td><td>' + won(r.payment) + '</td><td>' + won(r.principal) + '</td><td>' + won(r.interest) + '</td><td>' + won(r.balance) + '</td></tr>';
     }).join('');
-    note.textContent = truncated ? '총 ' + rows.length + '회차 중 처음 12개 + 마지막 12개 표시' : '';
   }
+
+  function csvField(v) {
+    v = String(v);
+    if (v.indexOf(',') !== -1 || v.indexOf('"') !== -1 || v.indexOf('\n') !== -1) return '"' + v.replace(/"/g, '""') + '"';
+    return v;
+  }
+
+  document.getElementById('downloadScheduleBtn').addEventListener('click', function() {
+    if (!currentSchedule.length) { showToast('먼저 계산해주세요'); return; }
+    var lines = ['회차,상환액,원금,이자,잔액'];
+    currentSchedule.forEach(function(r) {
+      lines.push([r.month, Math.round(r.payment), Math.round(r.principal), Math.round(r.interest), Math.round(r.balance)].map(csvField).join(','));
+    });
+    var blob = new Blob(['﻿' + lines.join('\n')], { type: 'text/csv;charset=utf-8' });
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'loan-schedule.csv';
+    a.click();
+    URL.revokeObjectURL(a.href);
+    showToast('✓ CSV 파일이 저장됩니다');
+  });
 
   document.getElementById('calcBtn').addEventListener('click', function() {
     var principalMan = parseFloat(document.getElementById('principalInput').value);
@@ -295,6 +312,7 @@
     document.getElementById('rowTotalPay').textContent = won(totalPay);
     document.getElementById('breakdownCard').classList.add('show');
 
+    currentSchedule = rows;
     renderSchedule(rows);
     document.getElementById('scheduleCard').classList.add('show');
 
