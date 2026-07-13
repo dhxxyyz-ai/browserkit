@@ -8,7 +8,7 @@
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="BrowserKit — 설치 없이 브라우저에서 바로 쓰는 무료 도구 59가지. 개인정보 마스킹, 얼굴 블러, PDF 편집, QR 코드, JSON 포맷터, 차트 생성까지. 대부분 서버 전송 없이 완전 로컬 처리합니다.">
+  <meta name="description" content="BrowserKit — 설치 없이 브라우저에서 바로 쓰는 무료 도구 60가지. 개인정보 마스킹, 얼굴 블러, PDF 편집, QR 코드, JSON 포맷터, 차트 생성까지. 대부분 서버 전송 없이 완전 로컬 처리합니다.">
   <meta property="og:title" content="BrowserKit — 브라우저 기반 무료 도구 모음">
   <meta property="og:description" content="서버 전송 없이 브라우저에서 바로 쓰는 무료 도구 모음. 개인정보 마스킹, 이미지 편집, PDF 처리.">
   <meta property="og:type" content="website">
@@ -85,7 +85,7 @@ const TOOL_URLS = {
   SQLFormatter:'/sql-formatter/', LoremGen:'/lorem-gen/', ImageCompare:'/image-compare/', ImageFrame:'/image-frame/',
   CSVJSONConvert:'/csv-json-convert/', YAMLJSONConvert:'/yaml-json-convert/', QRScanner:'/qr-scanner/',
   SalaryCalc:'/salary-calc/', LadderGame:'/ladder-game/', TextStats:'/text-stats/', ColorConverter:'/color-converter/',
-  MarkdownTableConvert:'/markdown-table-convert/'
+  MarkdownTableConvert:'/markdown-table-convert/', LoanCalc:'/loan-calc/'
 };
 
 const BLOG_URLS = {
@@ -160,7 +160,8 @@ const BLOG_URLS = {
   '사다리타기 사용법 완전 가이드':'/blog/71-laddergame-howto.html',
   '텍스트 통계 분석기 사용법 완전 가이드':'/blog/72-textstats-howto.html',
   '색상 코드 변환기 사용법 완전 가이드':'/blog/73-colorconverter-howto.html',
-  '표 변환기 사용법 완전 가이드':'/blog/74-markdowntableconvert-howto.html'
+  '표 변환기 사용법 완전 가이드':'/blog/74-markdowntableconvert-howto.html',
+  '대출 이자 계산기 사용법 완전 가이드':'/blog/75-loancalc-howto.html'
 };
 
 const INFO_URLS = {
@@ -209,7 +210,7 @@ function glyphInfo(code) {
     ChartMaker:'chart', ImageText:'token:T', ImageFilter:'halfcircle', ImageCollage:'collage', PixelArt:'pixelart',
     MosaicMaker:'mosaic', PDFSplit:'split', LineNumber:'linenum', CurrencyCalc:'currency', Minifier:'token:<>',
     URLEncode:'token:%20', CSSUnit:'token:rem', DiagramMaker:'diagram', PaletteGen:'palette', ExifRemover:'exif',
-    RandomPicker:'roulette', WordCloudGen:'wordcloud', FaviconGen:'favicon', SVGtoPNG:'token:SVG', PomodoroTimer:'pomodoro', UUIDGen:'token:UUID', JWTDecoder:'token:JWT', CronHelper:'token:CRON', SQLFormatter:'token:SQL', LoremGen:'token:Lo', ImageCompare:'compare', ImageFrame:'frame', CSVJSONConvert:'token:CSV', YAMLJSONConvert:'token:YML', QRScanner:'qrscan', SalaryCalc:'salary', LadderGame:'ladder', TextStats:'textstats', ColorConverter:'colorswap', MarkdownTableConvert:'gridtable'
+    RandomPicker:'roulette', WordCloudGen:'wordcloud', FaviconGen:'favicon', SVGtoPNG:'token:SVG', PomodoroTimer:'pomodoro', UUIDGen:'token:UUID', JWTDecoder:'token:JWT', CronHelper:'token:CRON', SQLFormatter:'token:SQL', LoremGen:'token:Lo', ImageCompare:'compare', ImageFrame:'frame', CSVJSONConvert:'token:CSV', YAMLJSONConvert:'token:YML', QRScanner:'qrscan', SalaryCalc:'salary', LadderGame:'ladder', TextStats:'textstats', ColorConverter:'colorswap', MarkdownTableConvert:'gridtable', LoanCalc:'loanbar'
   };
   const v = m[code];
   if (!v) return { glyph: 'token', token: '+' };
@@ -262,6 +263,7 @@ function icon(type, fill, ink, glyph, token) {
     else if (gl === 'textstats') inner = `<div style="display:flex;align-items:flex-end;gap:3px;height:28px"><div style="width:6px;height:13px;background:#fffdf9;border:2px solid ${k};border-radius:2px 2px 0 0;box-sizing:border-box"></div><div style="width:6px;height:22px;background:#fffdf9;border:2px solid ${k};border-radius:2px 2px 0 0;box-sizing:border-box"></div><div style="width:6px;height:17px;background:#fffdf9;border:2px solid ${k};border-radius:2px 2px 0 0;box-sizing:border-box"></div></div>`;
     else if (gl === 'colorswap') inner = `<div style="position:relative;width:28px;height:22px"><div style="position:absolute;left:0;top:0;width:18px;height:18px;border-radius:50%;background:#ff8a5e;border:2px solid ${k};box-sizing:border-box"></div><div style="position:absolute;right:0;top:0;width:18px;height:18px;border-radius:50%;background:#6aa8ff;border:2px solid ${k};box-sizing:border-box;opacity:.85"></div></div>`;
     else if (gl === 'gridtable') inner = `<div style="display:grid;grid-template-columns:repeat(2,10px);grid-template-rows:repeat(2,10px);gap:2px"><div style="background:#fffdf9;border:1.5px solid ${k};box-sizing:border-box"></div><div style="background:#fffdf9;border:1.5px solid ${k};box-sizing:border-box"></div><div style="background:#fffdf9;border:1.5px solid ${k};box-sizing:border-box"></div><div style="background:#fffdf9;border:1.5px solid ${k};box-sizing:border-box"></div></div>`;
+    else if (gl === 'loanbar') inner = `<div style="display:flex;align-items:flex-end;gap:3px;height:26px"><div style="width:6px;height:10px;background:#fffdf9;border:2px solid ${k};border-radius:2px 2px 0 0;box-sizing:border-box"></div><div style="width:6px;height:16px;background:#fffdf9;border:2px solid ${k};border-radius:2px 2px 0 0;box-sizing:border-box"></div><div style="width:6px;height:22px;background:#fffdf9;border:2px solid ${k};border-radius:2px 2px 0 0;box-sizing:border-box"></div></div>`;
     else inner = `<div style="font:700 16px Gowun Dodum,sans-serif;color:${k};line-height:1;letter-spacing:-.5px;white-space:nowrap">${tk}</div>`;
     return `<div style="width:46px;height:46px;background:${f};border:2.5px solid ${k};border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden">${inner}</div>`;
   }
@@ -303,7 +305,7 @@ const SEARCH_TOOLS = [
   {code:'UUIDGen',name:'UUID 생성기'},{code:'JWTDecoder',name:'JWT 디코더'},
   {code:'CronHelper',name:'Cron 표현식 도우미'},{code:'SQLFormatter',name:'SQL 포맷터'},
   {code:'LoremGen',name:'더미 텍스트 생성기'},{code:'ImageCompare',name:'이미지 비교 슬라이더'},
-  {code:'ImageFrame',name:'이미지 테두리 추가'},{code:'CSVJSONConvert',name:'CSV ↔ JSON 변환기'},{code:'YAMLJSONConvert',name:'YAML ↔ JSON 변환기'},{code:'QRScanner',name:'QR 코드 스캐너'},{code:'SalaryCalc',name:'연봉 실수령액 계산기'},{code:'LadderGame',name:'사다리타기'},{code:'TextStats',name:'텍스트 통계 분석기'},{code:'ColorConverter',name:'색상 코드 변환기'},{code:'MarkdownTableConvert',name:'표 변환기'}
+  {code:'ImageFrame',name:'이미지 테두리 추가'},{code:'CSVJSONConvert',name:'CSV ↔ JSON 변환기'},{code:'YAMLJSONConvert',name:'YAML ↔ JSON 변환기'},{code:'QRScanner',name:'QR 코드 스캐너'},{code:'SalaryCalc',name:'연봉 실수령액 계산기'},{code:'LadderGame',name:'사다리타기'},{code:'TextStats',name:'텍스트 통계 분석기'},{code:'ColorConverter',name:'색상 코드 변환기'},{code:'MarkdownTableConvert',name:'표 변환기'},{code:'LoanCalc',name:'대출 이자 계산기'}
 ];
 
 // ── Toolbox categories (desktop widget) ──────────────────────────────────────
@@ -314,7 +316,7 @@ const TOOLBOX_CATS = [
   { label: '유틸리티',     keys: ['QRCode','PasswordGen','UnitConvert','DateCalc','WorldClock','RandomPicker','PomodoroTimer','QRScanner','LadderGame'] },
   { label: '개발자',       keys: ['JSONFormat','RegexTest','Base64Tool','HashGen','Minifier','URLEncode','CSSUnit','UUIDGen','JWTDecoder','CronHelper','SQLFormatter','ColorConverter'] },
   { label: '데이터·시각화',keys: ['ChartMaker','DiagramMaker','PaletteGen','WordCloudGen'] },
-  { label: '계산기',       keys: ['SalaryCalc','CurrencyCalc'] },
+  { label: '계산기',       keys: ['SalaryCalc','CurrencyCalc','LoanCalc'] },
 ];
 const TOOL_LABEL   = Object.fromEntries(SEARCH_TOOLS.map(t => [t.code, t.name]));
 const TOOL_CAT_IDX = {};
@@ -332,7 +334,7 @@ function buildTree() {
       '유틸리티':{type:'folder',label:'유틸리티',children:{QRCode:t('QR 코드 생성'),PasswordGen:t('비밀번호 생성기'),UnitConvert:t('단위 변환기'),DateCalc:t('날짜 계산기'),WorldClock:t('세계 시간'),RandomPicker:t('랜덤 추첨기'),PomodoroTimer:t('집중 · 휴식 타이머'),QRScanner:t('QR 코드 스캐너'),LadderGame:t('사다리타기')}},
       '개발자':{type:'folder',label:'개발자',children:{JSONFormat:t('JSON 포맷터'),RegexTest:t('정규식 테스터'),Base64Tool:t('Base64 변환'),HashGen:t('해시 생성기'),Minifier:t('코드 압축기'),URLEncode:t('URL 인코더'),CSSUnit:t('CSS 단위 변환기'),UUIDGen:t('UUID 생성기'),JWTDecoder:t('JWT 디코더'),CronHelper:t('Cron 표현식 도우미'),SQLFormatter:t('SQL 포맷터'),ColorConverter:t('색상 코드 변환기')}},
       '데이터\xb7시각화':{type:'folder',label:'데이터\xb7시각화',children:{ChartMaker:t('차트 생성기'),DiagramMaker:t('다이어그램 생성기'),PaletteGen:t('색상 팔레트 생성기'),WordCloudGen:t('워드클라우드 생성기')}},
-      '계산기':{type:'folder',label:'계산기',children:{SalaryCalc:t('연봉 실수령액 계산기'),CurrencyCalc:t('환율 계산기')}}
+      '계산기':{type:'folder',label:'계산기',children:{SalaryCalc:t('연봉 실수령액 계산기'),CurrencyCalc:t('환율 계산기'),LoanCalc:t('대출 이자 계산기')}}
     }},
     '블로그':{type:'folder',label:'블로그',children:{
       '개인정보 보호':{type:'folder',label:'개인정보 보호',children:{
@@ -375,7 +377,7 @@ function buildTree() {
         b27:a('차트 생성기 사용법 완전 가이드'),b39:a('다이어그램 생성기 사용법 완전 가이드'),
         b40:a('색상 팔레트 생성기 사용법 완전 가이드'),b43:a('워드클라우드 생성기 사용법 완전 가이드'),
         h7:{type:'header',label:'계산기'},
-        b57:a('연봉 실수령액 계산기 사용법 완전 가이드'),b35:a('환율 계산기 사용법 완전 가이드')
+        b57:a('연봉 실수령액 계산기 사용법 완전 가이드'),b35:a('환율 계산기 사용법 완전 가이드'),b62:a('대출 이자 계산기 사용법 완전 가이드')
       }}
     }},
     '정보':{type:'folder',label:'정보',children:{
@@ -522,7 +524,8 @@ function fileBodyHtml(win,pal) {
     LadderGame: '참가자와 결과를 입력하면 랜덤 사다리를 타고 결과를 배정합니다.',
     TextStats: '텍스트를 입력하면 글자 수·단어 수·문장 수·읽기 시간을 실시간으로 계산합니다.',
     ColorConverter: '색상을 고르거나 입력하면 HEX·RGB·HSL 코드를 실시간으로 서로 변환합니다.',
-    MarkdownTableConvert: '마크다운·CSV·HTML 표를 서로 즉시 변환하고 표로 미리봅니다.'
+    MarkdownTableConvert: '마크다운·CSV·HTML 표를 서로 즉시 변환하고 표로 미리봅니다.',
+    LoanCalc: '대출금액·이자율·기간을 입력하면 원리금균등·원금균등 상환액과 총 이자를 계산합니다.'
   };
   if(file.kind==='tool'){
     const catColor = TOOL_CAT_IDX[file.code]!=null ? folders[TOOL_CAT_IDX[file.code]%folders.length] : accent;
