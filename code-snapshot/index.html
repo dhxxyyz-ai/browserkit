@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <link rel="icon" href="/favicon.ico" sizes="32x32">
+  <link rel="icon" href="/favicon-16.png" sizes="16x16" type="image/png">
+  <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="/favicon-192.png" sizes="192x192" type="image/png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="코드를 붙여넣으면 배경·테마·창 스타일을 적용해 공유하기 좋은 코드 스니펫 이미지를 만들어주는 무료 온라인 도구. PNG로 바로 다운로드할 수 있습니다. 서버 전송 없이 브라우저에서 바로 처리합니다." />
+  <meta property="og:title" content="CodeSnapshot — 코드 스니펫 이미지 생성기" />
+  <meta property="og:description" content="코드를 예쁜 테마의 이미지로 만들어 공유하는 무료 온라인 도구입니다. PNG 다운로드 지원." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://browserkit.online/code-snapshot/" />
+  <title>CodeSnapshot — 코드 스니펫 이미지 생성기</title>
+  <link rel="stylesheet" href="/css/style.css?v=20260704c" />
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506"
+     crossorigin="anonymous"></script>
+  <style>
+    .setting-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:24px; margin-bottom:20px; }
+    .setting-row { display:flex; align-items:center; gap:16px; margin-bottom:18px; flex-wrap:wrap; }
+    .setting-row:last-child { margin-bottom:0; }
+    .setting-label { font-size:14px; font-weight:600; color:var(--text); min-width:90px; flex-shrink:0; }
+
+    .seg-btns { display:flex; gap:6px; flex-wrap:wrap; }
+    .seg-btn { background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:8px 14px; font-size:13px; color:var(--subtext); cursor:pointer; font-family:'Gowun Dodum',sans-serif; }
+    .seg-btn:hover { border-color:var(--point); color:var(--text); }
+    .seg-btn.active { background:rgba(123,108,255,0.15); border-color:var(--point); color:var(--point-hover); font-weight:700; }
+
+    .theme-swatch { width:36px; height:36px; border-radius:10px; border:2px solid var(--border); cursor:pointer; position:relative; box-sizing:border-box; }
+    .theme-swatch.active { border-color:var(--point); box-shadow:0 0 0 2px var(--point); }
+
+    .toggle-row { display:flex; align-items:center; gap:8px; font-size:13px; color:var(--subtext); cursor:pointer; }
+    .toggle-row input { accent-color:var(--point); width:16px; height:16px; cursor:pointer; }
+
+    .count-field input { width:70px; background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:8px 10px; color:var(--text); font-size:14px; outline:none; text-align:center; }
+    .count-field input:focus { border-color:var(--point); }
+
+    .code-textarea { width:100%; min-height:220px; background:var(--bg); border:1px solid var(--border); border-radius:10px; padding:16px; color:var(--text); font-family:'Fira Code',monospace; font-size:13px; line-height:1.7; resize:vertical; outline:none; box-sizing:border-box; margin-bottom:20px; }
+    .code-textarea:focus { border-color:var(--point); }
+
+    .btn-generate { background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border:none; border-radius:12px; padding:14px 32px; font-size:16px; font-weight:700; cursor:pointer; font-family:'Gowun Dodum',sans-serif; width:100%; margin-bottom:20px; }
+    .btn-generate:hover { transform:translateY(-2px); box-shadow:0 8px 24px var(--glow); }
+
+    .preview-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px 24px; margin-bottom:20px; }
+    .preview-title { font-size:13px; font-weight:600; color:var(--subtext); margin-bottom:12px; }
+    .preview-canvas-wrap { overflow-x:auto; text-align:center; background:var(--bg); border-radius:10px; padding:16px; }
+    .preview-canvas-wrap canvas { max-width:100%; height:auto; border-radius:8px; }
+    .preview-empty { color:var(--subtext); font-size:13px; padding:40px 20px; text-align:center; }
+
+    .action-bar { display:flex; gap:10px; margin-bottom:48px; flex-wrap:wrap; }
+    .btn-sub { background:var(--card); color:var(--subtext); border:1px solid var(--border); border-radius:10px; padding:10px 18px; font-size:13px; cursor:pointer; font-family:'Gowun Dodum',sans-serif; }
+    .btn-sub:hover { color:var(--text); border-color:var(--point); }
+
+    .toast { position:fixed; bottom:32px; left:50%; transform:translateX(-50%) translateY(80px); background:var(--success); color:#fff; border-radius:999px; padding:10px 24px; font-size:14px; font-weight:600; opacity:0; pointer-events:none; z-index:999; }
+    .toast.show { transform:translateX(-50%) translateY(0); opacity:1; }
+
+    .footer { border-top:1px solid var(--border); padding:32px 0; text-align:center; }
+    .footer-copy { color:var(--subtext); font-size:13px; margin-bottom:12px; }
+    .footer-nav { display:flex; justify-content:center; gap:20px; flex-wrap:wrap; }
+    .footer-nav a { color:var(--subtext); font-size:13px; text-decoration:none; }
+    .footer-nav a:hover { color:var(--text); }
+
+    @media (max-width:640px) {
+      .hero-title { font-size:24px; }
+      .setting-label { min-width:100%; margin-bottom:4px; }
+    }
+  </style>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+  <meta property="og:image" content="https://browserkit.online/img/og-browserkit.png" />
+  <link rel="canonical" href="https://browserkit.online/code-snapshot/" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://browserkit.online/img/og-browserkit.png" />
+</head>
+
+<body>
+  <header class="header">
+    <div class="container">
+      <a href="/" class="header-brand">
+        <div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Gowun Dodum,sans-serif;flex-shrink:0">B</div>
+        <span class="header-brand-text"><span style="color:var(--text)">Browser</span><span style="color:var(--point)">Kit</span></span>
+      </a>
+      <a href="/" class="header-back">&#x2190; BrowserKit 홈으로</a>
+    </div>
+  </header>
+
+  <main><div class="container">
+    <div class="hero">
+      <div class="hero-icon" style="height:78px;display:flex;justify-content:center;align-items:center"><div style="transform:scale(1.7);transform-origin:center"><div style="width:46px;height:46px;background:#e0c3ff;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="font:700 15px Fira Code,monospace;color:#2a2433;line-height:1;letter-spacing:-.5px;white-space:nowrap">&lt;/&gt;</div></div></div></div>
+      <div class="hero-title-wrap"><h1 class="hero-title">코드 스니펫 이미지 생성기</h1><a href="/blog/76-codesnapshot-howto.html" class="hero-guide-link">사용법 가이드 보기</a></div>
+      <p class="hero-desc">코드를 붙여넣으면 공유하기 좋은 예쁜 이미지로 만들어드려요</p>
+      <div class="hero-badges">
+        <span class="badge">🔒 완전 로컬 처리</span>
+        <span class="badge">⚡ 무료 사용</span>
+        <span class="badge">🛡️ 서버 전송 없음</span>
+        <span class="badge">📦 설치 불필요</span>
+      </div>
+    </div>
+    <div style="margin:0 0 12px"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+
+    <p class="notice">💡 간단한 자체 하이라이터로 문자열·주석·숫자·주요 키워드를 색칠합니다. 복잡한 언어별 문법을 완벽히 인식하지는 못하니, 결과 이미지를 확인 후 필요하면 코드를 다시 다듬어 재생성하세요. 모든 처리는 브라우저에서만 이루어집니다.</p>
+
+    <div class="setting-card">
+      <div class="setting-row">
+        <span class="setting-label">테마</span>
+        <div class="seg-btns" id="themeBtns"></div>
+      </div>
+      <div class="setting-row">
+        <span class="setting-label">창 스타일</span>
+        <div class="seg-btns" id="windowBtns">
+          <button class="seg-btn active" data-window="mac">맥 스타일</button>
+          <button class="seg-btn" data-window="none">창 없음</button>
+        </div>
+        <label class="toggle-row"><input type="checkbox" id="lineNumOpt" checked /> 줄 번호 표시</label>
+      </div>
+      <div class="setting-row">
+        <span class="setting-label">파일명</span>
+        <input type="text" class="num-input" id="filenameInput" placeholder="예: app.js (선택)" style="max-width:200px;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:8px 12px;color:var(--text);font-size:13px;outline:none;" />
+        <span class="setting-label" style="min-width:auto;">글자 크기</span>
+        <div class="count-field"><input type="number" id="fontSizeInput" value="16" min="10" max="28" step="1" /></div>
+      </div>
+    </div>
+
+    <textarea class="code-textarea" id="codeInput" spellcheck="false" placeholder="function greet(name) {
+  // 인사말을 반환합니다
+  return `Hello, ${name}!`;
+}"></textarea>
+
+    <button class="btn-generate" id="genBtn">&#x1F5BC;&#xFE0F; 이미지 생성</button>
+
+    <div class="preview-card">
+      <div class="preview-title">🖼️ 미리보기</div>
+      <div class="preview-canvas-wrap" id="previewWrap">
+        <div class="preview-empty" id="previewEmpty">생성 버튼을 누르면 여기에 코드 이미지가 표시됩니다.</div>
+        <canvas id="snapCanvas" style="display:none"></canvas>
+      </div>
+    </div>
+
+    <div class="action-bar">
+      <button class="btn-sub" id="downloadBtn">&#x2B07; PNG 다운로드</button>
+      <button class="btn-sub" id="copyImgBtn">&#x1F4CB; 이미지 복사</button>
+    </div>
+
+    <div style="margin:0 0 12px"><ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="9500090221"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+  </div></main>
+
+  <footer class="footer">
+    <div class="container">
+      <p class="footer-copy">&#xa9; 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p>
+      <nav class="footer-nav">
+        <a href="/privacy.html">개인정보 처리방침</a>
+        <a href="/terms.html">이용약관</a>
+        <a href="/about.html">서비스 소개</a>
+        <a href="/blog/">블로그</a>
+      </nav>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+  var THEMES = [
+    { id: 'dracula', name: 'Dracula', bg: ['#ff8a5e', '#7b6cff'], codeBg: '#282a36', text: '#f8f8f2', keyword: '#ff79c6', string: '#f1fa8c', comment: '#6272a4', number: '#bd93f9', title: '#8be9fd' },
+    { id: 'monokai', name: 'Monokai', bg: ['#f78fb3', '#f6b93b'], codeBg: '#272822', text: '#f8f8f2', keyword: '#f92672', string: '#e6db74', comment: '#75715e', number: '#ae81ff', title: '#a6e22e' },
+    { id: 'nord', name: 'Nord', bg: ['#6aa8ff', '#a8e6cf'], codeBg: '#2e3440', text: '#d8dee9', keyword: '#81a1c1', string: '#a3be8c', comment: '#616e88', number: '#b48ead', title: '#88c0d0' },
+    { id: 'ghdark', name: 'GitHub Dark', bg: ['#2a2433', '#7b6cff'], codeBg: '#0d1117', text: '#c9d1d9', keyword: '#ff7b72', string: '#a5d6ff', comment: '#8b949e', number: '#79c0ff', title: '#d2a8ff' },
+    { id: 'ocean', name: 'Ocean', bg: ['#6aa8ff', '#2a2433'], codeBg: '#0f2740', text: '#c0d8f0', keyword: '#82aaff', string: '#c3e88d', comment: '#546e8a', number: '#f78c6c', title: '#89ddff' }
+  ];
+
+  var KEYWORDS = ['function','return','if','else','for','while','var','let','const','class','extends','new','this','import','export','from','default','async','await','try','catch','finally','throw','switch','case','break','continue','do','typeof','instanceof','null','undefined','true','false','def','elif','print','self','None','True','False','end','then','fn','pub','impl','struct','enum','match','use','mod','static','void','public','private','protected','interface','implements','package'];
+
+  var currentTheme = THEMES[0];
+  var currentWindow = 'mac';
+
+  var themeBtns = document.getElementById('themeBtns');
+  themeBtns.innerHTML = THEMES.map(function(t, i) {
+    return '<button class="theme-swatch' + (i === 0 ? ' active' : '') + '" data-id="' + t.id + '" style="background:linear-gradient(135deg,' + t.bg[0] + ',' + t.bg[1] + ')" title="' + t.name + '"></button>';
+  }).join('');
+  themeBtns.querySelectorAll('.theme-swatch').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      themeBtns.querySelectorAll('.theme-swatch').forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      currentTheme = THEMES.filter(function(t) { return t.id === btn.dataset.id; })[0];
+    });
+  });
+
+  document.querySelectorAll('#windowBtns .seg-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('#windowBtns .seg-btn').forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      currentWindow = btn.dataset.window;
+    });
+  });
+
+  // ── 간단한 토큰화 (문자열/주석/숫자/키워드) ──
+  function tokenizeLine(line) {
+    var tokens = [];
+    var i = 0;
+    var len = line.length;
+    while (i < len) {
+      var ch = line[i];
+      // 줄 주석
+      if ((ch === '/' && line[i + 1] === '/') || ch === '#') {
+        tokens.push({ text: line.slice(i), type: 'comment' });
+        break;
+      }
+      // 문자열
+      if (ch === '"' || ch === "'" || ch === '`') {
+        var quote = ch;
+        var j = i + 1;
+        while (j < len && line[j] !== quote) {
+          if (line[j] === '\\') j++;
+          j++;
+        }
+        j = Math.min(j + 1, len);
+        tokens.push({ text: line.slice(i, j), type: 'string' });
+        i = j;
+        continue;
+      }
+      // 숫자
+      if (/[0-9]/.test(ch) && (i === 0 || !/[a-zA-Z0-9_]/.test(line[i - 1]))) {
+        var k = i;
+        while (k < len && /[0-9.]/.test(line[k])) k++;
+        tokens.push({ text: line.slice(i, k), type: 'number' });
+        i = k;
+        continue;
+      }
+      // 단어(키워드 후보)
+      if (/[a-zA-Z_]/.test(ch)) {
+        var m = i;
+        while (m < len && /[a-zA-Z0-9_]/.test(line[m])) m++;
+        var word = line.slice(i, m);
+        tokens.push({ text: word, type: KEYWORDS.indexOf(word) !== -1 ? 'keyword' : 'text' });
+        i = m;
+        continue;
+      }
+      // 그 외 문자는 이어붙임
+      var start = i;
+      while (i < len && !/[a-zA-Z_0-9"'`#]/.test(line[i]) && !(line[i] === '/' && line[i + 1] === '/')) i++;
+      if (i === start) i++;
+      tokens.push({ text: line.slice(start, i), type: 'text' });
+    }
+    return tokens;
+  }
+
+  function colorFor(theme, type) {
+    if (type === 'keyword') return theme.keyword;
+    if (type === 'string') return theme.string;
+    if (type === 'comment') return theme.comment;
+    if (type === 'number') return theme.number;
+    return theme.text;
+  }
+
+  function drawSnapshot() {
+    var code = document.getElementById('codeInput').value;
+    if (!code.trim()) { showToast('코드를 입력해주세요'); return null; }
+
+    var fontSize = Math.max(10, Math.min(28, parseInt(document.getElementById('fontSizeInput').value, 10) || 16));
+    var showLineNum = document.getElementById('lineNumOpt').checked;
+    var filename = document.getElementById('filenameInput').value.trim();
+    var lines = code.replace(/\t/g, '  ').split('\n');
+
+    var dpr = 2;
+    var lineHeight = Math.round(fontSize * 1.6);
+    var padX = 32, padY = 28;
+    var windowBarH = currentWindow === 'mac' ? 44 : 0;
+    var fontFamily = "'Fira Code', monospace";
+    var lineNumW = showLineNum ? (String(lines.length).length * (fontSize * 0.62) + 24) : 0;
+
+    var measureCanvas = document.createElement('canvas');
+    var mctx = measureCanvas.getContext('2d');
+    mctx.font = fontSize + 'px ' + fontFamily;
+    var maxLineWidth = 0;
+    lines.forEach(function(line) {
+      var w = mctx.measureText(line).width;
+      if (w > maxLineWidth) maxLineWidth = w;
+    });
+
+    var codeWidth = Math.max(360, maxLineWidth + lineNumW + padX * 2);
+    var codeHeight = lines.length * lineHeight + padY * 2 + windowBarH + (filename ? lineHeight : 0);
+    var outerPad = 56;
+    var canvasW = codeWidth + outerPad * 2;
+    var canvasH = codeHeight + outerPad * 2;
+
+    var canvas = document.getElementById('snapCanvas');
+    canvas.width = canvasW * dpr;
+    canvas.height = canvasH * dpr;
+    canvas.style.width = canvasW + 'px';
+    canvas.style.height = canvasH + 'px';
+    var ctx = canvas.getContext('2d');
+    ctx.scale(dpr, dpr);
+
+    // 배경 그라데이션
+    var grad = ctx.createLinearGradient(0, 0, canvasW, canvasH);
+    grad.addColorStop(0, currentTheme.bg[0]);
+    grad.addColorStop(1, currentTheme.bg[1]);
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, canvasW, canvasH);
+
+    // 코드 카드 (그림자 + 둥근 사각형)
+    var cardX = outerPad, cardY = outerPad, cardR = 14;
+    ctx.save();
+    ctx.shadowColor = 'rgba(0,0,0,0.35)';
+    ctx.shadowBlur = 40;
+    ctx.shadowOffsetY = 20;
+    roundRect(ctx, cardX, cardY, codeWidth, codeHeight, cardR);
+    ctx.fillStyle = currentTheme.codeBg;
+    ctx.fill();
+    ctx.restore();
+
+    var contentY = cardY;
+
+    // 창 바
+    if (currentWindow === 'mac') {
+      var dotY = cardY + windowBarH / 2;
+      var dotColors = ['#ff5f56', '#ffbd2e', '#27c93f'];
+      dotColors.forEach(function(c, i) {
+        ctx.beginPath();
+        ctx.arc(cardX + 22 + i * 20, dotY, 6, 0, Math.PI * 2);
+        ctx.fillStyle = c;
+        ctx.fill();
+      });
+      if (filename) {
+        ctx.font = '600 ' + Math.max(11, fontSize - 3) + 'px ' + fontFamily;
+        ctx.fillStyle = 'rgba(255,255,255,0.55)';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(filename, cardX + codeWidth / 2, dotY);
+        ctx.textAlign = 'left';
+      }
+      contentY += windowBarH;
+    } else if (filename) {
+      ctx.font = '600 ' + fontSize + 'px ' + fontFamily;
+      ctx.fillStyle = 'rgba(255,255,255,0.55)';
+      ctx.textBaseline = 'alphabetic';
+      ctx.fillText(filename, cardX + padX, contentY + padY + fontSize);
+      contentY += lineHeight;
+    }
+
+    // 코드 라인
+    ctx.font = fontSize + 'px ' + fontFamily;
+    ctx.textBaseline = 'alphabetic';
+    var baseY = contentY + padY + fontSize;
+    lines.forEach(function(line, idx) {
+      var y = baseY + idx * lineHeight;
+      var x = cardX + padX + lineNumW;
+      if (showLineNum) {
+        ctx.fillStyle = 'rgba(255,255,255,0.28)';
+        ctx.textAlign = 'right';
+        ctx.fillText(String(idx + 1), cardX + padX + lineNumW - 16, y);
+        ctx.textAlign = 'left';
+      }
+      var tokens = tokenizeLine(line);
+      tokens.forEach(function(tok) {
+        ctx.fillStyle = colorFor(currentTheme, tok.type);
+        ctx.fillText(tok.text, x, y);
+        x += ctx.measureText(tok.text).width;
+      });
+    });
+
+    return canvas;
+  }
+
+  function roundRect(ctx, x, y, w, h, r) {
+    ctx.beginPath();
+    ctx.moveTo(x + r, y);
+    ctx.arcTo(x + w, y, x + w, y + h, r);
+    ctx.arcTo(x + w, y + h, x, y + h, r);
+    ctx.arcTo(x, y + h, x, y, r);
+    ctx.arcTo(x, y, x + w, y, r);
+    ctx.closePath();
+  }
+
+  document.getElementById('genBtn').addEventListener('click', function() {
+    var canvas = drawSnapshot();
+    if (!canvas) return;
+    document.getElementById('previewEmpty').style.display = 'none';
+    canvas.style.display = 'inline-block';
+    showToast('✓ 이미지를 생성했습니다');
+  });
+
+  document.getElementById('downloadBtn').addEventListener('click', function() {
+    var canvas = document.getElementById('snapCanvas');
+    if (canvas.style.display === 'none') { showToast('먼저 이미지를 생성해주세요'); return; }
+    var a = document.createElement('a');
+    a.href = canvas.toDataURL('image/png');
+    a.download = 'code-snapshot.png';
+    a.click();
+    showToast('✓ PNG 파일이 저장됩니다');
+  });
+
+  document.getElementById('copyImgBtn').addEventListener('click', function() {
+    var canvas = document.getElementById('snapCanvas');
+    if (canvas.style.display === 'none') { showToast('먼저 이미지를 생성해주세요'); return; }
+    canvas.toBlob(function(blob) {
+      if (navigator.clipboard && window.ClipboardItem) {
+        navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]).then(function() {
+          showToast('✓ 이미지가 클립보드에 복사되었습니다');
+        }).catch(function() {
+          showToast('클립보드 복사가 지원되지 않는 브라우저입니다');
+        });
+      } else {
+        showToast('클립보드 복사가 지원되지 않는 브라우저입니다');
+      }
+    });
+  });
+
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(function() { t.classList.remove('show'); }, 2000);
+  }
+  </script>
+</body>
+</html>
