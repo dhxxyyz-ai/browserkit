@@ -28,6 +28,13 @@
     .num-input { background:var(--bg); border:1px solid var(--border); border-radius:10px; padding:13px 16px; font-size:15px; font-weight:600; color:var(--text); font-family:'Gowun Dodum',sans-serif; outline:none; width:100%; box-sizing:border-box; }
     .num-input:focus { border-color:var(--point); }
 
+    .help-icon { position:relative; display:inline-flex; align-items:center; justify-content:center; width:15px; height:15px; border-radius:50%; border:1px solid var(--border); color:var(--subtext); font-size:10px; font-weight:700; cursor:pointer; vertical-align:middle; margin-left:2px; }
+    .help-icon:hover, .help-icon:focus, .help-icon.show { border-color:var(--point); color:var(--point-hover); outline:none; }
+    .help-tooltip { position:absolute; bottom:calc(100% + 8px); left:50%; transform:translateX(-50%); background:var(--card); border:1px solid var(--border); border-radius:10px; padding:10px 12px; font-size:12px; font-weight:400; line-height:1.5; color:var(--text); width:220px; box-shadow:0 8px 24px rgba(0,0,0,.18); display:none; z-index:10; text-align:left; white-space:normal; }
+    .help-tooltip::after { content:''; position:absolute; top:100%; left:50%; transform:translateX(-50%); border:6px solid transparent; border-top-color:var(--border); }
+    .help-tooltip::before { content:''; position:absolute; top:calc(100% - 1px); left:50%; transform:translateX(-50%); border:5px solid transparent; border-top-color:var(--card); z-index:1; }
+    .help-icon:hover .help-tooltip, .help-icon:focus .help-tooltip, .help-icon.show .help-tooltip { display:block; }
+
     .btn-calc { background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border:none; border-radius:12px; padding:14px 32px; font-size:16px; font-weight:700; cursor:pointer; font-family:'Gowun Dodum',sans-serif; width:100%; margin-bottom:20px; }
     .btn-calc:hover { transform:translateY(-2px); box-shadow:0 8px 24px var(--glow); }
 
@@ -111,7 +118,11 @@
           <input type="number" class="amount-input" id="salaryInput" placeholder="예: 4000" min="0" step="1" />
         </div>
         <div class="input-group">
-          <span class="input-label">비과세액 (월, 만원)</span>
+          <span class="input-label">비과세액 (월, 만원)
+            <span class="help-icon" tabindex="0" role="button" aria-label="비과세액 설명 보기">?
+              <span class="help-tooltip">식대, 자가운전보조금 등 소득세가 부과되지 않는 금액이에요. 회사에서 매달 식대 20만원을 비과세로 처리하는 경우가 가장 흔합니다.</span>
+            </span>
+          </span>
           <input type="number" class="num-input" id="nontaxInput" value="20" min="0" step="1" />
         </div>
       </div>
@@ -756,6 +767,18 @@
   document.getElementById('calcBtn').addEventListener('click', calculate);
   document.getElementById('salaryInput').addEventListener('keydown', function(e) {
     if (e.key === 'Enter') calculate();
+  });
+
+  document.querySelectorAll('.help-icon').forEach(function(icon) {
+    icon.addEventListener('click', function(e) {
+      e.stopPropagation();
+      var wasShown = icon.classList.contains('show');
+      document.querySelectorAll('.help-icon.show').forEach(function(el) { el.classList.remove('show'); });
+      if (!wasShown) icon.classList.add('show');
+    });
+  });
+  document.addEventListener('click', function() {
+    document.querySelectorAll('.help-icon.show').forEach(function(el) { el.classList.remove('show'); });
   });
 
   function showToast(msg) {
