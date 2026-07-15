@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <link rel="icon" href="/favicon.ico" sizes="32x32">
+  <link rel="icon" href="/favicon-16.png" sizes="16x16" type="image/png">
+  <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="/favicon-192.png" sizes="192x192" type="image/png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="비밀번호가 걸린 PDF의 비밀번호를 입력해 잠금을 해제하는 무료 온라인 도구. 파일이 서버로 전송되지 않습니다." />
+  <meta property="og:title" content="PDFPasswordRemove — PDF 비밀번호 해제" />
+  <meta property="og:description" content="비밀번호가 걸린 PDF의 잠금을 해제하는 무료 온라인 도구입니다." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://browserkit.online/pdf-password-remove/" />
+  <title>PDFPasswordRemove — PDF 비밀번호 해제</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506"
+     crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="/css/style.css?v=20260704c" />
+  <style>
+    .upload-zone { background:var(--card); border:2px dashed var(--border); border-radius:var(--radius); padding:48px 40px; text-align:center; cursor:pointer; margin:0 0 20px; transition:all 0.2s; }
+    .upload-zone:hover, .upload-zone.drag-over { border-color:var(--point); box-shadow:0 0 24px var(--glow); }
+    .upload-icon { font-size:40px; margin-bottom:12px; }
+    .upload-title { font-size:16px; font-weight:600; margin-bottom:6px; }
+    .upload-sub { color:var(--subtext); font-size:13px; }
+    .upload-safe { color:var(--success); font-size:13px; margin-top:8px; }
+
+    .work-area { display:none; }
+    .work-area.show { display:block; }
+
+    .file-summary { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:16px 20px; margin-bottom:20px; display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; }
+    .file-summary-name { font-size:14px; font-weight:600; }
+    .file-summary-meta { font-size:12px; color:var(--subtext); margin-top:2px; font-family:'Gowun Dodum',sans-serif; }
+    .btn-change { background:var(--bg); border:1px solid var(--border); color:var(--subtext); border-radius:8px; padding:7px 16px; font-size:13px; cursor:pointer; font-family:'Gowun Dodum',sans-serif; }
+    .btn-change:hover { border-color:var(--point); color:var(--text); }
+
+    .notice { margin:0 0 20px; padding:12px 16px; background:rgba(123,108,255,0.07); border:1px solid var(--border); border-radius:10px; font-size:13px; color:var(--subtext); line-height:1.7; }
+
+    .password-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:24px; margin-bottom:20px; }
+    .password-label { font-size:13px; font-weight:600; color:var(--subtext); margin-bottom:10px; }
+    .password-row { display:flex; gap:10px; flex-wrap:wrap; }
+    .password-input { flex:1; min-width:200px; background:var(--bg); border:1px solid var(--border); color:var(--text); border-radius:10px; padding:12px 16px; font-size:14px; font-family:'Gowun Dodum',sans-serif; outline:none; }
+    .password-input:focus { border-color:var(--point); }
+    .password-input.error { border-color:#F87171; }
+    .password-err { color:#F87171; font-size:12.5px; margin-top:8px; display:none; }
+    .password-err.show { display:block; }
+
+    .status-card { background:var(--card); border:1px solid var(--point); border-radius:var(--radius); padding:20px 24px; margin-bottom:20px; display:none; align-items:center; gap:12px; }
+    .status-card.show { display:flex; }
+    .status-icon { font-size:22px; }
+    .status-text { font-size:14px; color:var(--text); }
+
+    .progress-wrap { margin:24px 0; text-align:center; display:none; }
+    .progress-label { color:var(--subtext); font-size:14px; margin-bottom:10px; }
+    .progress-bar { background:var(--card); border-radius:999px; height:6px; overflow:hidden; }
+    .progress-fill { height:100%; width:0%; background:linear-gradient(90deg,var(--point),var(--point-hover)); border-radius:999px; transition:width 0.3s ease; }
+
+    .action-wrap { display:flex; justify-content:center; gap:12px; margin:8px 0 48px; flex-wrap:wrap; }
+    .btn-primary { background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border:none; border-radius:12px; padding:14px 32px; font-size:15px; font-weight:600; cursor:pointer; font-family:'Gowun Dodum',sans-serif; }
+    .btn-primary:hover { transform:translateY(-2px); box-shadow:0 8px 24px var(--glow); }
+    .btn-primary:disabled { opacity:0.5; cursor:default; transform:none; box-shadow:none; }
+    .btn-reset { background:var(--card); color:var(--subtext); border:1px solid var(--border); border-radius:12px; padding:14px 24px; font-size:15px; cursor:pointer; font-family:'Gowun Dodum',sans-serif; }
+    .btn-reset:hover { transform:translateY(-2px); color:var(--text); border-color:var(--point); }
+
+    .footer { border-top:1px solid var(--border); padding:32px 0; text-align:center; }
+    .footer-copy { color:var(--subtext); font-size:13px; margin-bottom:12px; }
+    .footer-nav { display:flex; justify-content:center; gap:20px; flex-wrap:wrap; }
+    .footer-nav a { color:var(--subtext); font-size:13px; text-decoration:none; }
+    .footer-nav a:hover { color:var(--text); }
+
+    @media (max-width:640px) {
+      .upload-zone { padding:40px 20px; }
+      .hero-title { font-size:24px; }
+    }
+  </style>
+  <meta property="og:image" content="https://browserkit.online/img/og-browserkit.png" />
+  <link rel="canonical" href="https://browserkit.online/pdf-password-remove/" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://browserkit.online/img/og-browserkit.png" />
+</head>
+<body>
+
+  <header class="header">
+    <div class="container">
+      <a href="/" class="header-brand"><div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Gowun Dodum,sans-serif;flex-shrink:0">B</div><span class="header-brand-text"><span style="color:var(--text)">Browser</span><span style="color:var(--point)">Kit</span></span></a>
+      <a href="/" class="header-back">← BrowserKit 홈으로</a>
+    </div>
+  </header>
+
+  <main><div class="container">
+    <div class="hero">
+      <div class="hero-icon" style="height:78px;display:flex;justify-content:center;align-items:center"><div style="transform:scale(1.7);transform-origin:center"><div style="width:46px;height:46px;background:#a8e6cf;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="position:relative;width:22px;height:26px"><div style="width:22px;height:16px;background:#fffdf9;border:2.5px solid #2a2433;border-radius:3px;box-sizing:border-box;position:absolute;bottom:0"></div><div style="width:12px;height:11px;border:2.5px solid #2a2433;border-bottom:none;border-radius:6px 6px 0 0;box-sizing:border-box;position:absolute;top:0;left:5px"></div></div></div></div></div>
+      <div class="hero-title-wrap"><h1 class="hero-title">PDF 비밀번호 해제</h1><a href="/blog/78-pdfpasswordremove-howto.html" class="hero-guide-link">사용법 가이드 보기</a></div>
+      <p class="hero-desc">비밀번호가 걸린 PDF의 잠금을 풀어 비밀번호 없는 파일로 저장하세요</p>
+      <div class="hero-badges">
+        <span class="badge">🔒 완전 로컬 처리</span>
+        <span class="badge">⚡ 무료 사용</span>
+        <span class="badge">🛡️ 서버 전송 없음</span>
+        <span class="badge">📦 설치 불필요</span>
+      </div>
+    </div>
+    <div style="margin:0 0 12px"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+
+    <!-- 업로드 -->
+    <div class="upload-zone" id="uploadZone">
+      <input type="file" id="fileInput" accept=".pdf" hidden />
+      <div class="upload-icon" style="height:64px;display:flex;justify-content:center;align-items:center"><div style="transform:scale(1.4);transform-origin:center"><div style="width:46px;height:46px;background:#a8e6cf;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="position:relative;width:22px;height:26px"><div style="width:22px;height:16px;background:#fffdf9;border:2.5px solid #2a2433;border-radius:3px;box-sizing:border-box;position:absolute;bottom:0"></div><div style="width:12px;height:11px;border:2.5px solid #2a2433;border-bottom:none;border-radius:6px 6px 0 0;box-sizing:border-box;position:absolute;top:0;left:5px"></div></div></div></div></div>
+      <p class="upload-title">비밀번호가 걸린 PDF를 드래그하여 놓으세요</p>
+      <p class="upload-sub">또는 클릭하여 파일 선택 (1개 파일)</p>
+      <p class="upload-safe">✓ 파일과 비밀번호가 서버로 전송되지 않습니다</p>
+    </div>
+
+    <!-- 작업 영역 -->
+    <div class="work-area" id="workArea">
+      <div class="file-summary">
+        <div>
+          <div class="file-summary-name" id="fileName"></div>
+          <div class="file-summary-meta" id="fileMeta"></div>
+        </div>
+        <button class="btn-change" id="btnChange">다른 파일 선택</button>
+      </div>
+
+      <p class="notice">💡 이 도구는 PDF를 페이지 이미지로 변환한 뒤 비밀번호 없이 재조립합니다. 텍스트 선택·검색이 가능했던 원본과 달리 결과 파일은 이미지 기반 PDF가 됩니다. 본인이 소유하거나 적법하게 접근 권한이 있는 PDF에만 사용해주세요.</p>
+
+      <div class="status-card" id="notProtectedCard">
+        <div class="status-icon">✅</div>
+        <div class="status-text">이 PDF는 비밀번호가 걸려 있지 않습니다. 아래 버튼으로 그대로 다운로드할 수 있어요.</div>
+      </div>
+
+      <div class="password-card" id="passwordCard" style="display:none">
+        <div class="password-label">🔑 PDF 비밀번호 입력</div>
+        <div class="password-row">
+          <input type="password" class="password-input" id="passwordInput" placeholder="PDF를 열 때 필요한 비밀번호" />
+          <button class="btn-primary" id="unlockBtn" style="padding:12px 24px;">잠금 해제 시도</button>
+        </div>
+        <div class="password-err" id="passwordErr">⚠ 비밀번호가 올바르지 않습니다. 다시 시도해주세요.</div>
+      </div>
+
+      <div class="progress-wrap" id="progressWrap">
+        <div class="progress-label" id="progressLabel">처리 중...</div>
+        <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+      </div>
+
+      <div class="action-wrap">
+        <button class="btn-primary" id="downloadBtn" style="display:none">⬇ 비밀번호 없이 다운로드</button>
+        <button class="btn-reset" id="resetBtn">↺ 처음부터</button>
+      </div>
+    </div>
+
+<div style="margin:0 0 12px"><ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="9500090221"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+  </div></main>
+
+  <footer class="footer">
+    <div class="container">
+      <p class="footer-copy">© 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p>
+      <nav class="footer-nav">
+        <a href="/privacy.html">개인정보 처리방침</a>
+        <a href="/terms.html">이용약관</a>
+        <a href="/about.html">서비스 소개</a>
+        <a href="/blog/">블로그</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+  <script>
+  const pdfjsLib = window['pdfjs-dist/build/pdf'];
+  pdfjsLib.GlobalWorkerOptions.workerSrc =
+    'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+  const uploadZone     = document.getElementById('uploadZone');
+  const fileInput      = document.getElementById('fileInput');
+  const workArea       = document.getElementById('workArea');
+  const fileNameEl     = document.getElementById('fileName');
+  const fileMetaEl     = document.getElementById('fileMeta');
+  const btnChange      = document.getElementById('btnChange');
+  const notProtectedCard = document.getElementById('notProtectedCard');
+  const passwordCard   = document.getElementById('passwordCard');
+  const passwordInput  = document.getElementById('passwordInput');
+  const passwordErr    = document.getElementById('passwordErr');
+  const unlockBtn      = document.getElementById('unlockBtn');
+  const progressWrap   = document.getElementById('progressWrap');
+  const progressFill   = document.getElementById('progressFill');
+  const progressLabel  = document.getElementById('progressLabel');
+  const downloadBtn    = document.getElementById('downloadBtn');
+  const resetBtn       = document.getElementById('resetBtn');
+
+  let currentFile = null, currentArrayBuffer = null, currentPdf = null;
+
+  uploadZone.addEventListener('click', () => fileInput.click());
+  uploadZone.addEventListener('dragover', (e) => { e.preventDefault(); uploadZone.classList.add('drag-over'); });
+  uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('drag-over'));
+  uploadZone.addEventListener('drop', (e) => {
+    e.preventDefault(); uploadZone.classList.remove('drag-over');
+    const file = [...e.dataTransfer.files].find(f => f.type === 'application/pdf');
+    if (file) loadFile(file);
+  });
+  fileInput.addEventListener('change', (e) => {
+    if (e.target.files[0]) loadFile(e.target.files[0]);
+    fileInput.value = '';
+  });
+  btnChange.addEventListener('click', () => fileInput.click());
+
+  async function loadFile(file) {
+    uploadZone.style.display = 'none';
+    progressWrap.style.display = 'block';
+    showProgress(10, 'PDF 확인하는 중...');
+
+    currentFile = file;
+    currentArrayBuffer = await file.arrayBuffer();
+
+    fileNameEl.textContent = file.name;
+    fileMetaEl.textContent = formatBytes(file.size);
+
+    notProtectedCard.classList.remove('show');
+    passwordCard.style.display = 'none';
+    downloadBtn.style.display = 'none';
+    currentPdf = null;
+
+    try {
+      // 비밀번호 없이 먼저 열어본다 — 성공하면 애초에 잠겨있지 않은 파일
+      const pdfDoc = await pdfjsLib.getDocument({ data: currentArrayBuffer.slice(0) }).promise;
+      currentPdf = pdfDoc;
+      notProtectedCard.classList.add('show');
+      downloadBtn.style.display = '';
+      downloadBtn.textContent = '⬇ PDF 다운로드';
+    } catch (e) {
+      if (e.name === 'PasswordException') {
+        passwordCard.style.display = '';
+      } else {
+        console.error('PDF 로드 실패:', e);
+        alert('PDF를 여는 중 오류가 발생했습니다. 파일을 확인해주세요.');
+        resetAll();
+        return;
+      }
+    }
+
+    progressWrap.style.display = 'none';
+    workArea.classList.add('show');
+  }
+
+  unlockBtn.addEventListener('click', async () => {
+    const pw = passwordInput.value;
+    if (!pw) { showPasswordErr('비밀번호를 입력해주세요.'); return; }
+    unlockBtn.disabled = true;
+    passwordErr.classList.remove('show');
+    passwordInput.classList.remove('error');
+
+    try {
+      const pdfDoc = await pdfjsLib.getDocument({ data: currentArrayBuffer.slice(0), password: pw }).promise;
+      currentPdf = pdfDoc;
+      passwordCard.style.display = 'none';
+      downloadBtn.style.display = '';
+      downloadBtn.textContent = '⬇ 비밀번호 없이 다운로드';
+    } catch (e) {
+      if (e.name === 'PasswordException') {
+        showPasswordErr('비밀번호가 올바르지 않습니다. 다시 시도해주세요.');
+      } else {
+        console.error('잠금 해제 실패:', e);
+        showPasswordErr('잠금 해제 중 오류가 발생했습니다.');
+      }
+    }
+    unlockBtn.disabled = false;
+  });
+
+  passwordInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') unlockBtn.click();
+  });
+
+  function showPasswordErr(msg) {
+    passwordErr.textContent = '⚠ ' + msg;
+    passwordErr.classList.add('show');
+    passwordInput.classList.add('error');
+  }
+
+  downloadBtn.addEventListener('click', async () => {
+    if (!currentPdf) return;
+    downloadBtn.disabled = true;
+    progressWrap.style.display = 'block';
+
+    try {
+      const { jsPDF } = window.jspdf;
+      const numPages = currentPdf.numPages;
+      let pdf = null;
+      for (let p = 1; p <= numPages; p++) {
+        showProgress(Math.floor((p - 1) / numPages * 90), p + ' / ' + numPages + '페이지 처리 중...');
+        const page = await currentPdf.getPage(p);
+        const viewport = page.getViewport({ scale: 2.0 });
+        const canvas = document.createElement('canvas');
+        canvas.width = viewport.width; canvas.height = viewport.height;
+        await page.render({ canvasContext: canvas.getContext('2d'), viewport }).promise;
+        const w = canvas.width / 2, h = canvas.height / 2;
+        const orient = w > h ? 'l' : 'p';
+        if (!pdf) pdf = new jsPDF({ orientation: orient, unit: 'px', format: [w, h] });
+        else pdf.addPage([w, h], orient);
+        pdf.addImage(canvas.toDataURL('image/jpeg', 0.92), 'JPEG', 0, 0, w, h);
+      }
+      showProgress(100, '다운로드 준비 완료!');
+      await new Promise(r => setTimeout(r, 200));
+      const baseName = currentFile.name.replace(/\.pdf$/i, '');
+      pdf.save(baseName + '_unlocked.pdf');
+    } catch (e) {
+      console.error('다운로드 오류:', e);
+      alert('PDF를 저장하는 중 오류가 발생했습니다.');
+    }
+
+    progressWrap.style.display = 'none';
+    downloadBtn.disabled = false;
+  });
+
+  function resetAll() {
+    currentFile = null; currentArrayBuffer = null; currentPdf = null;
+    fileInput.value = '';
+    passwordInput.value = '';
+    passwordErr.classList.remove('show');
+    passwordInput.classList.remove('error');
+    passwordCard.style.display = 'none';
+    notProtectedCard.classList.remove('show');
+    downloadBtn.style.display = 'none';
+    progressWrap.style.display = 'none';
+    workArea.classList.remove('show');
+    uploadZone.style.display = 'block';
+  }
+
+  resetBtn.addEventListener('click', resetAll);
+
+  function showProgress(percent, label) {
+    progressFill.style.width  = percent + '%';
+    progressLabel.textContent = label;
+  }
+  function formatBytes(bytes) {
+    if (bytes < 1024)        return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
+  }
+  </script>
+
+</body>
+</html>
