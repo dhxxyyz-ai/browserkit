@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <link rel="icon" href="/favicon.ico" sizes="32x32">
+  <link rel="icon" href="/favicon-16.png" sizes="16x16" type="image/png">
+  <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="/favicon-192.png" sizes="192x192" type="image/png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="스크린샷을 스마트폰, 태블릿, 노트북, 브라우저 창 목업 프레임에 합성해주는 무료 온라인 디바이스 목업 생성기. 배경 색상까지 함께 적용해 PNG로 다운로드하세요. 서버 전송 없이 브라우저에서 바로 처리합니다." />
+  <meta property="og:title" content="MockupFrame — 디바이스 목업 생성기" />
+  <meta property="og:description" content="스크린샷을 스마트폰·태블릿·노트북·브라우저 목업에 합성하는 무료 온라인 도구입니다." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://browserkit.online/mockup-frame/" />
+  <title>MockupFrame — 디바이스 목업 생성기</title>
+  <link rel="stylesheet" href="/css/style.css?v=20260704c" />
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506"
+     crossorigin="anonymous"></script>
+  <style>
+    .upload-zone { background:var(--card); border:2px dashed var(--border); border-radius:var(--radius); padding:48px 40px; text-align:center; cursor:pointer; margin-bottom:16px; transition:all 0.2s; }
+    .upload-zone:hover, .upload-zone.drag-over { border-color:var(--point); box-shadow:0 0 24px var(--glow); }
+    .upload-icon { font-size:44px; margin-bottom:16px; }
+    .upload-title { font-size:17px; font-weight:600; margin-bottom:8px; }
+    .upload-sub { color:var(--subtext); font-size:13px; }
+    .upload-safe { color:var(--success); font-size:13px; margin-top:8px; }
+
+    .result-wrap { display:none; }
+    .result-wrap.show { display:block; }
+
+    .tab-wrap { display:flex; gap:8px; margin-bottom:20px; flex-wrap:wrap; }
+    .tab-btn { flex:1; background:var(--card); color:var(--subtext); border:1px solid var(--border); border-radius:10px; padding:10px 16px; font-size:14px; font-weight:600; cursor:pointer; font-family:'Gowun Dodum',sans-serif; min-width:100px; }
+    .tab-btn:hover { border-color:var(--point); color:var(--text); }
+    .tab-btn.active { background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border-color:transparent; }
+
+    .option-panel { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:22px 24px; margin-bottom:20px; }
+    .option-row { display:flex; align-items:center; gap:12px; margin-bottom:16px; flex-wrap:wrap; }
+    .option-row:last-child { margin-bottom:0; }
+    .option-label { font-size:13px; color:var(--subtext); min-width:88px; }
+    .option-row input[type=range] { flex:1; min-width:120px; accent-color:var(--point); cursor:pointer; }
+    .option-value { font-size:13px; font-weight:600; color:var(--point-hover); min-width:44px; font-family:'Gowun Dodum',sans-serif; }
+
+    .bg-presets { display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
+    .bg-preset { width:32px; height:32px; border-radius:8px; cursor:pointer; border:2px solid var(--border); box-sizing:border-box; }
+    .bg-preset:hover, .bg-preset.active { border-color:var(--point); transform:scale(1.1); }
+
+    .preview-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:24px; margin-bottom:20px; text-align:center; }
+    .preview-card canvas { max-width:100%; height:auto; border-radius:8px; }
+
+    .action-wrap { display:flex; justify-content:center; gap:12px; margin-bottom:48px; flex-wrap:wrap; }
+    .btn-primary { background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border:none; border-radius:12px; padding:13px 28px; font-size:15px; font-weight:600; cursor:pointer; font-family:'Gowun Dodum',sans-serif; }
+    .btn-primary:hover { transform:translateY(-2px); box-shadow:0 8px 24px var(--glow); }
+    .btn-sub { background:var(--card); color:var(--subtext); border:1px solid var(--border); border-radius:12px; padding:13px 22px; font-size:15px; cursor:pointer; font-family:'Gowun Dodum',sans-serif; }
+    .btn-sub:hover { transform:translateY(-2px); color:var(--text); border-color:var(--point); }
+
+    .toast { position:fixed; bottom:32px; left:50%; transform:translateX(-50%) translateY(80px); background:var(--success); color:#fff; border-radius:999px; padding:10px 24px; font-size:14px; font-weight:600; opacity:0; pointer-events:none; z-index:999; transition:all 0.3s ease; }
+    .toast.show { transform:translateX(-50%) translateY(0); opacity:1; }
+
+    .footer { border-top:1px solid var(--border); padding:32px 0; text-align:center; }
+    .footer-copy { color:var(--subtext); font-size:13px; margin-bottom:12px; }
+    .footer-nav { display:flex; justify-content:center; gap:20px; flex-wrap:wrap; }
+    .footer-nav a { color:var(--subtext); font-size:13px; text-decoration:none; }
+    .footer-nav a:hover { color:var(--text); }
+
+    @media (max-width:640px) {
+      .hero-title { font-size:24px; }
+      .upload-zone { padding:36px 20px; }
+    }
+  </style>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+  <meta property="og:image" content="https://browserkit.online/img/og-browserkit.png" />
+  <link rel="canonical" href="https://browserkit.online/mockup-frame/" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://browserkit.online/img/og-browserkit.png" />
+</head>
+
+<body>
+  <header class="header">
+    <div class="container">
+      <a href="/" class="header-brand">
+        <div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Gowun Dodum,sans-serif;flex-shrink:0">B</div>
+        <span class="header-brand-text"><span style="color:var(--text)">Browser</span><span style="color:var(--point)">Kit</span></span>
+      </a>
+      <a href="/" class="header-back">&#x2190; BrowserKit 홈으로</a>
+    </div>
+  </header>
+
+  <main><div class="container">
+    <div class="hero">
+      <div class="hero-icon" style="height:78px;display:flex;justify-content:center;align-items:center"><div style="transform:scale(1.7);transform-origin:center"><div style="width:46px;height:46px;background:#ffd9a8;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="width:18px;height:26px;background:#fffdf9;border:2.5px solid #2a2433;border-radius:4px;box-sizing:border-box"></div></div></div></div>
+      <div class="hero-title-wrap"><h1 class="hero-title">디바이스 목업 생성기</h1><a href="/blog/77-mockupframe-howto.html" class="hero-guide-link">사용법 가이드 보기</a></div>
+      <p class="hero-desc">스크린샷을 스마트폰·태블릿·노트북·브라우저 목업에 넣어보세요</p>
+      <div class="hero-badges">
+        <span class="badge">🔒 완전 로컬 처리</span>
+        <span class="badge">⚡ 무료 사용</span>
+        <span class="badge">🛡️ 서버 전송 없음</span>
+        <span class="badge">📦 설치 불필요</span>
+      </div>
+    </div>
+    <div style="margin:0 0 12px"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+
+    <p class="notice">💡 실제 디바이스 사진이 아닌 간단한 도형으로 그린 목업 프레임입니다. 스크린샷은 화면 영역에 꽉 차게(cover) 채워지며 비율이 다르면 일부가 잘릴 수 있습니다. 모든 처리는 브라우저에서만 이루어집니다.</p>
+
+    <div class="upload-zone" id="uploadZone">
+      <input type="file" id="fileInput" accept="image/*" style="display:none" />
+      <div class="upload-icon">📱</div>
+      <div class="upload-title">스크린샷을 업로드하세요</div>
+      <div class="upload-sub">클릭하거나 파일을 드래그하세요 (JPG, PNG, WEBP)</div>
+      <div class="upload-safe">🔒 파일은 서버로 전송되지 않습니다</div>
+    </div>
+
+    <div class="result-wrap" id="resultWrap">
+      <div class="tab-wrap">
+        <button class="tab-btn active" data-device="phone">📱 스마트폰</button>
+        <button class="tab-btn" data-device="tablet">📱 태블릿</button>
+        <button class="tab-btn" data-device="laptop">💻 노트북</button>
+        <button class="tab-btn" data-device="browser">🌐 브라우저</button>
+      </div>
+
+      <div class="option-panel">
+        <div class="option-row">
+          <span class="option-label">배경</span>
+          <div class="bg-presets" id="bgPresets"></div>
+        </div>
+        <div class="option-row">
+          <span class="option-label">여백</span>
+          <input type="range" id="paddingRange" min="20" max="160" value="80" />
+          <span class="option-value" id="paddingValue">80px</span>
+        </div>
+      </div>
+
+      <div class="preview-card">
+        <canvas id="previewCanvas"></canvas>
+      </div>
+
+      <div class="action-wrap">
+        <button class="btn-primary" id="downloadBtn">&#x2B07; PNG 다운로드</button>
+        <button class="btn-sub" id="resetBtn">&#x21BA; 새 이미지 선택</button>
+      </div>
+    </div>
+
+    <div style="margin:0 0 12px"><ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="9500090221"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+  </div></main>
+
+  <footer class="footer">
+    <div class="container">
+      <p class="footer-copy">&#xa9; 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p>
+      <nav class="footer-nav">
+        <a href="/privacy.html">개인정보 처리방침</a>
+        <a href="/terms.html">이용약관</a>
+        <a href="/about.html">서비스 소개</a>
+        <a href="/blog/">블로그</a>
+      </nav>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+  var uploadZone = document.getElementById('uploadZone');
+  var fileInput = document.getElementById('fileInput');
+  var resultWrap = document.getElementById('resultWrap');
+  var previewCanvas = document.getElementById('previewCanvas');
+  var ctx = previewCanvas.getContext('2d');
+
+  var currentImg = null;
+  var currentDevice = 'phone';
+
+  var BG_PRESETS = [
+    { id: 'solid1', colors: ['#7b6cff', '#7b6cff'] },
+    { id: 'grad1', colors: ['#ff8a5e', '#7b6cff'] },
+    { id: 'grad2', colors: ['#6aa8ff', '#a8e6cf'] },
+    { id: 'grad3', colors: ['#ffb3c7', '#e0c3ff'] },
+    { id: 'solid2', colors: ['#2a2433', '#2a2433'] },
+    { id: 'solid3', colors: ['#fffdf9', '#fffdf9'] }
+  ];
+  var currentBg = BG_PRESETS[1];
+
+  var bgPresetsEl = document.getElementById('bgPresets');
+  bgPresetsEl.innerHTML = BG_PRESETS.map(function(b, i) {
+    return '<div class="bg-preset' + (i === 1 ? ' active' : '') + '" data-id="' + b.id + '" style="background:linear-gradient(135deg,' + b.colors[0] + ',' + b.colors[1] + ')"></div>';
+  }).join('');
+  bgPresetsEl.querySelectorAll('.bg-preset').forEach(function(el) {
+    el.addEventListener('click', function() {
+      bgPresetsEl.querySelectorAll('.bg-preset').forEach(function(p) { p.classList.remove('active'); });
+      el.classList.add('active');
+      currentBg = BG_PRESETS.filter(function(b) { return b.id === el.dataset.id; })[0];
+      render();
+    });
+  });
+
+  uploadZone.addEventListener('click', function() { fileInput.click(); });
+  uploadZone.addEventListener('dragover', function(e) { e.preventDefault(); uploadZone.classList.add('drag-over'); });
+  uploadZone.addEventListener('dragleave', function() { uploadZone.classList.remove('drag-over'); });
+  uploadZone.addEventListener('drop', function(e) {
+    e.preventDefault();
+    uploadZone.classList.remove('drag-over');
+    if (e.dataTransfer.files[0]) loadFile(e.dataTransfer.files[0]);
+  });
+  fileInput.addEventListener('change', function() {
+    if (fileInput.files[0]) loadFile(fileInput.files[0]);
+  });
+
+  function loadFile(file) {
+    if (!file.type.startsWith('image/')) { showToast('이미지 파일을 선택해주세요'); return; }
+    var reader = new FileReader();
+    reader.onload = function() {
+      var img = new Image();
+      img.onload = function() {
+        currentImg = img;
+        uploadZone.style.display = 'none';
+        resultWrap.classList.add('show');
+        render();
+      };
+      img.onerror = function() { showToast('이미지를 불러올 수 없습니다'); };
+      img.src = reader.result;
+    };
+    reader.readAsDataURL(file);
+  }
+
+  document.querySelectorAll('.tab-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.tab-btn').forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      currentDevice = btn.dataset.device;
+      render();
+    });
+  });
+
+  document.getElementById('paddingRange').addEventListener('input', function() {
+    document.getElementById('paddingValue').textContent = this.value + 'px';
+    render();
+  });
+
+  function roundRectPath(c, x, y, w, h, r) {
+    r = Math.min(r, w / 2, h / 2);
+    c.beginPath();
+    c.moveTo(x + r, y);
+    c.arcTo(x + w, y, x + w, y + h, r);
+    c.arcTo(x + w, y + h, x, y + h, r);
+    c.arcTo(x, y + h, x, y, r);
+    c.arcTo(x, y, x + w, y, r);
+    c.closePath();
+  }
+
+  // 스크린샷을 목표 영역에 cover 방식으로 그림 (넘치는 부분은 클립으로 잘림)
+  function drawImageCover(c, img, x, y, w, h) {
+    var iw = img.naturalWidth, ih = img.naturalHeight;
+    var scale = Math.max(w / iw, h / ih);
+    var dw = iw * scale, dh = ih * scale;
+    var dx = x + (w - dw) / 2, dy = y + (h - dh) / 2;
+    c.save();
+    c.beginPath();
+    c.rect(x, y, w, h);
+    c.clip();
+    c.drawImage(img, dx, dy, dw, dh);
+    c.restore();
+  }
+
+  var DEVICE_SPECS = {
+    phone: { screenW: 320, screenH: 640, bezel: 16, radius: 44, chrome: 'notch' },
+    tablet: { screenW: 520, screenH: 700, bezel: 22, radius: 28, chrome: 'camera' },
+    laptop: { screenW: 640, screenH: 400, bezel: 14, radius: 12, chrome: 'laptop' },
+    browser: { screenW: 640, screenH: 420, bezel: 0, radius: 12, chrome: 'browser' }
+  };
+
+  function render() {
+    if (!currentImg) return;
+    var padding = parseInt(document.getElementById('paddingRange').value, 10);
+    var spec = DEVICE_SPECS[currentDevice];
+
+    var frameW, frameH, extraTop = 0, extraBottom = 0;
+    if (spec.chrome === 'laptop') extraBottom = 24;
+    if (spec.chrome === 'browser') extraTop = 36;
+
+    frameW = spec.screenW + spec.bezel * 2;
+    frameH = spec.screenH + spec.bezel * 2 + extraTop + extraBottom;
+
+    var canvasW = frameW + padding * 2;
+    var canvasH = frameH + padding * 2;
+    previewCanvas.width = canvasW;
+    previewCanvas.height = canvasH;
+    ctx.clearRect(0, 0, canvasW, canvasH);
+
+    // 배경
+    var grad = ctx.createLinearGradient(0, 0, canvasW, canvasH);
+    grad.addColorStop(0, currentBg.colors[0]);
+    grad.addColorStop(1, currentBg.colors[1]);
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, canvasW, canvasH);
+
+    var fx = padding, fy = padding;
+    var ink = '#2a2433';
+
+    ctx.save();
+    ctx.shadowColor = 'rgba(0,0,0,0.35)';
+    ctx.shadowBlur = 36;
+    ctx.shadowOffsetY = 18;
+
+    if (spec.chrome === 'notch' || spec.chrome === 'camera') {
+      // 폰/태블릿: 둥근 베젤 바디
+      roundRectPath(ctx, fx, fy, frameW, frameH, spec.radius);
+      ctx.fillStyle = ink;
+      ctx.fill();
+      ctx.restore();
+
+      var screenX = fx + spec.bezel, screenY = fy + spec.bezel;
+      roundRectPath(ctx, screenX, screenY, spec.screenW, spec.screenH, Math.max(4, spec.radius - spec.bezel));
+      ctx.save();
+      ctx.clip();
+      drawImageCover(ctx, currentImg, screenX, screenY, spec.screenW, spec.screenH);
+      ctx.restore();
+
+      if (spec.chrome === 'notch') {
+        var notchW = spec.screenW * 0.38, notchH = spec.bezel * 0.9;
+        roundRectPath(ctx, screenX + (spec.screenW - notchW) / 2, screenY, notchW, notchH, notchH / 2);
+        ctx.fillStyle = ink;
+        ctx.fill();
+        // 홈 인디케이터
+        var indW = spec.screenW * 0.32;
+        ctx.fillStyle = 'rgba(255,255,255,0.55)';
+        roundRectPath(ctx, screenX + (spec.screenW - indW) / 2, fy + frameH - spec.bezel * 0.55, indW, 5, 3);
+        ctx.fill();
+      } else {
+        ctx.beginPath();
+        ctx.arc(fx + frameW / 2, fy + spec.bezel / 2, 4, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(255,255,255,0.5)';
+        ctx.fill();
+      }
+
+    } else if (spec.chrome === 'laptop') {
+      var screenFrameH = spec.screenH + spec.bezel * 2;
+      roundRectPath(ctx, fx, fy, frameW, screenFrameH, spec.radius);
+      ctx.fillStyle = ink;
+      ctx.fill();
+      ctx.restore();
+
+      var sX = fx + spec.bezel, sY = fy + spec.bezel;
+      roundRectPath(ctx, sX, sY, spec.screenW, spec.screenH, 4);
+      ctx.save();
+      ctx.clip();
+      drawImageCover(ctx, currentImg, sX, sY, spec.screenW, spec.screenH);
+      ctx.restore();
+
+      // 하단 받침대(트레피조이드)
+      var baseY = fy + screenFrameH;
+      var baseOverhang = frameW * 0.06;
+      ctx.beginPath();
+      ctx.moveTo(fx - baseOverhang, baseY + extraBottom);
+      ctx.lineTo(fx, baseY);
+      ctx.lineTo(fx + frameW, baseY);
+      ctx.lineTo(fx + frameW + baseOverhang, baseY + extraBottom);
+      ctx.closePath();
+      ctx.fillStyle = '#3a3344';
+      ctx.fill();
+
+    } else if (spec.chrome === 'browser') {
+      roundRectPath(ctx, fx, fy, frameW, frameH, spec.radius);
+      ctx.fillStyle = '#fffdf9';
+      ctx.fill();
+      ctx.restore();
+
+      // 상단 바
+      ctx.save();
+      roundRectPath(ctx, fx, fy, frameW, extraTop, spec.radius);
+      ctx.clip();
+      ctx.fillStyle = '#eee6f5';
+      ctx.fillRect(fx, fy, frameW, extraTop);
+      ctx.restore();
+
+      var dotColors = ['#ff5f56', '#ffbd2e', '#27c93f'];
+      dotColors.forEach(function(c, i) {
+        ctx.beginPath();
+        ctx.arc(fx + 18 + i * 16, fy + extraTop / 2, 5, 0, Math.PI * 2);
+        ctx.fillStyle = c;
+        ctx.fill();
+      });
+      roundRectPath(ctx, fx + 70, fy + extraTop / 2 - 8, frameW - 100, 16, 8);
+      ctx.fillStyle = 'rgba(42,36,51,0.12)';
+      ctx.fill();
+
+      var bx = fx, by = fy + extraTop;
+      ctx.save();
+      roundRectPath(ctx, fx, fy, frameW, frameH, spec.radius);
+      ctx.clip();
+      drawImageCover(ctx, currentImg, bx, by, spec.screenW, spec.screenH);
+      ctx.restore();
+    }
+  }
+
+  document.getElementById('downloadBtn').addEventListener('click', function() {
+    if (!currentImg) { showToast('먼저 이미지를 업로드해주세요'); return; }
+    previewCanvas.toBlob(function(blob) {
+      var a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'device-mockup.png';
+      a.click();
+      URL.revokeObjectURL(a.href);
+      showToast('✓ 이미지가 저장됩니다');
+    }, 'image/png');
+  });
+
+  document.getElementById('resetBtn').addEventListener('click', function() {
+    currentImg = null;
+    fileInput.value = '';
+    ctx.clearRect(0, 0, previewCanvas.width, previewCanvas.height);
+    previewCanvas.width = 0;
+    previewCanvas.height = 0;
+    resultWrap.classList.remove('show');
+    uploadZone.style.display = '';
+  });
+
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(function() { t.classList.remove('show'); }, 2000);
+  }
+  </script>
+</body>
+</html>
