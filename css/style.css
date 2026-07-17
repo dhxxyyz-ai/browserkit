@@ -676,11 +676,11 @@ a:hover { color: var(--text); }
   padding: 28px 0;
   text-align: center;
   background: rgba(255,255,255,0.45);
-  margin-top: 28px;
+  margin-top: auto;
 }
 
 .post-wrap + .footer {
-  margin-top: 48px;
+  padding-top: 48px;
 }
 
 .footer-copy {
