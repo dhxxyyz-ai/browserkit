@@ -87,6 +87,7 @@ TOOLS = {
     'salary-calc':            ('연봉 실수령액 계산기', 'SalaryCalc', '계산기'),
     'currency-calc':          ('환율 계산기', 'CurrencyCalc', '계산기'),
     'loan-calc':              ('대출 이자 계산기', 'LoanCalc', '계산기'),
+    'savings-calc':           ('적금·예금 만기 계산기', 'SavingsCalc', '계산기'),
 }
 
 

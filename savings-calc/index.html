@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <link rel="icon" href="/favicon.ico" sizes="32x32">
+  <link rel="icon" href="/favicon-16.png" sizes="16x16" type="image/png">
+  <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="/favicon-192.png" sizes="192x192" type="image/png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="월 납입액이나 예치금액, 연이율, 기간을 입력하면 정기적금(월적립)과 예치식(거치식) 만기 수령액을 단리·복리로 계산하는 무료 온라인 적금 예금 계산기. 이자소득세(15.4%) 적용 여부도 선택할 수 있습니다. 서버 전송 없이 브라우저에서 바로 처리합니다." />
+  <meta property="og:title" content="SavingsCalc — 적금·예금 만기 계산기" />
+  <meta property="og:description" content="월 납입액·예치금액과 이율을 입력하면 단리·복리 기준 만기 수령액을 계산하는 무료 온라인 도구입니다." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://browserkit.online/savings-calc/" />
+  <title>SavingsCalc — 적금·예금 만기 계산기</title>
+  <link rel="stylesheet" href="/css/style.css?v=20260717a" />
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506"
+     crossorigin="anonymous"></script>
+  <style>
+    .input-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:24px; margin-bottom:20px; }
+    .input-row { display:flex; gap:12px; flex-wrap:wrap; align-items:flex-end; margin-bottom:16px; }
+    .input-row:last-child { margin-bottom:0; }
+    .input-group { flex:1; min-width:160px; display:flex; flex-direction:column; gap:8px; }
+    .input-label { font-size:12px; font-weight:600; color:var(--subtext); }
+    .amount-input { background:var(--bg); border:1px solid var(--border); border-radius:10px; padding:13px 16px; font-size:18px; font-weight:700; color:var(--text); font-family:'Fira Code',monospace; outline:none; width:100%; box-sizing:border-box; }
+    .amount-input:focus { border-color:var(--point); }
+    .num-input { background:var(--bg); border:1px solid var(--border); border-radius:10px; padding:13px 16px; font-size:15px; font-weight:600; color:var(--text); font-family:'Gowun Dodum',sans-serif; outline:none; width:100%; box-sizing:border-box; }
+    .num-input:focus { border-color:var(--point); }
+
+    .seg-btns { display:flex; gap:6px; flex-wrap:wrap; }
+    .seg-btn { background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:8px 16px; font-size:13px; color:var(--subtext); cursor:pointer; font-family:'Gowun Dodum',sans-serif; }
+    .seg-btn:hover { border-color:var(--point); color:var(--text); }
+    .seg-btn.active { background:rgba(123,108,255,0.15); border-color:var(--point); color:var(--point-hover); font-weight:700; }
+
+    .check-row { display:flex; align-items:center; gap:8px; font-size:14px; color:var(--subtext); cursor:pointer; user-select:none; }
+    .check-row input { width:16px; height:16px; accent-color:var(--point); cursor:pointer; }
+
+    .btn-calc { background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border:none; border-radius:12px; padding:14px 32px; font-size:16px; font-weight:700; cursor:pointer; font-family:'Gowun Dodum',sans-serif; width:100%; margin-bottom:20px; }
+    .btn-calc:hover { transform:translateY(-2px); box-shadow:0 8px 24px var(--glow); }
+
+    .result-hero { background:var(--card); border:1px solid var(--point); border-radius:var(--radius); padding:28px; text-align:center; margin-bottom:20px; display:none; }
+    .result-hero.show { display:block; }
+    .result-hero-label { font-size:13px; color:var(--subtext); margin-bottom:8px; }
+    .result-hero-value { font-size:34px; font-weight:800; color:var(--point-hover); font-family:'Fira Code',monospace; }
+    .result-hero-sub { font-size:13px; color:var(--subtext); margin-top:8px; }
+
+    .breakdown-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px 24px; margin-bottom:48px; display:none; }
+    .breakdown-card.show { display:block; }
+    .breakdown-title { font-size:13px; font-weight:600; color:var(--subtext); margin-bottom:14px; }
+    .breakdown-row { display:flex; justify-content:space-between; align-items:center; padding:9px 0; border-bottom:1px solid var(--border); font-size:14px; }
+    .breakdown-row:last-child { border-bottom:none; }
+    .breakdown-row.total { font-weight:700; color:var(--text); padding-top:12px; }
+    .breakdown-label { color:var(--subtext); }
+    .breakdown-value { font-family:'Fira Code',monospace; color:var(--text); font-weight:600; }
+    .breakdown-value.deduct { color:#F87171; }
+
+    .footer { border-top:1px solid var(--border); padding:32px 0; text-align:center; }
+    .footer-copy { color:var(--subtext); font-size:13px; margin-bottom:12px; }
+    .footer-nav { display:flex; justify-content:center; gap:20px; flex-wrap:wrap; }
+    .footer-nav a { color:var(--subtext); font-size:13px; text-decoration:none; }
+    .footer-nav a:hover { color:var(--text); }
+
+    @media (max-width:640px) {
+      .hero-title { font-size:24px; }
+      .input-row { flex-direction:column; align-items:stretch; }
+      .result-hero-value { font-size:26px; }
+    }
+  </style>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+  <meta property="og:image" content="https://browserkit.online/img/og/savings-calc.png" />
+  <link rel="canonical" href="https://browserkit.online/savings-calc/" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://browserkit.online/img/og/savings-calc.png" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "SavingsCalc — 적금·예금 만기 계산기",
+  "url": "https://browserkit.online/savings-calc/",
+  "description": "월 납입액이나 예치금액, 연이율, 기간을 입력하면 정기적금(월적립)과 예치식(거치식) 만기 수령액을 단리·복리로 계산하는 무료 온라인 적금 예금 계산기. 이자소득세(15.4%) 적용 여부도 선택할 수 있습니다. 서버 전송 없이 브라우저에서 바로 처리합니다.",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "Any",
+  "browserRequirements": "Requires JavaScript",
+  "inLanguage": "ko",
+  "isAccessibleForFree": true,
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "KRW"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "BrowserKit",
+    "url": "https://browserkit.online/"
+  }
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "홈",
+      "item": "https://browserkit.online/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "계산기"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "적금·예금 만기 계산기",
+      "item": "https://browserkit.online/savings-calc/"
+    }
+  ]
+}
+  </script>
+</head>
+
+<body>
+  <header class="header">
+    <div class="container">
+      <a href="/" class="header-brand">
+        <div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Gowun Dodum,sans-serif;flex-shrink:0">B</div>
+        <span class="header-brand-text"><span style="color:var(--text)">Browser</span><span style="color:var(--point)">Kit</span></span>
+      </a>
+      <a href="/" class="header-back">&#x2190; BrowserKit 홈으로</a>
+    </div>
+  </header>
+
+  <main><div class="container">
+    <div class="hero">
+      <div class="hero-icon" style="height:78px;display:flex;justify-content:center;align-items:center"><div style="transform:scale(1.7);transform-origin:center"><div style="width:46px;height:46px;background:#a0e8e0;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="position:relative;width:30px;height:26px"><div style="position:absolute;left:4px;bottom:0;width:22px;height:14px;border-radius:50%;background:#fffdf9;border:2.5px solid #2a2433;box-sizing:border-box"></div><div style="position:absolute;left:8px;bottom:6px;width:22px;height:14px;border-radius:50%;background:#fffdf9;border:2.5px solid #2a2433;box-sizing:border-box;display:flex;align-items:center;justify-content:center;font:700 9px Gowun Dodum,sans-serif;color:#2a2433">₩</div><div style="position:absolute;right:-2px;top:-2px;width:12px;height:12px;border-radius:50%;background:#ffd36e;border:2px solid #2a2433;box-sizing:border-box"></div></div></div></div></div>
+      <div class="hero-title-wrap"><h1 class="hero-title">적금·예금 만기 계산기</h1><a href="/blog/80-savingscalc-howto" class="hero-guide-link">사용법 가이드 보기</a></div>
+      <p class="hero-desc">월 납입액이나 예치금액을 입력하면 만기 수령액을 계산해드려요</p>
+      <div class="hero-badges">
+        <span class="badge">🔒 완전 로컬 처리</span>
+        <span class="badge">⚡ 무료 사용</span>
+        <span class="badge">🛡️ 서버 전송 없음</span>
+        <span class="badge">📦 설치 불필요</span>
+      </div>
+    </div>
+    <div style="margin:0 0 12px"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+
+    <p class="notice">💡 정기적금은 매월 초 동일한 금액을 납입한다고 가정해 계산합니다. 우대금리, 중도해지, 세금우대·비과세 종합저축 등은 반영하지 않으므로 실제 상품과 차이가 있을 수 있습니다. 모든 계산은 브라우저에서만 처리됩니다.</p>
+
+    <div class="input-card">
+      <div class="input-row">
+        <div class="input-group">
+          <span class="input-label">상품 유형</span>
+          <div class="seg-btns" id="typeBtns">
+            <button class="seg-btn active" data-type="installment">정기적금 (매월 납입)</button>
+            <button class="seg-btn" data-type="deposit">예치식 (목돈 예치)</button>
+          </div>
+        </div>
+      </div>
+      <div class="input-row">
+        <div class="input-group" style="flex:2">
+          <span class="input-label" id="amountLabel">월 납입액 (원)</span>
+          <input type="number" class="amount-input" id="amountInput" placeholder="예: 500000" min="0" step="1" />
+        </div>
+        <div class="input-group">
+          <span class="input-label">연이율 (%)</span>
+          <input type="number" class="num-input" id="rateInput" value="3.5" min="0" step="0.01" />
+        </div>
+        <div class="input-group">
+          <span class="input-label">기간 (개월)</span>
+          <input type="number" class="num-input" id="termInput" value="12" min="1" step="1" />
+        </div>
+      </div>
+      <div class="input-row">
+        <div class="input-group">
+          <span class="input-label">이자 계산 방식</span>
+          <div class="seg-btns" id="methodBtns">
+            <button class="seg-btn active" data-method="simple">단리</button>
+            <button class="seg-btn" data-method="compound">복리 (월복리)</button>
+          </div>
+        </div>
+        <div class="input-group">
+          <span class="input-label">&nbsp;</span>
+          <label class="check-row"><input type="checkbox" id="taxCheck" checked /> 이자소득세 적용 (15.4%)</label>
+        </div>
+      </div>
+    </div>
+
+    <button class="btn-calc" id="calcBtn">💰 만기 수령액 계산</button>
+
+    <div class="result-hero" id="resultHero">
+      <div class="result-hero-label">만기 수령액</div>
+      <div class="result-hero-value" id="resultValue">-</div>
+      <div class="result-hero-sub" id="resultSub"></div>
+    </div>
+
+    <div class="breakdown-card" id="breakdownCard">
+      <div class="breakdown-title">📋 계산 내역</div>
+      <div class="breakdown-row"><span class="breakdown-label" id="rowPrincipalLabel">납입 원금</span><span class="breakdown-value" id="rowPrincipal">-</span></div>
+      <div class="breakdown-row"><span class="breakdown-label">세전 이자</span><span class="breakdown-value" id="rowInterest">-</span></div>
+      <div class="breakdown-row" id="rowTaxWrap"><span class="breakdown-label">이자소득세 (15.4%)</span><span class="breakdown-value deduct" id="rowTax">-</span></div>
+      <div class="breakdown-row total"><span class="breakdown-label">만기 수령액</span><span class="breakdown-value" id="rowTotal">-</span></div>
+    </div>
+
+    <div style="margin:0 0 12px"><ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="9500090221"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+  </div></main>
+
+  <footer class="footer">
+    <div class="container">
+      <p class="footer-copy">&#xa9; 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p>
+      <nav class="footer-nav">
+        <a href="/privacy">개인정보 처리방침</a>
+        <a href="/terms">이용약관</a>
+        <a href="/about">서비스 소개</a>
+        <a href="/blog/">블로그</a>
+      </nav>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+  function won(n) {
+    return Math.round(n).toLocaleString('ko-KR') + '원';
+  }
+
+  var currentType = 'installment';
+  document.querySelectorAll('#typeBtns .seg-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('#typeBtns .seg-btn').forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      currentType = btn.dataset.type;
+      var amountLabel = document.getElementById('amountLabel');
+      var rowPrincipalLabel = document.getElementById('rowPrincipalLabel');
+      if (currentType === 'installment') {
+        amountLabel.textContent = '월 납입액 (원)';
+        rowPrincipalLabel.textContent = '납입 원금';
+      } else {
+        amountLabel.textContent = '예치금액 (원)';
+        rowPrincipalLabel.textContent = '예치 원금';
+      }
+    });
+  });
+
+  var currentMethod = 'simple';
+  document.querySelectorAll('#methodBtns .seg-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('#methodBtns .seg-btn').forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      currentMethod = btn.dataset.method;
+    });
+  });
+
+  // 정기적금 단리: 매월 초 납입 가정, 만기이자 = 월납입액 × n(n+1)/2 × (연이율/12)
+  function installmentSimpleInterest(monthly, annualRate, months) {
+    var monthlyRate = annualRate / 100 / 12;
+    return monthly * months * (months + 1) / 2 * monthlyRate;
+  }
+
+  // 정기적금 월복리(연금 선급, 매월 초 납입): FV = P × [((1+r)^n - 1)/r] × (1+r)
+  function installmentCompoundFV(monthly, annualRate, months) {
+    var r = annualRate / 100 / 12;
+    if (r === 0) return monthly * months;
+    return monthly * ((Math.pow(1 + r, months) - 1) / r) * (1 + r);
+  }
+
+  // 예치식 단리: 이자 = 원금 × 연이율 × (개월/12)
+  function depositSimpleInterest(principal, annualRate, months) {
+    return principal * (annualRate / 100) * (months / 12);
+  }
+
+  // 예치식 월복리: FV = 원금 × (1 + 연이율/12)^개월
+  function depositCompoundFV(principal, annualRate, months) {
+    var r = annualRate / 100 / 12;
+    return principal * Math.pow(1 + r, months);
+  }
+
+  document.getElementById('calcBtn').addEventListener('click', function() {
+    var amount = parseFloat(document.getElementById('amountInput').value);
+    if (!amount || amount <= 0) {
+      showToast(currentType === 'installment' ? '월 납입액을 입력해주세요' : '예치금액을 입력해주세요');
+      return;
+    }
+    var rate = parseFloat(document.getElementById('rateInput').value);
+    if (isNaN(rate) || rate < 0) {
+      showToast('연이율을 확인해주세요');
+      return;
+    }
+    var months = parseFloat(document.getElementById('termInput').value);
+    if (!months || months <= 0) {
+      showToast('기간을 확인해주세요');
+      return;
+    }
+    var applyTax = document.getElementById('taxCheck').checked;
+
+    var principal, interest;
+    if (currentType === 'installment') {
+      principal = amount * months;
+      if (currentMethod === 'simple') {
+        interest = installmentSimpleInterest(amount, rate, months);
+      } else {
+        interest = installmentCompoundFV(amount, rate, months) - principal;
+      }
+    } else {
+      principal = amount;
+      if (currentMethod === 'simple') {
+        interest = depositSimpleInterest(amount, rate, months);
+      } else {
+        interest = depositCompoundFV(amount, rate, months) - principal;
+      }
+    }
+
+    var tax = applyTax ? interest * 0.154 : 0;
+    var netInterest = interest - tax;
+    var total = principal + netInterest;
+
+    document.getElementById('resultValue').textContent = won(total);
+    document.getElementById('resultSub').textContent = (currentType === 'installment' ? '매월 ' + won(amount) + '씩 ' : won(amount) + '을 ') + months + '개월 ' + (currentMethod === 'simple' ? '단리' : '월복리') + ' 기준 계산 결과입니다';
+    document.getElementById('resultHero').classList.add('show');
+
+    document.getElementById('rowPrincipal').textContent = won(principal);
+    document.getElementById('rowInterest').textContent = won(interest);
+    document.getElementById('rowTaxWrap').style.display = applyTax ? 'flex' : 'none';
+    document.getElementById('rowTax').textContent = '-' + won(tax);
+    document.getElementById('rowTotal').textContent = won(total);
+    document.getElementById('breakdownCard').classList.add('show');
+
+    document.getElementById('resultHero').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    showToast('✓ 만기 수령액을 계산했습니다');
+  });
+
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(function() { t.classList.remove('show'); }, 2000);
+  }
+  </script>
+</body>
+</html>
