@@ -62,6 +62,38 @@
     .post-nav a { word-break:keep-all; }
     .post-nav .nav-label { display:block; font-size:13px; color:var(--subtext); opacity:0.7; margin-bottom:4px; }
   </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "모자이크와 블러 중 어느 쪽이 더 안전한가요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "흐림(블러)이 약하면 복원 시도에 취약할 수 있습니다. 민감한 정보는 완전히 덮어버리는 방식(솔리드 마스킹)이 가장 안전합니다."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "마스킹한 이미지가 복원될 수도 있나요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "약한 블러나 낮은 강도의 모자이크는 복원 기술로 일부 유추될 위험이 있습니다. 완전히 가리는 방식을 사용하고 원본과 별도 파일로 저장하세요."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "이미지 마스킹은 어떤 도구로 하는 게 좋나요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "파일을 서버에 올리지 않고 브라우저에서 처리하는 도구가 안전합니다. BrowserKit의 MaskPrivacy는 개인정보를 자동 탐지해 브라우저 안에서 마스킹합니다."
+      }
+    }
+  ]
+}
+  </script>
 </head>
 <body>
   <header class="header">
@@ -135,6 +167,20 @@
       </div>
 
       <p>구체적인 사용 방법(업로드 → 자동 탐지 → 마스킹 → 다운로드)은 <a href="/blog/07-maskprivacy-howto" style="color:var(--point-hover)">MaskPrivacy 사용법 완전 가이드</a>에서 확인할 수 있습니다.</p>
+    
+      <h2>자주 묻는 질문</h2>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
+        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. 모자이크와 블러 중 어느 쪽이 더 안전한가요?</p>
+        <p style="color:var(--subtext);margin:0;line-height:1.7">흐림(블러)이 약하면 복원 시도에 취약할 수 있습니다. 민감한 정보는 완전히 덮어버리는 방식(솔리드 마스킹)이 가장 안전합니다.</p>
+      </div>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
+        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. 마스킹한 이미지가 복원될 수도 있나요?</p>
+        <p style="color:var(--subtext);margin:0;line-height:1.7">약한 블러나 낮은 강도의 모자이크는 복원 기술로 일부 유추될 위험이 있습니다. 완전히 가리는 방식을 사용하고 원본과 별도 파일로 저장하세요.</p>
+      </div>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
+        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. 이미지 마스킹은 어떤 도구로 하는 게 좋나요?</p>
+        <p style="color:var(--subtext);margin:0;line-height:1.7">파일을 서버에 올리지 않고 브라우저에서 처리하는 도구가 안전합니다. BrowserKit의 MaskPrivacy는 개인정보를 자동 탐지해 브라우저 안에서 마스킹합니다.</p>
+      </div>
     </div>
     <div class="cta-box">
       <p>신분증·계약서·택배 운송장 — 공유 전에 마스킹하세요.<br />브라우저에서 바로, 서버 전송 없이 안전하게 처리됩니다.</p>

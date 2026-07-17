@@ -98,6 +98,46 @@
     .post-nav a { word-break:keep-all; }
     .post-nav .nav-label { display:block; font-size:13px; color:var(--subtext); opacity:0.7; margin-bottom:4px; }
   </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "마크다운 편집기 도구는 정말 무료인가요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "네, 회원가입이나 설치 없이 완전 무료로 사용할 수 있습니다. 횟수 제한도 없습니다."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "입력한 내용이 서버로 전송되나요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용이 외부 서버로 전송되거나 저장되지 않습니다."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "작성한 내용이 자동으로 저장되나요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "작성 내용은 브라우저 안에서만 처리되므로, 작업이 끝나면 결과물을 복사하거나 별도로 저장해 두세요."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "모바일에서도 사용할 수 있나요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "네, 별도의 앱 설치 없이 모바일 브라우저에서도 동일하게 사용할 수 있습니다."
+      }
+    }
+  ]
+}
+  </script>
 </head>
 <body>
   <header class="header">
@@ -364,6 +404,24 @@ function hello() {
       <p>마크다운은 2004년 John Gruber가 만든 경량 마크업 언어입니다. <code>#</code>, <code>**</code>, <code>-</code> 같은 간단한 기호로 제목, 굵기, 목록을 표현하며, HTML보다 훨씬 읽기 쉽고 작성하기 편합니다. GitHub, Notion, Obsidian, Discord, Slack 등 대부분의 현대 서비스에서 마크다운을 지원합니다.</p>
 
       <div class="post-highlight">&#x1F4DD; MarkdownEditor는 marked.js로 마크다운을 HTML로 변환하고, DOMPurify로 악성 스크립트를 제거합니다. 모든 처리가 브라우저 내에서만 이루어지므로 입력한 내용이 외부 서버로 전송되지 않습니다.</div>
+    
+      <h2>자주 묻는 질문</h2>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
+        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. 마크다운 편집기 도구는 정말 무료인가요?</p>
+        <p style="color:var(--subtext);margin:0;line-height:1.7">네, 회원가입이나 설치 없이 완전 무료로 사용할 수 있습니다. 횟수 제한도 없습니다.</p>
+      </div>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
+        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. 입력한 내용이 서버로 전송되나요?</p>
+        <p style="color:var(--subtext);margin:0;line-height:1.7">아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용이 외부 서버로 전송되거나 저장되지 않습니다.</p>
+      </div>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
+        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. 작성한 내용이 자동으로 저장되나요?</p>
+        <p style="color:var(--subtext);margin:0;line-height:1.7">작성 내용은 브라우저 안에서만 처리되므로, 작업이 끝나면 결과물을 복사하거나 별도로 저장해 두세요.</p>
+      </div>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
+        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. 모바일에서도 사용할 수 있나요?</p>
+        <p style="color:var(--subtext);margin:0;line-height:1.7">네, 별도의 앱 설치 없이 모바일 브라우저에서도 동일하게 사용할 수 있습니다.</p>
+      </div>
     </div>
 
     <div class="cta-box">

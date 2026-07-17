@@ -58,6 +58,38 @@
     .post-nav a { word-break:keep-all; }
     .post-nav .nav-label { display:block; font-size:13px; color:var(--subtext); opacity:0.7; margin-bottom:4px; }
   </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "신분증 사본을 제출할 때 어디를 가려야 하나요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "제출 목적에 필요하지 않은 정보, 특히 주민등록번호 뒷자리는 반드시 가리는 것이 좋습니다. 요구 기관이 명시한 필수 정보만 남기세요."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "신분증을 촬영한 사진에도 위험 요소가 있나요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "사진 파일에는 촬영 위치(GPS)와 기기 정보 같은 EXIF 메타데이터가 남을 수 있습니다. 공유 전 메타데이터를 제거하는 것이 안전합니다."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "온라인 마스킹 도구를 써도 안전한가요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "파일이 서버로 업로드되지 않고 브라우저 안에서만 처리되는 도구라면 안전합니다. 사용 전 해당 도구의 처리 방식을 확인하세요."
+      }
+    }
+  ]
+}
+  </script>
 </head>
 <body>
   <header class="header">
@@ -113,6 +145,20 @@
       <div class="post-highlight">💡 MaskPrivacy는 모든 처리가 브라우저 내에서만 이루어집니다. 신분증 사진이 외부 서버로 전송되지 않으므로 마스킹 과정 자체도 안전합니다.</div>
       <h2>법적으로도 마스킹이 권장됩니다</h2>
       <p>개인정보보호법은 개인정보를 수집할 때 목적에 필요한 최소한의 정보만 수집하도록 규정하고 있습니다. 본인확인에 주민번호 전체가 필요하지 않다면 뒷자리를 마스킹한 상태로 제공하는 것이 법적으로도 올바른 방식입니다.</p>
+    
+      <h2>자주 묻는 질문</h2>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
+        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. 신분증 사본을 제출할 때 어디를 가려야 하나요?</p>
+        <p style="color:var(--subtext);margin:0;line-height:1.7">제출 목적에 필요하지 않은 정보, 특히 주민등록번호 뒷자리는 반드시 가리는 것이 좋습니다. 요구 기관이 명시한 필수 정보만 남기세요.</p>
+      </div>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
+        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. 신분증을 촬영한 사진에도 위험 요소가 있나요?</p>
+        <p style="color:var(--subtext);margin:0;line-height:1.7">사진 파일에는 촬영 위치(GPS)와 기기 정보 같은 EXIF 메타데이터가 남을 수 있습니다. 공유 전 메타데이터를 제거하는 것이 안전합니다.</p>
+      </div>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
+        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. 온라인 마스킹 도구를 써도 안전한가요?</p>
+        <p style="color:var(--subtext);margin:0;line-height:1.7">파일이 서버로 업로드되지 않고 브라우저 안에서만 처리되는 도구라면 안전합니다. 사용 전 해당 도구의 처리 방식을 확인하세요.</p>
+      </div>
     </div>
     <div class="cta-box">
       <p>신분증 사진, 전송 전에 마스킹하셨나요?<br />MaskPrivacy로 30초 안에 안전하게 처리할 수 있습니다.</p>

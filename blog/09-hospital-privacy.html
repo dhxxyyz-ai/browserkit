@@ -58,6 +58,38 @@
     .post-nav a { word-break:keep-all; }
     .post-nav .nav-label { display:block; font-size:13px; color:var(--subtext); opacity:0.7; margin-bottom:4px; }
   </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "내 진료기록을 직접 열람할 수 있나요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "네, 의료법에 따라 환자 본인은 진료기록의 열람과 사본 발급을 요청할 수 있습니다."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "의료정보는 왜 민감정보로 분류되나요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "건강 상태·병력 등은 유출 시 차별이나 불이익으로 이어질 수 있어 개인정보보호법이 별도의 민감정보로 규정하고 더 엄격하게 보호합니다."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "병원 서류를 다른 곳에 제출할 때 주의할 점은?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "제출 목적에 필요 없는 정보(주민등록번호 뒷자리, 다른 진료 내역 등)는 가리고 제출하는 것이 안전합니다."
+      }
+    }
+  ]
+}
+  </script>
 </head>
 <body>
   <header class="header">
@@ -114,6 +146,20 @@
       <h3>4. 원본 파기</h3>
       <p>더 이상 필요 없는 병원 서류는 파쇄기로 파기합니다. 스마트폰에 저장된 사진도 완전히 삭제합니다.</p>
       <div class="post-highlight">💡 병원 서류 속 주민번호는 MaskPrivacy의 자동 탐지 기능으로 간편하게 마스킹할 수 있습니다. 탐지되지 않는 영역은 수동 드래그로 직접 가릴 수 있습니다.</div>
+    
+      <h2>자주 묻는 질문</h2>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
+        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. 내 진료기록을 직접 열람할 수 있나요?</p>
+        <p style="color:var(--subtext);margin:0;line-height:1.7">네, 의료법에 따라 환자 본인은 진료기록의 열람과 사본 발급을 요청할 수 있습니다.</p>
+      </div>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
+        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. 의료정보는 왜 민감정보로 분류되나요?</p>
+        <p style="color:var(--subtext);margin:0;line-height:1.7">건강 상태·병력 등은 유출 시 차별이나 불이익으로 이어질 수 있어 개인정보보호법이 별도의 민감정보로 규정하고 더 엄격하게 보호합니다.</p>
+      </div>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
+        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. 병원 서류를 다른 곳에 제출할 때 주의할 점은?</p>
+        <p style="color:var(--subtext);margin:0;line-height:1.7">제출 목적에 필요 없는 정보(주민등록번호 뒷자리, 다른 진료 내역 등)는 가리고 제출하는 것이 안전합니다.</p>
+      </div>
     </div>
     <div class="cta-box">
       <p>병원 서류 제출 전, 개인정보를 먼저 마스킹하세요.<br />서버 전송 없이 브라우저에서 안전하게 처리됩니다.</p>
