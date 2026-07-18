@@ -19,6 +19,7 @@ CAT_COLORS = {
     '개발자':        (0xe0, 0xc3, 0xff),
     '데이터·시각화': (0xff, 0xd9, 0xa8),
     '계산기':        (0xa0, 0xe8, 0xe0),
+    '생활·재미':     (0xff, 0xc2, 0xd6),
 }
 
 # slug -> (한글명, 영문명, 카테고리)
@@ -90,6 +91,7 @@ TOOLS = {
     'savings-calc':           ('적금·예금 만기 계산기', 'SavingsCalc', '계산기'),
     'gif-maker':              ('GIF 애니메이션 생성기', 'GifMaker', '이미지 편집'),
     'vat-calc':               ('부가세 계산기', 'VatCalc', '계산기'),
+    'lotto-gen':              ('로또 번호 생성기', 'LottoGen', '생활·재미'),
 }
 
 
