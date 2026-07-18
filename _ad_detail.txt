@@ -1,9 +1,0 @@
-=== 광고 위치 1 ===
-  margin='12px 0' slot=6825825428 -> 80개 글
-=== 광고 위치 2 ===
-  margin='12px 0 0' slot=6825825428 -> 69개 글
-  margin='12px 0' slot=6825825428 -> 8개 글
-  margin='0' slot=6825825428 -> 3개 글
-    예: ['blog\\02-rrn-leak-danger.html', 'blog\\10-contract-masking.html', 'blog\\15-privacy-report-guide.html']
-=== 광고 위치 3 ===
-  margin='12px 0' slot=9500090221 -> 80개 글
