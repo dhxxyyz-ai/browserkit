@@ -70,6 +70,7 @@ TOOLS = {
     'currency-calc':           ('환율 계산기', '계산기'),
     'loan-calc':               ('대출 이자 계산기', '계산기'),
     'savings-calc':            ('적금·예금 만기 계산기', '계산기'),
+    'gif-maker':               ('GIF 애니메이션 생성기', '이미지 편집'),
 }
 
 changed = 0

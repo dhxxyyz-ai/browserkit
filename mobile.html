@@ -69,7 +69,7 @@ const TOOL_URLS = {
   SQLFormatter:'/sql-formatter/', LoremGen:'/lorem-gen/', ImageCompare:'/image-compare/', ImageFrame:'/image-frame/',
   CSVJSONConvert:'/csv-json-convert/', YAMLJSONConvert:'/yaml-json-convert/', QRScanner:'/qr-scanner/',
   SalaryCalc:'/salary-calc/', LadderGame:'/ladder-game/', TextStats:'/text-stats/', ColorConverter:'/color-converter/',
-  MarkdownTableConvert:'/markdown-table-convert/', LoanCalc:'/loan-calc/', SavingsCalc:'/savings-calc/', CodeSnapshot:'/code-snapshot/', MockupFrame:'/mockup-frame/',
+  MarkdownTableConvert:'/markdown-table-convert/', LoanCalc:'/loan-calc/', SavingsCalc:'/savings-calc/', CodeSnapshot:'/code-snapshot/', MockupFrame:'/mockup-frame/', GifMaker:'/gif-maker/',
   PDFPasswordRemove:'/pdf-password-remove/', PDFPasswordSet:'/pdf-password-set/'
 };
 
@@ -151,7 +151,8 @@ const BLOG_URLS = {
   '디바이스 목업 생성기 사용법 완전 가이드':'/blog/77-mockupframe-howto.html',
   'PDF 비밀번호 해제 사용법 완전 가이드':'/blog/78-pdfpasswordremove-howto.html',
   'PDF 비밀번호 설정 사용법 완전 가이드':'/blog/79-pdfpasswordset-howto.html',
-  '적금·예금 만기 계산기 사용법 완전 가이드':'/blog/80-savingscalc-howto.html'
+  '적금·예금 만기 계산기 사용법 완전 가이드':'/blog/80-savingscalc-howto.html',
+  'GIF 애니메이션 생성기 사용법 완전 가이드':'/blog/81-gifmaker-howto.html'
 };
 
 const INFO_URLS = {
@@ -168,7 +169,7 @@ const PAL = {
 
 const TOOLBOX_CATS = [
   { label:'개인정보',      keys:['MaskPrivacy','MaskPDF','MaskFace','MaskDoc','ExifRemover'] },
-  { label:'이미지 편집',   keys:['FitImage','CropImage','WatermarkImage','ColorPicker','ImageBright','BGRemove','ImageText','ImageFilter','ImageCollage','PixelArt','MosaicMaker','FaviconGen','SVGtoPNG','ImageCompare','ImageFrame','MockupFrame'] },
+  { label:'이미지 편집',   keys:['FitImage','CropImage','WatermarkImage','ColorPicker','ImageBright','BGRemove','ImageText','ImageFilter','ImageCollage','PixelArt','MosaicMaker','FaviconGen','SVGtoPNG','ImageCompare','ImageFrame','MockupFrame','GifMaker'] },
   { label:'문서·텍스트',   keys:['PDFMerge','PDFSplit','TextTools','DiffChecker','MarkdownEditor','FindReplace','LineNumber','LoremGen','CSVJSONConvert','YAMLJSONConvert','TextStats','MarkdownTableConvert','PDFPasswordRemove','PDFPasswordSet'] },
   { label:'유틸리티',      keys:['QRCode','PasswordGen','UnitConvert','DateCalc','WorldClock','RandomPicker','PomodoroTimer','QRScanner','LadderGame'] },
   { label:'개발자',        keys:['JSONFormat','RegexTest','Base64Tool','HashGen','Minifier','URLEncode','CSSUnit','UUIDGen','JWTDecoder','CronHelper','SQLFormatter','ColorConverter','CodeSnapshot'] },
@@ -202,7 +203,7 @@ const SEARCH_TOOLS = [
   {code:'UUIDGen',name:'UUID 생성기'},{code:'JWTDecoder',name:'JWT 디코더'},
   {code:'CronHelper',name:'Cron 표현식 도우미'},{code:'SQLFormatter',name:'SQL 포맷터'},
   {code:'LoremGen',name:'더미 텍스트 생성기'},{code:'ImageCompare',name:'이미지 비교 슬라이더'},
-  {code:'ImageFrame',name:'이미지 테두리 추가'},{code:'CSVJSONConvert',name:'CSV ↔ JSON 변환기'},{code:'YAMLJSONConvert',name:'YAML ↔ JSON 변환기'},{code:'QRScanner',name:'QR 코드 스캐너'},{code:'SalaryCalc',name:'연봉 실수령액 계산기'},{code:'LadderGame',name:'사다리타기'},{code:'TextStats',name:'텍스트 통계 분석기'},{code:'ColorConverter',name:'색상 코드 변환기'},{code:'MarkdownTableConvert',name:'표 변환기'},{code:'LoanCalc',name:'대출 이자 계산기'},{code:'SavingsCalc',name:'적금·예금 만기 계산기'},{code:'CodeSnapshot',name:'코드 스니펫 이미지 생성기'},{code:'MockupFrame',name:'디바이스 목업 생성기'},{code:'PDFPasswordRemove',name:'PDF 비밀번호 해제'},{code:'PDFPasswordSet',name:'PDF 비밀번호 설정'}
+  {code:'ImageFrame',name:'이미지 테두리 추가'},{code:'CSVJSONConvert',name:'CSV ↔ JSON 변환기'},{code:'YAMLJSONConvert',name:'YAML ↔ JSON 변환기'},{code:'QRScanner',name:'QR 코드 스캐너'},{code:'SalaryCalc',name:'연봉 실수령액 계산기'},{code:'LadderGame',name:'사다리타기'},{code:'TextStats',name:'텍스트 통계 분석기'},{code:'ColorConverter',name:'색상 코드 변환기'},{code:'MarkdownTableConvert',name:'표 변환기'},{code:'LoanCalc',name:'대출 이자 계산기'},{code:'SavingsCalc',name:'적금·예금 만기 계산기'},{code:'CodeSnapshot',name:'코드 스니펫 이미지 생성기'},{code:'MockupFrame',name:'디바이스 목업 생성기'},{code:'GifMaker',name:'GIF 애니메이션 생성기'},{code:'PDFPasswordRemove',name:'PDF 비밀번호 해제'},{code:'PDFPasswordSet',name:'PDF 비밀번호 설정'}
 ];
 
 const TOOL_LABEL   = Object.fromEntries(SEARCH_TOOLS.map(t => [t.code, t.name]));
@@ -221,7 +222,7 @@ function glyphInfo(code) {
     ChartMaker:'chart', ImageText:'token:T', ImageFilter:'halfcircle', ImageCollage:'collage', PixelArt:'pixelart',
     MosaicMaker:'mosaic', PDFSplit:'split', LineNumber:'linenum', CurrencyCalc:'currency', Minifier:'token:<>',
     URLEncode:'token:%20', CSSUnit:'token:rem', DiagramMaker:'diagram', PaletteGen:'palette', ExifRemover:'exif',
-    RandomPicker:'roulette', WordCloudGen:'wordcloud', FaviconGen:'favicon', SVGtoPNG:'token:SVG', PomodoroTimer:'pomodoro', UUIDGen:'token:UUID', JWTDecoder:'token:JWT', CronHelper:'token:CRON', SQLFormatter:'token:SQL', LoremGen:'token:Lo', ImageCompare:'compare', ImageFrame:'frame', CSVJSONConvert:'token:CSV', YAMLJSONConvert:'token:YML', QRScanner:'qrscan', SalaryCalc:'salary', LadderGame:'ladder', TextStats:'textstats', ColorConverter:'colorswap', MarkdownTableConvert:'gridtable', LoanCalc:'loanbar', SavingsCalc:'coinstack', CodeSnapshot:'codetag', MockupFrame:'phoneicon', PDFPasswordRemove:'pdflock', PDFPasswordSet:'pdflockkey'
+    RandomPicker:'roulette', WordCloudGen:'wordcloud', FaviconGen:'favicon', SVGtoPNG:'token:SVG', PomodoroTimer:'pomodoro', UUIDGen:'token:UUID', JWTDecoder:'token:JWT', CronHelper:'token:CRON', SQLFormatter:'token:SQL', LoremGen:'token:Lo', ImageCompare:'compare', ImageFrame:'frame', CSVJSONConvert:'token:CSV', YAMLJSONConvert:'token:YML', QRScanner:'qrscan', SalaryCalc:'salary', LadderGame:'ladder', TextStats:'textstats', ColorConverter:'colorswap', MarkdownTableConvert:'gridtable', LoanCalc:'loanbar', SavingsCalc:'coinstack', CodeSnapshot:'codetag', MockupFrame:'phoneicon', GifMaker:'gifstack', PDFPasswordRemove:'pdflock', PDFPasswordSet:'pdflockkey'
   };
   const v = m[code];
   if (!v) return { glyph:'token', token:'+' };
@@ -276,6 +277,7 @@ function toolIcon(fill, ink, glyph, token) {
   else if (glyph==='phoneicon') inner=`<div style="width:18px;height:26px;background:#fffdf9;border:2.5px solid ${k};border-radius:4px;box-sizing:border-box"></div>`;
   else if (glyph==='pdflock') inner=`<div style="position:relative;width:22px;height:26px"><div style="width:22px;height:16px;background:#fffdf9;border:2.5px solid ${k};border-radius:3px;box-sizing:border-box;position:absolute;bottom:0"></div><div style="width:11px;height:10px;border:2.5px solid ${k};border-bottom:none;border-radius:6px 6px 0 0;box-sizing:border-box;position:absolute;top:-1px;left:10px;transform:rotate(25deg);transform-origin:bottom left"></div></div>`;
   else if (glyph==='coinstack') inner=`<div style="position:relative;width:24px;height:22px"><div style="position:absolute;left:7px;top:0px;width:10px;height:10px;border-radius:50%;background:#ffd36e;border:2px solid ${k};box-sizing:border-box;display:flex;align-items:center;justify-content:center;font:700 6px Gowun Dodum,sans-serif;color:${k}">&#8361;</div><div style="position:absolute;left:3px;top:6px;width:10px;height:10px;border-radius:50%;background:#ffd36e;border:2px solid ${k};box-sizing:border-box;display:flex;align-items:center;justify-content:center;font:700 6px Gowun Dodum,sans-serif;color:${k}">&#8361;</div><div style="position:absolute;left:10px;top:6px;width:10px;height:10px;border-radius:50%;background:#ffd36e;border:2px solid ${k};box-sizing:border-box;display:flex;align-items:center;justify-content:center;font:700 6px Gowun Dodum,sans-serif;color:${k}">&#8361;</div><div style="position:absolute;left:0px;top:12px;width:10px;height:10px;border-radius:50%;background:#ffd36e;border:2px solid ${k};box-sizing:border-box;display:flex;align-items:center;justify-content:center;font:700 6px Gowun Dodum,sans-serif;color:${k}">&#8361;</div><div style="position:absolute;left:7px;top:12px;width:10px;height:10px;border-radius:50%;background:#ffd36e;border:2px solid ${k};box-sizing:border-box;display:flex;align-items:center;justify-content:center;font:700 6px Gowun Dodum,sans-serif;color:${k}">&#8361;</div><div style="position:absolute;left:14px;top:12px;width:10px;height:10px;border-radius:50%;background:#ffd36e;border:2px solid ${k};box-sizing:border-box;display:flex;align-items:center;justify-content:center;font:700 6px Gowun Dodum,sans-serif;color:${k}">&#8361;</div></div>`;
+  else if (glyph==='gifstack') inner=`<div style="position:relative;width:26px;height:22px"><div style="position:absolute;left:0;top:6px;width:14px;height:14px;background:#fffdf9;border:2px solid ${k};border-radius:2px;box-sizing:border-box;opacity:.4"></div><div style="position:absolute;left:6px;top:3px;width:14px;height:14px;background:#fffdf9;border:2px solid ${k};border-radius:2px;box-sizing:border-box;opacity:.7"></div><div style="position:absolute;left:12px;top:0;width:14px;height:14px;background:#fffdf9;border:2px solid ${k};border-radius:2px;box-sizing:border-box"></div></div>`;
   else if (glyph==='pdflockkey') inner=`<div style="position:relative;width:22px;height:26px"><div style="width:22px;height:16px;background:#fffdf9;border:2.5px solid ${k};border-radius:3px;box-sizing:border-box;position:absolute;bottom:0;display:flex;align-items:center;justify-content:center"><div style="width:4px;height:4px;border-radius:50%;background:${k}"></div></div><div style="width:12px;height:11px;border:2.5px solid ${k};border-bottom:none;border-radius:6px 6px 0 0;box-sizing:border-box;position:absolute;top:0;left:5px"></div></div>`;
   else inner=`<div style="font:700 16px Gowun Dodum,sans-serif;color:${k};line-height:1;letter-spacing:-.5px;white-space:nowrap">${token||'+'}</div>`;
   return `<div style="width:46px;height:46px;background:${f};border:2.5px solid ${k};border-radius:14px 11px 13px 10px;box-sizing:border-box;display:flex;align-items:center;justify-content:center;overflow:hidden;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08)">${inner}</div>`;

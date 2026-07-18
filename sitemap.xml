@@ -393,6 +393,12 @@
     <priority>0.90</priority>
   </url>
   <url>
+    <loc>https://browserkit.online/gif-maker/</loc>
+    <lastmod>2026-07-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+  </url>
+  <url>
     <loc>https://browserkit.online/pdf-password-remove/</loc>
     <lastmod>2026-07-16</lastmod>
     <changefreq>weekly</changefreq>
@@ -909,6 +915,12 @@
   <url>
     <loc>https://browserkit.online/blog/80-savingscalc-howto</loc>
     <lastmod>2026-07-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.70</priority>
+  </url>
+  <url>
+    <loc>https://browserkit.online/blog/81-gifmaker-howto</loc>
+    <lastmod>2026-07-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.70</priority>
   </url>
