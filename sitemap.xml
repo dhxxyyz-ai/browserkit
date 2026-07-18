@@ -381,6 +381,12 @@
     <priority>0.90</priority>
   </url>
   <url>
+    <loc>https://browserkit.online/vat-calc/</loc>
+    <lastmod>2026-07-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+  </url>
+  <url>
     <loc>https://browserkit.online/code-snapshot/</loc>
     <lastmod>2026-07-13</lastmod>
     <changefreq>weekly</changefreq>
@@ -920,6 +926,12 @@
   </url>
   <url>
     <loc>https://browserkit.online/blog/81-gifmaker-howto</loc>
+    <lastmod>2026-07-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.70</priority>
+  </url>
+  <url>
+    <loc>https://browserkit.online/blog/82-vatcalc-howto</loc>
     <lastmod>2026-07-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.70</priority>

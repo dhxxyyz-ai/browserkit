@@ -8,11 +8,11 @@
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="GifMaker의 모든 기능을 단계별로 설명하는 공식 사용 가이드입니다. 여러 장의 이미지를 순서대로 합쳐 GIF 애니메이션을 만드는 방법을 알아보세요." />
-  <meta property="og:title" content="GIF 애니메이션 생성기 사용법 완전 가이드 — BrowserKit" />
-  <meta property="og:description" content="여러 이미지를 순서대로 합쳐 GIF 애니메이션을 만드는 GifMaker 공식 가이드입니다." />
+  <meta name="description" content="VatCalc의 모든 기능을 단계별로 설명하는 공식 사용 가이드입니다. 공급가액이나 합계금액을 입력해 부가가치세를 계산하는 방법을 알아보세요." />
+  <meta property="og:title" content="부가세 계산기 사용법 완전 가이드 — BrowserKit" />
+  <meta property="og:description" content="공급가액·합계금액을 입력해 부가가치세(10%)를 계산하는 VatCalc 공식 가이드입니다." />
   <meta property="og:type" content="article" />
-  <title>GIF 애니메이션 생성기 사용법 완전 가이드 — BrowserKit</title>
+  <title>부가세 계산기 사용법 완전 가이드 — BrowserKit</title>
   <link rel="stylesheet" href="/css/style.css?v=20260718b" />
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506"
      crossorigin="anonymous"></script>
@@ -54,23 +54,23 @@
   </style>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
-<meta property="og:image" content="https://browserkit.online/img/og/gif-maker.png" />
+<meta property="og:image" content="https://browserkit.online/img/og/vat-calc.png" />
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
-    "headline": "GIF 애니메이션 생성기 사용법 완전 가이드",
-    "description": "GifMaker의 모든 기능을 단계별로 설명하는 공식 사용 가이드입니다. 여러 장의 이미지를 순서대로 합쳐 GIF 애니메이션을 만드는 방법을 알아보세요.",
+    "headline": "부가세 계산기 사용법 완전 가이드",
+    "description": "VatCalc의 모든 기능을 단계별로 설명하는 공식 사용 가이드입니다. 공급가액이나 합계금액을 입력해 부가가치세를 계산하는 방법을 알아보세요.",
     "datePublished": "2026-07-18T00:00:00+09:00",
     "dateModified": "2026-07-18T00:00:00+09:00",
     "author": { "@type": "Organization", "name": "BrowserKit", "url": "https://browserkit.online" },
     "publisher": { "@type": "Organization", "name": "BrowserKit", "url": "https://browserkit.online", "logo": { "@type": "ImageObject", "url": "https://browserkit.online/img/og-browserkit.png" } },
-    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://browserkit.online/blog/81-gifmaker-howto" },
-    "image": "https://browserkit.online/img/og/gif-maker.png"
+    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://browserkit.online/blog/82-vatcalc-howto" },
+    "image": "https://browserkit.online/img/og/vat-calc.png"
   }
-  </script>  <link rel="canonical" href="https://browserkit.online/blog/81-gifmaker-howto" />
+  </script>  <link rel="canonical" href="https://browserkit.online/blog/82-vatcalc-howto" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:image" content="https://browserkit.online/img/og/gif-maker.png" />
+  <meta name="twitter:image" content="https://browserkit.online/img/og/vat-calc.png" />
   <style>
     .post-table-wrap { overflow-x:auto; }
     .post-table th, .post-table td { white-space:nowrap; }
@@ -84,7 +84,7 @@
   "mainEntity": [
     {
       "@type": "Question",
-      "name": "GIF 애니메이션 생성기 도구는 정말 무료인가요?",
+      "name": "부가세 계산기 도구는 정말 무료인가요?",
       "acceptedAnswer": {
         "@type": "Answer",
         "text": "네, 회원가입이나 설치 없이 완전 무료로 사용할 수 있습니다. 횟수 제한도 없습니다."
@@ -92,18 +92,18 @@
     },
     {
       "@type": "Question",
-      "name": "업로드한 이미지가 서버로 전송되나요?",
+      "name": "입력한 금액이 서버로 전송되나요?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "아니요. 모든 처리는 브라우저 안에서만 이루어지며 업로드한 이미지가 외부 서버로 전송되거나 저장되지 않습니다."
+        "text": "아니요. 모든 계산은 브라우저 안에서만 이루어지며 입력한 금액이 외부 서버로 전송되거나 저장되지 않습니다."
       }
     },
     {
       "@type": "Question",
-      "name": "이미지를 몇 장까지 넣을 수 있나요?",
+      "name": "면세 품목이나 간이과세자도 계산할 수 있나요?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "장수 제한은 없지만, 이미지 개수와 출력 크기가 클수록 GIF 생성에 시간이 걸립니다. 원활한 처리를 위해 10장 이하, 출력 크기 640px 이하를 권장합니다."
+        "text": "이 계산기는 일반과세 기준 10% 부가가치세율로만 계산합니다. 면세 품목이나 간이과세자 특례 세율은 반영하지 않으므로, 정확한 세무 처리는 반드시 세무사나 국세청에 확인하세요."
       }
     },
     {
@@ -129,34 +129,34 @@
   <article class="post-wrap">
     <a href="/blog/" class="back-link">&#x2190; 블로그 목록</a>
     <span class="post-tag">가이드</span>
-    <h1 class="post-title"><span style="color:var(--point-hover)">GIF 애니메이션 생성기</span> 사용법 완전 가이드</h1>
+    <h1 class="post-title"><span style="color:var(--point-hover)">부가세 계산기</span> 사용법 완전 가이드</h1>
     <div class="post-date">2026년 7월 18일</div>
     <div style="margin:12px 0"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
 
     <div class="post-body">
-      <p>GifMaker는 여러 장의 이미지를 업로드해 순서와 프레임 간격을 지정하면 움직이는 GIF 애니메이션으로 합성해주는 무료 온라인 도구입니다. 연속 촬영한 사진을 짧은 움짤로 만들거나, 화면 캡처 여러 장을 이어 붙여 사용법을 보여주는 GIF를 만들 때 유용합니다. 반복 재생 여부와 출력 크기를 선택할 수 있고, 모든 처리는 브라우저에서만 이루어집니다.</p>
+      <p>VatCalc는 공급가액이나 부가세 포함 합계금액을 입력하면 부가가치세(10%)와 나머지 금액을 계산해주는 무료 온라인 부가세 계산기입니다. 세금계산서를 발행하거나 견적서를 작성할 때, 혹은 영수증에 적힌 합계금액에서 공급가액과 부가세를 역산할 때 유용합니다. 공급가액 기준과 합계금액 기준 양방향 계산을 모두 지원하며, 모든 계산은 브라우저에서만 이루어집니다.</p>
 
       <h2>주요 기능</h2>
       <div class="feature-grid">
         <div class="feature-card">
-          <div class="feature-icon">&#x1F5BC;&#xFE0F;</div>
-          <div class="feature-title">여러 장 업로드 · 순서 변경</div>
-          <div class="feature-desc">이미지를 한 번에 여러 장 올리고, 드래그로 프레임 순서를 자유롭게 바꿀 수 있습니다.</div>
+          <div class="feature-icon">&#x1F504;</div>
+          <div class="feature-title">양방향 계산</div>
+          <div class="feature-desc">공급가액 기준(부가세 별도)과 합계금액 기준(부가세 포함) 중 원하는 방향으로 계산합니다.</div>
         </div>
         <div class="feature-card">
-          <div class="feature-icon">&#x23F1;&#xFE0F;</div>
-          <div class="feature-title">프레임 간격 조절</div>
-          <div class="feature-desc">50ms~2000ms 사이에서 프레임 전환 속도를 슬라이더로 세밀하게 조절합니다.</div>
+          <div class="feature-icon">&#x1F9FE;</div>
+          <div class="feature-title">10% 세율 자동 적용</div>
+          <div class="feature-desc">대한민국 부가가치세율(10%)을 기준으로 자동 계산됩니다.</div>
         </div>
         <div class="feature-card">
-          <div class="feature-icon">&#x1F501;</div>
-          <div class="feature-title">반복 재생 선택</div>
-          <div class="feature-desc">무한 반복 재생하거나 한 번만 재생되는 GIF 중 선택할 수 있습니다.</div>
+          <div class="feature-icon">&#x1F4CB;</div>
+          <div class="feature-title">계산 내역 한눈에 확인</div>
+          <div class="feature-desc">공급가액·부가세·합계금액 세 항목을 표로 정리해서 보여줍니다.</div>
         </div>
         <div class="feature-card">
           <div class="feature-icon">&#x1F512;</div>
           <div class="feature-title">완전 로컬 처리</div>
-          <div class="feature-desc">업로드한 이미지와 생성된 GIF가 브라우저 안에서만 처리되고 서버로 전송되지 않습니다.</div>
+          <div class="feature-desc">입력한 금액이 브라우저 안에서만 계산되고 서버로 전송되지 않습니다.</div>
         </div>
       </div>
 
@@ -166,99 +166,98 @@
       <div class="step-card">
         <div class="step-num">1</div>
         <div class="step-content">
-          <h3>이미지 업로드</h3>
-          <p>업로드 영역을 클릭하거나 GIF로 만들 이미지 여러 장을 드래그해 올립니다. 프레임 목록에서 드래그로 순서를 바꾸거나 필요 없는 프레임을 삭제할 수 있습니다.</p>
+          <h3>계산 기준 선택</h3>
+          <p><strong>공급가액 기준</strong>(부가세가 붙기 전 금액을 알고 있을 때)과 <strong>합계금액 기준</strong>(부가세가 포함된 총액을 알고 있을 때) 중 상황에 맞는 쪽을 선택합니다.</p>
         </div>
       </div>
 
       <div class="step-card">
         <div class="step-num">2</div>
         <div class="step-content">
-          <h3>프레임 간격·출력 크기·반복 재생 설정</h3>
-          <p><strong>프레임 간격</strong> 슬라이더로 전환 속도를, <strong>출력 크기</strong>(320/480/640px) 버튼으로 GIF 크기를, <strong>반복 재생</strong> 체크박스로 무한 루프 여부를 정합니다.</p>
+          <h3>금액 입력</h3>
+          <p>선택한 기준에 맞는 금액을 원 단위로 입력합니다. 예를 들어 공급가액 100만원짜리 거래라면 공급가액 기준을 선택하고 1000000을 입력하세요.</p>
         </div>
       </div>
 
       <figure style="margin:12px 0 24px; text-align:center;">
-        <img src="/img/blog/gifmaker/01-input.png"
-             alt="GifMaker의 이미지 업로드, 프레임 목록, 프레임 간격·출력 크기 옵션이 표시된 화면"
+        <img src="/img/blog/vatcalc/01-input.png"
+             alt="VatCalc의 계산 기준 선택과 금액 입력이 표시된 화면"
              style="width:100%; max-width:640px; border:1px solid var(--border); border-radius:var(--radius);"
              loading="lazy" />
         <figcaption style="font-size:13px; color:var(--subtext); margin-top:6px;">
-          이미지 업로드와 프레임 옵션 설정
+          계산 기준 선택과 금액 입력
         </figcaption>
       </figure>
 
       <div class="step-card">
         <div class="step-num">3</div>
         <div class="step-content">
-          <h3>GIF 생성 및 다운로드</h3>
-          <p><strong>🎞️ GIF 생성하기</strong> 버튼을 누르면 진행률이 표시되고, 완료되면 결과 미리보기와 함께 <strong>⬇ GIF 다운로드</strong> 버튼이 나타납니다.</p>
+          <h3>계산 결과 확인</h3>
+          <p><strong>🧾 부가세 계산하기</strong> 버튼을 누르면 상단에 결과 금액이 크게 표시되고, 아래 계산 내역에서 공급가액·부가세·합계금액을 한눈에 확인할 수 있습니다.</p>
         </div>
       </div>
 
       <figure style="margin:12px 0 24px; text-align:center;">
-        <img src="/img/blog/gifmaker/02-result.png"
-             alt="GifMaker의 GIF 생성 완료 미리보기와 다운로드 버튼이 표시된 화면"
+        <img src="/img/blog/vatcalc/02-result.png"
+             alt="VatCalc의 계산 결과와 공급가액·부가세·합계금액 계산 내역이 표시된 화면"
              style="width:100%; max-width:640px; border:1px solid var(--border); border-radius:var(--radius);"
              loading="lazy" />
         <figcaption style="font-size:13px; color:var(--subtext); margin-top:6px;">
-          생성된 GIF 미리보기와 다운로드
+          계산 결과와 계산 내역
         </figcaption>
       </figure>
 
       <div class="post-warn">
-        <strong>⚠️ 참고:</strong> 이미지 개수와 출력 크기가 클수록 GIF 생성에 시간이 걸립니다. 원활한 처리를 위해 10장 이하, 출력 크기 640px 이하를 권장합니다. 모든 이미지는 첫 번째 이미지의 비율에 맞춰 잘려서(cover) 합성됩니다.
+        <strong>⚠️ 참고:</strong> 일반과세 기준 10% 세율로만 계산하는 표준 계산기입니다. 면세 품목이나 간이과세자 특례 세율 등은 반영하지 않으므로, 세금계산서 발행 등 실제 세무 처리는 반드시 세무사나 국세청에 확인하세요.
       </div>
 
-      <h2>옵션별 정리</h2>
+      <h2>계산 기준 비교</h2>
       <div class="post-table-wrap"><table class="post-table">
-        <thead><tr><th>옵션</th><th>설명</th></tr></thead>
+        <thead><tr><th>기준</th><th>사용 상황</th></tr></thead>
         <tbody>
-          <tr><td>프레임 간격</td><td>50ms(빠름)~2000ms(느림) 사이에서 조절, 짧을수록 빠르게 전환되는 애니메이션</td></tr>
-          <tr><td>출력 크기</td><td>320 / 480 / 640px 중 선택, 클수록 화질은 좋지만 파일 용량과 생성 시간이 늘어남</td></tr>
-          <tr><td>반복 재생</td><td>켜면 무한 루프, 끄면 한 번만 재생되고 마지막 프레임에서 정지</td></tr>
+          <tr><td>공급가액 기준</td><td>세금계산서 발행 전 공급가액을 알고 있을 때 — 부가세와 합계금액을 구함</td></tr>
+          <tr><td>합계금액 기준</td><td>영수증이나 청구서의 총액(부가세 포함)만 알고 있을 때 — 공급가액과 부가세를 역산</td></tr>
         </tbody>
       </table></div>
 
       <h2>활용 예시</h2>
       <div class="use-case-grid">
         <div class="use-case-card">
-          <div class="use-case-icon">&#x1F4F8;</div>
-          <div class="use-case-title">연속 촬영 움짤 제작</div>
-          <div class="use-case-desc">연속 촬영한 사진 여러 장을 이어 붙여 짧은 움짤을 만듭니다.</div>
+          <div class="use-case-icon">&#x1F4C4;</div>
+          <div class="use-case-title">세금계산서 발행 전 확인</div>
+          <div class="use-case-desc">공급가액에 부가세를 얼마나 더해야 하는지 미리 계산합니다.</div>
         </div>
         <div class="use-case-card">
-          <div class="use-case-icon">&#x1F5A5;&#xFE0F;</div>
-          <div class="use-case-title">사용법 안내 GIF</div>
-          <div class="use-case-desc">화면 캡처 여러 장을 이어 붙여 클릭 순서를 보여주는 안내 이미지를 만듭니다.</div>
+          <div class="use-case-icon">&#x1F9FE;</div>
+          <div class="use-case-title">영수증 금액 역산</div>
+          <div class="use-case-desc">부가세 포함 합계금액에서 공급가액과 부가세를 따로 확인합니다.</div>
         </div>
         <div class="use-case-card">
-          <div class="use-case-icon">&#x1F4AC;</div>
-          <div class="use-case-title">SNS·메신저 공유용 짤</div>
-          <div class="use-case-desc">재미있는 순간을 담은 이미지들을 움짤로 만들어 대화방에 공유합니다.</div>
+          <div class="use-case-icon">&#x1F4B0;</div>
+          <div class="use-case-title">견적서·청구서 작성</div>
+          <div class="use-case-desc">거래처에 보낼 견적서에 부가세를 정확히 반영합니다.</div>
         </div>
         <div class="use-case-card">
-          <div class="use-case-icon">&#x1F6CD;&#xFE0F;</div>
-          <div class="use-case-title">상품 여러 각도 소개</div>
-          <div class="use-case-desc">상품을 여러 각도에서 찍은 사진을 돌려보는 듯한 GIF로 만듭니다.</div>
+          <div class="use-case-icon">&#x1F3EA;</div>
+          <div class="use-case-title">사업자 매출 정리</div>
+          <div class="use-case-desc">매출액에서 공급가액과 부가세를 구분해 장부를 정리합니다.</div>
         </div>
       </div>
 
-      <div class="post-highlight">&#x1F512; GifMaker는 모든 처리가 내 PC 브라우저에서만 실행됩니다. 업로드한 이미지와 생성된 GIF가 외부 서버로 전송되지 않습니다.</div>
+      <div class="post-highlight">&#x1F512; VatCalc는 모든 계산이 내 PC 브라우저에서만 실행됩니다. 입력한 금액이 외부 서버로 전송되지 않습니다.</div>
 
       <h2>자주 묻는 질문</h2>
       <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
-        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. GIF 애니메이션 생성기 도구는 정말 무료인가요?</p>
+        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. 부가세 계산기 도구는 정말 무료인가요?</p>
         <p style="color:var(--subtext);margin:0;line-height:1.7">네, 회원가입이나 설치 없이 완전 무료로 사용할 수 있습니다. 횟수 제한도 없습니다.</p>
       </div>
       <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
-        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. 업로드한 이미지가 서버로 전송되나요?</p>
-        <p style="color:var(--subtext);margin:0;line-height:1.7">아니요. 모든 처리는 브라우저 안에서만 이루어지며 업로드한 이미지가 외부 서버로 전송되거나 저장되지 않습니다.</p>
+        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. 입력한 금액이 서버로 전송되나요?</p>
+        <p style="color:var(--subtext);margin:0;line-height:1.7">아니요. 모든 계산은 브라우저 안에서만 이루어지며 입력한 금액이 외부 서버로 전송되거나 저장되지 않습니다.</p>
       </div>
       <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
-        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. 이미지를 몇 장까지 넣을 수 있나요?</p>
-        <p style="color:var(--subtext);margin:0;line-height:1.7">장수 제한은 없지만, 이미지 개수와 출력 크기가 클수록 GIF 생성에 시간이 걸립니다. 원활한 처리를 위해 10장 이하, 출력 크기 640px 이하를 권장합니다.</p>
+        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. 면세 품목이나 간이과세자도 계산할 수 있나요?</p>
+        <p style="color:var(--subtext);margin:0;line-height:1.7">이 계산기는 일반과세 기준 10% 부가가치세율로만 계산합니다. 면세 품목이나 간이과세자 특례 세율은 반영하지 않으므로, 정확한 세무 처리는 반드시 세무사나 국세청에 확인하세요.</p>
       </div>
       <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
         <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. 모바일에서도 사용할 수 있나요?</p>
@@ -269,17 +268,17 @@
     <div style="margin:12px 0"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
 
     <div class="cta-box">
-      <p>지금 바로 나만의 GIF 애니메이션을 만들어보세요.<br />설치도 회원가입도 필요 없습니다.</p>
-      <a href="/gif-maker/" class="cta-btn" style="display:inline-flex;align-items:center;gap:8px">
-        <span style="display:inline-block;width:26px;height:26px;overflow:hidden;flex-shrink:0"><span style="display:block;transform:scale(0.565);transform-origin:top left"><div style="width:46px;height:46px;background:#ffb3c7;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="position:relative;width:26px;height:22px"><div style="position:absolute;left:0;top:6px;width:14px;height:14px;background:#fffdf9;border:2px solid #2a2433;border-radius:2px;box-sizing:border-box;opacity:.4"></div><div style="position:absolute;left:6px;top:3px;width:14px;height:14px;background:#fffdf9;border:2px solid #2a2433;border-radius:2px;box-sizing:border-box;opacity:.7"></div><div style="position:absolute;left:12px;top:0;width:14px;height:14px;background:#fffdf9;border:2px solid #2a2433;border-radius:2px;box-sizing:border-box"></div></div></div></span></span>
-        무료로 GIF 만들기
+      <p>지금 바로 부가세를 계산해보세요.<br />설치도 회원가입도 필요 없습니다.</p>
+      <a href="/vat-calc/" class="cta-btn" style="display:inline-flex;align-items:center;gap:8px">
+        <span style="display:inline-block;width:26px;height:26px;overflow:hidden;flex-shrink:0"><span style="display:block;transform:scale(0.565);transform-origin:top left"><div style="width:46px;height:46px;background:#a0e8e0;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="position:relative;width:26px;height:26px;border-radius:50%;background:#fffdf9;border:2.5px solid #2a2433;box-sizing:border-box;display:flex;align-items:center;justify-content:center;font:700 13px Gowun Dodum,sans-serif;color:#2a2433">%</div></div></span></span>
+        무료로 부가세 계산하기
       </a>
     </div>
     <div style="margin:12px 0"><ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="9500090221"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
 
 <div class="post-nav">
-      <a href="/blog/80-savingscalc-howto"><span class="nav-label">← 이전 글</span><span style="color:var(--point-hover)">적금·예금 만기 계산기</span> 사용법 완전 가이드</a>
-      <a href="/blog/82-vatcalc-howto" style="text-align:right"><span class="nav-label">다음 글 →</span><span style="color:var(--point-hover)">부가세 계산기</span> 사용법 완전 가이드</a>
+      <a href="/blog/81-gifmaker-howto"><span class="nav-label">← 이전 글</span><span style="color:var(--point-hover)">GIF 애니메이션 생성기</span> 사용법 완전 가이드</a>
+      <a href="/blog/24-qrcode-howto" style="text-align:right"><span class="nav-label">다음 글 →</span><span style="color:var(--point-hover)">QR 코드 생성</span> 사용법 완전 가이드</a>
     </div></div>
 
   </article>

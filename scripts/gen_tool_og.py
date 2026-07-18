@@ -89,6 +89,7 @@ TOOLS = {
     'loan-calc':              ('대출 이자 계산기', 'LoanCalc', '계산기'),
     'savings-calc':           ('적금·예금 만기 계산기', 'SavingsCalc', '계산기'),
     'gif-maker':              ('GIF 애니메이션 생성기', 'GifMaker', '이미지 편집'),
+    'vat-calc':               ('부가세 계산기', 'VatCalc', '계산기'),
 }
 
 
