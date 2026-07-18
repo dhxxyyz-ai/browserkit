@@ -49,6 +49,9 @@
     .breakdown-label { color:var(--subtext); }
     .breakdown-value { font-family:'Fira Code',monospace; color:var(--text); font-weight:600; }
 
+    .toast { position:fixed; bottom:32px; left:50%; transform:translateX(-50%) translateY(80px); background:var(--success); color:#fff; border-radius:999px; padding:10px 24px; font-size:14px; font-weight:600; opacity:0; pointer-events:none; z-index:999; transition:all 0.3s ease; }
+    .toast.show { transform:translateX(-50%) translateY(0); opacity:1; }
+
     .footer { border-top:1px solid var(--border); padding:32px 0; text-align:center; }
     .footer-copy { color:var(--subtext); font-size:13px; margin-bottom:12px; }
     .footer-nav { display:flex; justify-content:center; gap:20px; flex-wrap:wrap; }
