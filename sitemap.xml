@@ -393,6 +393,12 @@
     <priority>0.90</priority>
   </url>
   <url>
+    <loc>https://browserkit.online/severance-pay-calc/</loc>
+    <lastmod>2026-07-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+  </url>
+  <url>
     <loc>https://browserkit.online/code-snapshot/</loc>
     <lastmod>2026-07-13</lastmod>
     <changefreq>weekly</changefreq>
@@ -944,6 +950,12 @@
   </url>
   <url>
     <loc>https://browserkit.online/blog/83-lottogen-howto</loc>
+    <lastmod>2026-07-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.70</priority>
+  </url>
+  <url>
+    <loc>https://browserkit.online/blog/84-severancepaycalc-howto</loc>
     <lastmod>2026-07-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.70</priority>

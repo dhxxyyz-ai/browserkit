@@ -73,6 +73,7 @@ TOOLS = {
     'gif-maker':               ('GIF 애니메이션 생성기', '이미지 편집'),
     'vat-calc':                ('부가세 계산기', '계산기'),
     'lotto-gen':               ('로또 번호 생성기', '생활·재미'),
+    'severance-pay-calc':      ('퇴직금 계산기', '계산기'),
 }
 
 changed = 0
