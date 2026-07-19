@@ -8,11 +8,11 @@
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="HttpStatusRef의 모든 기능을 단계별로 설명하는 공식 사용 가이드입니다. HTTP 상태 코드를 검색하고, 카테고리로 필터링하고, 코드를 복사하는 방법을 알아보세요." />
-  <meta property="og:title" content="HTTP 상태 코드 사전 사용법 완전 가이드 — BrowserKit" />
-  <meta property="og:description" content="HTTP 상태 코드를 검색·필터링·복사하는 HttpStatusRef 공식 가이드입니다." />
+  <meta name="description" content="XlsxCsvConvert의 모든 기능을 단계별로 설명하는 공식 사용 가이드입니다. 엑셀 파일을 CSV로 변환하고, CSV를 엑셀 파일로 저장하는 방법과 다중 시트 처리 방법을 알아보세요." />
+  <meta property="og:title" content="엑셀 CSV 변환기 사용법 완전 가이드 — BrowserKit" />
+  <meta property="og:description" content="엑셀과 CSV를 서로 변환하는 XlsxCsvConvert 공식 가이드입니다." />
   <meta property="og:type" content="article" />
-  <title>HTTP 상태 코드 사전 사용법 완전 가이드 — BrowserKit</title>
+  <title>엑셀 CSV 변환기 사용법 완전 가이드 — BrowserKit</title>
   <link rel="stylesheet" href="/css/style.css?v=20260718b" />
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506"
      crossorigin="anonymous"></script>
@@ -54,23 +54,23 @@
   </style>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
-<meta property="og:image" content="https://browserkit.online/img/og/http-status-ref.png" />
+<meta property="og:image" content="https://browserkit.online/img/og/xlsx-csv-convert.png" />
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
-    "headline": "HTTP 상태 코드 사전 사용법 완전 가이드",
-    "description": "HttpStatusRef의 모든 기능을 단계별로 설명하는 공식 사용 가이드입니다. HTTP 상태 코드를 검색하고, 카테고리로 필터링하고, 코드를 복사하는 방법을 알아보세요.",
+    "headline": "엑셀 CSV 변환기 사용법 완전 가이드",
+    "description": "XlsxCsvConvert의 모든 기능을 단계별로 설명하는 공식 사용 가이드입니다. 엑셀 파일을 CSV로 변환하고, CSV를 엑셀 파일로 저장하는 방법과 다중 시트 처리 방법을 알아보세요.",
     "datePublished": "2026-07-19T00:00:00+09:00",
     "dateModified": "2026-07-19T00:00:00+09:00",
     "author": { "@type": "Organization", "name": "BrowserKit", "url": "https://browserkit.online" },
     "publisher": { "@type": "Organization", "name": "BrowserKit", "url": "https://browserkit.online", "logo": { "@type": "ImageObject", "url": "https://browserkit.online/img/og-browserkit.png" } },
-    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://browserkit.online/blog/86-httpstatusref-howto" },
-    "image": "https://browserkit.online/img/og/http-status-ref.png"
+    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://browserkit.online/blog/88-xlsxcsvconvert-howto" },
+    "image": "https://browserkit.online/img/og/xlsx-csv-convert.png"
   }
-  </script>  <link rel="canonical" href="https://browserkit.online/blog/86-httpstatusref-howto" />
+  </script>  <link rel="canonical" href="https://browserkit.online/blog/88-xlsxcsvconvert-howto" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:image" content="https://browserkit.online/img/og/http-status-ref.png" />
+  <meta name="twitter:image" content="https://browserkit.online/img/og/xlsx-csv-convert.png" />
   <style>
     .post-table-wrap { overflow-x:auto; }
     .post-table th, .post-table td { white-space:nowrap; }
@@ -84,7 +84,7 @@
   "mainEntity": [
     {
       "@type": "Question",
-      "name": "HTTP 상태 코드 사전은 정말 무료인가요?",
+      "name": "엑셀 CSV 변환기는 정말 무료인가요?",
       "acceptedAnswer": {
         "@type": "Answer",
         "text": "네, 회원가입이나 설치 없이 완전 무료로 사용할 수 있습니다. 횟수 제한도 없습니다."
@@ -92,26 +92,26 @@
     },
     {
       "@type": "Question",
-      "name": "몇 개의 상태 코드가 등록되어 있나요?",
+      "name": "업로드한 엑셀 파일이 서버로 전송되나요?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "IANA에 등록된 표준 HTTP 상태 코드를 기준으로 1xx부터 5xx까지 총 62개 코드를 제공합니다."
+        "text": "아니요. 엑셀 파일 파싱은 오픈소스 라이브러리(SheetJS)를 이용해 브라우저 안에서만 처리되며, 업로드한 파일이 외부 서버로 전송되지 않습니다."
       }
     },
     {
       "@type": "Question",
-      "name": "검색은 어떻게 동작하나요?",
+      "name": "시트가 여러 개인 엑셀 파일도 변환할 수 있나요?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "코드 번호(예: 404), 영문 이름(예: Not Found), 한글 설명(예: 찾을 수 없습니다) 중 어느 것으로 검색해도 실시간으로 결과가 필터링됩니다."
+        "text": "네. 엑셀 파일을 업로드하면 시트 목록이 나타나고, 원하는 시트를 선택해 CSV로 변환할 수 있습니다."
       }
     },
     {
       "@type": "Question",
-      "name": "입력한 검색어가 서버로 전송되나요?",
+      "name": "구형 엑셀 형식(.xls)도 지원하나요?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "아니요. 모든 검색은 브라우저에 이미 저장된 데이터 안에서만 이루어지며 외부 서버로 전송되지 않습니다."
+        "text": "네, .xlsx와 .xls 형식 모두 업로드할 수 있습니다. 다만 CSV에서 엑셀로 변환할 때는 최신 형식(.xlsx)으로만 저장됩니다."
       }
     }
   ]
@@ -129,34 +129,34 @@
   <article class="post-wrap">
     <a href="/blog/" class="back-link">&#x2190; 블로그 목록</a>
     <span class="post-tag">가이드</span>
-    <h1 class="post-title"><span style="color:var(--point-hover)">HTTP 상태 코드 사전</span> 사용법 완전 가이드</h1>
+    <h1 class="post-title"><span style="color:var(--point-hover)">엑셀 CSV 변환기</span> 사용법 완전 가이드</h1>
     <div class="post-date">2026년 7월 19일</div>
     <div style="margin:12px 0"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
 
     <div class="post-body">
-      <p>HttpStatusRef는 100번대부터 500번대까지 HTTP 상태 코드를 검색하고 뜻을 확인할 수 있는 무료 온라인 사전입니다. 코드 번호나 이름으로 실시간 검색할 수 있고, 1xx~5xx 카테고리 필터로 원하는 범위만 모아볼 수도 있습니다. 카드를 클릭하면 코드 번호가 바로 클립보드에 복사됩니다. 모든 검색은 브라우저에서만 이루어집니다.</p>
+      <p>XlsxCsvConvert는 엑셀(XLSX) 파일과 CSV 파일을 서로 변환해주는 무료 온라인 도구입니다. 엑셀 파일을 업로드하면 CSV로 변환하고, CSV를 붙여넣거나 업로드하면 엑셀 파일로 저장할 수 있습니다. 여러 시트가 있는 엑셀 파일도 원하는 시트를 골라 변환할 수 있습니다. 모든 처리는 브라우저에서만 이루어집니다.</p>
 
       <h2>주요 기능</h2>
       <div class="feature-grid">
         <div class="feature-card">
-          <div class="feature-icon">&#x1F50D;</div>
-          <div class="feature-title">실시간 검색</div>
-          <div class="feature-desc">코드 번호, 영문 이름, 한글 설명 중 무엇으로 검색해도 즉시 결과가 나옵니다.</div>
+          <div class="feature-icon">&#x1F4CA;</div>
+          <div class="feature-title">엑셀 → CSV 변환</div>
+          <div class="feature-desc">엑셀 파일을 업로드하면 즉시 CSV로 변환해 다운로드할 수 있습니다.</div>
         </div>
         <div class="feature-card">
-          <div class="feature-icon">&#x1F4C2;</div>
-          <div class="feature-title">카테고리 필터</div>
-          <div class="feature-desc">1xx~5xx 중 원하는 카테고리만 골라서 모아볼 수 있습니다.</div>
+          <div class="feature-icon">&#x1F4C4;</div>
+          <div class="feature-title">CSV → 엑셀 변환</div>
+          <div class="feature-desc">CSV를 붙여넣거나 파일로 업로드하면 정식 엑셀(.xlsx) 파일로 저장합니다.</div>
         </div>
         <div class="feature-card">
-          <div class="feature-icon">&#x1F4CB;</div>
-          <div class="feature-title">클릭으로 코드 복사</div>
-          <div class="feature-desc">카드를 클릭하면 상태 코드 번호가 바로 클립보드에 복사됩니다.</div>
+          <div class="feature-icon">&#x1F4D1;</div>
+          <div class="feature-title">다중 시트 지원</div>
+          <div class="feature-desc">시트가 여러 개인 엑셀 파일도 원하는 시트를 선택해 변환합니다.</div>
         </div>
         <div class="feature-card">
           <div class="feature-icon">&#x1F512;</div>
           <div class="feature-title">완전 로컬 처리</div>
-          <div class="feature-desc">검색이 브라우저 안에서만 이루어지고 서버로 전송되지 않습니다.</div>
+          <div class="feature-desc">업로드한 파일이 브라우저 안에서만 처리되고 서버로 전송되지 않습니다.</div>
         </div>
       </div>
 
@@ -166,114 +166,119 @@
       <div class="step-card">
         <div class="step-num">1</div>
         <div class="step-content">
-          <h3>검색어 입력 또는 카테고리 선택</h3>
-          <p>궁금한 코드 번호(예: 404)나 이름(예: Not Found)을 검색창에 입력하거나, 1xx~5xx 카테고리 버튼을 눌러 원하는 범위만 모아봅니다.</p>
+          <h3>변환 방향 선택</h3>
+          <p>엑셀을 CSV로 바꾸고 싶다면 "엑셀 → CSV"를, CSV를 엑셀로 바꾸고 싶다면 "CSV → 엑셀"을 선택합니다.</p>
         </div>
       </div>
-
-      <figure style="margin:12px 0 24px; text-align:center;">
-        <img src="/img/blog/httpstatusref/01-input.png"
-             alt="HttpStatusRef의 검색창과 카테고리 필터 버튼이 표시된 화면"
-             style="width:100%; max-width:640px; border:1px solid var(--border); border-radius:var(--radius);"
-             loading="lazy" />
-        <figcaption style="font-size:13px; color:var(--subtext); margin-top:6px;">
-          검색창과 카테고리 필터
-        </figcaption>
-      </figure>
 
       <div class="step-card">
         <div class="step-num">2</div>
         <div class="step-content">
-          <h3>검색 결과 확인 및 코드 복사</h3>
-          <p>검색·필터 결과가 카드 목록으로 표시됩니다. 원하는 코드의 카드를 클릭하면 코드 번호가 클립보드에 바로 복사됩니다.</p>
+          <h3>파일 업로드 또는 CSV 입력</h3>
+          <p>엑셀 → CSV 방향이면 .xlsx 또는 .xls 파일을 업로드합니다. 시트가 여러 개면 원하는 시트를 선택하세요. CSV → 엑셀 방향이면 CSV 내용을 붙여넣거나 파일을 업로드합니다.</p>
         </div>
       </div>
 
       <figure style="margin:12px 0 24px; text-align:center;">
-        <img src="/img/blog/httpstatusref/02-result.png"
-             alt="HttpStatusRef의 검색 결과 카드 목록과 상태 코드 설명이 표시된 화면"
+        <img src="/img/blog/xlsxcsvconvert/01-input.png"
+             alt="XlsxCsvConvert의 변환 방향 선택과 파일 업로드 화면"
              style="width:100%; max-width:640px; border:1px solid var(--border); border-radius:var(--radius);"
              loading="lazy" />
         <figcaption style="font-size:13px; color:var(--subtext); margin-top:6px;">
-          검색 결과와 상태 코드 설명
+          변환 방향 선택과 파일 업로드
+        </figcaption>
+      </figure>
+
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <h3>변환 및 다운로드</h3>
+          <p><strong>🔄 변환하기</strong> 버튼을 누르면 표 미리보기가 표시됩니다. 결과가 맞다면 <strong>결과 파일 다운로드</strong> 버튼을 눌러 저장하세요.</p>
+        </div>
+      </div>
+
+      <figure style="margin:12px 0 24px; text-align:center;">
+        <img src="/img/blog/xlsxcsvconvert/02-result.png"
+             alt="XlsxCsvConvert의 변환 결과 표 미리보기와 다운로드 버튼이 표시된 화면"
+             style="width:100%; max-width:640px; border:1px solid var(--border); border-radius:var(--radius);"
+             loading="lazy" />
+        <figcaption style="font-size:13px; color:var(--subtext); margin-top:6px;">
+          변환 결과 미리보기
         </figcaption>
       </figure>
 
       <div class="post-warn">
-        <strong>⚠️ 참고:</strong> IANA에 등록된 표준 HTTP 상태 코드를 기준으로 정리했습니다. 일부 프레임워크나 서비스가 사용하는 비표준 코드는 포함되지 않을 수 있습니다.
+        <strong>⚠️ 참고:</strong> 엑셀 파일의 서식(글꼴 색상, 셀 배경색 등)은 CSV로 변환하는 과정에서 사라집니다. CSV는 순수 데이터만 담는 형식이기 때문입니다.
       </div>
 
-      <h2>카테고리별 의미</h2>
+      <h2>변환 방향별 안내</h2>
       <div class="post-table-wrap"><table class="post-table">
-        <thead><tr><th>카테고리</th><th>의미</th></tr></thead>
+        <thead><tr><th>방향</th><th>사용 상황</th></tr></thead>
         <tbody>
-          <tr><td>1xx 정보성</td><td>요청을 받았고 처리를 계속 진행 중임을 알림</td></tr>
-          <tr><td>2xx 성공</td><td>요청이 성공적으로 처리됨</td></tr>
-          <tr><td>3xx 리다이렉션</td><td>요청을 완료하려면 추가 동작(다른 URL로 이동 등)이 필요함</td></tr>
-          <tr><td>4xx 클라이언트 오류</td><td>요청 자체에 문제가 있어 서버가 처리할 수 없음</td></tr>
-          <tr><td>5xx 서버 오류</td><td>서버 쪽 문제로 정상적인 요청도 처리하지 못함</td></tr>
+          <tr><td>엑셀 → CSV</td><td>엑셀 데이터를 다른 시스템에 업로드하거나 프로그램에서 처리해야 할 때</td></tr>
+          <tr><td>CSV → 엑셀</td><td>시스템에서 내려받은 CSV를 엑셀에서 편집하기 좋게 만들 때</td></tr>
         </tbody>
       </table></div>
 
       <h2>활용 예시</h2>
       <div class="use-case-grid">
         <div class="use-case-card">
-          <div class="use-case-icon">&#x1F41B;</div>
-          <div class="use-case-title">API 디버깅</div>
-          <div class="use-case-desc">API 응답으로 받은 낯선 상태 코드의 정확한 의미를 바로 확인합니다.</div>
+          <div class="use-case-icon">&#x1F4E5;</div>
+          <div class="use-case-title">시스템 데이터 업로드</div>
+          <div class="use-case-desc">엑셀로 정리한 데이터를 CSV로 변환해 다른 시스템에 업로드합니다.</div>
         </div>
         <div class="use-case-card">
-          <div class="use-case-icon">&#x1F4DA;</div>
-          <div class="use-case-title">개발 공부</div>
-          <div class="use-case-desc">HTTP 프로토콜을 공부하며 상태 코드 체계를 익힙니다.</div>
+          <div class="use-case-icon">&#x1F4CB;</div>
+          <div class="use-case-title">CSV 데이터 정리</div>
+          <div class="use-case-desc">서버에서 받은 CSV를 엑셀로 열어 필터·정렬로 편하게 정리합니다.</div>
         </div>
         <div class="use-case-card">
-          <div class="use-case-icon">&#x1F4DD;</div>
-          <div class="use-case-title">API 문서 작성</div>
-          <div class="use-case-desc">API 문서에 사용할 정확한 상태 코드와 설명을 빠르게 찾습니다.</div>
+          <div class="use-case-icon">&#x1F4CA;</div>
+          <div class="use-case-title">특정 시트만 추출</div>
+          <div class="use-case-desc">여러 시트로 된 엑셀에서 필요한 시트 하나만 CSV로 뽑아냅니다.</div>
         </div>
         <div class="use-case-card">
-          <div class="use-case-icon">&#x1F310;</div>
-          <div class="use-case-title">서버 로그 분석</div>
-          <div class="use-case-desc">서버 로그에 찍힌 상태 코드가 무엇을 의미하는지 확인합니다.</div>
+          <div class="use-case-icon">&#x1F4BC;</div>
+          <div class="use-case-title">업무 데이터 변환</div>
+          <div class="use-case-desc">거래처에서 받은 파일 형식을 원하는 형식으로 즉시 바꿉니다.</div>
         </div>
       </div>
 
-      <div class="post-highlight">&#x1F512; HttpStatusRef는 모든 검색이 내 PC 브라우저에서만 실행됩니다. 검색어가 외부 서버로 전송되지 않습니다.</div>
+      <div class="post-highlight">&#x1F512; XlsxCsvConvert는 모든 변환이 내 PC 브라우저에서만 실행됩니다. 업로드한 파일이 외부 서버로 전송되지 않습니다.</div>
 
       <h2>자주 묻는 질문</h2>
       <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
-        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. HTTP 상태 코드 사전은 정말 무료인가요?</p>
+        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. 엑셀 CSV 변환기는 정말 무료인가요?</p>
         <p style="color:var(--subtext);margin:0;line-height:1.7">네, 회원가입이나 설치 없이 완전 무료로 사용할 수 있습니다. 횟수 제한도 없습니다.</p>
       </div>
       <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
-        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. 몇 개의 상태 코드가 등록되어 있나요?</p>
-        <p style="color:var(--subtext);margin:0;line-height:1.7">IANA에 등록된 표준 HTTP 상태 코드를 기준으로 1xx부터 5xx까지 총 62개 코드를 제공합니다.</p>
+        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. 업로드한 엑셀 파일이 서버로 전송되나요?</p>
+        <p style="color:var(--subtext);margin:0;line-height:1.7">아니요. 엑셀 파일 파싱은 오픈소스 라이브러리(SheetJS)를 이용해 브라우저 안에서만 처리되며, 업로드한 파일이 외부 서버로 전송되지 않습니다.</p>
       </div>
       <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
-        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. 검색은 어떻게 동작하나요?</p>
-        <p style="color:var(--subtext);margin:0;line-height:1.7">코드 번호(예: 404), 영문 이름(예: Not Found), 한글 설명(예: 찾을 수 없습니다) 중 어느 것으로 검색해도 실시간으로 결과가 필터링됩니다.</p>
+        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. 시트가 여러 개인 엑셀 파일도 변환할 수 있나요?</p>
+        <p style="color:var(--subtext);margin:0;line-height:1.7">네. 엑셀 파일을 업로드하면 시트 목록이 나타나고, 원하는 시트를 선택해 CSV로 변환할 수 있습니다.</p>
       </div>
       <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
-        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. 입력한 검색어가 서버로 전송되나요?</p>
-        <p style="color:var(--subtext);margin:0;line-height:1.7">아니요. 모든 검색은 브라우저에 이미 저장된 데이터 안에서만 이루어지며 외부 서버로 전송되지 않습니다.</p>
+        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. 구형 엑셀 형식(.xls)도 지원하나요?</p>
+        <p style="color:var(--subtext);margin:0;line-height:1.7">네, .xlsx와 .xls 형식 모두 업로드할 수 있습니다. 다만 CSV에서 엑셀로 변환할 때는 최신 형식(.xlsx)으로만 저장됩니다.</p>
       </div>
     </div>
 
     <div style="margin:12px 0"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
 
     <div class="cta-box">
-      <p>지금 바로 HTTP 상태 코드를 검색해보세요.<br />설치도 회원가입도 필요 없습니다.</p>
-      <a href="/http-status-ref/" class="cta-btn" style="display:inline-flex;align-items:center;gap:8px">
-        <span style="display:inline-block;width:26px;height:26px;overflow:hidden;flex-shrink:0"><span style="display:block;transform:scale(0.565);transform-origin:top left"><div style="width:46px;height:46px;background:#e0c3ff;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="font:700 15px Fira Code,monospace;color:#2a2433;line-height:1;letter-spacing:-.5px;white-space:nowrap">404</div></div></span></span>
-        무료로 상태 코드 검색하기
+      <p>지금 바로 엑셀과 CSV를 변환해보세요.<br />설치도 회원가입도 필요 없습니다.</p>
+      <a href="/xlsx-csv-convert/" class="cta-btn" style="display:inline-flex;align-items:center;gap:8px">
+        <span style="display:inline-block;width:26px;height:26px;overflow:hidden;flex-shrink:0"><span style="display:block;transform:scale(0.565);transform-origin:top left"><div style="width:46px;height:46px;background:#a8e6cf;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="font:700 13px Gowun Dodum,sans-serif;color:#2a2433;line-height:1;letter-spacing:-.5px;white-space:nowrap">XLS</div></div></span></span>
+        무료로 엑셀 CSV 변환하기
       </a>
     </div>
     <div style="margin:12px 0"><ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="9500090221"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
 
 <div class="post-nav">
-      <a href="/blog/85-bmicalc-howto"><span class="nav-label">← 이전 글</span><span style="color:var(--point-hover)">BMI 계산기</span> 사용법 완전 가이드</a>
-      <a href="/blog/88-xlsxcsvconvert-howto" style="text-align:right"><span class="nav-label">다음 글 →</span><span style="color:var(--point-hover)">엑셀 CSV 변환기</span> 사용법 완전 가이드</a>
+      <a href="/blog/86-httpstatusref-howto"><span class="nav-label">← 이전 글</span><span style="color:var(--point-hover)">HTTP 상태 코드 사전</span> 사용법 완전 가이드</a>
+      <a href="/blog/24-qrcode-howto" style="text-align:right"><span class="nav-label">다음 글 →</span><span style="color:var(--point-hover)">QR 코드 생성</span> 사용법 완전 가이드</a>
     </div></div>
 
   </article>
