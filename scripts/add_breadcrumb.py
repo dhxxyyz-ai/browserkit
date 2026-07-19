@@ -76,6 +76,7 @@ TOOLS = {
     'severance-pay-calc':      ('퇴직금 계산기', '계산기'),
     'bmi-calc':                ('BMI/칼로리 계산기', '계산기'),
     'http-status-ref':         ('HTTP 상태 코드 사전', '개발자'),
+    'cron-next-run':           ('Cron 다음 실행 시각 계산기', '개발자'),
 }
 
 changed = 0
