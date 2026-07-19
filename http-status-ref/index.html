@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <link rel="icon" href="/favicon.ico" sizes="32x32">
+  <link rel="icon" href="/favicon-16.png" sizes="16x16" type="image/png">
+  <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="/favicon-192.png" sizes="192x192" type="image/png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="100번대부터 500번대까지 HTTP 상태 코드를 검색하고 뜻을 확인하는 무료 온라인 사전. 코드 번호나 이름으로 실시간 검색, 1xx~5xx 카테고리 필터, 클릭 한 번으로 코드 복사를 지원합니다. 서버 전송 없이 브라우저에서 바로 처리합니다." />
+  <meta property="og:title" content="HttpStatusRef — HTTP 상태 코드 사전" />
+  <meta property="og:description" content="HTTP 상태 코드를 검색하고 뜻을 확인하는 무료 온라인 사전. 1xx~5xx 카테고리 필터와 코드 복사를 지원합니다." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://browserkit.online/http-status-ref/" />
+  <title>HttpStatusRef — HTTP 상태 코드 사전</title>
+  <link rel="stylesheet" href="/css/style.css?v=20260718b" />
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506"
+     crossorigin="anonymous"></script>
+  <style>
+    .search-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px 24px; margin-bottom:16px; }
+    .search-input { background:var(--bg); border:1px solid var(--border); border-radius:10px; padding:13px 16px; font-size:15px; color:var(--text); font-family:'Gowun Dodum',sans-serif; outline:none; width:100%; box-sizing:border-box; }
+    .search-input:focus { border-color:var(--point); }
+
+    .cat-btns { display:flex; gap:6px; flex-wrap:wrap; margin-top:12px; }
+    .cat-btn { background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:8px 16px; font-size:13px; color:var(--subtext); cursor:pointer; font-family:'Fira Code',monospace; font-weight:600; }
+    .cat-btn:hover { border-color:var(--point); color:var(--text); }
+    .cat-btn.active { background:rgba(123,108,255,0.15); border-color:var(--point); color:var(--point-hover); }
+
+    .status-list { display:flex; flex-direction:column; gap:10px; margin:16px 0 48px; }
+    .status-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:16px 20px; display:flex; align-items:flex-start; gap:16px; cursor:pointer; }
+    .status-card:hover { border-color:var(--point); }
+    .status-code { min-width:64px; font-family:'Fira Code',monospace; font-size:20px; font-weight:800; color:var(--point-hover); flex-shrink:0; }
+    .status-body { flex:1; }
+    .status-name { font-size:14px; font-weight:700; color:var(--text); margin-bottom:4px; }
+    .status-desc { font-size:13px; color:var(--subtext); line-height:1.6; }
+    .status-empty { text-align:center; padding:40px 20px; color:var(--subtext); font-size:14px; }
+
+    .toast { position:fixed; bottom:32px; left:50%; transform:translateX(-50%) translateY(80px); background:var(--success); color:#fff; border-radius:999px; padding:10px 24px; font-size:14px; font-weight:600; opacity:0; pointer-events:none; z-index:999; transition:all 0.3s ease; }
+    .toast.show { transform:translateX(-50%) translateY(0); opacity:1; }
+
+    .footer { border-top:1px solid var(--border); padding:32px 0; text-align:center; }
+    .footer-copy { color:var(--subtext); font-size:13px; margin-bottom:12px; }
+    .footer-nav { display:flex; justify-content:center; gap:20px; flex-wrap:wrap; }
+    .footer-nav a { color:var(--subtext); font-size:13px; text-decoration:none; }
+    .footer-nav a:hover { color:var(--text); }
+
+    @media (max-width:640px) {
+      .hero-title { font-size:24px; }
+      .status-card { flex-direction:column; gap:4px; }
+      .status-code { font-size:18px; }
+    }
+  </style>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+  <meta property="og:image" content="https://browserkit.online/img/og/http-status-ref.png" />
+  <link rel="canonical" href="https://browserkit.online/http-status-ref/" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://browserkit.online/img/og/http-status-ref.png" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "HttpStatusRef — HTTP 상태 코드 사전",
+  "url": "https://browserkit.online/http-status-ref/",
+  "description": "100번대부터 500번대까지 HTTP 상태 코드를 검색하고 뜻을 확인하는 무료 온라인 사전. 코드 번호나 이름으로 실시간 검색, 1xx~5xx 카테고리 필터, 클릭 한 번으로 코드 복사를 지원합니다. 서버 전송 없이 브라우저에서 바로 처리합니다.",
+  "applicationCategory": "DeveloperApplication",
+  "operatingSystem": "Any",
+  "browserRequirements": "Requires JavaScript",
+  "inLanguage": "ko",
+  "isAccessibleForFree": true,
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "KRW"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "BrowserKit",
+    "url": "https://browserkit.online/"
+  }
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "홈",
+      "item": "https://browserkit.online/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "개발자"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "HTTP 상태 코드 사전",
+      "item": "https://browserkit.online/http-status-ref/"
+    }
+  ]
+}
+  </script>
+</head>
+
+<body>
+  <header class="header">
+    <div class="container">
+      <a href="/" class="header-brand">
+        <div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Gowun Dodum,sans-serif;flex-shrink:0">B</div>
+        <span class="header-brand-text"><span style="color:var(--text)">Browser</span><span style="color:var(--point)">Kit</span></span>
+      </a>
+      <a href="/" class="header-back">&#x2190; BrowserKit 홈으로</a>
+    </div>
+  </header>
+
+  <main><div class="container">
+    <div class="hero">
+      <div class="hero-icon" style="height:78px;display:flex;justify-content:center;align-items:center"><div style="transform:scale(1.7);transform-origin:center"><div style="width:46px;height:46px;background:#e0c3ff;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="font:700 15px Fira Code,monospace;color:#2a2433;line-height:1;letter-spacing:-.5px;white-space:nowrap">404</div></div></div></div>
+      <div class="hero-title-wrap"><h1 class="hero-title">HTTP 상태 코드 사전</h1><a href="/blog/86-httpstatusref-howto" class="hero-guide-link">사용법 가이드 보기</a></div>
+      <p class="hero-desc">코드 번호나 이름으로 검색하면 HTTP 상태 코드의 뜻을 바로 알려드려요</p>
+      <div class="hero-badges">
+        <span class="badge">🔒 완전 로컬 처리</span>
+        <span class="badge">⚡ 무료 사용</span>
+        <span class="badge">🛡️ 서버 전송 없음</span>
+        <span class="badge">📦 설치 불필요</span>
+      </div>
+    </div>
+    <div style="margin:0 0 12px"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+
+    <p class="notice">💡 IANA에 등록된 표준 HTTP 상태 코드를 기준으로 정리했습니다. 카드를 클릭하면 코드 번호가 클립보드에 복사됩니다. 모든 검색은 브라우저에서만 이루어집니다.</p>
+
+    <div class="search-card">
+      <input type="text" class="search-input" id="searchInput" placeholder="코드 번호나 이름으로 검색 (예: 404, Not Found, 찾을 수 없음)" />
+      <div class="cat-btns" id="catBtns">
+        <button class="cat-btn active" data-cat="all">전체</button>
+        <button class="cat-btn" data-cat="1">1xx 정보성</button>
+        <button class="cat-btn" data-cat="2">2xx 성공</button>
+        <button class="cat-btn" data-cat="3">3xx 리다이렉션</button>
+        <button class="cat-btn" data-cat="4">4xx 클라이언트 오류</button>
+        <button class="cat-btn" data-cat="5">5xx 서버 오류</button>
+      </div>
+    </div>
+
+    <div class="status-list" id="statusList"></div>
+
+    <div style="margin:0 0 12px"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+  </div></main>
+
+  <footer class="footer">
+    <div class="container">
+      <p class="footer-copy">&#xa9; 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p>
+      <nav class="footer-nav">
+        <a href="/privacy">개인정보 처리방침</a>
+        <a href="/terms">이용약관</a>
+        <a href="/about">서비스 소개</a>
+        <a href="/blog/">블로그</a>
+      </nav>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+  var STATUS_CODES = [
+    { code: 100, name: 'Continue', desc: '요청의 일부를 받았으며 계속 진행해도 좋다는 의미. 대용량 요청 전송 전 확인용으로 사용됩니다.', cat: 1 },
+    { code: 101, name: 'Switching Protocols', desc: '서버가 클라이언트의 요청에 따라 프로토콜을 전환합니다(예: HTTP → WebSocket).', cat: 1 },
+    { code: 102, name: 'Processing', desc: '요청을 받아 처리 중이지만 아직 응답이 준비되지 않았음을 알립니다(WebDAV).', cat: 1 },
+    { code: 103, name: 'Early Hints', desc: '최종 응답 전에 미리 일부 헤더(예: 리소스 preload)를 알려줍니다.', cat: 1 },
+
+    { code: 200, name: 'OK', desc: '요청이 성공적으로 처리되었습니다. 가장 흔히 보는 성공 응답입니다.', cat: 2 },
+    { code: 201, name: 'Created', desc: '요청이 성공했고 그 결과로 새로운 리소스가 생성되었습니다(주로 POST).', cat: 2 },
+    { code: 202, name: 'Accepted', desc: '요청은 접수되었지만 아직 처리가 완료되지 않았습니다.', cat: 2 },
+    { code: 203, name: 'Non-Authoritative Information', desc: '원 서버가 아닌 다른 곳(프록시 등)을 거쳐 수정된 정보를 반환했습니다.', cat: 2 },
+    { code: 204, name: 'No Content', desc: '요청은 성공했지만 응답 본문(body)이 없습니다. 삭제 요청 등에서 흔합니다.', cat: 2 },
+    { code: 205, name: 'Reset Content', desc: '요청 처리 후 클라이언트가 화면(폼 등)을 초기화하도록 지시합니다.', cat: 2 },
+    { code: 206, name: 'Partial Content', desc: '리소스의 일부만 반환합니다. 동영상 스트리밍이나 다운로드 재개에 사용됩니다.', cat: 2 },
+    { code: 207, name: 'Multi-Status', desc: '여러 개의 독립적인 처리 결과를 하나의 응답으로 반환합니다(WebDAV).', cat: 2 },
+    { code: 208, name: 'Already Reported', desc: '이미 이전에 보고된 리소스를 다시 나열하지 않도록 알립니다(WebDAV).', cat: 2 },
+    { code: 226, name: 'IM Used', desc: '서버가 인스턴스 조작(instance manipulation) 결과를 반환했습니다.', cat: 2 },
+
+    { code: 300, name: 'Multiple Choices', desc: '요청에 대해 여러 응답 가능한 옵션이 있어 클라이언트가 선택해야 합니다.', cat: 3 },
+    { code: 301, name: 'Moved Permanently', desc: '요청한 리소스가 새로운 URL로 영구적으로 이동했습니다. SEO에서 중요한 리다이렉트입니다.', cat: 3 },
+    { code: 302, name: 'Found', desc: '리소스가 일시적으로 다른 URL에 있습니다. 원래 URL은 나중에도 계속 사용됩니다.', cat: 3 },
+    { code: 303, name: 'See Other', desc: '요청 결과를 다른 URL에서 GET으로 조회하도록 안내합니다.', cat: 3 },
+    { code: 304, name: 'Not Modified', desc: '캐시된 리소스가 변경되지 않았으니 그대로 사용해도 된다는 의미입니다.', cat: 3 },
+    { code: 305, name: 'Use Proxy', desc: '요청한 리소스는 지정된 프록시를 통해서만 접근해야 합니다(대부분 미사용, 보안 문제로 폐지).', cat: 3 },
+    { code: 307, name: 'Temporary Redirect', desc: '리소스가 일시적으로 다른 URL에 있으며, 302와 달리 요청 메서드와 본문을 유지합니다.', cat: 3 },
+    { code: 308, name: 'Permanent Redirect', desc: '리소스가 영구적으로 다른 URL로 이동했으며, 301과 달리 요청 메서드를 유지합니다.', cat: 3 },
+
+    { code: 400, name: 'Bad Request', desc: '요청 구문이나 형식이 잘못되어 서버가 이해할 수 없습니다.', cat: 4 },
+    { code: 401, name: 'Unauthorized', desc: '인증이 필요합니다. 로그인하지 않았거나 인증 정보가 없거나 잘못됐을 때 발생합니다.', cat: 4 },
+    { code: 402, name: 'Payment Required', desc: '결제가 필요합니다. 표준으로 예약만 되어 있고 실제로는 거의 사용되지 않습니다.', cat: 4 },
+    { code: 403, name: 'Forbidden', desc: '서버가 요청을 이해했지만 접근 권한이 없어 거부합니다.', cat: 4 },
+    { code: 404, name: 'Not Found', desc: '요청한 리소스를 서버에서 찾을 수 없습니다. 가장 유명한 에러 코드입니다.', cat: 4 },
+    { code: 405, name: 'Method Not Allowed', desc: '해당 리소스에 허용되지 않은 HTTP 메서드로 요청했습니다.', cat: 4 },
+    { code: 406, name: 'Not Acceptable', desc: '클라이언트가 요구한 형식(Accept 헤더 등)에 맞는 응답을 만들 수 없습니다.', cat: 4 },
+    { code: 407, name: 'Proxy Authentication Required', desc: '프록시 서버에 대한 인증이 필요합니다.', cat: 4 },
+    { code: 408, name: 'Request Timeout', desc: '클라이언트가 정해진 시간 내에 요청을 완료하지 못했습니다.', cat: 4 },
+    { code: 409, name: 'Conflict', desc: '요청이 현재 서버의 리소스 상태와 충돌합니다(예: 동시 수정 충돌).', cat: 4 },
+    { code: 410, name: 'Gone', desc: '요청한 리소스가 예전에는 있었지만 이제는 영구적으로 삭제되어 없습니다.', cat: 4 },
+    { code: 411, name: 'Length Required', desc: '요청에 Content-Length 헤더가 필요한데 빠져 있습니다.', cat: 4 },
+    { code: 412, name: 'Precondition Failed', desc: '요청 헤더에 지정한 전제 조건을 서버가 만족하지 못했습니다.', cat: 4 },
+    { code: 413, name: 'Payload Too Large', desc: '요청 본문(body)이 서버가 허용하는 크기보다 큽니다.', cat: 4 },
+    { code: 414, name: 'URI Too Long', desc: '요청한 URI가 서버가 처리할 수 있는 길이보다 깁니다.', cat: 4 },
+    { code: 415, name: 'Unsupported Media Type', desc: '요청 본문의 미디어 타입을 서버가 지원하지 않습니다.', cat: 4 },
+    { code: 416, name: 'Range Not Satisfiable', desc: '요청한 범위(Range 헤더)가 리소스 크기에 비해 유효하지 않습니다.', cat: 4 },
+    { code: 417, name: 'Expectation Failed', desc: 'Expect 헤더에 명시된 조건을 서버가 만족할 수 없습니다.', cat: 4 },
+    { code: 418, name: "I'm a teapot", desc: '만우절 농담으로 만들어진 코드로, 서버가 찻주전자라서 커피를 못 끓인다는 의미입니다.', cat: 4 },
+    { code: 421, name: 'Misdirected Request', desc: '요청이 이 응답을 생성할 수 없는 서버로 잘못 전달되었습니다.', cat: 4 },
+    { code: 422, name: 'Unprocessable Entity', desc: '요청 구문은 올바르지만 의미상 오류가 있어 처리할 수 없습니다(주로 유효성 검사 실패).', cat: 4 },
+    { code: 423, name: 'Locked', desc: '요청한 리소스가 잠겨 있어 접근할 수 없습니다(WebDAV).', cat: 4 },
+    { code: 424, name: 'Failed Dependency', desc: '이전 요청이 실패해서 현재 요청도 처리할 수 없습니다(WebDAV).', cat: 4 },
+    { code: 425, name: 'Too Early', desc: '재전송 공격 위험이 있어 서버가 요청을 아직 처리하지 않으려 합니다.', cat: 4 },
+    { code: 426, name: 'Upgrade Required', desc: '클라이언트가 다른 프로토콜로 업그레이드해야 요청을 처리할 수 있습니다.', cat: 4 },
+    { code: 428, name: 'Precondition Required', desc: '요청에 조건부 헤더(If-Match 등)가 반드시 있어야 합니다.', cat: 4 },
+    { code: 429, name: 'Too Many Requests', desc: '일정 시간 동안 너무 많은 요청을 보내 속도 제한(rate limit)에 걸렸습니다.', cat: 4 },
+    { code: 431, name: 'Request Header Fields Too Large', desc: '요청 헤더의 크기가 서버가 허용하는 범위를 초과했습니다.', cat: 4 },
+    { code: 451, name: 'Unavailable For Legal Reasons', desc: '법적인 사유(저작권, 정부 검열 등)로 접근이 차단된 리소스입니다.', cat: 4 },
+
+    { code: 500, name: 'Internal Server Error', desc: '서버 내부에 예기치 못한 오류가 발생했습니다. 가장 흔한 서버 오류 코드입니다.', cat: 5 },
+    { code: 501, name: 'Not Implemented', desc: '서버가 요청을 처리하는 데 필요한 기능을 지원하지 않습니다.', cat: 5 },
+    { code: 502, name: 'Bad Gateway', desc: '게이트웨이나 프록시 서버가 상위 서버로부터 잘못된 응답을 받았습니다.', cat: 5 },
+    { code: 503, name: 'Service Unavailable', desc: '서버가 일시적으로 과부하 상태이거나 점검 중이라 요청을 처리할 수 없습니다.', cat: 5 },
+    { code: 504, name: 'Gateway Timeout', desc: '게이트웨이나 프록시가 상위 서버로부터 제시간에 응답을 받지 못했습니다.', cat: 5 },
+    { code: 505, name: 'HTTP Version Not Supported', desc: '서버가 요청에 사용된 HTTP 버전을 지원하지 않습니다.', cat: 5 },
+    { code: 506, name: 'Variant Also Negotiates', desc: '서버 내부 설정 오류로 콘텐츠 협상 과정에 문제가 있습니다.', cat: 5 },
+    { code: 507, name: 'Insufficient Storage', desc: '요청을 완료하는 데 필요한 저장 공간이 서버에 부족합니다(WebDAV).', cat: 5 },
+    { code: 508, name: 'Loop Detected', desc: '요청을 처리하는 도중 무한 루프가 감지되었습니다(WebDAV).', cat: 5 },
+    { code: 510, name: 'Not Extended', desc: '요청을 처리하려면 추가적인 확장이 더 필요합니다.', cat: 5 },
+    { code: 511, name: 'Network Authentication Required', desc: '네트워크 접근 자체에 인증이 필요합니다(예: 공공 와이파이 로그인 페이지).', cat: 5 }
+  ];
+
+  var CAT_COLOR = { 1: '#bcd4ff', 2: '#a8e6cf', 3: '#ffd9a8', 4: '#ff8a5e', 5: '#ff6b6b' };
+  var currentCat = 'all';
+  var currentQuery = '';
+
+  function render() {
+    var q = currentQuery.trim().toLowerCase();
+    var filtered = STATUS_CODES.filter(function(s) {
+      if (currentCat !== 'all' && String(s.cat) !== currentCat) return false;
+      if (!q) return true;
+      return String(s.code).indexOf(q) !== -1 ||
+        s.name.toLowerCase().indexOf(q) !== -1 ||
+        s.desc.toLowerCase().indexOf(q) !== -1;
+    });
+
+    var list = document.getElementById('statusList');
+    if (!filtered.length) {
+      list.innerHTML = '<div class="status-empty">검색 결과가 없어요. 다른 키워드로 검색해보세요.</div>';
+      return;
+    }
+
+    list.innerHTML = filtered.map(function(s) {
+      return '<div class="status-card" data-code="' + s.code + '">' +
+        '<div class="status-code" style="color:' + CAT_COLOR[s.cat] + '">' + s.code + '</div>' +
+        '<div class="status-body">' +
+          '<div class="status-name">' + s.name + '</div>' +
+          '<div class="status-desc">' + s.desc + '</div>' +
+        '</div>' +
+      '</div>';
+    }).join('');
+
+    list.querySelectorAll('.status-card').forEach(function(card) {
+      card.addEventListener('click', function() {
+        var code = card.dataset.code;
+        navigator.clipboard.writeText(code).then(function() {
+          showToast('✓ ' + code + ' 코드를 복사했어요');
+        }).catch(function() {
+          showToast(code + ' — 복사 권한이 없어요. 직접 선택해 복사해주세요');
+        });
+      });
+    });
+  }
+
+  document.getElementById('searchInput').addEventListener('input', function(e) {
+    currentQuery = e.target.value;
+    render();
+  });
+
+  document.querySelectorAll('#catBtns .cat-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('#catBtns .cat-btn').forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      currentCat = btn.dataset.cat;
+      render();
+    });
+  });
+
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(function() { t.classList.remove('show'); }, 2000);
+  }
+
+  render();
+  </script>
+</body>
+</html>

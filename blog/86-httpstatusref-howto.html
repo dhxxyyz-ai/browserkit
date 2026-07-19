@@ -8,11 +8,11 @@
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="BmiCalc의 모든 기능을 단계별로 설명하는 공식 사용 가이드입니다. 키·체중으로 BMI를 계산하고, 나이·성별·활동량을 더해 기초대사량과 활동대사량까지 계산하는 방법을 알아보세요." />
-  <meta property="og:title" content="BMI 계산기 사용법 완전 가이드 — BrowserKit" />
-  <meta property="og:description" content="키·체중으로 BMI를 계산하고, 기초대사량·활동대사량까지 계산하는 BmiCalc 공식 가이드입니다." />
+  <meta name="description" content="HttpStatusRef의 모든 기능을 단계별로 설명하는 공식 사용 가이드입니다. HTTP 상태 코드를 검색하고, 카테고리로 필터링하고, 코드를 복사하는 방법을 알아보세요." />
+  <meta property="og:title" content="HTTP 상태 코드 사전 사용법 완전 가이드 — BrowserKit" />
+  <meta property="og:description" content="HTTP 상태 코드를 검색·필터링·복사하는 HttpStatusRef 공식 가이드입니다." />
   <meta property="og:type" content="article" />
-  <title>BMI 계산기 사용법 완전 가이드 — BrowserKit</title>
+  <title>HTTP 상태 코드 사전 사용법 완전 가이드 — BrowserKit</title>
   <link rel="stylesheet" href="/css/style.css?v=20260718b" />
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506"
      crossorigin="anonymous"></script>
@@ -54,23 +54,23 @@
   </style>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
-<meta property="og:image" content="https://browserkit.online/img/og/bmi-calc.png" />
+<meta property="og:image" content="https://browserkit.online/img/og/http-status-ref.png" />
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
-    "headline": "BMI 계산기 사용법 완전 가이드",
-    "description": "BmiCalc의 모든 기능을 단계별로 설명하는 공식 사용 가이드입니다. 키·체중으로 BMI를 계산하고, 나이·성별·활동량을 더해 기초대사량과 활동대사량까지 계산하는 방법을 알아보세요.",
+    "headline": "HTTP 상태 코드 사전 사용법 완전 가이드",
+    "description": "HttpStatusRef의 모든 기능을 단계별로 설명하는 공식 사용 가이드입니다. HTTP 상태 코드를 검색하고, 카테고리로 필터링하고, 코드를 복사하는 방법을 알아보세요.",
     "datePublished": "2026-07-19T00:00:00+09:00",
     "dateModified": "2026-07-19T00:00:00+09:00",
     "author": { "@type": "Organization", "name": "BrowserKit", "url": "https://browserkit.online" },
     "publisher": { "@type": "Organization", "name": "BrowserKit", "url": "https://browserkit.online", "logo": { "@type": "ImageObject", "url": "https://browserkit.online/img/og-browserkit.png" } },
-    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://browserkit.online/blog/85-bmicalc-howto" },
-    "image": "https://browserkit.online/img/og/bmi-calc.png"
+    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://browserkit.online/blog/86-httpstatusref-howto" },
+    "image": "https://browserkit.online/img/og/http-status-ref.png"
   }
-  </script>  <link rel="canonical" href="https://browserkit.online/blog/85-bmicalc-howto" />
+  </script>  <link rel="canonical" href="https://browserkit.online/blog/86-httpstatusref-howto" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:image" content="https://browserkit.online/img/og/bmi-calc.png" />
+  <meta name="twitter:image" content="https://browserkit.online/img/og/http-status-ref.png" />
   <style>
     .post-table-wrap { overflow-x:auto; }
     .post-table th, .post-table td { white-space:nowrap; }
@@ -84,7 +84,7 @@
   "mainEntity": [
     {
       "@type": "Question",
-      "name": "BMI 계산기는 정말 무료인가요?",
+      "name": "HTTP 상태 코드 사전은 정말 무료인가요?",
       "acceptedAnswer": {
         "@type": "Answer",
         "text": "네, 회원가입이나 설치 없이 완전 무료로 사용할 수 있습니다. 횟수 제한도 없습니다."
@@ -92,26 +92,26 @@
     },
     {
       "@type": "Question",
-      "name": "입력한 키·체중·나이 정보가 서버로 전송되나요?",
+      "name": "몇 개의 상태 코드가 등록되어 있나요?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "아니요. 모든 계산은 브라우저 안에서만 이루어지며 입력한 정보가 외부 서버로 전송되거나 저장되지 않습니다."
+        "text": "IANA에 등록된 표준 HTTP 상태 코드를 기준으로 1xx부터 5xx까지 총 62개 코드를 제공합니다."
       }
     },
     {
       "@type": "Question",
-      "name": "BMI가 정상이면 건강한 건가요?",
+      "name": "검색은 어떻게 동작하나요?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "BMI는 키와 체중만으로 계산하는 참고 지표이며 근육량이나 체지방률은 반영하지 않습니다. 예를 들어 근육량이 많은 사람은 BMI가 높게 나와도 체지방률은 낮을 수 있습니다. 정확한 건강 상태 판단은 반드시 병원이나 전문가와 상담하세요."
+        "text": "코드 번호(예: 404), 영문 이름(예: Not Found), 한글 설명(예: 찾을 수 없습니다) 중 어느 것으로 검색해도 실시간으로 결과가 필터링됩니다."
       }
     },
     {
       "@type": "Question",
-      "name": "기초대사량(BMR)과 활동대사량(TDEE)은 어떻게 다른가요?",
+      "name": "입력한 검색어가 서버로 전송되나요?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "기초대사량(BMR)은 아무 활동 없이 누워만 있어도 소모되는 최소 에너지량이고, 활동대사량(TDEE)은 여기에 일상 활동량을 반영해 실제 하루에 소모하는 총 칼로리입니다. 다이어트나 식단 계획을 세울 때는 TDEE를 기준으로 삼는 것이 일반적입니다."
+        "text": "아니요. 모든 검색은 브라우저에 이미 저장된 데이터 안에서만 이루어지며 외부 서버로 전송되지 않습니다."
       }
     }
   ]
@@ -129,34 +129,34 @@
   <article class="post-wrap">
     <a href="/blog/" class="back-link">&#x2190; 블로그 목록</a>
     <span class="post-tag">가이드</span>
-    <h1 class="post-title"><span style="color:var(--point-hover)">BMI 계산기</span> 사용법 완전 가이드</h1>
+    <h1 class="post-title"><span style="color:var(--point-hover)">HTTP 상태 코드 사전</span> 사용법 완전 가이드</h1>
     <div class="post-date">2026년 7월 19일</div>
     <div style="margin:12px 0"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
 
     <div class="post-body">
-      <p>BmiCalc는 키와 체중만 입력하면 BMI(체질량지수)와 비만도를 바로 계산해주는 무료 온라인 BMI 계산기입니다. 나이·성별·활동량을 추가로 입력하면 Mifflin-St Jeor 공식 기준 기초대사량(BMR)과, 여기에 활동량을 반영한 활동대사량(TDEE)까지 함께 계산해줍니다. 모든 계산은 브라우저에서만 이루어집니다.</p>
+      <p>HttpStatusRef는 100번대부터 500번대까지 HTTP 상태 코드를 검색하고 뜻을 확인할 수 있는 무료 온라인 사전입니다. 코드 번호나 이름으로 실시간 검색할 수 있고, 1xx~5xx 카테고리 필터로 원하는 범위만 모아볼 수도 있습니다. 카드를 클릭하면 코드 번호가 바로 클립보드에 복사됩니다. 모든 검색은 브라우저에서만 이루어집니다.</p>
 
       <h2>주요 기능</h2>
       <div class="feature-grid">
         <div class="feature-card">
-          <div class="feature-icon">&#x1F4CF;</div>
-          <div class="feature-title">BMI·비만도 계산</div>
-          <div class="feature-desc">키와 체중만 입력하면 BMI와 저체중/정상/과체중/비만 판정을 바로 보여줍니다.</div>
+          <div class="feature-icon">&#x1F50D;</div>
+          <div class="feature-title">실시간 검색</div>
+          <div class="feature-desc">코드 번호, 영문 이름, 한글 설명 중 무엇으로 검색해도 즉시 결과가 나옵니다.</div>
         </div>
         <div class="feature-card">
-          <div class="feature-icon">&#x1F525;</div>
-          <div class="feature-title">기초대사량 계산</div>
-          <div class="feature-desc">Mifflin-St Jeor 공식으로 나이·성별 기준 기초대사량(BMR)을 계산합니다.</div>
+          <div class="feature-icon">&#x1F4C2;</div>
+          <div class="feature-title">카테고리 필터</div>
+          <div class="feature-desc">1xx~5xx 중 원하는 카테고리만 골라서 모아볼 수 있습니다.</div>
         </div>
         <div class="feature-card">
-          <div class="feature-icon">&#x1F3C3;</div>
-          <div class="feature-title">활동대사량(TDEE) 계산</div>
-          <div class="feature-desc">5단계 활동량 중 선택하면 실제 하루 칼로리 소모량까지 보여줍니다.</div>
+          <div class="feature-icon">&#x1F4CB;</div>
+          <div class="feature-title">클릭으로 코드 복사</div>
+          <div class="feature-desc">카드를 클릭하면 상태 코드 번호가 바로 클립보드에 복사됩니다.</div>
         </div>
         <div class="feature-card">
           <div class="feature-icon">&#x1F512;</div>
           <div class="feature-title">완전 로컬 처리</div>
-          <div class="feature-desc">입력한 정보가 브라우저 안에서만 계산되고 서버로 전송되지 않습니다.</div>
+          <div class="feature-desc">검색이 브라우저 안에서만 이루어지고 서버로 전송되지 않습니다.</div>
         </div>
       </div>
 
@@ -166,121 +166,114 @@
       <div class="step-card">
         <div class="step-num">1</div>
         <div class="step-content">
-          <h3>키·체중 입력</h3>
-          <p>키(cm)와 체중(kg)을 입력합니다. 이 두 값만 있으면 바로 BMI를 계산할 수 있습니다.</p>
+          <h3>검색어 입력 또는 카테고리 선택</h3>
+          <p>궁금한 코드 번호(예: 404)나 이름(예: Not Found)을 검색창에 입력하거나, 1xx~5xx 카테고리 버튼을 눌러 원하는 범위만 모아봅니다.</p>
         </div>
       </div>
+
+      <figure style="margin:12px 0 24px; text-align:center;">
+        <img src="/img/blog/httpstatusref/01-input.png"
+             alt="HttpStatusRef의 검색창과 카테고리 필터 버튼이 표시된 화면"
+             style="width:100%; max-width:640px; border:1px solid var(--border); border-radius:var(--radius);"
+             loading="lazy" />
+        <figcaption style="font-size:13px; color:var(--subtext); margin-top:6px;">
+          검색창과 카테고리 필터
+        </figcaption>
+      </figure>
 
       <div class="step-card">
         <div class="step-num">2</div>
         <div class="step-content">
-          <h3>기초대사량 계산 여부 선택</h3>
-          <p>BMI만 필요하면 "BMI만 계산"을, 하루 권장 칼로리까지 알고 싶다면 "기초대사량도 계산"을 선택하고 나이·성별·활동량을 추가로 입력합니다.</p>
+          <h3>검색 결과 확인 및 코드 복사</h3>
+          <p>검색·필터 결과가 카드 목록으로 표시됩니다. 원하는 코드의 카드를 클릭하면 코드 번호가 클립보드에 바로 복사됩니다.</p>
         </div>
       </div>
 
       <figure style="margin:12px 0 24px; text-align:center;">
-        <img src="/img/blog/bmicalc/01-input.png"
-             alt="BmiCalc의 키·체중·나이·성별·활동량 입력 화면"
+        <img src="/img/blog/httpstatusref/02-result.png"
+             alt="HttpStatusRef의 검색 결과 카드 목록과 상태 코드 설명이 표시된 화면"
              style="width:100%; max-width:640px; border:1px solid var(--border); border-radius:var(--radius);"
              loading="lazy" />
         <figcaption style="font-size:13px; color:var(--subtext); margin-top:6px;">
-          키·체중과 기초대사량 계산 옵션 입력
-        </figcaption>
-      </figure>
-
-      <div class="step-card">
-        <div class="step-num">3</div>
-        <div class="step-content">
-          <h3>계산 결과 확인</h3>
-          <p><strong>📏 계산하기</strong> 버튼을 누르면 BMI 수치와 비만도 배지가 크게 표시되고, 기초대사량 계산을 선택했다면 아래 계산 내역에서 BMR·TDEE까지 함께 확인할 수 있습니다.</p>
-        </div>
-      </div>
-
-      <figure style="margin:12px 0 24px; text-align:center;">
-        <img src="/img/blog/bmicalc/02-result.png"
-             alt="BmiCalc의 BMI 계산 결과와 기초대사량·활동대사량 계산 내역이 표시된 화면"
-             style="width:100%; max-width:640px; border:1px solid var(--border); border-radius:var(--radius);"
-             loading="lazy" />
-        <figcaption style="font-size:13px; color:var(--subtext); margin-top:6px;">
-          계산 결과와 계산 내역
+          검색 결과와 상태 코드 설명
         </figcaption>
       </figure>
 
       <div class="post-warn">
-        <strong>⚠️ 참고:</strong> BMI는 대한비만학회 기준으로, 기초대사량은 Mifflin-St Jeor 공식으로 계산하는 표준 계산기입니다. 체성분(근육량·체지방률)은 반영하지 않으므로 참고용으로만 활용하고, 정확한 건강 상태는 반드시 병원이나 전문가에 확인하세요.
+        <strong>⚠️ 참고:</strong> IANA에 등록된 표준 HTTP 상태 코드를 기준으로 정리했습니다. 일부 프레임워크나 서비스가 사용하는 비표준 코드는 포함되지 않을 수 있습니다.
       </div>
 
-      <h2>BMI 판정 기준</h2>
+      <h2>카테고리별 의미</h2>
       <div class="post-table-wrap"><table class="post-table">
-        <thead><tr><th>BMI 범위</th><th>판정</th></tr></thead>
+        <thead><tr><th>카테고리</th><th>의미</th></tr></thead>
         <tbody>
-          <tr><td>18.5 미만</td><td>저체중</td></tr>
-          <tr><td>18.5 ~ 22.9</td><td>정상</td></tr>
-          <tr><td>23 ~ 24.9</td><td>과체중</td></tr>
-          <tr><td>25 이상</td><td>비만</td></tr>
+          <tr><td>1xx 정보성</td><td>요청을 받았고 처리를 계속 진행 중임을 알림</td></tr>
+          <tr><td>2xx 성공</td><td>요청이 성공적으로 처리됨</td></tr>
+          <tr><td>3xx 리다이렉션</td><td>요청을 완료하려면 추가 동작(다른 URL로 이동 등)이 필요함</td></tr>
+          <tr><td>4xx 클라이언트 오류</td><td>요청 자체에 문제가 있어 서버가 처리할 수 없음</td></tr>
+          <tr><td>5xx 서버 오류</td><td>서버 쪽 문제로 정상적인 요청도 처리하지 못함</td></tr>
         </tbody>
       </table></div>
 
       <h2>활용 예시</h2>
       <div class="use-case-grid">
         <div class="use-case-card">
-          <div class="use-case-icon">&#x1F4CA;</div>
-          <div class="use-case-title">건강검진 결과 참고</div>
-          <div class="use-case-desc">건강검진에서 받은 키·체중으로 BMI를 빠르게 확인합니다.</div>
+          <div class="use-case-icon">&#x1F41B;</div>
+          <div class="use-case-title">API 디버깅</div>
+          <div class="use-case-desc">API 응답으로 받은 낯선 상태 코드의 정확한 의미를 바로 확인합니다.</div>
         </div>
         <div class="use-case-card">
-          <div class="use-case-icon">&#x1F957;</div>
-          <div class="use-case-title">다이어트 식단 계획</div>
-          <div class="use-case-desc">TDEE를 기준으로 하루 섭취 칼로리 목표를 세웁니다.</div>
+          <div class="use-case-icon">&#x1F4DA;</div>
+          <div class="use-case-title">개발 공부</div>
+          <div class="use-case-desc">HTTP 프로토콜을 공부하며 상태 코드 체계를 익힙니다.</div>
         </div>
         <div class="use-case-card">
-          <div class="use-case-icon">&#x1F3CB;&#xFE0F;</div>
-          <div class="use-case-title">운동 목표 설정</div>
-          <div class="use-case-desc">활동량 변화에 따른 칼로리 소모량 차이를 비교합니다.</div>
+          <div class="use-case-icon">&#x1F4DD;</div>
+          <div class="use-case-title">API 문서 작성</div>
+          <div class="use-case-desc">API 문서에 사용할 정확한 상태 코드와 설명을 빠르게 찾습니다.</div>
         </div>
         <div class="use-case-card">
-          <div class="use-case-icon">&#x1F4C8;</div>
-          <div class="use-case-title">체중 변화 추적</div>
-          <div class="use-case-desc">주기적으로 체중을 입력해 BMI 변화 추이를 확인합니다.</div>
+          <div class="use-case-icon">&#x1F310;</div>
+          <div class="use-case-title">서버 로그 분석</div>
+          <div class="use-case-desc">서버 로그에 찍힌 상태 코드가 무엇을 의미하는지 확인합니다.</div>
         </div>
       </div>
 
-      <div class="post-highlight">&#x1F512; BmiCalc는 모든 계산이 내 PC 브라우저에서만 실행됩니다. 입력한 정보가 외부 서버로 전송되지 않습니다.</div>
+      <div class="post-highlight">&#x1F512; HttpStatusRef는 모든 검색이 내 PC 브라우저에서만 실행됩니다. 검색어가 외부 서버로 전송되지 않습니다.</div>
 
       <h2>자주 묻는 질문</h2>
       <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
-        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. BMI 계산기는 정말 무료인가요?</p>
+        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. HTTP 상태 코드 사전은 정말 무료인가요?</p>
         <p style="color:var(--subtext);margin:0;line-height:1.7">네, 회원가입이나 설치 없이 완전 무료로 사용할 수 있습니다. 횟수 제한도 없습니다.</p>
       </div>
       <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
-        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. 입력한 키·체중·나이 정보가 서버로 전송되나요?</p>
-        <p style="color:var(--subtext);margin:0;line-height:1.7">아니요. 모든 계산은 브라우저 안에서만 이루어지며 입력한 정보가 외부 서버로 전송되거나 저장되지 않습니다.</p>
+        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. 몇 개의 상태 코드가 등록되어 있나요?</p>
+        <p style="color:var(--subtext);margin:0;line-height:1.7">IANA에 등록된 표준 HTTP 상태 코드를 기준으로 1xx부터 5xx까지 총 62개 코드를 제공합니다.</p>
       </div>
       <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
-        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. BMI가 정상이면 건강한 건가요?</p>
-        <p style="color:var(--subtext);margin:0;line-height:1.7">BMI는 키와 체중만으로 계산하는 참고 지표이며 근육량이나 체지방률은 반영하지 않습니다. 예를 들어 근육량이 많은 사람은 BMI가 높게 나와도 체지방률은 낮을 수 있습니다. 정확한 건강 상태 판단은 반드시 병원이나 전문가와 상담하세요.</p>
+        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. 검색은 어떻게 동작하나요?</p>
+        <p style="color:var(--subtext);margin:0;line-height:1.7">코드 번호(예: 404), 영문 이름(예: Not Found), 한글 설명(예: 찾을 수 없습니다) 중 어느 것으로 검색해도 실시간으로 결과가 필터링됩니다.</p>
       </div>
       <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
-        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. 기초대사량(BMR)과 활동대사량(TDEE)은 어떻게 다른가요?</p>
-        <p style="color:var(--subtext);margin:0;line-height:1.7">기초대사량(BMR)은 아무 활동 없이 누워만 있어도 소모되는 최소 에너지량이고, 활동대사량(TDEE)은 여기에 일상 활동량을 반영해 실제 하루에 소모하는 총 칼로리입니다. 다이어트나 식단 계획을 세울 때는 TDEE를 기준으로 삼는 것이 일반적입니다.</p>
+        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. 입력한 검색어가 서버로 전송되나요?</p>
+        <p style="color:var(--subtext);margin:0;line-height:1.7">아니요. 모든 검색은 브라우저에 이미 저장된 데이터 안에서만 이루어지며 외부 서버로 전송되지 않습니다.</p>
       </div>
     </div>
 
     <div style="margin:12px 0"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
 
     <div class="cta-box">
-      <p>지금 바로 BMI를 계산해보세요.<br />설치도 회원가입도 필요 없습니다.</p>
-      <a href="/bmi-calc/" class="cta-btn" style="display:inline-flex;align-items:center;gap:8px">
-        <span style="display:inline-block;width:26px;height:26px;overflow:hidden;flex-shrink:0"><span style="display:block;transform:scale(0.565);transform-origin:top left"><div style="width:46px;height:46px;background:#a0e8e0;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="position:relative;width:26px;height:26px;border-radius:50%;background:#fffdf9;border:2.5px solid #2a2433;box-sizing:border-box;display:flex;align-items:center;justify-content:center;font:700 9px Fira Code,monospace;color:#2a2433">BMI</div></div></span></span>
-        무료로 BMI 계산하기
+      <p>지금 바로 HTTP 상태 코드를 검색해보세요.<br />설치도 회원가입도 필요 없습니다.</p>
+      <a href="/http-status-ref/" class="cta-btn" style="display:inline-flex;align-items:center;gap:8px">
+        <span style="display:inline-block;width:26px;height:26px;overflow:hidden;flex-shrink:0"><span style="display:block;transform:scale(0.565);transform-origin:top left"><div style="width:46px;height:46px;background:#e0c3ff;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="font:700 15px Fira Code,monospace;color:#2a2433;line-height:1;letter-spacing:-.5px;white-space:nowrap">404</div></div></span></span>
+        무료로 상태 코드 검색하기
       </a>
     </div>
     <div style="margin:12px 0"><ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="9500090221"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
 
 <div class="post-nav">
-      <a href="/blog/84-severancepaycalc-howto"><span class="nav-label">← 이전 글</span><span style="color:var(--point-hover)">퇴직금 계산기</span> 사용법 완전 가이드</a>
-      <a href="/blog/86-httpstatusref-howto" style="text-align:right"><span class="nav-label">다음 글 →</span><span style="color:var(--point-hover)">HTTP 상태 코드 사전</span> 사용법 완전 가이드</a>
+      <a href="/blog/85-bmicalc-howto"><span class="nav-label">← 이전 글</span><span style="color:var(--point-hover)">BMI 계산기</span> 사용법 완전 가이드</a>
+      <a href="/blog/24-qrcode-howto" style="text-align:right"><span class="nav-label">다음 글 →</span><span style="color:var(--point-hover)">QR 코드 생성</span> 사용법 완전 가이드</a>
     </div></div>
 
   </article>

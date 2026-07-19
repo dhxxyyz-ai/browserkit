@@ -69,7 +69,7 @@ const TOOL_URLS = {
   SQLFormatter:'/sql-formatter/', LoremGen:'/lorem-gen/', ImageCompare:'/image-compare/', ImageFrame:'/image-frame/',
   CSVJSONConvert:'/csv-json-convert/', YAMLJSONConvert:'/yaml-json-convert/', QRScanner:'/qr-scanner/',
   SalaryCalc:'/salary-calc/', LadderGame:'/ladder-game/', TextStats:'/text-stats/', ColorConverter:'/color-converter/',
-  MarkdownTableConvert:'/markdown-table-convert/', LoanCalc:'/loan-calc/', SavingsCalc:'/savings-calc/', CodeSnapshot:'/code-snapshot/', MockupFrame:'/mockup-frame/', GifMaker:'/gif-maker/', VatCalc:'/vat-calc/', LottoGen:'/lotto-gen/', SeverancePayCalc:'/severance-pay-calc/', BmiCalc:'/bmi-calc/',
+  MarkdownTableConvert:'/markdown-table-convert/', LoanCalc:'/loan-calc/', SavingsCalc:'/savings-calc/', CodeSnapshot:'/code-snapshot/', MockupFrame:'/mockup-frame/', GifMaker:'/gif-maker/', VatCalc:'/vat-calc/', LottoGen:'/lotto-gen/', SeverancePayCalc:'/severance-pay-calc/', BmiCalc:'/bmi-calc/', HttpStatusRef:'/http-status-ref/',
   PDFPasswordRemove:'/pdf-password-remove/', PDFPasswordSet:'/pdf-password-set/'
 };
 
@@ -156,7 +156,8 @@ const BLOG_URLS = {
   '부가세 계산기 사용법 완전 가이드':'/blog/82-vatcalc-howto.html',
   '로또 번호 생성기 사용법 완전 가이드':'/blog/83-lottogen-howto.html',
   '퇴직금 계산기 사용법 완전 가이드':'/blog/84-severancepaycalc-howto.html',
-  'BMI 계산기 사용법 완전 가이드':'/blog/85-bmicalc-howto.html'
+  'BMI 계산기 사용법 완전 가이드':'/blog/85-bmicalc-howto.html',
+  'HTTP 상태 코드 사전 사용법 완전 가이드':'/blog/86-httpstatusref-howto.html'
 };
 
 const INFO_URLS = {
@@ -176,7 +177,7 @@ const TOOLBOX_CATS = [
   { label:'이미지 편집',   keys:['FitImage','CropImage','WatermarkImage','ColorPicker','ImageBright','BGRemove','ImageText','ImageFilter','ImageCollage','PixelArt','MosaicMaker','FaviconGen','SVGtoPNG','ImageCompare','ImageFrame','MockupFrame','GifMaker'] },
   { label:'문서·텍스트',   keys:['PDFMerge','PDFSplit','TextTools','DiffChecker','MarkdownEditor','FindReplace','LineNumber','LoremGen','CSVJSONConvert','YAMLJSONConvert','TextStats','MarkdownTableConvert','PDFPasswordRemove','PDFPasswordSet'] },
   { label:'유틸리티',      keys:['QRCode','PasswordGen','UnitConvert','DateCalc','WorldClock','RandomPicker','PomodoroTimer','QRScanner','LadderGame'] },
-  { label:'개발자',        keys:['JSONFormat','RegexTest','Base64Tool','HashGen','Minifier','URLEncode','CSSUnit','UUIDGen','JWTDecoder','CronHelper','SQLFormatter','ColorConverter','CodeSnapshot'] },
+  { label:'개발자',        keys:['JSONFormat','RegexTest','Base64Tool','HashGen','Minifier','URLEncode','CSSUnit','UUIDGen','JWTDecoder','CronHelper','SQLFormatter','ColorConverter','CodeSnapshot','HttpStatusRef'] },
   { label:'데이터·시각화', keys:['ChartMaker','DiagramMaker','PaletteGen','WordCloudGen'] },
   { label:'계산기',        keys:['SalaryCalc','CurrencyCalc','LoanCalc','SavingsCalc','VatCalc','SeverancePayCalc','BmiCalc'] },
   { label:'생활·재미',     keys:['LottoGen'] }
@@ -208,7 +209,7 @@ const SEARCH_TOOLS = [
   {code:'UUIDGen',name:'UUID 생성기'},{code:'JWTDecoder',name:'JWT 디코더'},
   {code:'CronHelper',name:'Cron 표현식 도우미'},{code:'SQLFormatter',name:'SQL 포맷터'},
   {code:'LoremGen',name:'더미 텍스트 생성기'},{code:'ImageCompare',name:'이미지 비교 슬라이더'},
-  {code:'ImageFrame',name:'이미지 테두리 추가'},{code:'CSVJSONConvert',name:'CSV ↔ JSON 변환기'},{code:'YAMLJSONConvert',name:'YAML ↔ JSON 변환기'},{code:'QRScanner',name:'QR 코드 스캐너'},{code:'SalaryCalc',name:'연봉 실수령액 계산기'},{code:'LadderGame',name:'사다리타기'},{code:'TextStats',name:'텍스트 통계 분석기'},{code:'ColorConverter',name:'색상 코드 변환기'},{code:'MarkdownTableConvert',name:'표 변환기'},{code:'LoanCalc',name:'대출 이자 계산기'},{code:'SavingsCalc',name:'적금·예금 만기 계산기'},{code:'CodeSnapshot',name:'코드 스니펫 이미지 생성기'},{code:'MockupFrame',name:'디바이스 목업 생성기'},{code:'GifMaker',name:'GIF 애니메이션 생성기'},{code:'VatCalc',name:'부가세 계산기'},{code:'PDFPasswordRemove',name:'PDF 비밀번호 해제'},{code:'PDFPasswordSet',name:'PDF 비밀번호 설정'},{code:'LottoGen',name:'로또 번호 생성기'},{code:'SeverancePayCalc',name:'퇴직금 계산기'},{code:'BmiCalc',name:'BMI 계산기'}
+  {code:'ImageFrame',name:'이미지 테두리 추가'},{code:'CSVJSONConvert',name:'CSV ↔ JSON 변환기'},{code:'YAMLJSONConvert',name:'YAML ↔ JSON 변환기'},{code:'QRScanner',name:'QR 코드 스캐너'},{code:'SalaryCalc',name:'연봉 실수령액 계산기'},{code:'LadderGame',name:'사다리타기'},{code:'TextStats',name:'텍스트 통계 분석기'},{code:'ColorConverter',name:'색상 코드 변환기'},{code:'MarkdownTableConvert',name:'표 변환기'},{code:'LoanCalc',name:'대출 이자 계산기'},{code:'SavingsCalc',name:'적금·예금 만기 계산기'},{code:'CodeSnapshot',name:'코드 스니펫 이미지 생성기'},{code:'MockupFrame',name:'디바이스 목업 생성기'},{code:'GifMaker',name:'GIF 애니메이션 생성기'},{code:'VatCalc',name:'부가세 계산기'},{code:'PDFPasswordRemove',name:'PDF 비밀번호 해제'},{code:'PDFPasswordSet',name:'PDF 비밀번호 설정'},{code:'LottoGen',name:'로또 번호 생성기'},{code:'SeverancePayCalc',name:'퇴직금 계산기'},{code:'BmiCalc',name:'BMI 계산기'},{code:'HttpStatusRef',name:'HTTP 상태 코드 사전'}
 ];
 
 const TOOL_LABEL   = Object.fromEntries(SEARCH_TOOLS.map(t => [t.code, t.name]));
@@ -227,7 +228,7 @@ function glyphInfo(code) {
     ChartMaker:'chart', ImageText:'token:T', ImageFilter:'halfcircle', ImageCollage:'collage', PixelArt:'pixelart',
     MosaicMaker:'mosaic', PDFSplit:'split', LineNumber:'linenum', CurrencyCalc:'currency', Minifier:'token:<>',
     URLEncode:'token:%20', CSSUnit:'token:rem', DiagramMaker:'diagram', PaletteGen:'palette', ExifRemover:'exif',
-    RandomPicker:'roulette', WordCloudGen:'wordcloud', FaviconGen:'favicon', SVGtoPNG:'token:SVG', PomodoroTimer:'pomodoro', UUIDGen:'token:UUID', JWTDecoder:'token:JWT', CronHelper:'token:CRON', SQLFormatter:'token:SQL', LoremGen:'token:Lo', ImageCompare:'compare', ImageFrame:'frame', CSVJSONConvert:'token:CSV', YAMLJSONConvert:'token:YML', QRScanner:'qrscan', SalaryCalc:'salary', LadderGame:'ladder', TextStats:'textstats', ColorConverter:'colorswap', MarkdownTableConvert:'gridtable', LoanCalc:'loanbar', SavingsCalc:'coinstack', CodeSnapshot:'codetag', MockupFrame:'phoneicon', GifMaker:'gifstack', VatCalc:'percent', PDFPasswordRemove:'pdflock', PDFPasswordSet:'pdflockkey', LottoGen:'lottoball', SeverancePayCalc:'briefcase', BmiCalc:'bmiscale'
+    RandomPicker:'roulette', WordCloudGen:'wordcloud', FaviconGen:'favicon', SVGtoPNG:'token:SVG', PomodoroTimer:'pomodoro', UUIDGen:'token:UUID', JWTDecoder:'token:JWT', CronHelper:'token:CRON', SQLFormatter:'token:SQL', LoremGen:'token:Lo', ImageCompare:'compare', ImageFrame:'frame', CSVJSONConvert:'token:CSV', YAMLJSONConvert:'token:YML', QRScanner:'qrscan', SalaryCalc:'salary', LadderGame:'ladder', TextStats:'textstats', ColorConverter:'colorswap', MarkdownTableConvert:'gridtable', LoanCalc:'loanbar', SavingsCalc:'coinstack', CodeSnapshot:'codetag', MockupFrame:'phoneicon', GifMaker:'gifstack', VatCalc:'percent', PDFPasswordRemove:'pdflock', PDFPasswordSet:'pdflockkey', LottoGen:'lottoball', SeverancePayCalc:'briefcase', BmiCalc:'bmiscale', HttpStatusRef:'statuscode'
   };
   const v = m[code];
   if (!v) return { glyph:'token', token:'+' };
@@ -287,6 +288,7 @@ function toolIcon(fill, ink, glyph, token) {
   else if (glyph==='lottoball') inner=`<div style="position:relative;width:26px;height:26px;border-radius:50%;background:#fffdf9;border:2.5px solid ${k};box-sizing:border-box;display:flex;align-items:center;justify-content:center;font:700 12px Fira Code,monospace;color:${k}">7</div>`;
   else if (glyph==='briefcase') inner=`<div style="position:relative;width:24px;height:19px;background:#fffdf9;border:2.5px solid ${k};border-radius:4px;box-sizing:border-box"><div style="position:absolute;left:7px;top:-6px;width:8px;height:6px;border:2.5px solid ${k};border-bottom:none;border-radius:3px 3px 0 0;box-sizing:border-box"></div></div>`;
   else if (glyph==='bmiscale') inner=`<div style="position:relative;width:26px;height:26px;border-radius:50%;background:#fffdf9;border:2.5px solid ${k};box-sizing:border-box;display:flex;align-items:center;justify-content:center;font:700 9px Fira Code,monospace;color:${k}">BMI</div>`;
+  else if (glyph==='statuscode') inner=`<div style="font:700 15px Fira Code,monospace;color:${k};line-height:1;letter-spacing:-.5px;white-space:nowrap">404</div>`;
   else if (glyph==='pdflockkey') inner=`<div style="position:relative;width:22px;height:26px"><div style="width:22px;height:16px;background:#fffdf9;border:2.5px solid ${k};border-radius:3px;box-sizing:border-box;position:absolute;bottom:0;display:flex;align-items:center;justify-content:center"><div style="width:4px;height:4px;border-radius:50%;background:${k}"></div></div><div style="width:12px;height:11px;border:2.5px solid ${k};border-bottom:none;border-radius:6px 6px 0 0;box-sizing:border-box;position:absolute;top:0;left:5px"></div></div>`;
   else inner=`<div style="font:700 16px Gowun Dodum,sans-serif;color:${k};line-height:1;letter-spacing:-.5px;white-space:nowrap">${token||'+'}</div>`;
   return `<div style="width:46px;height:46px;background:${f};border:2.5px solid ${k};border-radius:14px 11px 13px 10px;box-sizing:border-box;display:flex;align-items:center;justify-content:center;overflow:hidden;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08)">${inner}</div>`;
