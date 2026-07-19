@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <link rel="icon" href="/favicon.ico" sizes="32x32">
+  <link rel="icon" href="/favicon-16.png" sizes="16x16" type="image/png">
+  <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="/favicon-192.png" sizes="192x192" type="image/png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="키와 체중을 입력하면 BMI와 비만도를 계산하고, 나이·성별·활동량을 더하면 기초대사량과 활동대사량까지 계산하는 무료 온라인 BMI 계산기입니다. 서버 전송 없이 브라우저에서 바로 처리합니다." />
+  <meta property="og:title" content="BmiCalc — BMI/칼로리 계산기" />
+  <meta property="og:description" content="키·체중으로 BMI를 계산하고, 나이·성별·활동량을 더하면 기초대사량과 일일 칼로리 소모량까지 계산하는 무료 온라인 도구입니다." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://browserkit.online/bmi-calc/" />
+  <title>BmiCalc — BMI/칼로리 계산기</title>
+  <link rel="stylesheet" href="/css/style.css?v=20260718b" />
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506"
+     crossorigin="anonymous"></script>
+  <style>
+    .input-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:24px; margin-bottom:20px; }
+    .input-row { display:flex; gap:12px; flex-wrap:wrap; align-items:flex-end; margin-bottom:16px; }
+    .input-row:last-child { margin-bottom:0; }
+    .input-group { flex:1; min-width:160px; display:flex; flex-direction:column; gap:8px; }
+    .input-label { font-size:12px; font-weight:600; color:var(--subtext); }
+    .amount-input { background:var(--bg); border:1px solid var(--border); border-radius:10px; padding:13px 16px; font-size:16px; font-weight:600; color:var(--text); font-family:'Fira Code',monospace; outline:none; width:100%; box-sizing:border-box; }
+    .amount-input:focus { border-color:var(--point); }
+    .input-hint { font-size:12px; color:var(--subtext); margin-top:2px; }
+
+    .seg-btns { display:flex; gap:6px; flex-wrap:wrap; }
+    .seg-btn { background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:8px 16px; font-size:13px; color:var(--subtext); cursor:pointer; font-family:'Gowun Dodum',sans-serif; }
+    .seg-btn:hover { border-color:var(--point); color:var(--text); }
+    .seg-btn.active { background:rgba(123,108,255,0.15); border-color:var(--point); color:var(--point-hover); font-weight:700; }
+
+    .select-input { background:var(--bg); border:1px solid var(--border); border-radius:10px; padding:13px 16px; font-size:14px; font-weight:600; color:var(--text); font-family:'Gowun Dodum',sans-serif; outline:none; width:100%; box-sizing:border-box; }
+    .select-input:focus { border-color:var(--point); }
+
+    .btn-calc { background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border:none; border-radius:12px; padding:14px 32px; font-size:16px; font-weight:700; cursor:pointer; font-family:'Gowun Dodum',sans-serif; width:100%; margin-bottom:20px; }
+    .btn-calc:hover { transform:translateY(-2px); box-shadow:0 8px 24px var(--glow); }
+
+    .result-hero { background:var(--card); border:1px solid var(--point); border-radius:var(--radius); padding:28px; text-align:center; margin-bottom:20px; display:none; }
+    .result-hero.show { display:block; }
+    .result-hero-label { font-size:13px; color:var(--subtext); margin-bottom:8px; }
+    .result-hero-value { font-size:34px; font-weight:800; color:var(--point-hover); font-family:'Fira Code',monospace; }
+    .result-hero-sub { font-size:13px; color:var(--subtext); margin-top:8px; }
+    .bmi-badge { display:inline-block; margin-top:10px; padding:5px 16px; border-radius:999px; font-size:13px; font-weight:700; }
+
+    .breakdown-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px 24px; margin-bottom:48px; display:none; }
+    .breakdown-card.show { display:block; }
+    .breakdown-title { font-size:13px; font-weight:600; color:var(--subtext); margin-bottom:14px; }
+    .breakdown-row { display:flex; justify-content:space-between; align-items:center; padding:9px 0; border-bottom:1px solid var(--border); font-size:14px; }
+    .breakdown-row:last-child { border-bottom:none; }
+    .breakdown-row.total { font-weight:700; color:var(--text); padding-top:12px; }
+    .breakdown-label { color:var(--subtext); }
+    .breakdown-value { font-family:'Fira Code',monospace; color:var(--text); font-weight:600; }
+
+    .toast { position:fixed; bottom:32px; left:50%; transform:translateX(-50%) translateY(80px); background:var(--success); color:#fff; border-radius:999px; padding:10px 24px; font-size:14px; font-weight:600; opacity:0; pointer-events:none; z-index:999; transition:all 0.3s ease; }
+    .toast.show { transform:translateX(-50%) translateY(0); opacity:1; }
+
+    .footer { border-top:1px solid var(--border); padding:32px 0; text-align:center; }
+    .footer-copy { color:var(--subtext); font-size:13px; margin-bottom:12px; }
+    .footer-nav { display:flex; justify-content:center; gap:20px; flex-wrap:wrap; }
+    .footer-nav a { color:var(--subtext); font-size:13px; text-decoration:none; }
+    .footer-nav a:hover { color:var(--text); }
+
+    @media (max-width:640px) {
+      .hero-title { font-size:24px; }
+      .input-row { flex-direction:column; align-items:stretch; }
+      .result-hero-value { font-size:26px; }
+    }
+  </style>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+  <meta property="og:image" content="https://browserkit.online/img/og/bmi-calc.png" />
+  <link rel="canonical" href="https://browserkit.online/bmi-calc/" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://browserkit.online/img/og/bmi-calc.png" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "BmiCalc — BMI/칼로리 계산기",
+  "url": "https://browserkit.online/bmi-calc/",
+  "description": "키와 체중을 입력하면 BMI와 비만도를 계산하고, 나이·성별·활동량을 더하면 기초대사량과 활동대사량까지 계산하는 무료 온라인 BMI 계산기입니다. 서버 전송 없이 브라우저에서 바로 처리합니다.",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "Any",
+  "browserRequirements": "Requires JavaScript",
+  "inLanguage": "ko",
+  "isAccessibleForFree": true,
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "KRW"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "BrowserKit",
+    "url": "https://browserkit.online/"
+  }
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "홈",
+      "item": "https://browserkit.online/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "계산기"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "BMI/칼로리 계산기",
+      "item": "https://browserkit.online/bmi-calc/"
+    }
+  ]
+}
+  </script>
+</head>
+
+<body>
+  <header class="header">
+    <div class="container">
+      <a href="/" class="header-brand">
+        <div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Gowun Dodum,sans-serif;flex-shrink:0">B</div>
+        <span class="header-brand-text"><span style="color:var(--text)">Browser</span><span style="color:var(--point)">Kit</span></span>
+      </a>
+      <a href="/" class="header-back">&#x2190; BrowserKit 홈으로</a>
+    </div>
+  </header>
+
+  <main><div class="container">
+    <div class="hero">
+      <div class="hero-icon" style="height:78px;display:flex;justify-content:center;align-items:center"><div style="transform:scale(1.7);transform-origin:center"><div style="width:46px;height:46px;background:#a0e8e0;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="position:relative;width:26px;height:26px;border-radius:50%;background:#fffdf9;border:2.5px solid #2a2433;box-sizing:border-box;display:flex;align-items:center;justify-content:center;font:700 9px Fira Code,monospace;color:#2a2433">BMI</div></div></div></div>
+      <div class="hero-title-wrap"><h1 class="hero-title">BMI/칼로리 계산기</h1><a href="/blog/85-bmicalc-howto" class="hero-guide-link">사용법 가이드 보기</a></div>
+      <p class="hero-desc">키·체중으로 BMI를, 나이·성별·활동량을 더하면 기초대사량까지 계산해드려요</p>
+      <div class="hero-badges">
+        <span class="badge">🔒 완전 로컬 처리</span>
+        <span class="badge">⚡ 무료 사용</span>
+        <span class="badge">🛡️ 서버 전송 없음</span>
+        <span class="badge">📦 설치 불필요</span>
+      </div>
+    </div>
+    <div style="margin:0 0 12px"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+
+    <p class="notice">💡 BMI는 대한비만학회 기준(저체중 18.5 미만·정상 18.5~22.9·과체중 23~24.9·비만 25 이상)으로 판정하며, 기초대사량은 Mifflin-St Jeor 공식을 사용합니다. 체성분(근육량·체지방률)은 반영하지 않으므로 참고용으로만 활용하고, 정확한 건강 상태는 반드시 병원이나 전문가에 확인하세요. 모든 계산은 브라우저에서만 이루어집니다.</p>
+
+    <div class="input-card">
+      <div class="input-row">
+        <div class="input-group">
+          <span class="input-label">키 (cm)</span>
+          <input type="number" class="amount-input" id="heightInput" placeholder="예: 170" min="0" step="0.1" />
+        </div>
+        <div class="input-group">
+          <span class="input-label">체중 (kg)</span>
+          <input type="number" class="amount-input" id="weightInput" placeholder="예: 65" min="0" step="0.1" />
+        </div>
+      </div>
+      <div class="input-row">
+        <div class="input-group">
+          <span class="input-label">기초대사량·칼로리 계산 (선택)</span>
+          <div class="seg-btns" id="bmrToggleBtns">
+            <button class="seg-btn" data-on="0">BMI만 계산</button>
+            <button class="seg-btn active" data-on="1">기초대사량도 계산</button>
+          </div>
+        </div>
+      </div>
+      <div id="bmrInputs">
+        <div class="input-row">
+          <div class="input-group">
+            <span class="input-label">나이 (세)</span>
+            <input type="number" class="amount-input" id="ageInput" placeholder="예: 30" min="0" step="1" />
+          </div>
+          <div class="input-group">
+            <span class="input-label">성별</span>
+            <div class="seg-btns" id="genderBtns">
+              <button class="seg-btn active" data-gender="male">남성</button>
+              <button class="seg-btn" data-gender="female">여성</button>
+            </div>
+          </div>
+        </div>
+        <div class="input-row">
+          <div class="input-group">
+            <span class="input-label">활동량</span>
+            <select class="select-input" id="activitySelect">
+              <option value="1.2">좌식 생활 (운동 거의 안 함)</option>
+              <option value="1.375">가벼운 운동 (주 1~3일)</option>
+              <option value="1.55" selected>보통 운동 (주 3~5일)</option>
+              <option value="1.725">활발한 운동 (주 6~7일)</option>
+              <option value="1.9">매우 활발함 (매일 고강도 운동/육체노동)</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <button class="btn-calc" id="calcBtn">📏 계산하기</button>
+
+    <div class="result-hero" id="resultHero">
+      <div class="result-hero-label">BMI (체질량지수)</div>
+      <div class="result-hero-value" id="resultValue">-</div>
+      <div class="result-hero-sub" id="resultSub"></div>
+      <div class="bmi-badge" id="bmiBadge"></div>
+    </div>
+
+    <div class="breakdown-card" id="breakdownCard">
+      <div class="breakdown-title">📋 계산 내역</div>
+      <div class="breakdown-row"><span class="breakdown-label">BMI</span><span class="breakdown-value" id="rowBmi">-</span></div>
+      <div class="breakdown-row" id="rowBmrWrap"><span class="breakdown-label">기초대사량 (BMR)</span><span class="breakdown-value" id="rowBmr">-</span></div>
+      <div class="breakdown-row total" id="rowTdeeWrap"><span class="breakdown-label">활동대사량 (TDEE)</span><span class="breakdown-value" id="rowTdee">-</span></div>
+    </div>
+
+    <div style="margin:0 0 12px"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+  </div></main>
+
+  <footer class="footer">
+    <div class="container">
+      <p class="footer-copy">&#xa9; 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p>
+      <nav class="footer-nav">
+        <a href="/privacy">개인정보 처리방침</a>
+        <a href="/terms">이용약관</a>
+        <a href="/about">서비스 소개</a>
+        <a href="/blog/">블로그</a>
+      </nav>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+  var wantBmr = true;
+  var gender = 'male';
+
+  document.querySelectorAll('#bmrToggleBtns .seg-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('#bmrToggleBtns .seg-btn').forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      wantBmr = btn.dataset.on === '1';
+      document.getElementById('bmrInputs').style.display = wantBmr ? 'block' : 'none';
+    });
+  });
+
+  document.querySelectorAll('#genderBtns .seg-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('#genderBtns .seg-btn').forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      gender = btn.dataset.gender;
+    });
+  });
+
+  function bmiCategory(bmi) {
+    if (bmi < 18.5) return { label: '저체중', color: '#6aa8ff' };
+    if (bmi < 23) return { label: '정상', color: '#5dffb0' };
+    if (bmi < 25) return { label: '과체중', color: '#ffd36e' };
+    return { label: '비만', color: '#ff8a5e' };
+  }
+
+  document.getElementById('calcBtn').addEventListener('click', function() {
+    var heightCm = parseFloat(document.getElementById('heightInput').value);
+    var weightKg = parseFloat(document.getElementById('weightInput').value);
+
+    if (!heightCm || heightCm <= 0 || !weightKg || weightKg <= 0) {
+      showToast('키와 체중을 입력해주세요');
+      return;
+    }
+
+    var heightM = heightCm / 100;
+    var bmi = weightKg / (heightM * heightM);
+    var cat = bmiCategory(bmi);
+
+    document.getElementById('resultValue').textContent = bmi.toFixed(1);
+    document.getElementById('resultSub').textContent = '키 ' + heightCm + 'cm, 체중 ' + weightKg + 'kg 기준';
+    var badge = document.getElementById('bmiBadge');
+    badge.textContent = cat.label;
+    badge.style.background = cat.color + '33';
+    badge.style.color = cat.color;
+    document.getElementById('resultHero').classList.add('show');
+
+    document.getElementById('rowBmi').textContent = bmi.toFixed(1) + ' (' + cat.label + ')';
+
+    var bmrWrap = document.getElementById('rowBmrWrap');
+    var tdeeWrap = document.getElementById('rowTdeeWrap');
+
+    if (wantBmr) {
+      var age = parseFloat(document.getElementById('ageInput').value);
+      if (!age || age <= 0) {
+        showToast('나이를 입력해주세요');
+        return;
+      }
+      var bmr = 10 * weightKg + 6.25 * heightCm - 5 * age + (gender === 'male' ? 5 : -161);
+      var activity = parseFloat(document.getElementById('activitySelect').value);
+      var tdee = bmr * activity;
+
+      bmrWrap.style.display = 'flex';
+      tdeeWrap.style.display = 'flex';
+      document.getElementById('rowBmr').textContent = Math.round(bmr).toLocaleString('ko-KR') + ' kcal';
+      document.getElementById('rowTdee').textContent = Math.round(tdee).toLocaleString('ko-KR') + ' kcal';
+    } else {
+      bmrWrap.style.display = 'none';
+      tdeeWrap.style.display = 'none';
+    }
+    document.getElementById('breakdownCard').classList.add('show');
+
+    document.getElementById('resultHero').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    showToast('✓ 계산했습니다');
+  });
+
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(function() { t.classList.remove('show'); }, 2000);
+  }
+  </script>
+</body>
+</html>
