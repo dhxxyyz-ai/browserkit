@@ -688,7 +688,8 @@ a:hover { color: var(--text); }
 }
 
 .post-wrap + .footer {
-  padding-top: 48px;
+  padding-top: 20px;
+  margin-top: 20px;
 }
 
 .footer-copy {
