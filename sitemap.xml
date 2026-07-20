@@ -417,6 +417,12 @@
     <priority>0.80</priority>
   </url>
   <url>
+    <loc>https://browserkit.online/laundry-symbol-ref/</loc>
+    <lastmod>2026-07-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+  </url>
+  <url>
     <loc>https://browserkit.online/code-snapshot/</loc>
     <lastmod>2026-07-13</lastmod>
     <changefreq>weekly</changefreq>
@@ -993,6 +999,12 @@
   <url>
     <loc>https://browserkit.online/blog/88-xlsxcsvconvert-howto</loc>
     <lastmod>2026-07-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.70</priority>
+  </url>
+  <url>
+    <loc>https://browserkit.online/blog/89-laundrysymbolref-howto</loc>
+    <lastmod>2026-07-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.70</priority>
   </url>

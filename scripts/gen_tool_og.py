@@ -96,6 +96,7 @@ TOOLS = {
     'bmi-calc':               ('BMI/칼로리 계산기', 'BmiCalc', '계산기'),
     'http-status-ref':        ('HTTP 상태 코드 사전', 'HttpStatusRef', '개발자'),
     'xlsx-csv-convert':       ('엑셀 CSV 변환기', 'XlsxCsvConvert', '문서·텍스트'),
+    'laundry-symbol-ref':     ('세탁 표시 기호 사전', 'LaundrySymbolRef', '생활·재미'),
 }
 
 

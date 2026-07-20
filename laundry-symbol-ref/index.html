@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <link rel="icon" href="/favicon.ico" sizes="32x32">
+  <link rel="icon" href="/favicon-16.png" sizes="16x16" type="image/png">
+  <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="/favicon-192.png" sizes="192x192" type="image/png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="세탁 라벨 기호(세탁·표백·건조·다림질·드라이클리닝)를 검색해 뜻을 바로 확인하는 무료 온라인 사전. 옷 안쪽 세탁 태그의 기호를 몰라도 이름이나 키워드로 검색하면 바로 알려드립니다. 서버 전송 없이 브라우저에서 처리합니다." />
+  <meta property="og:title" content="LaundrySymbolRef — 세탁 표시 기호 사전" />
+  <meta property="og:description" content="세탁 라벨 기호를 검색해 뜻을 바로 확인하는 무료 온라인 사전. 세탁·표백·건조·다림질·드라이클리닝 기호를 한눈에 정리했습니다." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://browserkit.online/laundry-symbol-ref/" />
+  <title>LaundrySymbolRef — 세탁 표시 기호 사전</title>
+  <link rel="stylesheet" href="/css/style.css?v=20260719a" />
+  <!-- Google AdSense 승인 대기 중 (2026-07-19 주석 처리, 카카오 애드핏으로 임시 전환) — 승인 후 주석 해제
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506"
+     crossorigin="anonymous"></script>
+  -->
+  <script type="text/javascript" src="//t1.kakaocdn.net/kas/static/ba.min.js" async></script>
+  <style>
+    .search-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px 24px; margin-bottom:16px; }
+    .search-input { background:var(--bg); border:1px solid var(--border); border-radius:10px; padding:13px 16px; font-size:15px; color:var(--text); font-family:'Gowun Dodum',sans-serif; outline:none; width:100%; box-sizing:border-box; }
+    .search-input:focus { border-color:var(--point); }
+
+    .cat-btns { display:flex; gap:6px; flex-wrap:wrap; margin-top:12px; }
+    .cat-btn { background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:8px 16px; font-size:13px; color:var(--subtext); cursor:pointer; font-family:'Gowun Dodum',sans-serif; font-weight:600; }
+    .cat-btn:hover { border-color:var(--point); color:var(--text); }
+    .cat-btn.active { background:rgba(123,108,255,0.15); border-color:var(--point); color:var(--point-hover); }
+
+    .symbol-list { display:flex; flex-direction:column; gap:10px; margin:16px 0 48px; }
+    .symbol-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:16px 20px; display:flex; align-items:flex-start; gap:16px; cursor:pointer; }
+    .symbol-card:hover { border-color:var(--point); }
+    .symbol-icon { min-width:56px; height:56px; display:flex; align-items:center; justify-content:center; font-size:28px; flex-shrink:0; background:var(--bg); border-radius:12px; }
+    .symbol-body { flex:1; }
+    .symbol-name { font-size:14px; font-weight:700; color:var(--text); margin-bottom:4px; }
+    .symbol-desc { font-size:13px; color:var(--subtext); line-height:1.6; }
+    .symbol-empty { text-align:center; padding:40px 20px; color:var(--subtext); font-size:14px; }
+
+    .toast { position:fixed; bottom:32px; left:50%; transform:translateX(-50%) translateY(80px); background:var(--success); color:#fff; border-radius:999px; padding:10px 24px; font-size:14px; font-weight:600; opacity:0; pointer-events:none; z-index:999; transition:all 0.3s ease; }
+    .toast.show { transform:translateX(-50%) translateY(0); opacity:1; }
+
+    .footer { border-top:1px solid var(--border); padding:32px 0; text-align:center; }
+    .footer-copy { color:var(--subtext); font-size:13px; margin-bottom:12px; }
+    .footer-nav { display:flex; justify-content:center; gap:20px; flex-wrap:wrap; }
+    .footer-nav a { color:var(--subtext); font-size:13px; text-decoration:none; }
+    .footer-nav a:hover { color:var(--text); }
+
+    @media (max-width:640px) {
+      .hero-title { font-size:24px; }
+      .symbol-card { flex-direction:column; gap:8px; }
+    }
+  </style>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+  <meta property="og:image" content="https://browserkit.online/img/og/laundry-symbol-ref.png" />
+  <link rel="canonical" href="https://browserkit.online/laundry-symbol-ref/" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://browserkit.online/img/og/laundry-symbol-ref.png" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "LaundrySymbolRef — 세탁 표시 기호 사전",
+  "url": "https://browserkit.online/laundry-symbol-ref/",
+  "description": "세탁 라벨 기호(세탁·표백·건조·다림질·드라이클리닝)를 검색해 뜻을 바로 확인하는 무료 온라인 사전. 옷 안쪽 세탁 태그의 기호를 몰라도 이름이나 키워드로 검색하면 바로 알려드립니다. 서버 전송 없이 브라우저에서 처리합니다.",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Any",
+  "browserRequirements": "Requires JavaScript",
+  "inLanguage": "ko",
+  "isAccessibleForFree": true,
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "KRW"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "BrowserKit",
+    "url": "https://browserkit.online/"
+  }
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "홈",
+      "item": "https://browserkit.online/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "세탁 표시 기호 사전",
+      "item": "https://browserkit.online/laundry-symbol-ref/"
+    }
+  ]
+}
+  </script>
+</head>
+
+<body>
+  <header class="header">
+    <div class="container">
+      <a href="/" class="header-brand">
+        <div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Gowun Dodum,sans-serif;flex-shrink:0">B</div>
+        <span class="header-brand-text"><span style="color:var(--text)">Browser</span><span style="color:var(--point)">Kit</span></span>
+      </a>
+      <a href="/" class="header-back">&#x2190; BrowserKit 홈으로</a>
+    </div>
+  </header>
+
+  <main><div class="container">
+    <div class="hero">
+      <div class="hero-icon" style="height:78px;display:flex;justify-content:center;align-items:center"><div style="transform:scale(1.7);transform-origin:center"><div style="width:46px;height:46px;background:#bcd4ff;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="font-size:22px;line-height:1">🧺</div></div></div></div>
+      <div class="hero-title-wrap"><h1 class="hero-title">세탁 표시 기호 사전</h1><a href="/blog/89-laundrysymbolref-howto" class="hero-guide-link">사용법 가이드 보기</a></div>
+      <p class="hero-desc">옷 안쪽 세탁 라벨의 기호를 몰라도, 이름이나 키워드로 검색하면 바로 알려드려요</p>
+      <div class="hero-badges">
+        <span class="badge">🔒 완전 로컬 처리</span>
+        <span class="badge">⚡ 무료 사용</span>
+        <span class="badge">🛡️ 서버 전송 없음</span>
+        <span class="badge">📦 설치 불필요</span>
+      </div>
+    </div>
+    <div style="margin:0 0 12px"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><div class="adfit-h-desktop"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-QD4pRIpdIj7i2mbt" data-ad-width="728" data-ad-height="90"></ins></div><div class="adfit-h-mobile"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-R4xA2niTT8HgGjoO" data-ad-width="320" data-ad-height="50"></ins></div></div>
+
+    <p class="notice">💡 국내 KS 및 국제 GINETEX 세탁 표시 기준을 참고해 정리했습니다. 카드를 클릭하면 기호 이름이 클립보드에 복사됩니다. 정확한 세탁은 실제 의류 라벨을 우선 확인해주세요.</p>
+
+    <div class="search-card">
+      <input type="text" class="search-input" id="searchInput" placeholder="기호 이름이나 키워드로 검색 (예: 삶기, 손세탁, 다림질, 드라이클리닝)" />
+      <div class="cat-btns" id="catBtns">
+        <button class="cat-btn active" data-cat="all">전체</button>
+        <button class="cat-btn" data-cat="wash">세탁</button>
+        <button class="cat-btn" data-cat="bleach">표백</button>
+        <button class="cat-btn" data-cat="dry">건조</button>
+        <button class="cat-btn" data-cat="iron">다림질</button>
+        <button class="cat-btn" data-cat="dryclean">드라이클리닝</button>
+      </div>
+    </div>
+
+    <div class="symbol-list" id="symbolList"></div>
+
+    <div style="margin:0 0 12px"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="9500090221"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><div class="adfit-rect-wrap"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-oePL4TCj742xAwqT" data-ad-width="300" data-ad-height="250"></ins></div></div>
+  </div></main>
+
+  <footer class="footer">
+    <div class="container">
+      <p class="footer-copy">&#xa9; 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p>
+      <nav class="footer-nav">
+        <a href="/privacy">개인정보 처리방침</a>
+        <a href="/terms">이용약관</a>
+        <a href="/about">서비스 소개</a>
+        <a href="/blog/">블로그</a>
+      </nav>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+  var SYMBOLS = [
+    { icon: '🪣', name: '가정 세탁 가능', desc: '대야 모양 기본 기호. 가정에서 물세탁이 가능하다는 의미입니다.', cat: 'wash' },
+    { icon: '🌡️30', name: '30도 물세탁', desc: '대야 안에 숫자 30 — 물 온도 30도 이하에서 세탁하라는 뜻입니다. 찬물~미온수 세탁.', cat: 'wash' },
+    { icon: '🌡️40', name: '40도 물세탁', desc: '대야 안에 숫자 40 — 물 온도 40도 이하에서 세탁하라는 뜻입니다. 가장 흔한 표시입니다.', cat: 'wash' },
+    { icon: '🌡️60', name: '60도 물세탁', desc: '대야 안에 숫자 60 — 물 온도 60도 이하에서 세탁 가능. 수건·속옷류에 많습니다.', cat: 'wash' },
+    { icon: '♨️95', name: '95도 삶기 세탁', desc: '대야 안에 숫자 95 — 삶는 세탁(열탕 세탁)이 가능하다는 뜻. 흰색 면 소재에 주로 사용됩니다.', cat: 'wash' },
+    { icon: '✋', name: '손세탁 전용', desc: '대야에 손 모양이 그려진 기호. 세탁기 사용 없이 반드시 손으로 약하게 세탁해야 합니다.', cat: 'wash' },
+    { icon: '🚫🪣', name: '물세탁 금지', desc: '대야에 X표시(또는 대야 자체가 X로 그어짐). 물세탁을 하면 안 되며 드라이클리닝 등을 이용해야 합니다.', cat: 'wash' },
+    { icon: '➖', name: '약(弱)세탁', desc: '대야 아래 밑줄 1개. 세탁기에서 약하게(울코스, 손세탁 코스 등) 돌려야 한다는 뜻입니다.', cat: 'wash' },
+    { icon: '⚌', name: '매우 약한 세탁', desc: '대야 아래 밑줄 2개. 손상되기 쉬운 소재로, 가장 약한 코스로 짧게 세탁해야 합니다.', cat: 'wash' },
+
+    { icon: '△', name: '표백 가능', desc: '삼각형 기호만 있으면 염소계·산소계 표백제를 모두 사용할 수 있다는 뜻입니다.', cat: 'bleach' },
+    { icon: '△2', name: '산소계 표백만 가능', desc: '삼각형 안에 사선 2줄. 산소계(비염소계) 표백제만 사용 가능하며 염소계는 금지입니다.', cat: 'bleach' },
+    { icon: '🚫△', name: '표백 금지', desc: '삼각형에 X표시. 어떤 표백제도 사용하면 안 됩니다. 색 빠짐이나 손상 위험이 있는 소재입니다.', cat: 'bleach' },
+
+    { icon: '⬜', name: '건조기 사용 가능', desc: '사각형 안에 원 모양. 회전식 건조기 사용이 가능하다는 기본 기호입니다.', cat: 'dry' },
+    { icon: '⬜●', name: '표준 건조기(고온)', desc: '사각형 안 원에 점 2개. 고온으로 건조기 사용이 가능합니다.', cat: 'dry' },
+    { icon: '⬜●1', name: '저온 건조기', desc: '사각형 안 원에 점 1개. 저온으로만 건조기를 사용해야 손상되지 않습니다.', cat: 'dry' },
+    { icon: '🚫⬜', name: '건조기 사용 금지', desc: '사각형에 X표시. 회전식 건조기를 사용하면 안 되며 자연 건조해야 합니다.', cat: 'dry' },
+    { icon: '⬜|', name: '옷걸이(자연) 건조', desc: '사각형 안에 세로선 1개. 짜지 않고 옷걸이에 걸어 그늘이나 햇빛에 건조합니다.', cat: 'dry' },
+    { icon: '⬜–', name: '뉘어서 건조', desc: '사각형 안에 가로선 1개. 옷걸이에 걸지 않고 바닥이나 건조대에 뉘어서 말립니다(니트류에 흔함).', cat: 'dry' },
+    { icon: '⬜▤', name: '그늘에서 건조', desc: '사각형 우측 상단에 대각선(그늘) 표시. 직사광선을 피해 그늘에서 건조해야 변색을 막을 수 있습니다.', cat: 'dry' },
+    { icon: '⬜🧺', name: '짜지 않고 물기 제거', desc: '사각형 안에 물결선. 비틀어 짜지 말고 자연스럽게 물기가 빠지도록 건조합니다.', cat: 'dry' },
+
+    { icon: '🔥', name: '다림질 가능', desc: '다리미 모양 기본 기호. 다림질이 가능하다는 뜻입니다.', cat: 'iron' },
+    { icon: '🔥1', name: '저온 다림질(110도)', desc: '다리미 안에 점 1개. 110도 이하 저온으로만 다림질 가능(합성섬유, 실크 등).', cat: 'iron' },
+    { icon: '🔥2', name: '중온 다림질(150도)', desc: '다리미 안에 점 2개. 150도 이하 중간 온도로 다림질(울, 폴리에스터 혼방 등).', cat: 'iron' },
+    { icon: '🔥3', name: '고온 다림질(200도)', desc: '다리미 안에 점 3개. 200도 이하 고온으로 다림질 가능(면, 마 소재).', cat: 'iron' },
+    { icon: '🚫🔥', name: '다림질 금지', desc: '다리미에 X표시. 열에 약한 소재이므로 다림질을 하면 안 됩니다.', cat: 'iron' },
+    { icon: '🔥💨', name: '스팀 다림질 금지', desc: '다리미 아래 스팀 표시에 X. 스팀을 사용한 다림질을 하면 안 되는 소재입니다.', cat: 'iron' },
+
+    { icon: '⭕', name: '드라이클리닝 가능', desc: '원 모양 기본 기호. 전문 드라이클리닝 세탁소를 이용하라는 뜻입니다.', cat: 'dryclean' },
+    { icon: '⭕P', name: '퍼클로로에틸렌 용제', desc: '원 안에 알파벳 P. 일반 드라이클리닝 용제(퍼클로로에틸렌)로 처리 가능합니다.', cat: 'dryclean' },
+    { icon: '⭕F', name: '석유계 용제만 가능', desc: '원 안에 알파벳 F. 석유계 용제로만 드라이클리닝이 가능하며 강한 용제는 피해야 합니다.', cat: 'dryclean' },
+    { icon: '🚫⭕', name: '드라이클리닝 금지', desc: '원에 X표시. 드라이클리닝을 하면 안 되는 소재로, 물세탁 표시를 따라야 합니다.', cat: 'dryclean' },
+    { icon: '⭕–', name: '단(短)시간·저자극 처리', desc: '원 아래 밑줄 1개. 드라이클리닝 시 짧은 시간, 저자극 공정으로 처리해야 합니다.', cat: 'dryclean' },
+    { icon: '⭕W', name: '웨트클리닝 가능', desc: '원 안에 알파벳 W. 전문 물세탁(웨트클리닝) 공정으로 처리 가능하다는 뜻입니다.', cat: 'dryclean' },
+    { icon: '🚫⭕W', name: '웨트클리닝 금지', desc: '웨트클리닝(W) 기호에 X표시. 전문 물세탁 공정도 사용할 수 없는 소재입니다.', cat: 'dryclean' }
+  ];
+
+  var CAT_LABEL = { wash: '세탁', bleach: '표백', dry: '건조', iron: '다림질', dryclean: '드라이클리닝' };
+  var currentCat = 'all';
+  var currentQuery = '';
+
+  function render() {
+    var q = currentQuery.trim().toLowerCase();
+    var filtered = SYMBOLS.filter(function(s) {
+      if (currentCat !== 'all' && s.cat !== currentCat) return false;
+      if (!q) return true;
+      return s.name.toLowerCase().indexOf(q) !== -1 ||
+        s.desc.toLowerCase().indexOf(q) !== -1 ||
+        CAT_LABEL[s.cat].indexOf(q) !== -1;
+    });
+
+    var list = document.getElementById('symbolList');
+    if (!filtered.length) {
+      list.innerHTML = '<div class="symbol-empty">검색 결과가 없어요. 다른 키워드로 검색해보세요.</div>';
+      return;
+    }
+
+    list.innerHTML = filtered.map(function(s) {
+      return '<div class="symbol-card" data-name="' + s.name + '">' +
+        '<div class="symbol-icon">' + s.icon + '</div>' +
+        '<div class="symbol-body">' +
+          '<div class="symbol-name">' + s.name + '</div>' +
+          '<div class="symbol-desc">' + s.desc + '</div>' +
+        '</div>' +
+      '</div>';
+    }).join('');
+
+    list.querySelectorAll('.symbol-card').forEach(function(card) {
+      card.addEventListener('click', function() {
+        var name = card.dataset.name;
+        navigator.clipboard.writeText(name).then(function() {
+          showToast('✓ "' + name + '"을(를) 복사했어요');
+        }).catch(function() {
+          showToast(name + ' — 복사 권한이 없어요. 직접 선택해 복사해주세요');
+        });
+      });
+    });
+  }
+
+  document.getElementById('searchInput').addEventListener('input', function(e) {
+    currentQuery = e.target.value;
+    render();
+  });
+
+  document.querySelectorAll('#catBtns .cat-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('#catBtns .cat-btn').forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      currentCat = btn.dataset.cat;
+      render();
+    });
+  });
+
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(function() { t.classList.remove('show'); }, 2000);
+  }
+
+  render();
+  </script>
+</body>
+</html>
