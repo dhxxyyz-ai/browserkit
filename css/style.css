@@ -964,6 +964,7 @@ a:hover { color: var(--text); }
 .adfit-rect-wrap { display: flex; justify-content: center; max-width: 100%; overflow: hidden; }
 .adfit-h-desktop .kakao_ad_area, .adfit-h-mobile .kakao_ad_area, .adfit-rect-wrap .kakao_ad_area { max-width: 100%; }
 .adfit-h-desktop .kakao_ad_area iframe, .adfit-h-mobile .kakao_ad_area iframe, .adfit-rect-wrap .kakao_ad_area iframe { max-width: 100% !important; }
+.adfit-h-desktop iframe, .adfit-h-mobile iframe, .adfit-rect-wrap iframe { max-width: 100% !important; }
 @media (max-width: 640px) {
   .adfit-h-desktop { display: none; }
   .adfit-h-mobile { display: flex; }
