@@ -460,7 +460,7 @@ function getNode(path) {
 }
 
 // ── State ─────────────────────────────────────────────────────────────────────
-let _idc=0, _zc=20, _drag=null, _searchMD=null;
+let _idc=0, _zc=20, _drag=null, _searchMD=null, _toolboxEl=null;
 const S = { windows:[], startOpen:false, time:'', dateStr:'', dateShort:'', palette:'msn' };
 
 function tick() {
@@ -763,7 +763,7 @@ function render() {
       </div>
     </div>
     <div id="bk-desktop" style="flex:1 1 auto;position:relative;overflow:hidden">
-      ${toolboxHtml}
+      <div id="bk-toolbox-slot"></div>
       <div style="position:absolute;right:22px;top:22px;display:flex;flex-direction:column;gap:14px;align-items:flex-end">${rightIcons}</div>
       ${winsHtml}
     </div>
@@ -789,6 +789,18 @@ function render() {
     </div>
   </div>`;
   document.getElementById('root').innerHTML = _html;
+  // 도구상자 위젯(광고 포함)은 서비스 창을 열 때마다 다시 그려지지 않도록,
+  // 최초 1회만 만들고 이후에는 같은 DOM 노드를 새 슬롯으로 옮기기만 한다.
+  // innerHTML로 매번 새로 만들면 이미 채워진 광고 iframe이 매번 파괴되고
+  // 다시 로드되어 배너가 깜빡이는 문제가 있었다.
+  const toolboxSlot = document.getElementById('bk-toolbox-slot');
+  if (toolboxSlot) {
+    if (!_toolboxEl) {
+      _toolboxEl = document.createElement('div');
+      _toolboxEl.innerHTML = toolboxHtml;
+    }
+    toolboxSlot.appendChild(_toolboxEl);
+  }
   wireEvents();
   // Google AdSense (승인 후 복원): if (SHOW_ADSENSE) { document.querySelectorAll('.adsbygoogle:not([data-adsbygoogle-status])').forEach(() => { (adsbygoogle = window.adsbygoogle || []).push({}); }); }
   if (SHOW_ADSENSE) loadKakaoAdFit();
