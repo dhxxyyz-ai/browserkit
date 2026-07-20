@@ -177,11 +177,23 @@
   function label(x, y, text, size) {
     return '<text x="' + x + '" y="' + y + '" font-size="' + (size || 7) + '" text-anchor="middle" fill="' + INK + '" stroke="none" font-family="Gowun Dodum,sans-serif">' + text + '</text>';
   }
+  // 글자 1개당 폭(한글은 거의 정사각형=1em, 숫자·기호는 더 좁음)을 근사 계산
+  function charW(ch) {
+    var code = ch.charCodeAt(0);
+    if (code >= 0xAC00 && code <= 0xD7A3) return 1.0;   // 한글 음절
+    if (code >= 0x3130 && code <= 0x318F) return 0.7;   // 한글 자모
+    return 0.58; // 숫자·영문·℃ 등
+  }
+  function textWidth(text, size) {
+    var w = 0;
+    for (var i = 0; i < text.length; i++) w += charW(text[i]) * size;
+    return w;
+  }
   // 글자 수에 맞춰 폭을 넘지 않도록 폰트 크기를 자동으로 줄인 라벨
   function fitLabel(x, y, text, maxWidth, baseSize, minSize) {
     var size = baseSize;
-    minSize = minSize || 4;
-    while (size > minSize && text.length * size * 0.62 > maxWidth) size -= 0.25;
+    minSize = minSize || 3.4;
+    while (size > minSize && textWidth(text, size) > maxWidth) size -= 0.2;
     return label(x, y, text, size);
   }
   // 물세탁(세탁기): 대야(사각 통) + 물결 구멍 + 온도
@@ -246,13 +258,13 @@
       s += '<line x1="' + x1 + '" y1="' + y1 + '" x2="' + x2 + '" y2="' + y2 + '" stroke-width="1.4"/>';
     }
     if (shade) s += '<line x1="12" y1="14" x2="28" y2="26" stroke-width="1"/><line x1="12" y1="20" x2="22" y2="28" stroke-width="1"/><line x1="18" y1="12" x2="28" y2="20" stroke-width="1"/>';
-    s += fitLabel(20, 21.5, text, 16, 5.5);
+    s += fitLabel(20, 21.5, text, 18, 5.5);
     return svgWrap(s);
   }
   // 기계건조(회전식 건조기): 사각형 + 원 + "기계건조" 텍스트 + 온도(2줄)
   function tumbleDryIcon(temp, prohibited) {
     var s = '<rect x="7" y="7" width="26" height="26" rx="3"/><circle cx="20" cy="20" r="9"/>';
-    s += fitLabel(20, 18, '기계건조', 15, 4.6);
+    s += fitLabel(20, 18, '기계건조', 16.5, 4.6);
     if (temp !== '') s += label(20, 24, temp + '℃', 5.5);
     if (prohibited) s += xMark();
     return svgWrap(s);
