@@ -8,11 +8,11 @@
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="XlsxCsvConvert의 모든 기능을 단계별로 설명하는 공식 사용 가이드입니다. 엑셀 파일을 CSV로 변환하고, CSV를 엑셀 파일로 저장하는 방법과 다중 시트 처리 방법을 알아보세요." />
-  <meta property="og:title" content="엑셀 CSV 변환기 사용법 완전 가이드 — BrowserKit" />
-  <meta property="og:description" content="엑셀과 CSV를 서로 변환하는 XlsxCsvConvert 공식 가이드입니다." />
+  <meta name="description" content="PetAgeCalc의 모든 기능을 단계별로 설명하는 공식 사용 가이드입니다. 강아지·고양이 나이를 사람 나이로 환산하는 방법과 체구별 환산표 차이를 알아보세요." />
+  <meta property="og:title" content="반려동물 나이 계산기 사용법 완전 가이드 — BrowserKit" />
+  <meta property="og:description" content="강아지·고양이 나이를 사람 나이로 환산하는 PetAgeCalc 공식 가이드입니다." />
   <meta property="og:type" content="article" />
-  <title>엑셀 CSV 변환기 사용법 완전 가이드 — BrowserKit</title>
+  <title>반려동물 나이 계산기 사용법 완전 가이드 — BrowserKit</title>
   <link rel="stylesheet" href="/css/style.css?v=20260721a" />
   <!-- Google AdSense 승인 대기 중 (2026-07-19 주석 처리, 카카오 애드핏으로 임시 전환) — 승인 후 주석 해제
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506"
@@ -57,23 +57,23 @@
   </style>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
-<meta property="og:image" content="https://browserkit.online/img/og/xlsx-csv-convert.png" />
+<meta property="og:image" content="https://browserkit.online/img/og/pet-age-calc.png" />
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
-    "headline": "엑셀 CSV 변환기 사용법 완전 가이드",
-    "description": "XlsxCsvConvert의 모든 기능을 단계별로 설명하는 공식 사용 가이드입니다. 엑셀 파일을 CSV로 변환하고, CSV를 엑셀 파일로 저장하는 방법과 다중 시트 처리 방법을 알아보세요.",
-    "datePublished": "2026-07-19T00:00:00+09:00",
-    "dateModified": "2026-07-19T00:00:00+09:00",
+    "headline": "반려동물 나이 계산기 사용법 완전 가이드",
+    "description": "PetAgeCalc의 모든 기능을 단계별로 설명하는 공식 사용 가이드입니다. 강아지·고양이 나이를 사람 나이로 환산하는 방법과 체구별 환산표 차이를 알아보세요.",
+    "datePublished": "2026-07-21T00:00:00+09:00",
+    "dateModified": "2026-07-21T00:00:00+09:00",
     "author": { "@type": "Organization", "name": "BrowserKit", "url": "https://browserkit.online" },
     "publisher": { "@type": "Organization", "name": "BrowserKit", "url": "https://browserkit.online", "logo": { "@type": "ImageObject", "url": "https://browserkit.online/img/og-browserkit.png" } },
-    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://browserkit.online/blog/88-xlsxcsvconvert-howto" },
-    "image": "https://browserkit.online/img/og/xlsx-csv-convert.png"
+    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://browserkit.online/blog/90-petagecalc-howto" },
+    "image": "https://browserkit.online/img/og/pet-age-calc.png"
   }
-  </script>  <link rel="canonical" href="https://browserkit.online/blog/88-xlsxcsvconvert-howto" />
+  </script>  <link rel="canonical" href="https://browserkit.online/blog/90-petagecalc-howto" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:image" content="https://browserkit.online/img/og/xlsx-csv-convert.png" />
+  <meta name="twitter:image" content="https://browserkit.online/img/og/pet-age-calc.png" />
   <style>
     .post-table-wrap { overflow-x:auto; }
     .post-table th, .post-table td { white-space:nowrap; }
@@ -87,34 +87,34 @@
   "mainEntity": [
     {
       "@type": "Question",
-      "name": "엑셀 CSV 변환기는 정말 무료인가요?",
+      "name": "반려동물 나이 계산기는 정말 무료인가요?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "네, 회원가입이나 설치 없이 완전 무료로 사용할 수 있습니다. 횟수 제한도 없습니다."
+        "text": "네, 회원가입이나 설치 없이 완전 무료로 사용할 수 있습니다. 계산 횟수 제한도 없습니다."
       }
     },
     {
       "@type": "Question",
-      "name": "업로드한 엑셀 파일이 서버로 전송되나요?",
+      "name": "왜 강아지는 체구를 따로 입력해야 하나요?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "아니요. 엑셀 파일 파싱은 오픈소스 라이브러리(SheetJS)를 이용해 브라우저 안에서만 처리되며, 업로드한 파일이 외부 서버로 전송되지 않습니다."
+        "text": "소형견보다 대형견이 노화 속도가 더 빠르기 때문입니다. 미국수의사회(AVMA) 환산표에 따르면 소형견은 매년 4살씩, 초대형견은 매년 7살씩 사람 나이가 늘어납니다."
       }
     },
     {
       "@type": "Question",
-      "name": "시트가 여러 개인 엑셀 파일도 변환할 수 있나요?",
+      "name": "고양이도 품종별로 다르게 계산하나요?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "네. 엑셀 파일을 업로드하면 시트 목록이 나타나고, 원하는 시트를 선택해 CSV로 변환할 수 있습니다."
+        "text": "아니요. 고양이는 강아지와 달리 품종 간 크기 차이가 크지 않아 단일 환산표를 사용합니다."
       }
     },
     {
       "@type": "Question",
-      "name": "구형 엑셀 형식(.xls)도 지원하나요?",
+      "name": "이 계산 결과가 정확한 건강 상태를 의미하나요?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "네, .xlsx와 .xls 형식 모두 업로드할 수 있습니다. 다만 CSV에서 엑셀로 변환할 때는 최신 형식(.xlsx)으로만 저장됩니다."
+        "text": "아니요. 환산표는 평균적인 노화 속도를 기준으로 한 참고용 수치이며, 개체별 건강 상태나 유전적 요인에 따라 실제 노화 속도는 다를 수 있습니다. 정확한 건강 상태는 반드시 동물병원에서 확인하세요."
       }
     }
   ]
@@ -132,34 +132,34 @@
   <article class="post-wrap">
     <a href="/blog/" class="back-link">&#x2190; 블로그 목록</a>
     <span class="post-tag">가이드</span>
-    <h1 class="post-title"><span style="color:var(--point-hover)">엑셀 CSV 변환기</span> 사용법 완전 가이드</h1>
-    <div class="post-date">2026년 7월 19일</div>
+    <h1 class="post-title"><span style="color:var(--point-hover)">반려동물 나이 계산기</span> 사용법 완전 가이드</h1>
+    <div class="post-date">2026년 7월 21일</div>
     <div style="margin:12px 0"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><div class="adfit-h-desktop"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-QD4pRIpdIj7i2mbt" data-ad-width="728" data-ad-height="90"></ins></div><div class="adfit-h-mobile"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-R4xA2niTT8HgGjoO" data-ad-width="320" data-ad-height="50"></ins></div></div>
 
     <div class="post-body">
-      <p>XlsxCsvConvert는 엑셀(XLSX) 파일과 CSV 파일을 서로 변환해주는 무료 온라인 도구입니다. 엑셀 파일을 업로드하면 CSV로 변환하고, CSV를 붙여넣거나 업로드하면 엑셀 파일로 저장할 수 있습니다. 여러 시트가 있는 엑셀 파일도 원하는 시트를 골라 변환할 수 있습니다. 모든 처리는 브라우저에서만 이루어집니다.</p>
+      <p>"우리 강아지 나이면 사람으로 치면 몇 살일까?" 흔히 알려진 "동물 나이 × 7"이라는 계산법은 실제로는 정확하지 않습니다. 강아지는 처음 1~2년 사이에 노화가 훨씬 빠르게 진행되고, 그 이후에는 체구(몸집)에 따라 노화 속도가 달라지기 때문입니다. PetAgeCalc는 미국수의사회(AVMA) 환산표를 기준으로 강아지·고양이 나이를 사람 나이로 정확히 환산해주는 무료 온라인 도구입니다. 모든 계산은 브라우저에서만 이루어집니다.</p>
 
       <h2>주요 기능</h2>
       <div class="feature-grid">
         <div class="feature-card">
-          <div class="feature-icon">&#x1F4CA;</div>
-          <div class="feature-title">엑셀 → CSV 변환</div>
-          <div class="feature-desc">엑셀 파일을 업로드하면 즉시 CSV로 변환해 다운로드할 수 있습니다.</div>
+          <div class="feature-icon">&#x1F436;</div>
+          <div class="feature-title">체구별 환산(강아지)</div>
+          <div class="feature-desc">소형·중형·대형·초대형견 4단계로 나눠 서로 다른 노화 속도를 반영합니다.</div>
         </div>
         <div class="feature-card">
-          <div class="feature-icon">&#x1F4C4;</div>
-          <div class="feature-title">CSV → 엑셀 변환</div>
-          <div class="feature-desc">CSV를 붙여넣거나 파일로 업로드하면 정식 엑셀(.xlsx) 파일로 저장합니다.</div>
+          <div class="feature-icon">&#x1F431;</div>
+          <div class="feature-title">고양이 전용 환산표</div>
+          <div class="feature-desc">고양이는 품종 간 체구 차이가 크지 않아 단일 환산표로 계산합니다.</div>
         </div>
         <div class="feature-card">
-          <div class="feature-icon">&#x1F4D1;</div>
-          <div class="feature-title">다중 시트 지원</div>
-          <div class="feature-desc">시트가 여러 개인 엑셀 파일도 원하는 시트를 선택해 변환합니다.</div>
+          <div class="feature-icon">&#x1F522;</div>
+          <div class="feature-title">소수점 나이 입력</div>
+          <div class="feature-desc">"3.5살"처럼 개월 수까지 반영한 소수점 나이도 입력할 수 있습니다.</div>
         </div>
         <div class="feature-card">
           <div class="feature-icon">&#x1F512;</div>
           <div class="feature-title">완전 로컬 처리</div>
-          <div class="feature-desc">업로드한 파일이 브라우저 안에서만 처리되고 서버로 전송되지 않습니다.</div>
+          <div class="feature-desc">모든 계산이 브라우저 안에서만 이루어지고 서버로 전송되지 않습니다.</div>
         </div>
       </div>
 
@@ -169,119 +169,102 @@
       <div class="step-card">
         <div class="step-num">1</div>
         <div class="step-content">
-          <h3>변환 방향 선택</h3>
-          <p>엑셀을 CSV로 바꾸고 싶다면 "엑셀 → CSV"를, CSV를 엑셀로 바꾸고 싶다면 "CSV → 엑셀"을 선택합니다.</p>
+          <h3>강아지 또는 고양이 선택</h3>
+          <p>키우는 반려동물의 종류를 선택합니다. 강아지를 선택하면 체구 선택 항목이 나타납니다.</p>
         </div>
       </div>
 
       <div class="step-card">
         <div class="step-num">2</div>
         <div class="step-content">
-          <h3>파일 업로드 또는 CSV 입력</h3>
-          <p>엑셀 → CSV 방향이면 .xlsx 또는 .xls 파일을 업로드합니다. 시트가 여러 개면 원하는 시트를 선택하세요. CSV → 엑셀 방향이면 CSV 내용을 붙여넣거나 파일을 업로드합니다.</p>
+          <h3>체구 선택(강아지만 해당)</h3>
+          <p>성견 기준 몸무게를 보고 소형견(~9kg)·중형견(9~23kg)·대형견(23~41kg)·초대형견(41kg~) 중 하나를 선택합니다.</p>
         </div>
       </div>
-
-      <figure style="margin:12px 0 24px; text-align:center;">
-        <img src="/img/blog/xlsxcsvconvert/01-input.png"
-             alt="XlsxCsvConvert의 변환 방향 선택과 파일 업로드 화면"
-             style="width:100%; max-width:640px; border:1px solid var(--border); border-radius:var(--radius);"
-             loading="lazy" />
-        <figcaption style="font-size:13px; color:var(--subtext); margin-top:6px;">
-          변환 방향 선택과 파일 업로드
-        </figcaption>
-      </figure>
 
       <div class="step-card">
         <div class="step-num">3</div>
         <div class="step-content">
-          <h3>변환 및 다운로드</h3>
-          <p><strong>🔄 변환하기</strong> 버튼을 누르면 표 미리보기가 표시됩니다. 결과가 맞다면 <strong>결과 파일 다운로드</strong> 버튼을 눌러 저장하세요.</p>
+          <h3>나이 입력 후 계산</h3>
+          <p>반려동물의 나이를 년 단위로 입력합니다(예: 3.5). <strong>🐾 계산하기</strong> 버튼을 누르면 사람 나이로 환산된 결과가 바로 표시됩니다.</p>
         </div>
       </div>
 
-      <figure style="margin:12px 0 24px; text-align:center;">
-        <img src="/img/blog/xlsxcsvconvert/02-result.png"
-             alt="XlsxCsvConvert의 변환 결과 표 미리보기와 다운로드 버튼이 표시된 화면"
-             style="width:100%; max-width:640px; border:1px solid var(--border); border-radius:var(--radius);"
-             loading="lazy" />
-        <figcaption style="font-size:13px; color:var(--subtext); margin-top:6px;">
-          변환 결과 미리보기
-        </figcaption>
-      </figure>
-
       <div class="post-warn">
-        <strong>⚠️ 참고:</strong> 엑셀 파일의 서식(글꼴 색상, 셀 배경색 등)은 CSV로 변환하는 과정에서 사라집니다. CSV는 순수 데이터만 담는 형식이기 때문입니다.
+        <strong>⚠️ 참고:</strong> 이 계산 결과는 미국수의사회(AVMA)와 국제고양이수의학회(ICatCare) 환산표를 기준으로 한 평균적인 추정치입니다. 개체별 건강 상태나 유전적 요인에 따라 실제 노화 속도는 다를 수 있으니, 정확한 건강 상태는 반드시 동물병원에서 확인하세요.
       </div>
 
-      <h2>변환 방향별 안내</h2>
+      <h2>체구별 환산 기준</h2>
       <div class="post-table-wrap"><table class="post-table">
-        <thead><tr><th>방향</th><th>사용 상황</th></tr></thead>
+        <thead><tr><th>구분</th><th>1년차</th><th>2년차</th><th>3년차 이후</th></tr></thead>
         <tbody>
-          <tr><td>엑셀 → CSV</td><td>엑셀 데이터를 다른 시스템에 업로드하거나 프로그램에서 처리해야 할 때</td></tr>
-          <tr><td>CSV → 엑셀</td><td>시스템에서 내려받은 CSV를 엑셀에서 편집하기 좋게 만들 때</td></tr>
+          <tr><td>소형견(~9kg)</td><td>15세</td><td>24세</td><td>매년 +4세</td></tr>
+          <tr><td>중형견(9~23kg)</td><td>15세</td><td>24세</td><td>매년 +5세</td></tr>
+          <tr><td>대형견(23~41kg)</td><td>15세</td><td>24세</td><td>매년 +6세</td></tr>
+          <tr><td>초대형견(41kg~)</td><td>12세</td><td>22세</td><td>매년 +7세</td></tr>
+          <tr><td>고양이</td><td>15세</td><td>24세</td><td>매년 +4세</td></tr>
         </tbody>
       </table></div>
 
       <h2>활용 예시</h2>
       <div class="use-case-grid">
         <div class="use-case-card">
-          <div class="use-case-icon">&#x1F4E5;</div>
-          <div class="use-case-title">시스템 데이터 업로드</div>
-          <div class="use-case-desc">엑셀로 정리한 데이터를 CSV로 변환해 다른 시스템에 업로드합니다.</div>
+          <div class="use-case-icon">&#x1F3E5;</div>
+          <div class="use-case-title">건강검진 주기 판단</div>
+          <div class="use-case-desc">사람 나이로 환산해 노령기 진입 시점을 가늠하고 검진 주기를 조정합니다.</div>
         </div>
         <div class="use-case-card">
-          <div class="use-case-icon">&#x1F4CB;</div>
-          <div class="use-case-title">CSV 데이터 정리</div>
-          <div class="use-case-desc">서버에서 받은 CSV를 엑셀로 열어 필터·정렬로 편하게 정리합니다.</div>
+          <div class="use-case-icon">&#x1F37D;&#xFE0F;</div>
+          <div class="use-case-title">사료·급여량 참고</div>
+          <div class="use-case-desc">생애 주기(퍼피/성견/노령견)를 가늠해 사료 선택에 참고합니다.</div>
         </div>
         <div class="use-case-card">
-          <div class="use-case-icon">&#x1F4CA;</div>
-          <div class="use-case-title">특정 시트만 추출</div>
-          <div class="use-case-desc">여러 시트로 된 엑셀에서 필요한 시트 하나만 CSV로 뽑아냅니다.</div>
+          <div class="use-case-icon">&#x1F4AC;</div>
+          <div class="use-case-title">궁금증 해소</div>
+          <div class="use-case-desc">"우리 아이가 사람 나이로 몇 살인지" 궁금할 때 바로 확인합니다.</div>
         </div>
         <div class="use-case-card">
-          <div class="use-case-icon">&#x1F4BC;</div>
-          <div class="use-case-title">업무 데이터 변환</div>
-          <div class="use-case-desc">거래처에서 받은 파일 형식을 원하는 형식으로 즉시 바꿉니다.</div>
+          <div class="use-case-icon">&#x1F415;</div>
+          <div class="use-case-title">입양 전 참고</div>
+          <div class="use-case-desc">입양을 고려하는 반려동물의 생애 주기를 미리 가늠해봅니다.</div>
         </div>
       </div>
 
-      <div class="post-highlight">&#x1F512; XlsxCsvConvert는 모든 변환이 내 PC 브라우저에서만 실행됩니다. 업로드한 파일이 외부 서버로 전송되지 않습니다.</div>
+      <div class="post-highlight">&#x1F512; PetAgeCalc는 모든 계산이 내 PC 브라우저에서만 실행됩니다. 입력한 정보가 외부 서버로 전송되지 않습니다.</div>
 
       <h2>자주 묻는 질문</h2>
       <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
-        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. 엑셀 CSV 변환기는 정말 무료인가요?</p>
-        <p style="color:var(--subtext);margin:0;line-height:1.7">네, 회원가입이나 설치 없이 완전 무료로 사용할 수 있습니다. 횟수 제한도 없습니다.</p>
+        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. 반려동물 나이 계산기는 정말 무료인가요?</p>
+        <p style="color:var(--subtext);margin:0;line-height:1.7">네, 회원가입이나 설치 없이 완전 무료로 사용할 수 있습니다. 계산 횟수 제한도 없습니다.</p>
       </div>
       <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
-        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. 업로드한 엑셀 파일이 서버로 전송되나요?</p>
-        <p style="color:var(--subtext);margin:0;line-height:1.7">아니요. 엑셀 파일 파싱은 오픈소스 라이브러리(SheetJS)를 이용해 브라우저 안에서만 처리되며, 업로드한 파일이 외부 서버로 전송되지 않습니다.</p>
+        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. 왜 강아지는 체구를 따로 입력해야 하나요?</p>
+        <p style="color:var(--subtext);margin:0;line-height:1.7">소형견보다 대형견이 노화 속도가 더 빠르기 때문입니다. AVMA 환산표에 따르면 소형견은 매년 4살씩, 초대형견은 매년 7살씩 사람 나이가 늘어납니다.</p>
       </div>
       <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
-        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. 시트가 여러 개인 엑셀 파일도 변환할 수 있나요?</p>
-        <p style="color:var(--subtext);margin:0;line-height:1.7">네. 엑셀 파일을 업로드하면 시트 목록이 나타나고, 원하는 시트를 선택해 CSV로 변환할 수 있습니다.</p>
+        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. 고양이도 품종별로 다르게 계산하나요?</p>
+        <p style="color:var(--subtext);margin:0;line-height:1.7">아니요. 고양이는 강아지와 달리 품종 간 크기 차이가 크지 않아 단일 환산표를 사용합니다.</p>
       </div>
       <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
-        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. 구형 엑셀 형식(.xls)도 지원하나요?</p>
-        <p style="color:var(--subtext);margin:0;line-height:1.7">네, .xlsx와 .xls 형식 모두 업로드할 수 있습니다. 다만 CSV에서 엑셀로 변환할 때는 최신 형식(.xlsx)으로만 저장됩니다.</p>
+        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. 이 계산 결과가 정확한 건강 상태를 의미하나요?</p>
+        <p style="color:var(--subtext);margin:0;line-height:1.7">아니요. 환산표는 평균적인 노화 속도를 기준으로 한 참고용 수치이며, 개체별 건강 상태나 유전적 요인에 따라 실제 노화 속도는 다를 수 있습니다. 정확한 건강 상태는 반드시 동물병원에서 확인하세요.</p>
       </div>
     </div>
 
     <div style="margin:12px 0"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><div class="adfit-h-desktop"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-QD4pRIpdIj7i2mbt" data-ad-width="728" data-ad-height="90"></ins></div><div class="adfit-h-mobile"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-R4xA2niTT8HgGjoO" data-ad-width="320" data-ad-height="50"></ins></div></div>
 
     <div class="cta-box">
-      <p>지금 바로 엑셀과 CSV를 변환해보세요.<br />설치도 회원가입도 필요 없습니다.</p>
-      <a href="/xlsx-csv-convert/" class="cta-btn" style="display:inline-flex;align-items:center;gap:8px">
-        <span style="display:inline-block;width:26px;height:26px;overflow:hidden;flex-shrink:0"><span style="display:block;transform:scale(0.565);transform-origin:top left"><div style="width:46px;height:46px;background:#a8e6cf;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="font:700 13px Gowun Dodum,sans-serif;color:#2a2433;line-height:1;letter-spacing:-.5px;white-space:nowrap">XLS</div></div></span></span>
-        무료로 엑셀 CSV 변환하기
+      <p>지금 바로 반려동물 나이를 계산해보세요.<br />설치도 회원가입도 필요 없습니다.</p>
+      <a href="/pet-age-calc/" class="cta-btn" style="display:inline-flex;align-items:center;gap:8px">
+        <span style="display:inline-block;width:26px;height:26px;overflow:hidden;flex-shrink:0"><span style="display:block;transform:scale(0.565);transform-origin:top left"><div style="width:46px;height:46px;background:#ffc2d6;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="font:700 13px Gowun Dodum,sans-serif;color:#2a2433;line-height:1;letter-spacing:-.5px;white-space:nowrap">나이</div></div></span></span>
+        무료로 반려동물 나이 계산하기
       </a>
     </div>
     <div style="margin:12px 0"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="9500090221"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><div class="adfit-rect-wrap"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-oePL4TCj742xAwqT" data-ad-width="300" data-ad-height="250"></ins></div></div>
 
 <div class="post-nav">
-      <a href="/blog/86-httpstatusref-howto"><span class="nav-label">← 이전 글</span><span style="color:var(--point-hover)">HTTP 상태 코드 사전</span> 사용법 완전 가이드</a>
-      <a href="/blog/90-petagecalc-howto" style="text-align:right"><span class="nav-label">다음 글 →</span><span style="color:var(--point-hover)">반려동물 나이 계산기</span> 사용법 완전 가이드</a>
+      <a href="/blog/88-xlsxcsvconvert-howto"><span class="nav-label">← 이전 글</span><span style="color:var(--point-hover)">엑셀 CSV 변환기</span> 사용법 완전 가이드</a>
+      <a href="/blog/24-qrcode-howto" style="text-align:right"><span class="nav-label">다음 글 →</span><span style="color:var(--point-hover)">QR 코드 생성</span> 사용법 완전 가이드</a>
     </div></div>
 
   </article>

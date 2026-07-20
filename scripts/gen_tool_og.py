@@ -96,6 +96,7 @@ TOOLS = {
     'bmi-calc':               ('BMI/칼로리 계산기', 'BmiCalc', '계산기'),
     'http-status-ref':        ('HTTP 상태 코드 사전', 'HttpStatusRef', '개발자'),
     'xlsx-csv-convert':       ('엑셀 CSV 변환기', 'XlsxCsvConvert', '문서·텍스트'),
+    'pet-age-calc':           ('반려동물 나이 계산기', 'PetAgeCalc', '생활·재미'),
 }
 
 
