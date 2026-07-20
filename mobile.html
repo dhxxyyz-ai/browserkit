@@ -18,7 +18,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Gowun Dodum:wght@300;400;700&display=swap" rel="stylesheet">
+  <!-- Google AdSense 승인 대기 중 (2026-07-19 주석 처리, 카카오 애드핏으로 임시 전환) — 승인 후 주석 해제
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506" crossorigin="anonymous"></script>
+  -->
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     html, body { font-family: 'Gowun Dodum', sans-serif; background: #e2cdff; }
@@ -52,6 +54,14 @@
 // ── 상수 ──────────────────────────────────────────────────────────────────────
 const BASE_URL = 'https://browserkit.online';
 const SHOW_ADSENSE = true;
+
+// ── 카카오 애드핏 (2026-07-19, 애드센스 승인 대기 중 임시 전환) ─────────────────
+function loadKakaoAdFit() {
+  var s = document.createElement('script');
+  s.src = '//t1.kakaocdn.net/kas/static/ba.min.js';
+  s.async = true;
+  document.body.appendChild(s);
+}
 
 const TOOL_URLS = {
   MaskPrivacy:'/maskprivacy/', MaskPDF:'/pdf-tools/', MaskFace:'/mask-face/', MaskDoc:'/mask-doc/',
@@ -355,12 +365,8 @@ function render() {
         </div>
       </div>
       <!-- 상단 디스플레이 광고 (sticky) -->
-      <div style="padding:6px 0;text-align:center;border-top:1px solid rgba(42,36,51,.08)">
-        <ins class="adsbygoogle bk-ad-top" style="display:block;min-height:50px"
-          data-ad-client="ca-pub-2077977787979506"
-          data-ad-slot="6825825428"
-          data-ad-format="auto"
-          data-full-width-responsive="true"></ins>
+      <div style="padding:6px 0;text-align:center;border-top:1px solid rgba(42,36,51,.08);display:flex;justify-content:center">
+        <ins class="kakao_ad_area bk-ad-top" style="display:none" data-ad-unit="DAN-R4xA2niTT8HgGjoO" data-ad-width="320" data-ad-height="50"></ins>
       </div>
     </div>
 
@@ -373,19 +379,17 @@ function render() {
   </div>
 
   <!-- 하단 고정 멀티플렉스 광고 -->
-  <div style="position:fixed;bottom:0;left:0;right:0;z-index:200;background:rgba(251,246,255,.82);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);box-shadow:0 -2px 16px rgba(42,36,51,.08)">
-    <ins class="adsbygoogle bk-ad-bottom" style="display:block;min-height:100px"
-      data-ad-client="ca-pub-2077977787979506"
-      data-ad-slot="9500090221"
-      data-ad-format="autorelaxed"></ins>
+  <div style="position:fixed;bottom:0;left:0;right:0;z-index:200;background:rgba(251,246,255,.82);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);box-shadow:0 -2px 16px rgba(42,36,51,.08);display:flex;justify-content:center;padding:6px 0">
+    <ins class="kakao_ad_area bk-ad-bottom" style="display:none" data-ad-unit="DAN-R4xA2niTT8HgGjoO" data-ad-width="320" data-ad-height="50"></ins>
   </div>`;
 
-  // 광고 초기화 (이미 초기화된 슬롯 제외)
-  document.querySelectorAll('.bk-ad-top, .bk-ad-bottom').forEach(el => {
-    if (!el.dataset.adsbygoogleStatus) {
-      try { (adsbygoogle = window.adsbygoogle || []).push({}); } catch(e) {}
-    }
-  });
+  // Google AdSense (승인 후 복원):
+  // document.querySelectorAll('.bk-ad-top, .bk-ad-bottom').forEach(el => {
+  //   if (!el.dataset.adsbygoogleStatus) {
+  //     try { (adsbygoogle = window.adsbygoogle || []).push({}); } catch(e) {}
+  //   }
+  // });
+  if (SHOW_ADSENSE) loadKakaoAdFit();
 }
 
 // ── 로딩 → 앱 전환 ───────────────────────────────────────────────────────────

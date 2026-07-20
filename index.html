@@ -21,7 +21,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Gowun Dodum:wght@300;400;700&family=Nanum+Pen+Script&display=swap" rel="stylesheet">
+  <!-- Google AdSense 승인 대기 중 (2026-07-19 주석 처리, 카카오 애드핏으로 임시 전환) — 승인 후 주석 해제
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506" crossorigin="anonymous"></script>
+  -->
   <style>
     html, body { margin: 0; padding: 0; height: 100%; overflow: hidden; font-family: 'Gowun Dodum', system-ui, sans-serif; }
     * { box-sizing: border-box; }
@@ -86,6 +88,16 @@ if (window.innerWidth <= 768) { window.location.replace('mobile.html'); }
 
 // ── AdSense toggle (false = 광고 숨김 / true = 애드센스 승인 후 활성화) ────────
 const SHOW_ADSENSE = true;
+
+// ── 카카오 애드핏 (2026-07-19, 애드센스 승인 대기 중 임시 전환) ─────────────────
+// render()가 매번 새 .kakao_ad_area를 innerHTML로 삽입하므로, 렌더 후마다
+// ba.min.js를 다시 실행해 새로 추가된 영역을 인식시킨다(이미 처리된 영역은 스킵됨).
+function loadKakaoAdFit() {
+  var s = document.createElement('script');
+  s.src = '//t1.kakaocdn.net/kas/static/ba.min.js';
+  s.async = true;
+  document.body.appendChild(s);
+}
 
 // ── Base URL ──────────────────────────────────────────────────────────────────
 const BASE_URL = 'https://browserkit.online';
@@ -620,7 +632,7 @@ function fileBodyHtml(win,pal) {
     ${fn?`<div style="background:rgba(255,255,255,.6);border:2.5px solid ${ink};border-radius:13px 11px 12px 10px;padding:14px 16px;display:flex;gap:10px;align-items:flex-start"><span style="width:22px;height:22px;flex:0 0 auto;border-radius:50%;background:${accent};border:2px solid ${ink};color:#fff;font:700 14px Gowun Dodum,sans-serif;display:flex;align-items:center;justify-content:center">!</span><span style="font:400 17px Gowun Dodum,sans-serif;color:${ink};line-height:1.45">${esc(fn)}</span></div>`:''}
     ${fp.map(p=>`<div style="font:400 18px Gowun Dodum,sans-serif;color:${ink};line-height:1.55">${esc(p)}</div>`).join('')}
     ${fct?`<a href="${esc(fu)}" class="bk-cta" style="align-self:flex-start;background:${btnColor};border:2.5px solid ${ink};color:#fff;font:700 19px Gowun Dodum,sans-serif;padding:8px 22px;border-radius:13px 11px 12px 10px;box-shadow:0 4px 0 ${ink};display:inline-block">${esc(fct)} →</a>`:''}
-    ${SHOW_ADSENSE ? `<div style="height:100px;overflow:hidden"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins></div>` : ''}
+    ${SHOW_ADSENSE ? `<div style="height:100px;overflow:hidden;display:flex;align-items:center;justify-content:center"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-R4xA2niTT8HgGjoO" data-ad-width="320" data-ad-height="50"></ins></div>` : ''}
   </div>`;
 }
 
@@ -659,7 +671,7 @@ function render() {
       }).join('');
       body=`<div style="padding:10px 16px 6px;border-bottom:2px dashed rgba(42,36,51,.22);display:flex;align-items:center;gap:8px"><span style="font:400 15px Gowun Dodum,sans-serif;color:rgba(42,36,51,.6)">${esc(crumb)}</span><span style="margin-left:auto;font:400 15px Gowun Dodum,sans-serif;color:rgba(42,36,51,.6)">${itemCount}개 항목</span></div>
         <div style="padding:16px;max-height:54vh;overflow:auto;display:grid;grid-template-columns:repeat(auto-fill,minmax(104px,1fr));gap:8px">${gridItems}</div>
-        ${SHOW_ADSENSE ? `<div style="padding:0 16px 16px"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="auto" data-full-width-responsive="true"></ins></div>` : ''}
+        ${SHOW_ADSENSE ? `<div style="padding:0 16px 16px;display:flex;justify-content:center"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-R4xA2niTT8HgGjoO" data-ad-width="320" data-ad-height="50"></ins></div>` : ''}
         `;
     } else if(win.kind==='file'){
       body=fileBodyHtml(win,pal);
@@ -701,7 +713,7 @@ function render() {
   const _adT = SHOW_ADSENSE ? 96 : 0;   // 디스플레이 광고 90px + 간격 6px
   const _adB = SHOW_ADSENSE ? 292 : 0;  // 멀티플렉스 광고 280px + 간격 12px
   const toolboxHtml=`
-    ${SHOW_ADSENSE?`<div style="position:absolute;left:20px;top:20px;right:160px;height:90px;overflow:hidden"><div><div><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins></div></div></div>`:''}
+    ${SHOW_ADSENSE?`<div style="position:absolute;left:20px;top:20px;right:160px;height:90px;overflow:hidden;display:flex;align-items:center;justify-content:center"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-QD4pRIpdIj7i2mbt" data-ad-width="728" data-ad-height="90"></ins></div>`:''}
     <fieldset style="position:absolute;left:20px;top:${20+_adT}px;right:160px;bottom:${_adB}px;min-width:0;border:3px solid ${ink};border-radius:20px 18px 19px 17px;background:rgba(255,255,255,.42);margin:0;padding:6px 12px 10px;box-sizing:border-box;display:flex;flex-direction:column;overflow:hidden">
       <legend style="font:700 22px Gowun Dodum,sans-serif;color:${ink};padding:3px 14px;background:rgba(255,255,255,.78);border:2.5px solid ${ink};border-radius:11px 9px 10px 8px;margin-left:12px">도구상자</legend>
       <div style="display:flex;flex-direction:column;gap:5px;overflow-y:auto;padding-right:2px;margin-top:6px">
@@ -716,7 +728,7 @@ function render() {
         }).join('')}
       </div>
     </fieldset>
-    ${SHOW_ADSENSE?`<div style="position:absolute;left:20px;right:160px;bottom:12px;height:280px;overflow:hidden"><div><div><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="9500090221" data-ad-format="autorelaxed"></ins></div></div></div>`:''}
+    ${SHOW_ADSENSE?`<div style="position:absolute;left:20px;right:160px;bottom:12px;height:280px;overflow:hidden;display:flex;align-items:center;justify-content:center"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-oePL4TCj742xAwqT" data-ad-width="300" data-ad-height="250"></ins></div>`:''}
   `;
 
   const rightIcons=[
@@ -776,11 +788,8 @@ function render() {
   </div>`;
   document.getElementById('root').innerHTML = _html;
   wireEvents();
-  if (SHOW_ADSENSE) {
-    document.querySelectorAll('.adsbygoogle:not([data-adsbygoogle-status])').forEach(() => {
-      (adsbygoogle = window.adsbygoogle || []).push({});
-    });
-  }
+  // Google AdSense (승인 후 복원): if (SHOW_ADSENSE) { document.querySelectorAll('.adsbygoogle:not([data-adsbygoogle-status])').forEach(() => { (adsbygoogle = window.adsbygoogle || []).push({}); }); }
+  if (SHOW_ADSENSE) loadKakaoAdFit();
 }
 
 // ── Wire events ───────────────────────────────────────────────────────────────

@@ -944,3 +944,15 @@ a:hover { color: var(--text); }
   .hero-title { font-size: 26px; }
   .post-title { font-size: 24px; }
 }
+
+/* ============================
+   카카오 애드핏 (2026-07-19, 애드센스 승인 대기 중 임시 전환)
+   가로형 배너: 데스크톱 728x90 / 모바일 320x50 전환
+============================ */
+.adfit-h-desktop { display: flex; justify-content: center; }
+.adfit-h-mobile { display: none; justify-content: center; }
+.adfit-rect-wrap { display: flex; justify-content: center; }
+@media (max-width: 640px) {
+  .adfit-h-desktop { display: none; }
+  .adfit-h-mobile { display: flex; }
+}

@@ -13,12 +13,15 @@
   <meta property="og:description" content="클라이언트 사이드 처리 방식이 왜 더 안전한지, 원리와 장점을 설명합니다." />
   <meta property="og:type" content="article" />
   <title>서버 없이 개인정보 처리하는 방법 — BrowserKit</title>
-  <link rel="stylesheet" href="/css/style.css?v=20260718b" />
+  <link rel="stylesheet" href="/css/style.css?v=20260719a" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+  <!-- Google AdSense 승인 대기 중 (2026-07-19 주석 처리, 카카오 애드핏으로 임시 전환) — 승인 후 주석 해제
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506"
      crossorigin="anonymous"></script>
+  -->
+  <script type="text/javascript" src="//t1.kakaocdn.net/kas/static/ba.min.js" async></script>
   <style>
     .header{padding:24px 0 16px;border-bottom:1px solid var(--border)}.header .container{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}.header-brand{display:flex;align-items:center;gap:10px;text-decoration:none}.header-brand-icon{font-size:24px}.header-brand-text{font-size:20px;font-weight:700;font-family:'Gowun Dodum',sans-serif;background:linear-gradient(135deg,var(--point),var(--point-hover));-webkit-background-clip:text;-webkit-text-fill-color:transparent}.header-back{font-size:13px;color:var(--subtext);display:flex;align-items:center;gap:6px;text-decoration:none}.header-back:hover{color:var(--text)}
     .flow-wrap { display:flex; flex-direction:column; gap:8px; margin:20px 0; }
@@ -103,7 +106,7 @@
     <span class="post-tag">기술</span>
     <h1 class="post-title">서버 없이 개인정보 처리하는 방법</h1>
     <div class="post-date">2026년 6월 10일</div>
-    <div style="margin:12px 0"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    <div style="margin:12px 0"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><div class="adfit-h-desktop"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-QD4pRIpdIj7i2mbt" data-ad-width="728" data-ad-height="90"></ins></div><div class="adfit-h-mobile"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-R4xA2niTT8HgGjoO" data-ad-width="320" data-ad-height="50"></ins></div></div>
     <div class="post-body">
       <p>대부분의 온라인 서비스는 이미지를 서버로 전송해 처리합니다. 하지만 개인정보가 담긴 이미지를 외부 서버로 보내는 것은 유출 위험이 있습니다. 서버 없이 브라우저에서만 처리하는 방식이 왜 더 안전한지 알아봅니다.</p>
       <h2>서버 처리 방식의 문제점</h2>
@@ -118,7 +121,7 @@
         </tbody>
       </table></div>
             
-      <div style="margin:12px 0"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+      <div style="margin:12px 0"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><div class="adfit-h-desktop"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-QD4pRIpdIj7i2mbt" data-ad-width="728" data-ad-height="90"></ins></div><div class="adfit-h-mobile"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-R4xA2niTT8HgGjoO" data-ad-width="320" data-ad-height="50"></ins></div></div>
       <h2>로컬(클라이언트 사이드) 처리 방식</h2>
       <p>로컬 처리 방식은 모든 연산이 사용자의 브라우저 안에서만 이루어집니다. 이미지 데이터가 외부 서버로 나가지 않습니다.</p>
       <div class="flow-wrap">
@@ -151,7 +154,7 @@
         <p style="color:var(--subtext);margin:0;line-height:1.7">유출 위험이 원천적으로 줄어들고, 업로드·다운로드 대기 시간이 없어 처리 속도도 빠릅니다. 민감한 문서일수록 로컬 처리 도구가 유리합니다.</p>
       </div>
     </div>
-    <div style="margin:12px 0"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    <div style="margin:12px 0"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><div class="adfit-h-desktop"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-QD4pRIpdIj7i2mbt" data-ad-width="728" data-ad-height="90"></ins></div><div class="adfit-h-mobile"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-R4xA2niTT8HgGjoO" data-ad-width="320" data-ad-height="50"></ins></div></div>
 
     <div class="cta-box">
       <p>서버 전송 없이 브라우저에서만 처리되는 안전한 마스킹.<br />MaskPrivacy로 지금 바로 시작해보세요.</p>
@@ -160,7 +163,7 @@
         무료로 마스킹 시작하기
       </a>
     </div>
-    <div style="margin:12px 0"><ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="9500090221"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    <div style="margin:12px 0"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="9500090221"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><div class="adfit-rect-wrap"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-oePL4TCj742xAwqT" data-ad-width="300" data-ad-height="250"></ins></div></div>
     <div class="post-nav">
       <a href="/blog/13-masking-tool-compare"><span class="nav-label">← 이전 글</span>무료 개인정보 마스킹 툴 비교</a>
       <a href="/blog/16-maskpdf-howto" style="text-align:right"><span class="nav-label">다음 글 →</span><span style="color:var(--point-hover)">PDF 마스킹</span> 사용법 완전 가이드</a>
