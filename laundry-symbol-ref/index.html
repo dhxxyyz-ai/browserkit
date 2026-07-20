@@ -33,7 +33,8 @@
     .symbol-list { display:flex; flex-direction:column; gap:10px; margin:16px 0 48px; }
     .symbol-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:16px 20px; display:flex; align-items:flex-start; gap:16px; cursor:pointer; }
     .symbol-card:hover { border-color:var(--point); }
-    .symbol-icon { min-width:56px; height:56px; display:flex; align-items:center; justify-content:center; font-size:28px; flex-shrink:0; background:var(--bg); border-radius:12px; }
+    .symbol-icon { min-width:56px; height:56px; display:flex; align-items:center; justify-content:center; flex-shrink:0; background:var(--bg); border-radius:12px; }
+    .symbol-icon svg { width:32px; height:32px; }
     .symbol-body { flex:1; }
     .symbol-name { font-size:14px; font-weight:700; color:var(--text); margin-bottom:4px; }
     .symbol-desc { font-size:13px; color:var(--subtext); line-height:1.6; }
@@ -118,7 +119,7 @@
 
   <main><div class="container">
     <div class="hero">
-      <div class="hero-icon" style="height:78px;display:flex;justify-content:center;align-items:center"><div style="transform:scale(1.7);transform-origin:center"><div style="width:46px;height:46px;background:#bcd4ff;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="font-size:22px;line-height:1">🧺</div></div></div></div>
+      <div class="hero-icon" style="height:78px;display:flex;justify-content:center;align-items:center"><div style="transform:scale(1.7);transform-origin:center"><div style="width:46px;height:46px;background:#bcd4ff;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="font:700 15px Gowun Dodum,sans-serif;color:#2a2433;line-height:1;letter-spacing:-.5px;white-space:nowrap">세탁</div></div></div></div>
       <div class="hero-title-wrap"><h1 class="hero-title">세탁 표시 기호 사전</h1><a href="/blog/89-laundrysymbolref-howto" class="hero-guide-link">사용법 가이드 보기</a></div>
       <p class="hero-desc">옷 안쪽 세탁 라벨의 기호를 몰라도, 이름이나 키워드로 검색하면 바로 알려드려요</p>
       <div class="hero-badges">
@@ -130,7 +131,7 @@
     </div>
     <div style="margin:0 0 12px"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><div class="adfit-h-desktop"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-QD4pRIpdIj7i2mbt" data-ad-width="728" data-ad-height="90"></ins></div><div class="adfit-h-mobile"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-R4xA2niTT8HgGjoO" data-ad-width="320" data-ad-height="50"></ins></div></div>
 
-    <p class="notice">💡 국내 KS 및 국제 GINETEX 세탁 표시 기준을 참고해 정리했습니다. 카드를 클릭하면 기호 이름이 클립보드에 복사됩니다. 정확한 세탁은 실제 의류 라벨을 우선 확인해주세요.</p>
+    <p class="notice">💡 국가표준 KS K 0021:2024(섬유 제품의 취급에 관한 표시 기호 및 그 표시 방법)를 참고해 정리했습니다. 카드를 클릭하면 기호 이름이 클립보드에 복사됩니다. 정확한 세탁은 실제 의류 라벨을 우선 확인해주세요.</p>
 
     <div class="search-card">
       <input type="text" class="search-input" id="searchInput" placeholder="기호 이름이나 키워드로 검색 (예: 삶기, 손세탁, 다림질, 드라이클리닝)" />
@@ -140,7 +141,8 @@
         <button class="cat-btn" data-cat="bleach">표백</button>
         <button class="cat-btn" data-cat="dry">건조</button>
         <button class="cat-btn" data-cat="iron">다림질</button>
-        <button class="cat-btn" data-cat="dryclean">드라이클리닝</button>
+        <button class="cat-btn" data-cat="dryclean">드라이·웨트클리닝</button>
+        <button class="cat-btn" data-cat="wring">짜기</button>
       </div>
     </div>
 
@@ -164,47 +166,131 @@
   <div class="toast" id="toast"></div>
 
   <script>
+  // ── 기호 아이콘 빌더 (KS K 0021:2024 실제 도형을 선으로 그대로 재현) ──────────
+  var INK = '#2a2433';
+  function svgWrap(inner) {
+    return '<svg viewBox="0 0 40 40" width="32" height="32" fill="none" stroke="' + INK + '" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round">' + inner + '</svg>';
+  }
+  function xMark() { return '<line x1="6" y1="6" x2="34" y2="34" stroke-width="2"/><line x1="34" y1="6" x2="6" y2="34" stroke-width="2"/>'; }
+  function label(x, y, text, size) {
+    return '<text x="' + x + '" y="' + y + '" font-size="' + (size || 7) + '" text-anchor="middle" fill="' + INK + '" stroke="none" font-family="Gowun Dodum,sans-serif">' + text + '</text>';
+  }
+  // 물세탁(세탁기): 대야(사각 통) + 물결 구멍 + 온도
+  function tubIcon(temp, gentle, prohibited) {
+    var s = '<rect x="7" y="7" width="26" height="24" rx="3"/><circle cx="20" cy="13" r="1.6" fill="' + INK + '" stroke="none"/>';
+    s += label(20, 25, temp + '℃', 8);
+    if (gentle >= 1) s += '<line x1="11" y1="28" x2="29" y2="28" stroke-width="1.6"/>';
+    if (gentle >= 2) s += '<line x1="11" y1="31" x2="29" y2="31" stroke-width="1.6"/>';
+    if (prohibited) s += xMark();
+    return svgWrap(s);
+  }
+  // 손세탁: 위가 열린 대야(그릇) 모양
+  function handWashIcon(temp, prohibited) {
+    var s = '<path d="M9,9 L9,25 Q9,31 15,31 L25,31 Q31,31 31,25 L31,9"/>';
+    s += label(20, 17, '손세탁', 6);
+    s += label(20, 26, temp + '℃', 7);
+    if (prohibited) s += xMark();
+    return svgWrap(s);
+  }
+  // 표백: 삼각형 + 텍스트(염소표백/산소표백)
+  function bleachIcon(text, prohibited) {
+    var s = '<path d="M20,7 L34,31 L6,31 Z"/>' + label(20, 26, text, 6);
+    if (prohibited) s += xMark();
+    return svgWrap(s);
+  }
+  // 다림질: 다리미 실루엣 + 온도 점 + 온도 + 스팀 표시
+  function ironIcon(dots, temp, steamBan, prohibited) {
+    var s = '<path d="M8,30 Q8,33 11,33 L27,33 Q33,33 33,25 Q33,15 22,10 L15,10 Q8,12 8,20 Z"/><line x1="15" y1="10" x2="24" y2="4"/>';
+    for (var i = 0; i < dots; i++) s += '<circle cx="' + (16 + i * 4) + '" cy="15" r="1.1" fill="' + INK + '" stroke="none"/>';
+    if (temp) s += label(20, 25, temp + '℃', 6.5);
+    if (steamBan) s += '<line x1="12" y1="37" x2="20" y2="33" stroke-width="1.8"/><line x1="20" y1="33" x2="28" y2="37" stroke-width="1.8"/>';
+    if (prohibited) s += xMark();
+    return svgWrap(s);
+  }
+  // 드라이클리닝/웨트클리닝: 원 + 물결선 + 텍스트(드라이/웨트 + 용제)
+  function circleCleanIcon(text, gentle, prohibited) {
+    var s = '<circle cx="20" cy="20" r="14"/><path d="M9,21 Q14,17 20,21 Q26,25 31,21" stroke-width="1.6"/>';
+    s += label(20, 16, text, 5.5);
+    if (gentle) s += '<line x1="14" y1="29" x2="26" y2="29" stroke-width="1.6"/>';
+    if (prohibited) s += xMark();
+    return svgWrap(s);
+  }
+  // 짜기: 비튼 천 모양
+  function wringIcon(text, prohibited) {
+    var s = '<path d="M8,11 Q22,20 8,29 M32,11 Q18,20 32,29" stroke-width="2"/>';
+    if (text) s += label(20, 36, text, 6);
+    if (prohibited) s += xMark();
+    return svgWrap(s);
+  }
+  // 자연건조: 원 + 방사형 눈금(햇빛) + 텍스트, 빗금=그늘
+  function dryIcon(text, shade) {
+    var s = '<circle cx="20" cy="20" r="10" stroke-width="2.2"/>';
+    for (var i = 0; i < 12; i++) {
+      var a = i * 30 * Math.PI / 180;
+      var x1 = (20 + 11 * Math.cos(a)).toFixed(1), y1 = (20 + 11 * Math.sin(a)).toFixed(1);
+      var x2 = (20 + 14 * Math.cos(a)).toFixed(1), y2 = (20 + 14 * Math.sin(a)).toFixed(1);
+      s += '<line x1="' + x1 + '" y1="' + y1 + '" x2="' + x2 + '" y2="' + y2 + '" stroke-width="1.4"/>';
+    }
+    if (shade) s += '<line x1="12" y1="14" x2="28" y2="26" stroke-width="1"/><line x1="12" y1="20" x2="22" y2="28" stroke-width="1"/><line x1="18" y1="12" x2="28" y2="20" stroke-width="1"/>';
+    s += label(20, 21, text, 5.5);
+    return svgWrap(s);
+  }
+  // 기계건조(회전식 건조기): 사각형 + 원
+  function tumbleDryIcon(temp, prohibited) {
+    var s = '<rect x="7" y="7" width="26" height="26" rx="3"/><circle cx="20" cy="20" r="8"/>';
+    s += label(20, 23, temp + '℃', 7);
+    if (prohibited) s += xMark();
+    return svgWrap(s);
+  }
+
   var SYMBOLS = [
-    { icon: '🪣', name: '가정 세탁 가능', desc: '대야 모양 기본 기호. 가정에서 물세탁이 가능하다는 의미입니다.', cat: 'wash' },
-    { icon: '🌡️30', name: '30도 물세탁', desc: '대야 안에 숫자 30 — 물 온도 30도 이하에서 세탁하라는 뜻입니다. 찬물~미온수 세탁.', cat: 'wash' },
-    { icon: '🌡️40', name: '40도 물세탁', desc: '대야 안에 숫자 40 — 물 온도 40도 이하에서 세탁하라는 뜻입니다. 가장 흔한 표시입니다.', cat: 'wash' },
-    { icon: '🌡️60', name: '60도 물세탁', desc: '대야 안에 숫자 60 — 물 온도 60도 이하에서 세탁 가능. 수건·속옷류에 많습니다.', cat: 'wash' },
-    { icon: '♨️95', name: '95도 삶기 세탁', desc: '대야 안에 숫자 95 — 삶는 세탁(열탕 세탁)이 가능하다는 뜻. 흰색 면 소재에 주로 사용됩니다.', cat: 'wash' },
-    { icon: '✋', name: '손세탁 전용', desc: '대야에 손 모양이 그려진 기호. 세탁기 사용 없이 반드시 손으로 약하게 세탁해야 합니다.', cat: 'wash' },
-    { icon: '🚫🪣', name: '물세탁 금지', desc: '대야에 X표시(또는 대야 자체가 X로 그어짐). 물세탁을 하면 안 되며 드라이클리닝 등을 이용해야 합니다.', cat: 'wash' },
-    { icon: '➖', name: '약(弱)세탁', desc: '대야 아래 밑줄 1개. 세탁기에서 약하게(울코스, 손세탁 코스 등) 돌려야 한다는 뜻입니다.', cat: 'wash' },
-    { icon: '⚌', name: '매우 약한 세탁', desc: '대야 아래 밑줄 2개. 손상되기 쉬운 소재로, 가장 약한 코스로 짧게 세탁해야 합니다.', cat: 'wash' },
+    { icon: tubIcon(95, 0), name: '95도 일반세탁', desc: '대야(세탁통) 안에 물결 구멍과 95℃ 표시. 물 온도 최대 95℃에서 세탁기로 일반 세탁할 수 있습니다.', cat: 'wash' },
+    { icon: tubIcon(70, 0), name: '70도 일반세탁', desc: '물 온도 최대 70℃에서 세탁기로 일반 세탁할 수 있습니다.', cat: 'wash' },
+    { icon: tubIcon(60, 0), name: '60도 일반세탁', desc: '물 온도 최대 60℃에서 세탁기로 일반 세탁할 수 있습니다.', cat: 'wash' },
+    { icon: tubIcon(50, 0), name: '50도 일반세탁', desc: '물 온도 최대 50℃에서 세탁기로 일반 세탁할 수 있습니다.', cat: 'wash' },
+    { icon: tubIcon(50, 1), name: '50도 약하게 세탁', desc: '대야 아래 밑줄 1개. 물 온도 최대 50℃에서 세탁기로 약하게 세탁해야 합니다.', cat: 'wash' },
+    { icon: tubIcon(40, 0), name: '40도 일반세탁', desc: '물 온도 최대 40℃에서 세탁기로 일반 세탁할 수 있습니다. 가장 흔한 표시입니다.', cat: 'wash' },
+    { icon: tubIcon(40, 1), name: '40도 약하게 세탁', desc: '대야 아래 밑줄 1개. 물 온도 최대 40℃에서 세탁기로 약하게 세탁해야 합니다.', cat: 'wash' },
+    { icon: tubIcon(40, 2), name: '40도 매우 약하게 세탁', desc: '대야 아래 밑줄 2개. 물 온도 최대 40℃에서 세탁기로 매우 약하게(울코스 등) 세탁해야 합니다.', cat: 'wash' },
+    { icon: tubIcon(30, 0), name: '30도 일반세탁', desc: '물 온도 최대 30℃에서 세탁기로 일반 세탁할 수 있습니다.', cat: 'wash' },
+    { icon: tubIcon(30, 2), name: '30도 매우 약하게(중성세제)', desc: '대야 아래 밑줄 2개. 물 온도 최대 30℃에서 매우 약하게 세탁하며, 중성 세제를 사용해야 합니다.', cat: 'wash' },
+    { icon: handWashIcon(40), name: '손세탁(40도)', desc: '위가 열린 대야 모양에 "손세탁" 표시. 물 온도 최대 40℃에서 손으로 약하게 세탁해야 하며 세탁기 사용은 불가합니다.', cat: 'wash' },
+    { icon: handWashIcon(30), name: '손세탁(30도, 중성)', desc: '물 온도 최대 30℃에서 손으로 매우 약하게 세탁하며, 중성 세제를 사용해야 합니다.', cat: 'wash' },
+    { icon: tubIcon('', 0, true), name: '물세탁 금지', desc: '대야 기호에 X표시. 물세탁을 하면 안 되며 드라이클리닝 등 다른 방법을 따라야 합니다.', cat: 'wash' },
 
-    { icon: '△', name: '표백 가능', desc: '삼각형 기호만 있으면 염소계·산소계 표백제를 모두 사용할 수 있다는 뜻입니다.', cat: 'bleach' },
-    { icon: '△2', name: '산소계 표백만 가능', desc: '삼각형 안에 사선 2줄. 산소계(비염소계) 표백제만 사용 가능하며 염소계는 금지입니다.', cat: 'bleach' },
-    { icon: '🚫△', name: '표백 금지', desc: '삼각형에 X표시. 어떤 표백제도 사용하면 안 됩니다. 색 빠짐이나 손상 위험이 있는 소재입니다.', cat: 'bleach' },
+    { icon: bleachIcon('염소표백', false), name: '염소계 표백 가능', desc: '삼각형 안에 "염소 표백" 표시. 염소계 표백제로만 표백할 수 있습니다.', cat: 'bleach' },
+    { icon: bleachIcon('염소표백', true), name: '염소계 표백 금지', desc: '삼각형에 X표시. 염소계 표백제로 표백하면 안 됩니다.', cat: 'bleach' },
+    { icon: bleachIcon('산소표백', false), name: '산소계 표백만 가능', desc: '삼각형 안에 "산소 표백" 표시. 산소계(비염소계) 표백제로만 표백할 수 있습니다.', cat: 'bleach' },
+    { icon: bleachIcon('산소표백', true), name: '산소계 표백 금지', desc: '삼각형에 X표시. 산소계 표백제로도 표백하면 안 됩니다.', cat: 'bleach' },
 
-    { icon: '⬜', name: '건조기 사용 가능', desc: '사각형 안에 원 모양. 회전식 건조기 사용이 가능하다는 기본 기호입니다.', cat: 'dry' },
-    { icon: '⬜●', name: '표준 건조기(고온)', desc: '사각형 안 원에 점 2개. 고온으로 건조기 사용이 가능합니다.', cat: 'dry' },
-    { icon: '⬜●1', name: '저온 건조기', desc: '사각형 안 원에 점 1개. 저온으로만 건조기를 사용해야 손상되지 않습니다.', cat: 'dry' },
-    { icon: '🚫⬜', name: '건조기 사용 금지', desc: '사각형에 X표시. 회전식 건조기를 사용하면 안 되며 자연 건조해야 합니다.', cat: 'dry' },
-    { icon: '⬜|', name: '옷걸이(자연) 건조', desc: '사각형 안에 세로선 1개. 짜지 않고 옷걸이에 걸어 그늘이나 햇빛에 건조합니다.', cat: 'dry' },
-    { icon: '⬜–', name: '뉘어서 건조', desc: '사각형 안에 가로선 1개. 옷걸이에 걸지 않고 바닥이나 건조대에 뉘어서 말립니다(니트류에 흔함).', cat: 'dry' },
-    { icon: '⬜▤', name: '그늘에서 건조', desc: '사각형 우측 상단에 대각선(그늘) 표시. 직사광선을 피해 그늘에서 건조해야 변색을 막을 수 있습니다.', cat: 'dry' },
-    { icon: '⬜🧺', name: '짜지 않고 물기 제거', desc: '사각형 안에 물결선. 비틀어 짜지 말고 자연스럽게 물기가 빠지도록 건조합니다.', cat: 'dry' },
+    { icon: ironIcon(3, 210), name: '다림질 고온(최대 210도)', desc: '다리미 안에 점 3개, 210℃ 표시. 다리미 온도 최대 210℃로 다림질할 수 있습니다(면·마 소재).', cat: 'iron' },
+    { icon: ironIcon(2, 160), name: '다림질 중온(최대 160도)', desc: '다리미 안에 점 2개, 160℃ 표시. 다리미 온도 최대 160℃로 다림질할 수 있습니다(울·폴리에스터 혼방 등).', cat: 'iron' },
+    { icon: ironIcon(1, 120), name: '다림질 저온(최대 120도)', desc: '다리미 안에 점 1개, 120℃ 표시. 다리미 온도 최대 120℃로 다림질할 수 있습니다(합성섬유·실크 등).', cat: 'iron' },
+    { icon: ironIcon(1, 120, true), name: '스팀 없이 다림질', desc: '다리미 아래 스팀 금지 표시. 다리미 온도 최대 120℃로 스팀을 가하지 않고 다림질해야 합니다.', cat: 'iron' },
+    { icon: ironIcon(0, '', false, true), name: '다림질 금지', desc: '다리미 기호에 X표시. 다림질을 하면 안 됩니다.', cat: 'iron' },
 
-    { icon: '🔥', name: '다림질 가능', desc: '다리미 모양 기본 기호. 다림질이 가능하다는 뜻입니다.', cat: 'iron' },
-    { icon: '🔥1', name: '저온 다림질(110도)', desc: '다리미 안에 점 1개. 110도 이하 저온으로만 다림질 가능(합성섬유, 실크 등).', cat: 'iron' },
-    { icon: '🔥2', name: '중온 다림질(150도)', desc: '다리미 안에 점 2개. 150도 이하 중간 온도로 다림질(울, 폴리에스터 혼방 등).', cat: 'iron' },
-    { icon: '🔥3', name: '고온 다림질(200도)', desc: '다리미 안에 점 3개. 200도 이하 고온으로 다림질 가능(면, 마 소재).', cat: 'iron' },
-    { icon: '🚫🔥', name: '다림질 금지', desc: '다리미에 X표시. 열에 약한 소재이므로 다림질을 하면 안 됩니다.', cat: 'iron' },
-    { icon: '🔥💨', name: '스팀 다림질 금지', desc: '다리미 아래 스팀 표시에 X. 스팀을 사용한 다림질을 하면 안 되는 소재입니다.', cat: 'iron' },
+    { icon: circleCleanIcon('드라이', 0), name: '드라이클리닝(퍼클로로에틸렌)', desc: '원 안에 물결선과 "드라이" 표시. 테트라클로로에텐(퍼클로로에틸렌), 석유계 등을 포함한 용제로 일반 드라이클리닝할 수 있습니다.', cat: 'dryclean' },
+    { icon: circleCleanIcon('드라이', 1), name: '드라이클리닝(약하게)', desc: '기호 아래 밑줄 1개. 같은 용제로 약하게(단시간·저온) 드라이클리닝해야 합니다.', cat: 'dryclean' },
+    { icon: circleCleanIcon('드라이 석유계', 0), name: '드라이클리닝(석유계 용제)', desc: '원 안에 "드라이 석유계" 표시. 석유계 용제로만 일반 드라이클리닝할 수 있습니다.', cat: 'dryclean' },
+    { icon: circleCleanIcon('드라이 석유계', 1), name: '드라이클리닝(석유계, 약하게)', desc: '기호 아래 밑줄 1개. 석유계 용제로 약하게 드라이클리닝해야 합니다.', cat: 'dryclean' },
+    { icon: circleCleanIcon('드라이', 0, true), name: '드라이클리닝 금지', desc: '원에 X표시. 드라이클리닝을 하면 안 됩니다.', cat: 'dryclean' },
+    { icon: circleCleanIcon('웨트', 0), name: '웨트클리닝 가능', desc: '원 안에 물결선과 "웨트" 표시. 웨트클리닝 전문점에서 일반 웨트클리닝(전문 물세탁)할 수 있습니다.', cat: 'dryclean' },
+    { icon: circleCleanIcon('웨트', 1), name: '웨트클리닝(약하게)', desc: '기호 아래 밑줄 1개. 웨트클리닝 전문점에서 약하게 웨트클리닝해야 합니다.', cat: 'dryclean' },
+    { icon: circleCleanIcon('웨트', 0, true), name: '웨트클리닝 금지', desc: '원에 X표시. 웨트클리닝(전문 물세탁)을 하면 안 됩니다.', cat: 'dryclean' },
 
-    { icon: '⭕', name: '드라이클리닝 가능', desc: '원 모양 기본 기호. 전문 드라이클리닝 세탁소를 이용하라는 뜻입니다.', cat: 'dryclean' },
-    { icon: '⭕P', name: '퍼클로로에틸렌 용제', desc: '원 안에 알파벳 P. 일반 드라이클리닝 용제(퍼클로로에틸렌)로 처리 가능합니다.', cat: 'dryclean' },
-    { icon: '⭕F', name: '석유계 용제만 가능', desc: '원 안에 알파벳 F. 석유계 용제로만 드라이클리닝이 가능하며 강한 용제는 피해야 합니다.', cat: 'dryclean' },
-    { icon: '🚫⭕', name: '드라이클리닝 금지', desc: '원에 X표시. 드라이클리닝을 하면 안 되는 소재로, 물세탁 표시를 따라야 합니다.', cat: 'dryclean' },
-    { icon: '⭕–', name: '단(短)시간·저자극 처리', desc: '원 아래 밑줄 1개. 드라이클리닝 시 짧은 시간, 저자극 공정으로 처리해야 합니다.', cat: 'dryclean' },
-    { icon: '⭕W', name: '웨트클리닝 가능', desc: '원 안에 알파벳 W. 전문 물세탁(웨트클리닝) 공정으로 처리 가능하다는 뜻입니다.', cat: 'dryclean' },
-    { icon: '🚫⭕W', name: '웨트클리닝 금지', desc: '웨트클리닝(W) 기호에 X표시. 전문 물세탁 공정도 사용할 수 없는 소재입니다.', cat: 'dryclean' }
+    { icon: wringIcon('약하게'), name: '손으로 약하게 짜기', desc: '비튼 천 모양에 "약하게" 표시. 손으로 짜는 경우 약하게 짜고, 정해진 시간 안에 탈수해야 합니다.', cat: 'wring' },
+    { icon: wringIcon('', true), name: '짜기 금지', desc: '비튼 천 모양에 X표시. 손으로도 세탁기로도 짜면 안 됩니다.', cat: 'wring' },
+
+    { icon: dryIcon('옷걸이'), name: '옷걸이 건조(햇빛)', desc: '원 둘레에 햇살 눈금과 "옷걸이" 표시. 옷걸이에 걸어 햇빛에서 자연 건조합니다.', cat: 'dry' },
+    { icon: dryIcon('옷걸이', true), name: '옷걸이 건조(그늘)', desc: '원 안에 빗금(그늘) 표시. 옷걸이에 걸어 그늘에서 자연 건조합니다.', cat: 'dry' },
+    { icon: dryIcon('뉘어서'), name: '뉘어서 건조(햇빛)', desc: '"뉘어서" 표시. 옷걸이에 걸지 않고 눕혀서 햇빛에 자연 건조합니다(니트류에 흔함).', cat: 'dry' },
+    { icon: dryIcon('뉘어서', true), name: '뉘어서 건조(그늘)', desc: '원 안에 빗금(그늘) 표시. 눕혀서 그늘에서 자연 건조합니다.', cat: 'dry' },
+    { icon: tumbleDryIcon(80), name: '기계건조(고온, 80도 이하)', desc: '사각형 안에 원. 80℃를 초과하지 않는 온도에서 회전식 건조기(기계건조)를 사용할 수 있습니다.', cat: 'dry' },
+    { icon: tumbleDryIcon(60), name: '기계건조(저온, 60도 이하)', desc: '60℃를 초과하지 않는 온도에서 회전식 건조기를 사용할 수 있습니다.', cat: 'dry' },
+    { icon: tumbleDryIcon('', true), name: '기계건조 금지', desc: '사각형과 원 기호에 X표시. 회전식 건조기(기계건조)를 사용하면 안 되며 자연 건조해야 합니다.', cat: 'dry' }
   ];
 
-  var CAT_LABEL = { wash: '세탁', bleach: '표백', dry: '건조', iron: '다림질', dryclean: '드라이클리닝' };
+  var CAT_LABEL = { wash: '세탁', bleach: '표백', dry: '건조', iron: '다림질', dryclean: '드라이클리닝·웨트클리닝', wring: '짜기' };
   var currentCat = 'all';
   var currentQuery = '';
 
