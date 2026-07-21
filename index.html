@@ -119,7 +119,7 @@ const TOOL_URLS = {
   SQLFormatter:'/sql-formatter/', LoremGen:'/lorem-gen/', ImageCompare:'/image-compare/', ImageFrame:'/image-frame/',
   CSVJSONConvert:'/csv-json-convert/', YAMLJSONConvert:'/yaml-json-convert/', QRScanner:'/qr-scanner/',
   SalaryCalc:'/salary-calc/', LadderGame:'/ladder-game/', TextStats:'/text-stats/', ColorConverter:'/color-converter/',
-  MarkdownTableConvert:'/markdown-table-convert/', LoanCalc:'/loan-calc/', SavingsCalc:'/savings-calc/', CodeSnapshot:'/code-snapshot/', MockupFrame:'/mockup-frame/', GifMaker:'/gif-maker/', VatCalc:'/vat-calc/', LottoGen:'/lotto-gen/', SeverancePayCalc:'/severance-pay-calc/', BmiCalc:'/bmi-calc/', HttpStatusRef:'/http-status-ref/', XlsxCsvConvert:'/xlsx-csv-convert/', PetAgeCalc:'/pet-age-calc/', SplitBillCalc:'/split-bill-calc/',
+  MarkdownTableConvert:'/markdown-table-convert/', LoanCalc:'/loan-calc/', SavingsCalc:'/savings-calc/', CodeSnapshot:'/code-snapshot/', MockupFrame:'/mockup-frame/', GifMaker:'/gif-maker/', VatCalc:'/vat-calc/', LottoGen:'/lotto-gen/', SeverancePayCalc:'/severance-pay-calc/', BmiCalc:'/bmi-calc/', HttpStatusRef:'/http-status-ref/', XlsxCsvConvert:'/xlsx-csv-convert/', PetAgeCalc:'/pet-age-calc/', SplitBillCalc:'/split-bill-calc/', AnnualLeaveCalc:'/annual-leave-calc/',
   PDFPasswordRemove:'/pdf-password-remove/', PDFPasswordSet:'/pdf-password-set/'
 };
 
@@ -210,6 +210,7 @@ const BLOG_URLS = {
   'HTTP 상태 코드 사전 사용법 완전 가이드':'/blog/86-httpstatusref-howto.html',
   '반려동물 나이 계산기 사용법 완전 가이드':'/blog/90-petagecalc-howto.html',
   '더치페이 계산기 사용법 완전 가이드':'/blog/91-splitbillcalc-howto.html',
+  '연차 계산기 사용법 완전 가이드':'/blog/92-annualleavecalc-howto.html',
   '엑셀 CSV 변환기 사용법 완전 가이드':'/blog/88-xlsxcsvconvert-howto.html'
 };
 
@@ -259,7 +260,7 @@ function glyphInfo(code) {
     ChartMaker:'chart', ImageText:'token:T', ImageFilter:'halfcircle', ImageCollage:'collage', PixelArt:'pixelart',
     MosaicMaker:'mosaic', PDFSplit:'split', LineNumber:'linenum', CurrencyCalc:'currency', Minifier:'token:<>',
     URLEncode:'token:%20', CSSUnit:'token:rem', DiagramMaker:'diagram', PaletteGen:'palette', ExifRemover:'exif',
-    RandomPicker:'roulette', WordCloudGen:'wordcloud', FaviconGen:'favicon', SVGtoPNG:'token:SVG', PomodoroTimer:'pomodoro', UUIDGen:'token:UUID', JWTDecoder:'token:JWT', CronHelper:'token:CRON', SQLFormatter:'token:SQL', LoremGen:'token:Lo', ImageCompare:'compare', ImageFrame:'frame', CSVJSONConvert:'token:CSV', YAMLJSONConvert:'token:YML', QRScanner:'qrscan', SalaryCalc:'salary', LadderGame:'ladder', TextStats:'textstats', ColorConverter:'colorswap', MarkdownTableConvert:'gridtable', LoanCalc:'loanbar', SavingsCalc:'coinstack', CodeSnapshot:'codetag', MockupFrame:'phoneicon', GifMaker:'gifstack', VatCalc:'percent', PDFPasswordRemove:'pdflock', PDFPasswordSet:'pdflockkey', LottoGen:'lottoball', SeverancePayCalc:'briefcase', BmiCalc:'bmiscale', HttpStatusRef:'statuscode', XlsxCsvConvert:'xlstoken', PetAgeCalc:'token:나이', SplitBillCalc:'token:1/N'
+    RandomPicker:'roulette', WordCloudGen:'wordcloud', FaviconGen:'favicon', SVGtoPNG:'token:SVG', PomodoroTimer:'pomodoro', UUIDGen:'token:UUID', JWTDecoder:'token:JWT', CronHelper:'token:CRON', SQLFormatter:'token:SQL', LoremGen:'token:Lo', ImageCompare:'compare', ImageFrame:'frame', CSVJSONConvert:'token:CSV', YAMLJSONConvert:'token:YML', QRScanner:'qrscan', SalaryCalc:'salary', LadderGame:'ladder', TextStats:'textstats', ColorConverter:'colorswap', MarkdownTableConvert:'gridtable', LoanCalc:'loanbar', SavingsCalc:'coinstack', CodeSnapshot:'codetag', MockupFrame:'phoneicon', GifMaker:'gifstack', VatCalc:'percent', PDFPasswordRemove:'pdflock', PDFPasswordSet:'pdflockkey', LottoGen:'lottoball', SeverancePayCalc:'briefcase', BmiCalc:'bmiscale', HttpStatusRef:'statuscode', XlsxCsvConvert:'xlstoken', PetAgeCalc:'token:나이', SplitBillCalc:'token:1/N', AnnualLeaveCalc:'token:15일'
   };
   const v = m[code];
   if (!v) return { glyph: 'token', token: '+' };
@@ -366,7 +367,7 @@ const SEARCH_TOOLS = [
   {code:'UUIDGen',name:'UUID 생성기'},{code:'JWTDecoder',name:'JWT 디코더'},
   {code:'CronHelper',name:'Cron 표현식 도우미'},{code:'SQLFormatter',name:'SQL 포맷터'},
   {code:'LoremGen',name:'더미 텍스트 생성기'},{code:'ImageCompare',name:'이미지 비교 슬라이더'},
-  {code:'ImageFrame',name:'이미지 테두리 추가'},{code:'CSVJSONConvert',name:'CSV ↔ JSON 변환기'},{code:'YAMLJSONConvert',name:'YAML ↔ JSON 변환기'},{code:'QRScanner',name:'QR 코드 스캐너'},{code:'SalaryCalc',name:'연봉 실수령액 계산기'},{code:'LadderGame',name:'사다리타기'},{code:'TextStats',name:'텍스트 통계 분석기'},{code:'ColorConverter',name:'색상 코드 변환기'},{code:'MarkdownTableConvert',name:'표 변환기'},{code:'LoanCalc',name:'대출 이자 계산기'},{code:'SavingsCalc',name:'적금·예금 만기 계산기'},{code:'CodeSnapshot',name:'코드 스니펫 이미지 생성기'},{code:'MockupFrame',name:'디바이스 목업 생성기'},{code:'GifMaker',name:'GIF 애니메이션 생성기'},{code:'VatCalc',name:'부가세 계산기'},{code:'PDFPasswordRemove',name:'PDF 비밀번호 해제'},{code:'PDFPasswordSet',name:'PDF 비밀번호 설정'},{code:'LottoGen',name:'로또 번호 생성기'},{code:'SeverancePayCalc',name:'퇴직금 계산기'},{code:'BmiCalc',name:'BMI 계산기'},{code:'HttpStatusRef',name:'HTTP 상태 코드 사전'},{code:'XlsxCsvConvert',name:'엑셀 CSV 변환기'},{code:'PetAgeCalc',name:'반려동물 나이 계산기'},{code:'SplitBillCalc',name:'더치페이 계산기'}
+  {code:'ImageFrame',name:'이미지 테두리 추가'},{code:'CSVJSONConvert',name:'CSV ↔ JSON 변환기'},{code:'YAMLJSONConvert',name:'YAML ↔ JSON 변환기'},{code:'QRScanner',name:'QR 코드 스캐너'},{code:'SalaryCalc',name:'연봉 실수령액 계산기'},{code:'LadderGame',name:'사다리타기'},{code:'TextStats',name:'텍스트 통계 분석기'},{code:'ColorConverter',name:'색상 코드 변환기'},{code:'MarkdownTableConvert',name:'표 변환기'},{code:'LoanCalc',name:'대출 이자 계산기'},{code:'SavingsCalc',name:'적금·예금 만기 계산기'},{code:'CodeSnapshot',name:'코드 스니펫 이미지 생성기'},{code:'MockupFrame',name:'디바이스 목업 생성기'},{code:'GifMaker',name:'GIF 애니메이션 생성기'},{code:'VatCalc',name:'부가세 계산기'},{code:'PDFPasswordRemove',name:'PDF 비밀번호 해제'},{code:'PDFPasswordSet',name:'PDF 비밀번호 설정'},{code:'LottoGen',name:'로또 번호 생성기'},{code:'SeverancePayCalc',name:'퇴직금 계산기'},{code:'BmiCalc',name:'BMI 계산기'},{code:'HttpStatusRef',name:'HTTP 상태 코드 사전'},{code:'XlsxCsvConvert',name:'엑셀 CSV 변환기'},{code:'PetAgeCalc',name:'반려동물 나이 계산기'},{code:'SplitBillCalc',name:'더치페이 계산기'},{code:'AnnualLeaveCalc',name:'연차 계산기'}
 ];
 
 // ── Toolbox categories (desktop widget) ──────────────────────────────────────
@@ -377,7 +378,7 @@ const TOOLBOX_CATS = [
   { label: '유틸리티',     keys: ['QRCode','PasswordGen','UnitConvert','DateCalc','WorldClock','RandomPicker','PomodoroTimer','QRScanner','LadderGame'] },
   { label: '개발자',       keys: ['JSONFormat','RegexTest','Base64Tool','HashGen','Minifier','URLEncode','CSSUnit','UUIDGen','JWTDecoder','CronHelper','SQLFormatter','ColorConverter','CodeSnapshot','HttpStatusRef'] },
   { label: '데이터·시각화',keys: ['ChartMaker','DiagramMaker','PaletteGen','WordCloudGen'] },
-  { label: '계산기',       keys: ['SalaryCalc','CurrencyCalc','LoanCalc','SavingsCalc','VatCalc','SeverancePayCalc','BmiCalc','SplitBillCalc'] },
+  { label: '계산기',       keys: ['SalaryCalc','CurrencyCalc','LoanCalc','SavingsCalc','VatCalc','SeverancePayCalc','BmiCalc','SplitBillCalc','AnnualLeaveCalc'] },
   { label: '생활·재미',    keys: ['LottoGen','PetAgeCalc'] },
 ];
 const TOOL_LABEL   = Object.fromEntries(SEARCH_TOOLS.map(t => [t.code, t.name]));
@@ -396,7 +397,7 @@ function buildTree() {
       '유틸리티':{type:'folder',label:'유틸리티',children:{QRCode:t('QR 코드 생성'),PasswordGen:t('비밀번호 생성기'),UnitConvert:t('단위 변환기'),DateCalc:t('날짜 계산기'),WorldClock:t('세계 시간'),RandomPicker:t('랜덤 추첨기'),PomodoroTimer:t('집중 · 휴식 타이머'),QRScanner:t('QR 코드 스캐너'),LadderGame:t('사다리타기')}},
       '개발자':{type:'folder',label:'개발자',children:{JSONFormat:t('JSON 포맷터'),RegexTest:t('정규식 테스터'),Base64Tool:t('Base64 변환'),HashGen:t('해시 생성기'),Minifier:t('코드 압축기'),URLEncode:t('URL 인코더'),CSSUnit:t('CSS 단위 변환기'),UUIDGen:t('UUID 생성기'),JWTDecoder:t('JWT 디코더'),CronHelper:t('Cron 표현식 도우미'),SQLFormatter:t('SQL 포맷터'),ColorConverter:t('색상 코드 변환기'),CodeSnapshot:t('코드 스니펫 이미지 생성기'),HttpStatusRef:t('HTTP 상태 코드 사전')}},
       '데이터\xb7시각화':{type:'folder',label:'데이터\xb7시각화',children:{ChartMaker:t('차트 생성기'),DiagramMaker:t('다이어그램 생성기'),PaletteGen:t('색상 팔레트 생성기'),WordCloudGen:t('워드클라우드 생성기')}},
-      '계산기':{type:'folder',label:'계산기',children:{SalaryCalc:t('연봉 실수령액 계산기'),CurrencyCalc:t('환율 계산기'),LoanCalc:t('대출 이자 계산기'),SavingsCalc:t('적금·예금 만기 계산기'),VatCalc:t('부가세 계산기'),SeverancePayCalc:t('퇴직금 계산기'),BmiCalc:t('BMI 계산기'),SplitBillCalc:t('더치페이 계산기')}},
+      '계산기':{type:'folder',label:'계산기',children:{SalaryCalc:t('연봉 실수령액 계산기'),CurrencyCalc:t('환율 계산기'),LoanCalc:t('대출 이자 계산기'),SavingsCalc:t('적금·예금 만기 계산기'),VatCalc:t('부가세 계산기'),SeverancePayCalc:t('퇴직금 계산기'),BmiCalc:t('BMI 계산기'),SplitBillCalc:t('더치페이 계산기'),AnnualLeaveCalc:t('연차 계산기')}},
       '생활\xb7재미':{type:'folder',label:'생활\xb7재미',children:{LottoGen:t('로또 번호 생성기'),PetAgeCalc:t('반려동물 나이 계산기')}}
     }},
     '블로그':{type:'folder',label:'블로그',children:{
@@ -440,7 +441,7 @@ function buildTree() {
         b27:a('차트 생성기 사용법 완전 가이드'),b39:a('다이어그램 생성기 사용법 완전 가이드'),
         b40:a('색상 팔레트 생성기 사용법 완전 가이드'),b43:a('워드클라우드 생성기 사용법 완전 가이드'),
         h7:{type:'header',label:'계산기'},
-        b57:a('연봉 실수령액 계산기 사용법 완전 가이드'),b35:a('환율 계산기 사용법 완전 가이드'),b62:a('대출 이자 계산기 사용법 완전 가이드'),b67:a('적금·예금 만기 계산기 사용법 완전 가이드'),b69:a('부가세 계산기 사용법 완전 가이드'),b71:a('퇴직금 계산기 사용법 완전 가이드'),b72:a('BMI 계산기 사용법 완전 가이드'),b78:a('더치페이 계산기 사용법 완전 가이드'),
+        b57:a('연봉 실수령액 계산기 사용법 완전 가이드'),b35:a('환율 계산기 사용법 완전 가이드'),b62:a('대출 이자 계산기 사용법 완전 가이드'),b67:a('적금·예금 만기 계산기 사용법 완전 가이드'),b69:a('부가세 계산기 사용법 완전 가이드'),b71:a('퇴직금 계산기 사용법 완전 가이드'),b72:a('BMI 계산기 사용법 완전 가이드'),b78:a('더치페이 계산기 사용법 완전 가이드'),b79:a('연차 계산기 사용법 완전 가이드'),
         h8:{type:'header',label:'생활\xb7재미'},
         b70:a('로또 번호 생성기 사용법 완전 가이드'),b77:a('반려동물 나이 계산기 사용법 완전 가이드')
       }}
@@ -601,6 +602,7 @@ function fileBodyHtml(win,pal) {
     XlsxCsvConvert: '엑셀 파일을 업로드하면 CSV로, CSV를 붙여넣으면 엑셀 파일로 변환합니다. 여러 시트가 있는 엑셀도 시트를 선택해 변환할 수 있습니다.',
     PetAgeCalc: '강아지·고양이 나이를 입력하면 사람 나이로 환산합니다. 강아지는 체구(소형·중형·대형·초대형)별로 다른 환산표를 사용합니다.',
     SplitBillCalc: '총 금액을 인원수로 균등하게 나누거나, 각자 낸 금액이 다를 때 누가 누구에게 얼마를 보내야 하는지 최소 이체로 계산합니다.',
+    AnnualLeaveCalc: '입사일을 입력하면 근로기준법 기준으로 발생 연차 일수를 계산합니다. 1년 미만은 개근 월수만큼, 1년 이상은 가산 연차까지 반영합니다.',
     CodeSnapshot: '코드를 붙여넣으면 테마·창 스타일을 적용해 공유하기 좋은 이미지로 만듭니다.',
     MockupFrame: '스크린샷을 스마트폰·태블릿·노트북·브라우저 목업 프레임에 합성합니다.',
     PDFPasswordRemove: '비밀번호를 입력하면 PDF의 잠금을 풀어 비밀번호 없는 파일로 저장합니다.',

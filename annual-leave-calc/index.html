@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <link rel="icon" href="/favicon.ico" sizes="32x32">
+  <link rel="icon" href="/favicon-16.png" sizes="16x16" type="image/png">
+  <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="/favicon-192.png" sizes="192x192" type="image/png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="근로기준법 기준 연차 계산기. 입사일을 입력하면 재직 기간에 따른 발생 연차 일수를 계산합니다. 입사 1년 미만은 개근 월수만큼, 1년 이상은 가산 연차까지 반영합니다. 서버 전송 없이 브라우저에서 바로 처리합니다." />
+  <meta property="og:title" content="AnnualLeaveCalc — 연차 계산기" />
+  <meta property="og:description" content="입사일을 입력하면 근로기준법 기준으로 발생 연차 일수를 계산하는 무료 온라인 도구입니다." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://browserkit.online/annual-leave-calc/" />
+  <title>AnnualLeaveCalc — 연차 계산기</title>
+  <link rel="stylesheet" href="/css/style.css?v=20260723a" />
+  <!-- Google AdSense 승인 대기 중 (2026-07-19 주석 처리, 카카오 애드핏으로 임시 전환) — 승인 후 주석 해제
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506"
+     crossorigin="anonymous"></script>
+  -->
+  <script type="text/javascript" src="//t1.kakaocdn.net/kas/static/ba.min.js" async></script>
+  <style>
+    .input-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:24px; margin-bottom:20px; }
+    .input-row { display:flex; gap:12px; flex-wrap:wrap; align-items:flex-end; margin-bottom:16px; }
+    .input-row:last-child { margin-bottom:0; }
+    .input-group { flex:1; min-width:160px; display:flex; flex-direction:column; gap:8px; }
+    .input-label { font-size:12px; font-weight:600; color:var(--subtext); }
+    .amount-input { background:var(--bg); border:1px solid var(--border); border-radius:10px; padding:13px 16px; font-size:16px; font-weight:600; color:var(--text); font-family:'Fira Code',monospace; outline:none; width:100%; box-sizing:border-box; }
+    .amount-input:focus { border-color:var(--point); }
+
+    .btn-calc { background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border:none; border-radius:12px; padding:14px 32px; font-size:16px; font-weight:700; cursor:pointer; font-family:'Gowun Dodum',sans-serif; width:100%; margin-bottom:20px; }
+    .btn-calc:hover { transform:translateY(-2px); box-shadow:0 8px 24px var(--glow); }
+
+    .result-hero { background:var(--card); border:1px solid var(--point); border-radius:var(--radius); padding:28px; text-align:center; margin-bottom:20px; display:none; }
+    .result-hero.show { display:block; }
+    .result-hero-label { font-size:13px; color:var(--subtext); margin-bottom:8px; }
+    .result-hero-value { font-size:34px; font-weight:800; color:var(--point-hover); font-family:'Fira Code',monospace; }
+    .result-hero-sub { font-size:13px; color:var(--subtext); margin-top:8px; }
+
+    .breakdown-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px 24px; margin-bottom:20px; display:none; }
+    .breakdown-card.show { display:block; }
+    .breakdown-title { font-size:13px; font-weight:600; color:var(--subtext); margin-bottom:14px; }
+    .breakdown-row { display:flex; justify-content:space-between; align-items:center; padding:9px 0; border-bottom:1px solid var(--border); font-size:14px; }
+    .breakdown-row:last-child { border-bottom:none; }
+    .breakdown-row.total { font-weight:700; color:var(--text); padding-top:12px; }
+    .breakdown-label { color:var(--subtext); }
+    .breakdown-value { font-family:'Fira Code',monospace; color:var(--text); font-weight:600; }
+
+    .toast { position:fixed; bottom:32px; left:50%; transform:translateX(-50%) translateY(80px); background:var(--success); color:#fff; border-radius:999px; padding:10px 24px; font-size:14px; font-weight:600; opacity:0; pointer-events:none; z-index:999; transition:all 0.3s ease; }
+    .toast.show { transform:translateX(-50%) translateY(0); opacity:1; }
+
+    .footer { border-top:1px solid var(--border); padding:32px 0; text-align:center; }
+    .footer-copy { color:var(--subtext); font-size:13px; margin-bottom:12px; }
+    .footer-nav { display:flex; justify-content:center; gap:20px; flex-wrap:wrap; }
+    .footer-nav a { color:var(--subtext); font-size:13px; text-decoration:none; }
+    .footer-nav a:hover { color:var(--text); }
+
+    @media (max-width:640px) {
+      .hero-title { font-size:24px; }
+      .input-row { flex-direction:column; align-items:stretch; }
+      .result-hero-value { font-size:26px; }
+    }
+  </style>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+  <meta property="og:image" content="https://browserkit.online/img/og/annual-leave-calc.png" />
+  <link rel="canonical" href="https://browserkit.online/annual-leave-calc/" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://browserkit.online/img/og/annual-leave-calc.png" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "AnnualLeaveCalc — 연차 계산기",
+  "url": "https://browserkit.online/annual-leave-calc/",
+  "description": "근로기준법 기준 연차 계산기. 입사일을 입력하면 재직 기간에 따른 발생 연차 일수를 계산합니다. 입사 1년 미만은 개근 월수만큼, 1년 이상은 가산 연차까지 반영합니다. 서버 전송 없이 브라우저에서 바로 처리합니다.",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "Any",
+  "browserRequirements": "Requires JavaScript",
+  "inLanguage": "ko",
+  "isAccessibleForFree": true,
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "KRW"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "BrowserKit",
+    "url": "https://browserkit.online/"
+  }
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "홈",
+      "item": "https://browserkit.online/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "연차 계산기",
+      "item": "https://browserkit.online/annual-leave-calc/"
+    }
+  ]
+}
+  </script>
+</head>
+
+<body>
+  <header class="header">
+    <div class="container">
+      <a href="/" class="header-brand">
+        <div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Gowun Dodum,sans-serif;flex-shrink:0">B</div>
+        <span class="header-brand-text"><span style="color:var(--text)">Browser</span><span style="color:var(--point)">Kit</span></span>
+      </a>
+      <a href="/" class="header-back">&#x2190; BrowserKit 홈으로</a>
+    </div>
+  </header>
+
+  <main><div class="container">
+    <div class="hero">
+      <div class="hero-icon" style="height:78px;display:flex;justify-content:center;align-items:center"><div style="transform:scale(1.7);transform-origin:center"><div style="width:46px;height:46px;background:#a0e8e0;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="font:700 12px Fira Code,monospace;color:#2a2433;line-height:1;letter-spacing:-.5px;white-space:nowrap">15일</div></div></div></div>
+      <div class="hero-title-wrap"><h1 class="hero-title">연차 계산기</h1><a href="/blog/92-annualleavecalc-howto" class="hero-guide-link">사용법 가이드 보기</a></div>
+      <p class="hero-desc">입사일을 입력하면 근로기준법 기준 발생 연차 일수를 계산해드려요</p>
+      <div class="hero-badges">
+        <span class="badge">🔒 완전 로컬 처리</span>
+        <span class="badge">⚡ 무료 사용</span>
+        <span class="badge">🛡️ 서버 전송 없음</span>
+        <span class="badge">📦 설치 불필요</span>
+      </div>
+    </div>
+    <div style="margin:0 0 12px"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><div class="adfit-h-desktop"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-QD4pRIpdIj7i2mbt" data-ad-width="728" data-ad-height="90"></ins></div><div class="adfit-h-mobile"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-R4xA2niTT8HgGjoO" data-ad-width="320" data-ad-height="50"></ins></div></div>
+
+    <p class="notice">💡 근로기준법 제60조 기준으로 계산합니다. 입사 1년 미만은 1개월 개근 시 1일씩(최대 11일), 1년 이상은 15일에 근속 3년차부터 매 2년마다 1일씩 가산(최대 25일)됩니다. 회사의 별도 규정이나 회계연도 기준 산정 방식에 따라 실제 연차와 다를 수 있으니 참고용으로만 활용하세요. 모든 계산은 브라우저에서만 이루어집니다.</p>
+
+    <div class="input-card">
+      <div class="input-row">
+        <div class="input-group">
+          <span class="input-label">입사일</span>
+          <input type="date" class="amount-input" id="startDateInput" />
+        </div>
+        <div class="input-group">
+          <span class="input-label">기준일</span>
+          <input type="date" class="amount-input" id="baseDateInput" />
+        </div>
+      </div>
+      <div class="input-row">
+        <div class="input-group">
+          <span class="input-label">이미 사용한 연차 (일, 선택)</span>
+          <input type="number" class="amount-input" id="usedInput" placeholder="예: 3" min="0" step="1" />
+        </div>
+      </div>
+    </div>
+
+    <button class="btn-calc" id="calcBtn">📅 계산하기</button>
+
+    <div class="result-hero" id="resultHero">
+      <div class="result-hero-label" id="resultLabel">발생 연차 일수</div>
+      <div class="result-hero-value" id="resultValue">-</div>
+      <div class="result-hero-sub" id="resultSub"></div>
+    </div>
+
+    <div class="breakdown-card" id="breakdownCard">
+      <div class="breakdown-title">📋 계산 내역</div>
+      <div class="breakdown-row"><span class="breakdown-label">재직 기간</span><span class="breakdown-value" id="rowPeriod">-</span></div>
+      <div class="breakdown-row"><span class="breakdown-label">발생 연차</span><span class="breakdown-value" id="rowLeave">-</span></div>
+      <div class="breakdown-row" id="rowUsedWrap"><span class="breakdown-label">사용한 연차</span><span class="breakdown-value" id="rowUsed">-</span></div>
+      <div class="breakdown-row total" id="rowRemainWrap"><span class="breakdown-label">잔여 연차</span><span class="breakdown-value" id="rowRemain">-</span></div>
+    </div>
+
+    <div style="margin:0 0 12px"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="9500090221"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><div class="adfit-rect-wrap"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-oePL4TCj742xAwqT" data-ad-width="300" data-ad-height="250"></ins></div></div>
+  </div></main>
+
+  <footer class="footer">
+    <div class="container">
+      <p class="footer-copy">&#xa9; 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p>
+      <nav class="footer-nav">
+        <a href="/privacy">개인정보 처리방침</a>
+        <a href="/terms">이용약관</a>
+        <a href="/about">서비스 소개</a>
+        <a href="/blog/">블로그</a>
+      </nav>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+  // 오늘 날짜를 기준일 기본값으로
+  (function() {
+    var today = new Date();
+    var iso = today.toISOString().slice(0, 10);
+    document.getElementById('baseDateInput').value = iso;
+  })();
+
+  function annualLeaveDays(startDate, baseDate) {
+    // 만 근속 연수 계산
+    var years = baseDate.getFullYear() - startDate.getFullYear();
+    var anniversary = new Date(startDate);
+    anniversary.setFullYear(startDate.getFullYear() + years);
+    if (anniversary > baseDate) years--;
+
+    if (years < 1) {
+      // 1년 미만: 개근한 개월 수만큼 1일씩, 최대 11일
+      var months = (baseDate.getFullYear() - startDate.getFullYear()) * 12 + (baseDate.getMonth() - startDate.getMonth());
+      if (baseDate.getDate() < startDate.getDate()) months--;
+      months = Math.max(0, Math.min(months, 11));
+      return { days: months, years: years, isFirstYear: true };
+    }
+    var leave = Math.min(15 + Math.floor((years - 1) / 2), 25);
+    return { days: leave, years: years, isFirstYear: false };
+  }
+
+  function formatPeriod(startDate, baseDate) {
+    var totalMonths = (baseDate.getFullYear() - startDate.getFullYear()) * 12 + (baseDate.getMonth() - startDate.getMonth());
+    if (baseDate.getDate() < startDate.getDate()) totalMonths--;
+    totalMonths = Math.max(0, totalMonths);
+    var y = Math.floor(totalMonths / 12);
+    var m = totalMonths % 12;
+    if (y === 0) return m + '개월';
+    if (m === 0) return y + '년';
+    return y + '년 ' + m + '개월';
+  }
+
+  document.getElementById('calcBtn').addEventListener('click', function() {
+    var startVal = document.getElementById('startDateInput').value;
+    var baseVal = document.getElementById('baseDateInput').value;
+    if (!startVal || !baseVal) {
+      showToast('입사일과 기준일을 입력해주세요');
+      return;
+    }
+    var startDate = new Date(startVal);
+    var baseDate = new Date(baseVal);
+    if (startDate > baseDate) {
+      showToast('입사일은 기준일보다 이전이어야 합니다');
+      return;
+    }
+
+    var result = annualLeaveDays(startDate, baseDate);
+    var used = parseInt(document.getElementById('usedInput').value, 10) || 0;
+    var remain = Math.max(0, result.days - used);
+
+    document.getElementById('resultValue').textContent = result.days + '일';
+    document.getElementById('resultSub').textContent = result.isFirstYear ? '입사 1년 미만 (개근 월수 기준)' : '근속 ' + result.years + '년차 기준';
+    document.getElementById('resultHero').classList.add('show');
+
+    document.getElementById('rowPeriod').textContent = formatPeriod(startDate, baseDate);
+    document.getElementById('rowLeave').textContent = result.days + '일';
+    document.getElementById('rowUsed').textContent = used + '일';
+    document.getElementById('rowRemain').textContent = remain + '일';
+    document.getElementById('breakdownCard').classList.add('show');
+
+    document.getElementById('resultHero').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    showToast('✓ 계산했습니다');
+  });
+
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(function() { t.classList.remove('show'); }, 2000);
+  }
+  </script>
+</body>
+</html>

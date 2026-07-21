@@ -98,6 +98,7 @@ TOOLS = {
     'xlsx-csv-convert':       ('엑셀 CSV 변환기', 'XlsxCsvConvert', '문서·텍스트'),
     'pet-age-calc':           ('반려동물 나이 계산기', 'PetAgeCalc', '생활·재미'),
     'split-bill-calc':        ('더치페이 계산기', 'SplitBillCalc', '계산기'),
+    'annual-leave-calc':      ('연차 계산기', 'AnnualLeaveCalc', '계산기'),
 }
 
 
