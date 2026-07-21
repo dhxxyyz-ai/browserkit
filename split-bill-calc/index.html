@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <link rel="icon" href="/favicon.ico" sizes="32x32">
+  <link rel="icon" href="/favicon-16.png" sizes="16x16" type="image/png">
+  <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="/favicon-192.png" sizes="192x192" type="image/png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="더치페이·정산 계산기. 총 금액을 인원수로 균등하게 나누거나, 각자 낸 금액이 다를 때 누가 누구에게 얼마를 보내야 하는지 자동으로 계산합니다. 서버 전송 없이 브라우저에서 바로 처리합니다." />
+  <meta property="og:title" content="SplitBillCalc — 더치페이 계산기" />
+  <meta property="og:description" content="총 금액을 인원수로 균등하게 나누거나, 각자 낸 금액이 다를 때 정산 금액을 자동으로 계산하는 무료 더치페이 계산기입니다." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://browserkit.online/split-bill-calc/" />
+  <title>SplitBillCalc — 더치페이 계산기</title>
+  <link rel="stylesheet" href="/css/style.css?v=20260723a" />
+  <!-- Google AdSense 승인 대기 중 (2026-07-19 주석 처리, 카카오 애드핏으로 임시 전환) — 승인 후 주석 해제
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506"
+     crossorigin="anonymous"></script>
+  -->
+  <script type="text/javascript" src="//t1.kakaocdn.net/kas/static/ba.min.js" async></script>
+  <style>
+    .input-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:24px; margin-bottom:20px; }
+    .input-row { display:flex; gap:12px; flex-wrap:wrap; align-items:flex-end; margin-bottom:16px; }
+    .input-row:last-child { margin-bottom:0; }
+    .input-group { flex:1; min-width:160px; display:flex; flex-direction:column; gap:8px; }
+    .input-label { font-size:12px; font-weight:600; color:var(--subtext); }
+    .amount-input { background:var(--bg); border:1px solid var(--border); border-radius:10px; padding:13px 16px; font-size:16px; font-weight:600; color:var(--text); font-family:'Fira Code',monospace; outline:none; width:100%; box-sizing:border-box; }
+    .amount-input:focus { border-color:var(--point); }
+
+    .seg-btns { display:flex; gap:6px; flex-wrap:wrap; }
+    .seg-btn { background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:8px 16px; font-size:13px; color:var(--subtext); cursor:pointer; font-family:'Gowun Dodum',sans-serif; }
+    .seg-btn:hover { border-color:var(--point); color:var(--text); }
+    .seg-btn.active { background:rgba(123,108,255,0.15); border-color:var(--point); color:var(--point-hover); font-weight:700; }
+
+    .btn-calc { background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border:none; border-radius:12px; padding:14px 32px; font-size:16px; font-weight:700; cursor:pointer; font-family:'Gowun Dodum',sans-serif; width:100%; margin-bottom:20px; }
+    .btn-calc:hover { transform:translateY(-2px); box-shadow:0 8px 24px var(--glow); }
+
+    .result-hero { background:var(--card); border:1px solid var(--point); border-radius:var(--radius); padding:28px; text-align:center; margin-bottom:20px; display:none; }
+    .result-hero.show { display:block; }
+    .result-hero-label { font-size:13px; color:var(--subtext); margin-bottom:8px; }
+    .result-hero-value { font-size:34px; font-weight:800; color:var(--point-hover); font-family:'Fira Code',monospace; }
+    .result-hero-sub { font-size:13px; color:var(--subtext); margin-top:8px; }
+
+    .breakdown-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px 24px; margin-bottom:20px; display:none; }
+    .breakdown-card.show { display:block; }
+    .breakdown-title { font-size:13px; font-weight:600; color:var(--subtext); margin-bottom:14px; }
+    .breakdown-row { display:flex; justify-content:space-between; align-items:center; padding:9px 0; border-bottom:1px solid var(--border); font-size:14px; }
+    .breakdown-row:last-child { border-bottom:none; }
+    .breakdown-label { color:var(--subtext); }
+    .breakdown-value { font-family:'Fira Code',monospace; color:var(--text); font-weight:600; }
+
+    .person-row { display:flex; gap:8px; align-items:center; margin-bottom:8px; }
+    .person-name { flex:1; min-width:0; background:var(--bg); border:1px solid var(--border); border-radius:10px; padding:11px 14px; font-size:14px; color:var(--text); font-family:'Gowun Dodum',sans-serif; outline:none; }
+    .person-name:focus { border-color:var(--point); }
+    .person-amount { width:140px; flex-shrink:0; background:var(--bg); border:1px solid var(--border); border-radius:10px; padding:11px 14px; font-size:14px; font-weight:600; color:var(--text); font-family:'Fira Code',monospace; outline:none; }
+    .person-amount:focus { border-color:var(--point); }
+    .person-remove { flex-shrink:0; width:36px; height:36px; border-radius:10px; border:1px solid var(--border); background:var(--bg); color:var(--subtext); cursor:pointer; font-size:16px; line-height:1; }
+    .person-remove:hover { border-color:#ff8a5e; color:#ff8a5e; }
+    .btn-add-person { background:var(--bg); border:1.5px dashed var(--border); border-radius:10px; padding:10px; text-align:center; font-size:13px; color:var(--subtext); cursor:pointer; font-family:'Gowun Dodum',sans-serif; margin-top:4px; }
+    .btn-add-person:hover { border-color:var(--point); color:var(--point-hover); }
+
+    .settle-row { display:flex; align-items:center; gap:10px; padding:12px 0; border-bottom:1px solid var(--border); font-size:14px; }
+    .settle-row:last-child { border-bottom:none; }
+    .settle-arrow { color:var(--point-hover); font-weight:700; }
+    .settle-amount { margin-left:auto; font-family:'Fira Code',monospace; font-weight:700; color:var(--text); }
+
+    .toast { position:fixed; bottom:32px; left:50%; transform:translateX(-50%) translateY(80px); background:var(--success); color:#fff; border-radius:999px; padding:10px 24px; font-size:14px; font-weight:600; opacity:0; pointer-events:none; z-index:999; transition:all 0.3s ease; }
+    .toast.show { transform:translateX(-50%) translateY(0); opacity:1; }
+
+    .footer { border-top:1px solid var(--border); padding:32px 0; text-align:center; }
+    .footer-copy { color:var(--subtext); font-size:13px; margin-bottom:12px; }
+    .footer-nav { display:flex; justify-content:center; gap:20px; flex-wrap:wrap; }
+    .footer-nav a { color:var(--subtext); font-size:13px; text-decoration:none; }
+    .footer-nav a:hover { color:var(--text); }
+
+    @media (max-width:640px) {
+      .hero-title { font-size:24px; }
+      .input-row { flex-direction:column; align-items:stretch; }
+      .result-hero-value { font-size:26px; }
+      .person-amount { width:110px; }
+    }
+  </style>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+  <meta property="og:image" content="https://browserkit.online/img/og/split-bill-calc.png" />
+  <link rel="canonical" href="https://browserkit.online/split-bill-calc/" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://browserkit.online/img/og/split-bill-calc.png" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "SplitBillCalc — 더치페이 계산기",
+  "url": "https://browserkit.online/split-bill-calc/",
+  "description": "더치페이·정산 계산기. 총 금액을 인원수로 균등하게 나누거나, 각자 낸 금액이 다를 때 누가 누구에게 얼마를 보내야 하는지 자동으로 계산합니다. 서버 전송 없이 브라우저에서 바로 처리합니다.",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "Any",
+  "browserRequirements": "Requires JavaScript",
+  "inLanguage": "ko",
+  "isAccessibleForFree": true,
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "KRW"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "BrowserKit",
+    "url": "https://browserkit.online/"
+  }
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "홈",
+      "item": "https://browserkit.online/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "더치페이 계산기",
+      "item": "https://browserkit.online/split-bill-calc/"
+    }
+  ]
+}
+  </script>
+</head>
+
+<body>
+  <header class="header">
+    <div class="container">
+      <a href="/" class="header-brand">
+        <div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Gowun Dodum,sans-serif;flex-shrink:0">B</div>
+        <span class="header-brand-text"><span style="color:var(--text)">Browser</span><span style="color:var(--point)">Kit</span></span>
+      </a>
+      <a href="/" class="header-back">&#x2190; BrowserKit 홈으로</a>
+    </div>
+  </header>
+
+  <main><div class="container">
+    <div class="hero">
+      <div class="hero-icon" style="height:78px;display:flex;justify-content:center;align-items:center"><div style="transform:scale(1.7);transform-origin:center"><div style="width:46px;height:46px;background:#a0e8e0;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="font:700 13px Gowun Dodum,sans-serif;color:#2a2433;line-height:1;letter-spacing:-.5px;white-space:nowrap">1/N</div></div></div></div>
+      <div class="hero-title-wrap"><h1 class="hero-title">더치페이 계산기</h1><a href="/blog/91-splitbillcalc-howto" class="hero-guide-link">사용법 가이드 보기</a></div>
+      <p class="hero-desc">총 금액을 나누거나, 각자 낸 금액이 다를 때 정산 금액을 계산해드려요</p>
+      <div class="hero-badges">
+        <span class="badge">🔒 완전 로컬 처리</span>
+        <span class="badge">⚡ 무료 사용</span>
+        <span class="badge">🛡️ 서버 전송 없음</span>
+        <span class="badge">📦 설치 불필요</span>
+      </div>
+    </div>
+    <div style="margin:0 0 12px"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><div class="adfit-h-desktop"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-QD4pRIpdIj7i2mbt" data-ad-width="728" data-ad-height="90"></ins></div><div class="adfit-h-mobile"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-R4xA2niTT8HgGjoO" data-ad-width="320" data-ad-height="50"></ins></div></div>
+
+    <p class="notice">💡 균등 나누기는 총 금액을 인원수로 나누고, 나눠떨어지지 않는 잔돈은 앞 인원부터 1원씩 더 부담하는 방식으로 배분합니다. 정산 모드는 각자 실제로 낸 금액을 평균과 비교해 최소 이체 횟수로 정산 방법을 계산합니다. 모든 계산은 브라우저에서만 이루어집니다.</p>
+
+    <div class="input-card">
+      <div class="input-row">
+        <div class="input-group">
+          <span class="input-label">계산 방식</span>
+          <div class="seg-btns" id="modeBtns">
+            <button class="seg-btn active" data-mode="equal">균등 나누기</button>
+            <button class="seg-btn" data-mode="settle">다르게 낸 금액 정산</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="equalInputs">
+        <div class="input-row">
+          <div class="input-group">
+            <span class="input-label">총 금액 (원)</span>
+            <input type="number" class="amount-input" id="totalInput" placeholder="예: 87000" min="0" step="100" />
+          </div>
+          <div class="input-group">
+            <span class="input-label">인원수</span>
+            <input type="number" class="amount-input" id="peopleInput" placeholder="예: 4" min="1" step="1" />
+          </div>
+        </div>
+      </div>
+
+      <div id="settleInputs" style="display:none">
+        <div class="input-label" style="margin-bottom:8px">참가자별 낸 금액</div>
+        <div id="personList"></div>
+        <div class="btn-add-person" id="addPersonBtn">+ 참가자 추가</div>
+      </div>
+    </div>
+
+    <button class="btn-calc" id="calcBtn">🧮 계산하기</button>
+
+    <div class="result-hero" id="resultHero">
+      <div class="result-hero-label" id="resultLabel">1인당 부담 금액</div>
+      <div class="result-hero-value" id="resultValue">-</div>
+      <div class="result-hero-sub" id="resultSub"></div>
+    </div>
+
+    <div class="breakdown-card" id="breakdownCard">
+      <div class="breakdown-title" id="breakdownTitle">📋 상세 내역</div>
+      <div id="breakdownBody"></div>
+    </div>
+
+    <div style="margin:0 0 12px"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="9500090221"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><div class="adfit-rect-wrap"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-oePL4TCj742xAwqT" data-ad-width="300" data-ad-height="250"></ins></div></div>
+  </div></main>
+
+  <footer class="footer">
+    <div class="container">
+      <p class="footer-copy">&#xa9; 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p>
+      <nav class="footer-nav">
+        <a href="/privacy">개인정보 처리방침</a>
+        <a href="/terms">이용약관</a>
+        <a href="/about">서비스 소개</a>
+        <a href="/blog/">블로그</a>
+      </nav>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+  var mode = 'equal';
+  var personCount = 0;
+
+  document.querySelectorAll('#modeBtns .seg-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('#modeBtns .seg-btn').forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      mode = btn.dataset.mode;
+      document.getElementById('equalInputs').style.display = mode === 'equal' ? 'block' : 'none';
+      document.getElementById('settleInputs').style.display = mode === 'settle' ? 'block' : 'none';
+      document.getElementById('resultHero').classList.remove('show');
+      document.getElementById('breakdownCard').classList.remove('show');
+    });
+  });
+
+  function addPersonRow(name) {
+    personCount++;
+    var row = document.createElement('div');
+    row.className = 'person-row';
+    row.innerHTML =
+      '<input type="text" class="person-name" placeholder="이름 (선택)" value="' + (name || '') + '" />' +
+      '<input type="number" class="person-amount" placeholder="낸 금액" min="0" step="100" />' +
+      '<button class="person-remove" type="button">&times;</button>';
+    row.querySelector('.person-remove').addEventListener('click', function() {
+      row.remove();
+    });
+    document.getElementById('personList').appendChild(row);
+  }
+
+  document.getElementById('addPersonBtn').addEventListener('click', function() {
+    addPersonRow('');
+  });
+
+  // 기본 참가자 2명으로 시작
+  addPersonRow('');
+  addPersonRow('');
+
+  function formatWon(n) {
+    return Math.round(n).toLocaleString('ko-KR') + '원';
+  }
+
+  function calcEqual() {
+    var total = parseFloat(document.getElementById('totalInput').value);
+    var people = parseInt(document.getElementById('peopleInput').value, 10);
+    if (!total || total <= 0 || !people || people <= 0) {
+      showToast('총 금액과 인원수를 입력해주세요');
+      return;
+    }
+    var base = Math.floor(total / people);
+    var remainder = Math.round(total - base * people);
+
+    document.getElementById('resultLabel').textContent = '1인당 부담 금액';
+    document.getElementById('resultValue').textContent = formatWon(base) + (remainder > 0 ? ' ~ ' + formatWon(base + 1) : '');
+    document.getElementById('resultSub').textContent = '총 ' + formatWon(total) + '을 ' + people + '명이 나눔';
+    document.getElementById('resultHero').classList.add('show');
+
+    var body = document.getElementById('breakdownBody');
+    body.innerHTML = '';
+    document.getElementById('breakdownTitle').textContent = '📋 인원별 부담 금액';
+    for (var i = 1; i <= people; i++) {
+      var amt = base + (i <= remainder ? 1 : 0);
+      var row = document.createElement('div');
+      row.className = 'breakdown-row';
+      row.innerHTML = '<span class="breakdown-label">' + i + '번째 사람</span><span class="breakdown-value">' + formatWon(amt) + '</span>';
+      body.appendChild(row);
+    }
+    document.getElementById('breakdownCard').classList.add('show');
+    document.getElementById('resultHero').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    showToast('✓ 계산했습니다');
+  }
+
+  function calcSettle() {
+    var rows = document.querySelectorAll('#personList .person-row');
+    var people = [];
+    rows.forEach(function(row, i) {
+      var name = row.querySelector('.person-name').value.trim() || ('참가자 ' + (i + 1));
+      var amt = parseFloat(row.querySelector('.person-amount').value) || 0;
+      people.push({ name: name, paid: amt });
+    });
+    if (people.length < 2) {
+      showToast('참가자를 2명 이상 입력해주세요');
+      return;
+    }
+    var total = people.reduce(function(s, p) { return s + p.paid; }, 0);
+    if (total <= 0) {
+      showToast('낸 금액을 입력해주세요');
+      return;
+    }
+    var avg = total / people.length;
+    var balances = people.map(function(p) { return { name: p.name, balance: p.paid - avg }; });
+
+    document.getElementById('resultLabel').textContent = '1인당 평균 부담 금액';
+    document.getElementById('resultValue').textContent = formatWon(avg);
+    document.getElementById('resultSub').textContent = '총 ' + formatWon(total) + '을 ' + people.length + '명이 나눔';
+    document.getElementById('resultHero').classList.add('show');
+
+    // 최소 이체 정산: 채무자(음수)와 채권자(양수)를 그리디하게 매칭
+    var debtors = balances.filter(function(b) { return b.balance < -0.5; }).map(function(b) { return { name: b.name, amount: -b.balance }; }).sort(function(a, b) { return b.amount - a.amount; });
+    var creditors = balances.filter(function(b) { return b.balance > 0.5; }).map(function(b) { return { name: b.name, amount: b.balance }; }).sort(function(a, b) { return b.amount - a.amount; });
+
+    var transfers = [];
+    var di = 0, ci = 0;
+    while (di < debtors.length && ci < creditors.length) {
+      var d = debtors[di], c = creditors[ci];
+      var amt = Math.min(d.amount, c.amount);
+      if (amt > 0.5) transfers.push({ from: d.name, to: c.name, amount: amt });
+      d.amount -= amt;
+      c.amount -= amt;
+      if (d.amount < 0.5) di++;
+      if (c.amount < 0.5) ci++;
+    }
+
+    var body = document.getElementById('breakdownBody');
+    body.innerHTML = '';
+    document.getElementById('breakdownTitle').textContent = '📋 인원별 낸 금액 · 평균 대비 차액';
+    balances.forEach(function(b) {
+      var row = document.createElement('div');
+      row.className = 'breakdown-row';
+      var diffLabel = b.balance > 0.5 ? ('+' + formatWon(b.balance) + ' 받아야 함') : (b.balance < -0.5 ? '-' + formatWon(-b.balance) + ' 더 내야 함' : '정산 완료');
+      row.innerHTML = '<span class="breakdown-label">' + b.name + '</span><span class="breakdown-value">' + diffLabel + '</span>';
+      body.appendChild(row);
+    });
+
+    if (transfers.length) {
+      var settleTitle = document.createElement('div');
+      settleTitle.className = 'breakdown-title';
+      settleTitle.style.marginTop = '18px';
+      settleTitle.textContent = '💸 이렇게 보내면 정산 끝';
+      body.appendChild(settleTitle);
+      transfers.forEach(function(t) {
+        var row = document.createElement('div');
+        row.className = 'settle-row';
+        row.innerHTML = t.from + ' <span class="settle-arrow">→</span> ' + t.to + '<span class="settle-amount">' + formatWon(t.amount) + '</span>';
+        body.appendChild(row);
+      });
+    }
+
+    document.getElementById('breakdownCard').classList.add('show');
+    document.getElementById('resultHero').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    showToast('✓ 정산 완료');
+  }
+
+  document.getElementById('calcBtn').addEventListener('click', function() {
+    if (mode === 'equal') calcEqual();
+    else calcSettle();
+  });
+
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(function() { t.classList.remove('show'); }, 2000);
+  }
+  </script>
+</body>
+</html>
