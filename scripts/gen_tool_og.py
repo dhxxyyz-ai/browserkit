@@ -100,6 +100,7 @@ TOOLS = {
     'split-bill-calc':        ('더치페이 계산기', 'SplitBillCalc', '계산기'),
     'annual-leave-calc':      ('연차 계산기', 'AnnualLeaveCalc', '계산기'),
     'jeonse-rent-calc':       ('전월세 전환 계산기', 'JeonseRentCalc', '계산기'),
+    'packing-list-gen':       ('여행 짐 싸기 체크리스트 생성기', 'PackingListGen', '생활·재미'),
 }
 
 

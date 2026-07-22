@@ -441,6 +441,12 @@
     <priority>0.80</priority>
   </url>
   <url>
+    <loc>https://browserkit.online/packing-list-gen/</loc>
+    <lastmod>2026-07-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+  </url>
+  <url>
     <loc>https://browserkit.online/code-snapshot/</loc>
     <lastmod>2026-07-13</lastmod>
     <changefreq>weekly</changefreq>
@@ -1040,6 +1046,12 @@
   </url>
   <url>
     <loc>https://browserkit.online/blog/93-jeonserentcalc-howto</loc>
+    <lastmod>2026-07-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.70</priority>
+  </url>
+  <url>
+    <loc>https://browserkit.online/blog/94-packinglistgen-howto</loc>
     <lastmod>2026-07-22</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.70</priority>
