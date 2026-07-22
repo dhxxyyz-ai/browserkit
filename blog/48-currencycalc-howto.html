@@ -64,7 +64,7 @@
     "headline": "환율 계산기 사용법 완전 가이드",
     "description": "CurrencyCalc의 모든 기능을 단계별로 설명하는 공식 사용 가이드입니다. 매일 갱신되는 환율로 주요 통화를 즉시 변환하는 방법을 알아보세요.",
     "datePublished": "2026-07-09T00:00:00+09:00",
-    "dateModified": "2026-07-09T00:00:00+09:00",
+    "dateModified": "2026-07-22T00:00:00+09:00",
     "author": { "@type": "Organization", "name": "BrowserKit", "url": "https://browserkit.online" },
     "publisher": { "@type": "Organization", "name": "BrowserKit", "url": "https://browserkit.online", "logo": { "@type": "ImageObject", "url": "https://browserkit.online/img/og-browserkit.png" } },
     "mainEntityOfPage": { "@type": "WebPage", "@id": "https://browserkit.online/blog/48-currencycalc-howto" },
@@ -136,7 +136,7 @@
     <div style="margin:12px 0"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><div class="adfit-h-desktop"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-QD4pRIpdIj7i2mbt" data-ad-width="728" data-ad-height="90"></ins></div><div class="adfit-h-mobile"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-R4xA2niTT8HgGjoO" data-ad-width="320" data-ad-height="50"></ins></div></div>
 
     <div class="post-body">
-      <p>CurrencyCalc는 매일 갱신되는 환율로 원화, 달러, 엔화 등 주요 통화를 즉시 변환하는 무료 온라인 환율 계산기입니다. 금액을 입력하면 기준 통화 대비 13개 주요 통화 환산 금액을 한 번에 확인할 수 있습니다. BrowserKit의 다른 도구들과 달리, 최신 환율 숫자를 가져오기 위해 외부 API와 통신하는 유일한 도구입니다.</p>
+      <p>해외 쇼핑몰에서 "$49.99"를 보면 대충 6~7만원쯤이라 짐작하지만, 환율은 매일 바뀌기 때문에 정확한 금액은 그때그때 다릅니다. CurrencyCalc는 금액을 입력하면 원화·달러·엔화 등 13개 주요 통화로 즉시 환산해주는 무료 온라인 환율 계산기입니다. BrowserKit의 다른 도구들과 달리 최신 환율 숫자를 가져오기 위해 외부 API와 통신하는 유일한 도구인데, 정확히 무엇이 전송되는지는 아래에서 투명하게 밝힙니다.</p>
 
       <h2>주요 기능</h2>
       <div class="feature-grid">
@@ -242,6 +242,10 @@
           <tr><td>오류 처리</td><td>요청이 실패하면 캐시된 마지막 환율을 안내 문구와 함께 표시하고, 캐시조차 없으면 오류 메시지를 표시합니다.</td></tr>
         </tbody>
       </table></div>
+
+      <div class="post-warn" style="background:rgba(123,108,255,0.06);border-left-color:var(--point)">
+        <strong>💡 실제 계산 예시:</strong> 해외 쇼핑몰 상품 가격이 <code>$49.99</code>이고 원/달러 환율이 1,380원이라면 → 49.99 × 1,380 = <strong>약 68,986원</strong>. 배송비 <code>$12.00</code>이 별도라면 여기에 16,560원이 더해져 총 <strong>약 85,546원</strong>입니다. 결제 시점 환율에 따라 실제 청구액은 달라질 수 있으니, 결제 직전 CurrencyCalc로 다시 한 번 확인하는 걸 권장합니다.
+      </div>
 
       <h2>활용 예시</h2>
       <div class="use-case-grid">
