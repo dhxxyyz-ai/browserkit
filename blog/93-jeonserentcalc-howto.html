@@ -8,11 +8,11 @@
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="AnnualLeaveCalc의 모든 기능을 단계별로 설명하는 공식 사용 가이드입니다. 근로기준법 기준으로 입사 1년 미만·1년 이상 발생 연차를 계산하는 방법을 알아보세요." />
-  <meta property="og:title" content="연차 계산기 사용법 완전 가이드 — BrowserKit" />
-  <meta property="og:description" content="입사일 기준 근로기준법 발생 연차를 계산하는 AnnualLeaveCalc 공식 가이드입니다." />
+  <meta name="description" content="JeonseRentCalc의 모든 기능을 단계별로 설명하는 공식 사용 가이드입니다. 전세보증금과 월세를 전월세 전환율로 서로 환산하는 방법을 알아보세요." />
+  <meta property="og:title" content="전월세 전환 계산기 사용법 완전 가이드 — BrowserKit" />
+  <meta property="og:description" content="전세보증금과 월세를 전월세 전환율로 서로 환산하는 JeonseRentCalc 공식 가이드입니다." />
   <meta property="og:type" content="article" />
-  <title>연차 계산기 사용법 완전 가이드 — BrowserKit</title>
+  <title>전월세 전환 계산기 사용법 완전 가이드 — BrowserKit</title>
   <link rel="stylesheet" href="/css/style.css?v=20260723a" />
   <!-- Google AdSense 승인 대기 중 (2026-07-19 주석 처리, 카카오 애드핏으로 임시 전환) — 승인 후 주석 해제
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506"
@@ -57,23 +57,23 @@
   </style>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
-<meta property="og:image" content="https://browserkit.online/img/og/annual-leave-calc.png" />
+<meta property="og:image" content="https://browserkit.online/img/og/jeonse-rent-calc.png" />
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
-    "headline": "연차 계산기 사용법 완전 가이드",
-    "description": "AnnualLeaveCalc의 모든 기능을 단계별로 설명하는 공식 사용 가이드입니다. 근로기준법 기준으로 입사 1년 미만·1년 이상 발생 연차를 계산하는 방법을 알아보세요.",
-    "datePublished": "2026-07-21T00:00:00+09:00",
-    "dateModified": "2026-07-21T00:00:00+09:00",
+    "headline": "전월세 전환 계산기 사용법 완전 가이드",
+    "description": "JeonseRentCalc의 모든 기능을 단계별로 설명하는 공식 사용 가이드입니다. 전세보증금과 월세를 전월세 전환율로 서로 환산하는 방법을 알아보세요.",
+    "datePublished": "2026-07-22T00:00:00+09:00",
+    "dateModified": "2026-07-22T00:00:00+09:00",
     "author": { "@type": "Organization", "name": "BrowserKit", "url": "https://browserkit.online" },
     "publisher": { "@type": "Organization", "name": "BrowserKit", "url": "https://browserkit.online", "logo": { "@type": "ImageObject", "url": "https://browserkit.online/img/og-browserkit.png" } },
-    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://browserkit.online/blog/92-annualleavecalc-howto" },
-    "image": "https://browserkit.online/img/og/annual-leave-calc.png"
+    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://browserkit.online/blog/93-jeonserentcalc-howto" },
+    "image": "https://browserkit.online/img/og/jeonse-rent-calc.png"
   }
-  </script>  <link rel="canonical" href="https://browserkit.online/blog/92-annualleavecalc-howto" />
+  </script>  <link rel="canonical" href="https://browserkit.online/blog/93-jeonserentcalc-howto" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:image" content="https://browserkit.online/img/og/annual-leave-calc.png" />
+  <meta name="twitter:image" content="https://browserkit.online/img/og/jeonse-rent-calc.png" />
   <style>
     .post-table-wrap { overflow-x:auto; }
     .post-table th, .post-table td { white-space:nowrap; }
@@ -87,7 +87,7 @@
   "mainEntity": [
     {
       "@type": "Question",
-      "name": "연차 계산기는 정말 무료인가요?",
+      "name": "전월세 전환 계산기는 정말 무료인가요?",
       "acceptedAnswer": {
         "@type": "Answer",
         "text": "네, 회원가입이나 설치 없이 완전 무료로 사용할 수 있습니다. 계산 횟수 제한도 없습니다."
@@ -95,26 +95,26 @@
     },
     {
       "@type": "Question",
-      "name": "입사 1년 미만이면 연차가 아예 없나요?",
+      "name": "전환율은 어떤 값을 입력해야 하나요?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "아니요. 근로기준법상 입사 1년 미만이어도 1개월 개근 시 1일의 유급휴가가 발생하며, 최대 11일까지 쌓입니다."
+        "text": "법정 전환율 상한은 「한국은행 기준금리 + 2%」와 「연 10%」 중 낮은 값입니다. 기준금리는 수시로 바뀌므로, 계산 시점의 최신 기준금리를 한국은행 홈페이지에서 확인해 전환율을 직접 입력하는 것을 권장합니다."
       }
     },
     {
       "@type": "Question",
-      "name": "연차는 최대 며칠까지 발생하나요?",
+      "name": "전세를 월세로 바꿀 때 계산식이 어떻게 되나요?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "1년 이상 근속 시 기본 15일에서 시작해 3년차부터 2년마다 1일씩 가산되며, 최대 25일까지 발생합니다."
+        "text": "월세 = (전세보증금 − 월세보증금) × 전환율 ÷ 12 입니다. 예를 들어 전세 3억 원을 보증금 5천만 원짜리 월세로 바꾸면, (3억 − 5천만) × 4.75% ÷ 12로 월세를 계산합니다."
       }
     },
     {
       "@type": "Question",
-      "name": "회사마다 연차 계산 방식이 다를 수 있나요?",
+      "name": "실제 계약에서도 이 계산 결과를 그대로 쓸 수 있나요?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "네. 이 계산기는 입사일 기준(회계연도 아님) 근로기준법 원칙으로 계산합니다. 회사가 회계연도 기준으로 별도 산정하는 경우 실제 발생 일수가 다를 수 있으니, 정확한 연차는 회사 인사 규정을 함께 확인하세요."
+        "text": "이 계산기는 법정 전환율 상한 산식을 기준으로 한 참고용 계산 결과를 제공합니다. 실제 계약 조건은 임대인·임차인 간 협의로 정해지며, 법정 상한을 초과할 수 없다는 점만 유의하면 됩니다. 정확한 계약은 공인중개사 또는 관련 기관에 확인하세요."
       }
     }
   ]
@@ -132,34 +132,34 @@
   <article class="post-wrap">
     <a href="/blog/" class="back-link">&#x2190; 블로그 목록</a>
     <span class="post-tag">가이드</span>
-    <h1 class="post-title"><span style="color:var(--point-hover)">연차 계산기</span> 사용법 완전 가이드</h1>
-    <div class="post-date">2026년 7월 21일</div>
+    <h1 class="post-title"><span style="color:var(--point-hover)">전월세 전환 계산기</span> 사용법 완전 가이드</h1>
+    <div class="post-date">2026년 7월 22일</div>
     <div style="margin:12px 0"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><div class="adfit-h-desktop"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-QD4pRIpdIj7i2mbt" data-ad-width="728" data-ad-height="90"></ins></div><div class="adfit-h-mobile"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-R4xA2niTT8HgGjoO" data-ad-width="320" data-ad-height="50"></ins></div></div>
 
     <div class="post-body">
-      <p>"올해 연차가 몇 개 남았지?"라는 질문에 정확히 답하기는 생각보다 어렵습니다. 입사한 지 1년이 안 됐다면 개월 수만큼, 1년이 넘었다면 근속 연수에 따라 가산되는 방식이 다르기 때문입니다. AnnualLeaveCalc는 입사일만 입력하면 근로기준법 기준으로 발생 연차 일수를 정확히 계산해주는 무료 온라인 도구입니다. 모든 계산은 브라우저에서만 이루어집니다.</p>
+      <p>전세를 월세로, 또는 월세를 전세로 바꾸려면 "전월세 전환율"이라는 개념을 알아야 합니다. 계산식은 간단하지만 법정 상한을 확인하고 매번 손으로 계산하기는 번거롭습니다. JeonseRentCalc는 전세보증금과 월세를 전월세 전환율로 서로 환산해주는 무료 온라인 도구입니다. 모든 계산은 브라우저에서만 이루어집니다.</p>
 
       <h2>주요 기능</h2>
       <div class="feature-grid">
         <div class="feature-card">
-          <div class="feature-icon">&#x1F4C5;</div>
-          <div class="feature-title">입사일 기준 계산</div>
-          <div class="feature-desc">입사일과 기준일만 입력하면 재직 기간과 발생 연차를 바로 계산합니다.</div>
+          <div class="feature-icon">&#x1F504;</div>
+          <div class="feature-title">양방향 환산</div>
+          <div class="feature-desc">전세 → 월세, 월세 → 전세 두 방향 모두 계산할 수 있습니다.</div>
         </div>
         <div class="feature-card">
-          <div class="feature-icon">&#x1F195;</div>
-          <div class="feature-title">1년 미만 신입 계산</div>
-          <div class="feature-desc">입사 1년 미만은 개근 월수만큼 1일씩(최대 11일) 정확히 반영합니다.</div>
+          <div class="feature-icon">&#x1F3E0;</div>
+          <div class="feature-title">반전세 지원</div>
+          <div class="feature-desc">월세보증금이 있는 반전세 조건도 그대로 입력해 계산할 수 있습니다.</div>
         </div>
         <div class="feature-card">
-          <div class="feature-icon">&#x2795;</div>
-          <div class="feature-title">가산 연차 반영</div>
-          <div class="feature-desc">근속 3년차부터 2년마다 1일씩 가산되는 연차를 최대 25일까지 계산합니다.</div>
+          <div class="feature-icon">&#x270F;&#xFE0F;</div>
+          <div class="feature-title">전환율 직접 입력</div>
+          <div class="feature-desc">법정 상한 산식(기준금리+2%, 최대 10%)을 참고해 전환율을 직접 수정할 수 있습니다.</div>
         </div>
         <div class="feature-card">
           <div class="feature-icon">&#x1F512;</div>
           <div class="feature-title">완전 로컬 처리</div>
-          <div class="feature-desc">입력한 날짜가 브라우저 안에서만 처리되고 서버로 전송되지 않습니다.</div>
+          <div class="feature-desc">입력한 금액이 브라우저 안에서만 처리되고 서버로 전송되지 않습니다.</div>
         </div>
       </div>
 
@@ -169,128 +169,126 @@
       <div class="step-card">
         <div class="step-num">1</div>
         <div class="step-content">
-          <h3>입사일 입력</h3>
-          <p>회사에 입사한 날짜를 입력합니다. 기준일은 기본적으로 오늘 날짜가 입력되어 있으며, 원하는 날짜로 바꿀 수 있습니다.</p>
+          <h3>계산 방향 선택</h3>
+          <p>"전세 → 월세" 또는 "월세 → 전세" 중 원하는 방향을 선택합니다.</p>
         </div>
       </div>
 
       <div class="step-card">
         <div class="step-num">2</div>
         <div class="step-content">
-          <h3>사용한 연차 입력(선택)</h3>
-          <p>이미 사용한 연차 일수를 입력하면 잔여 연차까지 함께 계산됩니다. 입력하지 않아도 발생 연차는 확인할 수 있습니다.</p>
+          <h3>보증금·월세 입력</h3>
+          <p>전세 → 월세 방향이면 전세보증금과(반전세라면) 월세보증금을, 월세 → 전세 방향이면 월세보증금과 월세를 입력합니다.</p>
         </div>
       </div>
 
       <figure style="margin:12px 0 24px; text-align:center;">
-        <img src="/img/blog/annualleavecalc/01-input.png"
-             alt="AnnualLeaveCalc의 입사일과 사용한 연차 입력 화면"
+        <img src="/img/blog/jeonserentcalc/01-input.png"
+             alt="JeonseRentCalc의 전세보증금과 월세보증금 입력 화면"
              style="width:100%; max-width:640px; border:1px solid var(--border); border-radius:var(--radius);"
              loading="lazy" />
         <figcaption style="font-size:13px; color:var(--subtext); margin-top:6px;">
-          입사일과 사용한 연차 입력 화면
+          전세보증금과 월세보증금 입력 화면
         </figcaption>
       </figure>
 
       <div class="step-card">
         <div class="step-num">3</div>
         <div class="step-content">
-          <h3>계산하기</h3>
-          <p><strong>📅 계산하기</strong> 버튼을 누르면 재직 기간, 발생 연차, 잔여 연차가 한 번에 표시됩니다.</p>
+          <h3>전환율 확인 후 계산하기</h3>
+          <p>전환율 입력란에는 참고용 기본값이 채워져 있습니다. 계산 시점의 최신 기준금리로 직접 수정한 뒤 <strong>&#x1F3E0; 계산하기</strong> 버튼을 누르면 환산 결과가 표시됩니다.</p>
         </div>
       </div>
 
       <figure style="margin:12px 0 24px; text-align:center;">
-        <img src="/img/blog/annualleavecalc/02-result.png"
-             alt="AnnualLeaveCalc의 발생 연차와 잔여 연차 계산 결과 화면"
+        <img src="/img/blog/jeonserentcalc/02-result.png"
+             alt="JeonseRentCalc의 전월세 환산 계산 결과 화면"
              style="width:100%; max-width:640px; border:1px solid var(--border); border-radius:var(--radius);"
              loading="lazy" />
         <figcaption style="font-size:13px; color:var(--subtext); margin-top:6px;">
-          발생 연차·잔여 연차 계산 결과 화면
+          전월세 환산 계산 결과 화면
         </figcaption>
       </figure>
 
       <div class="post-warn">
-        <strong>⚠️ 참고:</strong> 이 계산기는 입사일 기준(근로기준법 원칙)으로 계산합니다. 회사가 회계연도 기준으로 별도 산정하는 경우 실제 발생 일수가 다를 수 있으니, 정확한 연차는 반드시 회사 인사 규정과 함께 확인하세요.
+        <strong>&#x26A0;&#xFE0F; 참고:</strong> 전환율 기본값은 참고용입니다. 한국은행 기준금리는 수시로 변동되므로, 정확한 계산을 위해서는 계산 시점의 최신 기준금리를 확인해 전환율을 직접 수정한 뒤 사용하세요. 이 계산기의 결과는 법률 자문을 대체하지 않습니다.
       </div>
 
-      <h2>근속 기간별 연차 발생 기준</h2>
+      <h2>전월세 전환 계산 방식</h2>
       <div class="post-table-wrap"><table class="post-table">
-        <thead><tr><th>재직 기간</th><th>발생 연차</th></tr></thead>
+        <thead><tr><th>구분</th><th>계산식</th></tr></thead>
         <tbody>
-          <tr><td>1년 미만</td><td>1개월 개근 시 1일(최대 11일)</td></tr>
-          <tr><td>1~2년차</td><td>15일</td></tr>
-          <tr><td>3~4년차</td><td>16일</td></tr>
-          <tr><td>5~6년차</td><td>17일</td></tr>
-          <tr><td>21년차 이상</td><td>25일(상한)</td></tr>
+          <tr><td>전세 → 월세</td><td><code>월세 = (전세보증금 − 월세보증금) × 전환율 ÷ 12</code></td></tr>
+          <tr><td>월세 → 전세</td><td><code>전세보증금 = 월세보증금 + (월세 × 12) ÷ 전환율</code></td></tr>
+          <tr><td>법정 전환율 상한</td><td><code>MIN(한국은행 기준금리 + 2%, 연 10%)</code></td></tr>
         </tbody>
       </table></div>
 
       <h2>활용 예시</h2>
       <div class="use-case-grid">
         <div class="use-case-card">
-          <div class="use-case-icon">&#x1F195;</div>
-          <div class="use-case-title">신입사원 연차 확인</div>
-          <div class="use-case-desc">입사 첫해 개월 수만큼 쌓이는 연차를 미리 확인합니다.</div>
+          <div class="use-case-icon">&#x1F4E6;</div>
+          <div class="use-case-title">전세 만기 앞둔 세입자</div>
+          <div class="use-case-desc">집주인이 월세 전환을 제안했을 때 적정 월세 수준을 미리 확인합니다.</div>
         </div>
         <div class="use-case-card">
-          <div class="use-case-icon">&#x1F4C6;</div>
-          <div class="use-case-title">연차 계획 수립</div>
-          <div class="use-case-desc">연간 발생 연차를 미리 파악해 휴가 계획을 세웁니다.</div>
+          <div class="use-case-icon">&#x1F3E2;</div>
+          <div class="use-case-title">임대인의 전환 검토</div>
+          <div class="use-case-desc">전세 보증금을 월세로 돌릴 때 법정 상한 내에서 월세를 산정합니다.</div>
         </div>
         <div class="use-case-card">
-          <div class="use-case-icon">&#x1F4BC;</div>
-          <div class="use-case-title">인사 담당자 참고</div>
-          <div class="use-case-desc">직원별 발생 연차를 빠르게 확인할 때 참고용으로 사용합니다.</div>
+          <div class="use-case-icon">&#x1F50D;</div>
+          <div class="use-case-title">매물 비교</div>
+          <div class="use-case-desc">전세·월세 매물을 같은 기준으로 환산해 조건을 비교합니다.</div>
         </div>
         <div class="use-case-card">
-          <div class="use-case-icon">&#x1F91D;</div>
-          <div class="use-case-title">이직 시 연차 확인</div>
-          <div class="use-case-desc">이직을 앞두고 남은 연차가 얼마인지 미리 계산해봅니다.</div>
+          <div class="use-case-icon">&#x1F4B0;</div>
+          <div class="use-case-title">반전세 조건 검토</div>
+          <div class="use-case-desc">월세보증금이 있는 반전세 조건에서 적정 월세를 계산합니다.</div>
         </div>
       </div>
 
-      <div class="post-highlight">&#x1F512; AnnualLeaveCalc는 모든 계산이 내 PC 브라우저에서만 실행됩니다. 입력한 날짜가 외부 서버로 전송되지 않습니다.</div>
+      <div class="post-highlight">&#x1F512; JeonseRentCalc는 모든 계산이 내 PC 브라우저에서만 실행됩니다. 입력한 금액이 외부 서버로 전송되지 않습니다.</div>
 
       <h2>자주 묻는 질문</h2>
       <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
-        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. 연차 계산기는 정말 무료인가요?</p>
+        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. 전월세 전환 계산기는 정말 무료인가요?</p>
         <p style="color:var(--subtext);margin:0;line-height:1.7">네, 회원가입이나 설치 없이 완전 무료로 사용할 수 있습니다. 계산 횟수 제한도 없습니다.</p>
       </div>
       <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
-        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. 입사 1년 미만이면 연차가 아예 없나요?</p>
-        <p style="color:var(--subtext);margin:0;line-height:1.7">아니요. 근로기준법상 입사 1년 미만이어도 1개월 개근 시 1일의 유급휴가가 발생하며, 최대 11일까지 쌓입니다.</p>
+        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. 전환율은 어떤 값을 입력해야 하나요?</p>
+        <p style="color:var(--subtext);margin:0;line-height:1.7">법정 전환율 상한은 「한국은행 기준금리 + 2%」와 「연 10%」 중 낮은 값입니다. 기준금리는 수시로 바뀌므로, 계산 시점의 최신 기준금리를 한국은행 홈페이지에서 확인해 전환율을 직접 입력하는 것을 권장합니다.</p>
       </div>
       <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
-        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. 연차는 최대 며칠까지 발생하나요?</p>
-        <p style="color:var(--subtext);margin:0;line-height:1.7">1년 이상 근속 시 기본 15일에서 시작해 3년차부터 2년마다 1일씩 가산되며, 최대 25일까지 발생합니다.</p>
+        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. 전세를 월세로 바꿀 때 계산식이 어떻게 되나요?</p>
+        <p style="color:var(--subtext);margin:0;line-height:1.7">월세 = (전세보증금 − 월세보증금) × 전환율 ÷ 12 입니다. 예를 들어 전세 3억 원을 보증금 5천만 원짜리 월세로 바꾸면, (3억 − 5천만) × 4.75% ÷ 12로 월세를 계산합니다.</p>
       </div>
       <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
-        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. 회사마다 연차 계산 방식이 다를 수 있나요?</p>
-        <p style="color:var(--subtext);margin:0;line-height:1.7">네. 이 계산기는 입사일 기준(회계연도 아님) 근로기준법 원칙으로 계산합니다. 회사가 회계연도 기준으로 별도 산정하는 경우 실제 발생 일수가 다를 수 있으니, 정확한 연차는 회사 인사 규정을 함께 확인하세요.</p>
+        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. 실제 계약에서도 이 계산 결과를 그대로 쓸 수 있나요?</p>
+        <p style="color:var(--subtext);margin:0;line-height:1.7">이 계산기는 법정 전환율 상한 산식을 기준으로 한 참고용 계산 결과를 제공합니다. 실제 계약 조건은 임대인·임차인 간 협의로 정해지며, 법정 상한을 초과할 수 없다는 점만 유의하면 됩니다. 정확한 계약은 공인중개사 또는 관련 기관에 확인하세요.</p>
       </div>
     </div>
 
-    <div style="margin:12px 0"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><!-- 카카오 애드핏 (2026-07-21, 쿠팡 파트너스 다이내믹 배너로 임시 교체) — 복원 시 주석 해제: <div class="adfit-h-desktop"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-QD4pRIpdIj7i2mbt" data-ad-width="728" data-ad-height="90"></ins></div><div class="adfit-h-mobile"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-R4xA2niTT8HgGjoO" data-ad-width="320" data-ad-height="50"></ins></div> --><div class="adfit-h-desktop"><script src="https://ads-partners.coupang.com/g.js"></script><script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"728","height":"90","tsource":""});</script></div><div class="adfit-h-mobile"><script src="https://ads-partners.coupang.com/g.js"></script><script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"320","height":"50","tsource":""});</script></div></div>
+    <div style="margin:12px 0"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><!-- 카카오 애드핏 (2026-07-22, 쿠팡 파트너스 다이내믹 배너로 임시 교체) — 복원 시 주석 해제: <div class="adfit-h-desktop"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-QD4pRIpdIj7i2mbt" data-ad-width="728" data-ad-height="90"></ins></div><div class="adfit-h-mobile"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-R4xA2niTT8HgGjoO" data-ad-width="320" data-ad-height="50"></ins></div> --><div class="adfit-h-desktop"><script src="https://ads-partners.coupang.com/g.js"></script><script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"728","height":"90","tsource":""});</script></div><div class="adfit-h-mobile"><script src="https://ads-partners.coupang.com/g.js"></script><script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"320","height":"50","tsource":""});</script></div></div>
 
     <div class="cta-box">
-      <p>지금 바로 연차를 계산해보세요.<br />설치도 회원가입도 필요 없습니다.</p>
-      <a href="/annual-leave-calc/" class="cta-btn" style="display:inline-flex;align-items:center;gap:8px">
-        <span style="display:inline-block;width:26px;height:26px;overflow:hidden;flex-shrink:0"><span style="display:block;transform:scale(0.565);transform-origin:top left"><div style="width:46px;height:46px;background:#a0e8e0;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="font:700 11px Fira Code,monospace;color:#2a2433;line-height:1;letter-spacing:-.5px;white-space:nowrap">15일</div></div></span></span>
-        무료로 연차 계산하기
+      <p>지금 바로 전월세를 환산해보세요.<br />설치도 회원가입도 필요 없습니다.</p>
+      <a href="/jeonse-rent-calc/" class="cta-btn" style="display:inline-flex;align-items:center;gap:8px">
+        <span style="display:inline-block;width:26px;height:26px;overflow:hidden;flex-shrink:0"><span style="display:block;transform:scale(0.565);transform-origin:top left"><div style="width:46px;height:46px;background:#a0e8e0;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="font:700 11px Fira Code,monospace;color:#2a2433;line-height:1;letter-spacing:-.5px;white-space:nowrap">전⇄월</div></div></span></span>
+        무료로 전월세 계산하기
       </a>
     </div>
     <div style="margin:12px 0"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="9500090221"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><div class="adfit-rect-wrap"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-oePL4TCj742xAwqT" data-ad-width="300" data-ad-height="250"></ins></div></div>
 
 <div class="post-nav">
-      <a href="/blog/91-splitbillcalc-howto"><span class="nav-label">← 이전 글</span><span style="color:var(--point-hover)">더치페이 계산기</span> 사용법 완전 가이드</a>
-      <a href="/blog/93-jeonserentcalc-howto" style="text-align:right"><span class="nav-label">다음 글 →</span><span style="color:var(--point-hover)">전월세 전환 계산기</span> 사용법 완전 가이드</a>
+      <a href="/blog/92-annualleavecalc-howto"><span class="nav-label">← 이전 글</span><span style="color:var(--point-hover)">연차 계산기</span> 사용법 완전 가이드</a>
+      <a href="/blog/83-lottogen-howto" style="text-align:right"><span class="nav-label">다음 글 →</span><span style="color:var(--point-hover)">로또 번호 생성기</span> 사용법 완전 가이드</a>
     </div></div>
 
   </article>
   <footer class="footer">
     <div class="container">
-      <p class="footer-copy">© 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p>
+      <p class="footer-copy">&#xa9; 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p>
       <nav class="footer-nav">
         <a href="/privacy">개인정보 처리방침</a>
         <a href="/terms">이용약관</a>

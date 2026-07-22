@@ -99,6 +99,7 @@ TOOLS = {
     'pet-age-calc':           ('반려동물 나이 계산기', 'PetAgeCalc', '생활·재미'),
     'split-bill-calc':        ('더치페이 계산기', 'SplitBillCalc', '계산기'),
     'annual-leave-calc':      ('연차 계산기', 'AnnualLeaveCalc', '계산기'),
+    'jeonse-rent-calc':       ('전월세 전환 계산기', 'JeonseRentCalc', '계산기'),
 }
 
 

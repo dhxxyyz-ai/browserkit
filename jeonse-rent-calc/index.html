@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <link rel="icon" href="/favicon.ico" sizes="32x32">
+  <link rel="icon" href="/favicon-16.png" sizes="16x16" type="image/png">
+  <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="/favicon-192.png" sizes="192x192" type="image/png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="전세를 월세로, 월세를 전세로 환산하는 전월세 전환 계산기입니다. 전월세 전환율을 직접 입력해 법정 상한(기준금리+2%, 최대 10%) 기준으로 계산할 수 있습니다. 서버 전송 없이 브라우저에서 바로 처리합니다." />
+  <meta property="og:title" content="JeonseRentCalc — 전월세 전환 계산기" />
+  <meta property="og:description" content="전세보증금과 월세를 서로 환산하는 무료 온라인 계산기입니다. 전월세 전환율을 직접 입력해 계산합니다." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://browserkit.online/jeonse-rent-calc/" />
+  <title>JeonseRentCalc — 전월세 전환 계산기</title>
+  <link rel="stylesheet" href="/css/style.css?v=20260723a" />
+  <!-- Google AdSense 승인 대기 중 (2026-07-19 주석 처리, 카카오 애드핏으로 임시 전환) — 승인 후 주석 해제
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506"
+     crossorigin="anonymous"></script>
+  -->
+  <script type="text/javascript" src="//t1.kakaocdn.net/kas/static/ba.min.js" async></script>
+  <style>
+    .input-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:24px; margin-bottom:20px; }
+    .input-row { display:flex; gap:12px; flex-wrap:wrap; align-items:flex-end; margin-bottom:16px; }
+    .input-row:last-child { margin-bottom:0; }
+    .input-group { flex:1; min-width:160px; display:flex; flex-direction:column; gap:8px; }
+    .input-label { font-size:12px; font-weight:600; color:var(--subtext); }
+    .amount-input { background:var(--bg); border:1px solid var(--border); border-radius:10px; padding:13px 16px; font-size:16px; font-weight:600; color:var(--text); font-family:'Fira Code',monospace; outline:none; width:100%; box-sizing:border-box; }
+    .amount-input:focus { border-color:var(--point); }
+    .input-hint { font-size:12px; color:var(--subtext); margin-top:2px; }
+
+    .seg-btns { display:flex; gap:6px; flex-wrap:wrap; }
+    .seg-btn { background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:8px 16px; font-size:13px; color:var(--subtext); cursor:pointer; font-family:'Gowun Dodum',sans-serif; }
+    .seg-btn:hover { border-color:var(--point); color:var(--text); }
+    .seg-btn.active { background:rgba(123,108,255,0.15); border-color:var(--point); color:var(--point-hover); font-weight:700; }
+
+    .btn-calc { background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border:none; border-radius:12px; padding:14px 32px; font-size:16px; font-weight:700; cursor:pointer; font-family:'Gowun Dodum',sans-serif; width:100%; margin-bottom:20px; }
+    .btn-calc:hover { transform:translateY(-2px); box-shadow:0 8px 24px var(--glow); }
+
+    .result-hero { background:var(--card); border:1px solid var(--point); border-radius:var(--radius); padding:28px; text-align:center; margin-bottom:20px; display:none; }
+    .result-hero.show { display:block; }
+    .result-hero-label { font-size:13px; color:var(--subtext); margin-bottom:8px; }
+    .result-hero-value { font-size:34px; font-weight:800; color:var(--point-hover); font-family:'Fira Code',monospace; }
+    .result-hero-sub { font-size:13px; color:var(--subtext); margin-top:8px; }
+
+    .breakdown-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px 24px; margin-bottom:20px; display:none; }
+    .breakdown-card.show { display:block; }
+    .breakdown-title { font-size:13px; font-weight:600; color:var(--subtext); margin-bottom:14px; }
+    .breakdown-row { display:flex; justify-content:space-between; align-items:center; padding:9px 0; border-bottom:1px solid var(--border); font-size:14px; }
+    .breakdown-row:last-child { border-bottom:none; }
+    .breakdown-row.total { font-weight:700; color:var(--text); padding-top:12px; }
+    .breakdown-label { color:var(--subtext); }
+    .breakdown-value { font-family:'Fira Code',monospace; color:var(--text); font-weight:600; }
+
+    .toast { position:fixed; bottom:32px; left:50%; transform:translateX(-50%) translateY(80px); background:var(--success); color:#fff; border-radius:999px; padding:10px 24px; font-size:14px; font-weight:600; opacity:0; pointer-events:none; z-index:999; transition:all 0.3s ease; }
+    .toast.show { transform:translateX(-50%) translateY(0); opacity:1; }
+
+    .footer { border-top:1px solid var(--border); padding:32px 0; text-align:center; }
+    .footer-copy { color:var(--subtext); font-size:13px; margin-bottom:12px; }
+    .footer-nav { display:flex; justify-content:center; gap:20px; flex-wrap:wrap; }
+    .footer-nav a { color:var(--subtext); font-size:13px; text-decoration:none; }
+    .footer-nav a:hover { color:var(--text); }
+
+    @media (max-width:640px) {
+      .hero-title { font-size:24px; }
+      .input-row { flex-direction:column; align-items:stretch; }
+      .result-hero-value { font-size:26px; }
+    }
+  </style>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+  <meta property="og:image" content="https://browserkit.online/img/og/jeonse-rent-calc.png" />
+  <link rel="canonical" href="https://browserkit.online/jeonse-rent-calc/" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://browserkit.online/img/og/jeonse-rent-calc.png" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "JeonseRentCalc — 전월세 전환 계산기",
+  "url": "https://browserkit.online/jeonse-rent-calc/",
+  "description": "전세를 월세로, 월세를 전세로 환산하는 전월세 전환 계산기입니다. 전월세 전환율을 직접 입력해 법정 상한(기준금리+2%, 최대 10%) 기준으로 계산할 수 있습니다. 서버 전송 없이 브라우저에서 바로 처리합니다.",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "Any",
+  "browserRequirements": "Requires JavaScript",
+  "inLanguage": "ko",
+  "isAccessibleForFree": true,
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "KRW"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "BrowserKit",
+    "url": "https://browserkit.online/"
+  }
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "홈",
+      "item": "https://browserkit.online/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "전월세 전환 계산기",
+      "item": "https://browserkit.online/jeonse-rent-calc/"
+    }
+  ]
+}
+  </script>
+</head>
+
+<body>
+  <header class="header">
+    <div class="container">
+      <a href="/" class="header-brand">
+        <div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Gowun Dodum,sans-serif;flex-shrink:0">B</div>
+        <span class="header-brand-text"><span style="color:var(--text)">Browser</span><span style="color:var(--point)">Kit</span></span>
+      </a>
+      <a href="/" class="header-back">&#x2190; BrowserKit 홈으로</a>
+    </div>
+  </header>
+
+  <main><div class="container">
+    <div class="hero">
+      <div class="hero-icon" style="height:78px;display:flex;justify-content:center;align-items:center"><div style="transform:scale(1.7);transform-origin:center"><div style="width:46px;height:46px;background:#a0e8e0;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="font:700 12px Fira Code,monospace;color:#2a2433;line-height:1;letter-spacing:-.5px;white-space:nowrap">전⇄월</div></div></div></div>
+      <div class="hero-title-wrap"><h1 class="hero-title">전월세 전환 계산기</h1><a href="/blog/93-jeonserentcalc-howto" class="hero-guide-link">사용법 가이드 보기</a></div>
+      <p class="hero-desc">전세보증금과 월세를 전월세 전환율로 서로 환산해드려요</p>
+      <div class="hero-badges">
+        <span class="badge">🔒 완전 로컬 처리</span>
+        <span class="badge">⚡ 무료 사용</span>
+        <span class="badge">🛡️ 서버 전송 없음</span>
+        <span class="badge">📦 설치 불필요</span>
+      </div>
+    </div>
+    <div style="margin:0 0 12px"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><div class="adfit-h-desktop"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-QD4pRIpdIj7i2mbt" data-ad-width="728" data-ad-height="90"></ins></div><div class="adfit-h-mobile"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-R4xA2niTT8HgGjoO" data-ad-width="320" data-ad-height="50"></ins></div></div>
+
+    <p class="notice">💡 전월세 전환은 주택임대차보호법 제7조의2에 따라 (전세보증금 − 월세보증금) × 전환율 ÷ 12로 계산합니다. 법정 전환율 상한은 「한국은행 기준금리 + 2%」와 「연 10%」 중 낮은 값입니다. 전환율 기본값은 참고용이며, 계산 시점의 정확한 기준금리로 직접 수정해 사용하세요. 모든 계산은 브라우저에서만 이루어집니다.</p>
+
+    <div class="input-card">
+      <div class="input-row">
+        <div class="input-group">
+          <span class="input-label">계산 방향</span>
+          <div class="seg-btns" id="modeBtns">
+            <button class="seg-btn active" data-mode="toMonthly">전세 → 월세</button>
+            <button class="seg-btn" data-mode="toJeonse">월세 → 전세</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="toMonthlyInputs">
+        <div class="input-row">
+          <div class="input-group">
+            <span class="input-label">전세보증금 (만원)</span>
+            <input type="number" class="amount-input" id="jeonseInput" placeholder="예: 30000" min="0" step="100" />
+          </div>
+          <div class="input-group">
+            <span class="input-label">월세보증금 (만원, 반전세 시)</span>
+            <input type="number" class="amount-input" id="depositInput1" placeholder="예: 5000" min="0" step="100" value="0" />
+          </div>
+        </div>
+      </div>
+
+      <div id="toJeonseInputs" style="display:none">
+        <div class="input-row">
+          <div class="input-group">
+            <span class="input-label">월세보증금 (만원)</span>
+            <input type="number" class="amount-input" id="depositInput2" placeholder="예: 5000" min="0" step="100" />
+          </div>
+          <div class="input-group">
+            <span class="input-label">월세 (만원)</span>
+            <input type="number" class="amount-input" id="monthlyInput" placeholder="예: 60" min="0" step="1" />
+          </div>
+        </div>
+      </div>
+
+      <div class="input-row">
+        <div class="input-group">
+          <span class="input-label">전월세 전환율 (연 %)</span>
+          <input type="number" class="amount-input" id="rateInput" placeholder="예: 4.75" min="0" step="0.01" value="4.75" />
+          <span class="input-hint">기본값은 참고용(2026년 7월 기준금리 2.75%+2%)입니다. 최신 기준금리로 직접 수정하세요.</span>
+        </div>
+      </div>
+    </div>
+
+    <button class="btn-calc" id="calcBtn">🏠 계산하기</button>
+
+    <div class="result-hero" id="resultHero">
+      <div class="result-hero-label" id="resultLabel">환산 결과</div>
+      <div class="result-hero-value" id="resultValue">-</div>
+      <div class="result-hero-sub" id="resultSub"></div>
+    </div>
+
+    <div class="breakdown-card" id="breakdownCard">
+      <div class="breakdown-title">📋 계산 내역</div>
+      <div id="breakdownBody"></div>
+    </div>
+
+    <div style="margin:0 0 12px"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="9500090221"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><div class="adfit-rect-wrap"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-oePL4TCj742xAwqT" data-ad-width="300" data-ad-height="250"></ins></div></div>
+  </div></main>
+
+  <footer class="footer">
+    <div class="container">
+      <p class="footer-copy">&#xa9; 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p>
+      <nav class="footer-nav">
+        <a href="/privacy">개인정보 처리방침</a>
+        <a href="/terms">이용약관</a>
+        <a href="/about">서비스 소개</a>
+        <a href="/blog/">블로그</a>
+      </nav>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+  var mode = 'toMonthly';
+
+  document.querySelectorAll('#modeBtns .seg-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('#modeBtns .seg-btn').forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      mode = btn.dataset.mode;
+      document.getElementById('toMonthlyInputs').style.display = mode === 'toMonthly' ? 'block' : 'none';
+      document.getElementById('toJeonseInputs').style.display = mode === 'toJeonse' ? 'block' : 'none';
+      document.getElementById('resultHero').classList.remove('show');
+      document.getElementById('breakdownCard').classList.remove('show');
+    });
+  });
+
+  function formatMan(n) {
+    return Math.round(n).toLocaleString('ko-KR') + '만원';
+  }
+
+  function calcToMonthly() {
+    var jeonse = parseFloat(document.getElementById('jeonseInput').value);
+    var deposit = parseFloat(document.getElementById('depositInput1').value) || 0;
+    var rate = parseFloat(document.getElementById('rateInput').value);
+    if (!jeonse || jeonse <= 0 || !rate || rate <= 0) {
+      showToast('전세보증금과 전환율을 입력해주세요');
+      return;
+    }
+    if (deposit > jeonse) {
+      showToast('월세보증금은 전세보증금보다 클 수 없습니다');
+      return;
+    }
+    var monthly = (jeonse - deposit) * (rate / 100) / 12;
+
+    document.getElementById('resultLabel').textContent = '환산 월세';
+    document.getElementById('resultValue').textContent = formatMan(monthly);
+    document.getElementById('resultSub').textContent = '전세 ' + formatMan(jeonse) + ' → 보증금 ' + formatMan(deposit) + ' + 월세';
+    document.getElementById('resultHero').classList.add('show');
+
+    var body = document.getElementById('breakdownBody');
+    body.innerHTML =
+      '<div class="breakdown-row"><span class="breakdown-label">전세보증금</span><span class="breakdown-value">' + formatMan(jeonse) + '</span></div>' +
+      '<div class="breakdown-row"><span class="breakdown-label">월세보증금</span><span class="breakdown-value">' + formatMan(deposit) + '</span></div>' +
+      '<div class="breakdown-row"><span class="breakdown-label">전환율</span><span class="breakdown-value">연 ' + rate + '%</span></div>' +
+      '<div class="breakdown-row total"><span class="breakdown-label">환산 월세</span><span class="breakdown-value">' + formatMan(monthly) + '</span></div>';
+    document.getElementById('breakdownCard').classList.add('show');
+
+    document.getElementById('resultHero').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    showToast('✓ 계산했습니다');
+  }
+
+  function calcToJeonse() {
+    var deposit = parseFloat(document.getElementById('depositInput2').value) || 0;
+    var monthly = parseFloat(document.getElementById('monthlyInput').value);
+    var rate = parseFloat(document.getElementById('rateInput').value);
+    if (!monthly || monthly <= 0 || !rate || rate <= 0) {
+      showToast('월세와 전환율을 입력해주세요');
+      return;
+    }
+    var jeonse = deposit + (monthly * 12) / (rate / 100);
+
+    document.getElementById('resultLabel').textContent = '환산 전세보증금';
+    document.getElementById('resultValue').textContent = formatMan(jeonse);
+    document.getElementById('resultSub').textContent = '보증금 ' + formatMan(deposit) + ' + 월세 ' + formatMan(monthly) + ' → 전세';
+    document.getElementById('resultHero').classList.add('show');
+
+    var body = document.getElementById('breakdownBody');
+    body.innerHTML =
+      '<div class="breakdown-row"><span class="breakdown-label">월세보증금</span><span class="breakdown-value">' + formatMan(deposit) + '</span></div>' +
+      '<div class="breakdown-row"><span class="breakdown-label">월세</span><span class="breakdown-value">' + formatMan(monthly) + '</span></div>' +
+      '<div class="breakdown-row"><span class="breakdown-label">전환율</span><span class="breakdown-value">연 ' + rate + '%</span></div>' +
+      '<div class="breakdown-row total"><span class="breakdown-label">환산 전세보증금</span><span class="breakdown-value">' + formatMan(jeonse) + '</span></div>';
+    document.getElementById('breakdownCard').classList.add('show');
+
+    document.getElementById('resultHero').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    showToast('✓ 계산했습니다');
+  }
+
+  document.getElementById('calcBtn').addEventListener('click', function() {
+    if (mode === 'toMonthly') calcToMonthly();
+    else calcToJeonse();
+  });
+
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(function() { t.classList.remove('show'); }, 2000);
+  }
+  </script>
+</body>
+</html>
