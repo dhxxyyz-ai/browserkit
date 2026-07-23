@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <link rel="icon" href="/favicon.ico" sizes="32x32">
+  <link rel="icon" href="/favicon-16.png" sizes="16x16" type="image/png">
+  <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="/favicon-192.png" sizes="192x192" type="image/png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="단위가격 계산기. 가격과 용량이 다른 상품들을 g당·ml당·개당 단위가격으로 환산해 어떤 게 더 저렴한지 바로 비교합니다. 서버 전송 없이 브라우저에서 바로 처리합니다." />
+  <meta property="og:title" content="UnitPriceCalc — 단위가격 계산기" />
+  <meta property="og:description" content="가격과 용량이 다른 상품들을 단위가격으로 환산해 최저가를 바로 비교하는 무료 온라인 계산기입니다." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://browserkit.online/unit-price-calc/" />
+  <title>UnitPriceCalc — 단위가격 계산기</title>
+  <link rel="stylesheet" href="/css/style.css?v=20260723a" />
+  <!-- Google AdSense 승인 대기 중 (2026-07-19 주석 처리, 카카오 애드핏으로 임시 전환) — 승인 후 주석 해제
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506"
+     crossorigin="anonymous"></script>
+  -->
+  <script type="text/javascript" src="//t1.kakaocdn.net/kas/static/ba.min.js" async></script>
+  <style>
+    .guide-summary { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:24px; margin:0 0 12px; }
+    .guide-summary-title { font-size:16px; font-weight:700; color:var(--text); margin:0 0 12px; }
+    .guide-steps { margin:0 0 20px; padding-left:20px; color:var(--subtext); font-size:14px; line-height:2; }
+    .guide-faq-title { font-size:14px; font-weight:700; color:var(--text); margin:0 0 10px; }
+    .guide-faq details { border:1px solid var(--border); border-radius:10px; padding:12px 16px; margin-bottom:8px; }
+    .guide-faq summary { cursor:pointer; font-weight:600; font-size:14px; color:var(--text); }
+    .guide-faq p { margin:8px 0 0; font-size:13px; color:var(--subtext); line-height:1.7; }
+    .guide-full-link { display:inline-block; margin-top:12px; font-size:14px; font-weight:600; color:var(--point-hover); text-decoration:none; }
+    .guide-full-link:hover { text-decoration:underline; }
+
+    .input-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:24px; margin-bottom:20px; }
+    .amount-input { background:var(--bg); border:1px solid var(--border); border-radius:10px; padding:11px 14px; font-size:14px; font-weight:600; color:var(--text); font-family:'Fira Code',monospace; outline:none; width:100%; box-sizing:border-box; }
+    .amount-input:focus { border-color:var(--point); }
+    .name-input { background:var(--bg); border:1px solid var(--border); border-radius:10px; padding:11px 14px; font-size:14px; color:var(--text); font-family:'Gowun Dodum',sans-serif; outline:none; width:100%; box-sizing:border-box; }
+    .name-input:focus { border-color:var(--point); }
+    .unit-select { background:var(--bg); border:1px solid var(--border); border-radius:10px; padding:11px 10px; font-size:13px; color:var(--text); font-family:'Gowun Dodum',sans-serif; outline:none; width:100%; box-sizing:border-box; }
+
+    .product-row { display:grid; grid-template-columns:1fr 1fr 1fr 90px 36px; gap:8px; align-items:center; margin-bottom:10px; }
+    .product-row-label { font-size:11px; font-weight:600; color:var(--subtext); margin-bottom:6px; display:grid; grid-template-columns:1fr 1fr 1fr 90px 36px; gap:8px; }
+    .product-remove { width:36px; height:36px; border-radius:10px; border:1px solid var(--border); background:var(--bg); color:var(--subtext); cursor:pointer; font-size:16px; line-height:1; }
+    .product-remove:hover { border-color:#ff8a5e; color:#ff8a5e; }
+    .btn-add-product { background:var(--bg); border:1.5px dashed var(--border); border-radius:10px; padding:10px; text-align:center; font-size:13px; color:var(--subtext); cursor:pointer; font-family:'Gowun Dodum',sans-serif; margin-top:4px; }
+    .btn-add-product:hover { border-color:var(--point); color:var(--point-hover); }
+
+    .btn-calc { background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border:none; border-radius:12px; padding:14px 32px; font-size:16px; font-weight:700; cursor:pointer; font-family:'Gowun Dodum',sans-serif; width:100%; margin-bottom:20px; }
+    .btn-calc:hover { transform:translateY(-2px); box-shadow:0 8px 24px var(--glow); }
+
+    .result-hero { background:var(--card); border:1px solid var(--point); border-radius:var(--radius); padding:28px; text-align:center; margin-bottom:20px; display:none; }
+    .result-hero.show { display:block; }
+    .result-hero-label { font-size:13px; color:var(--subtext); margin-bottom:8px; }
+    .result-hero-value { font-size:26px; font-weight:800; color:var(--point-hover); font-family:'Gowun Dodum',sans-serif; }
+    .result-hero-sub { font-size:13px; color:var(--subtext); margin-top:8px; }
+
+    .breakdown-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px 24px; margin-bottom:20px; display:none; }
+    .breakdown-card.show { display:block; }
+    .breakdown-title { font-size:13px; font-weight:600; color:var(--subtext); margin-bottom:14px; }
+    .breakdown-row { display:flex; justify-content:space-between; align-items:center; padding:9px 0; border-bottom:1px solid var(--border); font-size:14px; gap:10px; }
+    .breakdown-row:last-child { border-bottom:none; }
+    .breakdown-label { color:var(--text); }
+    .breakdown-value { font-family:'Fira Code',monospace; color:var(--text); font-weight:600; white-space:nowrap; }
+    .best-badge { display:inline-block; background:rgba(52,211,153,0.15); color:var(--success); font-size:11px; font-weight:700; border-radius:999px; padding:2px 8px; margin-left:6px; }
+
+    .footer { border-top:1px solid var(--border); padding:32px 0; text-align:center; }
+    .footer-copy { color:var(--subtext); font-size:13px; margin-bottom:12px; }
+    .footer-nav { display:flex; justify-content:center; gap:20px; flex-wrap:wrap; }
+    .footer-nav a { color:var(--subtext); font-size:13px; text-decoration:none; }
+    .footer-nav a:hover { color:var(--text); }
+
+    @media (max-width:640px) {
+      .hero-title { font-size:24px; }
+      .product-row, .product-row-label { grid-template-columns:1fr 1fr; }
+      .product-row-label { display:none; }
+      .result-hero-value { font-size:20px; }
+    }
+  </style>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+  <meta property="og:image" content="https://browserkit.online/img/og/unit-price-calc.png" />
+  <link rel="canonical" href="https://browserkit.online/unit-price-calc/" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://browserkit.online/img/og/unit-price-calc.png" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "UnitPriceCalc — 단위가격 계산기",
+  "url": "https://browserkit.online/unit-price-calc/",
+  "description": "단위가격 계산기. 가격과 용량이 다른 상품들을 g당·ml당·개당 단위가격으로 환산해 어떤 게 더 저렴한지 바로 비교합니다. 서버 전송 없이 브라우저에서 바로 처리합니다.",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "Any",
+  "browserRequirements": "Requires JavaScript",
+  "inLanguage": "ko",
+  "isAccessibleForFree": true,
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "KRW" },
+  "publisher": { "@type": "Organization", "name": "BrowserKit", "url": "https://browserkit.online/" }
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "홈", "item": "https://browserkit.online/" },
+    { "@type": "ListItem", "position": 2, "name": "단위가격 계산기", "item": "https://browserkit.online/unit-price-calc/" }
+  ]
+}
+  </script>
+</head>
+
+<body>
+  <header class="header">
+    <div class="container">
+      <a href="/" class="header-brand">
+        <div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Gowun Dodum,sans-serif;flex-shrink:0">B</div>
+        <span class="header-brand-text"><span style="color:var(--text)">Browser</span><span style="color:var(--point)">Kit</span></span>
+      </a>
+      <a href="/" class="header-back">&#x2190; BrowserKit 홈으로</a>
+    </div>
+  </header>
+
+  <main><div class="container">
+    <div class="hero">
+      <div class="hero-icon" style="height:78px;display:flex;justify-content:center;align-items:center"><div style="transform:scale(1.7);transform-origin:center"><div style="width:46px;height:46px;background:#a0e8e0;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="position:relative;width:22px;height:22px;background:#fffdf9;border:2.5px solid #2a2433;border-radius:4px 11px 4px 4px;box-sizing:border-box;transform:rotate(-45deg)"><div style="position:absolute;left:3px;top:3px;width:5px;height:5px;border-radius:50%;background:#2a2433"></div></div></div></div></div>
+      <div class="hero-title-wrap"><h1 class="hero-title">단위가격 계산기</h1><a href="/blog/95-unitpricecalc-howto" class="hero-guide-link">사용법 가이드 보기</a></div>
+      <p class="hero-desc">가격과 용량이 다른 상품들을 단위가격으로 환산해 최저가를 비교해드려요</p>
+      <div class="hero-badges">
+        <span class="badge">🔒 완전 로컬 처리</span>
+        <span class="badge">⚡ 무료 사용</span>
+        <span class="badge">🛡️ 서버 전송 없음</span>
+        <span class="badge">📦 설치 불필요</span>
+      </div>
+    </div>
+    <div style="margin:0 0 12px"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><div class="adfit-h-desktop"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-QD4pRIpdIj7i2mbt" data-ad-width="728" data-ad-height="90"></ins></div><div class="adfit-h-mobile"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-R4xA2niTT8HgGjoO" data-ad-width="320" data-ad-height="50"></ins></div></div>
+
+    <p class="notice">💡 상품별 가격·용량·단위를 입력하면 g당·ml당·개당 단위가격으로 환산해 같은 종류(무게/부피/개수)끼리 비교합니다. 무게와 부피처럼 기준이 다른 상품은 서로 비교하지 않습니다. 모든 계산은 브라우저에서만 이루어집니다.</p>
+
+    <div class="input-card">
+      <div class="product-row-label">
+        <span>상품명(선택)</span><span>가격(원)</span><span>용량</span><span>단위</span><span></span>
+      </div>
+      <div id="productList"></div>
+      <div class="btn-add-product" id="addProductBtn">+ 상품 추가</div>
+    </div>
+
+    <button class="btn-calc" id="calcBtn">⚖️ 비교하기</button>
+
+    <div class="result-hero" id="resultHero">
+      <div class="result-hero-label">가장 저렴한 상품</div>
+      <div class="result-hero-value" id="resultValue">-</div>
+      <div class="result-hero-sub" id="resultSub"></div>
+    </div>
+
+    <div class="breakdown-card" id="breakdownCard">
+      <div class="breakdown-title">📋 단위가격 비교</div>
+      <div id="breakdownBody"></div>
+    </div>
+
+    <div style="margin:0 0 12px"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><!-- 카카오 애드핏 (2026-07-22, 쿠팡 파트너스 다이내믹 배너로 교체) — 복원 시 주석 해제: <div class="adfit-h-desktop"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-QD4pRIpdIj7i2mbt" data-ad-width="728" data-ad-height="90"></ins></div><div class="adfit-h-mobile"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-R4xA2niTT8HgGjoO" data-ad-width="320" data-ad-height="50"></ins></div> --><div class="adfit-h-desktop"><script src="https://ads-partners.coupang.com/g.js"></script><script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"728","height":"90","tsource":""});</script></div><div class="adfit-h-mobile"><script src="https://ads-partners.coupang.com/g.js"></script><script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"320","height":"50","tsource":""});</script></div></div>
+
+    <div class="guide-summary">
+      <h2 class="guide-summary-title">사용법 요약</h2>
+      <ol class="guide-steps">
+        <li>상품별 가격·용량·단위 입력</li>
+        <li>필요하면 상품 추가</li>
+        <li>비교하기로 결과 확인</li>
+      </ol>
+      <h3 class="guide-faq-title">자주 묻는 질문</h3>
+      <div class="guide-faq">
+        <details>
+          <summary>단위가격 계산기는 정말 무료인가요?</summary>
+          <p>네, 회원가입이나 설치 없이 완전 무료로 사용할 수 있습니다. 비교 횟수 제한도 없습니다.</p>
+        </details>
+        <details>
+          <summary>무게와 부피 상품을 같이 비교할 수 있나요?</summary>
+          <p>무게(g/kg)와 부피(ml/L)는 서로 다른 기준이라 직접 비교할 수 없습니다. 같은 카테고리(무게/부피/개수)끼리만 최저가를 비교합니다.</p>
+        </details>
+        <details>
+          <summary>개당 판매하는 상품도 비교할 수 있나요?</summary>
+          <p>네, 단위를 '개'로 선택하면 1개당 가격 기준으로 비교할 수 있습니다.</p>
+        </details>
+        <details>
+          <summary>입력한 가격 정보가 서버로 전송되나요?</summary>
+          <p>아니요. 모든 계산은 브라우저 안에서만 이루어지며 입력한 정보가 외부 서버로 전송되거나 저장되지 않습니다.</p>
+        </details>
+      </div>
+      <a href="/blog/95-unitpricecalc-howto" class="guide-full-link">전체 가이드 보기 →</a>
+    </div>
+
+    <div style="margin:0 0 12px"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="9500090221"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><div class="adfit-rect-wrap"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-oePL4TCj742xAwqT" data-ad-width="300" data-ad-height="250"></ins></div></div>
+  </div></main>
+
+  <footer class="footer">
+    <div class="container">
+      <p class="footer-copy">&#xa9; 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p>
+      <nav class="footer-nav">
+        <a href="/privacy">개인정보 처리방침</a>
+        <a href="/terms">이용약관</a>
+        <a href="/about">서비스 소개</a>
+        <a href="/blog/">블로그</a>
+      </nav>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+  var productCount = 0;
+  var UNIT_INFO = {
+    g:   { base: 1,    group: 'weight', label: '100g당' },
+    kg:  { base: 1000, group: 'weight', label: '100g당' },
+    ml:  { base: 1,    group: 'volume', label: '100ml당' },
+    L:   { base: 1000, group: 'volume', label: '100ml당' },
+    ea:  { base: 1,    group: 'count',  label: '1개당' }
+  };
+  var UNIT_NAMES = { g:'g', kg:'kg', ml:'ml', L:'L', ea:'개' };
+  var GROUP_NAMES = { weight:'무게', volume:'부피', count:'개수' };
+
+  function addProductRow(name) {
+    productCount++;
+    var row = document.createElement('div');
+    row.className = 'product-row';
+    row.innerHTML =
+      '<input type="text" class="name-input" placeholder="상품 ' + productCount + '" value="' + (name || '') + '" />' +
+      '<input type="number" class="amount-input" placeholder="가격" min="0" step="10" />' +
+      '<input type="number" class="amount-input" placeholder="용량" min="0" step="0.1" />' +
+      '<select class="unit-select"><option value="g">g</option><option value="kg">kg</option><option value="ml">ml</option><option value="L">L</option><option value="ea">개</option></select>' +
+      '<button class="product-remove" type="button">&times;</button>';
+    row.querySelector('.product-remove').addEventListener('click', function() {
+      row.remove();
+    });
+    document.getElementById('productList').appendChild(row);
+  }
+
+  document.getElementById('addProductBtn').addEventListener('click', function() {
+    addProductRow('');
+  });
+
+  addProductRow('');
+  addProductRow('');
+
+  function formatWon(n) {
+    return Math.round(n).toLocaleString('ko-KR') + '원';
+  }
+
+  document.getElementById('calcBtn').addEventListener('click', function() {
+    var rows = document.querySelectorAll('#productList .product-row');
+    var products = [];
+    rows.forEach(function(row, i) {
+      var inputs = row.querySelectorAll('input');
+      var name = inputs[0].value.trim() || ('상품 ' + (i + 1));
+      var price = parseFloat(inputs[1].value);
+      var amount = parseFloat(inputs[2].value);
+      var unit = row.querySelector('select').value;
+      if (price > 0 && amount > 0) {
+        var info = UNIT_INFO[unit];
+        var baseAmount = amount * info.base;
+        var perUnit = price / baseAmount;
+        products.push({
+          name: name,
+          price: price,
+          amount: amount,
+          unit: unit,
+          group: info.group,
+          unitPriceDisplay: info.group === 'count' ? perUnit : perUnit * 100,
+          label: info.label
+        });
+      }
+    });
+
+    if (products.length < 2) {
+      showToast('가격과 용량을 입력한 상품이 2개 이상 필요해요');
+      return;
+    }
+
+    // group by category, find cheapest per group
+    var groups = {};
+    products.forEach(function(p) {
+      if (!groups[p.group]) groups[p.group] = [];
+      groups[p.group].push(p);
+    });
+    var bestOverall = null;
+    Object.keys(groups).forEach(function(g) {
+      groups[g].sort(function(a, b) { return a.unitPriceDisplay - b.unitPriceDisplay; });
+      if (!bestOverall || groups[g][0].unitPriceDisplay < bestOverall._cmp) {
+        bestOverall = groups[g][0];
+        bestOverall._cmp = groups[g][0].unitPriceDisplay;
+      }
+    });
+
+    document.getElementById('resultValue').textContent = bestOverall.name;
+    document.getElementById('resultSub').textContent = bestOverall.label + ' ' + formatWon(bestOverall.unitPriceDisplay) + ' — 같은 카테고리(' + GROUP_NAMES[bestOverall.group] + ') 중 최저가';
+    document.getElementById('resultHero').classList.add('show');
+
+    var body = document.getElementById('breakdownBody');
+    body.innerHTML = '';
+    Object.keys(groups).forEach(function(g) {
+      var groupTitle = document.createElement('div');
+      groupTitle.style.cssText = 'font-size:12px;font-weight:700;color:var(--point-hover);margin:14px 0 6px';
+      groupTitle.textContent = GROUP_NAMES[g] + ' 기준 비교';
+      body.appendChild(groupTitle);
+      groups[g].forEach(function(p, idx) {
+        var row = document.createElement('div');
+        row.className = 'breakdown-row';
+        var badge = idx === 0 ? '<span class="best-badge">최저가</span>' : '';
+        row.innerHTML = '<span class="breakdown-label">' + p.name + badge + '</span><span class="breakdown-value">' + p.label + ' ' + formatWon(p.unitPriceDisplay) + '</span>';
+        body.appendChild(row);
+      });
+    });
+    document.getElementById('breakdownCard').classList.add('show');
+    document.getElementById('resultHero').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    showToast('✓ 비교했습니다');
+  });
+
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(function() { t.classList.remove('show'); }, 2000);
+  }
+  </script>
+</body>
+</html>
