@@ -21,6 +21,16 @@
   -->
   <script type="text/javascript" src="//t1.kakaocdn.net/kas/static/ba.min.js" async></script>
   <style>
+    .guide-summary { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:24px; margin:0 0 12px; }
+    .guide-summary-title { font-size:16px; font-weight:700; color:var(--text); margin:0 0 12px; }
+    .guide-steps { margin:0 0 20px; padding-left:20px; color:var(--subtext); font-size:14px; line-height:2; }
+    .guide-faq-title { font-size:14px; font-weight:700; color:var(--text); margin:0 0 10px; }
+    .guide-faq details { border:1px solid var(--border); border-radius:10px; padding:12px 16px; margin-bottom:8px; }
+    .guide-faq summary { cursor:pointer; font-weight:600; font-size:14px; color:var(--text); }
+    .guide-faq p { margin:8px 0 0; font-size:13px; color:var(--subtext); line-height:1.7; }
+    .guide-full-link { display:inline-block; margin-top:12px; font-size:14px; font-weight:600; color:var(--point-hover); text-decoration:none; }
+    .guide-full-link:hover { text-decoration:underline; }
+
     .input-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:24px; margin-bottom:20px; }
     .input-row { display:flex; gap:12px; flex-wrap:wrap; align-items:flex-end; margin-bottom:16px; }
     .input-row:last-child { margin-bottom:0; }
@@ -177,6 +187,37 @@
       <div class="breakdown-row"><span class="breakdown-label">공급가액</span><span class="breakdown-value" id="rowSupply">-</span></div>
       <div class="breakdown-row"><span class="breakdown-label">부가세 (10%)</span><span class="breakdown-value" id="rowVat">-</span></div>
       <div class="breakdown-row total"><span class="breakdown-label">합계금액</span><span class="breakdown-value" id="rowTotal">-</span></div>
+    </div>
+
+    <div style="margin:0 0 12px"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><!-- 카카오 애드핏 (2026-07-22, 쿠팡 파트너스 다이내믹 배너로 교체) — 복원 시 주석 해제: <div class="adfit-h-desktop"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-QD4pRIpdIj7i2mbt" data-ad-width="728" data-ad-height="90"></ins></div><div class="adfit-h-mobile"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-R4xA2niTT8HgGjoO" data-ad-width="320" data-ad-height="50"></ins></div> --><div class="adfit-h-desktop"><script src="https://ads-partners.coupang.com/g.js"></script><script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"728","height":"90","tsource":""});</script></div><div class="adfit-h-mobile"><script src="https://ads-partners.coupang.com/g.js"></script><script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"320","height":"50","tsource":""});</script></div></div>
+
+    <div class="guide-summary">
+      <h2 class="guide-summary-title">사용법 요약</h2>
+      <ol class="guide-steps">
+        <li>계산 기준 선택</li>
+        <li>금액 입력</li>
+        <li>계산 결과 확인</li>
+      </ol>
+      <h3 class="guide-faq-title">자주 묻는 질문</h3>
+      <div class="guide-faq">
+        <details>
+          <summary>부가세 계산기 도구는 정말 무료인가요?</summary>
+          <p>네, 회원가입이나 설치 없이 완전 무료로 사용할 수 있습니다. 횟수 제한도 없습니다.</p>
+        </details>
+        <details>
+          <summary>입력한 금액이 서버로 전송되나요?</summary>
+          <p>아니요. 모든 계산은 브라우저 안에서만 이루어지며 입력한 금액이 외부 서버로 전송되거나 저장되지 않습니다.</p>
+        </details>
+        <details>
+          <summary>면세 품목이나 간이과세자도 계산할 수 있나요?</summary>
+          <p>이 계산기는 일반과세 기준 10% 부가가치세율로만 계산합니다. 면세 품목이나 간이과세자 특례 세율은 반영하지 않으므로, 정확한 세무 처리는 반드시 세무사나 국세청에 확인하세요.</p>
+        </details>
+        <details>
+          <summary>모바일에서도 사용할 수 있나요?</summary>
+          <p>네, 별도의 앱 설치 없이 모바일 브라우저에서도 동일하게 사용할 수 있습니다.</p>
+        </details>
+      </div>
+      <a href="/blog/82-vatcalc-howto" class="guide-full-link">전체 가이드 보기 →</a>
     </div>
 
     <div style="margin:0 0 12px"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="9500090221"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><div class="adfit-rect-wrap"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-oePL4TCj742xAwqT" data-ad-width="300" data-ad-height="250"></ins></div></div>

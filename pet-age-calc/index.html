@@ -21,6 +21,16 @@
   -->
   <script type="text/javascript" src="//t1.kakaocdn.net/kas/static/ba.min.js" async></script>
   <style>
+    .guide-summary { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:24px; margin:0 0 12px; }
+    .guide-summary-title { font-size:16px; font-weight:700; color:var(--text); margin:0 0 12px; }
+    .guide-steps { margin:0 0 20px; padding-left:20px; color:var(--subtext); font-size:14px; line-height:2; }
+    .guide-faq-title { font-size:14px; font-weight:700; color:var(--text); margin:0 0 10px; }
+    .guide-faq details { border:1px solid var(--border); border-radius:10px; padding:12px 16px; margin-bottom:8px; }
+    .guide-faq summary { cursor:pointer; font-weight:600; font-size:14px; color:var(--text); }
+    .guide-faq p { margin:8px 0 0; font-size:13px; color:var(--subtext); line-height:1.7; }
+    .guide-full-link { display:inline-block; margin-top:12px; font-size:14px; font-weight:600; color:var(--point-hover); text-decoration:none; }
+    .guide-full-link:hover { text-decoration:underline; }
+
     .input-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:24px; margin-bottom:20px; }
     .input-row { display:flex; gap:12px; flex-wrap:wrap; align-items:flex-end; margin-bottom:16px; }
     .input-row:last-child { margin-bottom:0; }
@@ -187,6 +197,37 @@
       <div class="breakdown-row"><span class="breakdown-label">종류</span><span class="breakdown-value" id="rowSpecies">-</span></div>
       <div class="breakdown-row" id="rowSizeWrap"><span class="breakdown-label">체구</span><span class="breakdown-value" id="rowSize">-</span></div>
       <div class="breakdown-row"><span class="breakdown-label">입력 나이</span><span class="breakdown-value" id="rowAge">-</span></div>
+    </div>
+
+    <div style="margin:0 0 12px"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><!-- 카카오 애드핏 (2026-07-22, 쿠팡 파트너스 다이내믹 배너로 교체) — 복원 시 주석 해제: <div class="adfit-h-desktop"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-QD4pRIpdIj7i2mbt" data-ad-width="728" data-ad-height="90"></ins></div><div class="adfit-h-mobile"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-R4xA2niTT8HgGjoO" data-ad-width="320" data-ad-height="50"></ins></div> --><div class="adfit-h-desktop"><script src="https://ads-partners.coupang.com/g.js"></script><script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"728","height":"90","tsource":""});</script></div><div class="adfit-h-mobile"><script src="https://ads-partners.coupang.com/g.js"></script><script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"320","height":"50","tsource":""});</script></div></div>
+
+    <div class="guide-summary">
+      <h2 class="guide-summary-title">사용법 요약</h2>
+      <ol class="guide-steps">
+        <li>강아지 또는 고양이 선택</li>
+        <li>체구 선택(강아지만 해당)</li>
+        <li>나이 입력 후 계산</li>
+      </ol>
+      <h3 class="guide-faq-title">자주 묻는 질문</h3>
+      <div class="guide-faq">
+        <details>
+          <summary>반려동물 나이 계산기는 정말 무료인가요?</summary>
+          <p>네, 회원가입이나 설치 없이 완전 무료로 사용할 수 있습니다. 계산 횟수 제한도 없습니다.</p>
+        </details>
+        <details>
+          <summary>왜 강아지는 체구를 따로 입력해야 하나요?</summary>
+          <p>소형견보다 대형견이 노화 속도가 더 빠르기 때문입니다. 미국수의사회(AVMA) 환산표에 따르면 소형견은 매년 4살씩, 초대형견은 매년 7살씩 사람 나이가 늘어납니다.</p>
+        </details>
+        <details>
+          <summary>고양이도 품종별로 다르게 계산하나요?</summary>
+          <p>아니요. 고양이는 강아지와 달리 품종 간 크기 차이가 크지 않아 단일 환산표를 사용합니다.</p>
+        </details>
+        <details>
+          <summary>이 계산 결과가 정확한 건강 상태를 의미하나요?</summary>
+          <p>아니요. 환산표는 평균적인 노화 속도를 기준으로 한 참고용 수치이며, 개체별 건강 상태나 유전적 요인에 따라 실제 노화 속도는 다를 수 있습니다. 정확한 건강 상태는 반드시 동물병원에서 확인하세요.</p>
+        </details>
+      </div>
+      <a href="/blog/90-petagecalc-howto" class="guide-full-link">전체 가이드 보기 →</a>
     </div>
 
     <div style="margin:0 0 12px"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="9500090221"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><div class="adfit-rect-wrap"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-oePL4TCj742xAwqT" data-ad-width="300" data-ad-height="250"></ins></div></div>
