@@ -21,6 +21,15 @@
   -->
   <script type="text/javascript" src="//t1.kakaocdn.net/kas/static/ba.min.js" async></script>
   <style>
+    .guide-summary { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:24px; margin:0 0 12px; }
+    .guide-summary-title { font-size:16px; font-weight:700; color:var(--text); margin:0 0 12px; }
+    .guide-steps { margin:0 0 20px; padding-left:20px; color:var(--subtext); font-size:14px; line-height:2; }
+    .guide-faq-title { font-size:14px; font-weight:700; color:var(--text); margin:0 0 10px; }
+    .guide-faq details { border:1px solid var(--border); border-radius:10px; padding:12px 16px; margin-bottom:8px; }
+    .guide-faq summary { cursor:pointer; font-weight:600; font-size:14px; color:var(--text); }
+    .guide-faq p { margin:8px 0 0; font-size:13px; color:var(--subtext); line-height:1.7; }
+    .guide-full-link { display:inline-block; margin-top:12px; font-size:14px; font-weight:600; color:var(--point-hover); text-decoration:none; }
+    .guide-full-link:hover { text-decoration:underline; }
     .input-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:24px; margin-bottom:20px; }
     .input-row { display:flex; gap:12px; flex-wrap:wrap; align-items:flex-end; margin-bottom:16px; }
     .input-row:last-child { margin-bottom:0; }
@@ -204,6 +213,37 @@
     <div class="breakdown-card" id="breakdownCard">
       <div class="breakdown-title">📋 계산 내역</div>
       <div id="breakdownBody"></div>
+    </div>
+
+    <div style="margin:0 0 12px"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><!-- 카카오 애드핏 (2026-07-22, 쿠팡 파트너스 다이내믹 배너로 교체) — 복원 시 주석 해제: <div class="adfit-h-desktop"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-QD4pRIpdIj7i2mbt" data-ad-width="728" data-ad-height="90"></ins></div><div class="adfit-h-mobile"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-R4xA2niTT8HgGjoO" data-ad-width="320" data-ad-height="50"></ins></div> --><div class="adfit-h-desktop"><script src="https://ads-partners.coupang.com/g.js"></script><script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"728","height":"90","tsource":""});</script></div><div class="adfit-h-mobile"><script src="https://ads-partners.coupang.com/g.js"></script><script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"320","height":"50","tsource":""});</script></div></div>
+
+    <div class="guide-summary">
+      <h2 class="guide-summary-title">사용법 요약</h2>
+      <ol class="guide-steps">
+        <li>계산 방향 선택</li>
+        <li>보증금·월세 입력</li>
+        <li>전환율 확인 후 계산하기</li>
+      </ol>
+      <h3 class="guide-faq-title">자주 묻는 질문</h3>
+      <div class="guide-faq">
+        <details>
+          <summary>전월세 전환 계산기는 정말 무료인가요?</summary>
+          <p>네, 회원가입이나 설치 없이 완전 무료로 사용할 수 있습니다. 계산 횟수 제한도 없습니다.</p>
+        </details>
+        <details>
+          <summary>전환율은 어떤 값을 입력해야 하나요?</summary>
+          <p>법정 전환율 상한은 「한국은행 기준금리 + 2%」와 「연 10%」 중 낮은 값입니다. 기준금리는 수시로 바뀌므로, 계산 시점의 최신 기준금리를 한국은행 홈페이지에서 확인해 전환율을 직접 입력하는 것을 권장합니다.</p>
+        </details>
+        <details>
+          <summary>전세를 월세로 바꿀 때 계산식이 어떻게 되나요?</summary>
+          <p>월세 = (전세보증금 − 월세보증금) × 전환율 ÷ 12 입니다.</p>
+        </details>
+        <details>
+          <summary>실제 계약에서도 이 계산 결과를 그대로 쓸 수 있나요?</summary>
+          <p>이 계산기는 법정 전환율 상한 산식을 기준으로 한 참고용 계산 결과를 제공합니다. 정확한 계약은 공인중개사 또는 관련 기관에 확인하세요.</p>
+        </details>
+      </div>
+      <a href="/blog/93-jeonserentcalc-howto" class="guide-full-link">전체 가이드 보기 →</a>
     </div>
 
     <div style="margin:0 0 12px"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="9500090221"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><div class="adfit-rect-wrap"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-oePL4TCj742xAwqT" data-ad-width="300" data-ad-height="250"></ins></div></div>
