@@ -102,6 +102,7 @@ TOOLS = {
     'jeonse-rent-calc':       ('전월세 전환 계산기', 'JeonseRentCalc', '계산기'),
     'packing-list-gen':       ('여행 짐 싸기 체크리스트 생성기', 'PackingListGen', '생활·재미'),
     'unit-price-calc':        ('단위가격 계산기', 'UnitPriceCalc', '계산기'),
+    'color-contrast-checker': ('색상 대비 검사기', 'ColorContrastChecker', '개발자'),
 }
 
 
