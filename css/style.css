@@ -969,3 +969,26 @@ a:hover { color: var(--text); }
   .adfit-h-desktop { display: none; }
   .adfit-h-mobile { display: flex; }
 }
+
+/* ============================
+   언어 스위처 (2026-07-24, 해외 진출 1단계)
+============================ */
+.header-right { display: flex; align-items: center; gap: 14px; }
+.lang-switcher { position: relative; }
+.lang-switcher-btn { background: var(--card); border: 1px solid var(--border); border-radius: 999px; padding: 6px 14px; font-size: 13px; color: var(--text); cursor: pointer; font-family: 'Gowun Dodum',sans-serif; display: flex; align-items: center; gap: 6px; }
+.lang-switcher-btn:hover { border-color: var(--point); }
+.lang-switcher-menu { position: absolute; right: 0; top: calc(100% + 6px); background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 6px; min-width: 130px; box-shadow: 0 8px 24px rgba(0,0,0,.1); display: none; flex-direction: column; gap: 2px; z-index: 50; }
+.lang-switcher-menu.show { display: flex; }
+.lang-switcher-menu a { padding: 8px 10px; border-radius: 6px; font-size: 13px; color: var(--subtext); text-decoration: none; }
+.lang-switcher-menu a:hover { background: var(--bg); color: var(--text); }
+.lang-switcher-menu a.active { color: var(--point-hover); font-weight: 600; }
+@media (max-width: 480px) {
+  .lang-switcher-btn .lang-label-full { display: none; }
+}
+
+/* 브라우저 언어 감지 배너 */
+.lang-banner { display: none; align-items: center; justify-content: center; gap: 14px; background: rgba(123,108,255,0.08); border-bottom: 1px solid var(--border); padding: 10px 20px; font-size: 13px; color: var(--text); text-align: center; flex-wrap: wrap; }
+.lang-banner.show { display: flex; }
+.lang-banner a { color: var(--point-hover); font-weight: 700; text-decoration: none; }
+.lang-banner a:hover { text-decoration: underline; }
+.lang-banner-close { background: none; border: none; color: var(--subtext); cursor: pointer; font-size: 16px; line-height: 1; padding: 2px 6px; }

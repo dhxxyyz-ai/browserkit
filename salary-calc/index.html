@@ -14,7 +14,7 @@
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://browserkit.online/salary-calc/" />
   <title>SalaryCalc — 연봉 실수령액 계산기</title>
-  <link rel="stylesheet" href="/css/style.css?v=20260723a" />
+  <link rel="stylesheet" href="/css/style.css?v=20260724a" />
   <!-- Google AdSense 승인 대기 중 (2026-07-19 주석 처리, 카카오 애드핏으로 임시 전환) — 승인 후 주석 해제
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506"
      crossorigin="anonymous"></script>
@@ -142,13 +142,26 @@
 </head>
 
 <body>
+  <div class="lang-banner" id="langBanner">
+    <span>🌐 This page is also available in <a href="/en/">English</a>.</span>
+    <button class="lang-banner-close" id="langBannerClose" type="button" aria-label="close">&times;</button>
+  </div>
   <header class="header">
     <div class="container">
       <a href="/" class="header-brand">
         <div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Gowun Dodum,sans-serif;flex-shrink:0">B</div>
         <span class="header-brand-text"><span style="color:var(--text)">Browser</span><span style="color:var(--point)">Kit</span></span>
       </a>
-      <a href="/" class="header-back">&#x2190; BrowserKit 홈으로</a>
+      <div class="header-right">
+        <div class="lang-switcher">
+          <button class="lang-switcher-btn" type="button" data-lang-btn>🌐 <span class="lang-label-full">한국어</span></button>
+          <div class="lang-switcher-menu" data-lang-menu>
+            <a href="/en/">English</a>
+            <a href="#" class="active">한국어</a>
+          </div>
+        </div>
+        <a href="/" class="header-back">&#x2190; BrowserKit 홈으로</a>
+      </div>
     </div>
   </header>
 
@@ -875,6 +888,37 @@
     t.classList.add('show');
     setTimeout(function() { t.classList.remove('show'); }, 2000);
   }
+  </script>
+
+  <script>
+  document.querySelectorAll('[data-lang-btn]').forEach(function(btn){
+    btn.addEventListener('click', function(e){
+      e.stopPropagation();
+      var menu = btn.nextElementSibling;
+      menu.classList.toggle('show');
+    });
+  });
+  document.addEventListener('click', function(){
+    document.querySelectorAll('.lang-switcher-menu.show').forEach(function(m){ m.classList.remove('show'); });
+  });
+  </script>
+
+  <script>
+  (function(){
+    try {
+      if (document.cookie.indexOf('bk_lang_dismiss=1') !== -1) return;
+      var lang = (navigator.language || navigator.userLanguage || '').toLowerCase();
+      if (lang.indexOf('ko') === 0) return;
+      var banner = document.getElementById('langBanner');
+      if (!banner) return;
+      banner.classList.add('show');
+      var closeBtn = document.getElementById('langBannerClose');
+      closeBtn.addEventListener('click', function(){
+        banner.classList.remove('show');
+        document.cookie = 'bk_lang_dismiss=1; max-age=' + (60*60*24*180) + '; path=/';
+      });
+    } catch(e) {}
+  })();
   </script>
 </body>
 </html>
