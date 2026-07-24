@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
   <link rel="icon" href="/favicon.ico" sizes="32x32">
   <link rel="icon" href="/favicon-16.png" sizes="16x16" type="image/png">
@@ -8,18 +8,17 @@
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="색상 대비 검사기. 텍스트 색상과 배경 색상을 입력하면 WCAG 2.1 기준 명도 대비를 계산해 AA·AAA 등급 통과 여부를 바로 확인합니다. 서버 전송 없이 브라우저에서 바로 처리합니다." />
-  <meta property="og:title" content="ColorContrastChecker — 색상 대비 검사기" />
-  <meta property="og:description" content="텍스트·배경 색상의 WCAG 명도 대비를 계산해 AA·AAA 등급 통과 여부를 바로 확인하는 무료 온라인 도구입니다." />
+  <meta name="description" content="Color contrast checker. Enter a text color and background color, and instantly see the WCAG 2.1 contrast ratio and whether it passes the AA/AAA levels. Processed entirely in your browser, nothing is uploaded." />
+  <meta property="og:title" content="ColorContrastChecker — Color Contrast Checker" />
+  <meta property="og:description" content="A free online tool that calculates the WCAG contrast ratio between a text and background color and instantly shows whether it passes AA/AAA." />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://browserkit.online/color-contrast-checker/" />
-  <title>ColorContrastChecker — 색상 대비 검사기</title>
+  <meta property="og:url" content="https://browserkit.online/en/color-contrast-checker/" />
+  <title>ColorContrastChecker — Color Contrast Checker</title>
   <link rel="stylesheet" href="/css/style.css?v=20260724c" />
-  <!-- Google AdSense 승인 대기 중 (2026-07-19 주석 처리, 카카오 애드핏으로 임시 전환) — 승인 후 주석 해제
+  <!-- Google AdSense — pending re-review. Uncomment once approved.
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506"
      crossorigin="anonymous"></script>
   -->
-  <script type="text/javascript" src="//t1.kakaocdn.net/kas/static/ba.min.js" async></script>
   <style>
     .guide-summary { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:24px; margin:0 0 12px; }
     .guide-summary-title { font-size:16px; font-weight:700; color:var(--text); margin:0 0 12px; }
@@ -31,6 +30,9 @@
     .guide-full-link { display:inline-block; margin-top:12px; font-size:14px; font-weight:600; color:var(--point-hover); text-decoration:none; }
     .guide-full-link:hover { text-decoration:underline; }
 
+    .ad-slot { min-height:90px; display:flex; align-items:center; justify-content:center; margin:0 0 12px; }
+    .ad-slot-rect { min-height:250px; }
+
     .input-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:24px; margin-bottom:20px; }
     .color-row { display:grid; grid-template-columns:44px 1fr 90px; gap:10px; align-items:center; margin-bottom:14px; }
     .color-row:last-child { margin-bottom:0; }
@@ -38,7 +40,7 @@
     .color-swatch { width:44px; height:44px; border-radius:10px; border:2px solid var(--border); cursor:pointer; padding:0; background:none; }
     .hex-input { background:var(--bg); border:1px solid var(--border); border-radius:10px; padding:11px 14px; font-size:14px; font-weight:600; color:var(--text); font-family:'Fira Code',monospace; outline:none; width:100%; box-sizing:border-box; text-transform:uppercase; }
     .hex-input:focus { border-color:var(--point); }
-    .btn-swap { background:var(--bg); border:1px solid var(--border); border-radius:10px; height:44px; color:var(--subtext); cursor:pointer; font-size:13px; font-weight:600; font-family:'Gowun Dodum',sans-serif; }
+    .btn-swap { background:var(--bg); border:1px solid var(--border); border-radius:10px; height:44px; color:var(--subtext); cursor:pointer; font-size:13px; font-weight:600; }
     .btn-swap:hover { border-color:var(--point); color:var(--point-hover); }
 
     .preview-box { border-radius:var(--radius); padding:36px 24px; text-align:center; margin-bottom:20px; border:1px solid var(--border); }
@@ -73,9 +75,9 @@
     }
   </style>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <meta property="og:image" content="https://browserkit.online/img/og/color-contrast-checker.png" />
-  <link rel="canonical" href="https://browserkit.online/color-contrast-checker/" />
+  <link rel="canonical" href="https://browserkit.online/en/color-contrast-checker/" />
   <link rel="alternate" hreflang="ko" href="https://browserkit.online/color-contrast-checker/" />
   <link rel="alternate" hreflang="en" href="https://browserkit.online/en/color-contrast-checker/" />
   <link rel="alternate" hreflang="x-default" href="https://browserkit.online/en/color-contrast-checker/" />
@@ -85,15 +87,15 @@
 {
   "@context": "https://schema.org",
   "@type": "WebApplication",
-  "name": "ColorContrastChecker — 색상 대비 검사기",
-  "url": "https://browserkit.online/color-contrast-checker/",
-  "description": "색상 대비 검사기. 텍스트 색상과 배경 색상을 입력하면 WCAG 2.1 기준 명도 대비를 계산해 AA·AAA 등급 통과 여부를 바로 확인합니다. 서버 전송 없이 브라우저에서 바로 처리합니다.",
+  "name": "ColorContrastChecker — Color Contrast Checker",
+  "url": "https://browserkit.online/en/color-contrast-checker/",
+  "description": "Color contrast checker. Enter a text color and background color, and instantly see the WCAG 2.1 contrast ratio and whether it passes the AA/AAA levels. Processed entirely in your browser, nothing is uploaded.",
   "applicationCategory": "UtilityApplication",
   "operatingSystem": "Any",
   "browserRequirements": "Requires JavaScript",
-  "inLanguage": "ko",
+  "inLanguage": "en",
   "isAccessibleForFree": true,
-  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "KRW" },
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
   "publisher": { "@type": "Organization", "name": "BrowserKit", "url": "https://browserkit.online/" }
 }
   </script>
@@ -102,8 +104,8 @@
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
   "itemListElement": [
-    { "@type": "ListItem", "position": 1, "name": "홈", "item": "https://browserkit.online/" },
-    { "@type": "ListItem", "position": 2, "name": "색상 대비 검사기", "item": "https://browserkit.online/color-contrast-checker/" }
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://browserkit.online/en/" },
+    { "@type": "ListItem", "position": 2, "name": "Color Contrast Checker", "item": "https://browserkit.online/en/color-contrast-checker/" }
   ]
 }
   </script>
@@ -111,55 +113,59 @@
 
 <body>
   <div class="lang-banner" id="langBanner">
-    <span>🌐 This page is also available in <a href="/en/color-contrast-checker/">English</a>.</span>
+    <span>🌐 이 페이지는 <a href="/color-contrast-checker/">한국어</a>로도 볼 수 있습니다.</span>
     <button class="lang-banner-close" id="langBannerClose" type="button" aria-label="close">&times;</button>
   </div>
   <header class="header">
     <div class="container">
-      <a href="/" class="header-brand">
-        <div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Gowun Dodum,sans-serif;flex-shrink:0">B</div>
+      <a href="/en/" class="header-brand">
+        <div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Poppins,sans-serif;flex-shrink:0">B</div>
         <span class="header-brand-text"><span style="color:var(--text)">Browser</span><span style="color:var(--point)">Kit</span></span>
       </a>
       <div class="header-right">
         <div class="lang-switcher">
-          <button class="lang-switcher-btn" type="button" data-lang-btn>🌐 <span class="lang-label-full">한국어</span></button>
+          <button class="lang-switcher-btn" type="button" data-lang-btn>🌐 <span class="lang-label-full">English</span></button>
           <div class="lang-switcher-menu" data-lang-menu>
-            <a href="/en/color-contrast-checker/">English</a>
-            <a href="#" class="active">한국어</a>
+            <a href="#" class="active">English</a>
+            <a href="/color-contrast-checker/">한국어</a>
           </div>
         </div>
-        <a href="/" class="header-back">&#x2190; <span class="header-back-label">BrowserKit 홈으로</span></a>
+        <a href="/en/" class="header-back">&#x2190; <span class="header-back-label">Back to BrowserKit</span></a>
       </div>
     </div>
   </header>
 
   <main><div class="container">
     <div class="hero">
-      <div class="hero-icon" style="height:78px;display:flex;justify-content:center;align-items:center"><div style="transform:scale(1.7);transform-origin:center"><div style="width:46px;height:46px;background:#e0c3ff;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="font:700 16px Gowun Dodum,sans-serif;color:#2a2433;line-height:1;letter-spacing:-.5px;white-space:nowrap">AA</div></div></div></div>
-      <div class="hero-title-wrap"><h1 class="hero-title">색상 대비 검사기</h1><a href="/blog/96-colorcontrastchecker-howto" class="hero-guide-link">사용법 가이드 보기</a></div>
-      <p class="hero-desc">텍스트와 배경 색상의 명도 대비를 계산해 WCAG 접근성 기준 통과 여부를 확인해드려요</p>
+      <div class="hero-icon" style="height:78px;display:flex;justify-content:center;align-items:center"><div style="transform:scale(1.7);transform-origin:center"><div style="width:46px;height:46px;background:#e0c3ff;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="font:700 16px Poppins,sans-serif;color:#2a2433;line-height:1;letter-spacing:-.5px;white-space:nowrap">AA</div></div></div></div>
+      <div class="hero-title-wrap"><h1 class="hero-title">Color Contrast Checker</h1><a href="/blog/96-colorcontrastchecker-howto" class="hero-guide-link">View usage guide</a></div>
+      <p class="hero-desc">Calculate the contrast ratio between your text and background colors and check it against WCAG accessibility standards</p>
       <div class="hero-badges">
-        <span class="badge">🔒 완전 로컬 처리</span>
-        <span class="badge">⚡ 무료 사용</span>
-        <span class="badge">🛡️ 서버 전송 없음</span>
-        <span class="badge">📦 설치 불필요</span>
+        <span class="badge">🔒 Fully local processing</span>
+        <span class="badge">⚡ Free to use</span>
+        <span class="badge">🛡️ No server upload</span>
+        <span class="badge">📦 No installation</span>
       </div>
     </div>
-    <div style="margin:0 0 12px"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><div class="adfit-h-desktop"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-QD4pRIpdIj7i2mbt" data-ad-width="728" data-ad-height="90"></ins></div><div class="adfit-h-mobile"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-R4xA2niTT8HgGjoO" data-ad-width="320" data-ad-height="50"></ins></div></div>
+    <!-- Google AdSense Display Ad — pending approval, reserving space -->
+    <div class="ad-slot" id="adTop">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
 
-    <p class="notice">💡 텍스트 색상과 배경 색상의 HEX 코드를 입력하면 WCAG 2.1 명도 대비(1:1~21:1)를 계산해 일반 텍스트·큰 텍스트 기준 AA·AAA 등급 통과 여부를 알려드립니다. 모든 계산은 브라우저에서만 이루어집니다.</p>
+    <p class="notice">💡 Enter the HEX codes for a text color and background color, and this tool calculates the WCAG 2.1 contrast ratio (1:1 to 21:1) and tells you whether it passes the AA/AAA levels for normal and large text. All calculations happen entirely in your browser.</p>
 
     <div class="input-card">
       <div>
-        <div class="color-row-label">텍스트 색상</div>
+        <div class="color-row-label">Text color</div>
         <div class="color-row">
           <input type="color" class="color-swatch" id="fgSwatch" value="#2a2433" />
           <input type="text" class="hex-input" id="fgHex" value="#2A2433" maxlength="7" />
-          <button type="button" class="btn-swap" id="swapBtn">⇅ 교체</button>
+          <button type="button" class="btn-swap" id="swapBtn">⇅ Swap</button>
         </div>
       </div>
       <div>
-        <div class="color-row-label">배경 색상</div>
+        <div class="color-row-label">Background color</div>
         <div class="color-row">
           <input type="color" class="color-swatch" id="bgSwatch" value="#ffffff" />
           <input type="text" class="hex-input" id="bgHex" value="#FFFFFF" maxlength="7" />
@@ -169,63 +175,71 @@
     </div>
 
     <div class="preview-box" id="previewBox">
-      <div class="preview-large" id="previewLarge">큰 텍스트 미리보기 (24px)</div>
-      <div class="preview-normal" id="previewNormal">일반 텍스트 미리보기 (16px) — 실제 본문에 이 색상 조합을 쓰면 이렇게 보입니다.</div>
+      <div class="preview-large" id="previewLarge">Large text preview (24px)</div>
+      <div class="preview-normal" id="previewNormal">Normal text preview (16px) — this is how the combination looks in real body text.</div>
     </div>
 
     <div class="result-hero">
-      <div class="result-hero-label">명도 대비</div>
+      <div class="result-hero-label">Contrast ratio</div>
       <div class="result-hero-value" id="resultValue">-</div>
       <div class="result-hero-sub" id="resultSub"></div>
     </div>
 
     <div class="breakdown-card">
-      <div class="breakdown-title">📋 WCAG 2.1 등급별 통과 여부</div>
+      <div class="breakdown-title">📋 WCAG 2.1 pass/fail by level</div>
       <div id="breakdownBody"></div>
     </div>
 
-    <div style="margin:0 0 12px"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><!-- 카카오 애드핏 (2026-07-24, 쿠팡 파트너스 다이내믹 배너로 교체) — 복원 시 주석 해제: <div class="adfit-h-desktop"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-QD4pRIpdIj7i2mbt" data-ad-width="728" data-ad-height="90"></ins></div><div class="adfit-h-mobile"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-R4xA2niTT8HgGjoO" data-ad-width="320" data-ad-height="50"></ins></div> --><div class="adfit-h-desktop"><script src="https://ads-partners.coupang.com/g.js"></script><script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"728","height":"90","tsource":""});</script></div><div class="adfit-h-mobile"><script src="https://ads-partners.coupang.com/g.js"></script><script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"320","height":"50","tsource":""});</script></div></div>
-
-    <div class="guide-summary">
-      <h2 class="guide-summary-title">사용법 요약</h2>
-      <ol class="guide-steps">
-        <li>텍스트·배경 색상 입력(HEX 또는 색상 선택기)</li>
-        <li>명도 대비와 미리보기 자동 확인</li>
-        <li>AA·AAA 등급 통과 여부 확인</li>
-      </ol>
-      <h3 class="guide-faq-title">자주 묻는 질문</h3>
-      <div class="guide-faq">
-        <details>
-          <summary>WCAG AA·AAA는 무엇을 기준으로 하나요?</summary>
-          <p>WCAG 2.1 기준으로 일반 텍스트는 AA 4.5:1 이상, AAA 7:1 이상, 큰 텍스트(18pt 이상 또는 14pt 굵게)는 AA 3:1 이상, AAA 4.5:1 이상을 통과 기준으로 봅니다.</p>
-        </details>
-        <details>
-          <summary>색상 대비 검사기는 정말 무료인가요?</summary>
-          <p>네, 회원가입이나 설치 없이 완전 무료로 사용할 수 있습니다. 검사 횟수 제한도 없습니다.</p>
-        </details>
-        <details>
-          <summary>입력한 색상 정보가 서버로 전송되나요?</summary>
-          <p>아니요. 모든 계산은 브라우저 안에서만 이루어지며 입력한 색상이 외부 서버로 전송되거나 저장되지 않습니다.</p>
-        </details>
-        <details>
-          <summary>왜 접근성 기준을 지켜야 하나요?</summary>
-          <p>대비가 낮은 텍스트는 저시력자·색약자뿐 아니라 야외에서 화면을 보는 일반 사용자에게도 읽기 어렵습니다. 공공기관·기업 웹사이트는 접근성 지침 준수가 요구되는 경우가 많습니다.</p>
-        </details>
-      </div>
-      <a href="/blog/96-colorcontrastchecker-howto" class="guide-full-link">전체 가이드 보기 →</a>
+    <!-- Google AdSense Display Ad — pending approval, reserving space -->
+    <div class="ad-slot" id="adMiddle">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
     </div>
 
-    <div style="margin:0 0 12px"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="9500090221"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><div class="adfit-rect-wrap"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-oePL4TCj742xAwqT" data-ad-width="300" data-ad-height="250"></ins></div></div>
+    <div class="guide-summary">
+      <h2 class="guide-summary-title">Quick guide</h2>
+      <ol class="guide-steps">
+        <li>Enter text and background colors (HEX or color picker)</li>
+        <li>The contrast ratio and preview update automatically</li>
+        <li>Check whether it passes AA/AAA</li>
+      </ol>
+      <h3 class="guide-faq-title">Frequently asked questions</h3>
+      <div class="guide-faq">
+        <details>
+          <summary>What are the WCAG AA/AAA thresholds?</summary>
+          <p>Under WCAG 2.1, normal text must reach at least 4.5:1 for AA and 7:1 for AAA. Large text (18pt or larger, or 14pt bold) must reach at least 3:1 for AA and 4.5:1 for AAA.</p>
+        </details>
+        <details>
+          <summary>Is the Color Contrast Checker really free?</summary>
+          <p>Yes, it is completely free to use with no sign-up or installation required. There is no limit on how many times you can check.</p>
+        </details>
+        <details>
+          <summary>Is the color information I enter sent to a server?</summary>
+          <p>No. All calculations happen entirely in your browser, and the colors you enter are never sent to or stored on an external server.</p>
+        </details>
+        <details>
+          <summary>Why does accessibility contrast matter?</summary>
+          <p>Low-contrast text is hard to read not only for people with low vision or color blindness, but also for anyone viewing a screen outdoors. Government and corporate websites are often required to meet accessibility guidelines.</p>
+        </details>
+      </div>
+      <a href="/blog/96-colorcontrastchecker-howto" class="guide-full-link">View full guide →</a>
+    </div>
+
+    <!-- Google AdSense Multiplex Ad — pending approval, reserving space -->
+    <div class="ad-slot ad-slot-rect" id="adBottom">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
   </div></main>
 
   <footer class="footer">
     <div class="container">
-      <p class="footer-copy">&#xa9; 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p>
+      <p class="footer-copy">&#xa9; 2026 BrowserKit. All processing happens in your browser.</p>
       <nav class="footer-nav">
-        <a href="/privacy">개인정보 처리방침</a>
-        <a href="/terms">이용약관</a>
-        <a href="/about">서비스 소개</a>
-        <a href="/blog/">블로그</a>
+        <a href="/en/privacy.html">Privacy Policy</a>
+        <a href="/en/terms.html">Terms of Service</a>
+        <a href="/en/about.html">About</a>
+        <a href="/en/blog/">Blog</a>
       </nav>
     </div>
   </footer>
@@ -285,10 +299,10 @@
   });
 
   var CRITERIA = [
-    { key: 'aaNormal',  label: 'AA · 일반 텍스트',  min: 4.5 },
-    { key: 'aaaNormal', label: 'AAA · 일반 텍스트', min: 7 },
-    { key: 'aaLarge',   label: 'AA · 큰 텍스트',    min: 3 },
-    { key: 'aaaLarge',  label: 'AAA · 큰 텍스트',   min: 4.5 }
+    { key: 'aaNormal',  label: 'AA · Normal text',  min: 4.5 },
+    { key: 'aaaNormal', label: 'AAA · Normal text', min: 7 },
+    { key: 'aaLarge',   label: 'AA · Large text',    min: 3 },
+    { key: 'aaaLarge',  label: 'AAA · Large text',   min: 4.5 }
   ];
 
   function update() {
@@ -304,9 +318,9 @@
     document.getElementById('resultValue').textContent = ratio.toFixed(2) + ' : 1';
     var passCount = CRITERIA.filter(function(c) { return ratio >= c.min; }).length;
     document.getElementById('resultSub').textContent =
-      passCount === 4 ? '모든 WCAG 등급을 통과했어요' :
-      passCount === 0 ? 'WCAG 최소 기준(AA)도 통과하지 못했어요' :
-      passCount + '/4개 기준 통과';
+      passCount === 4 ? 'Passes every WCAG level' :
+      passCount === 0 ? 'Does not meet even the minimum WCAG (AA) standard' :
+      passCount + '/4 criteria passed';
 
     var body = document.getElementById('breakdownBody');
     body.innerHTML = '';
@@ -314,8 +328,8 @@
       var pass = ratio >= c.min;
       var row = document.createElement('div');
       row.className = 'breakdown-row';
-      var badge = '<span class="pass-badge ' + (pass ? 'ok' : 'fail') + '">' + (pass ? '통과' : '미달') + '</span>';
-      row.innerHTML = '<span class="breakdown-label">' + c.label + ' (' + c.min + ':1 이상)</span><span class="breakdown-value">' + badge + '</span>';
+      var badge = '<span class="pass-badge ' + (pass ? 'ok' : 'fail') + '">' + (pass ? 'Pass' : 'Fail') + '</span>';
+      row.innerHTML = '<span class="breakdown-label">' + c.label + ' (' + c.min + ':1 or higher)</span><span class="breakdown-value">' + badge + '</span>';
       body.appendChild(row);
     });
   }
@@ -341,7 +355,7 @@
     try {
       if (document.cookie.indexOf('bk_lang_dismiss=1') !== -1) return;
       var lang = (navigator.language || navigator.userLanguage || '').toLowerCase();
-      if (lang.indexOf('ko') === 0) return;
+      if (lang.indexOf('ko') !== 0) return;
       var banner = document.getElementById('langBanner');
       if (!banner) return;
       banner.classList.add('show');
