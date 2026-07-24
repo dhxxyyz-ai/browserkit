@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
   <link rel="icon" href="/favicon.ico" sizes="32x32">
   <link rel="icon" href="/favicon-16.png" sizes="16x16" type="image/png">
@@ -8,18 +8,17 @@
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="이미지 업로드 또는 웹캠으로 QR 코드를 읽는 무료 온라인 도구. 스캔 결과를 즉시 복사하거나 링크로 바로 열 수 있습니다. 서버 전송 없이 브라우저에서 바로 처리합니다." />
-  <meta property="og:title" content="QRScanner — QR 코드 스캐너" />
-  <meta property="og:description" content="이미지 업로드 또는 웹캠으로 QR 코드를 읽는 무료 온라인 도구입니다." />
+  <meta name="description" content="Free online tool that reads QR codes from an uploaded image or your webcam. Copy the scanned result instantly or open it as a link. Processed entirely in your browser, nothing is uploaded." />
+  <meta property="og:title" content="QRScanner — QR Code Scanner" />
+  <meta property="og:description" content="A free online tool that reads QR codes from an uploaded image or your webcam." />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://browserkit.online/qr-scanner/" />
-  <title>QRScanner — QR 코드 스캐너</title>
+  <meta property="og:url" content="https://browserkit.online/en/qr-scanner/" />
+  <title>QRScanner — QR Code Scanner</title>
   <link rel="stylesheet" href="/css/style.css?v=20260724c" />
-  <!-- Google AdSense 승인 대기 중 (2026-07-19 주석 처리, 카카오 애드핏으로 임시 전환) — 승인 후 주석 해제
+  <!-- Google AdSense — pending re-review. Uncomment once approved.
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506"
      crossorigin="anonymous"></script>
   -->
-  <script type="text/javascript" src="//t1.kakaocdn.net/kas/static/ba.min.js" async></script>
   <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"></script>
   <style>
     .guide-summary { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:24px; margin:0 0 12px; }
@@ -32,8 +31,11 @@
     .guide-full-link { display:inline-block; margin-top:12px; font-size:14px; font-weight:600; color:var(--point-hover); text-decoration:none; }
     .guide-full-link:hover { text-decoration:underline; }
 
+    .ad-slot { min-height:90px; display:flex; align-items:center; justify-content:center; margin:0 0 12px; }
+    .ad-slot-rect { min-height:250px; }
+
     .tab-wrap { display:flex; gap:8px; margin-bottom:20px; flex-wrap:wrap; }
-    .tab-btn { background:var(--card); color:var(--subtext); border:1px solid var(--border); border-radius:10px; padding:10px 24px; font-size:14px; font-weight:600; cursor:pointer; font-family:'Gowun Dodum',sans-serif; transition:all 0.2s; }
+    .tab-btn { background:var(--card); color:var(--subtext); border:1px solid var(--border); border-radius:10px; padding:10px 24px; font-size:14px; font-weight:600; cursor:pointer; transition:all 0.2s; }
     .tab-btn:hover { border-color:var(--point); color:var(--text); }
     .tab-btn.active { background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border-color:transparent; }
     .tab-panel { display:none; }
@@ -55,12 +57,12 @@
     .cam-status { font-size:13px; color:var(--subtext); margin-top:10px; text-align:center; }
     .cam-status.scanning { color:var(--point-hover); font-weight:600; }
 
-    .btn-primary { background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border:none; border-radius:12px; padding:13px 28px; font-size:15px; font-weight:600; cursor:pointer; font-family:'Gowun Dodum',sans-serif; transition:all 0.2s; }
+    .btn-primary { background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border:none; border-radius:12px; padding:13px 28px; font-size:15px; font-weight:600; cursor:pointer; transition:all 0.2s; }
     .btn-primary:hover { transform:translateY(-2px); box-shadow:0 8px 24px var(--glow); }
     .btn-primary:disabled { opacity:0.4; cursor:default; transform:none; box-shadow:none; }
-    .btn-sub { background:var(--bg); color:var(--subtext); border:1px solid var(--border); border-radius:12px; padding:10px 20px; font-size:14px; cursor:pointer; font-family:'Gowun Dodum',sans-serif; transition:all 0.2s; }
+    .btn-sub { background:var(--bg); color:var(--subtext); border:1px solid var(--border); border-radius:12px; padding:10px 20px; font-size:14px; cursor:pointer; transition:all 0.2s; }
     .btn-sub:hover { color:var(--text); border-color:var(--point); }
-    .btn-danger { background:var(--bg); color:#F87171; border:1px solid var(--border); border-radius:12px; padding:10px 20px; font-size:14px; cursor:pointer; font-family:'Gowun Dodum',sans-serif; }
+    .btn-danger { background:var(--bg); color:#F87171; border:1px solid var(--border); border-radius:12px; padding:10px 20px; font-size:14px; cursor:pointer; }
     .btn-danger:hover { border-color:#F87171; }
 
     .result-card { background:var(--card); border:1px solid var(--point); border-radius:var(--radius); padding:24px; margin-bottom:20px; display:none; }
@@ -94,9 +96,9 @@
     }
   </style>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <meta property="og:image" content="https://browserkit.online/img/og/qr-scanner.png" />
-  <link rel="canonical" href="https://browserkit.online/qr-scanner/" />
+  <link rel="canonical" href="https://browserkit.online/en/qr-scanner/" />
   <link rel="alternate" hreflang="ko" href="https://browserkit.online/qr-scanner/" />
   <link rel="alternate" hreflang="en" href="https://browserkit.online/en/qr-scanner/" />
   <link rel="alternate" hreflang="x-default" href="https://browserkit.online/en/qr-scanner/" />
@@ -106,18 +108,18 @@
 {
   "@context": "https://schema.org",
   "@type": "WebApplication",
-  "name": "QRScanner — QR 코드 스캐너",
-  "url": "https://browserkit.online/qr-scanner/",
-  "description": "이미지 업로드 또는 웹캠으로 QR 코드를 읽는 무료 온라인 도구. 스캔 결과를 즉시 복사하거나 링크로 바로 열 수 있습니다. 서버 전송 없이 브라우저에서 바로 처리합니다.",
+  "name": "QRScanner — QR Code Scanner",
+  "url": "https://browserkit.online/en/qr-scanner/",
+  "description": "Free online tool that reads QR codes from an uploaded image or your webcam. Copy the scanned result instantly or open it as a link. Processed entirely in your browser, nothing is uploaded.",
   "applicationCategory": "UtilityApplication",
   "operatingSystem": "Any",
   "browserRequirements": "Requires JavaScript",
-  "inLanguage": "ko",
+  "inLanguage": "en",
   "isAccessibleForFree": true,
   "offers": {
     "@type": "Offer",
     "price": "0",
-    "priceCurrency": "KRW"
+    "priceCurrency": "USD"
   },
   "publisher": {
     "@type": "Organization",
@@ -134,14 +136,14 @@
     {
       "@type": "ListItem",
       "position": 1,
-      "name": "홈",
-      "item": "https://browserkit.online/"
+      "name": "Home",
+      "item": "https://browserkit.online/en/"
     },
     {
       "@type": "ListItem",
       "position": 2,
-      "name": "QR 코드 스캐너",
-      "item": "https://browserkit.online/qr-scanner/"
+      "name": "QR Code Scanner",
+      "item": "https://browserkit.online/en/qr-scanner/"
     }
   ]
 }
@@ -150,24 +152,24 @@
 
 <body>
   <div class="lang-banner" id="langBanner">
-    <span>🌐 This page is also available in <a href="/en/qr-scanner/">English</a>.</span>
+    <span>🌐 이 페이지는 <a href="/qr-scanner/">한국어</a>로도 볼 수 있습니다.</span>
     <button class="lang-banner-close" id="langBannerClose" type="button" aria-label="close">&times;</button>
   </div>
   <header class="header">
     <div class="container">
-      <a href="/" class="header-brand">
-        <div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Gowun Dodum,sans-serif;flex-shrink:0">B</div>
+      <a href="/en/" class="header-brand">
+        <div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Poppins,sans-serif;flex-shrink:0">B</div>
         <span class="header-brand-text"><span style="color:var(--text)">Browser</span><span style="color:var(--point)">Kit</span></span>
       </a>
       <div class="header-right">
         <div class="lang-switcher">
-          <button class="lang-switcher-btn" type="button" data-lang-btn>🌐 <span class="lang-label-full">한국어</span></button>
+          <button class="lang-switcher-btn" type="button" data-lang-btn>🌐 <span class="lang-label-full">English</span></button>
           <div class="lang-switcher-menu" data-lang-menu>
-            <a href="/en/qr-scanner/">English</a>
-            <a href="#" class="active">한국어</a>
+            <a href="#" class="active">English</a>
+            <a href="/qr-scanner/">한국어</a>
           </div>
         </div>
-        <a href="/" class="header-back">&#x2190; <span class="header-back-label">BrowserKit 홈으로</span></a>
+        <a href="/en/" class="header-back">&#x2190; <span class="header-back-label">Back to BrowserKit</span></a>
       </div>
     </div>
   </header>
@@ -175,34 +177,38 @@
   <main><div class="container">
     <div class="hero">
       <div class="hero-icon" style="height:78px;display:flex;justify-content:center;align-items:center"><div style="transform:scale(1.7);transform-origin:center"><div style="width:46px;height:46px;background:#bcd4ff;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="position:relative;width:26px;height:26px"><div style="position:relative;width:22px;height:22px;border-radius:50%;background:#fffdf9;border:3px solid #2a2433;box-sizing:border-box"></div><div style="position:absolute;right:-4px;bottom:-2px;width:9px;height:3px;background:#2a2433;border-radius:2px;transform:rotate(45deg);transform-origin:left center"></div></div></div></div></div>
-      <div class="hero-title-wrap"><h1 class="hero-title">QR 코드 스캐너</h1><a href="/blog/69-qrscanner-howto" class="hero-guide-link">사용법 가이드 보기</a></div>
-      <p class="hero-desc">이미지 업로드나 웹캠으로 QR 코드를 즉시 읽어보세요</p>
+      <div class="hero-title-wrap"><h1 class="hero-title">QR Code Scanner</h1><a href="/blog/69-qrscanner-howto" class="hero-guide-link">View usage guide</a></div>
+      <p class="hero-desc">Instantly read QR codes from an uploaded image or your webcam</p>
       <div class="hero-badges">
-        <span class="badge">🔒 완전 로컬 처리</span>
-        <span class="badge">⚡ 무료 사용</span>
-        <span class="badge">🛡️ 서버 전송 없음</span>
-        <span class="badge">📦 설치 불필요</span>
+        <span class="badge">🔒 Fully local processing</span>
+        <span class="badge">⚡ Free to use</span>
+        <span class="badge">🛡️ No server upload</span>
+        <span class="badge">📦 No installation</span>
       </div>
     </div>
-    <div style="margin:0 0 12px"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><div class="adfit-h-desktop"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-QD4pRIpdIj7i2mbt" data-ad-width="728" data-ad-height="90"></ins></div><div class="adfit-h-mobile"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-R4xA2niTT8HgGjoO" data-ad-width="320" data-ad-height="50"></ins></div></div>
+    <!-- Google AdSense Display Ad — pending approval, reserving space -->
+    <div class="ad-slot" id="adTop">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
 
-    <p class="notice">💡 오픈소스 라이브러리 jsQR로 디코딩합니다. 웹캠 영상과 업로드한 이미지는 브라우저 안에서만 분석되며 서버로 전송되지 않습니다. 초점이 안 맞거나 QR 코드가 너무 작으면 인식이 안 될 수 있으니 카메라를 가까이 대거나 밝은 곳에서 시도하세요.</p>
+    <p class="notice">💡 Decoding is powered by the open-source jsQR library. Your webcam feed and uploaded images are analyzed entirely in your browser and never sent to a server. If the code is out of focus or too small, it may not be recognized — try moving the camera closer or scanning in better light.</p>
 
     <div class="tab-wrap" id="tabWrap">
-      <button class="tab-btn active" data-tab="upload">🖼️ 이미지 업로드</button>
-      <button class="tab-btn" data-tab="camera">📷 웹캠 스캔</button>
+      <button class="tab-btn active" data-tab="upload">🖼️ Upload Image</button>
+      <button class="tab-btn" data-tab="camera">📷 Webcam Scan</button>
     </div>
 
     <div class="tab-panel active" id="panel-upload">
       <div class="scan-card">
         <div class="drop-zone" id="dropZone">
           <div class="drop-zone-icon">📁</div>
-          <div class="drop-zone-text">QR 코드가 담긴 이미지를 드래그하거나 클릭해서 업로드하세요</div>
-          <div class="drop-zone-sub">PNG, JPG, WEBP 등 지원</div>
+          <div class="drop-zone-text">Drag or click to upload an image containing a QR code</div>
+          <div class="drop-zone-sub">Supports PNG, JPG, WEBP, and more</div>
         </div>
         <input type="file" id="fileInput" accept="image/*" style="display:none" />
         <div class="preview-wrap-media" id="uploadPreviewWrap" style="display:none">
-          <img id="uploadPreviewImg" alt="업로드한 이미지 미리보기" />
+          <img id="uploadPreviewImg" alt="Preview of uploaded image" />
         </div>
       </div>
     </div>
@@ -214,69 +220,77 @@
           <canvas class="scan-canvas-overlay" id="camOverlay" style="display:none"></canvas>
         </div>
         <div class="cam-controls">
-          <button class="btn-primary" id="camStartBtn" style="flex:1">📷 웹캠 스캔 시작</button>
-          <button class="btn-danger" id="camStopBtn" style="display:none;flex:1">⏹ 스캔 중지</button>
+          <button class="btn-primary" id="camStartBtn" style="flex:1">📷 Start Webcam Scan</button>
+          <button class="btn-danger" id="camStopBtn" style="display:none;flex:1">⏹ Stop Scan</button>
         </div>
         <div class="cam-status" id="camStatus"></div>
       </div>
     </div>
 
     <div class="result-card" id="resultCard">
-      <div class="result-title">✅ 스캔 결과 <span class="result-type-badge" id="resultTypeBadge">TEXT</span></div>
+      <div class="result-title">✅ Scan Result <span class="result-type-badge" id="resultTypeBadge">TEXT</span></div>
       <div class="result-text" id="resultText"></div>
       <div class="result-actions">
-        <button class="btn-sub" id="copyResultBtn">📋 복사</button>
-        <a id="openLinkBtn" href="#" target="_blank" rel="noopener noreferrer" style="display:none"><button class="btn-primary">🔗 새 탭에서 열기</button></a>
+        <button class="btn-sub" id="copyResultBtn">📋 Copy</button>
+        <a id="openLinkBtn" href="#" target="_blank" rel="noopener noreferrer" style="display:none"><button class="btn-primary">🔗 Open in New Tab</button></a>
       </div>
     </div>
 
     <div class="history-card">
-      <div class="history-title"><span>🕘 이번 세션 스캔 기록</span><button class="btn-sub" id="clearHistoryBtn" style="padding:4px 12px;font-size:12px">전체 삭제</button></div>
-      <div id="historyList"><div class="history-empty" id="historyEmpty">아직 스캔한 QR 코드가 없습니다.</div></div>
+      <div class="history-title"><span>🕘 Scan History (This Session)</span><button class="btn-sub" id="clearHistoryBtn" style="padding:4px 12px;font-size:12px">Clear All</button></div>
+      <div id="historyList"><div class="history-empty" id="historyEmpty">No QR codes scanned yet.</div></div>
     </div>
 
-    <div style="margin:0 0 12px"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><!-- 카카오 애드핏 (2026-07-22, 쿠팡 파트너스 다이내믹 배너로 교체) — 복원 시 주석 해제: <div class="adfit-h-desktop"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-QD4pRIpdIj7i2mbt" data-ad-width="728" data-ad-height="90"></ins></div><div class="adfit-h-mobile"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-R4xA2niTT8HgGjoO" data-ad-width="320" data-ad-height="50"></ins></div> --><div class="adfit-h-desktop"><script src="https://ads-partners.coupang.com/g.js"></script><script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"728","height":"90","tsource":""});</script></div><div class="adfit-h-mobile"><script src="https://ads-partners.coupang.com/g.js"></script><script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"320","height":"50","tsource":""});</script></div></div>
+    <!-- Google AdSense Display Ad — pending approval, reserving space -->
+    <div class="ad-slot" id="adMiddle">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
 
     <div class="guide-summary">
-      <h2 class="guide-summary-title">사용법 요약</h2>
+      <h2 class="guide-summary-title">Quick guide</h2>
       <ol class="guide-steps">
-        <li>스캔 방식 선택</li>
-        <li>이미지 업로드로 스캔</li>
-        <li>웹캠으로 스캔</li>
+        <li>Choose a scan method</li>
+        <li>Scan by uploading an image</li>
+        <li>Scan with your webcam</li>
       </ol>
-      <h3 class="guide-faq-title">자주 묻는 질문</h3>
+      <h3 class="guide-faq-title">Frequently asked questions</h3>
       <div class="guide-faq">
         <details>
-          <summary>QR 코드 스캐너 도구는 정말 무료인가요?</summary>
-          <p>네, 회원가입이나 설치 없이 완전 무료로 사용할 수 있습니다. 횟수 제한도 없습니다.</p>
+          <summary>Is the QR Code Scanner tool really free?</summary>
+          <p>Yes, it is completely free to use with no sign-up or installation required. There is no usage limit either.</p>
         </details>
         <details>
-          <summary>업로드한 파일이 서버로 전송되나요?</summary>
-          <p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 업로드한 파일이 외부 서버로 전송되거나 저장되지 않습니다.</p>
+          <summary>Are uploaded files sent to a server?</summary>
+          <p>No. All processing happens entirely in your browser, and uploaded files are never sent to or stored on an external server.</p>
         </details>
         <details>
-          <summary>카메라 영상이 외부로 전송되나요?</summary>
-          <p>아니요. 카메라는 QR 인식 순간에만 브라우저 안에서 사용되며 영상이 서버로 전송되지 않습니다.</p>
+          <summary>Is my camera feed sent anywhere?</summary>
+          <p>No. Your camera is only used within your browser to recognize the QR code, and the video is never sent to a server.</p>
         </details>
         <details>
-          <summary>모바일에서도 사용할 수 있나요?</summary>
-          <p>네, 별도의 앱 설치 없이 모바일 브라우저에서도 동일하게 사용할 수 있습니다.</p>
+          <summary>Can I use this on mobile?</summary>
+          <p>Yes, it works the same way in a mobile browser without needing to install any app.</p>
         </details>
       </div>
-      <a href="/blog/69-qrscanner-howto" class="guide-full-link">전체 가이드 보기 →</a>
+      <a href="/blog/69-qrscanner-howto" class="guide-full-link">View full guide →</a>
     </div>
 
-    <div style="margin:0 0 12px"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="9500090221"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><div class="adfit-rect-wrap"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-oePL4TCj742xAwqT" data-ad-width="300" data-ad-height="250"></ins></div></div>
+    <!-- Google AdSense Multiplex Ad — pending approval, reserving space -->
+    <div class="ad-slot ad-slot-rect" id="adBottom">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
   </div></main>
 
   <footer class="footer">
     <div class="container">
-      <p class="footer-copy">&#xa9; 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p>
+      <p class="footer-copy">&#xa9; 2026 BrowserKit. All processing happens in your browser.</p>
       <nav class="footer-nav">
-        <a href="/privacy">개인정보 처리방침</a>
-        <a href="/terms">이용약관</a>
-        <a href="/about">서비스 소개</a>
-        <a href="/blog/">블로그</a>
+        <a href="/en/privacy.html">Privacy Policy</a>
+        <a href="/en/terms.html">Terms of Service</a>
+        <a href="/en/about.html">About</a>
+        <a href="/en/blog/">Blog</a>
       </nav>
     </div>
   </footer>
@@ -319,7 +333,7 @@
       openBtn.style.display = 'none';
     }
     addHistory(text);
-    showToast('✓ QR 코드를 인식했습니다');
+    showToast('✓ QR code recognized');
     document.getElementById('resultCard').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }
 
@@ -332,7 +346,7 @@
   function renderHistory() {
     var list = document.getElementById('historyList');
     if (!scanHistory.length) {
-      list.innerHTML = '<div class="history-empty" id="historyEmpty">아직 스캔한 QR 코드가 없습니다.</div>';
+      list.innerHTML = '<div class="history-empty" id="historyEmpty">No QR codes scanned yet.</div>';
       return;
     }
     list.innerHTML = scanHistory.map(function(h, i) {
@@ -353,10 +367,10 @@
 
   document.getElementById('copyResultBtn').addEventListener('click', function() {
     var text = document.getElementById('resultText').textContent;
-    navigator.clipboard.writeText(text).then(function() { showToast('✓ 복사되었습니다'); });
+    navigator.clipboard.writeText(text).then(function() { showToast('✓ Copied'); });
   });
 
-  // ── 이미지 업로드 스캔 ──
+  // ── Upload image scan ──
   var dropZone = document.getElementById('dropZone');
   var fileInput = document.getElementById('fileInput');
   var hiddenCanvas = document.getElementById('hiddenCanvas');
@@ -393,7 +407,7 @@
         if (code && code.data) {
           showResult(code.data);
         } else {
-          showToast('⚠ QR 코드를 찾지 못했습니다');
+          showToast('⚠ No QR code found');
         }
       };
       img.src = reader.result;
@@ -401,7 +415,7 @@
     reader.readAsDataURL(file);
   }
 
-  // ── 웹캠 스캔 ──
+  // ── Webcam scan ──
   var camStream = null;
   var camRafId = null;
   var camVideo = document.getElementById('camVideo');
@@ -412,7 +426,7 @@
 
   function startCamera() {
     if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-      document.getElementById('camStatus').textContent = '⚠ 이 브라우저는 웹캠 접근을 지원하지 않습니다.';
+      document.getElementById('camStatus').textContent = '⚠ This browser does not support webcam access.';
       return;
     }
     navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } }).then(function(stream) {
@@ -422,14 +436,14 @@
       camOverlay.style.display = '';
       document.getElementById('camStartBtn').style.display = 'none';
       document.getElementById('camStopBtn').style.display = '';
-      document.getElementById('camStatus').textContent = '스캔 중... QR 코드를 카메라에 비춰주세요';
+      document.getElementById('camStatus').textContent = 'Scanning... point the camera at a QR code';
       document.getElementById('camStatus').classList.add('scanning');
       camVideo.onloadedmetadata = function() {
         camVideo.play();
         camRafId = requestAnimationFrame(scanCameraFrame);
       };
     }).catch(function(err) {
-      document.getElementById('camStatus').textContent = '⚠ 웹캠 접근이 거부되었거나 사용할 수 없습니다.';
+      document.getElementById('camStatus').textContent = '⚠ Webcam access was denied or is unavailable.';
       document.getElementById('camStatus').classList.remove('scanning');
     });
   }
@@ -505,7 +519,7 @@
     try {
       if (document.cookie.indexOf('bk_lang_dismiss=1') !== -1) return;
       var lang = (navigator.language || navigator.userLanguage || '').toLowerCase();
-      if (lang.indexOf('ko') === 0) return;
+      if (lang.indexOf('ko') !== 0) return;
       var banner = document.getElementById('langBanner');
       if (!banner) return;
       banner.classList.add('show');
