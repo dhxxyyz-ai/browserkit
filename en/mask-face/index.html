@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
   <link rel="icon" href="/favicon.ico" sizes="32x32">
   <link rel="icon" href="/favicon-16.png" sizes="16x16" type="image/png">
@@ -8,21 +8,20 @@
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="이미지 속 얼굴을 자동으로 감지해 모자이크 또는 블러 처리하는 무료 온라인 도구. 파일이 서버로 전송되지 않습니다." />
-  <meta property="og:title" content="MaskFace &#x2014; 얼굴 자동 블러 처리 도구" />
-  <meta property="og:description" content="이미지 속 얼굴을 자동으로 감지해 모자이크 처리하는 무료 도구. 모든 처리가 브라우저 내에서 이루어집니다." />
+  <meta name="description" content="Free online tool that automatically detects faces in an image and applies mosaic or blur masking. Files are never sent to a server." />
+  <meta property="og:title" content="MaskFace &#x2014; Automatic Face Blur Tool" />
+  <meta property="og:description" content="Free tool that automatically detects faces in an image and applies mosaic masking. All processing happens in your browser." />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://browserkit.online/mask-face/" />
+  <meta property="og:url" content="https://browserkit.online/en/mask-face/" />
   <meta property="og:locale" content="ko_KR" />
-  <title>MaskFace &#x2014; 얼굴 자동 블러 처리 도구</title>
+  <title>MaskFace &#x2014; Automatic Face Blur Tool</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
-  <!-- Google AdSense 승인 대기 중 (2026-07-19 주석 처리, 카카오 애드핏으로 임시 전환) — 승인 후 주석 해제
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Google AdSense — pending re-review. Uncomment once approved.
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506"
      crossorigin="anonymous"></script>
   -->
-  <script type="text/javascript" src="//t1.kakaocdn.net/kas/static/ba.min.js" async></script>
   <link rel="stylesheet" href="/css/style.css?v=20260724c" />
   <style>
     .guide-summary { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:24px; margin:0 0 12px; }
@@ -35,26 +34,29 @@
     .guide-full-link { display:inline-block; margin-top:12px; font-size:14px; font-weight:600; color:var(--point-hover); text-decoration:none; }
     .guide-full-link:hover { text-decoration:underline; }
 
+    .ad-slot { min-height:90px; display:flex; align-items:center; justify-content:center; margin:0 0 12px; }
+    .ad-slot-rect { min-height:250px; }
+
     
     * { margin:0; padding:0; box-sizing:border-box; transition:all 0.2s ease; }
-    body { color:var(--text); font-family:'Gowun Dodum',sans-serif; font-size:16px; line-height:1.6; min-height:100vh; }
+    body { color:var(--text); font-size:16px; line-height:1.6; min-height:100vh; }
     a { color:var(--point-hover); text-decoration:none; }
     a:hover { color:var(--text); }
     .container { max-width:960px; margin:0 auto; padding:0 24px; }
 
-    /* 헤더 */
+    /* Header */
     .header .container { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; }
     .logo { display:flex; align-items:center; gap:10px; text-decoration:none; }
     .logo-icon { font-size:24px; }
-    .logo-text { font-size:20px; font-weight:700; font-family:'Gowun Dodum',sans-serif; background:linear-gradient(135deg,var(--point),var(--point-hover)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+    .logo-text { font-size:20px; font-weight:700; background:linear-gradient(135deg,var(--point),var(--point-hover)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
     .back-link { font-size:13px; color:var(--subtext); display:flex; align-items:center; gap:6px; }
     .back-link:hover { color:var(--text); }
 
-    /* 히어로 */
+    /* Hero */
     .hero { text-align:center; padding:40px 0 20px; }
     .hero-icon { font-size:48px; margin-bottom:16px; }
     .badges { display:flex; justify-content:center; gap:10px; flex-wrap:wrap; padding-bottom:0; }
-    /* 모델 로딩 */
+    /* Model loading */
     .model-loading { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px 24px; margin:0 0 20px; display:flex; align-items:center; gap:16px; }
     .model-loading-icon { font-size:28px; flex-shrink:0; }
     .model-loading-text { flex:1; }
@@ -65,7 +67,7 @@
     .model-ready { background:rgba(52,211,153,0.08); border-color:rgba(52,211,153,0.3); }
     .model-ready .model-loading-title { color:var(--success); }
 
-    /* 업로드 존 */
+    /* Upload zone */
     .upload-zone { background:var(--card); border:2px dashed var(--border); border-radius:var(--radius); padding:48px 40px; text-align:center; cursor:pointer; margin:0 0 20px; }
     .upload-zone.disabled { opacity:0.5; cursor:not-allowed; }
     .upload-zone:not(.disabled):hover, .upload-zone.drag-over { border-color:var(--point); box-shadow:0 0 24px var(--glow); background:rgba(123,108,255,0.05); }
@@ -74,51 +76,51 @@
     .upload-sub { color:var(--subtext); font-size:14px; margin-bottom:12px; }
     .upload-safe { color:var(--success); font-size:13px; }
 
-    /* 미리보기 */
+    /* Preview */
     .preview-section { display:none; margin:0 0 20px; }
     .preview-wrap { display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-bottom:20px; }
     .preview-box { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:16px; }
     .preview-label { font-size:13px; color:var(--subtext); margin-bottom:10px; font-weight:600; }
     .preview-canvas-wrap { position:relative; width:100%; }
     canvas { width:100%; height:auto; border-radius:8px; display:block; }
-    .preview-info { font-size:12px; color:var(--subtext); margin-top:8px; font-family:'Gowun Dodum',sans-serif; }
+    .preview-info { font-size:12px; color:var(--subtext); margin-top:8px; }
 
-    /* 탐지 결과 */
+    /* Detection result */
     .detect-result { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:16px 20px; margin-bottom:20px; }
     .detect-result-title { font-size:14px; font-weight:600; margin-bottom:10px; }
-    .detect-count { font-size:28px; font-weight:700; color:var(--point-hover); font-family:'Gowun Dodum',sans-serif; }
+    .detect-count { font-size:28px; font-weight:700; color:var(--point-hover); }
     .detect-count-label { font-size:13px; color:var(--subtext); margin-left:6px; }
     .detect-none { color:var(--subtext); font-size:14px; }
 
-    /* 마스킹 옵션 */
+    /* Masking options */
     .options-wrap { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px 24px; margin-bottom:20px; }
     .options-title { font-size:14px; font-weight:600; margin-bottom:16px; }
     .option-group { margin-bottom:16px; }
     .option-group:last-child { margin-bottom:0; }
     .option-group-label { font-size:13px; color:var(--subtext); margin-bottom:10px; }
     .radio-group { display:flex; gap:10px; flex-wrap:wrap; }
-    .radio-btn { background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:8px 16px; font-size:13px; cursor:pointer; font-family:'Gowun Dodum',sans-serif; color:var(--subtext); }
+    .radio-btn { background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:8px 16px; font-size:13px; cursor:pointer; color:var(--subtext); }
     .radio-btn.active { border-color:var(--point); color:var(--point-hover); background:rgba(123,108,255,0.1); }
     .radio-btn:hover:not(.active) { border-color:rgba(123,108,255,0.5); color:var(--text); }
     .slider-wrap { display:flex; align-items:center; gap:12px; }
     .slider-wrap input[type=range] { flex:1; accent-color:var(--point); }
-    .slider-value { font-size:13px; color:var(--point-hover); font-family:'Gowun Dodum',sans-serif; min-width:32px; text-align:right; }
+    .slider-value { font-size:13px; color:var(--point-hover); min-width:32px; text-align:right; }
 
-    /* 수동 마스킹 안내 */
+    /* Manual masking notice */
     .manual-notice { font-size:13px; color:var(--subtext); background:rgba(123,108,255,0.07); border:1px solid var(--border); border-radius:10px; padding:12px 16px; margin-bottom:20px; line-height:1.7; }
 
-    /* 액션 */
+    /* Action */
     .action-wrap { display:flex; justify-content:center; gap:12px; margin:0 0 48px; flex-wrap:wrap; }
-    .btn-download { background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border:none; border-radius:12px; padding:14px 32px; font-size:15px; font-weight:600; cursor:pointer; font-family:'Gowun Dodum',sans-serif; }
+    .btn-download { background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border:none; border-radius:12px; padding:14px 32px; font-size:15px; font-weight:600; cursor:pointer; }
     .btn-download:hover { transform:translateY(-2px); box-shadow:0 8px 24px var(--glow); }
     .btn-download:disabled { opacity:0.4; cursor:default; transform:none; box-shadow:none; }
-    .btn-reset { background:var(--card); color:var(--subtext); border:1px solid var(--border); border-radius:12px; padding:14px 24px; font-size:15px; cursor:pointer; font-family:'Gowun Dodum',sans-serif; }
+    .btn-reset { background:var(--card); color:var(--subtext); border:1px solid var(--border); border-radius:12px; padding:14px 24px; font-size:15px; cursor:pointer; }
     .btn-reset:hover { transform:translateY(-2px); color:var(--text); border-color:var(--point); }
     .btn-reset:disabled { opacity:0.4; cursor:default; transform:none; }
 
-    /* 배너 */
+    /* Banner */
 
-    /* 푸터 */
+    /* Footer */
     .footer { border-top:1px solid var(--border); padding:32px 0; text-align:center; }
     .footer-copy { color:var(--subtext); font-size:13px; margin-bottom:12px; }
     .footer-nav { display:flex; justify-content:center; gap:20px; flex-wrap:wrap; }
@@ -131,7 +133,7 @@
     }
   </style>
   <meta property="og:image" content="https://browserkit.online/img/og/mask-face.png" />
-  <link rel="canonical" href="https://browserkit.online/mask-face/" />
+  <link rel="canonical" href="https://browserkit.online/en/mask-face/" />
   <link rel="alternate" hreflang="ko" href="https://browserkit.online/mask-face/" />
   <link rel="alternate" hreflang="en" href="https://browserkit.online/en/mask-face/" />
   <link rel="alternate" hreflang="x-default" href="https://browserkit.online/en/mask-face/" />
@@ -141,18 +143,18 @@
 {
   "@context": "https://schema.org",
   "@type": "WebApplication",
-  "name": "MaskFace — 얼굴 자동 블러 처리 도구",
-  "url": "https://browserkit.online/mask-face/",
-  "description": "이미지 속 얼굴을 자동으로 감지해 모자이크 또는 블러 처리하는 무료 온라인 도구. 파일이 서버로 전송되지 않습니다.",
+  "name": "MaskFace — Automatic Face Blur Tool",
+  "url": "https://browserkit.online/en/mask-face/",
+  "description": "Free online tool that automatically detects faces in an image and applies mosaic or blur masking. Files are never sent to a server.",
   "applicationCategory": "UtilityApplication",
   "operatingSystem": "Any",
   "browserRequirements": "Requires JavaScript",
-  "inLanguage": "ko",
+  "inLanguage": "en",
   "isAccessibleForFree": true,
   "offers": {
     "@type": "Offer",
     "price": "0",
-    "priceCurrency": "KRW"
+    "priceCurrency": "USD"
   },
   "publisher": {
     "@type": "Organization",
@@ -169,14 +171,14 @@
     {
       "@type": "ListItem",
       "position": 1,
-      "name": "홈",
-      "item": "https://browserkit.online/"
+      "name": "Home",
+      "item": "https://browserkit.online/en/"
     },
     {
       "@type": "ListItem",
       "position": 2,
-      "name": "얼굴 블러",
-      "item": "https://browserkit.online/mask-face/"
+      "name": "Face Blur",
+      "item": "https://browserkit.online/en/mask-face/"
     }
   ]
 }
@@ -184,22 +186,22 @@
 </head>
 <body>
   <div class="lang-banner" id="langBanner">
-    <span>🌐 This page is also available in <a href="/en/mask-face/">English</a>.</span>
+    <span>🌐 이 페이지는 <a href="/mask-face/">한국어</a>로도 볼 수 있습니다.</span>
     <button class="lang-banner-close" id="langBannerClose" type="button" aria-label="close">&times;</button>
   </div>
 
   <header class="header">
     <div class="container">
-      <a href="/" class="header-brand"><div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Gowun Dodum,sans-serif;flex-shrink:0">B</div><span class="header-brand-text"><span style="color:var(--text)">Browser</span><span style="color:var(--point)">Kit</span></span></a>
+      <a href="/en/" class="header-brand"><div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Poppins,sans-serif;flex-shrink:0">B</div><span class="header-brand-text"><span style="color:var(--text)">Browser</span><span style="color:var(--point)">Kit</span></span></a>
       <div class="header-right">
         <div class="lang-switcher">
-          <button class="lang-switcher-btn" type="button" data-lang-btn>🌐 <span class="lang-label-full">한국어</span></button>
+          <button class="lang-switcher-btn" type="button" data-lang-btn>🌐 <span class="lang-label-full">English</span></button>
           <div class="lang-switcher-menu" data-lang-menu>
-            <a href="/en/mask-face/">English</a>
-            <a href="#" class="active">한국어</a>
+            <a href="#" class="active">English</a>
+            <a href="/mask-face/">한국어</a>
           </div>
         </div>
-        <a href="/" class="header-back">&#x2190; <span class="header-back-label">BrowserKit 홈으로</span></a>
+        <a href="/en/" class="header-back">&#x2190; <span class="header-back-label">Back to BrowserKit</span></a>
       </div>
     </div>
   </header>
@@ -209,58 +211,62 @@
 
       <div class="hero">
         <div class="hero-icon" style="height:78px;display:flex;justify-content:center;align-items:center"><div style="transform:scale(1.7);transform-origin:center"><div style="width:46px;height:46px;background:#ffd36e;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="position:relative;width:27px;height:27px;border-radius:50%;background:#fffdf9;border:2.5px solid #2a2433;box-sizing:border-box;overflow:hidden"><div style="position:absolute;left:6px;top:8px;width:3px;height:3px;border-radius:50%;background:#2a2433"></div><div style="position:absolute;right:6px;top:8px;width:3px;height:3px;border-radius:50%;background:#2a2433"></div><div style="position:absolute;left:7px;bottom:5px;width:11px;height:3px;border-radius:3px;background:rgba(42,36,51,.4)"></div><div style="position:absolute;left:-3px;bottom:4px;width:34px;height:3px;background:rgba(255,255,255,.85)"></div><div style="position:absolute;left:-3px;bottom:9px;width:34px;height:3px;background:rgba(255,255,255,.7)"></div></div></div></div></div>
-        <div class="hero-title-wrap"><h1 class="hero-title">얼굴 블러</h1><a href="/blog/19-maskface-howto" class="hero-guide-link">사용법 가이드 보기</a></div>
-        <p class="hero-desc">이미지 속 얼굴을 자동으로 감지해 모자이크 처리하는 무료 도구</p>
+        <div class="hero-title-wrap"><h1 class="hero-title">Face Blur</h1><a href="/blog/19-maskface-howto" class="hero-guide-link">View usage guide</a></div>
+        <p class="hero-desc">Automatically detect faces in an image and apply mosaic masking, for free</p>
         <div class="hero-badges">
-        <span class="badge">🔒 완전 로컬 처리</span>
-        <span class="badge">⚡ 무료 사용</span>
-        <span class="badge">🛡️ 서버 전송 없음</span>
-        <span class="badge">📦 설치 불필요</span>
+        <span class="badge">🔒 Fully local processing</span>
+        <span class="badge">⚡ Free to use</span>
+        <span class="badge">🛡️ No server upload</span>
+        <span class="badge">📦 No installation</span>
       </div>
       </div>
-    <div style="margin:0 0 12px"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><div class="adfit-h-desktop"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-QD4pRIpdIj7i2mbt" data-ad-width="728" data-ad-height="90"></ins></div><div class="adfit-h-mobile"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-R4xA2niTT8HgGjoO" data-ad-width="320" data-ad-height="50"></ins></div></div>
+    <!-- Google AdSense Display Ad — pending approval, reserving space -->
+    <div class="ad-slot" id="adTop">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
 
-      <!-- 카카오 애드핏 -->
+      
 
-      <!-- 모델 로딩 상태 -->
+      <!-- Model loading status -->
       <div class="model-loading" id="modelStatus">
         <div class="model-loading-icon">&#x1F4E5;</div>
         <div class="model-loading-text">
-          <div class="model-loading-title" id="modelTitle">얼굴 인식 모델 로딩 중...</div>
-          <div class="model-loading-sub" id="modelSub">잠시만 기다려 주세요. 최초 로드 시 약 5~10초 소요됩니다.</div>
+          <div class="model-loading-title" id="modelTitle">Loading face detection model...</div>
+          <div class="model-loading-sub" id="modelSub">Please wait a moment. The first load takes about 5–10 seconds.</div>
           <div class="model-progress-bar"><div class="model-progress-fill" id="modelProgress"></div></div>
         </div>
       </div>
 
-      <!-- 업로드 존 -->
+      <!-- Upload zone -->
       <div class="upload-zone disabled" id="uploadZone">
         <input type="file" id="fileInput" accept="image/*" hidden />
         <div class="upload-icon" style="height:64px;display:flex;justify-content:center;align-items:center"><div style="transform:scale(1.4);transform-origin:center"><div style="width:46px;height:46px;background:#ffd36e;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="position:relative;width:27px;height:27px;border-radius:50%;background:#fffdf9;border:2.5px solid #2a2433;box-sizing:border-box;overflow:hidden"><div style="position:absolute;left:6px;top:8px;width:3px;height:3px;border-radius:50%;background:#2a2433"></div><div style="position:absolute;right:6px;top:8px;width:3px;height:3px;border-radius:50%;background:#2a2433"></div><div style="position:absolute;left:7px;bottom:5px;width:11px;height:3px;border-radius:3px;background:rgba(42,36,51,.4)"></div><div style="position:absolute;left:-3px;bottom:4px;width:34px;height:3px;background:rgba(255,255,255,.85)"></div><div style="position:absolute;left:-3px;bottom:9px;width:34px;height:3px;background:rgba(255,255,255,.7)"></div></div></div></div></div>
-        <p class="upload-title">이미지를 드래그하여 놓으세요</p>
-        <p class="upload-sub">또는 클릭하여 파일 선택 (JPG, PNG, WEBP 지원)</p>
-        <p class="upload-safe">&#x2713; 파일이 서버로 전송되지 않습니다</p>
+        <p class="upload-title">Drag and drop an image</p>
+        <p class="upload-sub">or click to choose a file (JPG, PNG, WEBP supported)</p>
+        <p class="upload-safe">&#x2713; Files are never uploaded to a server</p>
       </div>
 
-      <!-- 미리보기 -->
+      <!-- Preview -->
       <div class="preview-section" id="previewSection">
 
         <div class="detect-result" id="detectResult">
-          <div class="detect-result-title">&#x1F50D; 얼굴 탐지 결과</div>
-          <div id="detectCount"><span class="detect-none">탐지 중...</span></div>
+          <div class="detect-result-title">&#x1F50D; Face detection results</div>
+          <div id="detectCount"><span class="detect-none">Detecting...</span></div>
         </div>
 
-        <!-- 마스킹 옵션 -->
+        <!-- Masking options -->
         <div class="options-wrap">
-          <div class="options-title">&#x2699;&#xFE0F; 마스킹 옵션</div>
+          <div class="options-title">&#x2699;&#xFE0F; Masking options</div>
           <div class="option-group">
-            <div class="option-group-label">마스킹 방식</div>
+            <div class="option-group-label">Masking method</div>
             <div class="radio-group">
-              <button class="radio-btn active" data-mode="mosaic">&#x1F532; 모자이크</button>
-              <button class="radio-btn" data-mode="black">&#x2B1B; 검정 박스</button>
+              <button class="radio-btn active" data-mode="mosaic">&#x1F532; Mosaic</button>
+              <button class="radio-btn" data-mode="black">&#x2B1B; Black box</button>
             </div>
           </div>
           <div class="option-group" id="sliderGroup">
-            <div class="option-group-label">모자이크 강도</div>
+            <div class="option-group-label">Mosaic strength</div>
             <div class="slider-wrap">
               <input type="range" id="mosaicStrength" min="4" max="32" value="12" />
               <span class="slider-value" id="strengthVal">12px</span>
@@ -269,19 +275,19 @@
         </div>
 
         <p class="manual-notice">
-          &#x270D;&#xFE0F; <strong>수동 마스킹:</strong> 결과 이미지 위에서 마우스를 드래그하면 원하는 영역을 추가로 마스킹할 수 있습니다. 자동 탐지가 어려운 얼굴(옆면, 마스크 착용 등)도 수동으로 처리하세요.
+          &#x270D;&#xFE0F; <strong>Manual masking:</strong> drag your mouse over the result image to mask additional areas. Use this for faces that are hard to auto-detect (side profiles, masks, etc.).
         </p>
 
         <div class="preview-wrap">
           <div class="preview-box">
-            <div class="preview-label">원본</div>
+            <div class="preview-label">Original</div>
             <div class="preview-canvas-wrap">
               <canvas id="originalCanvas"></canvas>
             </div>
             <div class="preview-info" id="originalInfo"></div>
           </div>
           <div class="preview-box">
-            <div class="preview-label">마스킹 결과 (드래그로 추가 마스킹 가능)</div>
+            <div class="preview-label">Masked result (drag to mask more)</div>
             <div class="preview-canvas-wrap">
               <canvas id="resultCanvas"></canvas>
             </div>
@@ -290,56 +296,64 @@
         </div>
 
         <div class="action-wrap">
-          <button class="btn-download" id="downloadBtn" disabled>&#x2B07; PNG 다운로드</button>
-          <button class="btn-reset" id="resetBtn">&#x21BA; 처음부터</button>
+          <button class="btn-download" id="downloadBtn" disabled>&#x2B07; Download PNG</button>
+          <button class="btn-reset" id="resetBtn">&#x21BA; Start over</button>
         </div>
 
       </div>
 
 </div>
   </main>
-<div class="container"><div style="margin:0 0 12px"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><!-- 카카오 애드핏 (2026-07-22, 쿠팡 파트너스 다이내믹 배너로 교체) — 복원 시 주석 해제: <div class="adfit-h-desktop"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-QD4pRIpdIj7i2mbt" data-ad-width="728" data-ad-height="90"></ins></div><div class="adfit-h-mobile"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-R4xA2niTT8HgGjoO" data-ad-width="320" data-ad-height="50"></ins></div> --><div class="adfit-h-desktop"><script src="https://ads-partners.coupang.com/g.js"></script><script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"728","height":"90","tsource":""});</script></div><div class="adfit-h-mobile"><script src="https://ads-partners.coupang.com/g.js"></script><script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"320","height":"50","tsource":""});</script></div></div>
-
-    <div class="guide-summary">
-      <h2 class="guide-summary-title">사용법 요약</h2>
-      <ol class="guide-steps">
-        <li>모델 로딩 대기</li>
-        <li>이미지 업로드</li>
-        <li>얼굴 자동 탐지</li>
-      </ol>
-      <h3 class="guide-faq-title">자주 묻는 질문</h3>
-      <div class="guide-faq">
-        <details>
-          <summary>얼굴 블러 도구는 정말 무료인가요?</summary>
-          <p>네, 회원가입이나 설치 없이 완전 무료로 사용할 수 있습니다. 횟수 제한도 없습니다.</p>
-        </details>
-        <details>
-          <summary>업로드한 파일이 서버로 전송되나요?</summary>
-          <p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 업로드한 파일이 외부 서버로 전송되거나 저장되지 않습니다.</p>
-        </details>
-        <details>
-          <summary>얼굴이 자동으로 인식되지 않으면 어떻게 하나요?</summary>
-          <p>자동 감지가 놓친 얼굴은 수동으로 영역을 지정해 모자이크 처리할 수 있습니다. 각도가 크게 틀어진 얼굴은 자동 인식률이 낮아질 수 있습니다.</p>
-        </details>
-        <details>
-          <summary>모바일에서도 사용할 수 있나요?</summary>
-          <p>네, 별도의 앱 설치 없이 모바일 브라우저에서도 동일하게 사용할 수 있습니다.</p>
-        </details>
-      </div>
-      <a href="/blog/19-maskface-howto" class="guide-full-link">전체 가이드 보기 →</a>
+<div class="container"><!-- Google AdSense Display Ad — pending approval, reserving space -->
+    <div class="ad-slot" id="adMiddle">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
     </div>
 
-    <div style="margin:0 0 12px"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="9500090221"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><div class="adfit-rect-wrap"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-oePL4TCj742xAwqT" data-ad-width="300" data-ad-height="250"></ins></div></div></div>
+    <div class="guide-summary">
+      <h2 class="guide-summary-title">Quick guide</h2>
+      <ol class="guide-steps">
+        <li>Wait for the model to load</li>
+        <li>Upload an image</li>
+        <li>Faces are auto-detected</li>
+      </ol>
+      <h3 class="guide-faq-title">Frequently asked questions</h3>
+      <div class="guide-faq">
+        <details>
+          <summary>Is the Face Blur tool really free?</summary>
+          <p>Yes, it is completely free to use with no sign-up or installation required. There is no usage limit either.</p>
+        </details>
+        <details>
+          <summary>Are uploaded files sent to a server?</summary>
+          <p>No. All processing happens entirely in your browser, and uploaded files are never sent to or stored on an external server.</p>
+        </details>
+        <details>
+          <summary>What if a face isn't recognized automatically?</summary>
+          <p>You can manually select an area to mask any face the automatic detection missed. Faces at extreme angles may have lower automatic detection accuracy.</p>
+        </details>
+        <details>
+          <summary>Can I use this on mobile?</summary>
+          <p>Yes, it works the same way in a mobile browser without needing to install any app.</p>
+        </details>
+      </div>
+      <a href="/blog/19-maskface-howto" class="guide-full-link">View full guide →</a>
+    </div>
+
+    <!-- Google AdSense Multiplex Ad — pending approval, reserving space -->
+    <div class="ad-slot ad-slot-rect" id="adBottom">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div></div>
 
 
   <footer class="footer">
     <div class="container">
-      <p class="footer-copy">&#169; 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p>
+      <p class="footer-copy">&#169; 2026 BrowserKit. All processing happens in your browser.</p>
       <nav class="footer-nav">
-        <a href="/privacy">개인정보 처리방침</a>
-        <a href="/terms">이용약관</a>
-        <a href="/about">서비스 소개</a>
-        <a href="/blog/">블로그</a>
+        <a href="/en/privacy.html">Privacy Policy</a>
+        <a href="/en/terms.html">Terms of Service</a>
+        <a href="/en/about.html">About</a>
+        <a href="/en/blog/">Blog</a>
       </nav>
     </div>
   </footer>
@@ -348,11 +362,11 @@
   <script src="./face-api.min.js"></script>
 
   <script>
-  // ── 상태 변수 ──────────────────────────────────────────
+  // ── State variables ──────────────────────────────────
   let modelLoaded   = false;
   let originalImg   = null;
-  let detectedFaces = [];   // { x, y, w, h } 배열
-  let manualRegions = [];   // 수동 마스킹 영역
+  let detectedFaces = [];   // array of { x, y, w, h }
+  let manualRegions = [];   // manually masked regions
   let maskMode      = 'mosaic';
   let mosaicBlock   = 12;
   let isDragging    = false;
@@ -378,7 +392,7 @@
   const strengthSlider= document.getElementById('mosaicStrength');
   const strengthVal   = document.getElementById('strengthVal');
 
-  // ── 모델 로드 ──────────────────────────────────────────
+  // ── Load model ───────────────────────────────────────
   async function loadModels() {
     try {
       modelProgress.style.width = '30%';
@@ -386,18 +400,18 @@
       modelProgress.style.width = '100%';
       modelLoaded = true;
       modelStatus.classList.add('model-ready');
-      modelTitle.textContent = '얼굴 인식 모델 준비 완료';
-      modelSub.textContent   = '이미지를 업로드하면 자동으로 얼굴을 탐지합니다.';
+      modelTitle.textContent = 'Face detection model ready';
+      modelSub.textContent   = 'Upload an image and faces will be detected automatically.';
       uploadZone.classList.remove('disabled');
     } catch (err) {
-      modelTitle.textContent = '&#x26A0; 모델 로드 실패';
-      modelSub.textContent   = '네트워크 오류가 발생했습니다. 페이지를 새로고침해 주세요.';
-      console.error('face-api 모델 로드 실패:', err);
+      modelTitle.textContent = '&#x26A0; Failed to load model';
+      modelSub.textContent   = 'A network error occurred. Please refresh the page.';
+      console.error('face-api model load failed:', err);
     }
   }
   loadModels();
 
-  // ── 업로드 존 이벤트 ───────────────────────────────────
+  // ── Upload zone events ───────────────────────────────
   uploadZone.addEventListener('click', () => { if (modelLoaded) fileInput.click(); });
   uploadZone.addEventListener('dragover', (e) => {
     e.preventDefault();
@@ -415,7 +429,7 @@
     fileInput.value = '';
   });
 
-  // ── 이미지 처리 ────────────────────────────────────────
+  // ── Process image ────────────────────────────────────
   async function processImage(file) {
     const url = URL.createObjectURL(file);
     const img  = new Image();
@@ -423,7 +437,7 @@
       originalImg = img;
       manualRegions = [];
 
-      // 원본 Canvas 렌더링
+      // Render original canvas
       originalCanvas.width  = img.naturalWidth;
       originalCanvas.height = img.naturalHeight;
       const octx = originalCanvas.getContext('2d');
@@ -431,13 +445,13 @@
 
       originalInfo.textContent = img.naturalWidth + ' x ' + img.naturalHeight + ' px  |  ' + formatBytes(file.size);
 
-      // 미리보기 섹션 표시
+      // Show preview section
       previewSection.style.display = 'block';
       uploadZone.style.display = 'none';
-      detectCount.innerHTML = '<span class="detect-none">&#x1F50D; 얼굴 탐지 중...</span>';
+      detectCount.innerHTML = '<span class="detect-none">&#x1F50D; Detecting faces...</span>';
       downloadBtn.disabled = true;
 
-      // 얼굴 탐지
+      // Detect faces
       await detectFaces(img);
     };
     img.src = url;
@@ -457,22 +471,22 @@
       }));
 
       if (detectedFaces.length === 0) {
-        detectCount.innerHTML = '<span class="detect-none">&#x26A0; 자동으로 탐지된 얼굴이 없습니다. 아래 결과 이미지에서 수동으로 마스킹 영역을 드래그해 주세요.</span>';
+        detectCount.innerHTML = '<span class="detect-none">&#x26A0; No faces were automatically detected. Drag over the result image below to mask an area manually.</span>';
       } else {
         detectCount.innerHTML =
           '<span class="detect-count">' + detectedFaces.length + '</span>' +
-          '<span class="detect-count-label">개의 얼굴이 탐지됐습니다.</span>';
+          '<span class="detect-count-label">face(s) detected.</span>';
       }
 
       applyMasking();
       downloadBtn.disabled = false;
     } catch (err) {
-      console.error('얼굴 탐지 오류:', err);
-      detectCount.innerHTML = '<span class="detect-none">&#x26A0; 탐지 중 오류가 발생했습니다.</span>';
+      console.error('Face detection error:', err);
+      detectCount.innerHTML = '<span class="detect-none">&#x26A0; An error occurred during detection.</span>';
     }
   }
 
-  // ── 마스킹 적용 ────────────────────────────────────────
+  // ── Apply masking ────────────────────────────────────
   function applyMasking() {
     if (!originalImg) return;
     resultCanvas.width  = originalImg.naturalWidth;
@@ -491,7 +505,7 @@
       ctx.fillStyle = '#000';
       ctx.fillRect(x, y, w, h);
     } else {
-      // 모자이크
+      // Mosaic
       const block = mosaicBlock;
       for (let py = y; py < y + h; py += block) {
         for (let px = x; px < x + w; px += block) {
@@ -505,7 +519,7 @@
     }
   }
 
-  // ── 수동 마스킹 (결과 Canvas 드래그) ──────────────────
+  // ── Manual masking (drag on result canvas) ───────────
   resultCanvas.addEventListener('mousedown', (e) => {
     if (!originalImg) return;
     isDragging = true;
@@ -526,7 +540,7 @@
     const cx = Math.floor((e.clientX - r.left) * scaleX);
     const cy = Math.floor((e.clientY - r.top)  * scaleY);
 
-    // 실시간 드래그 미리보기
+    // Live drag preview
     applyMasking();
     const ctx = resultCanvas.getContext('2d');
     ctx.strokeStyle = 'rgba(123,108,255,0.8)';
@@ -562,7 +576,7 @@
     if (isDragging) { isDragging = false; applyMasking(); }
   });
 
-  // ── 모드 버튼 ──────────────────────────────────────────
+  // ── Mode buttons ─────────────────────────────────────
   document.querySelectorAll('.radio-btn[data-mode]').forEach(btn => {
     btn.addEventListener('click', () => {
       document.querySelectorAll('.radio-btn[data-mode]').forEach(b => b.classList.remove('active'));
@@ -579,7 +593,7 @@
     applyMasking();
   });
 
-  // ── 다운로드 ───────────────────────────────────────────
+  // ── Download ─────────────────────────────────────────
   downloadBtn.addEventListener('click', () => {
     const link = document.createElement('a');
     link.download = 'maskface_result.png';
@@ -587,7 +601,7 @@
     link.click();
   });
 
-  // ── 초기화 ─────────────────────────────────────────────
+  // ── Reset ────────────────────────────────────────────
   resetBtn.addEventListener('click', () => {
     originalImg    = null;
     detectedFaces  = [];
@@ -602,7 +616,7 @@
     fileInput.value = '';
   });
 
-  // ── 유틸 ───────────────────────────────────────────────
+  // ── Utils ────────────────────────────────────────────
   function formatBytes(bytes) {
     if (bytes < 1024)        return bytes + ' B';
     if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
@@ -629,7 +643,7 @@
     try {
       if (document.cookie.indexOf('bk_lang_dismiss=1') !== -1) return;
       var lang = (navigator.language || navigator.userLanguage || '').toLowerCase();
-      if (lang.indexOf('ko') === 0) return;
+      if (lang.indexOf('ko') !== 0) return;
       var banner = document.getElementById('langBanner');
       if (!banner) return;
       banner.classList.add('show');
