@@ -161,10 +161,15 @@ def transform(ko_html: str, slug: str) -> str:
         1
     )
 
-    # footer nav -> /en/ pages
+    # footer nav -> /en/ pages (multi-line indented variant)
     c = c.replace(
         '<a href="/privacy">개인정보 처리방침</a>\n        <a href="/terms">이용약관</a>\n        <a href="/about">서비스 소개</a>\n        <a href="/blog/">블로그</a>',
         '<a href="/en/privacy.html">Privacy Policy</a>\n        <a href="/en/terms.html">Terms of Service</a>\n        <a href="/en/about.html">About</a>\n        <a href="/en/blog/">Blog</a>'
+    )
+    # footer nav -> /en/ pages (minified single-line variant)
+    c = c.replace(
+        '<a href="/privacy">개인정보 처리방침</a><a href="/terms">이용약관</a><a href="/about">서비스 소개</a><a href="/blog/">블로그</a>',
+        '<a href="/en/privacy.html">Privacy Policy</a><a href="/en/terms.html">Terms of Service</a><a href="/en/about.html">About</a><a href="/en/blog/">Blog</a>'
     )
     c = c.replace(
         '&#xa9; 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.',
