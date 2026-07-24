@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
   <link rel="icon" href="/favicon.ico" sizes="32x32">
   <link rel="icon" href="/favicon-16.png" sizes="16x16" type="image/png">
@@ -8,18 +8,18 @@
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="안전한 난수로 비밀번호를 생성하는 무료 온라인 도구. 길이, 대소문자, 숫자, 특수문자 조합을 설정하고 강도를 확인하세요. 서버 전송 없이 브라우저에서 바로 처리합니다." />
-  <meta property="og:title" content="PasswordGen — 비밀번호 생성기" />
-  <meta property="og:description" content="안전한 난수로 비밀번호를 생성하는 무료 온라인 도구. 조합과 길이를 설정하고 강도를 확인하세요." />
+  <meta name="description" content="Free online tool to generate secure random passwords. Set the length, character types, and check the strength. Everything runs in your browser." />
+  <meta property="og:title" content="PasswordGen — Password Generator" />
+  <meta property="og:description" content="Free online tool to generate secure random passwords. Set the character types and length, and check the strength." />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://browserkit.online/password-gen/" />
-  <title>PasswordGen — 비밀번호 생성기</title>
+  <meta property="og:url" content="https://browserkit.online/en/password-gen/" />
+  <title>PasswordGen — Password Generator</title>
   <link rel="stylesheet" href="/css/style.css?v=20260724a" />
-  <!-- Google AdSense 승인 대기 중 (2026-07-19 주석 처리, 카카오 애드핏으로 임시 전환) — 승인 후 주석 해제
+  <link rel="stylesheet" href="/css/style-en.css?v=20260724a" />
+  <!-- Google AdSense — pending re-review. Uncomment once approved.
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506"
      crossorigin="anonymous"></script>
   -->
-  <script type="text/javascript" src="//t1.kakaocdn.net/kas/static/ba.min.js" async></script>
   <style>
     .guide-summary { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:24px; margin:0 0 12px; }
     .guide-summary-title { font-size:16px; font-weight:700; color:var(--text); margin:0 0 12px; }
@@ -30,6 +30,9 @@
     .guide-faq p { margin:8px 0 0; font-size:13px; color:var(--subtext); line-height:1.7; }
     .guide-full-link { display:inline-block; margin-top:12px; font-size:14px; font-weight:600; color:var(--point-hover); text-decoration:none; }
     .guide-full-link:hover { text-decoration:underline; }
+
+    .ad-slot { min-height:90px; display:flex; align-items:center; justify-content:center; margin:0 0 12px; }
+    .ad-slot-rect { min-height:250px; }
 
 
 /* 설정 패널 */
@@ -43,7 +46,7 @@
     .range-slider { flex:1; -webkit-appearance:none; height:6px; border-radius:3px; background:var(--border); outline:none; }
     .range-slider::-webkit-slider-thumb { -webkit-appearance:none; width:18px; height:18px; border-radius:50%; background:var(--point); cursor:pointer; box-shadow:0 0 0 3px rgba(123,108,255,0.2); }
     .range-slider::-moz-range-thumb { width:18px; height:18px; border-radius:50%; background:var(--point); cursor:pointer; border:none; }
-    .slider-val { font-size:16px; font-weight:700; color:var(--point-hover); font-family:'Gowun Dodum',sans-serif; min-width:32px; text-align:center; }
+    .slider-val { font-size:16px; font-weight:700; color:var(--point-hover); min-width:32px; text-align:center; }
 
     /* 체크박스 옵션 */
     .check-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:10px; flex:1; }
@@ -62,11 +65,11 @@
     /* 제외 문자 */
     .exclude-input { background:var(--bg); border:1px solid var(--border); border-radius:10px; padding:10px 14px; font-size:14px; color:var(--text); font-family:'Fira Code','JetBrains Mono',monospace; flex:1; outline:none; transition:border-color 0.2s; }
     .exclude-input:focus { border-color:var(--point); }
-    .exclude-input::placeholder { color:var(--subtext); font-family:'Gowun Dodum',sans-serif; }
+    .exclude-input::placeholder { color:var(--subtext); }
 
     /* 생성 개수 */
     .count-btns { display:flex; gap:6px; flex-wrap:wrap; }
-    .count-btn { background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:7px 14px; font-size:13px; color:var(--subtext); cursor:pointer; font-family:'Gowun Dodum',sans-serif; transition:all 0.2s; }
+    .count-btn { background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:7px 14px; font-size:13px; color:var(--subtext); cursor:pointer; transition:all 0.2s; }
     .count-btn:hover { border-color:var(--point); color:var(--text); }
     .count-btn.active { background:rgba(123,108,255,0.15); border-color:var(--point); color:var(--point-hover); font-weight:600; }
 
@@ -78,7 +81,7 @@
     .strength-fill { height:100%; border-radius:4px; transition:width 0.3s, background 0.3s; width:0%; }
 
     /* 생성 버튼 */
-    .btn-generate { background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border:none; border-radius:12px; padding:14px 32px; font-size:16px; font-weight:700; cursor:pointer; font-family:'Gowun Dodum',sans-serif; width:100%; margin-bottom:20px; transition:all 0.2s; }
+    .btn-generate { background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border:none; border-radius:12px; padding:14px 32px; font-size:16px; font-weight:700; cursor:pointer; width:100%; margin-bottom:20px; transition:all 0.2s; }
     .btn-generate:hover { transform:translateY(-2px); box-shadow:0 8px 24px var(--glow); }
     .btn-generate:active { transform:translateY(0); }
 
@@ -90,13 +93,13 @@
     .result-list { display:flex; flex-direction:column; gap:10px; margin-bottom:48px; }
     .result-item { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:16px 20px; display:flex; align-items:center; justify-content:space-between; gap:16px; min-height:56px; }
     .result-pw { font-family:'Fira Code','JetBrains Mono',monospace; font-size:14px; color:var(--text); word-break:break-all; flex:1; letter-spacing:0.5px; line-height:1.6; min-width:0; }
-    .result-copy { background:rgba(123,108,255,0.12); border:1px solid var(--border); border-radius:8px; padding:7px 16px; font-size:12px; color:var(--point-hover); cursor:pointer; white-space:nowrap; font-family:'Gowun Dodum',sans-serif; transition:all 0.2s; flex-shrink:0; min-width:56px; text-align:center; }
+    .result-copy { background:rgba(123,108,255,0.12); border:1px solid var(--border); border-radius:8px; padding:7px 16px; font-size:12px; color:var(--point-hover); cursor:pointer; white-space:nowrap; transition:all 0.2s; flex-shrink:0; min-width:56px; text-align:center; }
     .result-copy:hover { background:rgba(123,108,255,0.25); }
     .result-copy.copied { background:rgba(52,211,153,0.12); color:var(--success); border-color:var(--success); }
     .result-empty { text-align:center; padding:40px; color:var(--subtext); font-size:14px; }
 
     /* 전체 복사 */
-    .btn-copy-all { background:var(--card); border:1px solid var(--border); border-radius:10px; padding:11px 20px; font-size:14px; color:var(--subtext); cursor:pointer; font-family:'Gowun Dodum',sans-serif; width:100%; margin-bottom:48px; transition:all 0.2s; }
+    .btn-copy-all { background:var(--card); border:1px solid var(--border); border-radius:10px; padding:11px 20px; font-size:14px; color:var(--subtext); cursor:pointer; width:100%; margin-bottom:48px; transition:all 0.2s; }
     .btn-copy-all:hover { color:var(--text); border-color:var(--point); }
     .btn-copy-all.copied { color:var(--success); border-color:var(--success); }
 
@@ -119,9 +122,9 @@
     }
   </style>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <meta property="og:image" content="https://browserkit.online/img/og/password-gen.png" />
-  <link rel="canonical" href="https://browserkit.online/password-gen/" />
+  <link rel="canonical" href="https://browserkit.online/en/password-gen/" />
   <link rel="alternate" hreflang="ko" href="https://browserkit.online/password-gen/" />
   <link rel="alternate" hreflang="en" href="https://browserkit.online/en/password-gen/" />
   <link rel="alternate" hreflang="x-default" href="https://browserkit.online/en/password-gen/" />
@@ -131,18 +134,18 @@
 {
   "@context": "https://schema.org",
   "@type": "WebApplication",
-  "name": "PasswordGen — 비밀번호 생성기",
-  "url": "https://browserkit.online/password-gen/",
-  "description": "안전한 난수로 비밀번호를 생성하는 무료 온라인 도구. 길이, 대소문자, 숫자, 특수문자 조합을 설정하고 강도를 확인하세요. 서버 전송 없이 브라우저에서 바로 처리합니다.",
+  "name": "PasswordGen — Password Generator",
+  "url": "https://browserkit.online/en/password-gen/",
+  "description": "Free online tool to generate secure random passwords. Set the length, character types, and check the strength. Everything runs in your browser.",
   "applicationCategory": "UtilityApplication",
   "operatingSystem": "Any",
   "browserRequirements": "Requires JavaScript",
-  "inLanguage": "ko",
+  "inLanguage": "en",
   "isAccessibleForFree": true,
   "offers": {
     "@type": "Offer",
     "price": "0",
-    "priceCurrency": "KRW"
+    "priceCurrency": "USD"
   },
   "publisher": {
     "@type": "Organization",
@@ -159,14 +162,14 @@
     {
       "@type": "ListItem",
       "position": 1,
-      "name": "홈",
-      "item": "https://browserkit.online/"
+      "name": "Home",
+      "item": "https://browserkit.online/en/"
     },
     {
       "@type": "ListItem",
       "position": 2,
-      "name": "비밀번호 생성기",
-      "item": "https://browserkit.online/password-gen/"
+      "name": "Password Generator",
+      "item": "https://browserkit.online/en/password-gen/"
     }
   ]
 }
@@ -175,24 +178,24 @@
 
 <body>
   <div class="lang-banner" id="langBanner">
-    <span>🌐 This page is also available in <a href="/en/password-gen/">English</a>.</span>
+    <span>🌐 이 페이지는 <a href="/password-gen/">한국어</a>로도 볼 수 있습니다.</span>
     <button class="lang-banner-close" id="langBannerClose" type="button" aria-label="close">&times;</button>
   </div>
   <header class="header">
     <div class="container">
-      <a href="/" class="header-brand">
-        <div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Gowun Dodum,sans-serif;flex-shrink:0">B</div>
+      <a href="/en/" class="header-brand">
+        <div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Poppins,sans-serif;flex-shrink:0">B</div>
         <span class="header-brand-text"><span style="color:var(--text)">Browser</span><span style="color:var(--point)">Kit</span></span>
       </a>
       <div class="header-right">
         <div class="lang-switcher">
-          <button class="lang-switcher-btn" type="button" data-lang-btn>🌐 <span class="lang-label-full">한국어</span></button>
+          <button class="lang-switcher-btn" type="button" data-lang-btn>🌐 <span class="lang-label-full">English</span></button>
           <div class="lang-switcher-menu" data-lang-menu>
-            <a href="/en/password-gen/">English</a>
-            <a href="#" class="active">한국어</a>
+            <a href="#" class="active">English</a>
+            <a href="/password-gen/">한국어</a>
           </div>
         </div>
-        <a href="/" class="header-back">&#x2190; BrowserKit 홈으로</a>
+        <a href="/en/" class="header-back">&#x2190; Back to BrowserKit</a>
       </div>
     </div>
   </header>
@@ -200,66 +203,70 @@
   <main><div class="container">
     <div class="hero">
       <div class="hero-icon" style="height:78px;display:flex;justify-content:center;align-items:center"><div style="transform:scale(1.7);transform-origin:center"><div style="width:46px;height:46px;background:#bcd4ff;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="position:relative;width:30px;height:18px;display:flex;align-items:center"><div style="width:15px;height:15px;border-radius:50%;background:transparent;border:3px solid #2a2433;box-sizing:border-box"></div><div style="position:absolute;left:13px;top:50%;transform:translateY(-50%);width:15px;height:3px;background:#2a2433;border-radius:2px"></div><div style="position:absolute;right:1px;top:50%;width:3px;height:7px;background:#2a2433;border-radius:2px"></div><div style="position:absolute;right:6px;top:50%;width:3px;height:7px;background:#2a2433;border-radius:2px"></div></div></div></div></div>
-      <div class="hero-title-wrap"><h1 class="hero-title">비밀번호 생성기</h1><a href="/blog/26-passwordgen-howto" class="hero-guide-link">사용법 가이드 보기</a></div>
-      <p class="hero-desc">안전한 난수로 강력한 비밀번호를 생성하세요. 조합과 길이를 자유롭게 설정하세요</p>
+      <div class="hero-title-wrap"><h1 class="hero-title">Password Generator</h1><a href="/en/blog/password-gen-howto" class="hero-guide-link">View the guide</a></div>
+      <p class="hero-desc">Generate strong passwords with secure random numbers — set the character types and length freely</p>
       <div class="hero-badges">
-        <span class="badge">🔒 완전 로컬 처리</span>
-        <span class="badge">⚡ 무료 사용</span>
-        <span class="badge">🛡️ 서버 전송 없음</span>
-        <span class="badge">📦 설치 불필요</span>
+        <span class="badge">🔒 Fully Local</span>
+        <span class="badge">⚡ Free to Use</span>
+        <span class="badge">🛡️ No Server Uploads</span>
+        <span class="badge">📦 No Install Needed</span>
       </div>
     </div>
-    <div style="margin:0 0 12px"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><div class="adfit-h-desktop"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-QD4pRIpdIj7i2mbt" data-ad-width="728" data-ad-height="90"></ins></div><div class="adfit-h-mobile"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-R4xA2niTT8HgGjoO" data-ad-width="320" data-ad-height="50"></ins></div></div>
+    <!-- Google AdSense Display Ad — pending approval, reserving space -->
+    <div class="ad-slot" id="adTop">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
 
 <!-- 설정 패널 -->
     <div class="setting-card">
       <!-- 길이 -->
       <div class="setting-row">
-        <span class="setting-label">&#x1F4CF; 길이</span>
+        <span class="setting-label">&#x1F4CF; Length</span>
         <div class="slider-wrap">
           <input type="range" class="range-slider" id="lengthSlider" min="4" max="64" value="16" />
           <span class="slider-val" id="lengthVal">16</span>
-          <span style="font-size:13px;color:var(--subtext);">자</span>
+          <span style="font-size:13px;color:var(--subtext);">chars</span>
         </div>
       </div>
       <!-- 조합 -->
       <div class="setting-row">
-        <span class="setting-label">&#x1F524; 조합</span>
+        <span class="setting-label">&#x1F524; Character types</span>
         <div class="check-grid">
           <label class="check-item active" id="chk-upper">
             <input type="checkbox" checked />
             <div class="check-box"><span class="check-box-tick">&#x2713;</span></div>
-            <div><div class="check-text">대문자</div><div class="check-chars">A&#x2013;Z</div></div>
+            <div><div class="check-text">Uppercase</div><div class="check-chars">A&#x2013;Z</div></div>
           </label>
           <label class="check-item active" id="chk-lower">
             <input type="checkbox" checked />
             <div class="check-box"><span class="check-box-tick">&#x2713;</span></div>
-            <div><div class="check-text">소문자</div><div class="check-chars">a&#x2013;z</div></div>
+            <div><div class="check-text">Lowercase</div><div class="check-chars">a&#x2013;z</div></div>
           </label>
           <label class="check-item active" id="chk-number">
             <input type="checkbox" checked />
             <div class="check-box"><span class="check-box-tick">&#x2713;</span></div>
-            <div><div class="check-text">숫자</div><div class="check-chars">0&#x2013;9</div></div>
+            <div><div class="check-text">Numbers</div><div class="check-chars">0&#x2013;9</div></div>
           </label>
           <label class="check-item active" id="chk-symbol">
             <input type="checkbox" checked />
             <div class="check-box"><span class="check-box-tick">&#x2713;</span></div>
-            <div><div class="check-text">특수문자</div><div class="check-chars">!@#$%^&amp;*</div></div>
+            <div><div class="check-text">Symbols</div><div class="check-chars">!@#$%^&amp;*</div></div>
           </label>
         </div>
       </div>
       <!-- 제외 문자 -->
       <div class="setting-row">
-        <span class="setting-label">&#x274C; 제외</span>
-        <input type="text" class="exclude-input" id="excludeInput" placeholder="혼동되는 문자 제외 (예: 0Ol1iI)" />
+        <span class="setting-label">&#x274C; Exclude</span>
+        <input type="text" class="exclude-input" id="excludeInput" placeholder="Exclude confusing characters (e.g. 0Ol1iI)" />
       </div>
       <!-- 생성 개수 -->
       <div class="setting-row">
-        <span class="setting-label">&#x1F522; 개수</span>
+        <span class="setting-label">&#x1F522; Count</span>
         <div class="count-btns">
-          <button class="count-btn" data-count="1">1개</button>
-          <button class="count-btn active" data-count="5">5개</button>
-          <button class="count-btn" data-count="10">10개</button>
+          <button class="count-btn" data-count="1">1</button>
+          <button class="count-btn active" data-count="5">5</button>
+          <button class="count-btn" data-count="10">10</button>
         </div>
       </div>
     </div>
@@ -267,68 +274,76 @@
     <!-- 강도 -->
     <div class="strength-wrap">
       <div class="strength-label">
-        <span>비밀번호 강도</span>
+        <span>Password strength</span>
         <span class="strength-text" id="strengthText" style="color:var(--subtext);">&#x2014;</span>
       </div>
       <div class="strength-bar"><div class="strength-fill" id="strengthFill"></div></div>
     </div>
 
     <!-- 경고 -->
-    <div class="warn-box" id="warnBox">&#x26A0;&#xFE0F; 최소 한 가지 이상의 문자 조합을 선택해주세요.</div>
+    <div class="warn-box" id="warnBox">&#x26A0;&#xFE0F; Please select at least one character type.</div>
 
     <!-- 생성 버튼 -->
-    <button class="btn-generate" id="generateBtn">&#x1F511; 비밀번호 생성</button>
+    <button class="btn-generate" id="generateBtn">&#x1F511; Generate Password</button>
 
     <!-- 결과 -->
     <div class="result-list" id="resultList">
-      <div class="result-empty">위 옵션을 설정하고 <strong>비밀번호 생성</strong> 버튼을 눌러주세요.</div>
+      <div class="result-empty">Set the options above and click <strong>Generate Password</strong>.</div>
     </div>
 
     <!-- 전체 복사 -->
-    <button class="btn-copy-all" id="copyAllBtn" style="display:none;">&#x1F4CB; 전체 복사</button>
+    <button class="btn-copy-all" id="copyAllBtn" style="display:none;">&#x1F4CB; Copy All</button>
 
-<div style="margin:0 0 12px"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><!-- 카카오 애드핏 (2026-07-22, 쿠팡 파트너스 다이내믹 배너로 교체) — 복원 시 주석 해제: <div class="adfit-h-desktop"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-QD4pRIpdIj7i2mbt" data-ad-width="728" data-ad-height="90"></ins></div><div class="adfit-h-mobile"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-R4xA2niTT8HgGjoO" data-ad-width="320" data-ad-height="50"></ins></div> --><div class="adfit-h-desktop"><script src="https://ads-partners.coupang.com/g.js"></script><script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"728","height":"90","tsource":""});</script></div><div class="adfit-h-mobile"><script src="https://ads-partners.coupang.com/g.js"></script><script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"320","height":"50","tsource":""});</script></div></div>
-
-    <div class="guide-summary">
-      <h2 class="guide-summary-title">사용법 요약</h2>
-      <ol class="guide-steps">
-        <li>길이 설정</li>
-        <li>문자 조합 선택</li>
-        <li>생성 개수 선택 (선택)</li>
-      </ol>
-      <h3 class="guide-faq-title">자주 묻는 질문</h3>
-      <div class="guide-faq">
-        <details>
-          <summary>비밀번호 생성기 도구는 정말 무료인가요?</summary>
-          <p>네, 회원가입이나 설치 없이 완전 무료로 사용할 수 있습니다. 횟수 제한도 없습니다.</p>
-        </details>
-        <details>
-          <summary>입력한 내용이 서버로 전송되나요?</summary>
-          <p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용이 외부 서버로 전송되거나 저장되지 않습니다.</p>
-        </details>
-        <details>
-          <summary>생성된 비밀번호가 어딘가에 저장되나요?</summary>
-          <p>아니요. 비밀번호는 브라우저의 안전한 난수 생성기로 만들어지며 어디에도 저장되거나 전송되지 않습니다.</p>
-        </details>
-        <details>
-          <summary>모바일에서도 사용할 수 있나요?</summary>
-          <p>네, 별도의 앱 설치 없이 모바일 브라우저에서도 동일하게 사용할 수 있습니다.</p>
-        </details>
-      </div>
-      <a href="/blog/26-passwordgen-howto" class="guide-full-link">전체 가이드 보기 →</a>
+<div style="margin:0 0 12px"><!-- Google AdSense Display Ad — pending approval, reserving space -->
+    <div class="ad-slot" id="adMiddle">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
     </div>
 
-    <div style="margin:12px 0"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="9500090221"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><div class="adfit-rect-wrap"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-oePL4TCj742xAwqT" data-ad-width="300" data-ad-height="250"></ins></div></div>
+    <div class="guide-summary">
+      <h2 class="guide-summary-title">Quick guide</h2>
+      <ol class="guide-steps">
+        <li>Set the length</li>
+        <li>Choose character types</li>
+        <li>Choose how many to generate (optional)</li>
+      </ol>
+      <h3 class="guide-faq-title">FAQ</h3>
+      <div class="guide-faq">
+        <details>
+          <summary>Is this password generator really free?</summary>
+          <p>Yes — no sign-up or installation required, and there's no limit on how many times you can use it.</p>
+        </details>
+        <details>
+          <summary>Is what I enter sent to a server?</summary>
+          <p>No. All processing happens entirely in your browser — nothing you enter is uploaded or stored anywhere.</p>
+        </details>
+        <details>
+          <summary>Are generated passwords stored anywhere?</summary>
+          <p>No. Passwords are generated using your browser's secure random number generator and are never stored or transmitted anywhere.</p>
+        </details>
+        <details>
+          <summary>Does it work on mobile?</summary>
+          <p>Yes, it works the same way in your mobile browser with no app install required.</p>
+        </details>
+      </div>
+      <a href="/en/blog/password-gen-howto" class="guide-full-link">Read the full guide →</a>
+    </div>
+
+    <!-- Google AdSense Multiplex Ad — pending approval, reserving space -->
+    <div class="ad-slot ad-slot-rect" id="adBottom">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
   </div></main>
 
   <footer class="footer">
     <div class="container">
-      <p class="footer-copy">&#xa9; 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p>
+      <p class="footer-copy">&#xa9; 2026 BrowserKit. All processing happens in your browser.</p>
       <nav class="footer-nav">
-        <a href="/privacy">개인정보 처리방침</a>
-        <a href="/terms">이용약관</a>
-        <a href="/about">서비스 소개</a>
-        <a href="/blog/">블로그</a>
+        <a href="/en/privacy.html">Privacy Policy</a>
+        <a href="/en/terms.html">Terms of Service</a>
+        <a href="/en/about.html">About</a>
+        <a href="/en/blog/">Blog</a>
       </nav>
     </div>
   </footer>
@@ -390,11 +405,11 @@
   function calcStrength(pool, len) {
     if (!pool || pool.length === 0) return { label: '\u2014', color: 'var(--subtext)', width: '0%' };
     var entropy = Math.log2(pool.length) * len;
-    if (entropy < 28)      return { label: '\ub9e4\uc6b0 \uc57d\ud568', color: '#F87171', width: '20%' };
-    else if (entropy < 40) return { label: '\uc57d\ud568',      color: '#FB923C', width: '40%' };
-    else if (entropy < 60) return { label: '\ubcf4\ud1b5',      color: '#FBBF24', width: '60%' };
-    else if (entropy < 80) return { label: '\uac15\ud568',      color: '#34D399', width: '80%' };
-    else                   return { label: '\ub9e4\uc6b0 \uac15\ud568', color: '#6C63FF', width: '100%' };
+    if (entropy < 28)      return { label: 'Very weak', color: '#F87171', width: '20%' };
+    else if (entropy < 40) return { label: 'Weak',      color: '#FB923C', width: '40%' };
+    else if (entropy < 60) return { label: 'Fair',      color: '#FBBF24', width: '60%' };
+    else if (entropy < 80) return { label: 'Strong',    color: '#34D399', width: '80%' };
+    else                   return { label: 'Very strong', color: '#6C63FF', width: '100%' };
   }
 
   function updateStrength() {
@@ -489,21 +504,21 @@
     var list = document.getElementById('resultList');
     var copyAll = document.getElementById('copyAllBtn');
     if (passwords.length === 0) {
-      list.innerHTML = '<div class="result-empty">\uc704 \uc635\uc158\uc744 \uc124\uc815\ud558\uace0 <strong>\ube44\ubc00\ubc88\ud638 \uc0dd\uc131</strong> \ubc84\ud2bc\uc744 \ub208\ub7ec\uc8fc\uc138\uc694.</div>';
+      list.innerHTML = '<div class="result-empty">Set the options above and click <strong>Generate Password</strong>.</div>';
       copyAll.style.display = 'none';
       return;
     }
     list.innerHTML = passwords.map(function(pw, i) {
-      return '<div class="result-item"><span class="result-pw">' + pw + '</span><button class="result-copy" data-index="' + i + '">\ubcf5\uc0ac</button></div>';
+      return '<div class="result-item"><span class="result-pw">' + pw + '</span><button class="result-copy" data-index="' + i + '">Copy</button></div>';
     }).join('');
     list.querySelectorAll('.result-copy').forEach(function(btn) {
       btn.addEventListener('click', function() {
         var pw = passwords[+btn.dataset.index];
         navigator.clipboard.writeText(pw).then(function() {
-          btn.textContent = '\u2713 \ubcf5\uc0ac\ub428';
+          btn.textContent = '✓ Copied';
           btn.classList.add('copied');
-          setTimeout(function() { btn.textContent = '\ubcf5\uc0ac'; btn.classList.remove('copied'); }, 1500);
-          showToast('\u2713 \ud074\ub9bd\ubcf4\ub4dc\uc5d0 \ubcf5\uc0ac\ub418\uc5c8\uc2b5\ub2c8\ub2e4');
+          setTimeout(function() { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 1500);
+          showToast('✓ Copied to clipboard');
         });
       });
     });
@@ -515,10 +530,10 @@
     if (passwords.length === 0) return;
     navigator.clipboard.writeText(passwords.join('\n')).then(function() {
       var btn = document.getElementById('copyAllBtn');
-      btn.textContent = '\u2713 \uc804\uccb4 \ubcf5\uc0ac\ub428';
+      btn.textContent = '✓ Copied all';
       btn.classList.add('copied');
-      setTimeout(function() { btn.textContent = '\ud83d\udccb \uc804\uccb4 \ubcf5\uc0ac'; btn.classList.remove('copied'); }, 1500);
-      showToast('\u2713 \uc804\uccb4 \ube44\ubc00\ubc88\ud638\uac00 \ubcf5\uc0ac\ub418\uc5c8\uc2b5\ub2c8\ub2e4');
+      setTimeout(function() { btn.textContent = '📋 Copy All'; btn.classList.remove('copied'); }, 1500);
+      showToast('✓ All passwords copied');
     });
   });
 
@@ -552,7 +567,7 @@
     try {
       if (document.cookie.indexOf('bk_lang_dismiss=1') !== -1) return;
       var lang = (navigator.language || navigator.userLanguage || '').toLowerCase();
-      if (lang.indexOf('ko') === 0) return;
+      if (lang.indexOf('ko') !== 0) return;
       var banner = document.getElementById('langBanner');
       if (!banner) return;
       banner.classList.add('show');
