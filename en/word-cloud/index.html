@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
   <link rel="icon" href="/favicon.ico" sizes="32x32">
   <link rel="icon" href="/favicon-16.png" sizes="16x16" type="image/png">
@@ -8,18 +8,17 @@
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="텍스트를 붙여넣으면 단어 빈도 기반 워드클라우드 이미지를 생성하는 무료 온라인 도구. PNG 다운로드 지원. 서버 전송 없이 브라우저에서 바로 처리합니다." />
-  <meta property="og:title" content="WordCloudGen — 워드클라우드 생성기" />
-  <meta property="og:description" content="텍스트를 붙여넣으면 단어 빈도 기반 워드클라우드를 즉시 생성하는 무료 온라인 도구입니다." />
+  <meta name="description" content="Free online tool that generates a word-frequency word cloud image from pasted text. Supports PNG download. Processed entirely in your browser, nothing is uploaded." />
+  <meta property="og:title" content="WordCloudGen — Word Cloud Generator" />
+  <meta property="og:description" content="A free online tool that instantly generates a word-frequency word cloud from pasted text." />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://browserkit.online/word-cloud/" />
-  <title>WordCloudGen — 워드클라우드 생성기</title>
+  <meta property="og:url" content="https://browserkit.online/en/word-cloud/" />
+  <title>WordCloudGen — Word Cloud Generator</title>
   <link rel="stylesheet" href="/css/style.css?v=20260724c" />
-  <!-- Google AdSense 승인 대기 중 (2026-07-19 주석 처리, 카카오 애드핏으로 임시 전환) — 승인 후 주석 해제
+  <!-- Google AdSense — pending re-review. Uncomment once approved.
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506"
      crossorigin="anonymous"></script>
   -->
-  <script type="text/javascript" src="//t1.kakaocdn.net/kas/static/ba.min.js" async></script>
   <style>
     .guide-summary { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:24px; margin:0 0 12px; }
     .guide-summary-title { font-size:16px; font-weight:700; color:var(--text); margin:0 0 12px; }
@@ -31,9 +30,12 @@
     .guide-full-link { display:inline-block; margin-top:12px; font-size:14px; font-weight:600; color:var(--point-hover); text-decoration:none; }
     .guide-full-link:hover { text-decoration:underline; }
 
+    .ad-slot { min-height:90px; display:flex; align-items:center; justify-content:center; margin:0 0 12px; }
+    .ad-slot-rect { min-height:250px; }
+
     .input-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px 24px; margin-bottom:16px; }
     .input-label { font-size:13px; font-weight:600; color:var(--subtext); margin-bottom:10px; display:flex; align-items:center; justify-content:space-between; }
-    .input-textarea { background:var(--bg); border:1px solid var(--border); border-radius:10px; padding:14px 16px; font-size:14px; color:var(--text); font-family:'Gowun Dodum',sans-serif; width:100%; min-height:140px; resize:vertical; outline:none; line-height:1.8; }
+    .input-textarea { background:var(--bg); border:1px solid var(--border); border-radius:10px; padding:14px 16px; font-size:14px; color:var(--text); width:100%; min-height:140px; resize:vertical; outline:none; line-height:1.8; }
     .input-textarea:focus { border-color:var(--point); }
     .quick-fill { display:flex; gap:8px; margin-top:10px; flex-wrap:wrap; }
     .quick-fill-btn { background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:6px 14px; font-size:12px; color:var(--subtext); cursor:pointer; }
@@ -52,9 +54,9 @@
     .cloud-empty { padding:80px 20px; text-align:center; color:var(--subtext); font-size:14px; }
 
     .action-wrap { display:flex; justify-content:center; gap:12px; margin-bottom:48px; flex-wrap:wrap; }
-    .btn-primary { background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border:none; border-radius:12px; padding:13px 28px; font-size:15px; font-weight:600; cursor:pointer; font-family:'Gowun Dodum',sans-serif; }
+    .btn-primary { background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border:none; border-radius:12px; padding:13px 28px; font-size:15px; font-weight:600; cursor:pointer; }
     .btn-primary:hover { transform:translateY(-2px); box-shadow:0 8px 24px var(--glow); }
-    .btn-sub { background:var(--card); color:var(--subtext); border:1px solid var(--border); border-radius:12px; padding:13px 22px; font-size:15px; cursor:pointer; font-family:'Gowun Dodum',sans-serif; }
+    .btn-sub { background:var(--card); color:var(--subtext); border:1px solid var(--border); border-radius:12px; padding:13px 22px; font-size:15px; cursor:pointer; }
     .btn-sub:hover { transform:translateY(-2px); color:var(--text); border-color:var(--point); }
 
     .notice { margin:0 0 20px; padding:12px 16px; background:rgba(123,108,255,0.07); border:1px solid var(--border); border-radius:10px; font-size:13px; color:var(--subtext); line-height:1.7; }
@@ -73,9 +75,9 @@
     }
   </style>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <meta property="og:image" content="https://browserkit.online/img/og/word-cloud.png" />
-  <link rel="canonical" href="https://browserkit.online/word-cloud/" />
+  <link rel="canonical" href="https://browserkit.online/en/word-cloud/" />
   <link rel="alternate" hreflang="ko" href="https://browserkit.online/word-cloud/" />
   <link rel="alternate" hreflang="en" href="https://browserkit.online/en/word-cloud/" />
   <link rel="alternate" hreflang="x-default" href="https://browserkit.online/en/word-cloud/" />
@@ -85,18 +87,18 @@
 {
   "@context": "https://schema.org",
   "@type": "WebApplication",
-  "name": "WordCloudGen — 워드클라우드 생성기",
-  "url": "https://browserkit.online/word-cloud/",
-  "description": "텍스트를 붙여넣으면 단어 빈도 기반 워드클라우드 이미지를 생성하는 무료 온라인 도구. PNG 다운로드 지원. 서버 전송 없이 브라우저에서 바로 처리합니다.",
+  "name": "WordCloudGen — Word Cloud Generator",
+  "url": "https://browserkit.online/en/word-cloud/",
+  "description": "Free online tool that generates a word-frequency word cloud image from pasted text. Supports PNG download. Processed entirely in your browser, nothing is uploaded.",
   "applicationCategory": "UtilityApplication",
   "operatingSystem": "Any",
   "browserRequirements": "Requires JavaScript",
-  "inLanguage": "ko",
+  "inLanguage": "en",
   "isAccessibleForFree": true,
   "offers": {
     "@type": "Offer",
     "price": "0",
-    "priceCurrency": "KRW"
+    "priceCurrency": "USD"
   },
   "publisher": {
     "@type": "Organization",
@@ -113,14 +115,14 @@
     {
       "@type": "ListItem",
       "position": 1,
-      "name": "홈",
-      "item": "https://browserkit.online/"
+      "name": "Home",
+      "item": "https://browserkit.online/en/"
     },
     {
       "@type": "ListItem",
       "position": 2,
-      "name": "워드클라우드 생성기",
-      "item": "https://browserkit.online/word-cloud/"
+      "name": "Word Cloud Generator",
+      "item": "https://browserkit.online/en/word-cloud/"
     }
   ]
 }
@@ -129,61 +131,65 @@
 
 <body>
   <div class="lang-banner" id="langBanner">
-    <span>🌐 This page is also available in <a href="/en/word-cloud/">English</a>.</span>
+    <span>🌐 이 페이지는 <a href="/word-cloud/">한국어</a>로도 볼 수 있습니다.</span>
     <button class="lang-banner-close" id="langBannerClose" type="button" aria-label="close">&times;</button>
   </div>
   <header class="header">
     <div class="container">
-      <a href="/" class="header-brand">
-        <div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Gowun Dodum,sans-serif;flex-shrink:0">B</div>
+      <a href="/en/" class="header-brand">
+        <div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Poppins,sans-serif;flex-shrink:0">B</div>
         <span class="header-brand-text"><span style="color:var(--text)">Browser</span><span style="color:var(--point)">Kit</span></span>
       </a>
       <div class="header-right">
         <div class="lang-switcher">
-          <button class="lang-switcher-btn" type="button" data-lang-btn>🌐 <span class="lang-label-full">한국어</span></button>
+          <button class="lang-switcher-btn" type="button" data-lang-btn>🌐 <span class="lang-label-full">English</span></button>
           <div class="lang-switcher-menu" data-lang-menu>
-            <a href="/en/word-cloud/">English</a>
-            <a href="#" class="active">한국어</a>
+            <a href="#" class="active">English</a>
+            <a href="/word-cloud/">한국어</a>
           </div>
         </div>
-        <a href="/" class="header-back">&#x2190; <span class="header-back-label">BrowserKit 홈으로</span></a>
+        <a href="/en/" class="header-back">&#x2190; <span class="header-back-label">Back to BrowserKit</span></a>
       </div>
     </div>
   </header>
 
   <main><div class="container">
     <div class="hero">
-      <div class="hero-icon" style="height:78px;display:flex;justify-content:center;align-items:center"><div style="transform:scale(1.7);transform-origin:center"><div style="width:46px;height:46px;background:#ffd9a8;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="display:flex;flex-direction:column;align-items:center;gap:3px"><div style="font:700 15px Gowun Dodum,sans-serif;color:#2a2433;line-height:1">Aa</div><div style="font:700 9px Gowun Dodum,sans-serif;color:rgba(42,36,51,.55);line-height:1">가나다</div><div style="font:700 11px Gowun Dodum,sans-serif;color:rgba(42,36,51,.75);line-height:1">Word</div></div></div></div></div>
-      <div class="hero-title-wrap"><h1 class="hero-title">워드클라우드 생성기</h1><a href="/blog/56-wordcloud-howto" class="hero-guide-link">사용법 가이드 보기</a></div>
-      <p class="hero-desc">텍스트를 붙여넣으면 단어 빈도 기반 워드클라우드를 즉시 생성하세요</p>
+      <div class="hero-icon" style="height:78px;display:flex;justify-content:center;align-items:center"><div style="transform:scale(1.7);transform-origin:center"><div style="width:46px;height:46px;background:#ffd9a8;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="display:flex;flex-direction:column;align-items:center;gap:3px"><div style="font:700 15px Poppins,sans-serif;color:#2a2433;line-height:1">Aa</div><div style="font:700 9px Poppins,sans-serif;color:rgba(42,36,51,.55);line-height:1">가나다</div><div style="font:700 11px Poppins,sans-serif;color:rgba(42,36,51,.75);line-height:1">Word</div></div></div></div></div>
+      <div class="hero-title-wrap"><h1 class="hero-title">Word Cloud Generator</h1><a href="/blog/56-wordcloud-howto" class="hero-guide-link">View usage guide</a></div>
+      <p class="hero-desc">Paste text and instantly generate a word-frequency word cloud</p>
       <div class="hero-badges">
-        <span class="badge">🔒 완전 로컬 처리</span>
-        <span class="badge">⚡ 무료 사용</span>
-        <span class="badge">🛡️ 서버 전송 없음</span>
-        <span class="badge">📦 설치 불필요</span>
+        <span class="badge">🔒 Fully local processing</span>
+        <span class="badge">⚡ Free to use</span>
+        <span class="badge">🛡️ No server upload</span>
+        <span class="badge">📦 No installation</span>
       </div>
     </div>
-    <div style="margin:0 0 12px"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><div class="adfit-h-desktop"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-QD4pRIpdIj7i2mbt" data-ad-width="728" data-ad-height="90"></ins></div><div class="adfit-h-mobile"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-R4xA2niTT8HgGjoO" data-ad-width="320" data-ad-height="50"></ins></div></div>
+    <!-- Google AdSense Display Ad — pending approval, reserving space -->
+    <div class="ad-slot" id="adTop">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
 
-    <p class="notice">💡 공백/문장부호 기준으로 단어를 나누고 빈도를 세는 방식입니다. 한글 조사가 붙은 형태("학교를", "학교에서")는 형태소 분석 없이는 별개 단어로 집계되니, 정확한 빈도가 필요하다면 조사를 뗀 텍스트를 준비하는 것이 좋습니다.</p>
+    <p class="notice">💡 Words are split on whitespace and punctuation, then counted by frequency. For Korean text, words with attached grammatical particles (e.g. "학교를", "학교에서") are counted as separate words without morphological analysis — if you need accurate counts for Korean, it helps to prepare text with particles removed.</p>
 
     <div class="input-card">
-      <div class="input-label"><span>텍스트 입력</span></div>
-      <textarea class="input-textarea" id="textInput" placeholder="워드클라우드로 만들 텍스트를 붙여넣으세요..."></textarea>
+      <div class="input-label"><span>Enter text</span></div>
+      <textarea class="input-textarea" id="textInput" placeholder="Paste the text you want to turn into a word cloud..."></textarea>
       <div class="quick-fill">
-        <button class="quick-fill-btn" id="sampleBtn">📋 예시 텍스트 채우기</button>
-        <button class="quick-fill-btn" id="clearBtn">↺ 비우기</button>
+        <button class="quick-fill-btn" id="sampleBtn">📋 Fill sample text</button>
+        <button class="quick-fill-btn" id="clearBtn">↺ Clear</button>
       </div>
     </div>
 
     <div class="option-group">
-      <label class="option-item"><input type="checkbox" id="stopwordOpt" checked /> 불용어 제거</label>
-      <label class="option-item">최대 단어 수 <input type="number" id="maxWordsInput" value="60" min="10" max="150" /></label>
+      <label class="option-item"><input type="checkbox" id="stopwordOpt" checked /> Remove stopwords</label>
+      <label class="option-item">Max words <input type="number" id="maxWordsInput" value="60" min="10" max="150" /></label>
       <div class="option-item">
-        <span>색상 테마</span>
+        <span>Color theme</span>
         <div class="theme-btns">
-          <button class="theme-btn active" data-theme="color">컬러</button>
-          <button class="theme-btn" data-theme="mono">모노톤</button>
+          <button class="theme-btn active" data-theme="color">Color</button>
+          <button class="theme-btn" data-theme="mono">Monotone</button>
         </div>
       </div>
     </div>
@@ -193,53 +199,61 @@
     </div>
 
     <div class="action-wrap">
-      <button class="btn-primary" id="generateBtn">🎨 워드클라우드 생성</button>
-      <button class="btn-sub" id="downloadBtn">&#x2B07; PNG 다운로드</button>
-      <button class="btn-sub" id="resetBtn">&#x21BA; 초기화</button>
+      <button class="btn-primary" id="generateBtn">🎨 Generate Word Cloud</button>
+      <button class="btn-sub" id="downloadBtn">&#x2B07; Download PNG</button>
+      <button class="btn-sub" id="resetBtn">&#x21BA; Reset</button>
     </div>
 
-    <div style="margin:0 0 12px"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><!-- 카카오 애드핏 (2026-07-22, 쿠팡 파트너스 다이내믹 배너로 교체) — 복원 시 주석 해제: <div class="adfit-h-desktop"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-QD4pRIpdIj7i2mbt" data-ad-width="728" data-ad-height="90"></ins></div><div class="adfit-h-mobile"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-R4xA2niTT8HgGjoO" data-ad-width="320" data-ad-height="50"></ins></div> --><div class="adfit-h-desktop"><script src="https://ads-partners.coupang.com/g.js"></script><script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"728","height":"90","tsource":""});</script></div><div class="adfit-h-mobile"><script src="https://ads-partners.coupang.com/g.js"></script><script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"320","height":"50","tsource":""});</script></div></div>
+    <!-- Google AdSense Display Ad — pending approval, reserving space -->
+    <div class="ad-slot" id="adMiddle">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
 
     <div class="guide-summary">
-      <h2 class="guide-summary-title">사용법 요약</h2>
+      <h2 class="guide-summary-title">Quick guide</h2>
       <ol class="guide-steps">
-        <li>텍스트 입력</li>
-        <li>옵션 설정</li>
-        <li>워드클라우드 생성</li>
+        <li>Enter text</li>
+        <li>Configure options</li>
+        <li>Generate the word cloud</li>
       </ol>
-      <h3 class="guide-faq-title">자주 묻는 질문</h3>
+      <h3 class="guide-faq-title">Frequently asked questions</h3>
       <div class="guide-faq">
         <details>
-          <summary>워드클라우드 생성기 도구는 정말 무료인가요?</summary>
-          <p>네, 회원가입이나 설치 없이 완전 무료로 사용할 수 있습니다. 횟수 제한도 없습니다.</p>
+          <summary>Is the Word Cloud Generator tool really free?</summary>
+          <p>Yes, it is completely free to use with no sign-up or installation required. There is no usage limit either.</p>
         </details>
         <details>
-          <summary>입력한 내용이 서버로 전송되나요?</summary>
-          <p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용이 외부 서버로 전송되거나 저장되지 않습니다.</p>
+          <summary>Is what I enter sent to a server?</summary>
+          <p>No. All processing happens entirely in your browser, and your input is never sent to or stored on an external server.</p>
         </details>
         <details>
-          <summary>한글 텍스트도 지원하나요?</summary>
-          <p>네, 한글 텍스트로도 단어 빈도 기반의 워드클라우드를 만들 수 있습니다.</p>
+          <summary>Does it support Korean text?</summary>
+          <p>Yes, you can create a word-frequency word cloud from Korean text as well.</p>
         </details>
         <details>
-          <summary>모바일에서도 사용할 수 있나요?</summary>
-          <p>네, 별도의 앱 설치 없이 모바일 브라우저에서도 동일하게 사용할 수 있습니다.</p>
+          <summary>Can I use this on mobile?</summary>
+          <p>Yes, it works the same way in a mobile browser without needing to install any app.</p>
         </details>
       </div>
-      <a href="/blog/56-wordcloud-howto" class="guide-full-link">전체 가이드 보기 →</a>
+      <a href="/blog/56-wordcloud-howto" class="guide-full-link">View full guide →</a>
     </div>
 
-    <div style="margin:0 0 12px"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="9500090221"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><div class="adfit-rect-wrap"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-oePL4TCj742xAwqT" data-ad-width="300" data-ad-height="250"></ins></div></div>
+    <!-- Google AdSense Multiplex Ad — pending approval, reserving space -->
+    <div class="ad-slot ad-slot-rect" id="adBottom">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
   </div></main>
 
   <footer class="footer">
     <div class="container">
-      <p class="footer-copy">&#xa9; 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p>
+      <p class="footer-copy">&#xa9; 2026 BrowserKit. All processing happens in your browser.</p>
       <nav class="footer-nav">
-        <a href="/privacy">개인정보 처리방침</a>
-        <a href="/terms">이용약관</a>
-        <a href="/about">서비스 소개</a>
-        <a href="/blog/">블로그</a>
+        <a href="/en/privacy.html">Privacy Policy</a>
+        <a href="/en/terms.html">Terms of Service</a>
+        <a href="/en/about.html">About</a>
+        <a href="/en/blog/">Blog</a>
       </nav>
     </div>
   </footer>
@@ -253,7 +267,7 @@
   var currentTheme = 'color';
   var lastPlaced = null;
 
-  var SAMPLE_TEXT = '브라우저킷은 설치 없이 브라우저에서 바로 쓰는 무료 도구 모음입니다. 개인정보 마스킹, 이미지 편집, PDF 처리, QR 코드 생성까지 다양한 도구를 제공합니다. 모든 처리는 브라우저 안에서 이루어지며 서버로 전송되지 않습니다. 무료로 누구나 설치 없이 바로 사용할 수 있는 온라인 도구를 지향합니다. 개인정보 보호와 편의성을 동시에 생각하는 도구, 브라우저킷입니다.';
+  var SAMPLE_TEXT = 'BrowserKit is a free collection of tools you can use right in your browser, with no installation required. It offers a wide range of tools, from privacy masking and image editing to PDF processing and QR code generation. All processing happens inside your browser and nothing is sent to a server. BrowserKit aims to be an online toolset that anyone can use instantly, for free, without installing anything. It is a tool that values both privacy protection and convenience.';
 
   var STOPWORDS = {};
   ['그리고','그러나','그래서','하지만','그런데','또한','즉','그','저','것','수','등','을','를','이','가','은','는',
@@ -316,7 +330,7 @@
     words.forEach(function(word, idx) {
       var ratio = maxCount === minCount ? 1 : (word.count - minCount) / (maxCount - minCount);
       var fontSize = Math.round(minFont + ratio * (maxFont - minFont));
-      ctx.font = '700 ' + fontSize + 'px "Gowun Dodum", sans-serif';
+      ctx.font = '700 ' + fontSize + 'px "Inter", sans-serif';
       var textW = ctx.measureText(word.text).width;
       var textH = fontSize * 1.15;
 
@@ -378,7 +392,7 @@
     placed.forEach(function(w, i) {
       ctx.save();
       ctx.translate(w.x + w.w / 2, w.y + w.h / 2);
-      ctx.font = '700 ' + w.fontSize + 'px "Gowun Dodum", sans-serif';
+      ctx.font = '700 ' + w.fontSize + 'px "Inter", sans-serif';
       ctx.fillStyle = palette[i % palette.length];
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
@@ -390,22 +404,22 @@
   }
 
   document.getElementById('generateBtn').addEventListener('click', function() {
-    if (!textInput.value.trim()) { showToast('텍스트를 입력해주세요'); return; }
+    if (!textInput.value.trim()) { showToast('Please enter some text'); return; }
     render();
-    if (!lastPlaced || !lastPlaced.length) { showToast('생성할 단어가 없습니다'); return; }
-    showToast('✓ 워드클라우드가 생성되었습니다 (' + lastPlaced.length + '개 단어)');
+    if (!lastPlaced || !lastPlaced.length) { showToast('There are no words to generate'); return; }
+    showToast('✓ Word cloud generated (' + lastPlaced.length + ' word(s))');
   });
 
   document.getElementById('downloadBtn').addEventListener('click', function() {
-    if (!lastPlaced || !lastPlaced.length) { showToast('먼저 워드클라우드를 생성해주세요'); return; }
+    if (!lastPlaced || !lastPlaced.length) { showToast('Please generate a word cloud first'); return; }
     canvas.toBlob(function(blob) {
-      if (!blob) { showToast('다운로드 중 오류가 발생했습니다'); return; }
+      if (!blob) { showToast('An error occurred during download'); return; }
       var a = document.createElement('a');
       a.href = URL.createObjectURL(blob);
       a.download = 'wordcloud.png';
       a.click();
       URL.revokeObjectURL(a.href);
-      showToast('✓ PNG 파일이 저장됩니다');
+      showToast('✓ Your PNG file has been saved');
     }, 'image/png');
   });
 
@@ -441,7 +455,7 @@
     try {
       if (document.cookie.indexOf('bk_lang_dismiss=1') !== -1) return;
       var lang = (navigator.language || navigator.userLanguage || '').toLowerCase();
-      if (lang.indexOf('ko') === 0) return;
+      if (lang.indexOf('ko') !== 0) return;
       var banner = document.getElementById('langBanner');
       if (!banner) return;
       banner.classList.add('show');
