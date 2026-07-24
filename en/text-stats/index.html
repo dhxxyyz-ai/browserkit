@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
   <link rel="icon" href="/favicon.ico" sizes="32x32">
   <link rel="icon" href="/favicon-16.png" sizes="16x16" type="image/png">
@@ -8,18 +8,17 @@
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="텍스트를 입력하면 글자 수, 단어 수, 문장 수, 문단 수, 바이트 수, 예상 읽기 시간을 실시간으로 계산해주는 무료 온라인 텍스트 통계 분석기. 서버 전송 없이 브라우저에서 바로 처리합니다." />
-  <meta property="og:title" content="TextStats — 텍스트 통계 분석기" />
-  <meta property="og:description" content="글자 수·단어 수·문장 수·읽기 시간을 실시간으로 계산하는 무료 온라인 도구입니다." />
+  <meta name="description" content="Free online text statistics analyzer that instantly calculates character count, word count, sentence count, paragraph count, byte size, and estimated reading time as you type. Processed entirely in your browser, nothing is uploaded." />
+  <meta property="og:title" content="TextStats — Text Statistics Analyzer" />
+  <meta property="og:description" content="A free online tool that instantly calculates character count, word count, sentence count, and reading time." />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://browserkit.online/text-stats/" />
-  <title>TextStats — 텍스트 통계 분석기</title>
+  <meta property="og:url" content="https://browserkit.online/en/text-stats/" />
+  <title>TextStats — Text Statistics Analyzer</title>
   <link rel="stylesheet" href="/css/style.css?v=20260724c" />
-  <!-- Google AdSense 승인 대기 중 (2026-07-19 주석 처리, 카카오 애드핏으로 임시 전환) — 승인 후 주석 해제
+  <!-- Google AdSense — pending re-review. Uncomment once approved.
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506"
      crossorigin="anonymous"></script>
   -->
-  <script type="text/javascript" src="//t1.kakaocdn.net/kas/static/ba.min.js" async></script>
   <style>
     .guide-summary { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:24px; margin:0 0 12px; }
     .guide-summary-title { font-size:16px; font-weight:700; color:var(--text); margin:0 0 12px; }
@@ -31,9 +30,12 @@
     .guide-full-link { display:inline-block; margin-top:12px; font-size:14px; font-weight:600; color:var(--point-hover); text-decoration:none; }
     .guide-full-link:hover { text-decoration:underline; }
 
+    .ad-slot { min-height:90px; display:flex; align-items:center; justify-content:center; margin:0 0 12px; }
+    .ad-slot-rect { min-height:250px; }
+
     .input-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px 24px; margin-bottom:20px; }
     .input-label { font-size:13px; font-weight:600; color:var(--subtext); margin-bottom:10px; display:flex; align-items:center; justify-content:space-between; }
-    .text-input { background:var(--bg); border:1px solid var(--border); border-radius:10px; padding:16px; font-size:15px; color:var(--text); font-family:'Gowun Dodum',sans-serif; width:100%; min-height:260px; resize:vertical; outline:none; line-height:1.9; box-sizing:border-box; }
+    .text-input { background:var(--bg); border:1px solid var(--border); border-radius:10px; padding:16px; font-size:15px; color:var(--text); width:100%; min-height:260px; resize:vertical; outline:none; line-height:1.9; box-sizing:border-box; }
     .text-input:focus { border-color:var(--point); }
     .quick-fill { display:flex; gap:8px; margin-top:10px; flex-wrap:wrap; }
     .quick-fill-btn { background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:6px 14px; font-size:12px; color:var(--subtext); cursor:pointer; }
@@ -59,7 +61,7 @@
     .freq-empty { font-size:13px; color:var(--subtext); }
 
     .action-wrap { display:flex; justify-content:center; gap:12px; margin-bottom:48px; flex-wrap:wrap; }
-    .btn-sub { background:var(--card); color:var(--subtext); border:1px solid var(--border); border-radius:12px; padding:13px 22px; font-size:15px; cursor:pointer; font-family:'Gowun Dodum',sans-serif; }
+    .btn-sub { background:var(--card); color:var(--subtext); border:1px solid var(--border); border-radius:12px; padding:13px 22px; font-size:15px; cursor:pointer; }
     .btn-sub:hover { transform:translateY(-2px); color:var(--text); border-color:var(--point); }
 
     .toast { position:fixed; bottom:32px; left:50%; transform:translateX(-50%) translateY(80px); background:var(--success); color:#fff; border-radius:999px; padding:10px 24px; font-size:14px; font-weight:600; opacity:0; pointer-events:none; z-index:999; transition:all 0.3s ease; }
@@ -77,9 +79,9 @@
     }
   </style>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <meta property="og:image" content="https://browserkit.online/img/og/text-stats.png" />
-  <link rel="canonical" href="https://browserkit.online/text-stats/" />
+  <link rel="canonical" href="https://browserkit.online/en/text-stats/" />
   <link rel="alternate" hreflang="ko" href="https://browserkit.online/text-stats/" />
   <link rel="alternate" hreflang="en" href="https://browserkit.online/en/text-stats/" />
   <link rel="alternate" hreflang="x-default" href="https://browserkit.online/en/text-stats/" />
@@ -89,18 +91,18 @@
 {
   "@context": "https://schema.org",
   "@type": "WebApplication",
-  "name": "TextStats — 텍스트 통계 분석기",
-  "url": "https://browserkit.online/text-stats/",
-  "description": "텍스트를 입력하면 글자 수, 단어 수, 문장 수, 문단 수, 바이트 수, 예상 읽기 시간을 실시간으로 계산해주는 무료 온라인 텍스트 통계 분석기. 서버 전송 없이 브라우저에서 바로 처리합니다.",
+  "name": "TextStats — Text Statistics Analyzer",
+  "url": "https://browserkit.online/en/text-stats/",
+  "description": "Free online text statistics analyzer that instantly calculates character count, word count, sentence count, paragraph count, byte size, and estimated reading time as you type. Processed entirely in your browser, nothing is uploaded.",
   "applicationCategory": "UtilityApplication",
   "operatingSystem": "Any",
   "browserRequirements": "Requires JavaScript",
-  "inLanguage": "ko",
+  "inLanguage": "en",
   "isAccessibleForFree": true,
   "offers": {
     "@type": "Offer",
     "price": "0",
-    "priceCurrency": "KRW"
+    "priceCurrency": "USD"
   },
   "publisher": {
     "@type": "Organization",
@@ -117,14 +119,14 @@
     {
       "@type": "ListItem",
       "position": 1,
-      "name": "홈",
-      "item": "https://browserkit.online/"
+      "name": "Home",
+      "item": "https://browserkit.online/en/"
     },
     {
       "@type": "ListItem",
       "position": 2,
-      "name": "텍스트 통계 분석기",
-      "item": "https://browserkit.online/text-stats/"
+      "name": "Text Statistics Analyzer",
+      "item": "https://browserkit.online/en/text-stats/"
     }
   ]
 }
@@ -133,24 +135,24 @@
 
 <body>
   <div class="lang-banner" id="langBanner">
-    <span>🌐 This page is also available in <a href="/en/text-stats/">English</a>.</span>
+    <span>🌐 이 페이지는 <a href="/text-stats/">한국어</a>로도 볼 수 있습니다.</span>
     <button class="lang-banner-close" id="langBannerClose" type="button" aria-label="close">&times;</button>
   </div>
   <header class="header">
     <div class="container">
-      <a href="/" class="header-brand">
-        <div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Gowun Dodum,sans-serif;flex-shrink:0">B</div>
+      <a href="/en/" class="header-brand">
+        <div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Poppins,sans-serif;flex-shrink:0">B</div>
         <span class="header-brand-text"><span style="color:var(--text)">Browser</span><span style="color:var(--point)">Kit</span></span>
       </a>
       <div class="header-right">
         <div class="lang-switcher">
-          <button class="lang-switcher-btn" type="button" data-lang-btn>🌐 <span class="lang-label-full">한국어</span></button>
+          <button class="lang-switcher-btn" type="button" data-lang-btn>🌐 <span class="lang-label-full">English</span></button>
           <div class="lang-switcher-menu" data-lang-menu>
-            <a href="/en/text-stats/">English</a>
-            <a href="#" class="active">한국어</a>
+            <a href="#" class="active">English</a>
+            <a href="/text-stats/">한국어</a>
           </div>
         </div>
-        <a href="/" class="header-back">&#x2190; <span class="header-back-label">BrowserKit 홈으로</span></a>
+        <a href="/en/" class="header-back">&#x2190; <span class="header-back-label">Back to BrowserKit</span></a>
       </div>
     </div>
   </header>
@@ -158,107 +160,119 @@
   <main><div class="container">
     <div class="hero">
       <div class="hero-icon" style="height:78px;display:flex;justify-content:center;align-items:center"><div style="transform:scale(1.7);transform-origin:center"><div style="width:46px;height:46px;background:#a8e6cf;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="display:flex;align-items:flex-end;gap:3px;height:28px"><div style="width:6px;height:13px;background:#fffdf9;border:2px solid #2a2433;border-radius:2px 2px 0 0;box-sizing:border-box"></div><div style="width:6px;height:22px;background:#fffdf9;border:2px solid #2a2433;border-radius:2px 2px 0 0;box-sizing:border-box"></div><div style="width:6px;height:17px;background:#fffdf9;border:2px solid #2a2433;border-radius:2px 2px 0 0;box-sizing:border-box"></div></div></div></div></div>
-      <div class="hero-title-wrap"><h1 class="hero-title">텍스트 통계 분석기</h1><a href="/blog/72-textstats-howto" class="hero-guide-link">사용법 가이드 보기</a></div>
-      <p class="hero-desc">텍스트를 입력하면 글자 수·단어 수·읽기 시간을 실시간으로 계산해드려요</p>
+      <div class="hero-title-wrap"><h1 class="hero-title">Text Statistics Analyzer</h1><a href="/blog/72-textstats-howto" class="hero-guide-link">View usage guide</a></div>
+      <p class="hero-desc">Type or paste text and get character count, word count, and reading time instantly</p>
       <div class="hero-badges">
-        <span class="badge">🔒 완전 로컬 처리</span>
-        <span class="badge">⚡ 무료 사용</span>
-        <span class="badge">🛡️ 서버 전송 없음</span>
-        <span class="badge">📦 설치 불필요</span>
+        <span class="badge">🔒 Fully local processing</span>
+        <span class="badge">⚡ Free to use</span>
+        <span class="badge">🛡️ No server upload</span>
+        <span class="badge">📦 No installation</span>
       </div>
     </div>
-    <div style="margin:0 0 12px"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><div class="adfit-h-desktop"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-QD4pRIpdIj7i2mbt" data-ad-width="728" data-ad-height="90"></ins></div><div class="adfit-h-mobile"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-R4xA2niTT8HgGjoO" data-ad-width="320" data-ad-height="50"></ins></div></div>
+    <!-- Google AdSense Display Ad — pending approval, reserving space -->
+    <div class="ad-slot" id="adTop">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
 
     <div class="input-card">
       <div class="input-label">
-        <span>텍스트 입력</span>
+        <span>Enter text</span>
         <span></span>
       </div>
-      <textarea class="text-input" id="textInput" placeholder="여기에 텍스트를 입력하거나 붙여넣으면 통계가 실시간으로 계산됩니다."></textarea>
+      <textarea class="text-input" id="textInput" placeholder="Type or paste text here and statistics will be calculated in real time."></textarea>
       <div class="quick-fill">
-        <button class="quick-fill-btn" id="sampleBtn">📋 예시 텍스트 채우기</button>
-        <button class="quick-fill-btn" id="clearBtn">↺ 비우기</button>
+        <button class="quick-fill-btn" id="sampleBtn">📋 Fill sample text</button>
+        <button class="quick-fill-btn" id="clearBtn">↺ Clear</button>
       </div>
     </div>
 
     <div class="stat-grid">
       <div class="stat-card">
         <div class="stat-value" id="statChars">0</div>
-        <div class="stat-label">글자 수 (공백 포함)</div>
+        <div class="stat-label">Characters (with spaces)</div>
       </div>
       <div class="stat-card">
         <div class="stat-value" id="statCharsNoSpace">0</div>
-        <div class="stat-label">글자 수 (공백 제외)</div>
+        <div class="stat-label">Characters (no spaces)</div>
       </div>
       <div class="stat-card">
         <div class="stat-value" id="statWords">0</div>
-        <div class="stat-label">단어 수</div>
+        <div class="stat-label">Word count</div>
       </div>
       <div class="stat-card">
-        <div class="stat-value" id="statReadTime">0분</div>
-        <div class="stat-label">예상 읽기 시간</div>
+        <div class="stat-value" id="statReadTime">0 min</div>
+        <div class="stat-label">Estimated reading time</div>
       </div>
     </div>
 
     <div class="detail-card">
-      <div class="detail-title">📊 상세 통계</div>
-      <div class="detail-row"><span class="detail-label">문장 수</span><span class="detail-value" id="statSentences">0</span></div>
-      <div class="detail-row"><span class="detail-label">문단 수</span><span class="detail-value" id="statParagraphs">0</span></div>
-      <div class="detail-row"><span class="detail-label">줄 수</span><span class="detail-value" id="statLines">0</span></div>
-      <div class="detail-row"><span class="detail-label">바이트 수 (UTF-8)</span><span class="detail-value" id="statBytes">0 B</span></div>
+      <div class="detail-title">📊 Detailed statistics</div>
+      <div class="detail-row"><span class="detail-label">Sentence count</span><span class="detail-value" id="statSentences">0</span></div>
+      <div class="detail-row"><span class="detail-label">Paragraph count</span><span class="detail-value" id="statParagraphs">0</span></div>
+      <div class="detail-row"><span class="detail-label">Line count</span><span class="detail-value" id="statLines">0</span></div>
+      <div class="detail-row"><span class="detail-label">Bytes (UTF-8)</span><span class="detail-value" id="statBytes">0 B</span></div>
     </div>
 
     <div class="freq-card">
-      <div class="freq-title">🔤 자주 나온 단어 Top 5</div>
-      <div class="freq-list" id="freqList"><span class="freq-empty">텍스트를 입력하면 표시됩니다.</span></div>
+      <div class="freq-title">🔤 Top 5 most frequent words</div>
+      <div class="freq-list" id="freqList"><span class="freq-empty">This will appear once you enter text.</span></div>
     </div>
 
     <div class="action-wrap">
-      <button class="btn-sub" id="copyStatsBtn">&#x1F4CB; 통계 복사</button>
+      <button class="btn-sub" id="copyStatsBtn">&#x1F4CB; Copy statistics</button>
     </div>
 
-    <div style="margin:0 0 12px"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><!-- 카카오 애드핏 (2026-07-22, 쿠팡 파트너스 다이내믹 배너로 교체) — 복원 시 주석 해제: <div class="adfit-h-desktop"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-QD4pRIpdIj7i2mbt" data-ad-width="728" data-ad-height="90"></ins></div><div class="adfit-h-mobile"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-R4xA2niTT8HgGjoO" data-ad-width="320" data-ad-height="50"></ins></div> --><div class="adfit-h-desktop"><script src="https://ads-partners.coupang.com/g.js"></script><script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"728","height":"90","tsource":""});</script></div><div class="adfit-h-mobile"><script src="https://ads-partners.coupang.com/g.js"></script><script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"320","height":"50","tsource":""});</script></div></div>
+    <!-- Google AdSense Display Ad — pending approval, reserving space -->
+    <div class="ad-slot" id="adMiddle">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
 
     <div class="guide-summary">
-      <h2 class="guide-summary-title">사용법 요약</h2>
+      <h2 class="guide-summary-title">Quick guide</h2>
       <ol class="guide-steps">
-        <li>텍스트 입력</li>
-        <li>통계 확인</li>
-        <li>자주 나온 단어 확인 및 복사</li>
+        <li>Enter text</li>
+        <li>Review the statistics</li>
+        <li>Check frequent words and copy</li>
       </ol>
-      <h3 class="guide-faq-title">자주 묻는 질문</h3>
+      <h3 class="guide-faq-title">Frequently asked questions</h3>
       <div class="guide-faq">
         <details>
-          <summary>텍스트 통계 분석기 도구는 정말 무료인가요?</summary>
-          <p>네, 회원가입이나 설치 없이 완전 무료로 사용할 수 있습니다. 횟수 제한도 없습니다.</p>
+          <summary>Is the Text Statistics Analyzer tool really free?</summary>
+          <p>Yes, it is completely free to use with no sign-up or installation required. There is no usage limit either.</p>
         </details>
         <details>
-          <summary>입력한 내용이 서버로 전송되나요?</summary>
-          <p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용이 외부 서버로 전송되거나 저장되지 않습니다.</p>
+          <summary>Is what I type sent to a server?</summary>
+          <p>No. All processing happens entirely in your browser, and your input is never sent to or stored on an external server.</p>
         </details>
         <details>
-          <summary>어떤 통계를 보여주나요?</summary>
-          <p>글자 수, 단어 수, 문장 수 등 텍스트의 다양한 통계를 한 번에 분석해 보여줍니다.</p>
+          <summary>What statistics does it show?</summary>
+          <p>It analyzes and displays a wide range of text statistics at once, including character count, word count, and sentence count.</p>
         </details>
         <details>
-          <summary>모바일에서도 사용할 수 있나요?</summary>
-          <p>네, 별도의 앱 설치 없이 모바일 브라우저에서도 동일하게 사용할 수 있습니다.</p>
+          <summary>Can I use this on mobile?</summary>
+          <p>Yes, it works the same way in a mobile browser without needing to install any app.</p>
         </details>
       </div>
-      <a href="/blog/72-textstats-howto" class="guide-full-link">전체 가이드 보기 →</a>
+      <a href="/blog/72-textstats-howto" class="guide-full-link">View full guide →</a>
     </div>
 
-    <div style="margin:0 0 12px"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="9500090221"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><div class="adfit-rect-wrap"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-oePL4TCj742xAwqT" data-ad-width="300" data-ad-height="250"></ins></div></div>
+    <!-- Google AdSense Multiplex Ad — pending approval, reserving space -->
+    <div class="ad-slot ad-slot-rect" id="adBottom">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
   </div></main>
 
   <footer class="footer">
     <div class="container">
-      <p class="footer-copy">&#xa9; 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p>
+      <p class="footer-copy">&#xa9; 2026 BrowserKit. All processing happens in your browser.</p>
       <nav class="footer-nav">
-        <a href="/privacy">개인정보 처리방침</a>
-        <a href="/terms">이용약관</a>
-        <a href="/about">서비스 소개</a>
-        <a href="/blog/">블로그</a>
+        <a href="/en/privacy.html">Privacy Policy</a>
+        <a href="/en/terms.html">Terms of Service</a>
+        <a href="/en/about.html">About</a>
+        <a href="/en/blog/">Blog</a>
       </nav>
     </div>
   </footer>
@@ -266,8 +280,8 @@
   <div class="toast" id="toast"></div>
 
   <script>
-  var SAMPLE_TEXT = 'BrowserKit은 설치나 회원가입 없이 브라우저에서 바로 쓸 수 있는 무료 도구 모음입니다.\n\n개인정보 마스킹, 이미지 편집, PDF 처리, 계산기까지 다양한 도구를 제공합니다. 모든 처리는 서버 전송 없이 여러분의 브라우저 안에서만 이루어집니다.\n\n지금 바로 필요한 도구를 찾아 사용해보세요!';
-  var STOP_WORDS = ['이', '그', '저', '것', '수', '등', '및', '을', '를', '은', '는', '이다', '있다', '하다', '의', '가', '에', '와', '과', '도', '으로', '로', 'the', 'a', 'an', 'is', 'are', 'to', 'of', 'and', 'in', 'it'];
+  var SAMPLE_TEXT = 'BrowserKit is a free collection of tools you can use right in your browser, with no installation or sign-up required.\n\nFrom privacy masking and image editing to PDF processing and calculators, it offers a wide range of tools. All processing happens entirely within your own browser, with nothing ever sent to a server.\n\nGo ahead and find the tool you need right now!';
+  var STOP_WORDS = ['the', 'a', 'an', 'is', 'are', 'was', 'were', 'to', 'of', 'and', 'in', 'it', 'on', 'for', 'with', 'as', 'at', 'by', 'this', 'that', 'be', 'or', 'from', 'you', 'your'];
 
   var textInput = document.getElementById('textInput');
 
@@ -341,7 +355,7 @@
     document.getElementById('statChars').textContent = chars.toLocaleString();
     document.getElementById('statCharsNoSpace').textContent = charsNoSpace.toLocaleString();
     document.getElementById('statWords').textContent = words.toLocaleString();
-    document.getElementById('statReadTime').textContent = text.trim() ? (readMinutes < 1 ? '1분 미만' : readMinutes + '분') : '0분';
+    document.getElementById('statReadTime').textContent = text.trim() ? (readMinutes < 1 ? 'Under 1 min' : readMinutes + ' min') : '0 min';
     document.getElementById('statSentences').textContent = sentences.toLocaleString();
     document.getElementById('statParagraphs').textContent = paragraphs.toLocaleString();
     document.getElementById('statLines').textContent = lines.toLocaleString();
@@ -350,7 +364,7 @@
     var freqList = document.getElementById('freqList');
     var top = topWords(text, 5);
     if (!top.length) {
-      freqList.innerHTML = '<span class="freq-empty">텍스트를 입력하면 표시됩니다.</span>';
+      freqList.innerHTML = '<span class="freq-empty">This will appear once you enter text.</span>';
     } else {
       freqList.innerHTML = top.map(function(item) {
         return '<span class="freq-chip">' + escapeHtml(item.word) + '<b>' + item.count + '</b></span>';
@@ -374,19 +388,19 @@
   });
 
   document.getElementById('copyStatsBtn').addEventListener('click', function() {
-    if (!textInput.value.trim()) { showToast('먼저 텍스트를 입력해주세요'); return; }
+    if (!textInput.value.trim()) { showToast('Please enter text first'); return; }
     var lines = [
-      '글자 수(공백 포함): ' + document.getElementById('statChars').textContent,
-      '글자 수(공백 제외): ' + document.getElementById('statCharsNoSpace').textContent,
-      '단어 수: ' + document.getElementById('statWords').textContent,
-      '문장 수: ' + document.getElementById('statSentences').textContent,
-      '문단 수: ' + document.getElementById('statParagraphs').textContent,
-      '줄 수: ' + document.getElementById('statLines').textContent,
-      '바이트 수: ' + document.getElementById('statBytes').textContent,
-      '예상 읽기 시간: ' + document.getElementById('statReadTime').textContent
+      'Characters (with spaces): ' + document.getElementById('statChars').textContent,
+      'Characters (no spaces): ' + document.getElementById('statCharsNoSpace').textContent,
+      'Word count: ' + document.getElementById('statWords').textContent,
+      'Sentence count: ' + document.getElementById('statSentences').textContent,
+      'Paragraph count: ' + document.getElementById('statParagraphs').textContent,
+      'Line count: ' + document.getElementById('statLines').textContent,
+      'Bytes: ' + document.getElementById('statBytes').textContent,
+      'Estimated reading time: ' + document.getElementById('statReadTime').textContent
     ];
     navigator.clipboard.writeText(lines.join('\n')).then(function() {
-      showToast('✓ 통계가 클립보드에 복사되었습니다');
+      showToast('✓ Statistics copied to clipboard');
     });
   });
 
@@ -411,7 +425,7 @@
     try {
       if (document.cookie.indexOf('bk_lang_dismiss=1') !== -1) return;
       var lang = (navigator.language || navigator.userLanguage || '').toLowerCase();
-      if (lang.indexOf('ko') === 0) return;
+      if (lang.indexOf('ko') !== 0) return;
       var banner = document.getElementById('langBanner');
       if (!banner) return;
       banner.classList.add('show');
