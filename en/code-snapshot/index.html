@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
   <link rel="icon" href="/favicon.ico" sizes="32x32">
   <link rel="icon" href="/favicon-16.png" sizes="16x16" type="image/png">
@@ -8,18 +8,17 @@
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="코드를 붙여넣으면 배경·테마·창 스타일을 적용해 공유하기 좋은 코드 스니펫 이미지를 만들어주는 무료 온라인 도구. PNG로 바로 다운로드할 수 있습니다. 서버 전송 없이 브라우저에서 바로 처리합니다." />
-  <meta property="og:title" content="CodeSnapshot — 코드 스니펫 이미지 생성기" />
-  <meta property="og:description" content="코드를 예쁜 테마의 이미지로 만들어 공유하는 무료 온라인 도구입니다. PNG 다운로드 지원." />
+  <meta name="description" content="Free online tool that turns pasted code into a share-ready snippet image with a background, theme, and window style. Download it as PNG instantly. Processed entirely in your browser, nothing is uploaded." />
+  <meta property="og:title" content="CodeSnapshot — Code Snippet Image Generator" />
+  <meta property="og:description" content="A free online tool that turns your code into a beautifully themed image for sharing. Supports PNG download." />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://browserkit.online/code-snapshot/" />
-  <title>CodeSnapshot — 코드 스니펫 이미지 생성기</title>
+  <meta property="og:url" content="https://browserkit.online/en/code-snapshot/" />
+  <title>CodeSnapshot — Code Snippet Image Generator</title>
   <link rel="stylesheet" href="/css/style.css?v=20260724c" />
-  <!-- Google AdSense 승인 대기 중 (2026-07-19 주석 처리, 카카오 애드핏으로 임시 전환) — 승인 후 주석 해제
+  <!-- Google AdSense — pending re-review. Uncomment once approved.
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506"
      crossorigin="anonymous"></script>
   -->
-  <script type="text/javascript" src="//t1.kakaocdn.net/kas/static/ba.min.js" async></script>
   <style>
     .guide-summary { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:24px; margin:0 0 12px; }
     .guide-summary-title { font-size:16px; font-weight:700; color:var(--text); margin:0 0 12px; }
@@ -31,13 +30,16 @@
     .guide-full-link { display:inline-block; margin-top:12px; font-size:14px; font-weight:600; color:var(--point-hover); text-decoration:none; }
     .guide-full-link:hover { text-decoration:underline; }
 
+    .ad-slot { min-height:90px; display:flex; align-items:center; justify-content:center; margin:0 0 12px; }
+    .ad-slot-rect { min-height:250px; }
+
     .setting-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:24px; margin-bottom:20px; }
     .setting-row { display:flex; align-items:center; gap:16px; margin-bottom:18px; flex-wrap:wrap; }
     .setting-row:last-child { margin-bottom:0; }
     .setting-label { font-size:14px; font-weight:600; color:var(--text); min-width:90px; flex-shrink:0; }
 
     .seg-btns { display:flex; gap:6px; flex-wrap:wrap; }
-    .seg-btn { background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:8px 14px; font-size:13px; color:var(--subtext); cursor:pointer; font-family:'Gowun Dodum',sans-serif; }
+    .seg-btn { background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:8px 14px; font-size:13px; color:var(--subtext); cursor:pointer; }
     .seg-btn:hover { border-color:var(--point); color:var(--text); }
     .seg-btn.active { background:rgba(123,108,255,0.15); border-color:var(--point); color:var(--point-hover); font-weight:700; }
 
@@ -53,7 +55,7 @@
     .code-textarea { width:100%; min-height:220px; background:var(--bg); border:1px solid var(--border); border-radius:10px; padding:16px; color:var(--text); font-family:'Fira Code',monospace; font-size:13px; line-height:1.7; resize:vertical; outline:none; box-sizing:border-box; margin-bottom:20px; }
     .code-textarea:focus { border-color:var(--point); }
 
-    .btn-generate { background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border:none; border-radius:12px; padding:14px 32px; font-size:16px; font-weight:700; cursor:pointer; font-family:'Gowun Dodum',sans-serif; width:100%; margin-bottom:20px; }
+    .btn-generate { background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border:none; border-radius:12px; padding:14px 32px; font-size:16px; font-weight:700; cursor:pointer; width:100%; margin-bottom:20px; }
     .btn-generate:hover { transform:translateY(-2px); box-shadow:0 8px 24px var(--glow); }
 
     .preview-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px 24px; margin-bottom:20px; }
@@ -63,7 +65,7 @@
     .preview-empty { color:var(--subtext); font-size:13px; padding:40px 20px; text-align:center; }
 
     .action-bar { display:flex; gap:10px; margin-bottom:48px; flex-wrap:wrap; }
-    .btn-sub { background:var(--card); color:var(--subtext); border:1px solid var(--border); border-radius:10px; padding:10px 18px; font-size:13px; cursor:pointer; font-family:'Gowun Dodum',sans-serif; }
+    .btn-sub { background:var(--card); color:var(--subtext); border:1px solid var(--border); border-radius:10px; padding:10px 18px; font-size:13px; cursor:pointer; }
     .btn-sub:hover { color:var(--text); border-color:var(--point); }
 
     .toast { position:fixed; bottom:32px; left:50%; transform:translateX(-50%) translateY(80px); background:var(--success); color:#fff; border-radius:999px; padding:10px 24px; font-size:14px; font-weight:600; opacity:0; pointer-events:none; z-index:999; }
@@ -81,9 +83,9 @@
     }
   </style>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <meta property="og:image" content="https://browserkit.online/img/og/code-snapshot.png" />
-  <link rel="canonical" href="https://browserkit.online/code-snapshot/" />
+  <link rel="canonical" href="https://browserkit.online/en/code-snapshot/" />
   <link rel="alternate" hreflang="ko" href="https://browserkit.online/code-snapshot/" />
   <link rel="alternate" hreflang="en" href="https://browserkit.online/en/code-snapshot/" />
   <link rel="alternate" hreflang="x-default" href="https://browserkit.online/en/code-snapshot/" />
@@ -93,18 +95,18 @@
 {
   "@context": "https://schema.org",
   "@type": "WebApplication",
-  "name": "CodeSnapshot — 코드 스니펫 이미지 생성기",
-  "url": "https://browserkit.online/code-snapshot/",
-  "description": "코드를 붙여넣으면 배경·테마·창 스타일을 적용해 공유하기 좋은 코드 스니펫 이미지를 만들어주는 무료 온라인 도구. PNG로 바로 다운로드할 수 있습니다. 서버 전송 없이 브라우저에서 바로 처리합니다.",
+  "name": "CodeSnapshot — Code Snippet Image Generator",
+  "url": "https://browserkit.online/en/code-snapshot/",
+  "description": "Free online tool that turns pasted code into a share-ready snippet image with a background, theme, and window style. Download it as PNG instantly. Processed entirely in your browser, nothing is uploaded.",
   "applicationCategory": "UtilityApplication",
   "operatingSystem": "Any",
   "browserRequirements": "Requires JavaScript",
-  "inLanguage": "ko",
+  "inLanguage": "en",
   "isAccessibleForFree": true,
   "offers": {
     "@type": "Offer",
     "price": "0",
-    "priceCurrency": "KRW"
+    "priceCurrency": "USD"
   },
   "publisher": {
     "@type": "Organization",
@@ -121,14 +123,14 @@
     {
       "@type": "ListItem",
       "position": 1,
-      "name": "홈",
-      "item": "https://browserkit.online/"
+      "name": "Home",
+      "item": "https://browserkit.online/en/"
     },
     {
       "@type": "ListItem",
       "position": 2,
-      "name": "코드 스니펫 이미지 생성기",
-      "item": "https://browserkit.online/code-snapshot/"
+      "name": "Code Snippet Image Generator",
+      "item": "https://browserkit.online/en/code-snapshot/"
     }
   ]
 }
@@ -137,24 +139,24 @@
 
 <body>
   <div class="lang-banner" id="langBanner">
-    <span>🌐 This page is also available in <a href="/en/code-snapshot/">English</a>.</span>
+    <span>🌐 이 페이지는 <a href="/code-snapshot/">한국어</a>로도 볼 수 있습니다.</span>
     <button class="lang-banner-close" id="langBannerClose" type="button" aria-label="close">&times;</button>
   </div>
   <header class="header">
     <div class="container">
-      <a href="/" class="header-brand">
-        <div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Gowun Dodum,sans-serif;flex-shrink:0">B</div>
+      <a href="/en/" class="header-brand">
+        <div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Poppins,sans-serif;flex-shrink:0">B</div>
         <span class="header-brand-text"><span style="color:var(--text)">Browser</span><span style="color:var(--point)">Kit</span></span>
       </a>
       <div class="header-right">
         <div class="lang-switcher">
-          <button class="lang-switcher-btn" type="button" data-lang-btn>🌐 <span class="lang-label-full">한국어</span></button>
+          <button class="lang-switcher-btn" type="button" data-lang-btn>🌐 <span class="lang-label-full">English</span></button>
           <div class="lang-switcher-menu" data-lang-menu>
-            <a href="/en/code-snapshot/">English</a>
-            <a href="#" class="active">한국어</a>
+            <a href="#" class="active">English</a>
+            <a href="/code-snapshot/">한국어</a>
           </div>
         </div>
-        <a href="/" class="header-back">&#x2190; <span class="header-back-label">BrowserKit 홈으로</span></a>
+        <a href="/en/" class="header-back">&#x2190; <span class="header-back-label">Back to BrowserKit</span></a>
       </div>
     </div>
   </header>
@@ -162,102 +164,114 @@
   <main><div class="container">
     <div class="hero">
       <div class="hero-icon" style="height:78px;display:flex;justify-content:center;align-items:center"><div style="transform:scale(1.7);transform-origin:center"><div style="width:46px;height:46px;background:#e0c3ff;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="font:700 15px Fira Code,monospace;color:#2a2433;line-height:1;letter-spacing:-.5px;white-space:nowrap">&lt;/&gt;</div></div></div></div>
-      <div class="hero-title-wrap"><h1 class="hero-title">코드 스니펫 이미지 생성기</h1><a href="/blog/76-codesnapshot-howto" class="hero-guide-link">사용법 가이드 보기</a></div>
-      <p class="hero-desc">코드를 붙여넣으면 공유하기 좋은 예쁜 이미지로 만들어드려요</p>
+      <div class="hero-title-wrap"><h1 class="hero-title">Code Snippet Image Generator</h1><a href="/blog/76-codesnapshot-howto" class="hero-guide-link">View usage guide</a></div>
+      <p class="hero-desc">Paste your code and turn it into a beautiful, share-ready image</p>
       <div class="hero-badges">
-        <span class="badge">🔒 완전 로컬 처리</span>
-        <span class="badge">⚡ 무료 사용</span>
-        <span class="badge">🛡️ 서버 전송 없음</span>
-        <span class="badge">📦 설치 불필요</span>
+        <span class="badge">🔒 Fully local processing</span>
+        <span class="badge">⚡ Free to use</span>
+        <span class="badge">🛡️ No server upload</span>
+        <span class="badge">📦 No installation</span>
       </div>
     </div>
-    <div style="margin:0 0 12px"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><div class="adfit-h-desktop"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-QD4pRIpdIj7i2mbt" data-ad-width="728" data-ad-height="90"></ins></div><div class="adfit-h-mobile"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-R4xA2niTT8HgGjoO" data-ad-width="320" data-ad-height="50"></ins></div></div>
+    <!-- Google AdSense Display Ad — pending approval, reserving space -->
+    <div class="ad-slot" id="adTop">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
 
-    <p class="notice">💡 간단한 자체 하이라이터로 문자열·주석·숫자·주요 키워드를 색칠합니다. 복잡한 언어별 문법을 완벽히 인식하지는 못하니, 결과 이미지를 확인 후 필요하면 코드를 다시 다듬어 재생성하세요. 모든 처리는 브라우저에서만 이루어집니다.</p>
+    <p class="notice">💡 This tool uses a simple built-in highlighter to color strings, comments, numbers, and common keywords. It doesn't fully recognize every language's complex syntax, so review the resulting image and re-generate after tweaking your code if needed. All processing happens entirely in your browser.</p>
 
     <div class="setting-card">
       <div class="setting-row">
-        <span class="setting-label">테마</span>
+        <span class="setting-label">Theme</span>
         <div class="seg-btns" id="themeBtns"></div>
       </div>
       <div class="setting-row">
-        <span class="setting-label">창 스타일</span>
+        <span class="setting-label">Window style</span>
         <div class="seg-btns" id="windowBtns">
-          <button class="seg-btn active" data-window="mac">맥 스타일</button>
-          <button class="seg-btn" data-window="none">창 없음</button>
+          <button class="seg-btn active" data-window="mac">Mac style</button>
+          <button class="seg-btn" data-window="none">No window</button>
         </div>
-        <label class="toggle-row"><input type="checkbox" id="lineNumOpt" checked /> 줄 번호 표시</label>
+        <label class="toggle-row"><input type="checkbox" id="lineNumOpt" checked /> Show line numbers</label>
       </div>
       <div class="setting-row">
-        <span class="setting-label">파일명</span>
-        <input type="text" class="num-input" id="filenameInput" placeholder="예: app.js (선택)" style="max-width:200px;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:8px 12px;color:var(--text);font-size:13px;outline:none;" />
-        <span class="setting-label" style="min-width:auto;">글자 크기</span>
+        <span class="setting-label">Filename</span>
+        <input type="text" class="num-input" id="filenameInput" placeholder="e.g. app.js (optional)" style="max-width:200px;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:8px 12px;color:var(--text);font-size:13px;outline:none;" />
+        <span class="setting-label" style="min-width:auto;">Font size</span>
         <div class="count-field"><input type="number" id="fontSizeInput" value="16" min="10" max="28" step="1" /></div>
       </div>
     </div>
 
     <textarea class="code-textarea" id="codeInput" spellcheck="false" placeholder="function greet(name) {
-  // 인사말을 반환합니다
+  // Returns a greeting
   return `Hello, ${name}!`;
 }"></textarea>
 
-    <button class="btn-generate" id="genBtn">&#x1F5BC;&#xFE0F; 이미지 생성</button>
+    <button class="btn-generate" id="genBtn">&#x1F5BC;&#xFE0F; Generate image</button>
 
     <div class="preview-card">
-      <div class="preview-title">🖼️ 미리보기</div>
+      <div class="preview-title">🖼️ Preview</div>
       <div class="preview-canvas-wrap" id="previewWrap">
-        <div class="preview-empty" id="previewEmpty">생성 버튼을 누르면 여기에 코드 이미지가 표시됩니다.</div>
+        <div class="preview-empty" id="previewEmpty">Click Generate and the code image will appear here.</div>
         <canvas id="snapCanvas" style="display:none"></canvas>
       </div>
     </div>
 
     <div class="action-bar">
-      <button class="btn-sub" id="downloadBtn">&#x2B07; PNG 다운로드</button>
-      <button class="btn-sub" id="copyImgBtn">&#x1F4CB; 이미지 복사</button>
+      <button class="btn-sub" id="downloadBtn">&#x2B07; Download PNG</button>
+      <button class="btn-sub" id="copyImgBtn">&#x1F4CB; Copy image</button>
     </div>
 
-    <div style="margin:0 0 12px"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><!-- 카카오 애드핏 (2026-07-22, 쿠팡 파트너스 다이내믹 배너로 교체) — 복원 시 주석 해제: <div class="adfit-h-desktop"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-QD4pRIpdIj7i2mbt" data-ad-width="728" data-ad-height="90"></ins></div><div class="adfit-h-mobile"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-R4xA2niTT8HgGjoO" data-ad-width="320" data-ad-height="50"></ins></div> --><div class="adfit-h-desktop"><script src="https://ads-partners.coupang.com/g.js"></script><script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"728","height":"90","tsource":""});</script></div><div class="adfit-h-mobile"><script src="https://ads-partners.coupang.com/g.js"></script><script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"320","height":"50","tsource":""});</script></div></div>
+    <!-- Google AdSense Display Ad — pending approval, reserving space -->
+    <div class="ad-slot" id="adMiddle">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
 
     <div class="guide-summary">
-      <h2 class="guide-summary-title">사용법 요약</h2>
+      <h2 class="guide-summary-title">Quick guide</h2>
       <ol class="guide-steps">
-        <li>테마·창 스타일 설정</li>
-        <li>코드 입력</li>
-        <li>이미지 생성 및 저장</li>
+        <li>Set the theme and window style</li>
+        <li>Enter your code</li>
+        <li>Generate and save the image</li>
       </ol>
-      <h3 class="guide-faq-title">자주 묻는 질문</h3>
+      <h3 class="guide-faq-title">Frequently asked questions</h3>
       <div class="guide-faq">
         <details>
-          <summary>코드 스니펫 이미지 생성기 도구는 정말 무료인가요?</summary>
-          <p>네, 회원가입이나 설치 없이 완전 무료로 사용할 수 있습니다. 횟수 제한도 없습니다.</p>
+          <summary>Is the Code Snippet Image Generator tool really free?</summary>
+          <p>Yes, it is completely free to use with no sign-up or installation required. There is no usage limit either.</p>
         </details>
         <details>
-          <summary>입력한 내용이 서버로 전송되나요?</summary>
-          <p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용이 외부 서버로 전송되거나 저장되지 않습니다.</p>
+          <summary>Is what I enter sent to a server?</summary>
+          <p>No. All processing happens entirely in your browser, and your input is never sent to or stored on an external server.</p>
         </details>
         <details>
-          <summary>만든 이미지는 어디에 쓰면 좋나요?</summary>
-          <p>블로그, SNS, 발표 자료에 코드를 보기 좋게 공유할 때 활용하기 좋습니다.</p>
+          <summary>What is a good use for the generated image?</summary>
+          <p>It's great for sharing code nicely on blogs, social media, and presentation slides.</p>
         </details>
         <details>
-          <summary>모바일에서도 사용할 수 있나요?</summary>
-          <p>네, 별도의 앱 설치 없이 모바일 브라우저에서도 동일하게 사용할 수 있습니다.</p>
+          <summary>Can I use this on mobile?</summary>
+          <p>Yes, it works the same way in a mobile browser without needing to install any app.</p>
         </details>
       </div>
-      <a href="/blog/76-codesnapshot-howto" class="guide-full-link">전체 가이드 보기 →</a>
+      <a href="/blog/76-codesnapshot-howto" class="guide-full-link">View full guide →</a>
     </div>
 
-    <div style="margin:0 0 12px"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="9500090221"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><div class="adfit-rect-wrap"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-oePL4TCj742xAwqT" data-ad-width="300" data-ad-height="250"></ins></div></div>
+    <!-- Google AdSense Multiplex Ad — pending approval, reserving space -->
+    <div class="ad-slot ad-slot-rect" id="adBottom">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
   </div></main>
 
   <footer class="footer">
     <div class="container">
-      <p class="footer-copy">&#xa9; 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p>
+      <p class="footer-copy">&#xa9; 2026 BrowserKit. All processing happens in your browser.</p>
       <nav class="footer-nav">
-        <a href="/privacy">개인정보 처리방침</a>
-        <a href="/terms">이용약관</a>
-        <a href="/about">서비스 소개</a>
-        <a href="/blog/">블로그</a>
+        <a href="/en/privacy.html">Privacy Policy</a>
+        <a href="/en/terms.html">Terms of Service</a>
+        <a href="/en/about.html">About</a>
+        <a href="/en/blog/">Blog</a>
       </nav>
     </div>
   </footer>
@@ -298,19 +312,19 @@
     });
   });
 
-  // ── 간단한 토큰화 (문자열/주석/숫자/키워드) ──
+  // ── Simple tokenizer (string/comment/number/keyword) ──
   function tokenizeLine(line) {
     var tokens = [];
     var i = 0;
     var len = line.length;
     while (i < len) {
       var ch = line[i];
-      // 줄 주석
+      // Line comment
       if ((ch === '/' && line[i + 1] === '/') || ch === '#') {
         tokens.push({ text: line.slice(i), type: 'comment' });
         break;
       }
-      // 문자열
+      // String
       if (ch === '"' || ch === "'" || ch === '`') {
         var quote = ch;
         var j = i + 1;
@@ -323,7 +337,7 @@
         i = j;
         continue;
       }
-      // 숫자
+      // Number
       if (/[0-9]/.test(ch) && (i === 0 || !/[a-zA-Z0-9_]/.test(line[i - 1]))) {
         var k = i;
         while (k < len && /[0-9.]/.test(line[k])) k++;
@@ -331,7 +345,7 @@
         i = k;
         continue;
       }
-      // 단어(키워드 후보)
+      // Word (keyword candidate)
       if (/[a-zA-Z_]/.test(ch)) {
         var m = i;
         while (m < len && /[a-zA-Z0-9_]/.test(line[m])) m++;
@@ -340,7 +354,7 @@
         i = m;
         continue;
       }
-      // 그 외 문자는 이어붙임
+      // Concatenate any other characters
       var start = i;
       while (i < len && !/[a-zA-Z_0-9"'`#]/.test(line[i]) && !(line[i] === '/' && line[i + 1] === '/')) i++;
       if (i === start) i++;
@@ -359,7 +373,7 @@
 
   function drawSnapshot() {
     var code = document.getElementById('codeInput').value;
-    if (!code.trim()) { showToast('코드를 입력해주세요'); return null; }
+    if (!code.trim()) { showToast('Please enter some code'); return null; }
 
     var fontSize = Math.max(10, Math.min(28, parseInt(document.getElementById('fontSizeInput').value, 10) || 16));
     var showLineNum = document.getElementById('lineNumOpt').checked;
@@ -396,14 +410,14 @@
     var ctx = canvas.getContext('2d');
     ctx.scale(dpr, dpr);
 
-    // 배경 그라데이션
+    // Background gradient
     var grad = ctx.createLinearGradient(0, 0, canvasW, canvasH);
     grad.addColorStop(0, currentTheme.bg[0]);
     grad.addColorStop(1, currentTheme.bg[1]);
     ctx.fillStyle = grad;
     ctx.fillRect(0, 0, canvasW, canvasH);
 
-    // 코드 카드 (그림자 + 둥근 사각형)
+    // Code card (shadow + rounded rectangle)
     var cardX = outerPad, cardY = outerPad, cardR = 14;
     ctx.save();
     ctx.shadowColor = 'rgba(0,0,0,0.35)';
@@ -416,7 +430,7 @@
 
     var contentY = cardY;
 
-    // 창 바
+    // Window bar
     if (currentWindow === 'mac') {
       var dotY = cardY + windowBarH / 2;
       var dotColors = ['#ff5f56', '#ffbd2e', '#27c93f'];
@@ -443,7 +457,7 @@
       contentY += lineHeight;
     }
 
-    // 코드 라인
+    // Code lines
     ctx.font = fontSize + 'px ' + fontFamily;
     ctx.textBaseline = 'alphabetic';
     var baseY = contentY + padY + fontSize;
@@ -482,31 +496,31 @@
     if (!canvas) return;
     document.getElementById('previewEmpty').style.display = 'none';
     canvas.style.display = 'inline-block';
-    showToast('✓ 이미지를 생성했습니다');
+    showToast('✓ Image generated');
   });
 
   document.getElementById('downloadBtn').addEventListener('click', function() {
     var canvas = document.getElementById('snapCanvas');
-    if (canvas.style.display === 'none') { showToast('먼저 이미지를 생성해주세요'); return; }
+    if (canvas.style.display === 'none') { showToast('Please generate an image first'); return; }
     var a = document.createElement('a');
     a.href = canvas.toDataURL('image/png');
     a.download = 'code-snapshot.png';
     a.click();
-    showToast('✓ PNG 파일이 저장됩니다');
+    showToast('✓ Your PNG file has been saved');
   });
 
   document.getElementById('copyImgBtn').addEventListener('click', function() {
     var canvas = document.getElementById('snapCanvas');
-    if (canvas.style.display === 'none') { showToast('먼저 이미지를 생성해주세요'); return; }
+    if (canvas.style.display === 'none') { showToast('Please generate an image first'); return; }
     canvas.toBlob(function(blob) {
       if (navigator.clipboard && window.ClipboardItem) {
         navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]).then(function() {
-          showToast('✓ 이미지가 클립보드에 복사되었습니다');
+          showToast('✓ Image copied to clipboard');
         }).catch(function() {
-          showToast('클립보드 복사가 지원되지 않는 브라우저입니다');
+          showToast('Your browser does not support copying to the clipboard');
         });
       } else {
-        showToast('클립보드 복사가 지원되지 않는 브라우저입니다');
+        showToast('Your browser does not support copying to the clipboard');
       }
     });
   });
@@ -537,7 +551,7 @@
     try {
       if (document.cookie.indexOf('bk_lang_dismiss=1') !== -1) return;
       var lang = (navigator.language || navigator.userLanguage || '').toLowerCase();
-      if (lang.indexOf('ko') === 0) return;
+      if (lang.indexOf('ko') !== 0) return;
       var banner = document.getElementById('langBanner');
       if (!banner) return;
       banner.classList.add('show');
