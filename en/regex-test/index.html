@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
   <link rel="icon" href="/favicon.ico" sizes="32x32">
   <link rel="icon" href="/favicon-16.png" sizes="16x16" type="image/png">
@@ -8,18 +8,18 @@
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="정규식을 입력하면 테스트 텍스트에서 매칭 영역을 실시간으로 하이라이트하는 무료 온라인 정규식 테스터. 서버 전송 없이 브라우저에서 바로 처리합니다." />
-  <meta property="og:title" content="RegexTest — 정규식 테스터" />
-  <meta property="og:description" content="정규식을 실시간으로 테스트하고 매칭 결과를 하이라이트하는 무료 온라인 도구입니다." />
+  <meta name="description" content="Free online regex tester — enter a pattern and see matches highlighted live against your test text. Everything runs in your browser." />
+  <meta property="og:title" content="RegexTest — Regex Tester" />
+  <meta property="og:description" content="Free online tool to test regular expressions and highlight matches live." />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://browserkit.online/regex-test/" />
-  <title>RegexTest — 정규식 테스터</title>
+  <meta property="og:url" content="https://browserkit.online/en/regex-test/" />
+  <title>RegexTest — Regex Tester</title>
   <link rel="stylesheet" href="/css/style.css?v=20260724a" />
-  <!-- Google AdSense 승인 대기 중 (2026-07-19 주석 처리, 카카오 애드핏으로 임시 전환) — 승인 후 주석 해제
+  <link rel="stylesheet" href="/css/style-en.css?v=20260724a" />
+  <!-- Google AdSense — pending re-review. Uncomment once approved.
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506"
      crossorigin="anonymous"></script>
   -->
-  <script type="text/javascript" src="//t1.kakaocdn.net/kas/static/ba.min.js" async></script>
   <style>
     .guide-summary { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:24px; margin:0 0 12px; }
     .guide-summary-title { font-size:16px; font-weight:700; color:var(--text); margin:0 0 12px; }
@@ -30,6 +30,9 @@
     .guide-faq p { margin:8px 0 0; font-size:13px; color:var(--subtext); line-height:1.7; }
     .guide-full-link { display:inline-block; margin-top:12px; font-size:14px; font-weight:600; color:var(--point-hover); text-decoration:none; }
     .guide-full-link:hover { text-decoration:underline; }
+
+    .ad-slot { min-height:90px; display:flex; align-items:center; justify-content:center; margin:0 0 12px; }
+    .ad-slot-rect { min-height:250px; }
 
 
 /* 정규식 입력 영역 */
@@ -51,12 +54,12 @@
 
     /* 프리셋 */
     .preset-wrap { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:16px; }
-    .preset-btn { background:var(--card); border:1px solid var(--border); border-radius:8px; padding:7px 14px; font-size:12px; font-weight:600; color:var(--subtext); cursor:pointer; font-family:'Gowun Dodum',sans-serif; transition:all 0.15s; white-space:nowrap; }
+    .preset-btn { background:var(--card); border:1px solid var(--border); border-radius:8px; padding:7px 14px; font-size:12px; font-weight:600; color:var(--subtext); cursor:pointer; transition:all 0.15s; white-space:nowrap; }
     .preset-btn:hover { border-color:var(--point); color:var(--text); }
 
     /* 테스트 텍스트 */
     .test-label { font-size:13px; font-weight:600; color:var(--subtext); margin-bottom:8px; display:flex; align-items:center; justify-content:space-between; }
-    .test-info { font-size:12px; font-family:'Gowun Dodum',sans-serif; }
+    .test-info { font-size:12px; }
     .test-input { width:100%; background:#0a0a12; border:1px solid var(--border); border-radius:12px; padding:16px; font-family:'Fira Code','JetBrains Mono',monospace; font-size:13px; line-height:1.8; color:#e2e8f0; resize:vertical; min-height:160px; outline:none; transition:border-color 0.2s; margin-bottom:16px; }
     .test-input:focus { border-color:var(--point); }
     .test-input::placeholder { color:#4a5568; }
@@ -72,9 +75,9 @@
     .match-header { font-size:13px; font-weight:600; color:var(--subtext); margin-bottom:10px; }
     .match-list { display:flex; flex-direction:column; gap:8px; }
     .match-item { background:var(--card); border:1px solid var(--border); border-radius:10px; padding:12px 16px; display:grid; grid-template-columns:auto 1fr auto; gap:12px; align-items:center; }
-    .match-idx { font-size:11px; font-weight:700; color:var(--subtext); font-family:'Gowun Dodum',sans-serif; min-width:24px; }
+    .match-idx { font-size:11px; font-weight:700; color:var(--subtext); min-width:24px; }
     .match-val { font-family:'Fira Code',monospace; font-size:13px; color:#FBBF24; word-break:break-all; }
-    .match-pos { font-size:11px; color:var(--subtext); font-family:'Gowun Dodum',sans-serif; white-space:nowrap; }
+    .match-pos { font-size:11px; color:var(--subtext); white-space:nowrap; }
     .match-groups { grid-column:1/-1; display:flex; flex-direction:column; gap:4px; margin-top:4px; }
     .match-group-row { font-size:12px; color:var(--subtext); font-family:'Fira Code',monospace; }
     .match-group-label { color:var(--point-hover); }
@@ -82,9 +85,9 @@
 
     /* 버튼 */
     .action-bar { display:flex; gap:10px; margin-bottom:24px; flex-wrap:wrap; }
-    .btn-sub { background:var(--card); color:var(--subtext); border:1px solid var(--border); border-radius:10px; padding:10px 18px; font-size:13px; cursor:pointer; font-family:'Gowun Dodum',sans-serif; transition:all 0.2s; }
+    .btn-sub { background:var(--card); color:var(--subtext); border:1px solid var(--border); border-radius:10px; padding:10px 18px; font-size:13px; cursor:pointer; transition:all 0.2s; }
     .btn-sub:hover { color:var(--text); border-color:var(--point); }
-    .btn-danger { background:var(--card); color:#F87171; border:1px solid var(--border); border-radius:10px; padding:10px 18px; font-size:13px; cursor:pointer; font-family:'Gowun Dodum',sans-serif; transition:all 0.2s; }
+    .btn-danger { background:var(--card); color:#F87171; border:1px solid var(--border); border-radius:10px; padding:10px 18px; font-size:13px; cursor:pointer; transition:all 0.2s; }
     .btn-danger:hover { border-color:#F87171; }
 
     /* 토스트 */
@@ -105,9 +108,9 @@
     }
   </style>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <meta property="og:image" content="https://browserkit.online/img/og/regex-test.png" />
-  <link rel="canonical" href="https://browserkit.online/regex-test/" />
+  <link rel="canonical" href="https://browserkit.online/en/regex-test/" />
   <link rel="alternate" hreflang="ko" href="https://browserkit.online/regex-test/" />
   <link rel="alternate" hreflang="en" href="https://browserkit.online/en/regex-test/" />
   <link rel="alternate" hreflang="x-default" href="https://browserkit.online/en/regex-test/" />
@@ -117,18 +120,18 @@
 {
   "@context": "https://schema.org",
   "@type": "WebApplication",
-  "name": "RegexTest — 정규식 테스터",
-  "url": "https://browserkit.online/regex-test/",
-  "description": "정규식을 입력하면 테스트 텍스트에서 매칭 영역을 실시간으로 하이라이트하는 무료 온라인 정규식 테스터. 서버 전송 없이 브라우저에서 바로 처리합니다.",
+  "name": "RegexTest — Regex Tester",
+  "url": "https://browserkit.online/en/regex-test/",
+  "description": "Free online regex tester — enter a pattern and see matches highlighted live against your test text. Everything runs in your browser.",
   "applicationCategory": "UtilityApplication",
   "operatingSystem": "Any",
   "browserRequirements": "Requires JavaScript",
-  "inLanguage": "ko",
+  "inLanguage": "en",
   "isAccessibleForFree": true,
   "offers": {
     "@type": "Offer",
     "price": "0",
-    "priceCurrency": "KRW"
+    "priceCurrency": "USD"
   },
   "publisher": {
     "@type": "Organization",
@@ -145,14 +148,14 @@
     {
       "@type": "ListItem",
       "position": 1,
-      "name": "홈",
-      "item": "https://browserkit.online/"
+      "name": "Home",
+      "item": "https://browserkit.online/en/"
     },
     {
       "@type": "ListItem",
       "position": 2,
-      "name": "정규식 테스터",
-      "item": "https://browserkit.online/regex-test/"
+      "name": "Regex Tester",
+      "item": "https://browserkit.online/en/regex-test/"
     }
   ]
 }
@@ -161,139 +164,151 @@
 
 <body>
   <div class="lang-banner" id="langBanner">
-    <span>🌐 This page is also available in <a href="/en/regex-test/">English</a>.</span>
+    <span>🌐 이 페이지는 <a href="/regex-test/">한국어</a>로도 볼 수 있습니다.</span>
     <button class="lang-banner-close" id="langBannerClose" type="button" aria-label="close">&times;</button>
   </div>
   <header class="header">
     <div class="container">
-      <a href="/" class="header-brand">
-        <div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Gowun Dodum,sans-serif;flex-shrink:0">B</div>
+      <a href="/en/" class="header-brand">
+        <div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Poppins,sans-serif;flex-shrink:0">B</div>
         <span class="header-brand-text"><span style="color:var(--text)">Browser</span><span style="color:var(--point)">Kit</span></span>
       </a>
       <div class="header-right">
         <div class="lang-switcher">
-          <button class="lang-switcher-btn" type="button" data-lang-btn>🌐 <span class="lang-label-full">한국어</span></button>
+          <button class="lang-switcher-btn" type="button" data-lang-btn>🌐 <span class="lang-label-full">English</span></button>
           <div class="lang-switcher-menu" data-lang-menu>
-            <a href="/en/regex-test/">English</a>
-            <a href="#" class="active">한국어</a>
+            <a href="#" class="active">English</a>
+            <a href="/regex-test/">한국어</a>
           </div>
         </div>
-        <a href="/" class="header-back">&#x2190; BrowserKit 홈으로</a>
+        <a href="/en/" class="header-back">&#x2190; Back to BrowserKit</a>
       </div>
     </div>
   </header>
 
   <main><div class="container">
     <div class="hero">
-      <div class="hero-icon" style="height:78px;display:flex;justify-content:center;align-items:center"><div style="transform:scale(1.7);transform-origin:center"><div style="width:46px;height:46px;background:#e0c3ff;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="font:700 16px Gowun Dodum,sans-serif;color:#2a2433;line-height:1;letter-spacing:-.5px;white-space:nowrap">.*</div></div></div></div>
-      <div class="hero-title-wrap"><h1 class="hero-title">정규식 테스터</h1><a href="/blog/32-regextest-howto" class="hero-guide-link">사용법 가이드 보기</a></div>
-      <p class="hero-desc">정규식을 입력하면 테스트 텍스트에서 매칭 영역이 실시간으로 하이라이트됩니다</p>
+      <div class="hero-icon" style="height:78px;display:flex;justify-content:center;align-items:center"><div style="transform:scale(1.7);transform-origin:center"><div style="width:46px;height:46px;background:#e0c3ff;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="font:700 16px Poppins,sans-serif;color:#2a2433;line-height:1;letter-spacing:-.5px;white-space:nowrap">.*</div></div></div></div>
+      <div class="hero-title-wrap"><h1 class="hero-title">Regex Tester</h1><a href="/en/blog/regex-test-howto" class="hero-guide-link">View the guide</a></div>
+      <p class="hero-desc">Enter a pattern and matches are highlighted live against your test text</p>
       <div class="hero-badges">
-        <span class="badge">🔒 완전 로컬 처리</span>
-        <span class="badge">⚡ 무료 사용</span>
-        <span class="badge">🛡️ 서버 전송 없음</span>
-        <span class="badge">📦 설치 불필요</span>
+        <span class="badge">🔒 Fully Local</span>
+        <span class="badge">⚡ Free to Use</span>
+        <span class="badge">🛡️ No Server Uploads</span>
+        <span class="badge">📦 No Install Needed</span>
       </div>
     </div>
-    <div style="margin:0 0 12px"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><div class="adfit-h-desktop"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-QD4pRIpdIj7i2mbt" data-ad-width="728" data-ad-height="90"></ins></div><div class="adfit-h-mobile"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-R4xA2niTT8HgGjoO" data-ad-width="320" data-ad-height="50"></ins></div></div>
+    <!-- Google AdSense Display Ad — pending approval, reserving space -->
+    <div class="ad-slot" id="adTop">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
 
 <!-- 정규식 입력 -->
     <div class="regex-input-card">
       <div class="regex-row">
         <span class="regex-slash">/</span>
-        <input type="text" class="regex-field" id="regexField" placeholder="정규식을 입력하세요 (예: \d{3}-\d{4}-\d{4})" autocomplete="off" spellcheck="false" />
+        <input type="text" class="regex-field" id="regexField" placeholder="Enter a pattern (e.g. \d{3}-\d{4}-\d{4})" autocomplete="off" spellcheck="false" />
         <span class="regex-slash">/</span>
         <div class="flag-wrap">
-          <button class="flag-btn active" data-flag="g" title="전체 매칭">g</button>
-          <button class="flag-btn" data-flag="i" title="대소문자 무시">i</button>
-          <button class="flag-btn" data-flag="m" title="멀티라인">m</button>
-          <button class="flag-btn" data-flag="s" title="점(.)이 줄바꿈 포함">s</button>
+          <button class="flag-btn active" data-flag="g" title="Global match">g</button>
+          <button class="flag-btn" data-flag="i" title="Case insensitive">i</button>
+          <button class="flag-btn" data-flag="m" title="Multiline">m</button>
+          <button class="flag-btn" data-flag="s" title="Dot matches newline">s</button>
         </div>
       </div>
-      <div class="regex-status" id="regexStatus"><span class="status-info">정규식을 입력하세요</span></div>
+      <div class="regex-status" id="regexStatus"><span class="status-info">Enter a pattern</span></div>
     </div>
 
     <!-- 빠른 프리셋 -->
     <div class="preset-wrap">
-      <button class="preset-btn" data-preset="email">&#x1F4E7; 이메일</button>
-      <button class="preset-btn" data-preset="phone">&#x1F4F1; 전화번호</button>
+      <button class="preset-btn" data-preset="email">&#x1F4E7; Email</button>
+      <button class="preset-btn" data-preset="phone">&#x1F4F1; Phone</button>
       <button class="preset-btn" data-preset="url">&#x1F517; URL</button>
-      <button class="preset-btn" data-preset="date">&#x1F4C5; 날짜</button>
-      <button class="preset-btn" data-preset="rrn">&#x1F4C4; 주민번호</button>
-      <button class="preset-btn" data-preset="account">&#x1F4B3; 계좌번호</button>
-      <button class="preset-btn" data-preset="ip">&#x1F310; IP 주소</button>
-      <button class="preset-btn" data-preset="hex">&#x1F3A8; HEX 색상</button>
+      <button class="preset-btn" data-preset="date">&#x1F4C5; Date</button>
+      <button class="preset-btn" data-preset="rrn">&#x1F4C4; ID Number</button>
+      <button class="preset-btn" data-preset="account">&#x1F4B3; Bank Account</button>
+      <button class="preset-btn" data-preset="ip">&#x1F310; IP Address</button>
+      <button class="preset-btn" data-preset="hex">&#x1F3A8; HEX Color</button>
     </div>
 
     <!-- 액션 버튼 -->
     <div class="action-bar">
-      <button class="btn-sub" id="copyRegexBtn">&#x1F4CB; 정규식 복사</button>
-      <button class="btn-danger" id="clearBtn">&#x21BA; 초기화</button>
+      <button class="btn-sub" id="copyRegexBtn">&#x1F4CB; Copy Pattern</button>
+      <button class="btn-danger" id="clearBtn">&#x21BA; Reset</button>
     </div>
 
     <!-- 테스트 텍스트 입력 -->
     <div class="test-label">
-      <span>&#x270F;&#xFE0F; 테스트 텍스트</span>
+      <span>&#x270F;&#xFE0F; Test Text</span>
       <span class="test-info" id="textInfo"></span>
     </div>
-    <textarea class="test-input" id="testInput" placeholder="매칭을 테스트할 텍스트를 입력하세요"></textarea>
+    <textarea class="test-input" id="testInput" placeholder="Enter text to test the match against"></textarea>
 
     <!-- 하이라이트 결과 -->
-    <div class="highlight-label">&#x1F4A1; 매칭 하이라이트</div>
+    <div class="highlight-label">&#x1F4A1; Match Highlight</div>
     <div class="highlight-box" id="highlightBox">
-      <span class="highlight-empty">정규식과 테스트 텍스트를 입력하면 매칭 영역이 여기에 표시됩니다.</span>
+      <span class="highlight-empty">Enter a pattern and test text to see matches highlighted here.</span>
     </div>
 
     <!-- 매칭 결과 목록 -->
     <div class="match-section">
-      <div class="match-header" id="matchHeader">매칭 결과</div>
+      <div class="match-header" id="matchHeader">Matches</div>
       <div class="match-list" id="matchList">
-        <div class="match-empty">아직 매칭 결과가 없습니다.</div>
+        <div class="match-empty">No matches yet.</div>
       </div>
     </div>
 
-<div style="margin:0 0 12px"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><!-- 카카오 애드핏 (2026-07-22, 쿠팡 파트너스 다이내믹 배너로 교체) — 복원 시 주석 해제: <div class="adfit-h-desktop"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-QD4pRIpdIj7i2mbt" data-ad-width="728" data-ad-height="90"></ins></div><div class="adfit-h-mobile"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-R4xA2niTT8HgGjoO" data-ad-width="320" data-ad-height="50"></ins></div> --><div class="adfit-h-desktop"><script src="https://ads-partners.coupang.com/g.js"></script><script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"728","height":"90","tsource":""});</script></div><div class="adfit-h-mobile"><script src="https://ads-partners.coupang.com/g.js"></script><script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"320","height":"50","tsource":""});</script></div></div>
+<div style="margin:0 0 12px"><!-- Google AdSense Display Ad — pending approval, reserving space -->
+    <div class="ad-slot" id="adMiddle">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
 
     <div class="guide-summary">
-      <h2 class="guide-summary-title">사용법 요약</h2>
+      <h2 class="guide-summary-title">Quick guide</h2>
       <ol class="guide-steps">
-        <li>정규식 입력</li>
-        <li>플래그 선택 (선택)</li>
-        <li>테스트 텍스트 입력</li>
+        <li>Enter a pattern</li>
+        <li>Choose flags (optional)</li>
+        <li>Enter test text</li>
       </ol>
-      <h3 class="guide-faq-title">자주 묻는 질문</h3>
+      <h3 class="guide-faq-title">FAQ</h3>
       <div class="guide-faq">
         <details>
-          <summary>정규식 테스터 도구는 정말 무료인가요?</summary>
-          <p>네, 회원가입이나 설치 없이 완전 무료로 사용할 수 있습니다. 횟수 제한도 없습니다.</p>
+          <summary>Is this regex tester really free?</summary>
+          <p>Yes, no sign-up or installation required, and there's no limit on how many times you can use it.</p>
         </details>
         <details>
-          <summary>입력한 내용이 서버로 전송되나요?</summary>
-          <p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용이 외부 서버로 전송되거나 저장되지 않습니다.</p>
+          <summary>Is what I enter sent to a server?</summary>
+          <p>No. All processing happens entirely in your browser, nothing you enter is uploaded or stored anywhere.</p>
         </details>
         <details>
-          <summary>어떤 정규식 문법을 기준으로 하나요?</summary>
-          <p>JavaScript 정규식 문법을 기준으로 실시간 매칭 결과를 하이라이트해 보여줍니다.</p>
+          <summary>Which regex syntax does it use?</summary>
+          <p>It uses JavaScript regex syntax and highlights matches live.</p>
         </details>
         <details>
-          <summary>모바일에서도 사용할 수 있나요?</summary>
-          <p>네, 별도의 앱 설치 없이 모바일 브라우저에서도 동일하게 사용할 수 있습니다.</p>
+          <summary>Does it work on mobile?</summary>
+          <p>Yes, it works the same way in your mobile browser with no app install required.</p>
         </details>
       </div>
-      <a href="/blog/32-regextest-howto" class="guide-full-link">전체 가이드 보기 →</a>
+      <a href="/en/blog/regex-test-howto" class="guide-full-link">Read the full guide -></a>
     </div>
 
-    <div style="margin:12px 0"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="9500090221"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><div class="adfit-rect-wrap"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-oePL4TCj742xAwqT" data-ad-width="300" data-ad-height="250"></ins></div></div>
+    <!-- Google AdSense Multiplex Ad — pending approval, reserving space -->
+    <div class="ad-slot ad-slot-rect" id="adBottom">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
   </div></main>
 
   <footer class="footer">
     <div class="container">
-      <p class="footer-copy">&#xa9; 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p>
+      <p class="footer-copy">&#xa9; 2026 BrowserKit. All processing happens in your browser.</p>
       <nav class="footer-nav">
-        <a href="/privacy">개인정보 처리방침</a>
-        <a href="/terms">이용약관</a>
-        <a href="/about">서비스 소개</a>
-        <a href="/blog/">블로그</a>
+        <a href="/en/privacy.html">Privacy Policy</a>
+        <a href="/en/terms.html">Terms of Service</a>
+        <a href="/en/about.html">About</a>
+        <a href="/en/blog/">Blog</a>
       </nav>
     </div>
   </footer>
@@ -303,14 +318,14 @@
   <script>
   // ── 프리셋 데이터 ──
   var PRESETS = {
-    email:   { pattern: '[\\w.+-]+@[\\w-]+\\.[\\w.]+', flags: 'gi', sample: '문의: support@browserkit.online\n안녕하세요 user.name+tag@example.co.kr 로 연락주세요.\ntest@test 는 유효하지 않습니다.' },
-    phone:   { pattern: '01[0-9]-?\\d{3,4}-?\\d{4}', flags: 'g', sample: '전화번호: 010-1234-5678\n또는 01012345678\n팩스: 02-1234-5678 (해당 안 됨)\n010.1234.5678' },
-    url:     { pattern: 'https?:\\/\\/[\\w\\-._~:\\/?#\\[\\]@!$&\'()*+,;=%]+', flags: 'gi', sample: '홈페이지: https://browserkit.online\n블로그: http://example.com/blog?id=1&page=2\n보안: https://secure.site.co.kr/path#section' },
-    date:    { pattern: '\\d{4}[-./](?:0[1-9]|1[0-2])[-./](?:0[1-9]|[12]\\d|3[01])', flags: 'g', sample: '작성일: 2026-06-22\n마감: 2026.12.31\n생년월일: 1990/01/15\n잘못된 형식: 2026-13-01' },
-    rrn:     { pattern: '\\d{6}-[1-4]\\d{6}', flags: 'g', sample: '주민등록번호: 900101-1234567\n외국인등록: 850315-2345678\n잘못된 예: 900101-5234567' },
-    account: { pattern: '\\d{3,6}-\\d{2,6}-\\d{2,6}(?:-\\d{2,3})?', flags: 'g', sample: '국민은행: 123456-78-901234\n신한은행: 110-123-456789\n기업은행: 123-456789-01-012' },
-    ip:      { pattern: '(?:(?:25[0-5]|2[0-4]\\d|[01]?\\d\\d?)\\.){3}(?:25[0-5]|2[0-4]\\d|[01]?\\d\\d?)', flags: 'g', sample: '서버 IP: 192.168.0.1\n공인 IP: 203.0.113.42\nIPv4 최대: 255.255.255.255\n잘못된 예: 256.1.1.1' },
-    hex:     { pattern: '#(?:[0-9a-fA-F]{6}|[0-9a-fA-F]{3})\\b', flags: 'g', sample: '배경색: #FF5733\n포인트: #6C63FF\n단축형: #fff\n잘못된 예: #GGGGGG\n텍스트: #1A1A24' }
+    email:   { pattern: '[\\w.+-]+@[\\w-]+\\.[\\w.]+', flags: 'gi', sample: 'Contact: support@browserkit.online\nHi, please reach out to user.name+tag@example.com\ntest@test is not valid.' },
+    phone:   { pattern: '\\(?\\d{3}\\)?[-.\\s]?\\d{3}[-.\\s]?\\d{4}', flags: 'g', sample: 'Phone: (555) 123-4567\nOr 555-123-4567\nAlt format: 555.123.4567' },
+    url:     { pattern: 'https?:\\/\\/[\\w\\-._~:\\/?#\\[\\]@!$&\'()*+,;=%]+', flags: 'gi', sample: 'Homepage: https://browserkit.online\nBlog: http://example.com/blog?id=1&page=2\nSecure: https://secure.example.com/path#section' },
+    date:    { pattern: '\\d{4}[-./](?:0[1-9]|1[0-2])[-./](?:0[1-9]|[12]\\d|3[01])', flags: 'g', sample: 'Created: 2026-06-22\nDue: 2026.12.31\nBirth date: 1990/01/15\nInvalid: 2026-13-01' },
+    rrn:     { pattern: '\\d{3}-\\d{2}-\\d{4}', flags: 'g', sample: 'SSN: 123-45-6789\nAlt: 987-65-4321\nInvalid: 12-345-6789' },
+    account: { pattern: '\\d{3,6}-\\d{2,6}-\\d{2,6}(?:-\\d{2,3})?', flags: 'g', sample: 'Account A: 123456-78-901234\nAccount B: 110-123-456789\nAccount C: 123-456789-01-012' },
+    ip:      { pattern: '(?:(?:25[0-5]|2[0-4]\\d|[01]?\\d\\d?)\\.){3}(?:25[0-5]|2[0-4]\\d|[01]?\\d\\d?)', flags: 'g', sample: 'Server IP: 192.168.0.1\nPublic IP: 203.0.113.42\nMax IPv4: 255.255.255.255\nInvalid: 256.1.1.1' },
+    hex:     { pattern: '#(?:[0-9a-fA-F]{6}|[0-9a-fA-F]{3})\\b', flags: 'g', sample: 'Background: #FF5733\nAccent: #6C63FF\nShorthand: #fff\nInvalid: #GGGGGG\nText: #1A1A24' }
   };
 
   // ── 상태 ──
@@ -332,7 +347,7 @@
   regexField.addEventListener('input', run);
   testInput.addEventListener('input', function() {
     var v = testInput.value;
-    document.getElementById('textInfo').textContent = v ? v.length.toLocaleString() + '자 · ' + v.split('\n').length + '줄' : '';
+    document.getElementById('textInfo').textContent = v ? v.length.toLocaleString() + ' chars - ' + v.split('\n').length + ' lines' : '';
     run();
   });
 
@@ -343,7 +358,7 @@
     var statusEl = document.getElementById('regexStatus');
 
     if (!pattern) {
-      statusEl.innerHTML = '<span class="status-info">정규식을 입력하세요</span>';
+      statusEl.innerHTML = '<span class="status-info">Enter a pattern</span>';
       renderHighlight(text, []);
       renderMatches([]);
       return;
@@ -370,7 +385,7 @@
     // 매칭 실행
     var matches = [];
     if (!text) {
-      statusEl.innerHTML = '<span class="status-ok">&#x2705; 유효한 정규식</span>';
+      statusEl.innerHTML = '<span class="status-ok">&#x2705; Valid pattern</span>';
       renderHighlight('', []);
       renderMatches([]);
       return;
@@ -396,8 +411,8 @@
 
     var cnt = matches.length;
     statusEl.innerHTML = cnt > 0
-      ? '<span class="status-ok">&#x2705; ' + cnt.toLocaleString() + '개 매칭</span>'
-      : '<span class="status-info">&#x26AA; 매칭 없음</span>';
+      ? '<span class="status-ok">&#x2705; ' + cnt.toLocaleString() + ' matches</span>'
+      : '<span class="status-info">&#x26AA; No matches</span>';
 
     renderHighlight(text, matches);
     renderMatches(matches);
@@ -407,7 +422,7 @@
   function renderHighlight(text, matches) {
     var box = document.getElementById('highlightBox');
     if (!text) {
-      box.innerHTML = '<span class="highlight-empty">정규식과 테스트 텍스트를 입력하면 매칭 영역이 여기에 표시됩니다.</span>';
+      box.innerHTML = '<span class="highlight-empty">Enter a pattern and test text to see matches highlighted here.</span>';
       return;
     }
     if (matches.length === 0) {
@@ -435,18 +450,18 @@
 
     if (matches.length === 0) {
       header.textContent = '매칭 결과';
-      list.innerHTML = '<div class="match-empty">아직 매칭 결과가 없습니다.</div>';
+      list.innerHTML = '<div class="match-empty">No matches yet.</div>';
       return;
     }
 
-    header.textContent = '매칭 결과 (' + matches.length + '개)';
+    header.textContent = 'Matches (' + matches.length + ')';
     var html = '';
     matches.forEach(function(m, i) {
       var groupsHtml = '';
       if (m.groups.length > 0) {
         groupsHtml = '<div class="match-groups">';
         m.groups.forEach(function(g, gi) {
-          groupsHtml += '<div class="match-group-row"><span class="match-group-label">그룹 ' + (gi+1) + ':</span> ' + (g !== undefined ? escHtml(g) : '<span style="color:#4a5568">undefined</span>') + '</div>';
+          groupsHtml += '<div class="match-group-row"><span class="match-group-label">Group ' + (gi+1) + ':</span> ' + (g !== undefined ? escHtml(g) : '<span style="color:#4a5568">undefined</span>') + '</div>';
         });
         groupsHtml += '</div>';
       }
@@ -488,7 +503,7 @@
         fb.classList.toggle('active', flags[fb.dataset.flag]);
       });
       var v = testInput.value;
-      document.getElementById('textInfo').textContent = v.length.toLocaleString() + '자 · ' + v.split('\n').length + '줄';
+      document.getElementById('textInfo').textContent = v.length.toLocaleString() + ' chars - ' + v.split('\n').length + ' lines';
       run();
       showToast('\u2713 \'' + btn.textContent.trim() + '\' \ud504\ub9ac\uc14b \ub85c\ub4dc');
     });
@@ -551,7 +566,7 @@
     try {
       if (document.cookie.indexOf('bk_lang_dismiss=1') !== -1) return;
       var lang = (navigator.language || navigator.userLanguage || '').toLowerCase();
-      if (lang.indexOf('ko') === 0) return;
+      if (lang.indexOf('ko') !== 0) return;
       var banner = document.getElementById('langBanner');
       if (!banner) return;
       banner.classList.add('show');
