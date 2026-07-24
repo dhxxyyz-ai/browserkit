@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
   <link rel="icon" href="/favicon.ico" sizes="32x32">
   <link rel="icon" href="/favicon-16.png" sizes="16x16" type="image/png">
@@ -8,18 +8,18 @@
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="텍스트를 URL 인코딩/디코딩하고, URL 쿼리 파라미터를 파싱하거나 조립하는 무료 온라인 도구. 서버 전송 없이 브라우저에서 바로 처리합니다." />
-  <meta property="og:title" content="URLEncode — URL 인코더/디코더" />
-  <meta property="og:description" content="텍스트를 URL 인코딩/디코딩하고 쿼리 파라미터를 파싱·조립하는 무료 온라인 도구입니다." />
+  <meta name="description" content="Free online tool to URL-encode/decode text, and parse or build URL query parameters. Everything runs in your browser." />
+  <meta property="og:title" content="URLEncode — URL Encoder/Decoder" />
+  <meta property="og:description" content="Free online tool to URL-encode/decode text and parse or build query parameters." />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://browserkit.online/url-encode/" />
-  <title>URLEncode — URL 인코더/디코더</title>
+  <meta property="og:url" content="https://browserkit.online/en/url-encode/" />
+  <title>URLEncode — URL Encoder/Decoder</title>
   <link rel="stylesheet" href="/css/style.css?v=20260724a" />
-  <!-- Google AdSense 승인 대기 중 (2026-07-19 주석 처리, 카카오 애드핏으로 임시 전환) — 승인 후 주석 해제
+  <link rel="stylesheet" href="/css/style-en.css?v=20260724a" />
+  <!-- Google AdSense — pending re-review. Uncomment once approved.
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506"
      crossorigin="anonymous"></script>
   -->
-  <script type="text/javascript" src="//t1.kakaocdn.net/kas/static/ba.min.js" async></script>
   <style>
     .guide-summary { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:24px; margin:0 0 12px; }
     .guide-summary-title { font-size:16px; font-weight:700; color:var(--text); margin:0 0 12px; }
@@ -31,9 +31,12 @@
     .guide-full-link { display:inline-block; margin-top:12px; font-size:14px; font-weight:600; color:var(--point-hover); text-decoration:none; }
     .guide-full-link:hover { text-decoration:underline; }
 
+    .ad-slot { min-height:90px; display:flex; align-items:center; justify-content:center; margin:0 0 12px; }
+    .ad-slot-rect { min-height:250px; }
+
     /* 탭 */
     .tab-wrap { display:flex; gap:8px; margin-bottom:24px; flex-wrap:wrap; }
-    .tab-btn { background:var(--card); color:var(--subtext); border:1px solid var(--border); border-radius:10px; padding:10px 24px; font-size:14px; font-weight:600; cursor:pointer; font-family:'Gowun Dodum',sans-serif; transition:all 0.2s; }
+    .tab-btn { background:var(--card); color:var(--subtext); border:1px solid var(--border); border-radius:10px; padding:10px 24px; font-size:14px; font-weight:600; cursor:pointer; transition:all 0.2s; }
     .tab-btn:hover { border-color:var(--point); color:var(--text); }
     .tab-btn.active { background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border-color:transparent; }
 
@@ -50,17 +53,17 @@
     .text-layout { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:16px; }
     .pane { display:flex; flex-direction:column; gap:8px; }
     .pane-label { font-size:13px; font-weight:600; color:var(--subtext); display:flex; align-items:center; justify-content:space-between; }
-    .pane-info { font-size:11px; color:var(--subtext); font-family:'Gowun Dodum',sans-serif; }
+    .pane-info { font-size:11px; color:var(--subtext); }
     .code-area { background:#0a0a12; border:1px solid var(--border); border-radius:12px; padding:16px; font-family:'Fira Code','JetBrains Mono',monospace; font-size:13px; line-height:1.7; color:#e2e8f0; resize:vertical; min-height:180px; width:100%; outline:none; transition:border-color 0.2s; }
     .code-area:focus { border-color:var(--point); }
-    .code-area::placeholder { color:#4a5568; font-style:italic; font-family:'Gowun Dodum',sans-serif; }
+    .code-area::placeholder { color:#4a5568; font-style:italic; }
 
     .text-actions { display:flex; justify-content:center; gap:10px; margin-bottom:24px; flex-wrap:wrap; }
-    .btn-primary { background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border:none; border-radius:10px; padding:11px 24px; font-size:14px; font-weight:600; cursor:pointer; font-family:'Gowun Dodum',sans-serif; transition:all 0.2s; white-space:nowrap; }
+    .btn-primary { background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border:none; border-radius:10px; padding:11px 24px; font-size:14px; font-weight:600; cursor:pointer; transition:all 0.2s; white-space:nowrap; }
     .btn-primary:hover { transform:translateY(-1px); box-shadow:0 6px 20px var(--glow); }
-    .btn-sub { background:var(--card); color:var(--subtext); border:1px solid var(--border); border-radius:10px; padding:11px 20px; font-size:14px; cursor:pointer; font-family:'Gowun Dodum',sans-serif; transition:all 0.2s; white-space:nowrap; }
+    .btn-sub { background:var(--card); color:var(--subtext); border:1px solid var(--border); border-radius:10px; padding:11px 20px; font-size:14px; cursor:pointer; transition:all 0.2s; white-space:nowrap; }
     .btn-sub:hover { color:var(--text); border-color:var(--point); }
-    .btn-danger { background:var(--card); color:#F87171; border:1px solid var(--border); border-radius:10px; padding:11px 20px; font-size:14px; cursor:pointer; font-family:'Gowun Dodum',sans-serif; transition:all 0.2s; white-space:nowrap; }
+    .btn-danger { background:var(--card); color:#F87171; border:1px solid var(--border); border-radius:10px; padding:11px 20px; font-size:14px; cursor:pointer; transition:all 0.2s; white-space:nowrap; }
     .btn-danger:hover { border-color:#F87171; }
 
     .error-box { background:rgba(248,113,113,0.08); border:1px solid rgba(248,113,113,0.3); border-radius:10px; padding:12px 16px; font-size:13px; color:#F87171; margin-bottom:16px; display:none; }
@@ -108,9 +111,9 @@
     }
   </style>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <meta property="og:image" content="https://browserkit.online/img/og/url-encode.png" />
-  <link rel="canonical" href="https://browserkit.online/url-encode/" />
+  <link rel="canonical" href="https://browserkit.online/en/url-encode/" />
   <link rel="alternate" hreflang="ko" href="https://browserkit.online/url-encode/" />
   <link rel="alternate" hreflang="en" href="https://browserkit.online/en/url-encode/" />
   <link rel="alternate" hreflang="x-default" href="https://browserkit.online/en/url-encode/" />
@@ -120,18 +123,18 @@
 {
   "@context": "https://schema.org",
   "@type": "WebApplication",
-  "name": "URLEncode — URL 인코더/디코더",
-  "url": "https://browserkit.online/url-encode/",
-  "description": "텍스트를 URL 인코딩/디코딩하고, URL 쿼리 파라미터를 파싱하거나 조립하는 무료 온라인 도구. 서버 전송 없이 브라우저에서 바로 처리합니다.",
+  "name": "URLEncode — URL Encoder/Decoder",
+  "url": "https://browserkit.online/en/url-encode/",
+  "description": "Free online tool to URL-encode/decode text, and parse or build URL query parameters. Everything runs in your browser.",
   "applicationCategory": "UtilityApplication",
   "operatingSystem": "Any",
   "browserRequirements": "Requires JavaScript",
-  "inLanguage": "ko",
+  "inLanguage": "en",
   "isAccessibleForFree": true,
   "offers": {
     "@type": "Offer",
     "price": "0",
-    "priceCurrency": "KRW"
+    "priceCurrency": "USD"
   },
   "publisher": {
     "@type": "Organization",
@@ -148,14 +151,14 @@
     {
       "@type": "ListItem",
       "position": 1,
-      "name": "홈",
-      "item": "https://browserkit.online/"
+      "name": "Home",
+      "item": "https://browserkit.online/en/"
     },
     {
       "@type": "ListItem",
       "position": 2,
-      "name": "URL 인코더",
-      "item": "https://browserkit.online/url-encode/"
+      "name": "URL Encoder",
+      "item": "https://browserkit.online/en/url-encode/"
     }
   ]
 }
@@ -164,46 +167,50 @@
 
 <body>
   <div class="lang-banner" id="langBanner">
-    <span>🌐 This page is also available in <a href="/en/url-encode/">English</a>.</span>
+    <span>🌐 이 페이지는 <a href="/url-encode/">한국어</a>로도 볼 수 있습니다.</span>
     <button class="lang-banner-close" id="langBannerClose" type="button" aria-label="close">&times;</button>
   </div>
   <header class="header">
     <div class="container">
-      <a href="/" class="header-brand">
-        <div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Gowun Dodum,sans-serif;flex-shrink:0">B</div>
+      <a href="/en/" class="header-brand">
+        <div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Poppins,sans-serif;flex-shrink:0">B</div>
         <span class="header-brand-text"><span style="color:var(--text)">Browser</span><span style="color:var(--point)">Kit</span></span>
       </a>
       <div class="header-right">
         <div class="lang-switcher">
-          <button class="lang-switcher-btn" type="button" data-lang-btn>🌐 <span class="lang-label-full">한국어</span></button>
+          <button class="lang-switcher-btn" type="button" data-lang-btn>🌐 <span class="lang-label-full">English</span></button>
           <div class="lang-switcher-menu" data-lang-menu>
-            <a href="/en/url-encode/">English</a>
-            <a href="#" class="active">한국어</a>
+            <a href="#" class="active">English</a>
+            <a href="/url-encode/">한국어</a>
           </div>
         </div>
-        <a href="/" class="header-back">&#x2190; BrowserKit 홈으로</a>
+        <a href="/en/" class="header-back">&#x2190; Back to BrowserKit</a>
       </div>
     </div>
   </header>
 
   <main><div class="container">
     <div class="hero">
-      <div class="hero-icon" style="height:78px;display:flex;justify-content:center;align-items:center"><div style="transform:scale(1.7);transform-origin:center"><div style="width:46px;height:46px;background:#e0c3ff;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="font:700 15px Gowun Dodum,sans-serif;color:#2a2433;line-height:1;letter-spacing:-.5px;white-space:nowrap">%20</div></div></div></div>
-      <div class="hero-title-wrap"><h1 class="hero-title">URL 인코더</h1><a href="/blog/50-urlencode-howto" class="hero-guide-link">사용법 가이드 보기</a></div>
-      <p class="hero-desc">텍스트를 URL 인코딩/디코딩하고 쿼리 파라미터를 파싱·조립하세요</p>
+      <div class="hero-icon" style="height:78px;display:flex;justify-content:center;align-items:center"><div style="transform:scale(1.7);transform-origin:center"><div style="width:46px;height:46px;background:#e0c3ff;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="font:700 15px Poppins,sans-serif;color:#2a2433;line-height:1;letter-spacing:-.5px;white-space:nowrap">%20</div></div></div></div>
+      <div class="hero-title-wrap"><h1 class="hero-title">URL Encoder</h1><a href="/en/blog/url-encode-howto" class="hero-guide-link">View the guide</a></div>
+      <p class="hero-desc">URL-encode or decode text, and parse or build query parameters</p>
       <div class="hero-badges">
-        <span class="badge">🔒 완전 로컬 처리</span>
-        <span class="badge">⚡ 무료 사용</span>
-        <span class="badge">🛡️ 서버 전송 없음</span>
-        <span class="badge">📦 설치 불필요</span>
+        <span class="badge">🔒 Fully Local</span>
+        <span class="badge">⚡ Free to Use</span>
+        <span class="badge">🛡️ No Server Uploads</span>
+        <span class="badge">📦 No Install Needed</span>
       </div>
     </div>
-    <div style="margin:0 0 12px"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><div class="adfit-h-desktop"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-QD4pRIpdIj7i2mbt" data-ad-width="728" data-ad-height="90"></ins></div><div class="adfit-h-mobile"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-R4xA2niTT8HgGjoO" data-ad-width="320" data-ad-height="50"></ins></div></div>
+    <!-- Google AdSense Display Ad — pending approval, reserving space -->
+    <div class="ad-slot" id="adTop">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
 
     <div class="tab-wrap">
-      <button class="tab-btn active" data-tab="text">&#x1F510; 인코딩/디코딩</button>
-      <button class="tab-btn" data-tab="parse">&#x1F50D; 쿼리 파싱</button>
-      <button class="tab-btn" data-tab="build">&#x1F527; 쿼리 빌더</button>
+      <button class="tab-btn active" data-tab="text">&#x1F510; Encode/Decode</button>
+      <button class="tab-btn" data-tab="parse">&#x1F50D; Parse Query</button>
+      <button class="tab-btn" data-tab="build">&#x1F527; Query Builder</button>
     </div>
 
     <!-- ── 텍스트 인코딩/디코딩 탭 ── -->
@@ -212,109 +219,117 @@
         <button class="mode-btn active" data-mode="component">encodeURIComponent</button>
         <button class="mode-btn" data-mode="uri">encodeURI</button>
       </div>
-      <div class="mode-desc" id="mode-desc">쿼리 파라미터 값, 폼 데이터 등 URL의 한 조각을 인코딩할 때 사용합니다. <code>&amp; = ? / : #</code> 등 URL 구분자까지 모두 인코딩합니다.</div>
+      <div class="mode-desc" id="mode-desc">Use this to encode a single piece of a URL, like a query parameter value or form data. It encodes all URL delimiters too, like <code>&amp; = ? / : #</code>.</div>
 
       <div class="text-layout">
         <div class="pane">
           <div class="pane-label">
-            <span>입력</span>
+            <span>Input</span>
             <span class="pane-info" id="input-info"></span>
           </div>
-          <textarea class="code-area" id="text-input" placeholder="인코딩할 텍스트 또는 디코딩할 URL 인코딩 문자열을 입력하세요"></textarea>
+          <textarea class="code-area" id="text-input" placeholder="Enter text to encode, or a URL-encoded string to decode"></textarea>
         </div>
         <div class="pane">
           <div class="pane-label">
-            <span>결과</span>
+            <span>Result</span>
             <span class="pane-info" id="output-info"></span>
           </div>
-          <textarea class="code-area" id="text-output" placeholder="결과가 여기에 표시됩니다" readonly></textarea>
+          <textarea class="code-area" id="text-output" placeholder="Result will appear here" readonly></textarea>
         </div>
       </div>
 
       <div class="error-box" id="text-error"></div>
 
       <div class="text-actions">
-        <button class="btn-primary" id="btn-encode">&#x1F510; 인코딩</button>
-        <button class="btn-primary" id="btn-decode">&#x1F513; 디코딩</button>
-        <button class="btn-sub" id="btn-copy-output">&#x1F4CB; 결과 복사</button>
-        <button class="btn-sub" id="btn-swap">&#x21C4; 입출력 교환</button>
-        <button class="btn-danger" id="btn-clear-text">&#x21BA; 초기화</button>
+        <button class="btn-primary" id="btn-encode">&#x1F510; Encode</button>
+        <button class="btn-primary" id="btn-decode">&#x1F513; Decode</button>
+        <button class="btn-sub" id="btn-copy-output">&#x1F4CB; Copy Result</button>
+        <button class="btn-sub" id="btn-swap">&#x21C4; Swap</button>
+        <button class="btn-danger" id="btn-clear-text">&#x21BA; Reset</button>
       </div>
     </div>
 
     <!-- ── 쿼리 파싱 탭 ── -->
     <div class="panel" id="panel-parse">
-      <div class="pane-label" style="margin-bottom:8px;"><span>URL 또는 쿼리 문자열</span></div>
-      <input type="text" class="parse-input" id="parse-input" placeholder="https://example.com/search?q=hello+world&page=2 또는 q=hello&page=2" />
+      <div class="pane-label" style="margin-bottom:8px;"><span>URL or query string</span></div>
+      <input type="text" class="parse-input" id="parse-input" placeholder="https://example.com/search?q=hello+world&page=2 or q=hello&page=2" />
       <div class="parse-result" id="parse-result">
-        <div class="parse-empty">URL이나 쿼리 문자열을 입력하면 파라미터가 표 형태로 표시됩니다</div>
+        <div class="parse-empty">Enter a URL or query string to see the parameters as a table</div>
       </div>
       <div class="text-actions">
-        <button class="btn-sub" id="btn-copy-json">&#x1F4CB; JSON으로 복사</button>
-        <button class="btn-danger" id="btn-clear-parse">&#x21BA; 초기화</button>
+        <button class="btn-sub" id="btn-copy-json">&#x1F4CB; Copy as JSON</button>
+        <button class="btn-danger" id="btn-clear-parse">&#x21BA; Reset</button>
       </div>
     </div>
 
     <!-- ── 쿼리 빌더 탭 ── -->
     <div class="panel" id="panel-build">
-      <div class="pane-label" style="margin-bottom:8px;"><span>기본 URL (선택사항)</span></div>
+      <div class="pane-label" style="margin-bottom:8px;"><span>Base URL (optional)</span></div>
       <input type="text" class="builder-base" id="builder-base" placeholder="https://example.com/search" />
 
-      <div class="pane-label" style="margin-bottom:8px;"><span>파라미터</span></div>
+      <div class="pane-label" style="margin-bottom:8px;"><span>Parameters</span></div>
       <div class="builder-rows" id="builder-rows"></div>
-      <div class="builder-add" id="builder-add">+ 파라미터 추가</div>
+      <div class="builder-add" id="builder-add">+ Add parameter</div>
 
-      <div class="pane-label" style="margin-bottom:8px;"><span>조립된 URL</span></div>
+      <div class="pane-label" style="margin-bottom:8px;"><span>Built URL</span></div>
       <div class="builder-result" id="builder-result">—</div>
 
       <div class="text-actions">
-        <button class="btn-primary" id="btn-copy-build">&#x1F4CB; URL 복사</button>
-        <button class="btn-danger" id="btn-clear-build">&#x21BA; 초기화</button>
+        <button class="btn-primary" id="btn-copy-build">&#x1F4CB; Copy URL</button>
+        <button class="btn-danger" id="btn-clear-build">&#x21BA; Reset</button>
       </div>
     </div>
 
-    <div style="margin:0 0 12px"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><!-- 카카오 애드핏 (2026-07-22, 쿠팡 파트너스 다이내믹 배너로 교체) — 복원 시 주석 해제: <div class="adfit-h-desktop"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-QD4pRIpdIj7i2mbt" data-ad-width="728" data-ad-height="90"></ins></div><div class="adfit-h-mobile"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-R4xA2niTT8HgGjoO" data-ad-width="320" data-ad-height="50"></ins></div> --><div class="adfit-h-desktop"><script src="https://ads-partners.coupang.com/g.js"></script><script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"728","height":"90","tsource":""});</script></div><div class="adfit-h-mobile"><script src="https://ads-partners.coupang.com/g.js"></script><script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"320","height":"50","tsource":""});</script></div></div>
+    <div style="margin:0 0 12px"><!-- Google AdSense Display Ad — pending approval, reserving space -->
+    <div class="ad-slot" id="adMiddle">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
 
     <div class="guide-summary">
-      <h2 class="guide-summary-title">사용법 요약</h2>
+      <h2 class="guide-summary-title">Quick guide</h2>
       <ol class="guide-steps">
-        <li>인코딩 방식 선택</li>
-        <li>텍스트 입력</li>
-        <li>결과 확인 및 복사</li>
+        <li>Choose an encoding mode</li>
+        <li>Enter your text</li>
+        <li>Check the result and copy</li>
       </ol>
-      <h3 class="guide-faq-title">자주 묻는 질문</h3>
+      <h3 class="guide-faq-title">FAQ</h3>
       <div class="guide-faq">
         <details>
-          <summary>URL 인코더 도구는 정말 무료인가요?</summary>
-          <p>네, 회원가입이나 설치 없이 완전 무료로 사용할 수 있습니다. 횟수 제한도 없습니다.</p>
+          <summary>Is this URL encoder really free?</summary>
+          <p>Yes, no sign-up or installation required, and there's no limit on how many times you can use it.</p>
         </details>
         <details>
-          <summary>입력한 내용이 서버로 전송되나요?</summary>
-          <p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용이 외부 서버로 전송되거나 저장되지 않습니다.</p>
+          <summary>Is what I enter sent to a server?</summary>
+          <p>No. All processing happens entirely in your browser, nothing you enter is uploaded or stored anywhere.</p>
         </details>
         <details>
-          <summary>한글이 포함된 URL도 변환되나요?</summary>
-          <p>네, 한글 등 비ASCII 문자를 UTF-8 기반 퍼센트 인코딩으로 변환하고 다시 복원할 수 있습니다.</p>
+          <summary>Does it work with non-ASCII characters in URLs?</summary>
+          <p>Yes, non-ASCII characters are converted to UTF-8-based percent-encoding and can be decoded back again.</p>
         </details>
         <details>
-          <summary>모바일에서도 사용할 수 있나요?</summary>
-          <p>네, 별도의 앱 설치 없이 모바일 브라우저에서도 동일하게 사용할 수 있습니다.</p>
+          <summary>Does it work on mobile?</summary>
+          <p>Yes, it works the same way in your mobile browser with no app install required.</p>
         </details>
       </div>
-      <a href="/blog/50-urlencode-howto" class="guide-full-link">전체 가이드 보기 →</a>
+      <a href="/en/blog/url-encode-howto" class="guide-full-link">Read the full guide -></a>
     </div>
 
-    <div style="margin:12px 0"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="9500090221"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><div class="adfit-rect-wrap"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-oePL4TCj742xAwqT" data-ad-width="300" data-ad-height="250"></ins></div></div>
+    <!-- Google AdSense Multiplex Ad — pending approval, reserving space -->
+    <div class="ad-slot ad-slot-rect" id="adBottom">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
   </div></main>
 
   <footer class="footer">
     <div class="container">
-      <p class="footer-copy">&#xa9; 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p>
+      <p class="footer-copy">&#xa9; 2026 BrowserKit. All processing happens in your browser.</p>
       <nav class="footer-nav">
-        <a href="/privacy">개인정보 처리방침</a>
-        <a href="/terms">이용약관</a>
-        <a href="/about">서비스 소개</a>
-        <a href="/blog/">블로그</a>
+        <a href="/en/privacy.html">Privacy Policy</a>
+        <a href="/en/terms.html">Terms of Service</a>
+        <a href="/en/about.html">About</a>
+        <a href="/en/blog/">Blog</a>
       </nav>
     </div>
   </footer>
@@ -349,8 +364,8 @@
   var currentMode = 'component';
 
   var MODE_DESC = {
-    component: '쿼리 파라미터 값, 폼 데이터 등 URL의 한 조각을 인코딩할 때 사용합니다. <code>& = ? / : #</code> 등 URL 구분자까지 모두 인코딩합니다.',
-    uri: '완전한 URL 전체를 인코딩할 때 사용합니다. <code>: / ? # &amp; =</code> 등 URL 구조에 필요한 구분자는 그대로 유지합니다.'
+    component: 'Use this to encode a single piece of a URL, like a query parameter value or form data. It encodes all URL delimiters too, like <code>& = ? / : #</code>.',
+    uri: 'Use this to encode a complete URL. Delimiters needed for URL structure, like <code>: / ? # &amp; =</code>, are left untouched.'
   };
 
   document.querySelectorAll('.mode-btn').forEach(function(btn) {
@@ -364,43 +379,43 @@
 
   function updateInfo(inputEl, infoEl) {
     var val = inputEl.value;
-    infoEl.textContent = val ? val.length.toLocaleString() + '자' : '';
+    infoEl.textContent = val ? val.length.toLocaleString() + ' chars' : '';
   }
   textInput.addEventListener('input', function() { updateInfo(textInput, inputInfo); });
 
   document.getElementById('btn-encode').addEventListener('click', function() {
     var val = textInput.value;
-    if (!val) { showError('인코딩할 텍스트를 입력해주세요.'); return; }
+    if (!val) { showError('Please enter text to encode.'); return; }
     clearError();
     try {
       var encoded = currentMode === 'component' ? encodeURIComponent(val) : encodeURI(val);
       textOutput.value = encoded;
       updateInfo(textOutput, outputInfo);
-      showToast('✓ 인코딩 완료');
+      showToast('✓ Encoded');
     } catch (e) {
-      showError('인코딩 중 오류가 발생했습니다: ' + e.message);
+      showError('Encoding failed: ' + e.message);
     }
   });
 
   document.getElementById('btn-decode').addEventListener('click', function() {
     var val = textInput.value;
-    if (!val) { showError('디코딩할 문자열을 입력해주세요.'); return; }
+    if (!val) { showError('Please enter a string to decode.'); return; }
     clearError();
     try {
       var decoded = currentMode === 'component' ? decodeURIComponent(val) : decodeURI(val);
       textOutput.value = decoded;
       updateInfo(textOutput, outputInfo);
-      showToast('✓ 디코딩 완료');
+      showToast('✓ Decoded');
     } catch (e) {
-      showError('올바른 URL 인코딩 형식이 아닙니다. 입력값을 확인해주세요.');
+      showError('That is not valid URL encoding. Please check your input.');
     }
   });
 
   document.getElementById('btn-copy-output').addEventListener('click', function() {
     var val = textOutput.value;
-    if (!val) { showToast('복사할 결과가 없습니다'); return; }
+    if (!val) { showToast('Nothing to copy yet'); return; }
     navigator.clipboard.writeText(val).then(function() {
-      showToast('✓ 결과가 클립보드에 복사되었습니다');
+      showToast('✓ Copied to clipboard');
     });
   });
 
@@ -439,7 +454,7 @@
   function renderParse() {
     var val = parseInput.value.trim();
     if (!val) {
-      parseResult.innerHTML = '<div class="parse-empty">URL이나 쿼리 문자열을 입력하면 파라미터가 표 형태로 표시됩니다</div>';
+      parseResult.innerHTML = '<div class="parse-empty">Enter a URL or query string to see the parameters as a table</div>';
       currentParsed = [];
       return;
     }
@@ -453,18 +468,18 @@
     currentParsed = entries;
 
     if (!entries.length) {
-      parseResult.innerHTML = '<div class="parse-empty">인식된 파라미터가 없습니다</div>';
+      parseResult.innerHTML = '<div class="parse-empty">No parameters found</div>';
       return;
     }
 
     parseResult.innerHTML = entries.map(function(pair) {
-      return '<div class="parse-row"><span class="parse-key">' + escapeHtml(pair[0]) + '</span><span class="parse-val">' + escapeHtml(pair[1]) + '</span><span class="parse-copy" data-val="' + escapeHtml(pair[1]) + '">복사</span></div>';
+      return '<div class="parse-row"><span class="parse-key">' + escapeHtml(pair[0]) + '</span><span class="parse-val">' + escapeHtml(pair[1]) + '</span><span class="parse-copy" data-val="' + escapeHtml(pair[1]) + '">Copy</span></div>';
     }).join('');
 
     parseResult.querySelectorAll('.parse-copy').forEach(function(btn) {
       btn.addEventListener('click', function() {
         navigator.clipboard.writeText(btn.dataset.val).then(function() {
-          showToast('✓ 값이 복사되었습니다');
+          showToast('✓ Value copied');
         });
       });
     });
@@ -475,11 +490,11 @@
   }
 
   document.getElementById('btn-copy-json').addEventListener('click', function() {
-    if (!currentParsed.length) { showToast('복사할 파라미터가 없습니다'); return; }
+    if (!currentParsed.length) { showToast('No parameters to copy'); return; }
     var obj = {};
     currentParsed.forEach(function(pair) { obj[pair[0]] = pair[1]; });
     navigator.clipboard.writeText(JSON.stringify(obj, null, 2)).then(function() {
-      showToast('✓ JSON으로 복사되었습니다');
+      showToast('✓ Copied as JSON');
     });
   });
 
@@ -497,8 +512,8 @@
   function addBuilderRow(key, val) {
     var row = document.createElement('div');
     row.className = 'builder-row';
-    row.innerHTML = '<input type="text" class="builder-input builder-key" placeholder="키" value="' + escapeHtml(key || '') + '" />' +
-                     '<input type="text" class="builder-input builder-val" placeholder="값" value="' + escapeHtml(val || '') + '" />' +
+    row.innerHTML = '<input type="text" class="builder-input builder-key" placeholder="Key" value="' + escapeHtml(key || '') + '" />' +
+                     '<input type="text" class="builder-input builder-val" placeholder="Value" value="' + escapeHtml(val || '') + '" />' +
                      '<button class="builder-remove">&#x2715;</button>';
     row.querySelector('.builder-key').addEventListener('input', renderBuild);
     row.querySelector('.builder-val').addEventListener('input', renderBuild);
@@ -532,9 +547,9 @@
   }
 
   document.getElementById('btn-copy-build').addEventListener('click', function() {
-    if (!currentBuildURL) { showToast('복사할 URL이 없습니다'); return; }
+    if (!currentBuildURL) { showToast('No URL to copy'); return; }
     navigator.clipboard.writeText(currentBuildURL).then(function() {
-      showToast('✓ URL이 복사되었습니다');
+      showToast('✓ URL copied');
     });
   });
 
@@ -569,7 +584,7 @@
     try {
       if (document.cookie.indexOf('bk_lang_dismiss=1') !== -1) return;
       var lang = (navigator.language || navigator.userLanguage || '').toLowerCase();
-      if (lang.indexOf('ko') === 0) return;
+      if (lang.indexOf('ko') !== 0) return;
       var banner = document.getElementById('langBanner');
       if (!banner) return;
       banner.classList.add('show');
