@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
   <link rel="icon" href="/favicon.ico" sizes="32x32">
   <link rel="icon" href="/favicon-16.png" sizes="16x16" type="image/png">
@@ -8,18 +8,18 @@
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="UUID(v4)를 즉시 생성하는 무료 온라인 도구. 한 번에 최대 1000개까지 대량 생성하고, 대문자·하이픈 제거·중괄호 등 형식을 선택해 복사하거나 텍스트 파일로 다운로드합니다. 서버 전송 없이 브라우저에서 바로 처리합니다." />
-  <meta property="og:title" content="UUIDGen — UUID 생성기" />
-  <meta property="og:description" content="UUID(v4)를 즉시 생성하고 대량으로 만들어 복사·다운로드하는 무료 온라인 도구입니다." />
+  <meta name="description" content="Free online tool to generate UUIDs (v4) instantly. Generate up to 1000 at once, choose uppercase, remove hyphens, or wrap in braces, then copy or download as a text file. Everything runs in your browser." />
+  <meta property="og:title" content="UUIDGen — UUID Generator" />
+  <meta property="og:description" content="Free online tool to instantly generate UUIDs (v4) in bulk, then copy or download them." />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://browserkit.online/uuid-gen/" />
-  <title>UUIDGen — UUID 생성기</title>
+  <meta property="og:url" content="https://browserkit.online/en/uuid-gen/" />
+  <title>UUIDGen — UUID Generator</title>
   <link rel="stylesheet" href="/css/style.css?v=20260724a" />
-  <!-- Google AdSense 승인 대기 중 (2026-07-19 주석 처리, 카카오 애드핏으로 임시 전환) — 승인 후 주석 해제
+  <link rel="stylesheet" href="/css/style-en.css?v=20260724a" />
+  <!-- Google AdSense — pending re-review. Uncomment once approved.
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506"
      crossorigin="anonymous"></script>
   -->
-  <script type="text/javascript" src="//t1.kakaocdn.net/kas/static/ba.min.js" async></script>
   <style>
     .guide-summary { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:24px; margin:0 0 12px; }
     .guide-summary-title { font-size:16px; font-weight:700; color:var(--text); margin:0 0 12px; }
@@ -30,6 +30,9 @@
     .guide-faq p { margin:8px 0 0; font-size:13px; color:var(--subtext); line-height:1.7; }
     .guide-full-link { display:inline-block; margin-top:12px; font-size:14px; font-weight:600; color:var(--point-hover); text-decoration:none; }
     .guide-full-link:hover { text-decoration:underline; }
+
+    .ad-slot { min-height:90px; display:flex; align-items:center; justify-content:center; margin:0 0 12px; }
+    .ad-slot-rect { min-height:250px; }
 
     .single-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:24px; margin-bottom:20px; display:flex; align-items:center; gap:16px; flex-wrap:wrap; }
     .single-uuid { flex:1; min-width:240px; font-family:'Fira Code','JetBrains Mono',monospace; font-size:19px; font-weight:600; color:var(--text); word-break:break-all; }
@@ -46,19 +49,19 @@
     .count-field input:focus { border-color:var(--point); }
     .toggle-chip { display:flex; align-items:center; gap:6px; font-size:13px; color:var(--subtext); cursor:pointer; user-select:none; }
     .toggle-chip input { accent-color:var(--point); width:16px; height:16px; cursor:pointer; }
-    .gen-btn { background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border:none; border-radius:10px; padding:10px 22px; font-size:14px; font-weight:700; cursor:pointer; font-family:'Gowun Dodum',sans-serif; margin-left:auto; }
+    .gen-btn { background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border:none; border-radius:10px; padding:10px 22px; font-size:14px; font-weight:700; cursor:pointer; margin-left:auto; }
     .gen-btn:hover { transform:translateY(-2px); box-shadow:0 8px 24px var(--glow); }
 
     .result-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px 24px; margin-bottom:20px; }
     .result-title { font-size:13px; font-weight:600; color:var(--subtext); margin-bottom:12px; display:flex; justify-content:space-between; align-items:center; }
     .result-textarea { width:100%; min-height:280px; background:var(--bg); border:1px solid var(--border); border-radius:10px; padding:14px 16px; color:var(--text); font-family:'Fira Code','JetBrains Mono',monospace; font-size:13px; line-height:1.9; resize:vertical; outline:none; }
     .result-textarea:focus { border-color:var(--point); }
-    .result-empty { color:var(--subtext); font-style:italic; font-family:'Gowun Dodum',sans-serif; text-align:center; padding:40px 0; }
+    .result-empty { color:var(--subtext); font-style:italic; text-align:center; padding:40px 0; }
 
     .action-bar { display:flex; gap:10px; margin-bottom:48px; flex-wrap:wrap; }
-    .btn-sub { background:var(--card); color:var(--subtext); border:1px solid var(--border); border-radius:10px; padding:10px 18px; font-size:13px; cursor:pointer; font-family:'Gowun Dodum',sans-serif; }
+    .btn-sub { background:var(--card); color:var(--subtext); border:1px solid var(--border); border-radius:10px; padding:10px 18px; font-size:13px; cursor:pointer; }
     .btn-sub:hover { color:var(--text); border-color:var(--point); }
-    .btn-danger { background:var(--card); color:#F87171; border:1px solid var(--border); border-radius:10px; padding:10px 18px; font-size:13px; cursor:pointer; font-family:'Gowun Dodum',sans-serif; }
+    .btn-danger { background:var(--card); color:#F87171; border:1px solid var(--border); border-radius:10px; padding:10px 18px; font-size:13px; cursor:pointer; }
     .btn-danger:hover { border-color:#F87171; }
 
     .toast { position:fixed; bottom:32px; left:50%; transform:translateX(-50%) translateY(80px); background:var(--success); color:#fff; border-radius:999px; padding:10px 24px; font-size:14px; font-weight:600; opacity:0; pointer-events:none; z-index:999; transition:all 0.3s ease; }
@@ -77,9 +80,9 @@
     }
   </style>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <meta property="og:image" content="https://browserkit.online/img/og/uuid-gen.png" />
-  <link rel="canonical" href="https://browserkit.online/uuid-gen/" />
+  <link rel="canonical" href="https://browserkit.online/en/uuid-gen/" />
   <link rel="alternate" hreflang="ko" href="https://browserkit.online/uuid-gen/" />
   <link rel="alternate" hreflang="en" href="https://browserkit.online/en/uuid-gen/" />
   <link rel="alternate" hreflang="x-default" href="https://browserkit.online/en/uuid-gen/" />
@@ -89,18 +92,18 @@
 {
   "@context": "https://schema.org",
   "@type": "WebApplication",
-  "name": "UUIDGen — UUID 생성기",
-  "url": "https://browserkit.online/uuid-gen/",
-  "description": "UUID(v4)를 즉시 생성하는 무료 온라인 도구. 한 번에 최대 1000개까지 대량 생성하고, 대문자·하이픈 제거·중괄호 등 형식을 선택해 복사하거나 텍스트 파일로 다운로드합니다. 서버 전송 없이 브라우저에서 바로 처리합니다.",
+  "name": "UUIDGen — UUID Generator",
+  "url": "https://browserkit.online/en/uuid-gen/",
+  "description": "Free online tool to generate UUIDs (v4) instantly. Generate up to 1000 at once, choose uppercase, remove hyphens, or wrap in braces, then copy or download as a text file. Everything runs in your browser.",
   "applicationCategory": "UtilityApplication",
   "operatingSystem": "Any",
   "browserRequirements": "Requires JavaScript",
-  "inLanguage": "ko",
+  "inLanguage": "en",
   "isAccessibleForFree": true,
   "offers": {
     "@type": "Offer",
     "price": "0",
-    "priceCurrency": "KRW"
+    "priceCurrency": "USD"
   },
   "publisher": {
     "@type": "Organization",
@@ -117,14 +120,14 @@
     {
       "@type": "ListItem",
       "position": 1,
-      "name": "홈",
-      "item": "https://browserkit.online/"
+      "name": "Home",
+      "item": "https://browserkit.online/en/"
     },
     {
       "@type": "ListItem",
       "position": 2,
-      "name": "UUID 생성기",
-      "item": "https://browserkit.online/uuid-gen/"
+      "name": "UUID Generator",
+      "item": "https://browserkit.online/en/uuid-gen/"
     }
   ]
 }
@@ -133,121 +136,133 @@
 
 <body>
   <div class="lang-banner" id="langBanner">
-    <span>🌐 This page is also available in <a href="/en/uuid-gen/">English</a>.</span>
+    <span>🌐 이 페이지는 <a href="/uuid-gen/">한국어</a>로도 볼 수 있습니다.</span>
     <button class="lang-banner-close" id="langBannerClose" type="button" aria-label="close">&times;</button>
   </div>
   <header class="header">
     <div class="container">
-      <a href="/" class="header-brand">
-        <div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Gowun Dodum,sans-serif;flex-shrink:0">B</div>
+      <a href="/en/" class="header-brand">
+        <div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Poppins,sans-serif;flex-shrink:0">B</div>
         <span class="header-brand-text"><span style="color:var(--text)">Browser</span><span style="color:var(--point)">Kit</span></span>
       </a>
       <div class="header-right">
         <div class="lang-switcher">
-          <button class="lang-switcher-btn" type="button" data-lang-btn>🌐 <span class="lang-label-full">한국어</span></button>
+          <button class="lang-switcher-btn" type="button" data-lang-btn>🌐 <span class="lang-label-full">English</span></button>
           <div class="lang-switcher-menu" data-lang-menu>
-            <a href="/en/uuid-gen/">English</a>
-            <a href="#" class="active">한국어</a>
+            <a href="#" class="active">English</a>
+            <a href="/uuid-gen/">한국어</a>
           </div>
         </div>
-        <a href="/" class="header-back">&#x2190; BrowserKit 홈으로</a>
+        <a href="/en/" class="header-back">&#x2190; Back to BrowserKit</a>
       </div>
     </div>
   </header>
 
   <main><div class="container">
     <div class="hero">
-      <div class="hero-icon" style="height:78px;display:flex;justify-content:center;align-items:center"><div style="transform:scale(1.7);transform-origin:center"><div style="width:46px;height:46px;background:#e0c3ff;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="font:700 14px Gowun Dodum,sans-serif;color:#2a2433;line-height:1;letter-spacing:-.5px;white-space:nowrap">UUID</div></div></div></div>
-      <div class="hero-title-wrap"><h1 class="hero-title">UUID 생성기</h1><a href="/blog/60-uuidgen-howto" class="hero-guide-link">사용법 가이드 보기</a></div>
-      <p class="hero-desc">UUID(v4)를 즉시 생성하고, 필요한 만큼 대량으로 만들어 복사·다운로드하세요</p>
+      <div class="hero-icon" style="height:78px;display:flex;justify-content:center;align-items:center"><div style="transform:scale(1.7);transform-origin:center"><div style="width:46px;height:46px;background:#e0c3ff;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="font:700 14px Poppins,sans-serif;color:#2a2433;line-height:1;letter-spacing:-.5px;white-space:nowrap">UUID</div></div></div></div>
+      <div class="hero-title-wrap"><h1 class="hero-title">UUID Generator</h1><a href="/en/blog/uuid-gen-howto" class="hero-guide-link">View the guide</a></div>
+      <p class="hero-desc">Instantly generate UUIDs (v4), in bulk if you need to — then copy or download</p>
       <div class="hero-badges">
-        <span class="badge">🔒 완전 로컬 처리</span>
-        <span class="badge">⚡ 무료 사용</span>
-        <span class="badge">🛡️ 서버 전송 없음</span>
-        <span class="badge">📦 설치 불필요</span>
+        <span class="badge">🔒 Fully Local</span>
+        <span class="badge">⚡ Free to Use</span>
+        <span class="badge">🛡️ No Server Uploads</span>
+        <span class="badge">📦 No Install Needed</span>
       </div>
     </div>
-    <div style="margin:0 0 12px"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><div class="adfit-h-desktop"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-QD4pRIpdIj7i2mbt" data-ad-width="728" data-ad-height="90"></ins></div><div class="adfit-h-mobile"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-R4xA2niTT8HgGjoO" data-ad-width="320" data-ad-height="50"></ins></div></div>
+    <!-- Google AdSense Display Ad — pending approval, reserving space -->
+    <div class="ad-slot" id="adTop">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
 
-    <p class="notice">💡 브라우저의 <code>crypto.randomUUID()</code>(RFC 4122 버전 4)를 사용해 암호학적으로 안전한 난수 기반 UUID를 생성합니다. 서버로 전송되지 않으며, 개발용 더미 ID, DB 기본키, 테스트 데이터 등에 자유롭게 사용할 수 있습니다.</p>
+    <p class="notice">💡 Uses your browser's <code>crypto.randomUUID()</code> (RFC 4122 version 4) to generate cryptographically secure random UUIDs. Nothing is sent to a server — use them freely for dev placeholder IDs, database primary keys, test data, and more.</p>
 
     <div class="single-card">
       <div class="single-uuid" id="singleUuid">—</div>
       <div class="single-btns">
-        <button class="icon-btn" id="singleRefreshBtn" title="새로 생성">&#x21BA;</button>
-        <button class="icon-btn" id="singleCopyBtn" title="복사">&#x1F4CB;</button>
+        <button class="icon-btn" id="singleRefreshBtn" title="Generate new">&#x21BA;</button>
+        <button class="icon-btn" id="singleCopyBtn" title="Copy">&#x1F4CB;</button>
       </div>
     </div>
 
     <div class="options-card">
-      <div class="options-title">⚙️ 대량 생성 옵션</div>
+      <div class="options-title">⚙️ Bulk Generation Options</div>
       <div class="options-row">
         <div class="count-field">
-          <label>생성 개수</label>
+          <label>Count</label>
           <input type="number" id="countInput" min="1" max="1000" value="5" />
         </div>
-        <label class="toggle-chip"><input type="checkbox" id="uppercaseOpt" /> 대문자</label>
-        <label class="toggle-chip"><input type="checkbox" id="noHyphenOpt" /> 하이픈(-) 제거</label>
-        <label class="toggle-chip"><input type="checkbox" id="bracesOpt" /> 중괄호 {} 감싸기</label>
-        <button class="gen-btn" id="genBtn">&#x1F3B2; 생성하기</button>
+        <label class="toggle-chip"><input type="checkbox" id="uppercaseOpt" /> Uppercase</label>
+        <label class="toggle-chip"><input type="checkbox" id="noHyphenOpt" /> Remove hyphens</label>
+        <label class="toggle-chip"><input type="checkbox" id="bracesOpt" /> Wrap in braces {}</label>
+        <button class="gen-btn" id="genBtn">&#x1F3B2; Generate</button>
       </div>
     </div>
 
     <div class="result-card">
       <div class="result-title">
-        <span>생성 결과 (<span id="resultCount">0</span>개)</span>
+        <span>Result (<span id="resultCount">0</span>)</span>
       </div>
-      <textarea class="result-textarea" id="resultTextarea" readonly placeholder="생성하기 버튼을 누르면 UUID 목록이 여기에 표시됩니다."></textarea>
+      <textarea class="result-textarea" id="resultTextarea" readonly placeholder="Click Generate to see your UUID list here."></textarea>
     </div>
 
     <div class="action-bar">
-      <button class="btn-sub" id="copyAllBtn">&#x1F4CB; 전체 복사</button>
-      <button class="btn-sub" id="downloadBtn">&#x2B07; TXT 다운로드</button>
-      <button class="btn-danger" id="clearBtn">&#x21BA; 초기화</button>
+      <button class="btn-sub" id="copyAllBtn">&#x1F4CB; Copy All</button>
+      <button class="btn-sub" id="downloadBtn">&#x2B07; Download TXT</button>
+      <button class="btn-danger" id="clearBtn">&#x21BA; Reset</button>
     </div>
 
-    <div style="margin:0 0 12px"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><!-- 카카오 애드핏 (2026-07-22, 쿠팡 파트너스 다이내믹 배너로 교체) — 복원 시 주석 해제: <div class="adfit-h-desktop"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-QD4pRIpdIj7i2mbt" data-ad-width="728" data-ad-height="90"></ins></div><div class="adfit-h-mobile"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-R4xA2niTT8HgGjoO" data-ad-width="320" data-ad-height="50"></ins></div> --><div class="adfit-h-desktop"><script src="https://ads-partners.coupang.com/g.js"></script><script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"728","height":"90","tsource":""});</script></div><div class="adfit-h-mobile"><script src="https://ads-partners.coupang.com/g.js"></script><script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"320","height":"50","tsource":""});</script></div></div>
+    <div style="margin:0 0 12px"><!-- Google AdSense Display Ad — pending approval, reserving space -->
+    <div class="ad-slot" id="adMiddle">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
 
     <div class="guide-summary">
-      <h2 class="guide-summary-title">사용법 요약</h2>
+      <h2 class="guide-summary-title">Quick guide</h2>
       <ol class="guide-steps">
-        <li>UUID 1개만 필요할 때</li>
-        <li>여러 개가 필요할 때 — 대량 생성 옵션 설정</li>
-        <li>생성하기 → 복사 또는 다운로드</li>
+        <li>Need just one UUID? Use the top box</li>
+        <li>Need several? Set the bulk options</li>
+        <li>Generate → copy or download</li>
       </ol>
-      <h3 class="guide-faq-title">자주 묻는 질문</h3>
+      <h3 class="guide-faq-title">FAQ</h3>
       <div class="guide-faq">
         <details>
-          <summary>UUID 생성기 도구는 정말 무료인가요?</summary>
-          <p>네, 회원가입이나 설치 없이 완전 무료로 사용할 수 있습니다. 횟수 제한도 없습니다.</p>
+          <summary>Is this UUID generator really free?</summary>
+          <p>Yes — no sign-up or installation required, and there's no limit on how many times you can use it.</p>
         </details>
         <details>
-          <summary>입력한 내용이 서버로 전송되나요?</summary>
-          <p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용이 외부 서버로 전송되거나 저장되지 않습니다.</p>
+          <summary>Is what I enter sent to a server?</summary>
+          <p>No. All processing happens entirely in your browser — nothing you enter is uploaded or stored anywhere.</p>
         </details>
         <details>
-          <summary>생성된 UUID는 중복될 수 있나요?</summary>
-          <p>난수 기반으로 생성되어 실무적으로 중복 가능성은 무시할 수 있을 만큼 낮습니다.</p>
+          <summary>Can generated UUIDs collide?</summary>
+          <p>They are randomly generated, so in practice the chance of a collision is negligible.</p>
         </details>
         <details>
-          <summary>모바일에서도 사용할 수 있나요?</summary>
-          <p>네, 별도의 앱 설치 없이 모바일 브라우저에서도 동일하게 사용할 수 있습니다.</p>
+          <summary>Does it work on mobile?</summary>
+          <p>Yes, it works the same way in your mobile browser with no app install required.</p>
         </details>
       </div>
-      <a href="/blog/60-uuidgen-howto" class="guide-full-link">전체 가이드 보기 →</a>
+      <a href="/en/blog/uuid-gen-howto" class="guide-full-link">Read the full guide →</a>
     </div>
 
-    <div style="margin:0 0 12px"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="9500090221"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><div class="adfit-rect-wrap"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-oePL4TCj742xAwqT" data-ad-width="300" data-ad-height="250"></ins></div></div>
+    <!-- Google AdSense Multiplex Ad — pending approval, reserving space -->
+    <div class="ad-slot ad-slot-rect" id="adBottom">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
   </div></main>
 
   <footer class="footer">
     <div class="container">
-      <p class="footer-copy">&#xa9; 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p>
+      <p class="footer-copy">&#xa9; 2026 BrowserKit. All processing happens in your browser.</p>
       <nav class="footer-nav">
-        <a href="/privacy">개인정보 처리방침</a>
-        <a href="/terms">이용약관</a>
-        <a href="/about">서비스 소개</a>
-        <a href="/blog/">블로그</a>
+        <a href="/en/privacy.html">Privacy Policy</a>
+        <a href="/en/terms.html">Terms of Service</a>
+        <a href="/en/about.html">About</a>
+        <a href="/en/blog/">Blog</a>
       </nav>
     </div>
   </footer>
@@ -284,7 +299,7 @@
   document.getElementById('singleCopyBtn').addEventListener('click', function() {
     if (singleUuid.textContent === '—') return;
     navigator.clipboard.writeText(singleUuid.textContent).then(function() {
-      showToast('✓ 복사되었습니다');
+      showToast('✓ Copied');
     });
   });
 
@@ -299,25 +314,25 @@
     for (var i = 0; i < n; i++) currentList.push(formatUuid(rawUuid()));
     resultTextarea.value = currentList.join('\n');
     resultCount.textContent = currentList.length;
-    showToast('✓ UUID ' + n + '개를 생성했습니다');
+    showToast('✓ Generated ' + n + ' UUID(s)');
   });
 
   document.getElementById('copyAllBtn').addEventListener('click', function() {
-    if (!currentList.length) { showToast('먼저 UUID를 생성해주세요'); return; }
+    if (!currentList.length) { showToast('Generate a UUID first'); return; }
     navigator.clipboard.writeText(currentList.join('\n')).then(function() {
-      showToast('✓ 전체 복사되었습니다');
+      showToast('✓ Copied all');
     });
   });
 
   document.getElementById('downloadBtn').addEventListener('click', function() {
-    if (!currentList.length) { showToast('먼저 UUID를 생성해주세요'); return; }
+    if (!currentList.length) { showToast('Generate a UUID first'); return; }
     var blob = new Blob([currentList.join('\n')], { type: 'text/plain;charset=utf-8' });
     var a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
     a.download = 'uuid-list.txt';
     a.click();
     URL.revokeObjectURL(a.href);
-    showToast('✓ TXT 파일이 저장됩니다');
+    showToast('✓ TXT file saved');
   });
 
   document.getElementById('clearBtn').addEventListener('click', function() {
@@ -354,7 +369,7 @@
     try {
       if (document.cookie.indexOf('bk_lang_dismiss=1') !== -1) return;
       var lang = (navigator.language || navigator.userLanguage || '').toLowerCase();
-      if (lang.indexOf('ko') === 0) return;
+      if (lang.indexOf('ko') !== 0) return;
       var banner = document.getElementById('langBanner');
       if (!banner) return;
       banner.classList.add('show');
