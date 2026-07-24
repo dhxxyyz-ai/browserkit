@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
   <link rel="icon" href="/favicon.ico" sizes="32x32">
   <link rel="icon" href="/favicon-16.png" sizes="16x16" type="image/png">
@@ -8,18 +8,17 @@
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="색상 1개를 입력하면 보색, 유사색, 삼각 배색 등 색상 조화 팔레트를 자동 생성하는 무료 온라인 도구. CSS 변수로 내보내기 지원. 서버 전송 없이 브라우저에서 바로 처리합니다." />
-  <meta property="og:title" content="PaletteGen — 색상 팔레트 생성기" />
-  <meta property="og:description" content="색상 1개로 보색, 유사색, 삼각 배색 등 조화로운 팔레트를 즉시 생성하는 무료 온라인 도구입니다." />
+  <meta name="description" content="Free online tool that generates a color-harmony palette — complementary, analogous, triadic, and more — from a single input color. Supports CSS variable export. Processed entirely in your browser, nothing is uploaded." />
+  <meta property="og:title" content="PaletteGen — Color Palette Generator" />
+  <meta property="og:description" content="A free online tool that instantly generates a harmonious palette — complementary, analogous, triadic, and more — from a single color." />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://browserkit.online/palette-gen/" />
-  <title>PaletteGen — 색상 팔레트 생성기</title>
+  <meta property="og:url" content="https://browserkit.online/en/palette-gen/" />
+  <title>PaletteGen — Color Palette Generator</title>
   <link rel="stylesheet" href="/css/style.css?v=20260724c" />
-  <!-- Google AdSense 승인 대기 중 (2026-07-19 주석 처리, 카카오 애드핏으로 임시 전환) — 승인 후 주석 해제
+  <!-- Google AdSense — pending re-review. Uncomment once approved.
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506"
      crossorigin="anonymous"></script>
   -->
-  <script type="text/javascript" src="//t1.kakaocdn.net/kas/static/ba.min.js" async></script>
   <style>
     .guide-summary { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:24px; margin:0 0 12px; }
     .guide-summary-title { font-size:16px; font-weight:700; color:var(--text); margin:0 0 12px; }
@@ -31,7 +30,10 @@
     .guide-full-link { display:inline-block; margin-top:12px; font-size:14px; font-weight:600; color:var(--point-hover); text-decoration:none; }
     .guide-full-link:hover { text-decoration:underline; }
 
-    /* 입력 */
+    .ad-slot { min-height:90px; display:flex; align-items:center; justify-content:center; margin:0 0 12px; }
+    .ad-slot-rect { min-height:250px; }
+
+    /* Input */
     .input-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:24px; margin-bottom:20px; }
     .input-row { display:flex; gap:12px; align-items:center; flex-wrap:wrap; }
     .color-swatch-input { width:56px; height:56px; border-radius:12px; border:2px solid var(--border); cursor:pointer; padding:0; background:none; flex-shrink:0; }
@@ -42,14 +44,14 @@
     .error-msg { color:#F87171; font-size:13px; margin-top:8px; display:none; }
     .error-msg.show { display:block; }
 
-    /* 하모니 탭 */
+    /* Harmony tabs */
     .harmony-wrap { display:flex; gap:8px; margin-bottom:20px; flex-wrap:wrap; }
-    .harmony-btn { background:var(--card); color:var(--subtext); border:1px solid var(--border); border-radius:10px; padding:10px 18px; font-size:13px; font-weight:600; cursor:pointer; font-family:'Gowun Dodum',sans-serif; transition:all 0.2s; white-space:nowrap; }
+    .harmony-btn { background:var(--card); color:var(--subtext); border:1px solid var(--border); border-radius:10px; padding:10px 18px; font-size:13px; font-weight:600; cursor:pointer; transition:all 0.2s; white-space:nowrap; }
     .harmony-btn:hover { border-color:var(--point); color:var(--text); }
     .harmony-btn.active { background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border-color:transparent; }
     .harmony-desc { font-size:12px; color:var(--subtext); margin-bottom:20px; line-height:1.6; }
 
-    /* 팔레트 결과 */
+    /* Palette result */
     .palette-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:14px; margin-bottom:20px; }
     .color-card { background:var(--card); border:1px solid var(--border); border-radius:12px; overflow:hidden; }
     .color-card-swatch { height:90px; cursor:pointer; position:relative; }
@@ -60,11 +62,11 @@
     .color-card-copy { background:var(--bg); border:1px solid var(--border); border-radius:6px; padding:3px 9px; font-size:11px; color:var(--subtext); cursor:pointer; flex-shrink:0; }
     .color-card-copy:hover { border-color:var(--point); color:var(--text); }
 
-    /* CSS 내보내기 */
+    /* CSS export */
     .export-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px 24px; margin-bottom:48px; }
     .export-title { font-size:13px; font-weight:600; color:var(--subtext); margin-bottom:12px; }
     .export-code { background:#0a0a12; border:1px solid var(--border); border-radius:10px; padding:16px; font-family:'Fira Code',monospace; font-size:13px; line-height:1.8; color:#68d391; overflow-x:auto; white-space:pre; margin-bottom:12px; }
-    .btn-primary { background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border:none; border-radius:10px; padding:10px 20px; font-size:13px; font-weight:600; cursor:pointer; font-family:'Gowun Dodum',sans-serif; transition:all 0.2s; }
+    .btn-primary { background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border:none; border-radius:10px; padding:10px 20px; font-size:13px; font-weight:600; cursor:pointer; transition:all 0.2s; }
     .btn-primary:hover { transform:translateY(-1px); box-shadow:0 6px 20px var(--glow); }
 
     .toast { position:fixed; bottom:32px; left:50%; transform:translateX(-50%) translateY(80px); background:var(--success); color:#fff; border-radius:999px; padding:10px 24px; font-size:14px; font-weight:600; opacity:0; pointer-events:none; z-index:999; transition:all 0.3s ease; }
@@ -83,9 +85,9 @@
     }
   </style>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <meta property="og:image" content="https://browserkit.online/img/og/palette-gen.png" />
-  <link rel="canonical" href="https://browserkit.online/palette-gen/" />
+  <link rel="canonical" href="https://browserkit.online/en/palette-gen/" />
   <link rel="alternate" hreflang="ko" href="https://browserkit.online/palette-gen/" />
   <link rel="alternate" hreflang="en" href="https://browserkit.online/en/palette-gen/" />
   <link rel="alternate" hreflang="x-default" href="https://browserkit.online/en/palette-gen/" />
@@ -95,18 +97,18 @@
 {
   "@context": "https://schema.org",
   "@type": "WebApplication",
-  "name": "PaletteGen — 색상 팔레트 생성기",
-  "url": "https://browserkit.online/palette-gen/",
-  "description": "색상 1개를 입력하면 보색, 유사색, 삼각 배색 등 색상 조화 팔레트를 자동 생성하는 무료 온라인 도구. CSS 변수로 내보내기 지원. 서버 전송 없이 브라우저에서 바로 처리합니다.",
+  "name": "PaletteGen — Color Palette Generator",
+  "url": "https://browserkit.online/en/palette-gen/",
+  "description": "Free online tool that generates a color-harmony palette — complementary, analogous, triadic, and more — from a single input color. Supports CSS variable export. Processed entirely in your browser, nothing is uploaded.",
   "applicationCategory": "UtilityApplication",
   "operatingSystem": "Any",
   "browserRequirements": "Requires JavaScript",
-  "inLanguage": "ko",
+  "inLanguage": "en",
   "isAccessibleForFree": true,
   "offers": {
     "@type": "Offer",
     "price": "0",
-    "priceCurrency": "KRW"
+    "priceCurrency": "USD"
   },
   "publisher": {
     "@type": "Organization",
@@ -123,14 +125,14 @@
     {
       "@type": "ListItem",
       "position": 1,
-      "name": "홈",
-      "item": "https://browserkit.online/"
+      "name": "Home",
+      "item": "https://browserkit.online/en/"
     },
     {
       "@type": "ListItem",
       "position": 2,
-      "name": "색상 팔레트 생성기",
-      "item": "https://browserkit.online/palette-gen/"
+      "name": "Color Palette Generator",
+      "item": "https://browserkit.online/en/palette-gen/"
     }
   ]
 }
@@ -139,24 +141,24 @@
 
 <body>
   <div class="lang-banner" id="langBanner">
-    <span>🌐 This page is also available in <a href="/en/palette-gen/">English</a>.</span>
+    <span>🌐 이 페이지는 <a href="/palette-gen/">한국어</a>로도 볼 수 있습니다.</span>
     <button class="lang-banner-close" id="langBannerClose" type="button" aria-label="close">&times;</button>
   </div>
   <header class="header">
     <div class="container">
-      <a href="/" class="header-brand">
-        <div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Gowun Dodum,sans-serif;flex-shrink:0">B</div>
+      <a href="/en/" class="header-brand">
+        <div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Poppins,sans-serif;flex-shrink:0">B</div>
         <span class="header-brand-text"><span style="color:var(--text)">Browser</span><span style="color:var(--point)">Kit</span></span>
       </a>
       <div class="header-right">
         <div class="lang-switcher">
-          <button class="lang-switcher-btn" type="button" data-lang-btn>🌐 <span class="lang-label-full">한국어</span></button>
+          <button class="lang-switcher-btn" type="button" data-lang-btn>🌐 <span class="lang-label-full">English</span></button>
           <div class="lang-switcher-menu" data-lang-menu>
-            <a href="/en/palette-gen/">English</a>
-            <a href="#" class="active">한국어</a>
+            <a href="#" class="active">English</a>
+            <a href="/palette-gen/">한국어</a>
           </div>
         </div>
-        <a href="/" class="header-back">&#x2190; <span class="header-back-label">BrowserKit 홈으로</span></a>
+        <a href="/en/" class="header-back">&#x2190; <span class="header-back-label">Back to BrowserKit</span></a>
       </div>
     </div>
   </header>
@@ -164,88 +166,100 @@
   <main><div class="container">
     <div class="hero">
       <div class="hero-icon" style="height:78px;display:flex;justify-content:center;align-items:center"><div style="transform:scale(1.7);transform-origin:center"><div style="width:46px;height:46px;background:#ffd9a8;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="display:flex;gap:3px"><div style="width:11px;height:11px;border-radius:50%;background:#ff8a5e;border:2px solid #2a2433;box-sizing:border-box"></div><div style="width:11px;height:11px;border-radius:50%;background:#5dffb0;border:2px solid #2a2433;box-sizing:border-box;margin-top:8px"></div><div style="width:11px;height:11px;border-radius:50%;background:#6aa8ff;border:2px solid #2a2433;box-sizing:border-box"></div></div></div></div></div>
-      <div class="hero-title-wrap"><h1 class="hero-title">색상 팔레트 생성기</h1><a href="/blog/53-palettegen-howto" class="hero-guide-link">사용법 가이드 보기</a></div>
-      <p class="hero-desc">색상 1개로 보색, 유사색, 삼각 배색 등 조화로운 팔레트를 즉시 생성하세요</p>
+      <div class="hero-title-wrap"><h1 class="hero-title">Color Palette Generator</h1><a href="/blog/53-palettegen-howto" class="hero-guide-link">View usage guide</a></div>
+      <p class="hero-desc">Instantly generate a harmonious palette — complementary, analogous, triadic, and more — from a single color</p>
       <div class="hero-badges">
-        <span class="badge">🔒 완전 로컬 처리</span>
-        <span class="badge">⚡ 무료 사용</span>
-        <span class="badge">🛡️ 서버 전송 없음</span>
-        <span class="badge">📦 설치 불필요</span>
+        <span class="badge">🔒 Fully local processing</span>
+        <span class="badge">⚡ Free to use</span>
+        <span class="badge">🛡️ No server upload</span>
+        <span class="badge">📦 No installation</span>
       </div>
     </div>
-    <div style="margin:0 0 12px"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><div class="adfit-h-desktop"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-QD4pRIpdIj7i2mbt" data-ad-width="728" data-ad-height="90"></ins></div><div class="adfit-h-mobile"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-R4xA2niTT8HgGjoO" data-ad-width="320" data-ad-height="50"></ins></div></div>
+    <!-- Google AdSense Display Ad — pending approval, reserving space -->
+    <div class="ad-slot" id="adTop">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
 
-    <!-- 입력 -->
+    <!-- Input -->
     <div class="input-card">
       <div class="input-row">
         <input type="color" class="color-swatch-input" id="colorSwatch" value="#7b6cff" />
         <input type="text" class="hex-input" id="hexInput" value="#7B6CFF" maxlength="7" />
       </div>
-      <div class="error-msg" id="errorMsg">올바른 HEX 색상 코드를 입력해주세요 (예: #7B6CFF).</div>
+      <div class="error-msg" id="errorMsg">Please enter a valid HEX color code (e.g. #7B6CFF).</div>
     </div>
 
-    <!-- 하모니 선택 -->
+    <!-- Harmony selection -->
     <div class="harmony-wrap">
-      <button class="harmony-btn active" data-type="complementary">보색</button>
-      <button class="harmony-btn" data-type="analogous">유사색</button>
-      <button class="harmony-btn" data-type="triad">삼각 배색</button>
-      <button class="harmony-btn" data-type="split">분할 보색</button>
-      <button class="harmony-btn" data-type="monochromatic">단색조</button>
+      <button class="harmony-btn active" data-type="complementary">Complementary</button>
+      <button class="harmony-btn" data-type="analogous">Analogous</button>
+      <button class="harmony-btn" data-type="triad">Triadic</button>
+      <button class="harmony-btn" data-type="split">Split Complementary</button>
+      <button class="harmony-btn" data-type="monochromatic">Monochromatic</button>
     </div>
     <div class="harmony-desc" id="harmonyDesc"></div>
 
-    <!-- 팔레트 결과 -->
+    <!-- Palette result -->
     <div class="palette-grid" id="paletteGrid"></div>
 
-    <!-- CSS 변수 내보내기 -->
+    <!-- CSS variable export -->
     <div class="export-card">
-      <div class="export-title">📤 CSS 변수로 내보내기</div>
+      <div class="export-title">📤 Export as CSS variables</div>
       <div class="export-code" id="exportCode"></div>
-      <button class="btn-primary" id="copyExportBtn">📋 CSS 변수 복사</button>
+      <button class="btn-primary" id="copyExportBtn">📋 Copy CSS Variables</button>
     </div>
 
-    <div style="margin:0 0 12px"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><!-- 카카오 애드핏 (2026-07-22, 쿠팡 파트너스 다이내믹 배너로 교체) — 복원 시 주석 해제: <div class="adfit-h-desktop"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-QD4pRIpdIj7i2mbt" data-ad-width="728" data-ad-height="90"></ins></div><div class="adfit-h-mobile"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-R4xA2niTT8HgGjoO" data-ad-width="320" data-ad-height="50"></ins></div> --><div class="adfit-h-desktop"><script src="https://ads-partners.coupang.com/g.js"></script><script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"728","height":"90","tsource":""});</script></div><div class="adfit-h-mobile"><script src="https://ads-partners.coupang.com/g.js"></script><script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"320","height":"50","tsource":""});</script></div></div>
+    <!-- Google AdSense Display Ad — pending approval, reserving space -->
+    <div class="ad-slot" id="adMiddle">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
 
     <div class="guide-summary">
-      <h2 class="guide-summary-title">사용법 요약</h2>
+      <h2 class="guide-summary-title">Quick guide</h2>
       <ol class="guide-steps">
-        <li>기준 색상 입력</li>
-        <li>색상 조화 방식 선택</li>
-        <li>팔레트 확인 및 복사</li>
+        <li>Enter a base color</li>
+        <li>Choose a harmony type</li>
+        <li>Review and copy the palette</li>
       </ol>
-      <h3 class="guide-faq-title">자주 묻는 질문</h3>
+      <h3 class="guide-faq-title">Frequently asked questions</h3>
       <div class="guide-faq">
         <details>
-          <summary>색상 팔레트 생성기 도구는 정말 무료인가요?</summary>
-          <p>네, 회원가입이나 설치 없이 완전 무료로 사용할 수 있습니다. 횟수 제한도 없습니다.</p>
+          <summary>Is the Color Palette Generator tool really free?</summary>
+          <p>Yes, it is completely free to use with no sign-up or installation required. There is no usage limit either.</p>
         </details>
         <details>
-          <summary>업로드한 파일이 서버로 전송되나요?</summary>
-          <p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 업로드한 파일이 외부 서버로 전송되거나 저장되지 않습니다.</p>
+          <summary>Are uploaded files sent to a server?</summary>
+          <p>No. All processing happens entirely in your browser, and uploaded files are never sent to or stored on an external server.</p>
         </details>
         <details>
-          <summary>만든 팔레트는 어떻게 활용하나요?</summary>
-          <p>팔레트의 각 색상 코드를 복사해 디자인 도구나 CSS에 바로 사용할 수 있습니다.</p>
+          <summary>How do I use the palette I create?</summary>
+          <p>You can copy each color code from the palette and use it directly in your design tools or CSS.</p>
         </details>
         <details>
-          <summary>모바일에서도 사용할 수 있나요?</summary>
-          <p>네, 별도의 앱 설치 없이 모바일 브라우저에서도 동일하게 사용할 수 있습니다.</p>
+          <summary>Can I use this on mobile?</summary>
+          <p>Yes, it works the same way in a mobile browser without needing to install any app.</p>
         </details>
       </div>
-      <a href="/blog/53-palettegen-howto" class="guide-full-link">전체 가이드 보기 →</a>
+      <a href="/blog/53-palettegen-howto" class="guide-full-link">View full guide →</a>
     </div>
 
-    <div style="margin:0 0 12px"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="9500090221"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><div class="adfit-rect-wrap"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-oePL4TCj742xAwqT" data-ad-width="300" data-ad-height="250"></ins></div></div>
+    <!-- Google AdSense Multiplex Ad — pending approval, reserving space -->
+    <div class="ad-slot ad-slot-rect" id="adBottom">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
   </div></main>
 
   <footer class="footer">
     <div class="container">
-      <p class="footer-copy">&#xa9; 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p>
+      <p class="footer-copy">&#xa9; 2026 BrowserKit. All processing happens in your browser.</p>
       <nav class="footer-nav">
-        <a href="/privacy">개인정보 처리방침</a>
-        <a href="/terms">이용약관</a>
-        <a href="/about">서비스 소개</a>
-        <a href="/blog/">블로그</a>
+        <a href="/en/privacy.html">Privacy Policy</a>
+        <a href="/en/terms.html">Terms of Service</a>
+        <a href="/en/about.html">About</a>
+        <a href="/en/blog/">Blog</a>
       </nav>
     </div>
   </footer>
@@ -262,14 +276,14 @@
   var currentType = 'complementary';
 
   var HARMONY_DESC = {
-    complementary: '색상환에서 정반대(180도)에 있는 색을 조합합니다. 강한 대비와 생동감이 필요할 때 사용합니다.',
-    analogous: '색상환에서 서로 인접한(±30도) 색을 조합합니다. 자연스럽고 편안한 느낌을 줍니다.',
-    triad: '색상환을 3등분(120도 간격)한 색을 조합합니다. 균형 잡힌 대비와 다채로움을 줍니다.',
-    split: '기준색의 보색 양옆(150도, 210도) 색을 조합합니다. 보색만큼 강하지 않으면서도 대비가 있습니다.',
-    monochromatic: '기준색의 색상(H)은 유지하고 명도(L)만 다르게 5단계로 조합합니다. 통일감 있는 팔레트에 적합합니다.'
+    complementary: 'Combines colors directly opposite (180°) on the color wheel. Use it when you need strong contrast and vibrancy.',
+    analogous: 'Combines colors adjacent to each other (±30°) on the color wheel, for a natural, comfortable feel.',
+    triad: 'Combines colors that split the color wheel into three equal parts (120° apart), for balanced contrast and variety.',
+    split: 'Combines the two colors adjacent to the base color\'s complement (150°, 210°) — contrast without being as strong as a pure complementary pair.',
+    monochromatic: 'Keeps the base color\'s hue (H) and varies only lightness (L) across 5 steps — ideal for a cohesive palette.'
   };
 
-  // ── 색 변환 유틸 ──
+  // ── Color conversion utils ──
   function hexToRgb(hex) {
     hex = hex.replace('#', '');
     if (hex.length === 3) hex = hex.split('').map(function(c) { return c + c; }).join('');
@@ -325,7 +339,7 @@
     return /^#([0-9A-Fa-f]{6}|[0-9A-Fa-f]{3})$/.test(hex);
   }
 
-  // ── 하모니별 색상 생성 ──
+  // ── Generate colors per harmony type ──
   function buildPalette(hex, type) {
     var rgb = hexToRgb(hex);
     var hsl = rgbToHsl(rgb.r, rgb.g, rgb.b);
@@ -353,7 +367,7 @@
     return colors;
   }
 
-  // ── 렌더링 ──
+  // ── Render ──
   function render() {
     var hex = hexInput.value.trim();
     if (!isValidHex(hex)) {
@@ -366,7 +380,7 @@
     harmonyDesc.textContent = HARMONY_DESC[currentType];
 
     var palette = buildPalette(hex, currentType);
-    var labels = ['기준색', '보조색 1', '보조색 2', '보조색 3', '보조색 4'];
+    var labels = ['Base', 'Accent 1', 'Accent 2', 'Accent 3', 'Accent 4'];
 
     paletteGrid.innerHTML = palette.map(function(c, i) {
       var rgb = hexToRgb(c.hex);
@@ -374,12 +388,12 @@
       var rgbStr = 'rgb(' + rgb.r + ', ' + rgb.g + ', ' + rgb.b + ')';
       return '<div class="color-card">' +
         '<div class="color-card-swatch" style="background:' + c.hex + '" data-copy="' + c.hex + '">' +
-          (c.isBase ? '<span class="base-badge">기준색</span>' : '') +
+          (c.isBase ? '<span class="base-badge">Base</span>' : '') +
         '</div>' +
         '<div class="color-card-body">' +
-          '<div class="color-card-row"><span class="color-card-code">' + c.hex + '</span><span class="color-card-copy" data-copy="' + c.hex + '">복사</span></div>' +
-          '<div class="color-card-row"><span class="color-card-code">' + rgbStr + '</span><span class="color-card-copy" data-copy="' + rgbStr + '">복사</span></div>' +
-          '<div class="color-card-row"><span class="color-card-code">' + hsl + '</span><span class="color-card-copy" data-copy="' + hsl + '">복사</span></div>' +
+          '<div class="color-card-row"><span class="color-card-code">' + c.hex + '</span><span class="color-card-copy" data-copy="' + c.hex + '">Copy</span></div>' +
+          '<div class="color-card-row"><span class="color-card-code">' + rgbStr + '</span><span class="color-card-copy" data-copy="' + rgbStr + '">Copy</span></div>' +
+          '<div class="color-card-row"><span class="color-card-code">' + hsl + '</span><span class="color-card-copy" data-copy="' + hsl + '">Copy</span></div>' +
         '</div>' +
       '</div>';
     }).join('');
@@ -388,7 +402,7 @@
       el.addEventListener('click', function() {
         var val = el.dataset.copy;
         navigator.clipboard.writeText(val).then(function() {
-          showToast('✓ ' + val + ' 복사됨');
+          showToast('✓ ' + val + ' copied');
         });
       });
     });
@@ -421,7 +435,7 @@
 
   document.getElementById('copyExportBtn').addEventListener('click', function() {
     navigator.clipboard.writeText(exportCode.textContent).then(function() {
-      showToast('✓ CSS 변수가 클립보드에 복사되었습니다');
+      showToast('✓ CSS variables copied to clipboard');
     });
   });
 
@@ -453,7 +467,7 @@
     try {
       if (document.cookie.indexOf('bk_lang_dismiss=1') !== -1) return;
       var lang = (navigator.language || navigator.userLanguage || '').toLowerCase();
-      if (lang.indexOf('ko') === 0) return;
+      if (lang.indexOf('ko') !== 0) return;
       var banner = document.getElementById('langBanner');
       if (!banner) return;
       banner.classList.add('show');
