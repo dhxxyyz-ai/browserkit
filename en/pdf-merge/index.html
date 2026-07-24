@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
   <link rel="icon" href="/favicon.ico" sizes="32x32">
   <link rel="icon" href="/favicon-16.png" sizes="16x16" type="image/png">
@@ -8,21 +8,20 @@
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="여러 PDF를 하나로 합치거나 특정 페이지만 추출하는 무료 온라인 도구. 파일이 서버로 전송되지 않습니다." />
-  <meta property="og:title" content="PDFMerge — PDF 합치기 / 페이지 추출 도구" />
-  <meta property="og:description" content="여러 PDF를 하나로 합치거나 특정 페이지만 추출하는 무료 온라인 도구. 파일이 서버로 전송되지 않습니다." />
+  <meta name="description" content="Free online tool to merge multiple PDFs into one, or extract specific pages. Files are never uploaded to a server." />
+  <meta property="og:title" content="PDFMerge — Merge PDFs / Extract Pages" />
+  <meta property="og:description" content="Free online tool to merge multiple PDFs into one, or extract specific pages. Files are never uploaded to a server." />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://browserkit.online/pdf-merge/" />
+  <meta property="og:url" content="https://browserkit.online/en/pdf-merge/" />
   <meta property="og:locale" content="ko_KR" />
-  <title>PDFMerge — PDF 합치기 / 페이지 추출 도구</title>
+  <title>PDFMerge — Merge PDFs / Extract Pages</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
-  <!-- Google AdSense 승인 대기 중 (2026-07-19 주석 처리, 카카오 애드핏으로 임시 전환) — 승인 후 주석 해제
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Google AdSense — pending re-review. Uncomment once approved.
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506"
      crossorigin="anonymous"></script>
   -->
-  <script type="text/javascript" src="//t1.kakaocdn.net/kas/static/ba.min.js" async></script>
   <link rel="stylesheet" href="/css/style.css?v=20260724c" />
   <style>
     .guide-summary { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:24px; margin:0 0 12px; }
@@ -35,16 +34,19 @@
     .guide-full-link { display:inline-block; margin-top:12px; font-size:14px; font-weight:600; color:var(--point-hover); text-decoration:none; }
     .guide-full-link:hover { text-decoration:underline; }
 
+    .ad-slot { min-height:90px; display:flex; align-items:center; justify-content:center; margin:0 0 12px; }
+    .ad-slot-rect { min-height:250px; }
+
     
     * { margin:0; padding:0; box-sizing:border-box; transition:all 0.2s ease; }
-    body { color:var(--text); font-family:'Gowun Dodum',sans-serif; font-size:16px; line-height:1.6; min-height:100vh; }
+    body { color:var(--text); font-size:16px; line-height:1.6; min-height:100vh; }
     a { color:var(--point-hover); text-decoration:none; }
     a:hover { color:var(--text); }
     .container { max-width:960px; margin:0 auto; padding:0 24px; }
     .header .container { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; }
     .logo { display:flex; align-items:center; gap:10px; text-decoration:none; }
     .logo-icon { font-size:24px; }
-    .logo-text { font-size:20px; font-weight:700; font-family:'Gowun Dodum',sans-serif; background:linear-gradient(135deg,var(--point),var(--point-hover)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+    .logo-text { font-size:20px; font-weight:700; background:linear-gradient(135deg,var(--point),var(--point-hover)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
     .back-link { font-size:13px; color:var(--subtext); display:flex; align-items:center; gap:6px; }
     .back-link:hover { color:var(--text); }
     .hero { text-align:center; padding:40px 0 20px; }
@@ -59,7 +61,7 @@
     .file-list-wrap { display:none; margin:0 0 20px; }
     .file-list-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; }
     .file-list-title { font-size:15px; font-weight:600; }
-    .btn-add-more { background:var(--card); border:1px solid var(--border); color:var(--subtext); border-radius:8px; padding:6px 14px; font-size:13px; cursor:pointer; font-family:'Gowun Dodum',sans-serif; }
+    .btn-add-more { background:var(--card); border:1px solid var(--border); color:var(--subtext); border-radius:8px; padding:6px 14px; font-size:13px; cursor:pointer; }
     .btn-add-more:hover { border-color:var(--point); color:var(--text); }
     .file-list { display:flex; flex-direction:column; gap:10px; }
     .file-card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:14px 16px; display:flex; align-items:center; gap:14px; cursor:grab; }
@@ -69,10 +71,10 @@
     .file-thumb { width:48px; height:60px; background:var(--bg); border-radius:6px; overflow:hidden; flex-shrink:0; display:flex; align-items:center; justify-content:center; font-size:20px; border:1px solid var(--border); }
     .file-info { flex:1; min-width:0; }
     .file-name { font-size:14px; font-weight:600; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-    .file-meta { font-size:12px; color:var(--subtext); margin-top:2px; font-family:'Gowun Dodum',sans-serif; }
+    .file-meta { font-size:12px; color:var(--subtext); margin-top:2px; }
     .file-range-wrap { display:flex; align-items:center; gap:8px; margin-top:6px; }
     .file-range-label { font-size:12px; color:var(--subtext); white-space:nowrap; }
-    .file-range-input { background:var(--bg); border:1px solid var(--border); color:var(--text); border-radius:6px; padding:4px 8px; font-size:12px; width:110px; font-family:'Gowun Dodum',sans-serif; }
+    .file-range-input { background:var(--bg); border:1px solid var(--border); color:var(--text); border-radius:6px; padding:4px 8px; font-size:12px; width:110px; }
     .file-range-input:focus { outline:none; border-color:var(--point); }
     .file-drag-handle { color:var(--subtext); font-size:18px; cursor:grab; flex-shrink:0; padding:0 4px; user-select:none; }
     .btn-file-remove { background:none; border:none; color:var(--subtext); font-size:18px; cursor:pointer; flex-shrink:0; padding:0 4px; line-height:1; }
@@ -83,10 +85,10 @@
     .progress-bar { background:var(--card); border-radius:999px; height:6px; overflow:hidden; }
     .progress-fill { height:100%; width:0%; background:linear-gradient(90deg,var(--point),var(--point-hover)); border-radius:999px; transition:width 0.3s ease; }
     .action-wrap { display:none; justify-content:center; gap:12px; margin:8px 0 48px; flex-wrap:wrap; }
-    .btn-merge { background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border:none; border-radius:12px; padding:14px 32px; font-size:15px; font-weight:600; cursor:pointer; font-family:'Gowun Dodum',sans-serif; }
+    .btn-merge { background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border:none; border-radius:12px; padding:14px 32px; font-size:15px; font-weight:600; cursor:pointer; }
     .btn-merge:hover { transform:translateY(-2px); box-shadow:0 8px 24px var(--glow); }
     .btn-merge:disabled { opacity:0.5; cursor:default; transform:none; box-shadow:none; }
-    .btn-reset { background:var(--card); color:var(--subtext); border:1px solid var(--border); border-radius:12px; padding:14px 24px; font-size:15px; cursor:pointer; font-family:'Gowun Dodum',sans-serif; }
+    .btn-reset { background:var(--card); color:var(--subtext); border:1px solid var(--border); border-radius:12px; padding:14px 24px; font-size:15px; cursor:pointer; }
     .btn-reset:hover { transform:translateY(-2px); color:var(--text); border-color:var(--point); }
     .footer { border-top:1px solid var(--border); padding:32px 0; text-align:center; }
     .footer-copy { color:var(--subtext); font-size:13px; margin-bottom:12px; }
@@ -99,7 +101,7 @@
     }
   </style>
   <meta property="og:image" content="https://browserkit.online/img/og/pdf-merge.png" />
-  <link rel="canonical" href="https://browserkit.online/pdf-merge/" />
+  <link rel="canonical" href="https://browserkit.online/en/pdf-merge/" />
   <link rel="alternate" hreflang="ko" href="https://browserkit.online/pdf-merge/" />
   <link rel="alternate" hreflang="en" href="https://browserkit.online/en/pdf-merge/" />
   <link rel="alternate" hreflang="x-default" href="https://browserkit.online/en/pdf-merge/" />
@@ -109,18 +111,18 @@
 {
   "@context": "https://schema.org",
   "@type": "WebApplication",
-  "name": "PDFMerge — PDF 합치기 / 페이지 추출 도구",
-  "url": "https://browserkit.online/pdf-merge/",
-  "description": "여러 PDF를 하나로 합치거나 특정 페이지만 추출하는 무료 온라인 도구. 파일이 서버로 전송되지 않습니다.",
+  "name": "PDFMerge — Merge PDFs / Extract Pages",
+  "url": "https://browserkit.online/en/pdf-merge/",
+  "description": "Free online tool to merge multiple PDFs into one, or extract specific pages. Files are never uploaded to a server.",
   "applicationCategory": "UtilityApplication",
   "operatingSystem": "Any",
   "browserRequirements": "Requires JavaScript",
-  "inLanguage": "ko",
+  "inLanguage": "en",
   "isAccessibleForFree": true,
   "offers": {
     "@type": "Offer",
     "price": "0",
-    "priceCurrency": "KRW"
+    "priceCurrency": "USD"
   },
   "publisher": {
     "@type": "Organization",
@@ -137,14 +139,14 @@
     {
       "@type": "ListItem",
       "position": 1,
-      "name": "홈",
-      "item": "https://browserkit.online/"
+      "name": "Home",
+      "item": "https://browserkit.online/en/"
     },
     {
       "@type": "ListItem",
       "position": 2,
-      "name": "PDF 합치기",
-      "item": "https://browserkit.online/pdf-merge/"
+      "name": "Merge PDFs",
+      "item": "https://browserkit.online/en/pdf-merge/"
     }
   ]
 }
@@ -152,22 +154,22 @@
 </head>
 <body>
   <div class="lang-banner" id="langBanner">
-    <span>🌐 This page is also available in <a href="/en/pdf-merge/">English</a>.</span>
+    <span>🌐 이 페이지는 <a href="/pdf-merge/">한국어</a>로도 볼 수 있습니다.</span>
     <button class="lang-banner-close" id="langBannerClose" type="button" aria-label="close">&times;</button>
   </div>
 
   <header class="header">
     <div class="container">
-      <a href="/" class="header-brand"><div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Gowun Dodum,sans-serif;flex-shrink:0">B</div><span class="header-brand-text"><span style="color:var(--text)">Browser</span><span style="color:var(--point)">Kit</span></span></a>
+      <a href="/en/" class="header-brand"><div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Poppins,sans-serif;flex-shrink:0">B</div><span class="header-brand-text"><span style="color:var(--text)">Browser</span><span style="color:var(--point)">Kit</span></span></a>
       <div class="header-right">
         <div class="lang-switcher">
-          <button class="lang-switcher-btn" type="button" data-lang-btn>🌐 <span class="lang-label-full">한국어</span></button>
+          <button class="lang-switcher-btn" type="button" data-lang-btn>🌐 <span class="lang-label-full">English</span></button>
           <div class="lang-switcher-menu" data-lang-menu>
-            <a href="/en/pdf-merge/">English</a>
-            <a href="#" class="active">한국어</a>
+            <a href="#" class="active">English</a>
+            <a href="/pdf-merge/">한국어</a>
           </div>
         </div>
-        <a href="/" class="header-back">← <span class="header-back-label">BrowserKit 홈으로</span></a>
+        <a href="/en/" class="header-back">← <span class="header-back-label">Back to BrowserKit</span></a>
       </div>
     </div>
   </header>
@@ -177,94 +179,106 @@
 
       <div class="hero">
         <div class="hero-icon" style="height:78px;display:flex;justify-content:center;align-items:center"><div style="transform:scale(1.7);transform-origin:center"><div style="width:46px;height:46px;background:#a8e6cf;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="position:relative;width:34px;height:32px"><div style="position:absolute;left:0;top:3px;width:20px;height:26px;background:#fffdf9;border:2.5px solid #2a2433;border-radius:3px;box-sizing:border-box"></div><div style="position:absolute;right:0;top:0;width:20px;height:26px;background:#a8e6cf;border:2.5px solid #2a2433;border-radius:3px;box-sizing:border-box"></div><div style="position:absolute;right:8px;top:9px;width:4px;height:12px;background:#2a2433;border-radius:2px"></div><div style="position:absolute;right:4px;top:13px;width:12px;height:4px;background:#2a2433;border-radius:2px"></div></div></div></div></div>
-        <div class="hero-title-wrap"><h1 class="hero-title">PDF 합치기</h1><a href="/blog/18-pdfmerge-howto" class="hero-guide-link">사용법 가이드 보기</a></div>
-        <p class="hero-desc">여러 PDF를 하나로 합치거나 특정 페이지만 추출하는 무료 도구</p>
+        <div class="hero-title-wrap"><h1 class="hero-title">Merge PDFs</h1><a href="/blog/18-pdfmerge-howto" class="hero-guide-link">View usage guide</a></div>
+        <p class="hero-desc">Merge multiple PDFs into one, or extract specific pages, for free</p>
         <div class="hero-badges">
-        <span class="badge">🔒 완전 로컬 처리</span>
-        <span class="badge">⚡ 무료 사용</span>
-        <span class="badge">🛡️ 서버 전송 없음</span>
-        <span class="badge">📦 설치 불필요</span>
+        <span class="badge">🔒 Fully local processing</span>
+        <span class="badge">⚡ Free to use</span>
+        <span class="badge">🛡️ No server upload</span>
+        <span class="badge">📦 No installation</span>
       </div>
       </div>
-    <div style="margin:0 0 12px"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><div class="adfit-h-desktop"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-QD4pRIpdIj7i2mbt" data-ad-width="728" data-ad-height="90"></ins></div><div class="adfit-h-mobile"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-R4xA2niTT8HgGjoO" data-ad-width="320" data-ad-height="50"></ins></div></div>
+    <!-- Google AdSense Display Ad — pending approval, reserving space -->
+    <div class="ad-slot" id="adTop">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
 
 <div class="upload-zone" id="uploadZone">
         <input type="file" id="fileInput" accept=".pdf" multiple hidden />
         <div class="upload-icon" style="height:64px;display:flex;justify-content:center;align-items:center"><div style="transform:scale(1.4);transform-origin:center"><div style="width:46px;height:46px;background:#a8e6cf;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="position:relative;width:34px;height:32px"><div style="position:absolute;left:0;top:3px;width:20px;height:26px;background:#fffdf9;border:2.5px solid #2a2433;border-radius:3px;box-sizing:border-box"></div><div style="position:absolute;right:0;top:0;width:20px;height:26px;background:#a8e6cf;border:2.5px solid #2a2433;border-radius:3px;box-sizing:border-box"></div><div style="position:absolute;right:8px;top:9px;width:4px;height:12px;background:#2a2433;border-radius:2px"></div><div style="position:absolute;right:4px;top:13px;width:12px;height:4px;background:#2a2433;border-radius:2px"></div></div></div></div></div>
-        <p class="upload-title">PDF 파일을 드래그하여 놓으세요</p>
-        <p class="upload-sub">또는 클릭하여 파일 선택 (여러 파일 동시 선택 가능)</p>
-        <p class="upload-safe">✓ 파일이 서버로 전송되지 않습니다</p>
+        <p class="upload-title">Drag and drop PDF files</p>
+        <p class="upload-sub">or click to choose files (you can select multiple at once)</p>
+        <p class="upload-safe">✓ Files are never uploaded to a server</p>
       </div>
 
       <p class="notice">
-        💡 파일을 업로드한 뒤 순서를 드래그로 조정하고, 페이지 범위를 입력하세요 (예: <strong>1-3, 5</strong>). 비워두면 전체 페이지가 포함됩니다.<br />
-        ⚠️ 대용량 PDF 또는 페이지 수가 많을 경우 처리 시간이 길어질 수 있습니다.
+        💡 After uploading, drag to reorder files and enter a page range (e.g. <strong>1-3, 5</strong>). Leave it blank to include every page.<br />
+        ⚠️ Large PDFs or files with many pages may take longer to process.
       </p>
 
       <div class="file-list-wrap" id="fileListWrap">
         <div class="file-list-header">
-          <span class="file-list-title" id="fileListTitle">파일 0개</span>
-          <button class="btn-add-more" id="btnAddMore">+ 파일 추가</button>
+          <span class="file-list-title" id="fileListTitle">0 files</span>
+          <button class="btn-add-more" id="btnAddMore">+ Add files</button>
         </div>
         <div class="file-list" id="fileList"></div>
       </div>
 
       <div class="progress-wrap" id="progressWrap">
-        <div class="progress-label" id="progressLabel">처리 중...</div>
+        <div class="progress-label" id="progressLabel">Processing...</div>
         <div class="progress-bar">
           <div class="progress-fill" id="progressFill"></div>
         </div>
       </div>
 
       <div class="action-wrap" id="actionWrap">
-        <button class="btn-merge" id="mergeBtn">⬇ PDF 합치기 및 다운로드</button>
-        <button class="btn-reset" id="resetBtn">↺ 처음부터</button>
+        <button class="btn-merge" id="mergeBtn">⬇ Merge & Download PDF</button>
+        <button class="btn-reset" id="resetBtn">↺ Start over</button>
       </div>
 
 </div>
   </main>
-<div class="container"><div style="margin:0 0 12px"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><!-- 카카오 애드핏 (2026-07-22, 쿠팡 파트너스 다이내믹 배너로 교체) — 복원 시 주석 해제: <div class="adfit-h-desktop"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-QD4pRIpdIj7i2mbt" data-ad-width="728" data-ad-height="90"></ins></div><div class="adfit-h-mobile"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-R4xA2niTT8HgGjoO" data-ad-width="320" data-ad-height="50"></ins></div> --><div class="adfit-h-desktop"><script src="https://ads-partners.coupang.com/g.js"></script><script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"728","height":"90","tsource":""});</script></div><div class="adfit-h-mobile"><script src="https://ads-partners.coupang.com/g.js"></script><script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"320","height":"50","tsource":""});</script></div></div>
-
-    <div class="guide-summary">
-      <h2 class="guide-summary-title">사용법 요약</h2>
-      <ol class="guide-steps">
-        <li>PDF 파일 업로드</li>
-        <li>파일 목록 확인</li>
-        <li>순서 조정 및 페이지 범위 입력</li>
-      </ol>
-      <h3 class="guide-faq-title">자주 묻는 질문</h3>
-      <div class="guide-faq">
-        <details>
-          <summary>PDF 합치기 도구는 정말 무료인가요?</summary>
-          <p>네, 회원가입이나 설치 없이 완전 무료로 사용할 수 있습니다. 횟수 제한도 없습니다.</p>
-        </details>
-        <details>
-          <summary>업로드한 파일이 서버로 전송되나요?</summary>
-          <p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 업로드한 파일이 외부 서버로 전송되거나 저장되지 않습니다.</p>
-        </details>
-        <details>
-          <summary>합칠 수 있는 PDF 개수에 제한이 있나요?</summary>
-          <p>별도의 개수 제한은 없습니다. 다만 파일이 매우 크거나 많으면 기기 성능에 따라 처리 시간이 길어질 수 있습니다.</p>
-        </details>
-        <details>
-          <summary>모바일에서도 사용할 수 있나요?</summary>
-          <p>네, 별도의 앱 설치 없이 모바일 브라우저에서도 동일하게 사용할 수 있습니다.</p>
-        </details>
-      </div>
-      <a href="/blog/18-pdfmerge-howto" class="guide-full-link">전체 가이드 보기 →</a>
+<div class="container"><!-- Google AdSense Display Ad — pending approval, reserving space -->
+    <div class="ad-slot" id="adMiddle">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
     </div>
 
-    <div style="margin:0 0 12px"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="9500090221"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><div class="adfit-rect-wrap"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-oePL4TCj742xAwqT" data-ad-width="300" data-ad-height="250"></ins></div></div></div>
+    <div class="guide-summary">
+      <h2 class="guide-summary-title">Quick guide</h2>
+      <ol class="guide-steps">
+        <li>Upload PDF files</li>
+        <li>Review the file list</li>
+        <li>Reorder files and enter page ranges</li>
+      </ol>
+      <h3 class="guide-faq-title">Frequently asked questions</h3>
+      <div class="guide-faq">
+        <details>
+          <summary>Is the Merge PDFs tool really free?</summary>
+          <p>Yes, it is completely free to use with no sign-up or installation required. There is no usage limit either.</p>
+        </details>
+        <details>
+          <summary>Are uploaded files sent to a server?</summary>
+          <p>No. All processing happens entirely in your browser, and uploaded files are never sent to or stored on an external server.</p>
+        </details>
+        <details>
+          <summary>Is there a limit on how many PDFs I can merge?</summary>
+          <p>There is no set limit. However, very large or numerous files may take longer to process depending on your device.</p>
+        </details>
+        <details>
+          <summary>Can I use this on mobile?</summary>
+          <p>Yes, it works the same way in a mobile browser without needing to install any app.</p>
+        </details>
+      </div>
+      <a href="/blog/18-pdfmerge-howto" class="guide-full-link">View full guide →</a>
+    </div>
+
+    <!-- Google AdSense Multiplex Ad — pending approval, reserving space -->
+    <div class="ad-slot ad-slot-rect" id="adBottom">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div></div>
 
 
   <footer class="footer">
     <div class="container">
-      <p class="footer-copy">© 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p>
+      <p class="footer-copy">&#xa9; 2026 BrowserKit. All processing happens in your browser.</p>
       <nav class="footer-nav">
-        <a href="/privacy">개인정보 처리방침</a>
-        <a href="/terms">이용약관</a>
-        <a href="/about">서비스 소개</a>
-        <a href="/blog/">블로그</a>
+        <a href="/en/privacy.html">Privacy Policy</a>
+        <a href="/en/terms.html">Terms of Service</a>
+        <a href="/en/about.html">About</a>
+        <a href="/en/blog/">Blog</a>
       </nav>
     </div>
   </footer>
@@ -309,20 +323,20 @@
 
   async function addFiles(files) {
     uploadZone.style.display = 'none';
-    showProgress(0, '파일 불러오는 중...');
+    showProgress(0, 'Loading files...');
     progressWrap.style.display = 'block';
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
-      showProgress(Math.floor((i / files.length) * 80), file.name + ' 불러오는 중...');
+      showProgress(Math.floor((i / files.length) * 80), 'Loading ' + file.name + '...');
       try {
         const ab = await file.arrayBuffer();
         const pdfDoc   = await pdfjsLib.getDocument({ data: ab }).promise;
         const numPages = pdfDoc.numPages;
         const thumbCanvas = await renderThumb(pdfDoc, 1);
         fileItems.push({ file, pdfDoc, numPages, thumbCanvas, range: '' });
-      } catch(e) { console.error(file.name + ' 로드 실패:', e); }
+      } catch(e) { console.error('Failed to load ' + file.name + ':', e); }
     }
-    showProgress(100, '완료!');
+    showProgress(100, 'Done!');
     setTimeout(() => {
       progressWrap.style.display = 'none';
       renderFileList();
@@ -342,7 +356,7 @@
 
   function renderFileList() {
     fileListEl.innerHTML = '';
-    fileListTitle.textContent = '파일 ' + fileItems.length + '개';
+    fileListTitle.textContent = fileItems.length + ' file(s)';
     fileItems.forEach((item, idx) => {
       const card = document.createElement('div');
       card.className = 'file-card';
@@ -363,7 +377,7 @@
       const rangeInput = document.createElement('input');
       rangeInput.className = 'file-range-input';
       rangeInput.type = 'text';
-      rangeInput.placeholder = '예: 1-3, 5';
+      rangeInput.placeholder = 'e.g. 1-3, 5';
       rangeInput.value = item.range;
       rangeInput.dataset.idx = idx;
       rangeInput.addEventListener('change', (e) => {
@@ -371,10 +385,10 @@
       });
       info.innerHTML =
         '<div class="file-name">' + item.file.name + '</div>' +
-        '<div class="file-meta">' + item.numPages + '페이지 · ' + formatBytes(item.file.size) + '</div>';
+        '<div class="file-meta">' + item.numPages + ' page(s) · ' + formatBytes(item.file.size) + '</div>';
       const rangeWrap = document.createElement('div');
       rangeWrap.className = 'file-range-wrap';
-      rangeWrap.innerHTML = '<span class="file-range-label">페이지 범위:</span>';
+      rangeWrap.innerHTML = '<span class="file-range-label">Page range:</span>';
       rangeWrap.appendChild(rangeInput);
       info.appendChild(rangeWrap);
 
@@ -438,8 +452,8 @@
   mergeBtn.addEventListener('click', async () => {
     if (!fileItems.length) return;
     mergeBtn.disabled = true;
-    mergeBtn.textContent = '⏳ PDF 생성 중...';
-    showProgress(0, '페이지 렌더링 중...');
+    mergeBtn.textContent = '⏳ Generating PDF...';
+    showProgress(0, 'Rendering pages...');
     progressWrap.style.display = 'block';
     try {
       const { jsPDF } = window.jspdf;
@@ -454,7 +468,7 @@
         for (let pi = 0; pi < pages.length; pi++) {
           const pageNum = pages[pi];
           showProgress(Math.floor((totalRendered / totalPageCount) * 90),
-            item.file.name + ' — ' + pageNum + '페이지 처리 중...');
+            item.file.name + ' — processing page ' + pageNum + '...');
           const page = await item.pdfDoc.getPage(pageNum);
           const viewport = page.getViewport({ scale: 2.0 });
           const canvas = document.createElement('canvas');
@@ -472,16 +486,16 @@
           totalRendered++;
         }
       }
-      showProgress(100, '다운로드 준비 중...');
+      showProgress(100, 'Preparing download...');
       await new Promise(r => setTimeout(r, 300));
       pdf.save('pdfmerge_result.pdf');
     } catch(err) {
-      console.error('PDF 생성 오류:', err);
-      alert('PDF 생성 중 오류가 발생했습니다. 파일을 확인해주세요.');
+      console.error('PDF generation error:', err);
+      alert('An error occurred while generating the PDF. Please check your files.');
     }
     progressWrap.style.display = 'none';
     mergeBtn.disabled = false;
-    mergeBtn.textContent = '⬇ PDF 합치기 및 다운로드';
+    mergeBtn.textContent = '⬇ Merge & Download PDF';
   });
 
   resetBtn.addEventListener('click', () => {
@@ -525,7 +539,7 @@
     try {
       if (document.cookie.indexOf('bk_lang_dismiss=1') !== -1) return;
       var lang = (navigator.language || navigator.userLanguage || '').toLowerCase();
-      if (lang.indexOf('ko') === 0) return;
+      if (lang.indexOf('ko') !== 0) return;
       var banner = document.getElementById('langBanner');
       if (!banner) return;
       banner.classList.add('show');

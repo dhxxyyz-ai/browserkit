@@ -6,6 +6,13 @@ transform below). Structural transform handles: html lang, font links, ad slot
 placeholders, canonical/hreflang, header/footer nav hrefs, lang switcher, lang banner.
 """
 import re
+import sys
+
+# Windows console may be cp949; make WARN prints never crash the batch.
+try:
+    sys.stdout.reconfigure(errors='replace')
+except Exception:
+    pass
 
 
 def transform(ko_html: str, slug: str) -> str:
@@ -82,6 +89,9 @@ def transform(ko_html: str, slug: str) -> str:
     # header brand + back link -> /en/
     c = c.replace('<a href="/" class="header-brand">', '<a href="/en/" class="header-brand">')
     c = c.replace('<a href="/" class="header-back">&#x2190; BrowserKit 홈으로</a>', '<a href="/en/" class="header-back">&#x2190; Back to BrowserKit</a>')
+    c = c.replace('<a href="/" class="header-back">&#x2190; <span class="header-back-label">BrowserKit 홈으로</span></a>', '<a href="/en/" class="header-back">&#x2190; <span class="header-back-label">Back to BrowserKit</span></a>')
+    c = c.replace('<a href="/" class="header-back">← BrowserKit 홈으로</a>', '<a href="/en/" class="header-back">← Back to BrowserKit</a>')
+    c = c.replace('<a href="/" class="header-back">← <span class="header-back-label">BrowserKit 홈으로</span></a>', '<a href="/en/" class="header-back">← <span class="header-back-label">Back to BrowserKit</span></a>')
 
     # lang switcher: EN active, link to ko slug
     c = c.replace(
@@ -96,7 +106,20 @@ def transform(ko_html: str, slug: str) -> str:
     # ── Known exact ad-block markups (site-wide constants) -> placeholders ──
     AD_TOP_MARGIN0 = ('<div style="margin:0 0 12px"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><div class="adfit-h-desktop"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-QD4pRIpdIj7i2mbt" data-ad-width="728" data-ad-height="90"></ins></div><div class="adfit-h-mobile"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-R4xA2niTT8HgGjoO" data-ad-width="320" data-ad-height="50"></ins></div></div>')
     AD_TOP_NOMARGIN = AD_TOP_MARGIN0.replace('margin:0 0 12px', 'margin:0 0 12px')  # alias, same string
-    AD_COUPANG_SWAP = ('<!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><!-- 카카오 애드핏 (2026-07-22, 쿠팡 파트너스 다이내믹 배너로 교체) — 복원 시 주석 해제: <div class="adfit-h-desktop"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-QD4pRIpdIj7i2mbt" data-ad-width="728" data-ad-height="90"></ins></div><div class="adfit-h-mobile"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-R4xA2niTT8HgGjoO" data-ad-width="320" data-ad-height="50"></ins></div> --><div class="adfit-h-desktop"><script src="https://ads-partners.coupang.com/g.js"></script><script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"728","height":"90","tsource":""});</script></div><div class="adfit-h-mobile"><script src="https://ads-partners.coupang.com/g.js"></script><script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"320","height":"50","tsource":""});</script></div></div>')
+    # NOTE: the coupang-swap comment's date varies per file (whatever date the swap
+    # was made on) — matched with a \d{4}-\d{2}-\d{2} wildcard instead of a fixed date.
+    AD_COUPANG_SWAP_PREFIX = '<!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><!-- 카카오 애드핏 ('
+    AD_COUPANG_SWAP_SUFFIX = ', 쿠팡 파트너스 다이내믹 배너로 교체) — 복원 시 주석 해제: <div class="adfit-h-desktop"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-QD4pRIpdIj7i2mbt" data-ad-width="728" data-ad-height="90"></ins></div><div class="adfit-h-mobile"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-R4xA2niTT8HgGjoO" data-ad-width="320" data-ad-height="50"></ins></div> --><div class="adfit-h-desktop"><script src="https://ads-partners.coupang.com/g.js"></script><script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"728","height":"90","tsource":""});</script></div><div class="adfit-h-mobile"><script src="https://ads-partners.coupang.com/g.js"></script><script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"320","height":"50","tsource":""});</script></div></div>'
+    # some KO sources wrap the whole swap block in an extra <div style="margin:0 0 12px">...</div>
+    # that isn't part of the constant above — consume it too (both sides optional/independent)
+    # so no unclosed wrapper div is left behind in the output.
+    AD_COUPANG_SWAP_RE = re.compile(
+        r'(?:<div style="margin:0 0 12px">)?'
+        + re.escape(AD_COUPANG_SWAP_PREFIX)
+        + r'\d{4}-\d{2}-\d{2}'
+        + re.escape(AD_COUPANG_SWAP_SUFFIX)
+        + r'(?:</div>)?'
+    )
     AD_BOTTOM_RECT_12 = ('<div style="margin:12px 0"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="9500090221"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><div class="adfit-rect-wrap"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-oePL4TCj742xAwqT" data-ad-width="300" data-ad-height="250"></ins></div></div>')
     AD_BOTTOM_RECT_00 = AD_BOTTOM_RECT_12.replace('margin:12px 0', 'margin:0 0 12px')
 
@@ -123,7 +146,7 @@ def transform(ko_html: str, slug: str) -> str:
         count[0] += 1
         return h_placeholder('adTop' if count[0] == 1 else f'adExtra{count[0]}')
     c = re.sub(re.escape(AD_TOP_MARGIN0), top_sub, c)
-    c = re.sub(re.escape(AD_COUPANG_SWAP), lambda _m: h_placeholder('adMiddle'), c)
+    c = AD_COUPANG_SWAP_RE.sub(lambda _m: h_placeholder('adMiddle'), c)
     c = re.sub(re.escape(AD_BOTTOM_RECT_12), lambda _m: bottom_placeholder, c)
     c = re.sub(re.escape(AD_BOTTOM_RECT_00), lambda _m: bottom_placeholder, c)
 
@@ -145,6 +168,10 @@ def transform(ko_html: str, slug: str) -> str:
     )
     c = c.replace(
         '&#xa9; 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.',
+        '&#xa9; 2026 BrowserKit. All processing happens in your browser.'
+    )
+    c = c.replace(
+        '© 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.',
         '&#xa9; 2026 BrowserKit. All processing happens in your browser.'
     )
 
