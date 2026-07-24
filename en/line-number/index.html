@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
   <link rel="icon" href="/favicon.ico" sizes="32x32">
   <link rel="icon" href="/favicon-16.png" sizes="16x16" type="image/png">
@@ -8,17 +8,16 @@
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="텍스트나 코드에 줄 번호를 붙여 복사하는 무료 온라인 도구. 시작 번호와 구분자를 자유롭게 설정할 수 있습니다. 서버 전송 없이 브라우저에서 바로 처리합니다." />
-  <meta property="og:title" content="LineNumber — 줄 번호 추가 도구" />
-  <meta property="og:description" content="텍스트나 코드에 줄 번호를 붙여 복사하는 무료 온라인 도구입니다." />
+  <meta name="description" content="Free online tool that adds line numbers to text or code for easy copying. Freely set the starting number and separator. Processed entirely in your browser, nothing is uploaded." />
+  <meta property="og:title" content="LineNumber — Add Line Numbers Tool" />
+  <meta property="og:description" content="A free online tool that adds line numbers to text or code for easy copying." />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://browserkit.online/line-number/" />
-  <title>LineNumber — 줄 번호 추가 도구</title>
-  <!-- Google AdSense 승인 대기 중 (2026-07-19 주석 처리, 카카오 애드핏으로 임시 전환) — 승인 후 주석 해제
+  <meta property="og:url" content="https://browserkit.online/en/line-number/" />
+  <title>LineNumber — Add Line Numbers Tool</title>
+  <!-- Google AdSense — pending re-review. Uncomment once approved.
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506"
      crossorigin="anonymous"></script>
   -->
-  <script type="text/javascript" src="//t1.kakaocdn.net/kas/static/ba.min.js" async></script>
   <link rel="stylesheet" href="/css/style.css?v=20260724c" />
   <style>
     .guide-summary { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:24px; margin:0 0 12px; }
@@ -31,8 +30,11 @@
     .guide-full-link { display:inline-block; margin-top:12px; font-size:14px; font-weight:600; color:var(--point-hover); text-decoration:none; }
     .guide-full-link:hover { text-decoration:underline; }
 
+    .ad-slot { min-height:90px; display:flex; align-items:center; justify-content:center; margin:0 0 12px; }
+    .ad-slot-rect { min-height:250px; }
+
     * { margin:0; padding:0; box-sizing:border-box; transition:all 0.2s ease; }
-    body { color:var(--text); font-family:'Gowun Dodum',sans-serif; font-size:16px; line-height:1.6; min-height:100vh; }
+    body { color:var(--text); font-size:16px; line-height:1.6; min-height:100vh; }
     a { color:var(--point-hover); text-decoration:none; }
     .container { max-width:960px; margin:0 auto; padding:0 24px; }
 
@@ -41,8 +43,8 @@
     .editor-label { font-size:13px; color:var(--subtext); font-weight:600; }
     .editor-textarea { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:16px; color:var(--text); font-size:14px; font-family:'Fira Code','JetBrains Mono',monospace; line-height:1.7; resize:none; min-height:320px; width:100%; }
     .editor-textarea:focus { outline:none; border-color:var(--point); }
-    .editor-textarea::placeholder { color:var(--subtext); font-family:'Gowun Dodum',sans-serif; }
-    .editor-info { font-size:12px; color:var(--subtext); font-family:'Gowun Dodum',sans-serif; }
+    .editor-textarea::placeholder { color:var(--subtext); }
+    .editor-info { font-size:12px; color:var(--subtext); }
 
     .option-group { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:16px 20px; margin-bottom:16px; }
     .option-group-title { font-size:13px; color:var(--subtext); font-weight:600; margin-bottom:12px; }
@@ -61,10 +63,10 @@
     .toggle-row input { accent-color:var(--point); cursor:pointer; width:16px; height:16px; }
 
     .action-wrap { display:flex; justify-content:center; gap:12px; margin:0 0 48px; flex-wrap:wrap; }
-    .btn-copy { background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border:none; border-radius:12px; padding:13px 28px; font-size:15px; font-weight:600; cursor:pointer; font-family:'Gowun Dodum',sans-serif; }
+    .btn-copy { background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border:none; border-radius:12px; padding:13px 28px; font-size:15px; font-weight:600; cursor:pointer; }
     .btn-copy:hover { transform:translateY(-2px); box-shadow:0 8px 24px var(--glow); }
     .btn-copy:disabled { opacity:0.4; cursor:default; transform:none; box-shadow:none; }
-    .btn-sub { background:var(--card); color:var(--subtext); border:1px solid var(--border); border-radius:12px; padding:13px 22px; font-size:15px; cursor:pointer; font-family:'Gowun Dodum',sans-serif; }
+    .btn-sub { background:var(--card); color:var(--subtext); border:1px solid var(--border); border-radius:12px; padding:13px 22px; font-size:15px; cursor:pointer; }
     .btn-sub:hover { transform:translateY(-2px); color:var(--text); border-color:var(--point); }
 
     .toast { position:fixed; bottom:32px; left:50%; transform:translateX(-50%) translateY(80px); background:var(--success); color:#fff; border-radius:999px; padding:10px 24px; font-size:14px; font-weight:600; opacity:0; pointer-events:none; z-index:999; }
@@ -82,9 +84,9 @@
     }
   </style>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <meta property="og:image" content="https://browserkit.online/img/og/line-number.png" />
-  <link rel="canonical" href="https://browserkit.online/line-number/" />
+  <link rel="canonical" href="https://browserkit.online/en/line-number/" />
   <link rel="alternate" hreflang="ko" href="https://browserkit.online/line-number/" />
   <link rel="alternate" hreflang="en" href="https://browserkit.online/en/line-number/" />
   <link rel="alternate" hreflang="x-default" href="https://browserkit.online/en/line-number/" />
@@ -94,18 +96,18 @@
 {
   "@context": "https://schema.org",
   "@type": "WebApplication",
-  "name": "LineNumber — 줄 번호 추가 도구",
-  "url": "https://browserkit.online/line-number/",
-  "description": "텍스트나 코드에 줄 번호를 붙여 복사하는 무료 온라인 도구. 시작 번호와 구분자를 자유롭게 설정할 수 있습니다. 서버 전송 없이 브라우저에서 바로 처리합니다.",
+  "name": "LineNumber — Add Line Numbers Tool",
+  "url": "https://browserkit.online/en/line-number/",
+  "description": "Free online tool that adds line numbers to text or code for easy copying. Freely set the starting number and separator. Processed entirely in your browser, nothing is uploaded.",
   "applicationCategory": "UtilityApplication",
   "operatingSystem": "Any",
   "browserRequirements": "Requires JavaScript",
-  "inLanguage": "ko",
+  "inLanguage": "en",
   "isAccessibleForFree": true,
   "offers": {
     "@type": "Offer",
     "price": "0",
-    "priceCurrency": "KRW"
+    "priceCurrency": "USD"
   },
   "publisher": {
     "@type": "Organization",
@@ -122,14 +124,14 @@
     {
       "@type": "ListItem",
       "position": 1,
-      "name": "홈",
-      "item": "https://browserkit.online/"
+      "name": "Home",
+      "item": "https://browserkit.online/en/"
     },
     {
       "@type": "ListItem",
       "position": 2,
-      "name": "줄 번호 추가",
-      "item": "https://browserkit.online/line-number/"
+      "name": "Add Line Numbers",
+      "item": "https://browserkit.online/en/line-number/"
     }
   ]
 }
@@ -137,122 +139,134 @@
 </head>
 <body>
   <div class="lang-banner" id="langBanner">
-    <span>🌐 This page is also available in <a href="/en/line-number/">English</a>.</span>
+    <span>🌐 이 페이지는 <a href="/line-number/">한국어</a>로도 볼 수 있습니다.</span>
     <button class="lang-banner-close" id="langBannerClose" type="button" aria-label="close">&times;</button>
   </div>
   <header class="header">
     <div class="container">
-      <a href="/" class="header-brand"><div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Gowun Dodum,sans-serif;flex-shrink:0">B</div><span class="header-brand-text"><span style="color:var(--text)">Browser</span><span style="color:var(--point)">Kit</span></span></a>
+      <a href="/en/" class="header-brand"><div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Poppins,sans-serif;flex-shrink:0">B</div><span class="header-brand-text"><span style="color:var(--text)">Browser</span><span style="color:var(--point)">Kit</span></span></a>
       <div class="header-right">
         <div class="lang-switcher">
-          <button class="lang-switcher-btn" type="button" data-lang-btn>🌐 <span class="lang-label-full">한국어</span></button>
+          <button class="lang-switcher-btn" type="button" data-lang-btn>🌐 <span class="lang-label-full">English</span></button>
           <div class="lang-switcher-menu" data-lang-menu>
-            <a href="/en/line-number/">English</a>
-            <a href="#" class="active">한국어</a>
+            <a href="#" class="active">English</a>
+            <a href="/line-number/">한국어</a>
           </div>
         </div>
-        <a href="/" class="header-back">← <span class="header-back-label">BrowserKit 홈으로</span></a>
+        <a href="/en/" class="header-back">← <span class="header-back-label">Back to BrowserKit</span></a>
       </div>
     </div>
   </header>
   <main><div class="container">
     <div class="hero">
       <div class="hero-icon" style="height:78px;display:flex;justify-content:center;align-items:center"><div style="transform:scale(1.7);transform-origin:center"><div style="width:46px;height:46px;background:#a8e6cf;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="width:30px;height:26px;display:flex;flex-direction:column;justify-content:space-between"><div style="display:flex;align-items:center;gap:3px"><div style="width:6px;height:6px;background:#2a2433;border-radius:1px;font:700 6px monospace"></div><div style="flex:1;height:3px;background:#2a2433;border-radius:2px"></div></div><div style="display:flex;align-items:center;gap:3px"><div style="width:6px;height:6px;background:#2a2433;border-radius:1px"></div><div style="flex:1;height:3px;background:#2a2433;border-radius:2px"></div></div><div style="display:flex;align-items:center;gap:3px"><div style="width:6px;height:6px;background:#2a2433;border-radius:1px"></div><div style="flex:1;height:3px;background:#2a2433;border-radius:2px"></div></div></div></div></div></div>
-      <div class="hero-title-wrap"><h1 class="hero-title">줄 번호 추가</h1><a href="/blog/47-linenumber-howto" class="hero-guide-link">사용법 가이드 보기</a></div>
-      <p class="hero-desc">텍스트나 코드에 줄 번호를 붙여 복사하세요 — 시작 번호와 구분자를 자유롭게</p>
+      <div class="hero-title-wrap"><h1 class="hero-title">Add Line Numbers</h1><a href="/blog/47-linenumber-howto" class="hero-guide-link">View usage guide</a></div>
+      <p class="hero-desc">Add line numbers to text or code and copy the result — set the starting number and separator however you like</p>
       <div class="hero-badges">
-        <span class="badge">🔒 완전 로컬 처리</span>
-        <span class="badge">⚡ 무료 사용</span>
-        <span class="badge">🛡️ 서버 전송 없음</span>
-        <span class="badge">📦 설치 불필요</span>
+        <span class="badge">🔒 Fully local processing</span>
+        <span class="badge">⚡ Free to use</span>
+        <span class="badge">🛡️ No server upload</span>
+        <span class="badge">📦 No installation</span>
       </div>
     </div>
-    <div style="margin:0 0 12px"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><div class="adfit-h-desktop"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-QD4pRIpdIj7i2mbt" data-ad-width="728" data-ad-height="90"></ins></div><div class="adfit-h-mobile"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-R4xA2niTT8HgGjoO" data-ad-width="320" data-ad-height="50"></ins></div></div>
+    <!-- Google AdSense Display Ad — pending approval, reserving space -->
+    <div class="ad-slot" id="adTop">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
 
     <div class="editor-wrap">
       <div class="editor-box">
-        <div class="editor-label">✏️ 입력</div>
-        <textarea class="editor-textarea" id="inputText" placeholder="줄 번호를 붙일 텍스트나 코드를 입력하세요..."></textarea>
-        <div class="editor-info" id="inputInfo">0줄</div>
+        <div class="editor-label">✏️ Input</div>
+        <textarea class="editor-textarea" id="inputText" placeholder="Enter the text or code to number..."></textarea>
+        <div class="editor-info" id="inputInfo">0 lines</div>
       </div>
       <div class="editor-box">
-        <div class="editor-label">📋 결과</div>
-        <textarea class="editor-textarea" id="outputText" placeholder="결과가 여기에 표시됩니다" readonly></textarea>
+        <div class="editor-label">📋 Result</div>
+        <textarea class="editor-textarea" id="outputText" placeholder="The result will appear here" readonly></textarea>
         <div class="editor-info" id="outputInfo"></div>
       </div>
     </div>
 
     <div class="option-group">
-      <div class="option-group-title">⚙️ 옵션</div>
+      <div class="option-group-title">⚙️ Options</div>
       <div class="option-row">
-        <span class="option-label">시작 번호</span>
+        <span class="option-label">Start number</span>
         <input type="number" class="option-input num" id="startNum" value="1" />
-        <span class="option-label" style="min-width:auto;">자릿수 맞춤(0 채우기)</span>
+        <span class="option-label" style="min-width:auto;">Pad with zeros</span>
         <input type="number" class="option-input num" id="padWidth" value="0" min="0" max="6" />
       </div>
       <div class="option-row">
-        <span class="option-label">구분자</span>
+        <span class="option-label">Separator</span>
         <div class="option-btns" id="sepBtns">
           <button class="option-btn active" data-sep=". ">1.&nbsp; </button>
           <button class="option-btn" data-sep=": ">1:&nbsp; </button>
           <button class="option-btn" data-sep=") ">1)&nbsp; </button>
           <button class="option-btn" data-sep="&#9;">1[Tab]</button>
         </div>
-        <input type="text" class="option-input sep" id="customSep" placeholder="직접 입력" />
+        <input type="text" class="option-input sep" id="customSep" placeholder="Custom" />
       </div>
       <div class="option-row">
-        <label class="toggle-row"><input type="checkbox" id="includeEmpty" checked /> 빈 줄에도 번호 붙이기</label>
+        <label class="toggle-row"><input type="checkbox" id="includeEmpty" checked /> Number empty lines too</label>
       </div>
     </div>
 
     <div class="action-wrap">
-      <button class="btn-copy" id="copyBtn">📋 결과 복사</button>
-      <button class="btn-sub" id="downloadBtn">⬇ .txt 다운로드</button>
-      <button class="btn-sub" id="resetBtn">↺ 초기화</button>
+      <button class="btn-copy" id="copyBtn">📋 Copy Result</button>
+      <button class="btn-sub" id="downloadBtn">⬇ Download .txt</button>
+      <button class="btn-sub" id="resetBtn">↺ Reset</button>
     </div>
 
-    <div style="margin:0 0 12px"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><!-- 카카오 애드핏 (2026-07-22, 쿠팡 파트너스 다이내믹 배너로 교체) — 복원 시 주석 해제: <div class="adfit-h-desktop"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-QD4pRIpdIj7i2mbt" data-ad-width="728" data-ad-height="90"></ins></div><div class="adfit-h-mobile"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-R4xA2niTT8HgGjoO" data-ad-width="320" data-ad-height="50"></ins></div> --><div class="adfit-h-desktop"><script src="https://ads-partners.coupang.com/g.js"></script><script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"728","height":"90","tsource":""});</script></div><div class="adfit-h-mobile"><script src="https://ads-partners.coupang.com/g.js"></script><script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"320","height":"50","tsource":""});</script></div></div>
+    <!-- Google AdSense Display Ad — pending approval, reserving space -->
+    <div class="ad-slot" id="adMiddle">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
 
     <div class="guide-summary">
-      <h2 class="guide-summary-title">사용법 요약</h2>
+      <h2 class="guide-summary-title">Quick guide</h2>
       <ol class="guide-steps">
-        <li>텍스트 입력</li>
-        <li>시작 번호 및 자릿수 설정</li>
-        <li>구분자 선택</li>
+        <li>Enter text</li>
+        <li>Set the starting number and padding</li>
+        <li>Choose a separator</li>
       </ol>
-      <h3 class="guide-faq-title">자주 묻는 질문</h3>
+      <h3 class="guide-faq-title">Frequently asked questions</h3>
       <div class="guide-faq">
         <details>
-          <summary>줄 번호 추가 도구는 정말 무료인가요?</summary>
-          <p>네, 회원가입이나 설치 없이 완전 무료로 사용할 수 있습니다. 횟수 제한도 없습니다.</p>
+          <summary>Is the Add Line Numbers tool really free?</summary>
+          <p>Yes, it is completely free to use with no sign-up or installation required. There is no usage limit either.</p>
         </details>
         <details>
-          <summary>입력한 내용이 서버로 전송되나요?</summary>
-          <p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용이 외부 서버로 전송되거나 저장되지 않습니다.</p>
+          <summary>Is what I type sent to a server?</summary>
+          <p>No. All processing happens entirely in your browser, and your input is never sent to or stored on an external server.</p>
         </details>
         <details>
-          <summary>줄 번호의 형식을 바꿀 수 있나요?</summary>
-          <p>텍스트에 줄 번호를 자동으로 붙여주며, 코드 리뷰나 문서 인용 시 특정 줄을 지칭하기 편리합니다.</p>
+          <summary>Can I change the line number format?</summary>
+          <p>It automatically adds line numbers to your text, which is handy for referencing specific lines in code reviews or document citations.</p>
         </details>
         <details>
-          <summary>모바일에서도 사용할 수 있나요?</summary>
-          <p>네, 별도의 앱 설치 없이 모바일 브라우저에서도 동일하게 사용할 수 있습니다.</p>
+          <summary>Can I use this on mobile?</summary>
+          <p>Yes, it works the same way in a mobile browser without needing to install any app.</p>
         </details>
       </div>
-      <a href="/blog/47-linenumber-howto" class="guide-full-link">전체 가이드 보기 →</a>
+      <a href="/blog/47-linenumber-howto" class="guide-full-link">View full guide →</a>
     </div>
 
-    <div style="margin:0 0 12px"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="9500090221"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><div class="adfit-rect-wrap"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-oePL4TCj742xAwqT" data-ad-width="300" data-ad-height="250"></ins></div></div>
+    <!-- Google AdSense Multiplex Ad — pending approval, reserving space -->
+    <div class="ad-slot ad-slot-rect" id="adBottom">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
   </div></main>
 
   <footer class="footer">
     <div class="container">
-      <p class="footer-copy">© 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p>
+      <p class="footer-copy">© 2026 BrowserKit. All processing happens in your browser.</p>
       <nav class="footer-nav">
-        <a href="/privacy">개인정보 처리방침</a>
-        <a href="/terms">이용약관</a>
-        <a href="/about">서비스 소개</a>
-        <a href="/blog/">블로그</a>
+        <a href="/en/privacy.html">Privacy Policy</a>
+        <a href="/en/terms.html">Terms of Service</a>
+        <a href="/en/about.html">About</a>
+        <a href="/en/blog/">Blog</a>
       </nav>
     </div>
   </footer>
@@ -295,7 +309,7 @@
   function render() {
     var raw = inputText.value;
     var lines = raw.length ? raw.split('\n') : [];
-    inputInfo.textContent = lines.length + '줄';
+    inputInfo.textContent = lines.length + ' lines';
 
     var start = parseInt(startNum.value, 10);
     if (isNaN(start)) start = 1;
@@ -314,25 +328,25 @@
     });
 
     outputText.value = out.join('\n');
-    outputInfo.textContent = lines.length + '줄 · ' + outputText.value.length.toLocaleString() + '자';
+    outputInfo.textContent = lines.length + ' lines · ' + outputText.value.length.toLocaleString() + ' chars';
   }
 
   document.getElementById('copyBtn').addEventListener('click', function() {
-    if (!outputText.value) { showToast('복사할 결과가 없습니다'); return; }
+    if (!outputText.value) { showToast('There is no result to copy'); return; }
     navigator.clipboard.writeText(outputText.value).then(function() {
-      showToast('✓ 결과가 클립보드에 복사되었습니다');
+      showToast('✓ Result copied to clipboard');
     });
   });
 
   document.getElementById('downloadBtn').addEventListener('click', function() {
-    if (!outputText.value) { showToast('다운로드할 결과가 없습니다'); return; }
+    if (!outputText.value) { showToast('There is no result to download'); return; }
     var blob = new Blob([outputText.value], { type: 'text/plain;charset=utf-8' });
     var a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
     a.download = 'linenumber_result.txt';
     a.click();
     URL.revokeObjectURL(a.href);
-    showToast('✓ .txt 파일이 저장됩니다');
+    showToast('✓ Your .txt file has been saved');
   });
 
   document.getElementById('resetBtn').addEventListener('click', function() {
@@ -375,7 +389,7 @@
     try {
       if (document.cookie.indexOf('bk_lang_dismiss=1') !== -1) return;
       var lang = (navigator.language || navigator.userLanguage || '').toLowerCase();
-      if (lang.indexOf('ko') === 0) return;
+      if (lang.indexOf('ko') !== 0) return;
       var banner = document.getElementById('langBanner');
       if (!banner) return;
       banner.classList.add('show');
