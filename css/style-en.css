@@ -1,0 +1,23 @@
+/* English (and other Latin-script locale) font override.
+   Loaded after style.css on non-Korean pages only.
+   Swaps Gowun Dodum (Korean-specific) -> Poppins for headers/UI,
+   and sets Inter as the default body font. Fira Code stays for code/numbers. */
+
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+h1, h2, h3, h4,
+.hero-title, .hero-desc,
+.header-brand-text, .header-back,
+.lang-switcher-btn, .lang-switcher-menu a,
+.btn-calc, .btn-gen, .btn-add-product, .btn-download, .btn-sub, .btn-primary,
+.name-input, .unit-select, .text-input, .amount-input, .hex-input, .name-input,
+.guide-summary-title, .guide-faq-title, .guide-faq summary,
+.result-hero-value, .preview-large,
+.cta-box p, .cta-btn,
+.post-title, .post-tag, .step-content h3,
+.blog-card-title, .blog-hero h1,
+.footer-nav a {
+  font-family: 'Poppins', sans-serif;
+}
