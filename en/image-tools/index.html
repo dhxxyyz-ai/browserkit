@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
   <link rel="icon" href="/favicon.ico" sizes="32x32">
   <link rel="icon" href="/favicon-16.png" sizes="16x16" type="image/png">
@@ -8,22 +8,21 @@
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="이미지 크기 조정, 형식 변환, 용량 압축을 브라우저에서 무료로 처리하는 온라인 도구. 파일이 서버로 전송되지 않습니다." />
-  <meta property="og:title" content="FitImage — 이미지 편집 도구" />
-  <meta property="og:description" content="이미지 크기 조정, 형식 변환, 용량 압축을 브라우저에서 무료로 처리하는 온라인 도구." />
+  <meta name="description" content="Free online tool for resizing images, converting formats, and compressing file size, all in your browser. Files are never uploaded to a server." />
+  <meta property="og:title" content="FitImage — Image Editing Tool" />
+  <meta property="og:description" content="A free online tool for resizing images, converting formats, and compressing file size, all in your browser." />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://browserkit.online/image-tools/" />
+  <meta property="og:url" content="https://browserkit.online/en/image-tools/" />
   <meta property="og:locale" content="ko_KR" />
-  <title>FitImage — 이미지 편집 도구</title>
+  <title>FitImage — Image Editing Tool</title>
   <link rel="stylesheet" href="/css/style.css?v=20260724c" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
-  <!-- Google AdSense 승인 대기 중 (2026-07-19 주석 처리, 카카오 애드핏으로 임시 전환) — 승인 후 주석 해제
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Google AdSense — pending re-review. Uncomment once approved.
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506"
      crossorigin="anonymous"></script>
   -->
-  <script type="text/javascript" src="//t1.kakaocdn.net/kas/static/ba.min.js" async></script>
   <style>
     .guide-summary { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:24px; margin:0 0 12px; }
     .guide-summary-title { font-size:16px; font-weight:700; color:var(--text); margin:0 0 12px; }
@@ -35,17 +34,20 @@
     .guide-full-link { display:inline-block; margin-top:12px; font-size:14px; font-weight:600; color:var(--point-hover); text-decoration:none; }
     .guide-full-link:hover { text-decoration:underline; }
 
-    /* 헤더 */
+    .ad-slot { min-height:90px; display:flex; align-items:center; justify-content:center; margin:0 0 12px; }
+    .ad-slot-rect { min-height:250px; }
 
-    /* 히어로 */
+    /* Header */
 
-    /* 기능 탭 */
+    /* Hero */
+
+    /* Feature tabs */
     .tab-wrap { display:flex; gap:8px; margin-bottom:24px; flex-wrap:wrap; }
-    .tab-btn { background:var(--card); color:var(--subtext); border:1px solid var(--border); border-radius:10px; padding:10px 24px; font-size:14px; font-weight:600; cursor:pointer; font-family:'Gowun Dodum',sans-serif; }
+    .tab-btn { background:var(--card); color:var(--subtext); border:1px solid var(--border); border-radius:10px; padding:10px 24px; font-size:14px; font-weight:600; cursor:pointer; }
     .tab-btn:hover { border-color:var(--point); color:var(--text); }
     .tab-btn.active { background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border-color:transparent; }
 
-    /* 업로드 존 */
+    /* Upload zone */
     .upload-zone { background:var(--card); border:2px dashed var(--border); border-radius:var(--radius); padding:56px 40px; text-align:center; cursor:pointer; margin-bottom:16px; }
     .upload-zone:hover, .upload-zone.drag-over { border-color:var(--point); box-shadow:0 0 24px var(--glow); background:rgba(123,108,255,0.05); }
     .upload-icon { font-size:48px; margin-bottom:20px; }
@@ -54,40 +56,40 @@
     .upload-formats { color:var(--subtext); font-size:13px; margin-bottom:8px; }
     .upload-safe { color:var(--success); font-size:13px; }
 
-    /* 탭별 옵션 영역 */
+    /* Per-tab options area */
     .tab-panel { display:none; background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:24px; margin-bottom:20px; }
     .tab-panel.active { display:block; }
     .panel-title { font-size:14px; font-weight:600; color:var(--subtext); margin-bottom:16px; }
 
-    /* 크기 조정 옵션 */
+    /* Resize options */
     .size-inputs { display:flex; align-items:center; gap:12px; margin-bottom:16px; flex-wrap:wrap; }
     .size-input-group { display:flex; flex-direction:column; gap:6px; }
     .size-input-group label { font-size:12px; color:var(--subtext); }
-    .size-input { background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:8px 12px; font-size:14px; color:var(--text); width:100px; font-family:'Gowun Dodum',sans-serif; }
+    .size-input { background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:8px 12px; font-size:14px; color:var(--text); width:100px; }
     .size-input:focus { outline:none; border-color:var(--point); }
     .size-sep { font-size:18px; color:var(--subtext); margin-top:20px; }
     .ratio-lock { display:flex; align-items:center; gap:8px; font-size:13px; color:var(--subtext); cursor:pointer; margin-bottom:16px; }
     .ratio-lock input { accent-color:var(--point); width:16px; height:16px; cursor:pointer; }
     .shortcut-btns { display:flex; gap:8px; flex-wrap:wrap; }
-    .shortcut-btn { background:var(--bg); color:var(--subtext); border:1px solid var(--border); border-radius:8px; padding:6px 14px; font-size:13px; cursor:pointer; font-family:'Gowun Dodum',sans-serif; }
+    .shortcut-btn { background:var(--bg); color:var(--subtext); border:1px solid var(--border); border-radius:8px; padding:6px 14px; font-size:13px; cursor:pointer; }
     .shortcut-btn:hover { border-color:var(--point); color:var(--text); }
 
-    /* 형식 변환 옵션 */
+    /* Format conversion options */
     .format-btns { display:flex; gap:10px; flex-wrap:wrap; margin-bottom:16px; }
-    .format-btn { background:var(--bg); color:var(--subtext); border:1px solid var(--border); border-radius:10px; padding:12px 24px; font-size:14px; font-weight:600; cursor:pointer; font-family:'Gowun Dodum',sans-serif; text-align:center; }
+    .format-btn { background:var(--bg); color:var(--subtext); border:1px solid var(--border); border-radius:10px; padding:12px 24px; font-size:14px; font-weight:600; cursor:pointer; text-align:center; }
     .format-btn:hover { border-color:var(--point); color:var(--text); }
     .format-btn.active { background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border-color:transparent; }
     .format-btn small { display:block; font-size:11px; font-weight:400; margin-top:3px; opacity:0.8; }
     .format-notice { font-size:13px; color:var(--subtext); padding:10px 14px; background:var(--bg); border-radius:8px; border:1px solid var(--border); }
 
-    /* 용량 압축 옵션 */
+    /* Compression options */
     .quality-wrap { margin-bottom:16px; }
     .quality-label { display:flex; justify-content:space-between; align-items:center; font-size:14px; color:var(--text); margin-bottom:10px; }
-    .quality-value { font-size:20px; font-weight:700; color:var(--point-hover); font-family:'Gowun Dodum',sans-serif; }
+    .quality-value { font-size:20px; font-weight:700; color:var(--point-hover); }
     .quality-slider { width:100%; accent-color:var(--point); height:6px; cursor:pointer; }
     .compress-info { font-size:13px; color:var(--subtext); margin-top:12px; }
 
-    /* 미리보기 */
+    /* Preview */
     .preview-wrap { display:none; grid-template-columns:1fr 1fr; gap:20px; margin-bottom:24px; }
     .preview-panel { background:var(--card); border-radius:var(--radius); padding:16px; border:1px solid var(--border); }
     .preview-label { font-size:13px; color:var(--subtext); margin-bottom:8px; text-align:center; }
@@ -96,14 +98,14 @@
     .file-info .diff { color:var(--success); font-weight:600; }
     .file-info .diff.up { color:#EF4444; }
 
-    /* 액션 버튼 */
+    /* Action buttons */
     .action-wrap { display:none; justify-content:center; gap:12px; margin-bottom:48px; flex-wrap:wrap; }
-    .btn-download { background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border:none; border-radius:12px; padding:14px 32px; font-size:15px; font-weight:600; cursor:pointer; font-family:'Gowun Dodum',sans-serif; }
+    .btn-download { background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border:none; border-radius:12px; padding:14px 32px; font-size:15px; font-weight:600; cursor:pointer; }
     .btn-download:hover { transform:translateY(-2px); box-shadow:0 8px 24px var(--glow); }
-    .btn-reset { background:var(--card); color:var(--subtext); border:1px solid var(--border); border-radius:12px; padding:14px 24px; font-size:15px; cursor:pointer; font-family:'Gowun Dodum',sans-serif; }
+    .btn-reset { background:var(--card); color:var(--subtext); border:1px solid var(--border); border-radius:12px; padding:14px 24px; font-size:15px; cursor:pointer; }
     .btn-reset:hover { transform:translateY(-2px); color:var(--text); border-color:var(--point); }
 
-    /* 배너 */
+    /* Banner */
 
     @media (max-width:640px) {
       .preview-wrap { grid-template-columns:1fr; }
@@ -114,7 +116,7 @@
     }
   </style>
   <meta property="og:image" content="https://browserkit.online/img/og/image-tools.png" />
-  <link rel="canonical" href="https://browserkit.online/image-tools/" />
+  <link rel="canonical" href="https://browserkit.online/en/image-tools/" />
   <link rel="alternate" hreflang="ko" href="https://browserkit.online/image-tools/" />
   <link rel="alternate" hreflang="en" href="https://browserkit.online/en/image-tools/" />
   <link rel="alternate" hreflang="x-default" href="https://browserkit.online/en/image-tools/" />
@@ -124,18 +126,18 @@
 {
   "@context": "https://schema.org",
   "@type": "WebApplication",
-  "name": "FitImage — 이미지 편집 도구",
-  "url": "https://browserkit.online/image-tools/",
-  "description": "이미지 크기 조정, 형식 변환, 용량 압축을 브라우저에서 무료로 처리하는 온라인 도구. 파일이 서버로 전송되지 않습니다.",
+  "name": "FitImage — Image Editing Tool",
+  "url": "https://browserkit.online/en/image-tools/",
+  "description": "Free online tool for resizing images, converting formats, and compressing file size, all in your browser. Files are never uploaded to a server.",
   "applicationCategory": "UtilityApplication",
   "operatingSystem": "Any",
   "browserRequirements": "Requires JavaScript",
-  "inLanguage": "ko",
+  "inLanguage": "en",
   "isAccessibleForFree": true,
   "offers": {
     "@type": "Offer",
     "price": "0",
-    "priceCurrency": "KRW"
+    "priceCurrency": "USD"
   },
   "publisher": {
     "@type": "Organization",
@@ -152,14 +154,14 @@
     {
       "@type": "ListItem",
       "position": 1,
-      "name": "홈",
-      "item": "https://browserkit.online/"
+      "name": "Home",
+      "item": "https://browserkit.online/en/"
     },
     {
       "@type": "ListItem",
       "position": 2,
-      "name": "이미지 변환",
-      "item": "https://browserkit.online/image-tools/"
+      "name": "Image Editor",
+      "item": "https://browserkit.online/en/image-tools/"
     }
   ]
 }
@@ -168,25 +170,25 @@
 
 <body>
   <div class="lang-banner" id="langBanner">
-    <span>🌐 This page is also available in <a href="/en/image-tools/">English</a>.</span>
+    <span>🌐 이 페이지는 <a href="/image-tools/">한국어</a>로도 볼 수 있습니다.</span>
     <button class="lang-banner-close" id="langBannerClose" type="button" aria-label="close">&times;</button>
   </div>
 
   <header class="header">
     <div class="container">
-      <a href="/" class="header-brand">
-        <div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Gowun Dodum,sans-serif;flex-shrink:0">B</div>
+      <a href="/en/" class="header-brand">
+        <div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Poppins,sans-serif;flex-shrink:0">B</div>
         <span class="header-brand-text"><span style="color:var(--text)">Browser</span><span style="color:var(--point)">Kit</span></span>
       </a>
       <div class="header-right">
         <div class="lang-switcher">
-          <button class="lang-switcher-btn" type="button" data-lang-btn>🌐 <span class="lang-label-full">한국어</span></button>
+          <button class="lang-switcher-btn" type="button" data-lang-btn>🌐 <span class="lang-label-full">English</span></button>
           <div class="lang-switcher-menu" data-lang-menu>
-            <a href="/en/image-tools/">English</a>
-            <a href="#" class="active">한국어</a>
+            <a href="#" class="active">English</a>
+            <a href="/image-tools/">한국어</a>
           </div>
         </div>
-        <a href="/" class="header-back">← <span class="header-back-label">BrowserKit 홈으로</span></a>
+        <a href="/en/" class="header-back">← <span class="header-back-label">Back to BrowserKit</span></a>
       </div>
     </div>
   </header>
@@ -196,51 +198,55 @@
 
       <div class="hero">
         <div class="hero-icon" style="height:78px;display:flex;justify-content:center;align-items:center"><div style="transform:scale(1.7);transform-origin:center"><div style="width:46px;height:46px;background:#ffb3c7;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="position:relative;width:30px;height:30px;background:#fffdf9;border:2.5px solid #2a2433;border-radius:4px;box-sizing:border-box"><div style="position:absolute;left:4px;top:4px;width:9px;height:2.5px;background:#2a2433;border-radius:2px"></div><div style="position:absolute;left:4px;top:4px;width:2.5px;height:9px;background:#2a2433;border-radius:2px"></div><div style="position:absolute;right:4px;bottom:4px;width:9px;height:2.5px;background:#2a2433;border-radius:2px"></div><div style="position:absolute;right:4px;bottom:4px;width:2.5px;height:9px;background:#2a2433;border-radius:2px"></div></div></div></div></div>
-        <div class="hero-title-wrap"><h1 class="hero-title" style="margin:0">이미지 변환</h1><a href="/blog/17-fitimage-howto" class="hero-guide-link">사용법 가이드 보기</a></div>
-        <p class="hero-desc">이미지 크기 조정, 형식 변환, 용량 압축을 브라우저에서 무료로 처리하는 도구</p>
+        <div class="hero-title-wrap"><h1 class="hero-title" style="margin:0">Image Editor</h1><a href="/blog/17-fitimage-howto" class="hero-guide-link">View usage guide</a></div>
+        <p class="hero-desc">A free tool to resize images, convert formats, and compress file size, all in your browser</p>
         <div class="hero-badges">
-        <span class="badge">🔒 완전 로컬 처리</span>
-        <span class="badge">⚡ 무료 사용</span>
-        <span class="badge">🛡️ 서버 전송 없음</span>
-        <span class="badge">📦 설치 불필요</span>
+        <span class="badge">🔒 Fully local processing</span>
+        <span class="badge">⚡ Free to use</span>
+        <span class="badge">🛡️ No server upload</span>
+        <span class="badge">📦 No installation</span>
       </div>
       </div>
-    <div style="margin:0 0 12px"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><div class="adfit-h-desktop"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-QD4pRIpdIj7i2mbt" data-ad-width="728" data-ad-height="90"></ins></div><div class="adfit-h-mobile"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-R4xA2niTT8HgGjoO" data-ad-width="320" data-ad-height="50"></ins></div></div>
+    <!-- Google AdSense Display Ad — pending approval, reserving space -->
+    <div class="ad-slot" id="adTop">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
 
-<!-- 기능 탭 -->
+<!-- Feature tabs -->
       <div class="tab-wrap">
-        <button class="tab-btn active" data-tab="resize">📐 크기 조정</button>
-        <button class="tab-btn" data-tab="convert">🔄 형식 변환</button>
-        <button class="tab-btn" data-tab="compress">📦 용량 압축</button>
+        <button class="tab-btn active" data-tab="resize">📐 Resize</button>
+        <button class="tab-btn" data-tab="convert">🔄 Convert Format</button>
+        <button class="tab-btn" data-tab="compress">📦 Compress</button>
       </div>
 
-      <!-- 업로드 존 -->
+      <!-- Upload zone -->
       <div class="upload-zone" id="uploadZone">
         <input type="file" id="fileInput" accept="image/png,image/jpeg,image/webp,image/gif" hidden />
         <div class="upload-icon" style="height:64px;display:flex;justify-content:center;align-items:center"><div style="transform:scale(1.4);transform-origin:center"><div style="width:46px;height:46px;background:#ffb3c7;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="position:relative;width:30px;height:30px;background:#fffdf9;border:2.5px solid #2a2433;border-radius:4px;box-sizing:border-box"><div style="position:absolute;left:4px;top:4px;width:9px;height:2.5px;background:#2a2433;border-radius:2px"></div><div style="position:absolute;left:4px;top:4px;width:2.5px;height:9px;background:#2a2433;border-radius:2px"></div><div style="position:absolute;right:4px;bottom:4px;width:9px;height:2.5px;background:#2a2433;border-radius:2px"></div><div style="position:absolute;right:4px;bottom:4px;width:2.5px;height:9px;background:#2a2433;border-radius:2px"></div></div></div></div></div>
-        <p class="upload-title">이미지를 드래그하여 놓으세요</p>
-        <p class="upload-sub">또는 클릭하여 파일 선택</p>
-        <p class="upload-formats">PNG, JPG, WEBP, GIF 지원</p>
-        <p class="upload-safe">✓ 파일이 서버로 전송되지 않습니다</p>
+        <p class="upload-title">Drag and drop an image</p>
+        <p class="upload-sub">or click to choose a file</p>
+        <p class="upload-formats">Supports PNG, JPG, WEBP, GIF</p>
+        <p class="upload-safe">✓ Files are never uploaded to a server</p>
       </div>
 
-      <!-- 탭 패널: 크기 조정 -->
+      <!-- Tab panel: Resize -->
       <div class="tab-panel active" id="panel-resize">
-        <div class="panel-title">크기 조정</div>
+        <div class="panel-title">Resize</div>
         <div class="size-inputs">
           <div class="size-input-group">
-            <label>가로 (px)</label>
+            <label>Width (px)</label>
             <input type="number" class="size-input" id="inputWidth" placeholder="1920" min="1" />
           </div>
           <span class="size-sep">×</span>
           <div class="size-input-group">
-            <label>세로 (px)</label>
+            <label>Height (px)</label>
             <input type="number" class="size-input" id="inputHeight" placeholder="1080" min="1" />
           </div>
         </div>
         <label class="ratio-lock">
           <input type="checkbox" id="ratioLock" checked />
-          비율 유지
+          Keep aspect ratio
         </label>
         <div class="shortcut-btns">
           <button class="shortcut-btn" data-resize="50%">50%</button>
@@ -251,119 +257,127 @@
         </div>
       </div>
 
-      <!-- 탭 패널: 형식 변환 -->
+      <!-- Tab panel: Convert Format -->
       <div class="tab-panel" id="panel-convert">
-        <div class="panel-title">형식 변환</div>
+        <div class="panel-title">Convert Format</div>
         <div class="format-btns">
           <button class="format-btn active" data-format="png">
-            PNG<small>투명 지원 · 무손실</small>
+            PNG<small>Transparency · Lossless</small>
           </button>
           <button class="format-btn" data-format="jpeg">
-            JPG<small>파일 작음 · 배경 흰색</small>
+            JPG<small>Smaller file · White background</small>
           </button>
           <button class="format-btn" data-format="webp">
-            WEBP<small>최신 형식 · 고압축</small>
+            WEBP<small>Modern format · High compression</small>
           </button>
         </div>
-        <p class="format-notice" id="formatNotice">PNG — 투명 배경을 지원하며 무손실 저장됩니다.</p>
+        <p class="format-notice" id="formatNotice">PNG — Supports transparency and saves losslessly.</p>
       </div>
 
-      <!-- 탭 패널: 용량 압축 -->
+      <!-- Tab panel: Compress -->
       <div class="tab-panel" id="panel-compress">
-        <div class="panel-title">용량 압축</div>
+        <div class="panel-title">Compress</div>
         <div class="quality-wrap">
           <div class="quality-label">
-            <span>품질</span>
+            <span>Quality</span>
             <span class="quality-value" id="qualityValue">80%</span>
           </div>
           <input type="range" class="quality-slider" id="qualitySlider" min="1" max="100" value="80" />
         </div>
         <div class="shortcut-btns">
-          <button class="shortcut-btn" data-quality="90">고화질 90%</button>
-          <button class="shortcut-btn" data-quality="75">표준 75%</button>
-          <button class="shortcut-btn" data-quality="50">최소 50%</button>
+          <button class="shortcut-btn" data-quality="90">High 90%</button>
+          <button class="shortcut-btn" data-quality="75">Standard 75%</button>
+          <button class="shortcut-btn" data-quality="50">Minimum 50%</button>
         </div>
-        <p class="compress-info" id="compressInfo">이미지를 업로드하면 예상 용량을 확인할 수 있습니다.</p>
+        <p class="compress-info" id="compressInfo">Upload an image to see the estimated file size.</p>
       </div>
 
-      <!-- 미리보기 -->
+      <!-- Preview -->
       <div class="preview-wrap" id="previewWrap">
         <div class="preview-panel">
-          <div class="preview-label">원본</div>
+          <div class="preview-label">Original</div>
           <canvas id="originalCanvas"></canvas>
           <div class="file-info" id="originalInfo">—</div>
         </div>
         <div class="preview-panel">
-          <div class="preview-label">결과</div>
+          <div class="preview-label">Result</div>
           <canvas id="resultCanvas"></canvas>
           <div class="file-info" id="resultInfo">—</div>
         </div>
       </div>
 
-      <!-- 액션 버튼 -->
+      <!-- Action buttons -->
       <div class="action-wrap" id="actionWrap">
-        <button class="btn-download" id="downloadBtn">⬇ 이미지 다운로드</button>
-        <button class="btn-reset" id="resetBtn">↺ 처음부터</button>
+        <button class="btn-download" id="downloadBtn">⬇ Download Image</button>
+        <button class="btn-reset" id="resetBtn">↺ Start Over</button>
       </div>
 
 </div>
   </main>
-<div class="container"><div style="margin:0 0 12px"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><!-- 카카오 애드핏 (2026-07-22, 쿠팡 파트너스 다이내믹 배너로 교체) — 복원 시 주석 해제: <div class="adfit-h-desktop"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-QD4pRIpdIj7i2mbt" data-ad-width="728" data-ad-height="90"></ins></div><div class="adfit-h-mobile"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-R4xA2niTT8HgGjoO" data-ad-width="320" data-ad-height="50"></ins></div> --><div class="adfit-h-desktop"><script src="https://ads-partners.coupang.com/g.js"></script><script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"728","height":"90","tsource":""});</script></div><div class="adfit-h-mobile"><script src="https://ads-partners.coupang.com/g.js"></script><script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"320","height":"50","tsource":""});</script></div></div>
-
-    <div class="guide-summary">
-      <h2 class="guide-summary-title">사용법 요약</h2>
-      <ol class="guide-steps">
-        <li>이미지 업로드</li>
-        <li>기능 탭 선택</li>
-        <li>옵션 설정</li>
-      </ol>
-      <h3 class="guide-faq-title">자주 묻는 질문</h3>
-      <div class="guide-faq">
-        <details>
-          <summary>이미지 변환 도구는 정말 무료인가요?</summary>
-          <p>네, 회원가입이나 설치 없이 완전 무료로 사용할 수 있습니다. 횟수 제한도 없습니다.</p>
-        </details>
-        <details>
-          <summary>업로드한 파일이 서버로 전송되나요?</summary>
-          <p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 업로드한 파일이 외부 서버로 전송되거나 저장되지 않습니다.</p>
-        </details>
-        <details>
-          <summary>어떤 이미지 형식을 지원하나요?</summary>
-          <p>JPG, PNG, WebP 등 주요 이미지 형식 간 변환을 지원하며, 크기 조정과 용량 압축도 함께 처리할 수 있습니다.</p>
-        </details>
-        <details>
-          <summary>모바일에서도 사용할 수 있나요?</summary>
-          <p>네, 별도의 앱 설치 없이 모바일 브라우저에서도 동일하게 사용할 수 있습니다.</p>
-        </details>
-      </div>
-      <a href="/blog/17-fitimage-howto" class="guide-full-link">전체 가이드 보기 →</a>
+<div class="container"><!-- Google AdSense Display Ad — pending approval, reserving space -->
+    <div class="ad-slot" id="adMiddle">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
     </div>
 
-    <div style="margin:0 0 12px"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="9500090221"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><div class="adfit-rect-wrap"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-oePL4TCj742xAwqT" data-ad-width="300" data-ad-height="250"></ins></div></div></div>
+    <div class="guide-summary">
+      <h2 class="guide-summary-title">Quick guide</h2>
+      <ol class="guide-steps">
+        <li>Upload an image</li>
+        <li>Choose a feature tab</li>
+        <li>Set your options</li>
+      </ol>
+      <h3 class="guide-faq-title">Frequently asked questions</h3>
+      <div class="guide-faq">
+        <details>
+          <summary>Is the Image Editor tool really free?</summary>
+          <p>Yes, it is completely free to use with no sign-up or installation required. There is no usage limit either.</p>
+        </details>
+        <details>
+          <summary>Are uploaded files sent to a server?</summary>
+          <p>No. All processing happens entirely in your browser, and uploaded files are never sent to or stored on an external server.</p>
+        </details>
+        <details>
+          <summary>Which image formats are supported?</summary>
+          <p>It supports converting between major image formats like JPG, PNG, and WebP, and can also resize and compress at the same time.</p>
+        </details>
+        <details>
+          <summary>Can I use this on mobile?</summary>
+          <p>Yes, it works the same way in a mobile browser without needing to install any app.</p>
+        </details>
+      </div>
+      <a href="/blog/17-fitimage-howto" class="guide-full-link">View full guide →</a>
+    </div>
+
+    <!-- Google AdSense Multiplex Ad — pending approval, reserving space -->
+    <div class="ad-slot ad-slot-rect" id="adBottom">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div></div>
 
 
   <footer class="footer">
     <div class="container">
-      <p class="footer-copy">© 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p>
+      <p class="footer-copy">&#xa9; 2026 BrowserKit. All processing happens in your browser.</p>
       <nav class="footer-nav">
-        <a href="/privacy">개인정보 처리방침</a>
-        <a href="/terms">이용약관</a>
-        <a href="/about">서비스 소개</a>
-        <a href="/blog/">블로그</a>
+        <a href="/en/privacy.html">Privacy Policy</a>
+        <a href="/en/terms.html">Terms of Service</a>
+        <a href="/en/about.html">About</a>
+        <a href="/en/blog/">Blog</a>
       </nav>
     </div>
   </footer>
 
   <script>
     // =============================================
-    // 상태 변수
+    // State variables
     // =============================================
-    let originalImage = null;  // 원본 Image 객체
-    let originalFile  = null;  // 원본 File 객체
-    let currentTab    = 'resize'; // 현재 탭 (resize / convert / compress)
-    let currentFormat = 'png';    // 형식 변환 선택값
-    let currentRatio  = 1;        // 원본 가로/세로 비율
-    let isGifInput    = false;     // GIF 원본 여부
+    let originalImage = null;  // Original Image object
+    let originalFile  = null;  // Original File object
+    let currentTab    = 'resize'; // Current tab (resize / convert / compress)
+    let currentFormat = 'png';    // Selected output format
+    let currentRatio  = 1;        // Original width/height ratio
+    let isGifInput    = false;     // Whether the original is a GIF
 
     const uploadZone     = document.getElementById('uploadZone');
     const fileInput      = document.getElementById('fileInput');
@@ -380,7 +394,7 @@
     const ratioLockEl    = document.getElementById('ratioLock');
 
     // =============================================
-    // 탭 전환
+    // Tab switching
     // =============================================
     document.querySelectorAll('.tab-btn').forEach(btn => {
       btn.addEventListener('click', () => {
@@ -394,7 +408,7 @@
     });
 
     // =============================================
-    // 업로드 이벤트
+    // Upload events
     // =============================================
     uploadZone.addEventListener('click', () => fileInput.click());
     fileInput.addEventListener('change', e => { if (e.target.files[0]) handleFile(e.target.files[0]); });
@@ -415,21 +429,21 @@
         img.onload = () => {
           originalImage = img;
           currentRatio  = img.width / img.height;
-          // 입력 필드 초기값 세팅
+          // Set initial input field values
           document.getElementById('inputWidth').value  = img.width;
           document.getElementById('inputHeight').value = img.height;
-          // 원본 Canvas 렌더링
+          // Render the original canvas
           originalCanvas.width  = img.width;
           originalCanvas.height = img.height;
           originalCanvas.getContext('2d').drawImage(img, 0, 0);
-          // 원본 파일 정보 표시 (해상도 / 용량 / 형식)
+          // Show original file info (resolution / size / format)
           originalInfo.textContent = img.width + ' × ' + img.height + ' · ' + formatBytes(file.size) + ' · ' + getFormatLabel(file);
-          // 결과 Canvas 초기 렌더링 (원본과 동일하게 시작, Step 3~5에서 갱신됨)
+          // Initial render of the result canvas (starts identical to the original, updated in steps 3-5)
           resultCanvas.width  = img.width;
           resultCanvas.height = img.height;
           resultCanvas.getContext('2d').drawImage(img, 0, 0);
           resultInfo.textContent = img.width + ' × ' + img.height + ' · ' + formatBytes(file.size) + ' · ' + getFormatLabel(file);
-          // UI 표시
+          // Show UI
           uploadZone.style.display  = 'none';
           previewWrap.style.display = 'grid';
           actionWrap.style.display  = 'flex';
@@ -442,7 +456,7 @@
     }
 
     // =============================================
-    // 결과 적용 및 미리보기 (탭별 분기) — Step 3 (크기 조정) 구현, Step 4~5에서 형식/압축 추가
+    // Apply result and preview (branches by tab) — Step 3 (resize) implemented, format/compress added in steps 4-5
     // =============================================
     function applyAndPreview() {
       if (!originalImage) return;
@@ -450,17 +464,17 @@
       let targetW = parseInt(inputWidthEl.value, 10);
       let targetH = parseInt(inputHeightEl.value, 10);
 
-      // 입력값이 없거나 0 이하인 경우 원본 크기 사용
+      // Use the original size if the input is missing or 0 or less
       if (!targetW || targetW <= 0) targetW = originalImage.width;
       if (!targetH || targetH <= 0) targetH = originalImage.height;
 
-      // 결과 Canvas 크기 설정 및 리샘플링
+      // Set result canvas size and resample
       resultCanvas.width  = targetW;
       resultCanvas.height = targetH;
       const ctx = resultCanvas.getContext('2d');
       ctx.clearRect(0, 0, targetW, targetH);
 
-      // JPG/WEBP 배경을 하얀 색으로 채움
+      // Fill JPG/WEBP background with white
       if (currentFormat === 'jpeg' || currentFormat === 'webp') {
         ctx.fillStyle = '#ffffff';
         ctx.fillRect(0, 0, targetW, targetH);
@@ -471,7 +485,7 @@
       updateResultInfo(targetW, targetH);
     }
 
-    // 결과 파일 정보 갱신 (해상도 / 용량 추정 / 형식 / 원본과의 차이 %)
+    // Update result file info (resolution / estimated size / format / % difference from original)
     function updateResultInfo(w, h) {
       const mimeMap = { png: 'image/png', jpeg: 'image/jpeg', webp: 'image/webp' };
       const mime = mimeMap[currentFormat] || 'image/png';
@@ -487,7 +501,7 @@
 
       let infoText = w + ' × ' + h + ' · ' + formatBytes(estimatedBytes) + ' · ' + formatLabel;
 
-      // 원본과의 용량 차이 % 계산
+      // Compute % size difference from the original
       let diffHtml = '';
       if (originalFile && originalFile.size > 0) {
         const diffPercent = Math.round((1 - estimatedBytes / originalFile.size) * 100);
@@ -500,22 +514,22 @@
 
       resultInfo.innerHTML = infoText + diffHtml;
 
-      // 압축 탭 안내 영역(#compressInfo) 갱신
+      // Update the compress tab hint area (#compressInfo)
       updateCompressInfo(estimatedBytes, diffHtml);
     }
 
-    // 압축 탭 안내 갱신 — PNG는 품질 설정이 반영되지 않으므로 안내 문구, 그 외 형식은 예상 용량/감소율 표시
+    // Update compress tab hint — PNG ignores the quality setting so show a note; other formats show estimated size/reduction
     function updateCompressInfo(estimatedBytes, diffHtml) {
       const compressInfoEl = document.getElementById('compressInfo');
       if (currentFormat === 'png') {
-        compressInfoEl.textContent = 'PNG는 무손실 형식이라 품질 설정이 적용되지 않습니다. JPG 또는 WEBP로 변환 후 압축해보세요.';
+        compressInfoEl.textContent = 'PNG is a lossless format, so the quality setting has no effect. Try converting to JPG or WEBP first, then compress.';
       } else {
-        compressInfoEl.innerHTML = '예상 용량: ' + formatBytes(estimatedBytes) + diffHtml;
+        compressInfoEl.innerHTML = 'Estimated size: ' + formatBytes(estimatedBytes) + diffHtml;
       }
     }
 
     // =============================================
-    // 크기 조정 — 가로/세로 입력, 한쪽 입력 시 다른 쪽 자동 계산
+    // Resize — width/height inputs; entering one auto-calculates the other
     // =============================================
     inputWidthEl.addEventListener('input', () => {
       if (!originalImage) return;
@@ -535,7 +549,7 @@
       applyAndPreview();
     });
 
-    // 크기 조정 단축 버튼 (50% / 75% / 1280px / 800px / 640px)
+    // Resize shortcut buttons (50% / 75% / 1280px / 800px / 640px)
     document.querySelectorAll('[data-resize]').forEach(btn => {
       btn.addEventListener('click', () => {
         if (!originalImage) return;
@@ -547,7 +561,7 @@
           targetW = Math.round(originalImage.width  * percent);
           targetH = Math.round(originalImage.height * percent);
         } else {
-          // px 값은 긴 쪽 기준 리사이즈
+          // For px values, resize based on the longer side
           const px = parseInt(val, 10);
           if (originalImage.width >= originalImage.height) {
             targetW = px;
@@ -565,13 +579,13 @@
     });
 
     // =============================================
-    // 다운로드 — 탭/형식별 파일명 자동 생성 후 Blob 다운로드
+    // Download — auto-generate a filename per tab/format, then download as a Blob
     // =============================================
-    // MIME / 확장자 매핑
+    // MIME type / extension mapping
     const downloadMimeMap = { png: 'image/png', jpeg: 'image/jpeg', webp: 'image/webp' };
     const downloadExtMap  = { png: 'png', jpeg: 'jpg', webp: 'webp' };
 
-    // 현재 탭/형식에 따른 다운로드 파일명 생성
+    // Generate the download filename based on the current tab/format
     function getDownloadFilename() {
       const ext = downloadExtMap[currentFormat] || 'png';
       if (currentTab === 'resize') {
@@ -609,7 +623,7 @@
     });
 
     // =============================================
-    // 초기화
+    // Reset
     // =============================================
     resetBtn.addEventListener('click', () => {
       originalImage = null;
@@ -635,11 +649,11 @@
       document.getElementById('inputHeight').value = '';
       document.getElementById('qualitySlider').value = 80;
       document.getElementById('qualityValue').textContent = '80%';
-      document.getElementById('compressInfo').textContent = '이미지를 업로드하면 예상 용량을 확인할 수 있습니다.';
+      document.getElementById('compressInfo').textContent = 'Upload an image to see the estimated file size.';
     });
 
     // =============================================
-    // 유틸
+    // Utils
     // =============================================
     function formatBytes(bytes) {
       if (bytes < 1024) return bytes + ' B';
@@ -647,7 +661,7 @@
       return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
     }
 
-    // MIME 타입 → 표시용 포맷 단어 (PNG / JPG / WEBP / GIF)
+    // MIME type -> display format label (PNG / JPG / WEBP / GIF)
     function getFormatLabel(file) {
       const map = {
         'image/png':  'PNG',
@@ -657,18 +671,18 @@
         'image/gif':  'GIF'
       };
       if (map[file.type]) return map[file.type];
-      // type이 미제공되는 경우 파일명 확장자로 보완
+      // Fall back to the filename extension if no type is provided
       const ext = (file.name.split('.').pop() || '').toUpperCase();
-      return ext === 'JPEG' ? 'JPG' : (ext || '이미지');
+      return ext === 'JPEG' ? 'JPG' : (ext || 'IMAGE');
     }
 
-    // 품질 슬라이더 실시간 표시
+    // Live-update the quality slider display
     document.getElementById('qualitySlider').addEventListener('input', e => {
       document.getElementById('qualityValue').textContent = e.target.value + '%';
       if (originalImage) applyAndPreview();
     });
 
-    // 압축 단축 버튼
+    // Compress shortcut buttons
     document.querySelectorAll('[data-quality]').forEach(btn => {
       btn.addEventListener('click', () => {
         const q = btn.dataset.quality;
@@ -678,14 +692,14 @@
       });
     });
 
-    // 형식 버튼
+    // Format buttons
     const formatNotices = {
-      png:  'PNG — 투명 배경을 지원하며 무손실 저장됩니다.',
-      jpeg: 'JPG — 파일 크기가 작습니다. 투명 배경은 흰색으로 자동 변환됩니다.',
-      webp: 'WEBP — 최신 포맷으로 JPG 대비 작은 용량에 높은 화질을 제공합니다.'
+      png:  'PNG — Supports transparency and saves losslessly.',
+      jpeg: 'JPG — Smaller file size. Transparent backgrounds are automatically converted to white.',
+      webp: 'WEBP — A modern format offering higher quality at a smaller size than JPG.'
     };
 
-    const gifNotice = ' GIF 이미지는 변환 시 애니메이션이 사라지고 첫 프레임만 저장됩니다.';
+    const gifNotice = ' Converting a GIF removes the animation and keeps only the first frame.';
 
     function updateFormatNotice() {
       let text = formatNotices[currentFormat];
@@ -723,7 +737,7 @@
     try {
       if (document.cookie.indexOf('bk_lang_dismiss=1') !== -1) return;
       var lang = (navigator.language || navigator.userLanguage || '').toLowerCase();
-      if (lang.indexOf('ko') === 0) return;
+      if (lang.indexOf('ko') !== 0) return;
       var banner = document.getElementById('langBanner');
       if (!banner) return;
       banner.classList.add('show');
