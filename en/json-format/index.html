@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
   <link rel="icon" href="/favicon.ico" sizes="32x32">
   <link rel="icon" href="/favicon-16.png" sizes="16x16" type="image/png">
@@ -8,18 +8,18 @@
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="JSON을 보기 좋게 정렬하거나 압축하는 무료 온라인 도구. 유효성 검사와 오류 위치 표시 기능을 지원합니다. 서버 전송 없이 브라우저에서 바로 처리합니다." />
-  <meta property="og:title" content="JSONFormat — JSON 포맷터 / 검사기" />
-  <meta property="og:description" content="JSON 정렬, 압축, 유효성 검사를 브라우저에서 바로 처리하는 무료 온라인 도구입니다." />
+  <meta name="description" content="Free online tool to pretty-print or minify JSON, with validation and error location highlighting. Everything runs in your browser." />
+  <meta property="og:title" content="JSONFormat — JSON Formatter / Validator" />
+  <meta property="og:description" content="Free online tool to pretty-print, minify, and validate JSON right in your browser." />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://browserkit.online/json-format/" />
-  <title>JSONFormat — JSON 포맷터 / 검사기</title>
+  <meta property="og:url" content="https://browserkit.online/en/json-format/" />
+  <title>JSONFormat — JSON Formatter / Validator</title>
   <link rel="stylesheet" href="/css/style.css?v=20260724a" />
-  <!-- Google AdSense 승인 대기 중 (2026-07-19 주석 처리, 카카오 애드핏으로 임시 전환) — 승인 후 주석 해제
+  <link rel="stylesheet" href="/css/style-en.css?v=20260724a" />
+  <!-- Google AdSense — pending re-review. Uncomment once approved.
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506"
      crossorigin="anonymous"></script>
   -->
-  <script type="text/javascript" src="//t1.kakaocdn.net/kas/static/ba.min.js" async></script>
   <style>
     .guide-summary { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:24px; margin:0 0 12px; }
     .guide-summary-title { font-size:16px; font-weight:700; color:var(--text); margin:0 0 12px; }
@@ -31,6 +31,9 @@
     .guide-full-link { display:inline-block; margin-top:12px; font-size:14px; font-weight:600; color:var(--point-hover); text-decoration:none; }
     .guide-full-link:hover { text-decoration:underline; }
 
+    .ad-slot { min-height:90px; display:flex; align-items:center; justify-content:center; margin:0 0 12px; }
+    .ad-slot-rect { min-height:250px; }
+
 
 /* 상태 바 */
     .status-bar { display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; flex-wrap:wrap; gap:8px; }
@@ -38,11 +41,11 @@
     .status-badge.valid { color:var(--success); border-color:var(--success); background:rgba(52,211,153,0.1); }
     .status-badge.error { color:#F87171; border-color:#F87171; background:rgba(248,113,113,0.1); }
     .status-badge.idle { color:var(--subtext); }
-    .info-text { font-size:12px; color:var(--subtext); font-family:'Gowun Dodum',sans-serif; }
+    .info-text { font-size:12px; color:var(--subtext); }
 
     /* 액션 버튼 묶음 */
     .action-bar { display:flex; gap:8px; margin-bottom:12px; flex-wrap:wrap; }
-    .act-btn { background:var(--card); border:1px solid var(--border); border-radius:10px; padding:9px 18px; font-size:13px; font-weight:600; color:var(--subtext); cursor:pointer; font-family:'Gowun Dodum',sans-serif; transition:all 0.2s; white-space:nowrap; }
+    .act-btn { background:var(--card); border:1px solid var(--border); border-radius:10px; padding:9px 18px; font-size:13px; font-weight:600; color:var(--subtext); cursor:pointer; transition:all 0.2s; white-space:nowrap; }
     .act-btn:hover { border-color:var(--point); color:var(--text); }
     .act-btn.primary { background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border-color:transparent; }
     .act-btn.primary:hover { transform:translateY(-1px); box-shadow:0 6px 20px var(--glow); }
@@ -53,7 +56,7 @@
     .editor-wrap { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:16px; }
     .editor-pane { display:flex; flex-direction:column; }
     .pane-label { font-size:12px; font-weight:600; color:var(--subtext); margin-bottom:8px; display:flex; align-items:center; justify-content:space-between; }
-    .pane-copy { font-size:11px; color:var(--point-hover); cursor:pointer; background:rgba(123,108,255,0.1); border:1px solid var(--border); border-radius:6px; padding:2px 8px; font-family:'Gowun Dodum',sans-serif; }
+    .pane-copy { font-size:11px; color:var(--point-hover); cursor:pointer; background:rgba(123,108,255,0.1); border:1px solid var(--border); border-radius:6px; padding:2px 8px; }
     .pane-copy:hover { background:rgba(123,108,255,0.2); }
     .pane-copy.copied { color:var(--success); background:rgba(52,211,153,0.1); border-color:var(--success); }
     .code-area { background:#0a0a12; border:1px solid var(--border); border-radius:12px; padding:16px; font-family:'Fira Code','Cascadia Code','JetBrains Mono',monospace; font-size:13px; line-height:1.7; color:#e2e8f0; resize:vertical; min-height:360px; width:100%; outline:none; transition:border-color 0.2s; tab-size:2; }
@@ -63,7 +66,7 @@
     .result-placeholder { color:#4a5568; font-style:italic; }
 
     /* 오류 메시지 */
-    .error-box { background:rgba(248,113,113,0.08); border:1px solid rgba(248,113,113,0.3); border-radius:10px; padding:12px 16px; margin-bottom:12px; font-size:13px; color:#F87171; font-family:'Gowun Dodum',sans-serif; display:none; }
+    .error-box { background:rgba(248,113,113,0.08); border:1px solid rgba(248,113,113,0.3); border-radius:10px; padding:12px 16px; margin-bottom:12px; font-size:13px; color:#F87171; display:none; }
     .error-box.show { display:block; }
     .error-location { font-weight:700; margin-right:6px; }
 
@@ -92,9 +95,9 @@
     }
   </style>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <meta property="og:image" content="https://browserkit.online/img/og/json-format.png" />
-  <link rel="canonical" href="https://browserkit.online/json-format/" />
+  <link rel="canonical" href="https://browserkit.online/en/json-format/" />
   <link rel="alternate" hreflang="ko" href="https://browserkit.online/json-format/" />
   <link rel="alternate" hreflang="en" href="https://browserkit.online/en/json-format/" />
   <link rel="alternate" hreflang="x-default" href="https://browserkit.online/en/json-format/" />
@@ -104,18 +107,18 @@
 {
   "@context": "https://schema.org",
   "@type": "WebApplication",
-  "name": "JSONFormat — JSON 포맷터 / 검사기",
-  "url": "https://browserkit.online/json-format/",
-  "description": "JSON을 보기 좋게 정렬하거나 압축하는 무료 온라인 도구. 유효성 검사와 오류 위치 표시 기능을 지원합니다. 서버 전송 없이 브라우저에서 바로 처리합니다.",
+  "name": "JSONFormat — JSON Formatter / Validator",
+  "url": "https://browserkit.online/en/json-format/",
+  "description": "Free online tool to pretty-print or minify JSON, with validation and error location highlighting. Everything runs in your browser.",
   "applicationCategory": "UtilityApplication",
   "operatingSystem": "Any",
   "browserRequirements": "Requires JavaScript",
-  "inLanguage": "ko",
+  "inLanguage": "en",
   "isAccessibleForFree": true,
   "offers": {
     "@type": "Offer",
     "price": "0",
-    "priceCurrency": "KRW"
+    "priceCurrency": "USD"
   },
   "publisher": {
     "@type": "Organization",
@@ -132,14 +135,14 @@
     {
       "@type": "ListItem",
       "position": 1,
-      "name": "홈",
-      "item": "https://browserkit.online/"
+      "name": "Home",
+      "item": "https://browserkit.online/en/"
     },
     {
       "@type": "ListItem",
       "position": 2,
-      "name": "JSON 포맷터",
-      "item": "https://browserkit.online/json-format/"
+      "name": "JSON Formatter",
+      "item": "https://browserkit.online/en/json-format/"
     }
   ]
 }
@@ -148,55 +151,59 @@
 
 <body>
   <div class="lang-banner" id="langBanner">
-    <span>🌐 This page is also available in <a href="/en/json-format/">English</a>.</span>
+    <span>🌐 이 페이지는 <a href="/json-format/">한국어</a>로도 볼 수 있습니다.</span>
     <button class="lang-banner-close" id="langBannerClose" type="button" aria-label="close">&times;</button>
   </div>
   <header class="header">
     <div class="container">
-      <a href="/" class="header-brand">
-        <div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Gowun Dodum,sans-serif;flex-shrink:0">B</div>
+      <a href="/en/" class="header-brand">
+        <div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Poppins,sans-serif;flex-shrink:0">B</div>
         <span class="header-brand-text"><span style="color:var(--text)">Browser</span><span style="color:var(--point)">Kit</span></span>
       </a>
       <div class="header-right">
         <div class="lang-switcher">
-          <button class="lang-switcher-btn" type="button" data-lang-btn>🌐 <span class="lang-label-full">한국어</span></button>
+          <button class="lang-switcher-btn" type="button" data-lang-btn>🌐 <span class="lang-label-full">English</span></button>
           <div class="lang-switcher-menu" data-lang-menu>
-            <a href="/en/json-format/">English</a>
-            <a href="#" class="active">한국어</a>
+            <a href="#" class="active">English</a>
+            <a href="/json-format/">한국어</a>
           </div>
         </div>
-        <a href="/" class="header-back">← BrowserKit 홈으로</a>
+        <a href="/en/" class="header-back">&#x2190; Back to BrowserKit</a>
       </div>
     </div>
   </header>
 
   <main><div class="container">
     <div class="hero">
-      <div class="hero-icon" style="height:78px;display:flex;justify-content:center;align-items:center"><div style="transform:scale(1.7);transform-origin:center"><div style="width:46px;height:46px;background:#e0c3ff;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="font:700 16px Gowun Dodum,sans-serif;color:#2a2433;line-height:1;letter-spacing:-.5px;white-space:nowrap">{ }</div></div></div></div>
-      <div class="hero-title-wrap"><h1 class="hero-title">JSON 포맷터</h1><a href="/blog/25-jsonformat-howto" class="hero-guide-link">사용법 가이드 보기</a></div>
-      <p class="hero-desc">JSON을 정렬하고, 압축하고, 유효성을 검사하세요 — 브라우저에서 바로</p>
+      <div class="hero-icon" style="height:78px;display:flex;justify-content:center;align-items:center"><div style="transform:scale(1.7);transform-origin:center"><div style="width:46px;height:46px;background:#e0c3ff;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="font:700 16px Poppins,sans-serif;color:#2a2433;line-height:1;letter-spacing:-.5px;white-space:nowrap">{ }</div></div></div></div>
+      <div class="hero-title-wrap"><h1 class="hero-title">JSON Formatter</h1><a href="/en/blog/json-format-howto" class="hero-guide-link">View the guide</a></div>
+      <p class="hero-desc">Pretty-print, minify, and validate JSON, right in your browser</p>
       <div class="hero-badges">
-        <span class="badge">🔒 완전 로컬 처리</span>
-        <span class="badge">⚡ 무료 사용</span>
-        <span class="badge">🛡️ 서버 전송 없음</span>
-        <span class="badge">📦 설치 불필요</span>
+        <span class="badge">🔒 Fully Local</span>
+        <span class="badge">⚡ Free to Use</span>
+        <span class="badge">🛡️ No Server Uploads</span>
+        <span class="badge">📦 No Install Needed</span>
       </div>
     </div>
-    <div style="margin:0 0 12px"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><div class="adfit-h-desktop"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-QD4pRIpdIj7i2mbt" data-ad-width="728" data-ad-height="90"></ins></div><div class="adfit-h-mobile"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-R4xA2niTT8HgGjoO" data-ad-width="320" data-ad-height="50"></ins></div></div>
+    <!-- Google AdSense Display Ad — pending approval, reserving space -->
+    <div class="ad-slot" id="adTop">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
 
 <!-- 상태 바 -->
     <div class="status-bar">
-      <span class="status-badge idle" id="statusBadge">⬜ 입력 대기</span>
+      <span class="status-badge idle" id="statusBadge">⬜ Waiting for input</span>
       <span class="info-text" id="infoText"></span>
     </div>
 
     <!-- 액션 버튼 -->
     <div class="action-bar">
-      <button class="act-btn primary" id="btn2">&#x2728; 정렬 (2칸)</button>
-      <button class="act-btn primary" id="btn4">&#x2728; 정렬 (4칸)</button>
-      <button class="act-btn" id="btnMin">&#x1F5DC;&#xFE0F; 압축</button>
-      <button class="act-btn" id="btnSample">&#x1F4CB; 샘플 불러오기</button>
-      <button class="act-btn danger" id="btnClear">&#x21BA; 초기화</button>
+      <button class="act-btn primary" id="btn2">&#x2728; Format (2 spaces)</button>
+      <button class="act-btn primary" id="btn4">&#x2728; Format (4 spaces)</button>
+      <button class="act-btn" id="btnMin">&#x1F5DC;&#xFE0F; Minify</button>
+      <button class="act-btn" id="btnSample">&#x1F4CB; Load Sample</button>
+      <button class="act-btn danger" id="btnClear">&#x21BA; Reset</button>
     </div>
 
     <!-- 오류 박스 -->
@@ -209,64 +216,72 @@
     <div class="editor-wrap">
       <div class="editor-pane">
         <div class="pane-label">
-          <span>입력 JSON</span>
-          <button class="pane-copy" id="copyInput">복사</button>
+          <span>Input JSON</span>
+          <button class="pane-copy" id="copyInput">Copy</button>
         </div>
         <textarea class="code-area" id="inputArea" placeholder='{"name": "BrowserKit", "type": "free tool"}'></textarea>
       </div>
       <div class="editor-pane">
         <div class="pane-label">
-          <span>결과</span>
-          <button class="pane-copy" id="copyResult">복사</button>
+          <span>Result</span>
+          <button class="pane-copy" id="copyResult">Copy</button>
         </div>
         <div class="result-area" id="resultArea">
-          <span class="result-placeholder">왼쪽에 JSON을 입력하고 정렬 버튼을 누르세요.</span>
+          <span class="result-placeholder">Enter JSON on the left and click Format.</span>
         </div>
       </div>
     </div>
 
-<div style="margin:0 0 12px"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><!-- 카카오 애드핏 (2026-07-22, 쿠팡 파트너스 다이내믹 배너로 교체) — 복원 시 주석 해제: <div class="adfit-h-desktop"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-QD4pRIpdIj7i2mbt" data-ad-width="728" data-ad-height="90"></ins></div><div class="adfit-h-mobile"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-R4xA2niTT8HgGjoO" data-ad-width="320" data-ad-height="50"></ins></div> --><div class="adfit-h-desktop"><script src="https://ads-partners.coupang.com/g.js"></script><script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"728","height":"90","tsource":""});</script></div><div class="adfit-h-mobile"><script src="https://ads-partners.coupang.com/g.js"></script><script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"320","height":"50","tsource":""});</script></div></div>
-
-    <div class="guide-summary">
-      <h2 class="guide-summary-title">사용법 요약</h2>
-      <ol class="guide-steps">
-        <li>JSON 입력</li>
-        <li>정렬 또는 압축</li>
-        <li>결과 복사</li>
-      </ol>
-      <h3 class="guide-faq-title">자주 묻는 질문</h3>
-      <div class="guide-faq">
-        <details>
-          <summary>JSON 포맷터 도구는 정말 무료인가요?</summary>
-          <p>네, 회원가입이나 설치 없이 완전 무료로 사용할 수 있습니다. 횟수 제한도 없습니다.</p>
-        </details>
-        <details>
-          <summary>입력한 내용이 서버로 전송되나요?</summary>
-          <p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용이 외부 서버로 전송되거나 저장되지 않습니다.</p>
-        </details>
-        <details>
-          <summary>잘못된 JSON도 확인할 수 있나요?</summary>
-          <p>네, 유효성 검사 기능이 문법 오류를 찾아 알려주므로 어디가 잘못됐는지 빠르게 확인할 수 있습니다.</p>
-        </details>
-        <details>
-          <summary>모바일에서도 사용할 수 있나요?</summary>
-          <p>네, 별도의 앱 설치 없이 모바일 브라우저에서도 동일하게 사용할 수 있습니다.</p>
-        </details>
-      </div>
-      <a href="/blog/25-jsonformat-howto" class="guide-full-link">전체 가이드 보기 →</a>
+<div style="margin:0 0 12px"><!-- Google AdSense Display Ad — pending approval, reserving space -->
+    <div class="ad-slot" id="adMiddle">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
     </div>
 
-    <div style="margin:12px 0"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="9500090221"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><div class="adfit-rect-wrap"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-oePL4TCj742xAwqT" data-ad-width="300" data-ad-height="250"></ins></div></div>
+    <div class="guide-summary">
+      <h2 class="guide-summary-title">Quick guide</h2>
+      <ol class="guide-steps">
+        <li>Enter your JSON</li>
+        <li>Format or minify</li>
+        <li>Copy the result</li>
+      </ol>
+      <h3 class="guide-faq-title">FAQ</h3>
+      <div class="guide-faq">
+        <details>
+          <summary>Is this JSON formatter really free?</summary>
+          <p>Yes, no sign-up or installation required, and there's no limit on how many times you can use it.</p>
+        </details>
+        <details>
+          <summary>Is what I enter sent to a server?</summary>
+          <p>No. All processing happens entirely in your browser, nothing you enter is uploaded or stored anywhere.</p>
+        </details>
+        <details>
+          <summary>Can it show me what is wrong with invalid JSON?</summary>
+          <p>Yes, the validator finds syntax errors and shows you exactly where the problem is.</p>
+        </details>
+        <details>
+          <summary>Does it work on mobile?</summary>
+          <p>Yes, it works the same way in your mobile browser with no app install required.</p>
+        </details>
+      </div>
+      <a href="/en/blog/json-format-howto" class="guide-full-link">Read the full guide -></a>
+    </div>
+
+    <!-- Google AdSense Multiplex Ad — pending approval, reserving space -->
+    <div class="ad-slot ad-slot-rect" id="adBottom">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
   </div></main>
 
   <footer class="footer">
     <div class="container">
-      <p class="footer-copy">© 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p>
+      <p class="footer-copy">&#xa9; 2026 BrowserKit. All processing happens in your browser.</p>
       <nav class="footer-nav">
-        <a href="/privacy">개인정보 처리방침</a>
-        <a href="/terms">이용약관</a>
-        <a href="/about">서비스 소개</a>
-        <a href="/blog/">블로그</a>
+        <a href="/en/privacy.html">Privacy Policy</a>
+        <a href="/en/terms.html">Terms of Service</a>
+        <a href="/en/about.html">About</a>
+        <a href="/en/blog/">Blog</a>
       </nav>
     </div>
   </footer>
@@ -299,7 +314,7 @@
 
   function updateInfo(str) {
     if (!str) { infoText.textContent = ''; return; }
-    infoText.textContent = `${countLines(str)}줄 · ${countChars(str).toLocaleString()}자`;
+    infoText.textContent = `${countLines(str)} lines - ${countChars(str).toLocaleString()} chars`;
   }
 
   // ── 구문 강조 ──
@@ -324,7 +339,7 @@
 
   function renderResult(text) {
     if (!text) {
-      resultArea.innerHTML = '<span class="result-placeholder">왼쪽에 JSON을 입력하고 정렬 버튼을 누르세요.</span>';
+      resultArea.innerHTML = '<span class="result-placeholder">Enter JSON on the left and click Format.</span>';
       lastResult = '';
       return;
     }
@@ -346,7 +361,7 @@
       const before = input.slice(0, pos);
       const line = before.split('\n').length;
       const col  = before.split('\n').pop().length + 1;
-      locationStr = `[${line}행 ${col}열]`;
+      locationStr = `[line ${line}, col ${col}]`;
     }
     return { msg: msg.replace(/at position \d+/, '').replace(/JSON position \d+/, '').trim(), location: locationStr };
   }
@@ -375,13 +390,13 @@
   function setStatus(type, err, input) {
     if (type === 'idle') {
       statusBadge.className = 'status-badge idle';
-      statusBadge.textContent = '⬜ 입력 대기';
+      statusBadge.textContent = '⬜ Waiting for input';
     } else if (type === 'valid') {
       statusBadge.className = 'status-badge valid';
-      statusBadge.textContent = '✅ 유효한 JSON';
+      statusBadge.textContent = '✅ Valid JSON';
     } else if (type === 'error') {
       statusBadge.className = 'status-badge error';
-      statusBadge.textContent = '❌ JSON 오류';
+      statusBadge.textContent = '❌ JSON Error';
       inputArea.classList.add('error-border');
       const {msg, location} = parseError(err, input);
       errorLocation.textContent = location;
@@ -398,7 +413,7 @@
   // ── 정렬 ──
   function format(indent) {
     const raw = inputArea.value.trim();
-    if (!raw) { showToast('JSON을 입력해주세요'); return; }
+    if (!raw) { showToast('Please enter JSON'); return; }
     try {
       const parsed = JSON.parse(raw);
       const pretty = JSON.stringify(parsed, null, indent);
@@ -418,7 +433,7 @@
   // ── 압축 ──
   document.getElementById('btnMin').addEventListener('click', () => {
     const raw = inputArea.value.trim();
-    if (!raw) { showToast('JSON을 입력해주세요'); return; }
+    if (!raw) { showToast('Please enter JSON'); return; }
     try {
       const parsed = JSON.parse(raw);
       const minified = JSON.stringify(parsed);
@@ -436,7 +451,7 @@
   const SAMPLE = {
     "name": "BrowserKit",
     "version": "2.0",
-    "description": "브라우저 기반 무료 도구 모음",
+    "description": "Browser-based free tools",
     "tools": [
       { "id": "json-format", "category": "developer", "free": true },
       { "id": "qr-code",     "category": "utility",   "free": true },
@@ -453,7 +468,7 @@
     inputArea.value = JSON.stringify(SAMPLE, null, 2);
     validateInput();
     format(2);
-    showToast('✓ 샘플 JSON이 로드되었습니다');
+    showToast('✓ Sample JSON loaded');
   });
 
   // ── 초기화 ──
@@ -470,23 +485,23 @@
   // ── 복사 버튼 ──
   document.getElementById('copyInput').addEventListener('click', () => {
     const val = inputArea.value;
-    if (!val) { showToast('복사할 내용이 없습니다'); return; }
+    if (!val) { showToast('Nothing to copy yet'); return; }
     navigator.clipboard.writeText(val).then(() => {
       const btn = document.getElementById('copyInput');
-      btn.textContent = '✓ 복사됨';
+      btn.textContent = '✓ Copied';
       btn.classList.add('copied');
-      setTimeout(() => { btn.textContent = '복사'; btn.classList.remove('copied'); }, 1500);
+      setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 1500);
     });
   });
 
   document.getElementById('copyResult').addEventListener('click', () => {
-    if (!lastResult) { showToast('복사할 결과가 없습니다'); return; }
+    if (!lastResult) { showToast('Nothing to copy yet'); return; }
     navigator.clipboard.writeText(lastResult).then(() => {
       const btn = document.getElementById('copyResult');
-      btn.textContent = '✓ 복사됨';
+      btn.textContent = '✓ Copied';
       btn.classList.add('copied');
-      setTimeout(() => { btn.textContent = '복사'; btn.classList.remove('copied'); }, 1500);
-      showToast('✓ 결과가 클립보드에 복사되었습니다');
+      setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 1500);
+      showToast('✓ Copied to clipboard');
     });
   });
 
@@ -519,7 +534,7 @@
     try {
       if (document.cookie.indexOf('bk_lang_dismiss=1') !== -1) return;
       var lang = (navigator.language || navigator.userLanguage || '').toLowerCase();
-      if (lang.indexOf('ko') === 0) return;
+      if (lang.indexOf('ko') !== 0) return;
       var banner = document.getElementById('langBanner');
       if (!banner) return;
       banner.classList.add('show');
