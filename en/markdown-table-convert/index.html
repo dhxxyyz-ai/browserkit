@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
   <link rel="icon" href="/favicon.ico" sizes="32x32">
   <link rel="icon" href="/favicon-16.png" sizes="16x16" type="image/png">
@@ -8,18 +8,17 @@
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="마크다운 표, CSV, HTML 표를 서로 변환하는 무료 온라인 표 변환기. 마크다운 표를 CSV로, CSV를 HTML 표로 등 어떤 조합이든 즉시 변환하며 표 미리보기를 제공합니다. 서버 전송 없이 브라우저에서 바로 처리합니다." />
-  <meta property="og:title" content="MarkdownTableConvert — 표 변환기" />
-  <meta property="og:description" content="마크다운·CSV·HTML 표를 서로 즉시 변환하는 무료 온라인 도구입니다. 표 미리보기 포함." />
+  <meta name="description" content="Free online table converter for Markdown, CSV, and HTML tables. Instantly convert any combination — Markdown to CSV, CSV to HTML, and more — with a table preview. Processed entirely in your browser, nothing is uploaded." />
+  <meta property="og:title" content="MarkdownTableConvert — Table Converter" />
+  <meta property="og:description" content="A free online tool that instantly converts between Markdown, CSV, and HTML tables, with a table preview." />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://browserkit.online/markdown-table-convert/" />
-  <title>MarkdownTableConvert — 표 변환기</title>
+  <meta property="og:url" content="https://browserkit.online/en/markdown-table-convert/" />
+  <title>MarkdownTableConvert — Table Converter</title>
   <link rel="stylesheet" href="/css/style.css?v=20260724c" />
-  <!-- Google AdSense 승인 대기 중 (2026-07-19 주석 처리, 카카오 애드핏으로 임시 전환) — 승인 후 주석 해제
+  <!-- Google AdSense — pending re-review. Uncomment once approved.
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506"
      crossorigin="anonymous"></script>
   -->
-  <script type="text/javascript" src="//t1.kakaocdn.net/kas/static/ba.min.js" async></script>
   <style>
     .guide-summary { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:24px; margin:0 0 12px; }
     .guide-summary-title { font-size:16px; font-weight:700; color:var(--text); margin:0 0 12px; }
@@ -31,13 +30,16 @@
     .guide-full-link { display:inline-block; margin-top:12px; font-size:14px; font-weight:600; color:var(--point-hover); text-decoration:none; }
     .guide-full-link:hover { text-decoration:underline; }
 
+    .ad-slot { min-height:90px; display:flex; align-items:center; justify-content:center; margin:0 0 12px; }
+    .ad-slot-rect { min-height:250px; }
+
     .setting-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:24px; margin-bottom:20px; }
     .setting-row { display:flex; align-items:center; gap:16px; margin-bottom:18px; flex-wrap:wrap; }
     .setting-row:last-child { margin-bottom:0; }
     .setting-label { font-size:14px; font-weight:600; color:var(--text); min-width:80px; flex-shrink:0; }
 
     .seg-btns { display:flex; gap:6px; flex-wrap:wrap; }
-    .seg-btn { background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:8px 16px; font-size:13px; color:var(--subtext); cursor:pointer; font-family:'Gowun Dodum',sans-serif; }
+    .seg-btn { background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:8px 16px; font-size:13px; color:var(--subtext); cursor:pointer; }
     .seg-btn:hover { border-color:var(--point); color:var(--text); }
     .seg-btn.active { background:rgba(123,108,255,0.15); border-color:var(--point); color:var(--point-hover); font-weight:700; }
 
@@ -57,13 +59,13 @@
     .file-drop:hover { border-color:var(--point); color:var(--text); }
     .file-drop.drag { border-color:var(--point); color:var(--point-hover); background:rgba(123,108,255,.08); }
 
-    .btn-convert { background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border:none; border-radius:12px; padding:14px 32px; font-size:16px; font-weight:700; cursor:pointer; font-family:'Gowun Dodum',sans-serif; width:100%; margin-bottom:20px; }
+    .btn-convert { background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border:none; border-radius:12px; padding:14px 32px; font-size:16px; font-weight:700; cursor:pointer; width:100%; margin-bottom:20px; }
     .btn-convert:hover { transform:translateY(-2px); box-shadow:0 8px 24px var(--glow); }
 
     .action-bar { display:flex; gap:10px; margin-bottom:20px; flex-wrap:wrap; }
-    .btn-sub { background:var(--card); color:var(--subtext); border:1px solid var(--border); border-radius:10px; padding:10px 18px; font-size:13px; cursor:pointer; font-family:'Gowun Dodum',sans-serif; }
+    .btn-sub { background:var(--card); color:var(--subtext); border:1px solid var(--border); border-radius:10px; padding:10px 18px; font-size:13px; cursor:pointer; }
     .btn-sub:hover { color:var(--text); border-color:var(--point); }
-    .btn-danger { background:var(--card); color:#F87171; border:1px solid var(--border); border-radius:10px; padding:10px 18px; font-size:13px; cursor:pointer; font-family:'Gowun Dodum',sans-serif; }
+    .btn-danger { background:var(--card); color:#F87171; border:1px solid var(--border); border-radius:10px; padding:10px 18px; font-size:13px; cursor:pointer; }
     .btn-danger:hover { border-color:#F87171; }
 
     .preview-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px 24px; margin-bottom:48px; }
@@ -93,9 +95,9 @@
     }
   </style>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <meta property="og:image" content="https://browserkit.online/img/og/markdown-table-convert.png" />
-  <link rel="canonical" href="https://browserkit.online/markdown-table-convert/" />
+  <link rel="canonical" href="https://browserkit.online/en/markdown-table-convert/" />
   <link rel="alternate" hreflang="ko" href="https://browserkit.online/markdown-table-convert/" />
   <link rel="alternate" hreflang="en" href="https://browserkit.online/en/markdown-table-convert/" />
   <link rel="alternate" hreflang="x-default" href="https://browserkit.online/en/markdown-table-convert/" />
@@ -105,18 +107,18 @@
 {
   "@context": "https://schema.org",
   "@type": "WebApplication",
-  "name": "MarkdownTableConvert — 표 변환기",
-  "url": "https://browserkit.online/markdown-table-convert/",
-  "description": "마크다운 표, CSV, HTML 표를 서로 변환하는 무료 온라인 표 변환기. 마크다운 표를 CSV로, CSV를 HTML 표로 등 어떤 조합이든 즉시 변환하며 표 미리보기를 제공합니다. 서버 전송 없이 브라우저에서 바로 처리합니다.",
+  "name": "MarkdownTableConvert — Table Converter",
+  "url": "https://browserkit.online/en/markdown-table-convert/",
+  "description": "Free online table converter for Markdown, CSV, and HTML tables. Instantly convert any combination — Markdown to CSV, CSV to HTML, and more — with a table preview. Processed entirely in your browser, nothing is uploaded.",
   "applicationCategory": "UtilityApplication",
   "operatingSystem": "Any",
   "browserRequirements": "Requires JavaScript",
-  "inLanguage": "ko",
+  "inLanguage": "en",
   "isAccessibleForFree": true,
   "offers": {
     "@type": "Offer",
     "price": "0",
-    "priceCurrency": "KRW"
+    "priceCurrency": "USD"
   },
   "publisher": {
     "@type": "Organization",
@@ -133,14 +135,14 @@
     {
       "@type": "ListItem",
       "position": 1,
-      "name": "홈",
-      "item": "https://browserkit.online/"
+      "name": "Home",
+      "item": "https://browserkit.online/en/"
     },
     {
       "@type": "ListItem",
       "position": 2,
-      "name": "표 변환기",
-      "item": "https://browserkit.online/markdown-table-convert/"
+      "name": "Table Converter",
+      "item": "https://browserkit.online/en/markdown-table-convert/"
     }
   ]
 }
@@ -149,24 +151,24 @@
 
 <body>
   <div class="lang-banner" id="langBanner">
-    <span>🌐 This page is also available in <a href="/en/markdown-table-convert/">English</a>.</span>
+    <span>🌐 이 페이지는 <a href="/markdown-table-convert/">한국어</a>로도 볼 수 있습니다.</span>
     <button class="lang-banner-close" id="langBannerClose" type="button" aria-label="close">&times;</button>
   </div>
   <header class="header">
     <div class="container">
-      <a href="/" class="header-brand">
-        <div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Gowun Dodum,sans-serif;flex-shrink:0">B</div>
+      <a href="/en/" class="header-brand">
+        <div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Poppins,sans-serif;flex-shrink:0">B</div>
         <span class="header-brand-text"><span style="color:var(--text)">Browser</span><span style="color:var(--point)">Kit</span></span>
       </a>
       <div class="header-right">
         <div class="lang-switcher">
-          <button class="lang-switcher-btn" type="button" data-lang-btn>🌐 <span class="lang-label-full">한국어</span></button>
+          <button class="lang-switcher-btn" type="button" data-lang-btn>🌐 <span class="lang-label-full">English</span></button>
           <div class="lang-switcher-menu" data-lang-menu>
-            <a href="/en/markdown-table-convert/">English</a>
-            <a href="#" class="active">한국어</a>
+            <a href="#" class="active">English</a>
+            <a href="/markdown-table-convert/">한국어</a>
           </div>
         </div>
-        <a href="/" class="header-back">&#x2190; <span class="header-back-label">BrowserKit 홈으로</span></a>
+        <a href="/en/" class="header-back">&#x2190; <span class="header-back-label">Back to BrowserKit</span></a>
       </div>
     </div>
   </header>
@@ -174,32 +176,36 @@
   <main><div class="container">
     <div class="hero">
       <div class="hero-icon" style="height:78px;display:flex;justify-content:center;align-items:center"><div style="transform:scale(1.7);transform-origin:center"><div style="width:46px;height:46px;background:#a8e6cf;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="display:grid;grid-template-columns:repeat(2,10px);grid-template-rows:repeat(2,10px);gap:2px"><div style="background:#fffdf9;border:1.5px solid #2a2433;box-sizing:border-box"></div><div style="background:#fffdf9;border:1.5px solid #2a2433;box-sizing:border-box"></div><div style="background:#fffdf9;border:1.5px solid #2a2433;box-sizing:border-box"></div><div style="background:#fffdf9;border:1.5px solid #2a2433;box-sizing:border-box"></div></div></div></div></div>
-      <div class="hero-title-wrap"><h1 class="hero-title">표 변환기</h1><a href="/blog/74-markdowntableconvert-howto" class="hero-guide-link">사용법 가이드 보기</a></div>
-      <p class="hero-desc">마크다운·CSV·HTML 표를 서로 즉시 변환하고 표로 미리보세요</p>
+      <div class="hero-title-wrap"><h1 class="hero-title">Table Converter</h1><a href="/blog/74-markdowntableconvert-howto" class="hero-guide-link">View usage guide</a></div>
+      <p class="hero-desc">Instantly convert between Markdown, CSV, and HTML tables, with a table preview</p>
       <div class="hero-badges">
-        <span class="badge">🔒 완전 로컬 처리</span>
-        <span class="badge">⚡ 무료 사용</span>
-        <span class="badge">🛡️ 서버 전송 없음</span>
-        <span class="badge">📦 설치 불필요</span>
+        <span class="badge">🔒 Fully local processing</span>
+        <span class="badge">⚡ Free to use</span>
+        <span class="badge">🛡️ No server upload</span>
+        <span class="badge">📦 No installation</span>
       </div>
     </div>
-    <div style="margin:0 0 12px"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><div class="adfit-h-desktop"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-QD4pRIpdIj7i2mbt" data-ad-width="728" data-ad-height="90"></ins></div><div class="adfit-h-mobile"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-R4xA2niTT8HgGjoO" data-ad-width="320" data-ad-height="50"></ins></div></div>
+    <!-- Google AdSense Display Ad — pending approval, reserving space -->
+    <div class="ad-slot" id="adTop">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
 
-    <p class="notice">💡 첫 행을 헤더로 인식하는 간단한 자체 파서를 사용합니다. 셀 안의 파이프(|)는 마크다운 입력 시 <code>\|</code>로 이스케이프해주세요. 매우 복잡한 표는 결과가 다를 수 있으니 변환 후 표 미리보기로 꼭 확인하세요. 모든 처리는 브라우저에서만 이루어집니다.</p>
+    <p class="notice">💡 This tool uses a simple built-in parser that treats the first row as the header. Escape pipes (|) inside cells as <code>\|</code> when entering Markdown. Results may vary for very complex tables, so always double-check with the table preview after converting. All processing happens entirely in your browser.</p>
 
     <div class="setting-card">
       <div class="setting-row">
-        <span class="setting-label">입력 형식</span>
+        <span class="setting-label">Input format</span>
         <div class="seg-btns" id="fromBtns">
-          <button class="seg-btn active" data-fmt="md">마크다운</button>
+          <button class="seg-btn active" data-fmt="md">Markdown</button>
           <button class="seg-btn" data-fmt="csv">CSV</button>
           <button class="seg-btn" data-fmt="html">HTML</button>
         </div>
       </div>
       <div class="setting-row">
-        <span class="setting-label">출력 형식</span>
+        <span class="setting-label">Output format</span>
         <div class="seg-btns" id="toBtns">
-          <button class="seg-btn" data-fmt="md">마크다운</button>
+          <button class="seg-btn" data-fmt="md">Markdown</button>
           <button class="seg-btn" data-fmt="csv">CSV</button>
           <button class="seg-btn active" data-fmt="html">HTML</button>
         </div>
@@ -208,73 +214,81 @@
 
     <div class="io-grid">
       <div class="io-card">
-        <div class="io-title"><span id="inputLabel">마크다운 입력</span></div>
-        <textarea class="io-textarea" id="inputArea" placeholder="| 이름 | 나이 | 도시 |&#10;|---|---|---|&#10;| 홍길동 | 28 | 서울 |&#10;| 김영희 | 34 | 부산 |"></textarea>
-        <div class="file-drop" id="fileDrop">📁 파일을 드래그하거나 클릭해서 업로드 (.md, .csv, .html, .txt)</div>
+        <div class="io-title"><span id="inputLabel">Markdown Input</span></div>
+        <textarea class="io-textarea" id="inputArea" placeholder="| name | age | city |&#10;|---|---|---|&#10;| John Doe | 28 | New York |&#10;| Jane Smith | 34 | Boston |"></textarea>
+        <div class="file-drop" id="fileDrop">📁 Drag a file or click to upload (.md, .csv, .html, .txt)</div>
         <input type="file" id="fileInput" accept=".md,.csv,.html,.htm,.txt" style="display:none" />
       </div>
       <div class="io-card">
-        <div class="io-title"><span id="outputLabel">HTML 결과</span></div>
-        <textarea class="io-textarea" id="outputArea" readonly placeholder="변환 버튼을 누르면 결과가 여기에 표시됩니다."></textarea>
+        <div class="io-title"><span id="outputLabel">HTML Result</span></div>
+        <textarea class="io-textarea" id="outputArea" readonly placeholder="Click Convert and the result will appear here."></textarea>
         <div class="err-box" id="errBox"></div>
       </div>
     </div>
 
-    <button class="btn-convert" id="convertBtn">&#x1F504; 변환하기</button>
+    <button class="btn-convert" id="convertBtn">&#x1F504; Convert</button>
 
     <div class="action-bar">
-      <button class="btn-sub" id="copyBtn">&#x1F4CB; 결과 복사</button>
-      <button class="btn-sub" id="downloadBtn">&#x2B07; 파일 다운로드</button>
-      <button class="btn-danger" id="clearBtn">&#x21BA; 초기화</button>
+      <button class="btn-sub" id="copyBtn">&#x1F4CB; Copy result</button>
+      <button class="btn-sub" id="downloadBtn">&#x2B07; Download file</button>
+      <button class="btn-danger" id="clearBtn">&#x21BA; Reset</button>
     </div>
 
     <div class="preview-card">
-      <div class="preview-title">📊 표 미리보기</div>
-      <div class="preview-tablewrap"><div class="preview-empty" id="previewEmpty">변환 결과가 여기에 표로 표시됩니다.</div><table class="preview-table" id="previewTable" style="display:none"><thead id="previewHead"></thead><tbody id="previewBody"></tbody></table></div>
+      <div class="preview-title">📊 Table preview</div>
+      <div class="preview-tablewrap"><div class="preview-empty" id="previewEmpty">The converted result will appear here as a table.</div><table class="preview-table" id="previewTable" style="display:none"><thead id="previewHead"></thead><tbody id="previewBody"></tbody></table></div>
     </div>
 
-    <div style="margin:0 0 12px"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><!-- 카카오 애드핏 (2026-07-22, 쿠팡 파트너스 다이내믹 배너로 교체) — 복원 시 주석 해제: <div class="adfit-h-desktop"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-QD4pRIpdIj7i2mbt" data-ad-width="728" data-ad-height="90"></ins></div><div class="adfit-h-mobile"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-R4xA2niTT8HgGjoO" data-ad-width="320" data-ad-height="50"></ins></div> --><div class="adfit-h-desktop"><script src="https://ads-partners.coupang.com/g.js"></script><script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"728","height":"90","tsource":""});</script></div><div class="adfit-h-mobile"><script src="https://ads-partners.coupang.com/g.js"></script><script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"320","height":"50","tsource":""});</script></div></div>
+    <!-- Google AdSense Display Ad — pending approval, reserving space -->
+    <div class="ad-slot" id="adMiddle">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
 
     <div class="guide-summary">
-      <h2 class="guide-summary-title">사용법 요약</h2>
+      <h2 class="guide-summary-title">Quick guide</h2>
       <ol class="guide-steps">
-        <li>입력·출력 형식 선택</li>
-        <li>표 데이터 입력</li>
-        <li>변환 및 결과 확인</li>
+        <li>Choose input and output formats</li>
+        <li>Enter your table data</li>
+        <li>Convert and review the result</li>
       </ol>
-      <h3 class="guide-faq-title">자주 묻는 질문</h3>
+      <h3 class="guide-faq-title">Frequently asked questions</h3>
       <div class="guide-faq">
         <details>
-          <summary>표 변환기 도구는 정말 무료인가요?</summary>
-          <p>네, 회원가입이나 설치 없이 완전 무료로 사용할 수 있습니다. 횟수 제한도 없습니다.</p>
+          <summary>Is the Table Converter tool really free?</summary>
+          <p>Yes, it is completely free to use with no sign-up or installation required. There is no usage limit either.</p>
         </details>
         <details>
-          <summary>입력한 내용이 서버로 전송되나요?</summary>
-          <p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용이 외부 서버로 전송되거나 저장되지 않습니다.</p>
+          <summary>Is what I enter sent to a server?</summary>
+          <p>No. All processing happens entirely in your browser, and your input is never sent to or stored on an external server.</p>
         </details>
         <details>
-          <summary>엑셀에서 복사한 표도 변환되나요?</summary>
-          <p>네, 엑셀이나 스프레드시트에서 복사한 표 데이터를 붙여넣으면 마크다운 표로 변환해줍니다.</p>
+          <summary>Can it convert a table copied from Excel?</summary>
+          <p>Yes, paste table data copied from Excel or a spreadsheet (as CSV) and it will convert it to a Markdown table.</p>
         </details>
         <details>
-          <summary>모바일에서도 사용할 수 있나요?</summary>
-          <p>네, 별도의 앱 설치 없이 모바일 브라우저에서도 동일하게 사용할 수 있습니다.</p>
+          <summary>Can I use this on mobile?</summary>
+          <p>Yes, it works the same way in a mobile browser without needing to install any app.</p>
         </details>
       </div>
-      <a href="/blog/74-markdowntableconvert-howto" class="guide-full-link">전체 가이드 보기 →</a>
+      <a href="/blog/74-markdowntableconvert-howto" class="guide-full-link">View full guide →</a>
     </div>
 
-    <div style="margin:0 0 12px"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="9500090221"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><div class="adfit-rect-wrap"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-oePL4TCj742xAwqT" data-ad-width="300" data-ad-height="250"></ins></div></div>
+    <!-- Google AdSense Multiplex Ad — pending approval, reserving space -->
+    <div class="ad-slot ad-slot-rect" id="adBottom">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
   </div></main>
 
   <footer class="footer">
     <div class="container">
-      <p class="footer-copy">&#xa9; 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p>
+      <p class="footer-copy">&#xa9; 2026 BrowserKit. All processing happens in your browser.</p>
       <nav class="footer-nav">
-        <a href="/privacy">개인정보 처리방침</a>
-        <a href="/terms">이용약관</a>
-        <a href="/about">서비스 소개</a>
-        <a href="/blog/">블로그</a>
+        <a href="/en/privacy.html">Privacy Policy</a>
+        <a href="/en/terms.html">Terms of Service</a>
+        <a href="/en/about.html">About</a>
+        <a href="/en/blog/">Blog</a>
       </nav>
     </div>
   </footer>
@@ -282,14 +296,14 @@
   <div class="toast" id="toast"></div>
 
   <script>
-  var FMT_LABEL = { md: '마크다운', csv: 'CSV', html: 'HTML' };
+  var FMT_LABEL = { md: 'Markdown', csv: 'CSV', html: 'HTML' };
   var FMT_PLACEHOLDER = {
-    md: '| 이름 | 나이 | 도시 |\n|---|---|---|\n| 홍길동 | 28 | 서울 |\n| 김영희 | 34 | 부산 |',
-    csv: '이름,나이,도시\n홍길동,28,서울\n김영희,34,부산',
-    html: '<table>\n  <tr><th>이름</th><th>나이</th><th>도시</th></tr>\n  <tr><td>홍길동</td><td>28</td><td>서울</td></tr>\n</table>'
+    md: '| name | age | city |\n|---|---|---|\n| John Doe | 28 | New York |\n| Jane Smith | 34 | Boston |',
+    csv: 'name,age,city\nJohn Doe,28,New York\nJane Smith,34,Boston',
+    html: '<table>\n  <tr><th>name</th><th>age</th><th>city</th></tr>\n  <tr><td>John Doe</td><td>28</td><td>New York</td></tr>\n</table>'
   };
 
-  // ── 파서: 각 형식 → { headers: [], rows: [[...]] } ──
+  // ── Parser: each format -> { headers: [], rows: [[...]] } ──
   function parseMarkdownTable(text) {
     var lines = text.split('\n').map(function(l) { return l.trim(); }).filter(function(l) { return l.length > 0; });
     if (!lines.length) return { headers: [], rows: [] };
@@ -346,7 +360,7 @@
   function parseHtmlTable(text) {
     var doc = new DOMParser().parseFromString(text, 'text/html');
     var table = doc.querySelector('table');
-    if (!table) throw new Error('<table> 태그를 찾을 수 없습니다.');
+    if (!table) throw new Error('No <table> tag was found.');
     var trs = Array.prototype.slice.call(table.querySelectorAll('tr'));
     if (!trs.length) return { headers: [], rows: [] };
     function cellsOf(tr) {
@@ -361,10 +375,10 @@
     if (fmt === 'md') return parseMarkdownTable(text);
     if (fmt === 'csv') return parseCSVTable(text, ',');
     if (fmt === 'html') return parseHtmlTable(text);
-    throw new Error('알 수 없는 입력 형식');
+    throw new Error('Unknown input format');
   }
 
-  // ── 생성기: { headers, rows } → 텍스트 ──
+  // ── Generator: { headers, rows } -> text ──
   function escapeHtml(s) {
     return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
   }
@@ -413,15 +427,15 @@
     if (fmt === 'md') return tableToMarkdown(t);
     if (fmt === 'csv') return tableToCSV(t);
     if (fmt === 'html') return tableToHtml(t);
-    throw new Error('알 수 없는 출력 형식');
+    throw new Error('Unknown output format');
   }
 
   var currentFrom = 'md';
   var currentTo = 'html';
 
   function updateLabels() {
-    document.getElementById('inputLabel').textContent = FMT_LABEL[currentFrom] + ' 입력';
-    document.getElementById('outputLabel').textContent = FMT_LABEL[currentTo] + ' 결과';
+    document.getElementById('inputLabel').textContent = FMT_LABEL[currentFrom] + ' Input';
+    document.getElementById('outputLabel').textContent = FMT_LABEL[currentTo] + ' Result';
     document.getElementById('inputArea').placeholder = FMT_PLACEHOLDER[currentFrom];
   }
 
@@ -478,16 +492,16 @@
     hideErr();
     var input = document.getElementById('inputArea').value;
     var outputArea = document.getElementById('outputArea');
-    if (!input.trim()) { showErr('입력 내용이 없습니다.'); return; }
+    if (!input.trim()) { showErr('There is no input.'); return; }
     try {
       var parsed = parseByFormat(currentFrom, input);
-      if (!parsed.headers.length) { showErr('표를 인식하지 못했습니다. 형식을 확인해주세요.'); outputArea.value = ''; renderPreview([], []); return; }
+      if (!parsed.headers.length) { showErr('Could not recognize a table. Please check the format.'); outputArea.value = ''; renderPreview([], []); return; }
       var result = genByFormat(currentTo, parsed);
       outputArea.value = result;
       renderPreview(parsed.headers, parsed.rows);
-      showToast('✓ ' + FMT_LABEL[currentTo] + '(으)로 변환했습니다');
+      showToast('✓ Converted to ' + FMT_LABEL[currentTo]);
     } catch (e) {
-      showErr('변환 오류: ' + e.message);
+      showErr('Conversion error: ' + e.message);
       outputArea.value = '';
       renderPreview([], []);
     }
@@ -495,13 +509,13 @@
 
   document.getElementById('copyBtn').addEventListener('click', function() {
     var val = document.getElementById('outputArea').value;
-    if (!val) { showToast('먼저 변환해주세요'); return; }
-    navigator.clipboard.writeText(val).then(function() { showToast('✓ 결과가 복사되었습니다'); });
+    if (!val) { showToast('Please convert first'); return; }
+    navigator.clipboard.writeText(val).then(function() { showToast('✓ Result copied'); });
   });
 
   document.getElementById('downloadBtn').addEventListener('click', function() {
     var val = document.getElementById('outputArea').value;
-    if (!val) { showToast('먼저 변환해주세요'); return; }
+    if (!val) { showToast('Please convert first'); return; }
     var ext = currentTo === 'md' ? 'md' : currentTo === 'csv' ? 'csv' : 'html';
     var mime = currentTo === 'md' ? 'text/markdown' : currentTo === 'csv' ? 'text/csv' : 'text/html';
     var blob = new Blob([val], { type: mime + ';charset=utf-8' });
@@ -510,7 +524,7 @@
     a.download = 'table.' + ext;
     a.click();
     URL.revokeObjectURL(a.href);
-    showToast('✓ 파일이 저장됩니다');
+    showToast('✓ Your file has been saved');
   });
 
   document.getElementById('clearBtn').addEventListener('click', function() {
@@ -575,7 +589,7 @@
     try {
       if (document.cookie.indexOf('bk_lang_dismiss=1') !== -1) return;
       var lang = (navigator.language || navigator.userLanguage || '').toLowerCase();
-      if (lang.indexOf('ko') === 0) return;
+      if (lang.indexOf('ko') !== 0) return;
       var banner = document.getElementById('langBanner');
       if (!banner) return;
       banner.classList.add('show');
