@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
   <link rel="icon" href="/favicon.ico" sizes="32x32">
   <link rel="icon" href="/favicon-16.png" sizes="16x16" type="image/png">
@@ -8,21 +8,20 @@
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="이미지 자르기, 회전, 반전을 브라우저에서 바로 처리하는 무료 도구. 증명사진, SNS 비율 단축 버튼 지원. 파일이 서버로 전송되지 않습니다." />
-  <meta property="og:title" content="CropImage &#x2014; 이미지 자르기 / 회전 / 반전 도구" />
-  <meta property="og:description" content="이미지 자르기, 회전, 반전을 브라우저에서 바로 처리하는 무료 도구." />
+  <meta name="description" content="Free tool to crop, rotate, and flip images right in your browser. Includes shortcut buttons for ID photo and social media ratios. Files are never uploaded to a server." />
+  <meta property="og:title" content="CropImage &#x2014; Crop / Rotate / Flip Image Tool" />
+  <meta property="og:description" content="A free tool to crop, rotate, and flip images right in your browser." />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://browserkit.online/crop-image/" />
+  <meta property="og:url" content="https://browserkit.online/en/crop-image/" />
   <meta property="og:locale" content="ko_KR" />
-  <title>CropImage &#x2014; 이미지 자르기 / 회전 / 반전 도구</title>
+  <title>CropImage &#x2014; Crop / Rotate / Flip Image Tool</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
-  <!-- Google AdSense 승인 대기 중 (2026-07-19 주석 처리, 카카오 애드핏으로 임시 전환) — 승인 후 주석 해제
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Google AdSense — pending re-review. Uncomment once approved.
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506"
      crossorigin="anonymous"></script>
   -->
-  <script type="text/javascript" src="//t1.kakaocdn.net/kas/static/ba.min.js" async></script>
   <link rel="stylesheet" href="/css/style.css?v=20260724c" />
   <style>
     .guide-summary { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:24px; margin:0 0 12px; }
@@ -35,26 +34,29 @@
     .guide-full-link { display:inline-block; margin-top:12px; font-size:14px; font-weight:600; color:var(--point-hover); text-decoration:none; }
     .guide-full-link:hover { text-decoration:underline; }
 
+    .ad-slot { min-height:90px; display:flex; align-items:center; justify-content:center; margin:0 0 12px; }
+    .ad-slot-rect { min-height:250px; }
+
     
     * { margin:0; padding:0; box-sizing:border-box; transition:all 0.2s ease; }
-    body { color:var(--text); font-family:'Gowun Dodum',sans-serif; font-size:16px; line-height:1.6; min-height:100vh; }
+    body { color:var(--text); font-size:16px; line-height:1.6; min-height:100vh; }
     a { color:var(--point-hover); text-decoration:none; }
     a:hover { color:var(--text); }
     .container { max-width:960px; margin:0 auto; padding:0 24px; }
 
-    /* 헤더 */
+    /* Header */
     .header .container { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; }
     .logo { display:flex; align-items:center; gap:10px; text-decoration:none; }
     .logo-icon { font-size:24px; }
-    .logo-text { font-size:20px; font-weight:700; font-family:'Gowun Dodum',sans-serif; background:linear-gradient(135deg,var(--point),var(--point-hover)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+    .logo-text { font-size:20px; font-weight:700; background:linear-gradient(135deg,var(--point),var(--point-hover)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
     .back-link { font-size:13px; color:var(--subtext); display:flex; align-items:center; gap:6px; }
     .back-link:hover { color:var(--text); }
 
-    /* 히어로 */
+    /* Hero */
     .hero { text-align:center; padding:40px 0 20px; }
     .hero-icon { font-size:48px; margin-bottom:16px; }
     .badges { display:flex; justify-content:center; gap:10px; flex-wrap:wrap; padding-bottom:0; }
-    /* 업로드 존 */
+    /* Upload zone */
     .upload-zone { background:var(--card); border:2px dashed var(--border); border-radius:var(--radius); padding:48px 40px; text-align:center; cursor:pointer; margin:0 0 20px; }
     .upload-zone:hover, .upload-zone.drag-over { border-color:var(--point); box-shadow:0 0 24px var(--glow); background:rgba(123,108,255,0.05); }
     .upload-icon { font-size:48px; margin-bottom:16px; }
@@ -62,58 +64,58 @@
     .upload-sub { color:var(--subtext); font-size:14px; margin-bottom:12px; }
     .upload-safe { color:var(--success); font-size:13px; }
 
-    /* 탭 */
+    /* Tabs */
     .tab-wrap { display:flex; gap:8px; margin-bottom:20px; }
-    .tab-btn { background:var(--card); border:1px solid var(--border); border-radius:8px; padding:10px 20px; font-size:14px; font-weight:600; cursor:pointer; color:var(--subtext); font-family:'Gowun Dodum',sans-serif; }
+    .tab-btn { background:var(--card); border:1px solid var(--border); border-radius:8px; padding:10px 20px; font-size:14px; font-weight:600; cursor:pointer; color:var(--subtext); }
     .tab-btn.active { background:rgba(123,108,255,0.15); border-color:var(--point); color:var(--point-hover); }
     .tab-btn:hover:not(.active) { border-color:rgba(123,108,255,0.5); color:var(--text); }
 
-    /* 편집 영역 */
+    /* Editor area */
     .editor-section { display:none; }
     .editor-section.active { display:block; }
 
-    /* 크롭 캔버스 영역 */
+    /* Crop canvas area */
     .crop-canvas-wrap { position:relative; background:var(--card); border:1px solid var(--border); border-radius:var(--radius); overflow:hidden; margin-bottom:16px; cursor:crosshair; user-select:none; }
     .crop-canvas-wrap canvas { display:block; width:100%; height:auto; }
     .crop-overlay { position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; }
 
-    /* 비율 버튼 */
+    /* Ratio buttons */
     .ratio-group { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:16px; }
-    .ratio-btn { background:var(--card); border:1px solid var(--border); border-radius:8px; padding:7px 14px; font-size:13px; cursor:pointer; color:var(--subtext); font-family:'Gowun Dodum',sans-serif; }
+    .ratio-btn { background:var(--card); border:1px solid var(--border); border-radius:8px; padding:7px 14px; font-size:13px; cursor:pointer; color:var(--subtext); }
     .ratio-btn.active { background:rgba(123,108,255,0.15); border-color:var(--point); color:var(--point-hover); }
     .ratio-btn:hover:not(.active) { border-color:rgba(123,108,255,0.5); color:var(--text); }
 
-    /* 크롭 좌표 정보 */
-    .crop-info { font-size:13px; color:var(--subtext); margin-bottom:16px; font-family:'Gowun Dodum',sans-serif; background:var(--card); border:1px solid var(--border); border-radius:8px; padding:10px 14px; }
+    /* Crop coordinate info */
+    .crop-info { font-size:13px; color:var(--subtext); margin-bottom:16px; background:var(--card); border:1px solid var(--border); border-radius:8px; padding:10px 14px; }
 
-    /* 회전/반전 버튼 그룹 */
+    /* Rotate/flip button group */
     .transform-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:20px; }
-    .transform-btn { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:20px 16px; font-size:14px; font-weight:600; cursor:pointer; color:var(--text); font-family:'Gowun Dodum',sans-serif; display:flex; flex-direction:column; align-items:center; gap:8px; }
+    .transform-btn { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:20px 16px; font-size:14px; font-weight:600; cursor:pointer; color:var(--text); display:flex; flex-direction:column; align-items:center; gap:8px; }
     .transform-btn:hover { border-color:var(--point); background:rgba(123,108,255,0.08); transform:translateY(-2px); }
     .transform-btn .t-icon { font-size:28px; }
     .transform-btn .t-label { font-size:13px; color:var(--subtext); }
 
-    /* 미리보기 */
+    /* Preview */
     .preview-wrap { display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-bottom:20px; }
     .preview-box { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:16px; }
     .preview-label { font-size:13px; color:var(--subtext); margin-bottom:10px; font-weight:600; }
     .preview-box canvas { width:100%; height:auto; border-radius:8px; display:block; }
-    .preview-info { font-size:12px; color:var(--subtext); margin-top:8px; font-family:'Gowun Dodum',sans-serif; }
+    .preview-info { font-size:12px; color:var(--subtext); margin-top:8px; }
 
-    /* 액션 버튼 */
+    /* Action buttons */
     .action-wrap { display:flex; justify-content:center; gap:12px; margin:0 0 48px; flex-wrap:wrap; }
-    .btn-apply { background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border:none; border-radius:12px; padding:14px 32px; font-size:15px; font-weight:600; cursor:pointer; font-family:'Gowun Dodum',sans-serif; }
+    .btn-apply { background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border:none; border-radius:12px; padding:14px 32px; font-size:15px; font-weight:600; cursor:pointer; }
     .btn-apply:hover { transform:translateY(-2px); box-shadow:0 8px 24px var(--glow); }
     .btn-apply:disabled { opacity:0.4; cursor:default; transform:none; box-shadow:none; }
-    .btn-download { background:var(--card); color:var(--subtext); border:1px solid var(--border); border-radius:12px; padding:14px 24px; font-size:15px; cursor:pointer; font-family:'Gowun Dodum',sans-serif; }
+    .btn-download { background:var(--card); color:var(--subtext); border:1px solid var(--border); border-radius:12px; padding:14px 24px; font-size:15px; cursor:pointer; }
     .btn-download:hover { transform:translateY(-2px); color:var(--text); border-color:var(--point); }
     .btn-download:disabled { opacity:0.4; cursor:default; transform:none; }
-    .btn-reset { background:var(--card); color:var(--subtext); border:1px solid var(--border); border-radius:12px; padding:14px 24px; font-size:15px; cursor:pointer; font-family:'Gowun Dodum',sans-serif; }
+    .btn-reset { background:var(--card); color:var(--subtext); border:1px solid var(--border); border-radius:12px; padding:14px 24px; font-size:15px; cursor:pointer; }
     .btn-reset:hover { transform:translateY(-2px); color:var(--text); border-color:var(--point); }
 
-    /* 배너 */
+    /* Banner */
 
-    /* 푸터 */
+    /* Footer */
     .footer { border-top:1px solid var(--border); padding:32px 0; text-align:center; }
     .footer-copy { color:var(--subtext); font-size:13px; margin-bottom:12px; }
     .footer-nav { display:flex; justify-content:center; gap:20px; flex-wrap:wrap; }
@@ -128,7 +130,7 @@
     }
   </style>
   <meta property="og:image" content="https://browserkit.online/img/og/crop-image.png" />
-  <link rel="canonical" href="https://browserkit.online/crop-image/" />
+  <link rel="canonical" href="https://browserkit.online/en/crop-image/" />
   <link rel="alternate" hreflang="ko" href="https://browserkit.online/crop-image/" />
   <link rel="alternate" hreflang="en" href="https://browserkit.online/en/crop-image/" />
   <link rel="alternate" hreflang="x-default" href="https://browserkit.online/en/crop-image/" />
@@ -138,18 +140,18 @@
 {
   "@context": "https://schema.org",
   "@type": "WebApplication",
-  "name": "CropImage — 이미지 자르기 / 회전 / 반전 도구",
-  "url": "https://browserkit.online/crop-image/",
-  "description": "이미지 자르기, 회전, 반전을 브라우저에서 바로 처리하는 무료 도구. 증명사진, SNS 비율 단축 버튼 지원. 파일이 서버로 전송되지 않습니다.",
+  "name": "CropImage — Crop / Rotate / Flip Image Tool",
+  "url": "https://browserkit.online/en/crop-image/",
+  "description": "Free tool to crop, rotate, and flip images right in your browser. Includes shortcut buttons for ID photo and social media ratios. Files are never uploaded to a server.",
   "applicationCategory": "UtilityApplication",
   "operatingSystem": "Any",
   "browserRequirements": "Requires JavaScript",
-  "inLanguage": "ko",
+  "inLanguage": "en",
   "isAccessibleForFree": true,
   "offers": {
     "@type": "Offer",
     "price": "0",
-    "priceCurrency": "KRW"
+    "priceCurrency": "USD"
   },
   "publisher": {
     "@type": "Organization",
@@ -166,14 +168,14 @@
     {
       "@type": "ListItem",
       "position": 1,
-      "name": "홈",
-      "item": "https://browserkit.online/"
+      "name": "Home",
+      "item": "https://browserkit.online/en/"
     },
     {
       "@type": "ListItem",
       "position": 2,
-      "name": "이미지 자르기",
-      "item": "https://browserkit.online/crop-image/"
+      "name": "Crop Image",
+      "item": "https://browserkit.online/en/crop-image/"
     }
   ]
 }
@@ -181,22 +183,22 @@
 </head>
 <body>
   <div class="lang-banner" id="langBanner">
-    <span>🌐 This page is also available in <a href="/en/crop-image/">English</a>.</span>
+    <span>🌐 이 페이지는 <a href="/crop-image/">한국어</a>로도 볼 수 있습니다.</span>
     <button class="lang-banner-close" id="langBannerClose" type="button" aria-label="close">&times;</button>
   </div>
 
   <header class="header">
     <div class="container">
-      <a href="/" class="header-brand"><div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Gowun Dodum,sans-serif;flex-shrink:0">B</div><span class="header-brand-text"><span style="color:var(--text)">Browser</span><span style="color:var(--point)">Kit</span></span></a>
+      <a href="/en/" class="header-brand"><div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Poppins,sans-serif;flex-shrink:0">B</div><span class="header-brand-text"><span style="color:var(--text)">Browser</span><span style="color:var(--point)">Kit</span></span></a>
       <div class="header-right">
         <div class="lang-switcher">
-          <button class="lang-switcher-btn" type="button" data-lang-btn>🌐 <span class="lang-label-full">한국어</span></button>
+          <button class="lang-switcher-btn" type="button" data-lang-btn>🌐 <span class="lang-label-full">English</span></button>
           <div class="lang-switcher-menu" data-lang-menu>
-            <a href="/en/crop-image/">English</a>
-            <a href="#" class="active">한국어</a>
+            <a href="#" class="active">English</a>
+            <a href="/crop-image/">한국어</a>
           </div>
         </div>
-        <a href="/" class="header-back">&#x2190; <span class="header-back-label">BrowserKit 홈으로</span></a>
+        <a href="/en/" class="header-back">&#x2190; <span class="header-back-label">Back to BrowserKit</span></a>
       </div>
     </div>
   </header>
@@ -206,42 +208,46 @@
 
       <div class="hero">
         <div class="hero-icon" style="height:78px;display:flex;justify-content:center;align-items:center"><div style="transform:scale(1.7);transform-origin:center"><div style="width:46px;height:46px;background:#ffb3c7;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="position:relative;width:30px;height:30px"><div style="position:absolute;left:4px;top:0;width:3px;height:26px;background:#2a2433;border-radius:2px"></div><div style="position:absolute;left:0;top:4px;width:26px;height:3px;background:#2a2433;border-radius:2px"></div><div style="position:absolute;right:4px;bottom:0;width:3px;height:26px;background:#2a2433;border-radius:2px"></div><div style="position:absolute;left:0;bottom:4px;width:26px;height:3px;background:#2a2433;border-radius:2px"></div></div></div></div></div>
-        <div class="hero-title-wrap"><h1 class="hero-title">이미지 자르기</h1><a href="/blog/39-cropimage-howto" class="hero-guide-link">사용법 가이드 보기</a></div>
-        <p class="hero-desc">이미지 자르기, 회전, 반전을 브라우저에서 바로 처리하는 무료 도구</p>
+        <div class="hero-title-wrap"><h1 class="hero-title">Crop Image</h1><a href="/blog/39-cropimage-howto" class="hero-guide-link">View usage guide</a></div>
+        <p class="hero-desc">Crop, rotate, and flip images right in your browser, for free</p>
         <div class="hero-badges">
-        <span class="badge">🔒 완전 로컬 처리</span>
-        <span class="badge">⚡ 무료 사용</span>
-        <span class="badge">🛡️ 서버 전송 없음</span>
-        <span class="badge">📦 설치 불필요</span>
+        <span class="badge">🔒 Fully local processing</span>
+        <span class="badge">⚡ Free to use</span>
+        <span class="badge">🛡️ No server upload</span>
+        <span class="badge">📦 No installation</span>
       </div>
       </div>
-    <div style="margin:0 0 12px"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><div class="adfit-h-desktop"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-QD4pRIpdIj7i2mbt" data-ad-width="728" data-ad-height="90"></ins></div><div class="adfit-h-mobile"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-R4xA2niTT8HgGjoO" data-ad-width="320" data-ad-height="50"></ins></div></div>
+    <!-- Google AdSense Display Ad — pending approval, reserving space -->
+    <div class="ad-slot" id="adTop">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
 
-<!-- 업로드 존 -->
+<!-- Upload zone -->
       <div class="upload-zone" id="uploadZone">
         <input type="file" id="fileInput" accept="image/*" hidden />
         <div class="upload-icon" style="height:64px;display:flex;justify-content:center;align-items:center"><div style="transform:scale(1.4);transform-origin:center"><div style="width:46px;height:46px;background:#ffb3c7;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="position:relative;width:30px;height:30px"><div style="position:absolute;left:4px;top:0;width:3px;height:26px;background:#2a2433;border-radius:2px"></div><div style="position:absolute;left:0;top:4px;width:26px;height:3px;background:#2a2433;border-radius:2px"></div><div style="position:absolute;right:4px;bottom:0;width:3px;height:26px;background:#2a2433;border-radius:2px"></div><div style="position:absolute;left:0;bottom:4px;width:26px;height:3px;background:#2a2433;border-radius:2px"></div></div></div></div></div>
-        <p class="upload-title">이미지를 드래그하여 놓으세요</p>
-        <p class="upload-sub">또는 클릭하여 파일 선택 (JPG, PNG, WEBP, GIF 지원)</p>
-        <p class="upload-safe">&#x2713; 파일이 서버로 전송되지 않습니다</p>
+        <p class="upload-title">Drag and drop an image</p>
+        <p class="upload-sub">or click to choose a file (JPG, PNG, WEBP, GIF supported)</p>
+        <p class="upload-safe">&#x2713; Files are never uploaded to a server</p>
       </div>
 
-      <!-- 편집 영역 (업로드 후 표시) -->
+      <!-- Editor area (shown after upload) -->
       <div id="editorWrap" style="display:none;">
 
-        <!-- 탭 -->
+        <!-- Tabs -->
         <div class="tab-wrap">
-          <button class="tab-btn active" data-tab="crop">&#x2702;&#xFE0F; 자르기</button>
-          <button class="tab-btn" data-tab="transform">&#x1F504; 회전 / 반전</button>
+          <button class="tab-btn active" data-tab="crop">&#x2702;&#xFE0F; Crop</button>
+          <button class="tab-btn" data-tab="transform">&#x1F504; Rotate / Flip</button>
         </div>
 
-        <!-- 자르기 탭 -->
+        <!-- Crop tab -->
         <div class="editor-section active" id="tabCrop">
           <div class="ratio-group">
-            <button class="ratio-btn active" data-ratio="free">자유</button>
-            <button class="ratio-btn" data-ratio="1:1">1:1 (정방형)</button>
+            <button class="ratio-btn active" data-ratio="free">Free</button>
+            <button class="ratio-btn" data-ratio="1:1">1:1 (Square)</button>
             <button class="ratio-btn" data-ratio="4:3">4:3</button>
-            <button class="ratio-btn" data-ratio="3:4">3:4 (증명사진)</button>
+            <button class="ratio-btn" data-ratio="3:4">3:4 (ID Photo)</button>
             <button class="ratio-btn" data-ratio="16:9">16:9</button>
             <button class="ratio-btn" data-ratio="9:16">9:16</button>
           </div>
@@ -249,115 +255,123 @@
             <canvas id="cropCanvas"></canvas>
             <canvas id="overlayCanvas" style="position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;"></canvas>
           </div>
-          <div class="crop-info" id="cropInfo">이미지 위에서 드래그해 자를 영역을 선택하세요.</div>
+          <div class="crop-info" id="cropInfo">Drag over the image to select the area to crop.</div>
           <div class="action-wrap" style="margin-bottom:20px;">
-            <button class="btn-apply" id="applyCropBtn" disabled>&#x2702;&#xFE0F; 자르기 적용</button>
+            <button class="btn-apply" id="applyCropBtn" disabled>&#x2702;&#xFE0F; Apply Crop</button>
           </div>
         </div>
 
-        <!-- 회전/반전 탭 -->
+        <!-- Rotate/Flip tab -->
         <div class="editor-section" id="tabTransform">
           <div class="transform-grid">
             <button class="transform-btn" id="rotateCW">
               <span class="t-icon">&#x21BB;</span>
-              <span>90° 시계 방향</span>
-              <span class="t-label">가로 ↔ 세로 전환</span>
+              <span>Rotate 90° CW</span>
+              <span class="t-label">Swaps width and height</span>
             </button>
             <button class="transform-btn" id="rotateCCW">
               <span class="t-icon">&#x21BA;</span>
-              <span>90° 반시계 방향</span>
-              <span class="t-label">가로 ↔ 세로 전환</span>
+              <span>Rotate 90° CCW</span>
+              <span class="t-label">Swaps width and height</span>
             </button>
             <button class="transform-btn" id="flipH">
               <span class="t-icon">&#x2194;&#xFE0F;</span>
-              <span>좌우 반전</span>
-              <span class="t-label">거울 효과</span>
+              <span>Flip Horizontal</span>
+              <span class="t-label">Mirror effect</span>
             </button>
             <button class="transform-btn" id="flipV">
               <span class="t-icon">&#x2195;&#xFE0F;</span>
-              <span>상하 반전</span>
-              <span class="t-label">뒤집기</span>
+              <span>Flip Vertical</span>
+              <span class="t-label">Upside down</span>
             </button>
           </div>
         </div>
 
-        <!-- 미리보기 -->
+        <!-- Preview -->
         <div class="preview-wrap">
           <div class="preview-box">
-            <div class="preview-label">원본</div>
+            <div class="preview-label">Original</div>
             <canvas id="originalCanvas"></canvas>
             <div class="preview-info" id="originalInfo"></div>
           </div>
           <div class="preview-box">
-            <div class="preview-label">결과</div>
+            <div class="preview-label">Result</div>
             <canvas id="resultCanvas"></canvas>
             <div class="preview-info" id="resultInfo"></div>
           </div>
         </div>
 
-        <!-- 다운로드 / 초기화 -->
+        <!-- Download / Reset -->
         <div class="action-wrap">
-          <button class="btn-download" id="downloadBtn" disabled>&#x2B07; PNG 다운로드</button>
-          <button class="btn-reset" id="resetBtn">&#x21BA; 처음부터</button>
+          <button class="btn-download" id="downloadBtn" disabled>&#x2B07; Download PNG</button>
+          <button class="btn-reset" id="resetBtn">&#x21BA; Start Over</button>
         </div>
 
       </div>
 
 </div>
   </main>
-<div class="container"><div style="margin:0 0 12px"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><!-- 카카오 애드핏 (2026-07-22, 쿠팡 파트너스 다이내믹 배너로 교체) — 복원 시 주석 해제: <div class="adfit-h-desktop"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-QD4pRIpdIj7i2mbt" data-ad-width="728" data-ad-height="90"></ins></div><div class="adfit-h-mobile"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-R4xA2niTT8HgGjoO" data-ad-width="320" data-ad-height="50"></ins></div> --><div class="adfit-h-desktop"><script src="https://ads-partners.coupang.com/g.js"></script><script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"728","height":"90","tsource":""});</script></div><div class="adfit-h-mobile"><script src="https://ads-partners.coupang.com/g.js"></script><script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"320","height":"50","tsource":""});</script></div></div>
-
-    <div class="guide-summary">
-      <h2 class="guide-summary-title">사용법 요약</h2>
-      <ol class="guide-steps">
-        <li>이미지 업로드</li>
-        <li>기능 탭 선택</li>
-        <li>편집 적용</li>
-      </ol>
-      <h3 class="guide-faq-title">자주 묻는 질문</h3>
-      <div class="guide-faq">
-        <details>
-          <summary>이미지 자르기 도구는 정말 무료인가요?</summary>
-          <p>네, 회원가입이나 설치 없이 완전 무료로 사용할 수 있습니다. 횟수 제한도 없습니다.</p>
-        </details>
-        <details>
-          <summary>업로드한 파일이 서버로 전송되나요?</summary>
-          <p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 업로드한 파일이 외부 서버로 전송되거나 저장되지 않습니다.</p>
-        </details>
-        <details>
-          <summary>자르기 외에 어떤 기능이 있나요?</summary>
-          <p>이미지 회전과 좌우·상하 반전도 함께 지원합니다.</p>
-        </details>
-        <details>
-          <summary>모바일에서도 사용할 수 있나요?</summary>
-          <p>네, 별도의 앱 설치 없이 모바일 브라우저에서도 동일하게 사용할 수 있습니다.</p>
-        </details>
-      </div>
-      <a href="/blog/39-cropimage-howto" class="guide-full-link">전체 가이드 보기 →</a>
+<div class="container"><!-- Google AdSense Display Ad — pending approval, reserving space -->
+    <div class="ad-slot" id="adMiddle">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
     </div>
 
-    <div style="margin:0 0 12px"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="9500090221"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><div class="adfit-rect-wrap"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-oePL4TCj742xAwqT" data-ad-width="300" data-ad-height="250"></ins></div></div></div>
+    <div class="guide-summary">
+      <h2 class="guide-summary-title">Quick guide</h2>
+      <ol class="guide-steps">
+        <li>Upload an image</li>
+        <li>Choose a feature tab</li>
+        <li>Apply the edit</li>
+      </ol>
+      <h3 class="guide-faq-title">Frequently asked questions</h3>
+      <div class="guide-faq">
+        <details>
+          <summary>Is the Crop Image tool really free?</summary>
+          <p>Yes, it is completely free to use with no sign-up or installation required. There is no usage limit either.</p>
+        </details>
+        <details>
+          <summary>Are uploaded files sent to a server?</summary>
+          <p>No. All processing happens entirely in your browser, and uploaded files are never sent to or stored on an external server.</p>
+        </details>
+        <details>
+          <summary>What other features are there besides cropping?</summary>
+          <p>It also supports rotating and flipping images horizontally or vertically.</p>
+        </details>
+        <details>
+          <summary>Can I use this on mobile?</summary>
+          <p>Yes, it works the same way in a mobile browser without needing to install any app.</p>
+        </details>
+      </div>
+      <a href="/blog/39-cropimage-howto" class="guide-full-link">View full guide →</a>
+    </div>
+
+    <!-- Google AdSense Multiplex Ad — pending approval, reserving space -->
+    <div class="ad-slot ad-slot-rect" id="adBottom">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div></div>
 
   <footer class="footer">
     <div class="container">
-      <p class="footer-copy">&#169; 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p>
+      <p class="footer-copy">&#169; 2026 BrowserKit. All processing happens locally in your browser.</p>
       <nav class="footer-nav">
-        <a href="/privacy">개인정보 처리방침</a>
-        <a href="/terms">이용약관</a>
-        <a href="/about">서비스 소개</a>
-        <a href="/blog/">블로그</a>
+        <a href="/en/privacy.html">Privacy Policy</a>
+        <a href="/en/terms.html">Terms of Service</a>
+        <a href="/en/about.html">About</a>
+        <a href="/en/blog/">Blog</a>
       </nav>
     </div>
   </footer>
 
   <script>
-  // ── 상태 변수 ──────────────────────────────────────────
+  // ── State variables ──────────────────────────────────
   let originalImg  = null;
-  let workingCanvas = document.createElement('canvas'); // 작업용 (회전/반전 누적)
+  let workingCanvas = document.createElement('canvas'); // Working canvas (accumulates rotate/flip)
   let currentRatio = 'free';
   let isDragging   = false;
   let dragStart    = { x: 0, y: 0 };
-  let cropRect     = null; // { x, y, w, h } — 실제 이미지 좌표
+  let cropRect     = null; // { x, y, w, h } — actual image coordinates
 
   const uploadZone    = document.getElementById('uploadZone');
   const fileInput     = document.getElementById('fileInput');
@@ -374,7 +388,7 @@
   const downloadBtn   = document.getElementById('downloadBtn');
   const resetBtn      = document.getElementById('resetBtn');
 
-  // ── 업로드 ─────────────────────────────────────────────
+  // ── Upload ────────────────────────────────────────────
   uploadZone.addEventListener('click', () => fileInput.click());
   uploadZone.addEventListener('dragover', (e) => { e.preventDefault(); uploadZone.classList.add('drag-over'); });
   uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('drag-over'));
@@ -393,7 +407,7 @@
     const img  = new Image();
     img.onload = () => {
       originalImg = img;
-      // 작업용 캔버스 초기화
+      // Initialize the working canvas
       workingCanvas.width  = img.naturalWidth;
       workingCanvas.height = img.naturalHeight;
       workingCanvas.getContext('2d').drawImage(img, 0, 0);
@@ -410,11 +424,11 @@
       originalInfo.textContent = img.naturalWidth + ' x ' + img.naturalHeight + ' px  |  ' + formatBytes(file.size);
     };
     img.src = url;
-    // 파일 크기 저장
+    // Store the file size
     img._fileSize = file.size;
   }
 
-  // ── 크롭 캔버스 렌더링 ────────────────────────────────
+  // ── Render crop canvas ───────────────────────────────
   function renderCropCanvas() {
     cropCanvas.width  = workingCanvas.width;
     cropCanvas.height = workingCanvas.height;
@@ -422,7 +436,7 @@
     clearOverlay();
     cropRect = null;
     applyCropBtn.disabled = true;
-    cropInfo.textContent = '이미지 위에서 드래그해 자를 영역을 선택하세요.';
+    cropInfo.textContent = 'Drag over the image to select the area to crop.';
   }
 
   function clearOverlay() {
@@ -430,7 +444,7 @@
     overlayCanvas.height = cropCanvas.height;
   }
 
-  // ── 비율 버튼 ─────────────────────────────────────────
+  // ── Ratio buttons ────────────────────────────────────
   document.querySelectorAll('.ratio-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       document.querySelectorAll('.ratio-btn').forEach(b => b.classList.remove('active'));
@@ -439,11 +453,11 @@
       cropRect = null;
       applyCropBtn.disabled = true;
       clearOverlay();
-      cropInfo.textContent = '이미지 위에서 드래그해 자를 영역을 선택하세요.';
+      cropInfo.textContent = 'Drag over the image to select the area to crop.';
     });
   });
 
-  // ── 드래그 크롭 ───────────────────────────────────────
+  // ── Drag to crop ─────────────────────────────────────
   cropWrap.addEventListener('mousedown', (e) => {
     if (e.target !== cropCanvas) return;
     isDragging = true;
@@ -461,7 +475,7 @@
     let   rw = Math.abs(pos.x - dragStart.x);
     let   rh = Math.abs(pos.y - dragStart.y);
 
-    // 비율 고정
+    // Lock aspect ratio
     if (currentRatio !== 'free') {
       const [rn, rd] = currentRatio.split(':').map(Number);
       const ratio = rn / rd;
@@ -469,7 +483,7 @@
       else                  rw = rh * ratio;
     }
 
-    // 경계 클램프
+    // Clamp to bounds
     rw = Math.min(rw, cropCanvas.width  - rx);
     rh = Math.min(rh, cropCanvas.height - ry);
 
@@ -499,27 +513,27 @@
     if (rw > 4 && rh > 4) {
       cropRect = { x: Math.floor(rx), y: Math.floor(ry), w: Math.floor(rw), h: Math.floor(rh) };
       applyCropBtn.disabled = false;
-      cropInfo.textContent = '선택 영역: ' + cropRect.w + ' x ' + cropRect.h + ' px  |  자르기 적용 버튼을 클릭하세요.';
+      cropInfo.textContent = 'Selected area: ' + cropRect.w + ' x ' + cropRect.h + ' px  |  Click Apply Crop.';
     }
   });
 
   cropWrap.addEventListener('mouseleave', () => { if (isDragging) isDragging = false; });
 
-  // ── 오버레이 그리기 ───────────────────────────────────
+  // ── Draw overlay ─────────────────────────────────────
   function drawOverlay(x, y, w, h) {
     clearOverlay();
     const ctx = overlayCanvas.getContext('2d');
-    // 어두운 오버레이
+    // Dark overlay
     ctx.fillStyle = 'rgba(0,0,0,0.45)';
     ctx.fillRect(0, 0, overlayCanvas.width, overlayCanvas.height);
-    // 선택 영역 투명하게
+    // Clear the selected area
     ctx.clearRect(x, y, w, h);
-    // 선택 테두리
+    // Selection border
     ctx.strokeStyle = 'rgba(123,108,255,0.9)';
     ctx.lineWidth   = 2;
     ctx.setLineDash([6, 3]);
     ctx.strokeRect(x, y, w, h);
-    // 코너 핸들
+    // Corner handles
     const cs = 10;
     ctx.setLineDash([]);
     ctx.strokeStyle = '#fff';
@@ -529,7 +543,7 @@
     });
   }
 
-  // ── 자르기 적용 ───────────────────────────────────────
+  // ── Apply crop ───────────────────────────────────────
   applyCropBtn.addEventListener('click', () => {
     if (!cropRect) return;
     const tmp = document.createElement('canvas');
@@ -544,7 +558,7 @@
     downloadBtn.disabled = false;
   });
 
-  // ── 회전 / 반전 ───────────────────────────────────────
+  // ── Rotate / Flip ────────────────────────────────────
   document.getElementById('rotateCW').addEventListener('click', () => {
     applyTransform('rotateCW'); });
   document.getElementById('rotateCCW').addEventListener('click', () => {
@@ -589,7 +603,7 @@
     downloadBtn.disabled = false;
   }
 
-  // ── 원본 / 결과 렌더링 ────────────────────────────────
+  // ── Render original / result ─────────────────────────
   function renderOriginal() {
     originalCanvas.width  = originalImg.naturalWidth;
     originalCanvas.height = originalImg.naturalHeight;
@@ -604,7 +618,7 @@
     resultInfo.textContent = workingCanvas.width + ' x ' + workingCanvas.height + ' px';
   }
 
-  // ── 탭 전환 ───────────────────────────────────────────
+  // ── Tab switching ────────────────────────────────────
   document.querySelectorAll('.tab-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
@@ -614,7 +628,7 @@
     });
   });
 
-  // ── 다운로드 ──────────────────────────────────────────
+  // ── Download ─────────────────────────────────────────
   downloadBtn.addEventListener('click', () => {
     const link = document.createElement('a');
     link.download = 'cropimage_result.png';
@@ -622,7 +636,7 @@
     link.click();
   });
 
-  // ── 초기화 ────────────────────────────────────────────
+  // ── Reset ────────────────────────────────────────────
   resetBtn.addEventListener('click', () => {
     originalImg = null;
     cropRect    = null;
@@ -634,7 +648,7 @@
     fileInput.value = '';
   });
 
-  // ── 유틸 ──────────────────────────────────────────────
+  // ── Utils ────────────────────────────────────────────
   function getCanvasPos(e, canvas) {
     const r = canvas.getBoundingClientRect();
     const scaleX = canvas.width  / r.width;
@@ -671,7 +685,7 @@
     try {
       if (document.cookie.indexOf('bk_lang_dismiss=1') !== -1) return;
       var lang = (navigator.language || navigator.userLanguage || '').toLowerCase();
-      if (lang.indexOf('ko') === 0) return;
+      if (lang.indexOf('ko') !== 0) return;
       var banner = document.getElementById('langBanner');
       if (!banner) return;
       banner.classList.add('show');
