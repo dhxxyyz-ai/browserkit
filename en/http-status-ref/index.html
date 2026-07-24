@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="icon" href="/favicon.ico" sizes="32x32">
+  <link rel="icon" href="/favicon-16.png" sizes="16x16" type="image/png">
+  <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="/favicon-192.png" sizes="192x192" type="image/png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Free online dictionary for looking up HTTP status codes from the 100s to the 500s. Search in real time by code number or name, filter by 1xx-5xx category, and copy a code with one click. Processed entirely in your browser, nothing is uploaded." />
+  <meta property="og:title" content="HttpStatusRef — HTTP Status Code Reference" />
+  <meta property="og:description" content="A free online dictionary for looking up HTTP status codes, with 1xx-5xx category filters and one-click copy." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://browserkit.online/en/http-status-ref/" />
+  <title>HttpStatusRef — HTTP Status Code Reference</title>
+  <link rel="stylesheet" href="/css/style.css?v=20260724c" />
+  <!-- Google AdSense — pending re-review. Uncomment once approved.
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506"
+     crossorigin="anonymous"></script>
+  -->
+  <style>
+    .guide-summary { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:24px; margin:0 0 12px; }
+    .guide-summary-title { font-size:16px; font-weight:700; color:var(--text); margin:0 0 12px; }
+    .guide-steps { margin:0 0 20px; padding-left:20px; color:var(--subtext); font-size:14px; line-height:2; }
+    .guide-faq-title { font-size:14px; font-weight:700; color:var(--text); margin:0 0 10px; }
+    .guide-faq details { border:1px solid var(--border); border-radius:10px; padding:12px 16px; margin-bottom:8px; }
+    .guide-faq summary { cursor:pointer; font-weight:600; font-size:14px; color:var(--text); }
+    .guide-faq p { margin:8px 0 0; font-size:13px; color:var(--subtext); line-height:1.7; }
+    .guide-full-link { display:inline-block; margin-top:12px; font-size:14px; font-weight:600; color:var(--point-hover); text-decoration:none; }
+    .guide-full-link:hover { text-decoration:underline; }
+
+    .ad-slot { min-height:90px; display:flex; align-items:center; justify-content:center; margin:0 0 12px; }
+    .ad-slot-rect { min-height:250px; }
+
+    .search-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px 24px; margin-bottom:16px; }
+    .search-input { background:var(--bg); border:1px solid var(--border); border-radius:10px; padding:13px 16px; font-size:15px; color:var(--text); outline:none; width:100%; box-sizing:border-box; }
+    .search-input:focus { border-color:var(--point); }
+
+    .cat-btns { display:flex; gap:6px; flex-wrap:wrap; margin-top:12px; }
+    .cat-btn { background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:8px 16px; font-size:13px; color:var(--subtext); cursor:pointer; font-family:'Fira Code',monospace; font-weight:600; }
+    .cat-btn:hover { border-color:var(--point); color:var(--text); }
+    .cat-btn.active { background:rgba(123,108,255,0.15); border-color:var(--point); color:var(--point-hover); }
+
+    .status-list { display:flex; flex-direction:column; gap:10px; margin:16px 0 20px; }
+    .status-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:16px 20px; display:flex; align-items:flex-start; gap:16px; cursor:pointer; }
+    .status-card:hover { border-color:var(--point); }
+    .status-code { min-width:64px; font-family:'Fira Code',monospace; font-size:20px; font-weight:800; color:var(--point-hover); flex-shrink:0; }
+    .status-body { flex:1; }
+    .status-name { font-size:14px; font-weight:700; color:var(--text); margin-bottom:4px; }
+    .status-desc { font-size:13px; color:var(--subtext); line-height:1.6; }
+    .status-empty { text-align:center; padding:40px 20px; color:var(--subtext); font-size:14px; }
+
+    .toast { position:fixed; bottom:32px; left:50%; transform:translateX(-50%) translateY(80px); background:var(--success); color:#fff; border-radius:999px; padding:10px 24px; font-size:14px; font-weight:600; opacity:0; pointer-events:none; z-index:999; transition:all 0.3s ease; }
+    .toast.show { transform:translateX(-50%) translateY(0); opacity:1; }
+
+    .footer { border-top:1px solid var(--border); padding:32px 0; text-align:center; }
+    .footer-copy { color:var(--subtext); font-size:13px; margin-bottom:12px; }
+    .footer-nav { display:flex; justify-content:center; gap:20px; flex-wrap:wrap; }
+    .footer-nav a { color:var(--subtext); font-size:13px; text-decoration:none; }
+    .footer-nav a:hover { color:var(--text); }
+
+    @media (max-width:640px) {
+      .hero-title { font-size:24px; }
+      .status-card { flex-direction:column; gap:4px; }
+      .status-code { font-size:18px; }
+    }
+  </style>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta property="og:image" content="https://browserkit.online/img/og/http-status-ref.png" />
+  <link rel="canonical" href="https://browserkit.online/en/http-status-ref/" />
+  <link rel="alternate" hreflang="ko" href="https://browserkit.online/http-status-ref/" />
+  <link rel="alternate" hreflang="en" href="https://browserkit.online/en/http-status-ref/" />
+  <link rel="alternate" hreflang="x-default" href="https://browserkit.online/en/http-status-ref/" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://browserkit.online/img/og/http-status-ref.png" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "HttpStatusRef — HTTP Status Code Reference",
+  "url": "https://browserkit.online/en/http-status-ref/",
+  "description": "Free online dictionary for looking up HTTP status codes from the 100s to the 500s. Search in real time by code number or name, filter by 1xx-5xx category, and copy a code with one click. Processed entirely in your browser, nothing is uploaded.",
+  "applicationCategory": "DeveloperApplication",
+  "operatingSystem": "Any",
+  "browserRequirements": "Requires JavaScript",
+  "inLanguage": "en",
+  "isAccessibleForFree": true,
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "BrowserKit",
+    "url": "https://browserkit.online/"
+  }
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://browserkit.online/en/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "HTTP Status Code Reference",
+      "item": "https://browserkit.online/en/http-status-ref/"
+    }
+  ]
+}
+  </script>
+</head>
+
+<body>
+  <div class="lang-banner" id="langBanner">
+    <span>🌐 이 페이지는 <a href="/http-status-ref/">한국어</a>로도 볼 수 있습니다.</span>
+    <button class="lang-banner-close" id="langBannerClose" type="button" aria-label="close">&times;</button>
+  </div>
+  <header class="header">
+    <div class="container">
+      <a href="/en/" class="header-brand">
+        <div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Poppins,sans-serif;flex-shrink:0">B</div>
+        <span class="header-brand-text"><span style="color:var(--text)">Browser</span><span style="color:var(--point)">Kit</span></span>
+      </a>
+      <div class="header-right">
+        <div class="lang-switcher">
+          <button class="lang-switcher-btn" type="button" data-lang-btn>🌐 <span class="lang-label-full">English</span></button>
+          <div class="lang-switcher-menu" data-lang-menu>
+            <a href="#" class="active">English</a>
+            <a href="/http-status-ref/">한국어</a>
+          </div>
+        </div>
+        <a href="/en/" class="header-back">&#x2190; <span class="header-back-label">Back to BrowserKit</span></a>
+      </div>
+    </div>
+  </header>
+
+  <main><div class="container">
+    <div class="hero">
+      <div class="hero-icon" style="height:78px;display:flex;justify-content:center;align-items:center"><div style="transform:scale(1.7);transform-origin:center"><div style="width:46px;height:46px;background:#e0c3ff;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="font:700 15px Fira Code,monospace;color:#2a2433;line-height:1;letter-spacing:-.5px;white-space:nowrap">404</div></div></div></div>
+      <div class="hero-title-wrap"><h1 class="hero-title">HTTP Status Code Reference</h1><a href="/blog/86-httpstatusref-howto" class="hero-guide-link">View usage guide</a></div>
+      <p class="hero-desc">Search by code number or name and instantly see what each HTTP status code means</p>
+      <div class="hero-badges">
+        <span class="badge">🔒 Fully local processing</span>
+        <span class="badge">⚡ Free to use</span>
+        <span class="badge">🛡️ No server upload</span>
+        <span class="badge">📦 No installation</span>
+      </div>
+    </div>
+    <!-- Google AdSense Display Ad — pending approval, reserving space -->
+    <div class="ad-slot" id="adTop">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
+
+    <p class="notice">💡 Compiled from the standard HTTP status codes registered with IANA. Click a card to copy its code number to the clipboard. All searching happens entirely in your browser.</p>
+
+    <div class="search-card">
+      <input type="text" class="search-input" id="searchInput" placeholder="Search by code number or name (e.g. 404, Not Found)" />
+      <div class="cat-btns" id="catBtns">
+        <button class="cat-btn active" data-cat="all">All</button>
+        <button class="cat-btn" data-cat="1">1xx Informational</button>
+        <button class="cat-btn" data-cat="2">2xx Success</button>
+        <button class="cat-btn" data-cat="3">3xx Redirection</button>
+        <button class="cat-btn" data-cat="4">4xx Client Error</button>
+        <button class="cat-btn" data-cat="5">5xx Server Error</button>
+      </div>
+    </div>
+
+    <div class="status-list" id="statusList"></div>
+
+    <!-- Google AdSense Display Ad — pending approval, reserving space -->
+    <div class="ad-slot" id="adMiddle">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
+
+    <div class="guide-summary">
+      <h2 class="guide-summary-title">Quick guide</h2>
+      <ol class="guide-steps">
+        <li>Enter a search term or choose a category</li>
+        <li>Review the results and copy a code</li>
+      </ol>
+      <h3 class="guide-faq-title">Frequently asked questions</h3>
+      <div class="guide-faq">
+        <details>
+          <summary>Is the HTTP Status Code Reference really free?</summary>
+          <p>Yes, it is completely free to use with no sign-up or installation required. There is no usage limit either.</p>
+        </details>
+        <details>
+          <summary>How many status codes are included?</summary>
+          <p>It covers 62 standard HTTP status codes registered with IANA, spanning 1xx through 5xx.</p>
+        </details>
+        <details>
+          <summary>How does the search work?</summary>
+          <p>You can search by code number (e.g. 404), name (e.g. Not Found), or description, and results are filtered in real time.</p>
+        </details>
+        <details>
+          <summary>Is what I search for sent to a server?</summary>
+          <p>No. All searching happens within data already stored in your browser, and nothing is sent to an external server.</p>
+        </details>
+      </div>
+      <a href="/blog/86-httpstatusref-howto" class="guide-full-link">View full guide →</a>
+    </div>
+
+    <!-- Google AdSense Multiplex Ad — pending approval, reserving space -->
+    <div class="ad-slot ad-slot-rect" id="adBottom">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
+  </div></main>
+
+  <footer class="footer">
+    <div class="container">
+      <p class="footer-copy">&#xa9; 2026 BrowserKit. All processing happens in your browser.</p>
+      <nav class="footer-nav">
+        <a href="/en/privacy.html">Privacy Policy</a>
+        <a href="/en/terms.html">Terms of Service</a>
+        <a href="/en/about.html">About</a>
+        <a href="/en/blog/">Blog</a>
+      </nav>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+  var STATUS_CODES = [
+    { code: 100, name: 'Continue', desc: 'The initial part of the request has been received and the client should continue. Used to check before sending a large request body.', cat: 1 },
+    { code: 101, name: 'Switching Protocols', desc: 'The server is switching protocols as requested by the client (e.g. HTTP to WebSocket).', cat: 1 },
+    { code: 102, name: 'Processing', desc: 'The server has received the request and is processing it, but no response is ready yet (WebDAV).', cat: 1 },
+    { code: 103, name: 'Early Hints', desc: 'Sends some headers early (e.g. resources to preload) before the final response.', cat: 1 },
+
+    { code: 200, name: 'OK', desc: 'The request succeeded. The most common successful response.', cat: 2 },
+    { code: 201, name: 'Created', desc: 'The request succeeded and a new resource was created as a result (typically for POST).', cat: 2 },
+    { code: 202, name: 'Accepted', desc: 'The request has been accepted for processing, but processing is not yet complete.', cat: 2 },
+    { code: 203, name: 'Non-Authoritative Information', desc: 'The returned metadata is from a source other than the origin server (e.g. a proxy) and may be modified.', cat: 2 },
+    { code: 204, name: 'No Content', desc: 'The request succeeded, but there is no response body. Common for delete requests.', cat: 2 },
+    { code: 205, name: 'Reset Content', desc: 'Tells the client to reset the document view (e.g. clear a form) after the request.', cat: 2 },
+    { code: 206, name: 'Partial Content', desc: 'Returns only part of a resource. Used for video streaming or resuming downloads.', cat: 2 },
+    { code: 207, name: 'Multi-Status', desc: 'Returns the results of multiple independent operations in a single response (WebDAV).', cat: 2 },
+    { code: 208, name: 'Already Reported', desc: 'Avoids repeating an already-reported resource within the same response (WebDAV).', cat: 2 },
+    { code: 226, name: 'IM Used', desc: 'The server has fulfilled a request and the response is a representation of the result of one or more instance manipulations.', cat: 2 },
+
+    { code: 300, name: 'Multiple Choices', desc: 'There are multiple possible responses to the request, and the client should choose one.', cat: 3 },
+    { code: 301, name: 'Moved Permanently', desc: 'The requested resource has permanently moved to a new URL. An important redirect for SEO.', cat: 3 },
+    { code: 302, name: 'Found', desc: 'The resource is temporarily at a different URL. The original URL will continue to be used going forward.', cat: 3 },
+    { code: 303, name: 'See Other', desc: 'Directs the client to fetch the response from a different URL using GET.', cat: 3 },
+    { code: 304, name: 'Not Modified', desc: 'The cached resource has not changed, so the client can keep using its cached copy.', cat: 3 },
+    { code: 305, name: 'Use Proxy', desc: 'The requested resource must be accessed through a specified proxy (mostly unused now and deprecated for security reasons).', cat: 3 },
+    { code: 307, name: 'Temporary Redirect', desc: 'The resource is temporarily at a different URL; unlike 302, the request method and body are preserved.', cat: 3 },
+    { code: 308, name: 'Permanent Redirect', desc: 'The resource has permanently moved to a different URL; unlike 301, the request method is preserved.', cat: 3 },
+
+    { code: 400, name: 'Bad Request', desc: 'The request syntax or format is invalid and the server cannot understand it.', cat: 4 },
+    { code: 401, name: 'Unauthorized', desc: 'Authentication is required. Occurs when the client is not logged in or its credentials are missing or invalid.', cat: 4 },
+    { code: 402, name: 'Payment Required', desc: 'Reserved for future use — payment is required. Rarely used in practice.', cat: 4 },
+    { code: 403, name: 'Forbidden', desc: 'The server understood the request but refuses to authorize it.', cat: 4 },
+    { code: 404, name: 'Not Found', desc: 'The requested resource could not be found on the server. The most famous error code.', cat: 4 },
+    { code: 405, name: 'Method Not Allowed', desc: 'The request used an HTTP method that is not allowed for this resource.', cat: 4 },
+    { code: 406, name: 'Not Acceptable', desc: 'The server cannot produce a response matching the format the client requested (e.g. via the Accept header).', cat: 4 },
+    { code: 407, name: 'Proxy Authentication Required', desc: 'Authentication with a proxy server is required.', cat: 4 },
+    { code: 408, name: 'Request Timeout', desc: 'The client did not complete the request within the time the server was willing to wait.', cat: 4 },
+    { code: 409, name: 'Conflict', desc: 'The request conflicts with the current state of the resource on the server (e.g. a concurrent edit conflict).', cat: 4 },
+    { code: 410, name: 'Gone', desc: 'The requested resource used to exist but has been permanently removed.', cat: 4 },
+    { code: 411, name: 'Length Required', desc: 'The request is missing a required Content-Length header.', cat: 4 },
+    { code: 412, name: 'Precondition Failed', desc: 'A precondition specified in the request headers was not met by the server.', cat: 4 },
+    { code: 413, name: 'Payload Too Large', desc: 'The request body is larger than the server is willing to accept.', cat: 4 },
+    { code: 414, name: 'URI Too Long', desc: 'The requested URI is longer than the server is willing to process.', cat: 4 },
+    { code: 415, name: 'Unsupported Media Type', desc: 'The server does not support the media type of the request body.', cat: 4 },
+    { code: 416, name: 'Range Not Satisfiable', desc: 'The requested range (Range header) is not valid for the size of the resource.', cat: 4 },
+    { code: 417, name: 'Expectation Failed', desc: 'The server cannot meet the requirement specified in the Expect header.', cat: 4 },
+    { code: 418, name: "I'm a teapot", desc: 'An April Fools\' joke code — indicates the server is a teapot and refuses to brew coffee.', cat: 4 },
+    { code: 421, name: 'Misdirected Request', desc: 'The request was directed at a server that cannot produce a response for it.', cat: 4 },
+    { code: 422, name: 'Unprocessable Entity', desc: 'The request syntax is correct but it contains semantic errors and cannot be processed (usually a validation failure).', cat: 4 },
+    { code: 423, name: 'Locked', desc: 'The requested resource is locked and cannot be accessed (WebDAV).', cat: 4 },
+    { code: 424, name: 'Failed Dependency', desc: 'The request failed because a previous, related request also failed (WebDAV).', cat: 4 },
+    { code: 425, name: 'Too Early', desc: 'The server is unwilling to process a request that might be replayed, due to replay-attack risk.', cat: 4 },
+    { code: 426, name: 'Upgrade Required', desc: 'The client must switch to a different protocol for the server to process the request.', cat: 4 },
+    { code: 428, name: 'Precondition Required', desc: 'The request must include a conditional header (such as If-Match).', cat: 4 },
+    { code: 429, name: 'Too Many Requests', desc: 'The client has sent too many requests in a given time and has hit a rate limit.', cat: 4 },
+    { code: 431, name: 'Request Header Fields Too Large', desc: 'The request headers are larger than the server is willing to accept.', cat: 4 },
+    { code: 451, name: 'Unavailable For Legal Reasons', desc: 'The resource is blocked for legal reasons (e.g. copyright, government censorship).', cat: 4 },
+
+    { code: 500, name: 'Internal Server Error', desc: 'An unexpected error occurred on the server. The most common server error code.', cat: 5 },
+    { code: 501, name: 'Not Implemented', desc: 'The server does not support a feature required to fulfill the request.', cat: 5 },
+    { code: 502, name: 'Bad Gateway', desc: 'A gateway or proxy server received an invalid response from an upstream server.', cat: 5 },
+    { code: 503, name: 'Service Unavailable', desc: 'The server is temporarily overloaded or under maintenance and cannot handle the request.', cat: 5 },
+    { code: 504, name: 'Gateway Timeout', desc: 'A gateway or proxy did not receive a timely response from an upstream server.', cat: 5 },
+    { code: 505, name: 'HTTP Version Not Supported', desc: 'The server does not support the HTTP version used in the request.', cat: 5 },
+    { code: 506, name: 'Variant Also Negotiates', desc: 'A server misconfiguration causes an issue with content negotiation.', cat: 5 },
+    { code: 507, name: 'Insufficient Storage', desc: 'The server does not have enough storage to complete the request (WebDAV).', cat: 5 },
+    { code: 508, name: 'Loop Detected', desc: 'An infinite loop was detected while processing the request (WebDAV).', cat: 5 },
+    { code: 510, name: 'Not Extended', desc: 'Further extensions to the request are required for the server to fulfill it.', cat: 5 },
+    { code: 511, name: 'Network Authentication Required', desc: 'The client needs to authenticate to gain network access (e.g. a public Wi-Fi login page).', cat: 5 }
+  ];
+
+  var CAT_COLOR = { 1: '#bcd4ff', 2: '#a8e6cf', 3: '#ffd9a8', 4: '#ff8a5e', 5: '#ff6b6b' };
+  var currentCat = 'all';
+  var currentQuery = '';
+
+  function render() {
+    var q = currentQuery.trim().toLowerCase();
+    var filtered = STATUS_CODES.filter(function(s) {
+      if (currentCat !== 'all' && String(s.cat) !== currentCat) return false;
+      if (!q) return true;
+      return String(s.code).indexOf(q) !== -1 ||
+        s.name.toLowerCase().indexOf(q) !== -1 ||
+        s.desc.toLowerCase().indexOf(q) !== -1;
+    });
+
+    var list = document.getElementById('statusList');
+    if (!filtered.length) {
+      list.innerHTML = '<div class="status-empty">No results found. Try a different search term.</div>';
+      return;
+    }
+
+    list.innerHTML = filtered.map(function(s) {
+      return '<div class="status-card" data-code="' + s.code + '">' +
+        '<div class="status-code" style="color:' + CAT_COLOR[s.cat] + '">' + s.code + '</div>' +
+        '<div class="status-body">' +
+          '<div class="status-name">' + s.name + '</div>' +
+          '<div class="status-desc">' + s.desc + '</div>' +
+        '</div>' +
+      '</div>';
+    }).join('');
+
+    list.querySelectorAll('.status-card').forEach(function(card) {
+      card.addEventListener('click', function() {
+        var code = card.dataset.code;
+        navigator.clipboard.writeText(code).then(function() {
+          showToast('✓ Copied code ' + code);
+        }).catch(function() {
+          showToast(code + ' — clipboard access denied. Please select and copy it manually');
+        });
+      });
+    });
+  }
+
+  document.getElementById('searchInput').addEventListener('input', function(e) {
+    currentQuery = e.target.value;
+    render();
+  });
+
+  document.querySelectorAll('#catBtns .cat-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('#catBtns .cat-btn').forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      currentCat = btn.dataset.cat;
+      render();
+    });
+  });
+
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(function() { t.classList.remove('show'); }, 2000);
+  }
+
+  render();
+  </script>
+
+  <script>
+  document.querySelectorAll('[data-lang-btn]').forEach(function(btn){
+    btn.addEventListener('click', function(e){
+      e.stopPropagation();
+      var menu = btn.nextElementSibling;
+      menu.classList.toggle('show');
+    });
+  });
+  document.addEventListener('click', function(){
+    document.querySelectorAll('.lang-switcher-menu.show').forEach(function(m){ m.classList.remove('show'); });
+  });
+  </script>
+
+  <script>
+  (function(){
+    try {
+      if (document.cookie.indexOf('bk_lang_dismiss=1') !== -1) return;
+      var lang = (navigator.language || navigator.userLanguage || '').toLowerCase();
+      if (lang.indexOf('ko') !== 0) return;
+      var banner = document.getElementById('langBanner');
+      if (!banner) return;
+      banner.classList.add('show');
+      var closeBtn = document.getElementById('langBannerClose');
+      closeBtn.addEventListener('click', function(){
+        banner.classList.remove('show');
+        document.cookie = 'bk_lang_dismiss=1; max-age=' + (60*60*24*180) + '; path=/';
+      });
+    } catch(e) {}
+  })();
+  </script>
+</body>
+</html>
