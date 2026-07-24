@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
   <link rel="icon" href="/favicon.ico" sizes="32x32">
   <link rel="icon" href="/favicon-16.png" sizes="16x16" type="image/png">
@@ -8,20 +8,19 @@
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="PDF에 열람용 비밀번호를 설정해 잠그는 무료 온라인 도구. 인쇄·수정·복사 권한도 함께 조절할 수 있습니다. 파일이 서버로 전송되지 않습니다." />
-  <meta property="og:title" content="PDFPasswordSet — PDF 비밀번호 설정" />
-  <meta property="og:description" content="PDF에 열람용 비밀번호와 권한을 설정하는 무료 온라인 도구입니다." />
+  <meta name="description" content="Free online tool to lock a PDF with a password required to open it. You can also control print, edit, and copy permissions. Files are never uploaded to a server." />
+  <meta property="og:title" content="PDFPasswordSet — Set PDF Password" />
+  <meta property="og:description" content="A free online tool to set an open password and permissions on a PDF." />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://browserkit.online/pdf-password-set/" />
-  <title>PDFPasswordSet — PDF 비밀번호 설정</title>
+  <meta property="og:url" content="https://browserkit.online/en/pdf-password-set/" />
+  <title>PDFPasswordSet — Set PDF Password</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
-  <!-- Google AdSense 승인 대기 중 (2026-07-19 주석 처리, 카카오 애드핏으로 임시 전환) — 승인 후 주석 해제
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Google AdSense — pending re-review. Uncomment once approved.
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506"
      crossorigin="anonymous"></script>
   -->
-  <script type="text/javascript" src="//t1.kakaocdn.net/kas/static/ba.min.js" async></script>
   <link rel="stylesheet" href="/css/style.css?v=20260724c" />
   <style>
     .guide-summary { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:24px; margin:0 0 12px; }
@@ -33,6 +32,9 @@
     .guide-faq p { margin:8px 0 0; font-size:13px; color:var(--subtext); line-height:1.7; }
     .guide-full-link { display:inline-block; margin-top:12px; font-size:14px; font-weight:600; color:var(--point-hover); text-decoration:none; }
     .guide-full-link:hover { text-decoration:underline; }
+
+    .ad-slot { min-height:90px; display:flex; align-items:center; justify-content:center; margin:0 0 12px; }
+    .ad-slot-rect { min-height:250px; }
 
     .upload-zone { background:var(--card); border:2px dashed var(--border); border-radius:var(--radius); padding:48px 40px; text-align:center; cursor:pointer; margin:0 0 20px; transition:all 0.2s; }
     .upload-zone:hover, .upload-zone.drag-over { border-color:var(--point); box-shadow:0 0 24px var(--glow); }
@@ -46,8 +48,8 @@
 
     .file-summary { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:16px 20px; margin-bottom:20px; display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; }
     .file-summary-name { font-size:14px; font-weight:600; }
-    .file-summary-meta { font-size:12px; color:var(--subtext); margin-top:2px; font-family:'Gowun Dodum',sans-serif; }
-    .btn-change { background:var(--bg); border:1px solid var(--border); color:var(--subtext); border-radius:8px; padding:7px 16px; font-size:13px; cursor:pointer; font-family:'Gowun Dodum',sans-serif; }
+    .file-summary-meta { font-size:12px; color:var(--subtext); margin-top:2px; }
+    .btn-change { background:var(--bg); border:1px solid var(--border); color:var(--subtext); border-radius:8px; padding:7px 16px; font-size:13px; cursor:pointer; }
     .btn-change:hover { border-color:var(--point); color:var(--text); }
 
     .notice { margin:0 0 20px; padding:12px 16px; background:rgba(123,108,255,0.07); border:1px solid var(--border); border-radius:10px; font-size:13px; color:var(--subtext); line-height:1.7; }
@@ -56,12 +58,12 @@
     .setting-row { display:flex; align-items:center; gap:12px; margin-bottom:18px; flex-wrap:wrap; }
     .setting-row:last-child { margin-bottom:0; }
     .setting-label { font-size:13px; font-weight:600; color:var(--subtext); min-width:120px; }
-    .setting-row input[type=password], .setting-row input[type=text] { flex:1; min-width:200px; background:var(--bg); border:1px solid var(--border); color:var(--text); border-radius:10px; padding:12px 16px; font-size:14px; font-family:'Gowun Dodum',sans-serif; outline:none; }
+    .setting-row input[type=password], .setting-row input[type=text] { flex:1; min-width:200px; background:var(--bg); border:1px solid var(--border); color:var(--text); border-radius:10px; padding:12px 16px; font-size:14px; outline:none; }
     .setting-row input[type=password]:focus, .setting-row input[type=text]:focus { border-color:var(--point); }
     .setting-row input.error { border-color:#F87171; }
 
     .seg-btns { display:flex; gap:6px; flex-wrap:wrap; }
-    .seg-btn { background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:8px 16px; font-size:13px; color:var(--subtext); cursor:pointer; font-family:'Gowun Dodum',sans-serif; }
+    .seg-btn { background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:8px 16px; font-size:13px; color:var(--subtext); cursor:pointer; }
     .seg-btn:hover { border-color:var(--point); color:var(--text); }
     .seg-btn.active { background:rgba(123,108,255,0.15); border-color:var(--point); color:var(--point-hover); font-weight:700; }
 
@@ -78,10 +80,10 @@
     .progress-fill { height:100%; width:0%; background:linear-gradient(90deg,var(--point),var(--point-hover)); border-radius:999px; transition:width 0.3s ease; }
 
     .action-wrap { display:flex; justify-content:center; gap:12px; margin:8px 0 48px; flex-wrap:wrap; }
-    .btn-primary { background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border:none; border-radius:12px; padding:14px 32px; font-size:15px; font-weight:600; cursor:pointer; font-family:'Gowun Dodum',sans-serif; }
+    .btn-primary { background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border:none; border-radius:12px; padding:14px 32px; font-size:15px; font-weight:600; cursor:pointer; }
     .btn-primary:hover { transform:translateY(-2px); box-shadow:0 8px 24px var(--glow); }
     .btn-primary:disabled { opacity:0.5; cursor:default; transform:none; box-shadow:none; }
-    .btn-reset { background:var(--card); color:var(--subtext); border:1px solid var(--border); border-radius:12px; padding:14px 24px; font-size:15px; cursor:pointer; font-family:'Gowun Dodum',sans-serif; }
+    .btn-reset { background:var(--card); color:var(--subtext); border:1px solid var(--border); border-radius:12px; padding:14px 24px; font-size:15px; cursor:pointer; }
     .btn-reset:hover { transform:translateY(-2px); color:var(--text); border-color:var(--point); }
 
     .footer { border-top:1px solid var(--border); padding:32px 0; text-align:center; }
@@ -97,7 +99,7 @@
     }
   </style>
   <meta property="og:image" content="https://browserkit.online/img/og/pdf-password-set.png" />
-  <link rel="canonical" href="https://browserkit.online/pdf-password-set/" />
+  <link rel="canonical" href="https://browserkit.online/en/pdf-password-set/" />
   <link rel="alternate" hreflang="ko" href="https://browserkit.online/pdf-password-set/" />
   <link rel="alternate" hreflang="en" href="https://browserkit.online/en/pdf-password-set/" />
   <link rel="alternate" hreflang="x-default" href="https://browserkit.online/en/pdf-password-set/" />
@@ -107,18 +109,18 @@
 {
   "@context": "https://schema.org",
   "@type": "WebApplication",
-  "name": "PDFPasswordSet — PDF 비밀번호 설정",
-  "url": "https://browserkit.online/pdf-password-set/",
-  "description": "PDF에 열람용 비밀번호를 설정해 잠그는 무료 온라인 도구. 인쇄·수정·복사 권한도 함께 조절할 수 있습니다. 파일이 서버로 전송되지 않습니다.",
+  "name": "PDFPasswordSet — Set PDF Password",
+  "url": "https://browserkit.online/en/pdf-password-set/",
+  "description": "Free online tool to lock a PDF with a password required to open it. You can also control print, edit, and copy permissions. Files are never uploaded to a server.",
   "applicationCategory": "UtilityApplication",
   "operatingSystem": "Any",
   "browserRequirements": "Requires JavaScript",
-  "inLanguage": "ko",
+  "inLanguage": "en",
   "isAccessibleForFree": true,
   "offers": {
     "@type": "Offer",
     "price": "0",
-    "priceCurrency": "KRW"
+    "priceCurrency": "USD"
   },
   "publisher": {
     "@type": "Organization",
@@ -135,14 +137,14 @@
     {
       "@type": "ListItem",
       "position": 1,
-      "name": "홈",
-      "item": "https://browserkit.online/"
+      "name": "Home",
+      "item": "https://browserkit.online/en/"
     },
     {
       "@type": "ListItem",
       "position": 2,
-      "name": "PDF 비밀번호 설정",
-      "item": "https://browserkit.online/pdf-password-set/"
+      "name": "Set PDF Password",
+      "item": "https://browserkit.online/en/pdf-password-set/"
     }
   ]
 }
@@ -150,22 +152,22 @@
 </head>
 <body>
   <div class="lang-banner" id="langBanner">
-    <span>🌐 This page is also available in <a href="/en/pdf-password-set/">English</a>.</span>
+    <span>🌐 이 페이지는 <a href="/pdf-password-set/">한국어</a>로도 볼 수 있습니다.</span>
     <button class="lang-banner-close" id="langBannerClose" type="button" aria-label="close">&times;</button>
   </div>
 
   <header class="header">
     <div class="container">
-      <a href="/" class="header-brand"><div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Gowun Dodum,sans-serif;flex-shrink:0">B</div><span class="header-brand-text"><span style="color:var(--text)">Browser</span><span style="color:var(--point)">Kit</span></span></a>
+      <a href="/en/" class="header-brand"><div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Poppins,sans-serif;flex-shrink:0">B</div><span class="header-brand-text"><span style="color:var(--text)">Browser</span><span style="color:var(--point)">Kit</span></span></a>
       <div class="header-right">
         <div class="lang-switcher">
-          <button class="lang-switcher-btn" type="button" data-lang-btn>🌐 <span class="lang-label-full">한국어</span></button>
+          <button class="lang-switcher-btn" type="button" data-lang-btn>🌐 <span class="lang-label-full">English</span></button>
           <div class="lang-switcher-menu" data-lang-menu>
-            <a href="/en/pdf-password-set/">English</a>
-            <a href="#" class="active">한국어</a>
+            <a href="#" class="active">English</a>
+            <a href="/pdf-password-set/">한국어</a>
           </div>
         </div>
-        <a href="/" class="header-back">← <span class="header-back-label">BrowserKit 홈으로</span></a>
+        <a href="/en/" class="header-back">← <span class="header-back-label">Back to BrowserKit</span></a>
       </div>
     </div>
   </header>
@@ -173,119 +175,131 @@
   <main><div class="container">
     <div class="hero">
       <div class="hero-icon" style="height:78px;display:flex;justify-content:center;align-items:center"><div style="transform:scale(1.7);transform-origin:center"><div style="width:46px;height:46px;background:#a8e6cf;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="position:relative;width:22px;height:26px"><div style="width:22px;height:16px;background:#fffdf9;border:2.5px solid #2a2433;border-radius:3px;box-sizing:border-box;position:absolute;bottom:0;display:flex;align-items:center;justify-content:center"><div style="width:4px;height:4px;border-radius:50%;background:#2a2433"></div></div><div style="width:12px;height:11px;border:2.5px solid #2a2433;border-bottom:none;border-radius:6px 6px 0 0;box-sizing:border-box;position:absolute;top:0;left:5px"></div></div></div></div></div>
-      <div class="hero-title-wrap"><h1 class="hero-title">PDF 비밀번호 설정</h1><a href="/blog/79-pdfpasswordset-howto" class="hero-guide-link">사용법 가이드 보기</a></div>
-      <p class="hero-desc">PDF에 비밀번호를 걸어 아무나 열어볼 수 없게 보호하세요</p>
+      <div class="hero-title-wrap"><h1 class="hero-title">Set PDF Password</h1><a href="/blog/79-pdfpasswordset-howto" class="hero-guide-link">View usage guide</a></div>
+      <p class="hero-desc">Protect your PDF with a password so no one else can open it</p>
       <div class="hero-badges">
-        <span class="badge">🔒 완전 로컬 처리</span>
-        <span class="badge">⚡ 무료 사용</span>
-        <span class="badge">🛡️ 서버 전송 없음</span>
-        <span class="badge">📦 설치 불필요</span>
+        <span class="badge">🔒 Fully local processing</span>
+        <span class="badge">⚡ Free to use</span>
+        <span class="badge">🛡️ No server upload</span>
+        <span class="badge">📦 No installation</span>
       </div>
     </div>
-    <div style="margin:0 0 12px"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><div class="adfit-h-desktop"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-QD4pRIpdIj7i2mbt" data-ad-width="728" data-ad-height="90"></ins></div><div class="adfit-h-mobile"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-R4xA2niTT8HgGjoO" data-ad-width="320" data-ad-height="50"></ins></div></div>
+    <!-- Google AdSense Display Ad — pending approval, reserving space -->
+    <div class="ad-slot" id="adTop">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
 
-    <!-- 업로드 -->
+    <!-- Upload -->
     <div class="upload-zone" id="uploadZone">
       <input type="file" id="fileInput" accept=".pdf" hidden />
       <div class="upload-icon" style="height:64px;display:flex;justify-content:center;align-items:center"><div style="transform:scale(1.4);transform-origin:center"><div style="width:46px;height:46px;background:#a8e6cf;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="position:relative;width:22px;height:26px"><div style="width:22px;height:16px;background:#fffdf9;border:2.5px solid #2a2433;border-radius:3px;box-sizing:border-box;position:absolute;bottom:0;display:flex;align-items:center;justify-content:center"><div style="width:4px;height:4px;border-radius:50%;background:#2a2433"></div></div><div style="width:12px;height:11px;border:2.5px solid #2a2433;border-bottom:none;border-radius:6px 6px 0 0;box-sizing:border-box;position:absolute;top:0;left:5px"></div></div></div></div></div>
-      <p class="upload-title">비밀번호를 설정할 PDF를 드래그하여 놓으세요</p>
-      <p class="upload-sub">또는 클릭하여 파일 선택 (1개 파일)</p>
-      <p class="upload-safe">✓ 파일과 비밀번호가 서버로 전송되지 않습니다</p>
+      <p class="upload-title">Drag and drop the PDF you want to password-protect</p>
+      <p class="upload-sub">or click to choose a file (1 file)</p>
+      <p class="upload-safe">✓ Your file and password are never uploaded to a server</p>
     </div>
 
-    <!-- 작업 영역 -->
+    <!-- Work area -->
     <div class="work-area" id="workArea">
       <div class="file-summary">
         <div>
           <div class="file-summary-name" id="fileName"></div>
           <div class="file-summary-meta" id="fileMeta"></div>
         </div>
-        <button class="btn-change" id="btnChange">다른 파일 선택</button>
+        <button class="btn-change" id="btnChange">Choose a different file</button>
       </div>
 
-      <p class="notice">💡 PDF를 페이지 이미지로 변환한 뒤 비밀번호를 걸어 재조립합니다. 텍스트 선택·검색이 가능했던 원본과 달리 결과 파일은 이미지 기반 PDF가 됩니다. 이미 비밀번호가 걸린 PDF는 먼저 PDFPasswordRemove로 잠금을 해제한 뒤 이용해주세요.</p>
+      <p class="notice">💡 This tool converts the PDF into page images, then reassembles them with a password. Unlike the original — which may have had selectable, searchable text — the result is an image-based PDF. If your PDF is already password-protected, unlock it first with PDFPasswordRemove.</p>
 
       <div class="setting-card">
         <div class="setting-row">
-          <span class="setting-label">열람용 비밀번호</span>
-          <input type="password" id="userPasswordInput" placeholder="PDF를 열 때 필요한 비밀번호 (필수)" />
+          <span class="setting-label">Open password</span>
+          <input type="password" id="userPasswordInput" placeholder="The password required to open the PDF (required)" />
         </div>
-        <div class="field-err" id="userPasswordErr">⚠ 열람용 비밀번호를 입력해주세요.</div>
+        <div class="field-err" id="userPasswordErr">⚠ Please enter an open password.</div>
         <div class="setting-row">
-          <span class="setting-label">편집용 비밀번호</span>
-          <input type="password" id="ownerPasswordInput" placeholder="비워두면 열람용 비밀번호와 동일하게 설정됩니다" />
+          <span class="setting-label">Owner password</span>
+          <input type="password" id="ownerPasswordInput" placeholder="Leave blank to use the same value as the open password" />
         </div>
         <div class="setting-row">
-          <span class="setting-label">허용 권한</span>
+          <span class="setting-label">Permissions</span>
           <div class="perm-grid">
-            <label class="perm-row"><input type="checkbox" id="permPrint" checked /> 인쇄</label>
-            <label class="perm-row"><input type="checkbox" id="permModify" /> 수정</label>
-            <label class="perm-row"><input type="checkbox" id="permCopy" /> 복사</label>
-            <label class="perm-row"><input type="checkbox" id="permAnnot" /> 양식 입력</label>
+            <label class="perm-row"><input type="checkbox" id="permPrint" checked /> Printing</label>
+            <label class="perm-row"><input type="checkbox" id="permModify" /> Editing</label>
+            <label class="perm-row"><input type="checkbox" id="permCopy" /> Copying</label>
+            <label class="perm-row"><input type="checkbox" id="permAnnot" /> Filling forms</label>
           </div>
         </div>
         <div class="setting-row">
-          <span class="setting-label">암호화 방식</span>
+          <span class="setting-label">Encryption</span>
           <div class="seg-btns" id="encBtns">
-            <button class="seg-btn active" data-enc="AES-128">AES 128비트 (권장)</button>
-            <button class="seg-btn" data-enc="RC4-40">RC4 40비트</button>
+            <button class="seg-btn active" data-enc="AES-128">AES 128-bit (recommended)</button>
+            <button class="seg-btn" data-enc="RC4-40">RC4 40-bit</button>
           </div>
         </div>
       </div>
 
       <div class="progress-wrap" id="progressWrap">
-        <div class="progress-label" id="progressLabel">처리 중...</div>
+        <div class="progress-label" id="progressLabel">Processing...</div>
         <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
       </div>
 
       <div class="action-wrap">
-        <button class="btn-primary" id="lockBtn">🔒 비밀번호 설정하고 다운로드</button>
-        <button class="btn-reset" id="resetBtn">↺ 처음부터</button>
+        <button class="btn-primary" id="lockBtn">🔒 Set Password & Download</button>
+        <button class="btn-reset" id="resetBtn">↺ Start over</button>
       </div>
     </div>
 
-<div style="margin:0 0 12px"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><!-- 카카오 애드핏 (2026-07-22, 쿠팡 파트너스 다이내믹 배너로 교체) — 복원 시 주석 해제: <div class="adfit-h-desktop"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-QD4pRIpdIj7i2mbt" data-ad-width="728" data-ad-height="90"></ins></div><div class="adfit-h-mobile"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-R4xA2niTT8HgGjoO" data-ad-width="320" data-ad-height="50"></ins></div> --><div class="adfit-h-desktop"><script src="https://ads-partners.coupang.com/g.js"></script><script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"728","height":"90","tsource":""});</script></div><div class="adfit-h-mobile"><script src="https://ads-partners.coupang.com/g.js"></script><script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"320","height":"50","tsource":""});</script></div></div>
+<!-- Google AdSense Display Ad — pending approval, reserving space -->
+    <div class="ad-slot" id="adMiddle">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
 
     <div class="guide-summary">
-      <h2 class="guide-summary-title">사용법 요약</h2>
+      <h2 class="guide-summary-title">Quick guide</h2>
       <ol class="guide-steps">
-        <li>PDF 업로드</li>
-        <li>비밀번호와 권한 설정</li>
-        <li>비밀번호 설정하고 다운로드</li>
+        <li>Upload a PDF</li>
+        <li>Set the password and permissions</li>
+        <li>Set the password and download</li>
       </ol>
-      <h3 class="guide-faq-title">자주 묻는 질문</h3>
+      <h3 class="guide-faq-title">Frequently asked questions</h3>
       <div class="guide-faq">
         <details>
-          <summary>PDF 비밀번호 설정 도구는 정말 무료인가요?</summary>
-          <p>네, 회원가입이나 설치 없이 완전 무료로 사용할 수 있습니다. 횟수 제한도 없습니다.</p>
+          <summary>Is the Set PDF Password tool really free?</summary>
+          <p>Yes, it is completely free to use with no sign-up or installation required. There is no usage limit either.</p>
         </details>
         <details>
-          <summary>업로드한 파일이 서버로 전송되나요?</summary>
-          <p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 업로드한 파일이 외부 서버로 전송되거나 저장되지 않습니다.</p>
+          <summary>Are uploaded files sent to a server?</summary>
+          <p>No. All processing happens entirely in your browser, and uploaded files are never sent to or stored on an external server.</p>
         </details>
         <details>
-          <summary>설정한 비밀번호를 잊어버리면 어떻게 되나요?</summary>
-          <p>비밀번호는 어디에도 저장되지 않아 복구할 방법이 없습니다. 설정 후 반드시 안전한 곳에 따로 보관하세요.</p>
+          <summary>What happens if I forget the password I set?</summary>
+          <p>The password is never stored anywhere, so there is no way to recover it. Be sure to keep it somewhere safe after setting it.</p>
         </details>
         <details>
-          <summary>모바일에서도 사용할 수 있나요?</summary>
-          <p>네, 별도의 앱 설치 없이 모바일 브라우저에서도 동일하게 사용할 수 있습니다.</p>
+          <summary>Can I use this on mobile?</summary>
+          <p>Yes, it works the same way in a mobile browser without needing to install any app.</p>
         </details>
       </div>
-      <a href="/blog/79-pdfpasswordset-howto" class="guide-full-link">전체 가이드 보기 →</a>
+      <a href="/blog/79-pdfpasswordset-howto" class="guide-full-link">View full guide →</a>
     </div>
 
-    <div style="margin:0 0 12px"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="9500090221"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><div class="adfit-rect-wrap"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-oePL4TCj742xAwqT" data-ad-width="300" data-ad-height="250"></ins></div></div>
+    <!-- Google AdSense Multiplex Ad — pending approval, reserving space -->
+    <div class="ad-slot ad-slot-rect" id="adBottom">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
   </div></main>
 
   <footer class="footer">
     <div class="container">
-      <p class="footer-copy">© 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p>
+      <p class="footer-copy">&#xa9; 2026 BrowserKit. All processing happens in your browser.</p>
       <nav class="footer-nav">
-        <a href="/privacy">개인정보 처리방침</a>
-        <a href="/terms">이용약관</a>
-        <a href="/about">서비스 소개</a>
-        <a href="/blog/">블로그</a>
+        <a href="/en/privacy.html">Privacy Policy</a>
+        <a href="/en/terms.html">Terms of Service</a>
+        <a href="/en/about.html">About</a>
+        <a href="/en/blog/">Blog</a>
       </nav>
     </div>
   </footer>
@@ -341,7 +355,7 @@
   async function loadFile(file) {
     uploadZone.style.display = 'none';
     progressWrap.style.display = 'block';
-    showProgress(10, 'PDF 불러오는 중...');
+    showProgress(10, 'Loading PDF...');
     try {
       const ab = await file.arrayBuffer();
       const pdfDoc = await pdfjsLib.getDocument({ data: ab }).promise;
@@ -349,9 +363,9 @@
       currentPdf  = pdfDoc;
 
       fileNameEl.textContent = file.name;
-      fileMetaEl.textContent = pdfDoc.numPages + '페이지 · ' + formatBytes(file.size);
+      fileMetaEl.textContent = pdfDoc.numPages + ' page(s) · ' + formatBytes(file.size);
 
-      showProgress(100, '완료!');
+      showProgress(100, 'Done!');
       setTimeout(() => {
         progressWrap.style.display = 'none';
         workArea.classList.add('show');
@@ -360,10 +374,10 @@
       progressWrap.style.display = 'none';
       uploadZone.style.display = 'block';
       if (e.name === 'PasswordException') {
-        alert('이미 비밀번호가 걸린 PDF입니다. 먼저 PDFPasswordRemove로 잠금을 해제한 뒤 다시 시도해주세요.');
+        alert('This PDF is already password-protected. Please unlock it with PDFPasswordRemove first, then try again.');
       } else {
-        console.error('PDF 로드 실패:', e);
-        alert('PDF를 여는 중 오류가 발생했습니다. 파일을 확인해주세요.');
+        console.error('Failed to load PDF:', e);
+        alert('An error occurred while opening the PDF. Please check your file.');
       }
     }
   }
@@ -395,7 +409,7 @@
       const numPages = currentPdf.numPages;
       let pdf = null;
       for (let p = 1; p <= numPages; p++) {
-        showProgress(Math.floor((p - 1) / numPages * 90), p + ' / ' + numPages + '페이지 처리 중...');
+        showProgress(Math.floor((p - 1) / numPages * 90), 'Processing page ' + p + ' / ' + numPages + '...');
         const page = await currentPdf.getPage(p);
         const viewport = page.getViewport({ scale: 2.0 });
         const canvas = document.createElement('canvas');
@@ -408,13 +422,13 @@
         else pdf.addPage([w, h], orient);
         pdf.addImage(canvas.toDataURL('image/jpeg', 0.92), 'JPEG', 0, 0, w, h);
       }
-      showProgress(100, '다운로드 준비 완료!');
+      showProgress(100, 'Ready to download!');
       await new Promise(r => setTimeout(r, 200));
       const baseName = currentFile.name.replace(/\.pdf$/i, '');
       pdf.save(baseName + '_locked.pdf');
     } catch (e) {
-      console.error('비밀번호 설정 오류:', e);
-      alert('비밀번호를 설정하는 중 오류가 발생했습니다.');
+      console.error('Error setting password:', e);
+      alert('An error occurred while setting the password.');
     }
 
     progressWrap.style.display = 'none';
@@ -476,7 +490,7 @@
     try {
       if (document.cookie.indexOf('bk_lang_dismiss=1') !== -1) return;
       var lang = (navigator.language || navigator.userLanguage || '').toLowerCase();
-      if (lang.indexOf('ko') === 0) return;
+      if (lang.indexOf('ko') !== 0) return;
       var banner = document.getElementById('langBanner');
       if (!banner) return;
       banner.classList.add('show');
