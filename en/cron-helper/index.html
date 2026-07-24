@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
   <link rel="icon" href="/favicon.ico" sizes="32x32">
   <link rel="icon" href="/favicon-16.png" sizes="16x16" type="image/png">
@@ -8,18 +8,17 @@
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Cron 표현식을 사람이 읽는 문장으로 해석하거나, 분/시/일/월/요일을 선택해 Cron 표현식을 직접 만드는 무료 온라인 도구. 다음 실행 시각 5회를 미리 계산해 보여줍니다. 서버 전송 없이 브라우저에서 바로 처리합니다." />
-  <meta property="og:title" content="CronHelper — Cron 표현식 도우미" />
-  <meta property="og:description" content="Cron 표현식을 해석하거나 시각적으로 만들고, 다음 실행 시각을 미리 계산하는 무료 온라인 도구입니다." />
+  <meta name="description" content="Free online tool that translates a cron expression into a human-readable sentence, or builds one by picking minute/hour/day/month/weekday values. Shows the next 5 run times ahead of time. Processed entirely in your browser, nothing is uploaded." />
+  <meta property="og:title" content="CronHelper — Cron Expression Helper" />
+  <meta property="og:description" content="A free online tool that parses cron expressions or builds them visually, and previews the next run times." />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://browserkit.online/cron-helper/" />
-  <title>CronHelper — Cron 표현식 도우미</title>
+  <meta property="og:url" content="https://browserkit.online/en/cron-helper/" />
+  <title>CronHelper — Cron Expression Helper</title>
   <link rel="stylesheet" href="/css/style.css?v=20260724c" />
-  <!-- Google AdSense 승인 대기 중 (2026-07-19 주석 처리, 카카오 애드핏으로 임시 전환) — 승인 후 주석 해제
+  <!-- Google AdSense — pending re-review. Uncomment once approved.
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506"
      crossorigin="anonymous"></script>
   -->
-  <script type="text/javascript" src="//t1.kakaocdn.net/kas/static/ba.min.js" async></script>
   <style>
     .guide-summary { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:24px; margin:0 0 12px; }
     .guide-summary-title { font-size:16px; font-weight:700; color:var(--text); margin:0 0 12px; }
@@ -31,8 +30,11 @@
     .guide-full-link { display:inline-block; margin-top:12px; font-size:14px; font-weight:600; color:var(--point-hover); text-decoration:none; }
     .guide-full-link:hover { text-decoration:underline; }
 
+    .ad-slot { min-height:90px; display:flex; align-items:center; justify-content:center; margin:0 0 12px; }
+    .ad-slot-rect { min-height:250px; }
+
     .tab-bar { display:flex; gap:4px; background:var(--card); border:1px solid var(--border); border-radius:14px; padding:5px; margin-bottom:20px; }
-    .tab-btn { flex:1; padding:10px; font-size:14px; font-weight:600; border:none; border-radius:10px; cursor:pointer; font-family:'Gowun Dodum',sans-serif; background:transparent; color:var(--subtext); transition:all 0.2s; }
+    .tab-btn { flex:1; padding:10px; font-size:14px; font-weight:600; border:none; border-radius:10px; cursor:pointer; background:transparent; color:var(--subtext); transition:all 0.2s; }
     .tab-btn.active { background:linear-gradient(135deg,var(--point),var(--point-hover)); color:#fff; }
     .tab-btn:hover:not(.active) { color:var(--text); background:rgba(123,108,255,0.08); }
     .panel { display:none; }
@@ -57,7 +59,7 @@
 
     .human-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:22px 24px; margin-bottom:20px; }
     .human-title { font-size:12px; font-weight:600; color:var(--subtext); margin-bottom:8px; }
-    .human-text { font-size:18px; font-weight:700; color:var(--point-hover); font-family:'Gowun Dodum',sans-serif; line-height:1.6; }
+    .human-text { font-size:18px; font-weight:700; color:var(--point-hover); line-height:1.6; }
     .human-approx { font-size:12px; color:var(--subtext); margin-top:8px; }
 
     .next-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px 24px; margin-bottom:20px; }
@@ -85,7 +87,7 @@
     .copy-btn:hover { border-color:var(--point); color:var(--text); }
 
     .action-bar { display:flex; gap:10px; margin-bottom:48px; flex-wrap:wrap; }
-    .btn-sub { background:var(--card); color:var(--subtext); border:1px solid var(--border); border-radius:10px; padding:10px 18px; font-size:13px; cursor:pointer; font-family:'Gowun Dodum',sans-serif; }
+    .btn-sub { background:var(--card); color:var(--subtext); border:1px solid var(--border); border-radius:10px; padding:10px 18px; font-size:13px; cursor:pointer; }
     .btn-sub:hover { color:var(--text); border-color:var(--point); }
 
     .toast { position:fixed; bottom:32px; left:50%; transform:translateX(-50%) translateY(80px); background:var(--success); color:#fff; border-radius:999px; padding:10px 24px; font-size:14px; font-weight:600; opacity:0; pointer-events:none; z-index:999; transition:all 0.3s ease; }
@@ -104,9 +106,9 @@
     }
   </style>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <meta property="og:image" content="https://browserkit.online/img/og/cron-helper.png" />
-  <link rel="canonical" href="https://browserkit.online/cron-helper/" />
+  <link rel="canonical" href="https://browserkit.online/en/cron-helper/" />
   <link rel="alternate" hreflang="ko" href="https://browserkit.online/cron-helper/" />
   <link rel="alternate" hreflang="en" href="https://browserkit.online/en/cron-helper/" />
   <link rel="alternate" hreflang="x-default" href="https://browserkit.online/en/cron-helper/" />
@@ -116,18 +118,18 @@
 {
   "@context": "https://schema.org",
   "@type": "WebApplication",
-  "name": "CronHelper — Cron 표현식 도우미",
-  "url": "https://browserkit.online/cron-helper/",
-  "description": "Cron 표현식을 사람이 읽는 문장으로 해석하거나, 분/시/일/월/요일을 선택해 Cron 표현식을 직접 만드는 무료 온라인 도구. 다음 실행 시각 5회를 미리 계산해 보여줍니다. 서버 전송 없이 브라우저에서 바로 처리합니다.",
+  "name": "CronHelper — Cron Expression Helper",
+  "url": "https://browserkit.online/en/cron-helper/",
+  "description": "Free online tool that translates a cron expression into a human-readable sentence, or builds one by picking minute/hour/day/month/weekday values. Shows the next 5 run times ahead of time. Processed entirely in your browser, nothing is uploaded.",
   "applicationCategory": "UtilityApplication",
   "operatingSystem": "Any",
   "browserRequirements": "Requires JavaScript",
-  "inLanguage": "ko",
+  "inLanguage": "en",
   "isAccessibleForFree": true,
   "offers": {
     "@type": "Offer",
     "price": "0",
-    "priceCurrency": "KRW"
+    "priceCurrency": "USD"
   },
   "publisher": {
     "@type": "Organization",
@@ -144,14 +146,14 @@
     {
       "@type": "ListItem",
       "position": 1,
-      "name": "홈",
-      "item": "https://browserkit.online/"
+      "name": "Home",
+      "item": "https://browserkit.online/en/"
     },
     {
       "@type": "ListItem",
       "position": 2,
-      "name": "Cron 표현식 도우미",
-      "item": "https://browserkit.online/cron-helper/"
+      "name": "Cron Expression Helper",
+      "item": "https://browserkit.online/en/cron-helper/"
     }
   ]
 }
@@ -160,64 +162,68 @@
 
 <body>
   <div class="lang-banner" id="langBanner">
-    <span>🌐 This page is also available in <a href="/en/cron-helper/">English</a>.</span>
+    <span>🌐 이 페이지는 <a href="/cron-helper/">한국어</a>로도 볼 수 있습니다.</span>
     <button class="lang-banner-close" id="langBannerClose" type="button" aria-label="close">&times;</button>
   </div>
   <header class="header">
     <div class="container">
-      <a href="/" class="header-brand">
-        <div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Gowun Dodum,sans-serif;flex-shrink:0">B</div>
+      <a href="/en/" class="header-brand">
+        <div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Poppins,sans-serif;flex-shrink:0">B</div>
         <span class="header-brand-text"><span style="color:var(--text)">Browser</span><span style="color:var(--point)">Kit</span></span>
       </a>
       <div class="header-right">
         <div class="lang-switcher">
-          <button class="lang-switcher-btn" type="button" data-lang-btn>🌐 <span class="lang-label-full">한국어</span></button>
+          <button class="lang-switcher-btn" type="button" data-lang-btn>🌐 <span class="lang-label-full">English</span></button>
           <div class="lang-switcher-menu" data-lang-menu>
-            <a href="/en/cron-helper/">English</a>
-            <a href="#" class="active">한국어</a>
+            <a href="#" class="active">English</a>
+            <a href="/cron-helper/">한국어</a>
           </div>
         </div>
-        <a href="/" class="header-back">&#x2190; <span class="header-back-label">BrowserKit 홈으로</span></a>
+        <a href="/en/" class="header-back">&#x2190; <span class="header-back-label">Back to BrowserKit</span></a>
       </div>
     </div>
   </header>
 
   <main><div class="container">
     <div class="hero">
-      <div class="hero-icon" style="height:78px;display:flex;justify-content:center;align-items:center"><div style="transform:scale(1.7);transform-origin:center"><div style="width:46px;height:46px;background:#e0c3ff;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="font:700 13px Gowun Dodum,sans-serif;color:#2a2433;line-height:1;letter-spacing:-.5px;white-space:nowrap">CRON</div></div></div></div>
-      <div class="hero-title-wrap"><h1 class="hero-title">Cron 표현식 도우미</h1><a href="/blog/62-cronhelper-howto" class="hero-guide-link">사용법 가이드 보기</a></div>
-      <p class="hero-desc">Cron 표현식을 해석하거나, 클릭 몇 번으로 직접 만들어보세요</p>
+      <div class="hero-icon" style="height:78px;display:flex;justify-content:center;align-items:center"><div style="transform:scale(1.7);transform-origin:center"><div style="width:46px;height:46px;background:#e0c3ff;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="font:700 13px Poppins,sans-serif;color:#2a2433;line-height:1;letter-spacing:-.5px;white-space:nowrap">CRON</div></div></div></div>
+      <div class="hero-title-wrap"><h1 class="hero-title">Cron Expression Helper</h1><a href="/blog/62-cronhelper-howto" class="hero-guide-link">View usage guide</a></div>
+      <p class="hero-desc">Parse a cron expression, or build one yourself with a few clicks</p>
       <div class="hero-badges">
-        <span class="badge">🔒 완전 로컬 처리</span>
-        <span class="badge">⚡ 무료 사용</span>
-        <span class="badge">🛡️ 서버 전송 없음</span>
-        <span class="badge">📦 설치 불필요</span>
+        <span class="badge">🔒 Fully local processing</span>
+        <span class="badge">⚡ Free to use</span>
+        <span class="badge">🛡️ No server upload</span>
+        <span class="badge">📦 No installation</span>
       </div>
     </div>
-    <div style="margin:0 0 12px"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><div class="adfit-h-desktop"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-QD4pRIpdIj7i2mbt" data-ad-width="728" data-ad-height="90"></ins></div><div class="adfit-h-mobile"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-R4xA2niTT8HgGjoO" data-ad-width="320" data-ad-height="50"></ins></div></div>
-
-    <p class="notice">💡 이 도구는 표준 5필드 Cron(분 시 일 월 요일)을 지원합니다. 문장 설명은 근사 표현이므로, 정확한 스케줄은 아래 <strong>다음 실행 시각</strong> 목록으로 확인하는 것이 가장 정확합니다. 모든 계산은 브라우저에서만 처리됩니다.</p>
-
-    <div class="tab-bar">
-      <button class="tab-btn active" data-tab="parse">&#x1F50D; 표현식 해석하기</button>
-      <button class="tab-btn" data-tab="build">&#x1F528; 선택해서 만들기</button>
+    <!-- Google AdSense Display Ad — pending approval, reserving space -->
+    <div class="ad-slot" id="adTop">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
     </div>
 
-    <!-- ─── 해석 탭 ─── -->
+    <p class="notice">💡 This tool supports standard 5-field cron (minute hour day month weekday). The sentence description is an approximation — check the <strong>next run times</strong> list below for the most accurate schedule. All calculations happen in your browser and use your device's local time.</p>
+
+    <div class="tab-bar">
+      <button class="tab-btn active" data-tab="parse">&#x1F50D; Parse an expression</button>
+      <button class="tab-btn" data-tab="build">&#x1F528; Build by selection</button>
+    </div>
+
+    <!-- ─── Parse tab ─── -->
     <div class="panel show" id="panel-parse">
       <div class="input-card">
-        <div class="field-label">&#x23F0; Cron 표현식 (분 시 일 월 요일)</div>
+        <div class="field-label">&#x23F0; Cron expression (minute hour day month weekday)</div>
         <input type="text" class="cron-input" id="cronInput" placeholder="0 9 * * 1-5" value="0 9 * * 1-5" />
         <div class="field-cols">
-          <div class="field-col-label">분</div><div class="field-col-label">시</div><div class="field-col-label">일</div><div class="field-col-label">월</div><div class="field-col-label">요일</div>
+          <div class="field-col-label">Min</div><div class="field-col-label">Hour</div><div class="field-col-label">Day</div><div class="field-col-label">Month</div><div class="field-col-label">Weekday</div>
         </div>
         <div class="quick-fill">
-          <button class="quick-fill-btn" data-preset="* * * * *">매분</button>
-          <button class="quick-fill-btn" data-preset="0 * * * *">매시 정각</button>
-          <button class="quick-fill-btn" data-preset="0 0 * * *">매일 자정</button>
-          <button class="quick-fill-btn" data-preset="0 9 * * 1-5">평일 오전 9시</button>
-          <button class="quick-fill-btn" data-preset="*/10 * * * *">10분마다</button>
-          <button class="quick-fill-btn" data-preset="0 0 1 * *">매월 1일 0시</button>
+          <button class="quick-fill-btn" data-preset="* * * * *">Every minute</button>
+          <button class="quick-fill-btn" data-preset="0 * * * *">Every hour, on the hour</button>
+          <button class="quick-fill-btn" data-preset="0 0 * * *">Every day at midnight</button>
+          <button class="quick-fill-btn" data-preset="0 9 * * 1-5">Weekdays at 9 AM</button>
+          <button class="quick-fill-btn" data-preset="*/10 * * * *">Every 10 minutes</button>
+          <button class="quick-fill-btn" data-preset="0 0 1 * *">1st of every month at midnight</button>
         </div>
       </div>
 
@@ -225,73 +231,81 @@
 
       <div class="result-wrap" id="parseResult">
         <div class="human-card">
-          <div class="human-title">📝 사람이 읽는 설명</div>
+          <div class="human-title">📝 Human-readable description</div>
           <div class="human-text" id="humanText">—</div>
-          <div class="human-approx">※ 근사 표현입니다. 정확한 일정은 아래 다음 실행 시각을 참고하세요.</div>
+          <div class="human-approx">※ This is an approximate description. See the next run times below for the exact schedule.</div>
         </div>
         <div class="next-card">
-          <div class="next-title">⏭️ 다음 실행 시각 (5회)</div>
+          <div class="next-title">⏭️ Next run times (5)</div>
           <div class="next-list" id="nextList"></div>
         </div>
       </div>
     </div>
 
-    <!-- ─── 만들기 탭 ─── -->
+    <!-- ─── Build tab ─── -->
     <div class="panel" id="panel-build">
       <div class="output-card">
         <div class="output-expr" id="builtExpr">* * * * *</div>
-        <button class="copy-btn" id="copyBuiltBtn">📋 복사</button>
+        <button class="copy-btn" id="copyBuiltBtn">📋 Copy</button>
       </div>
 
       <div id="builderFields"></div>
     </div>
 
     <div class="action-bar">
-      <button class="btn-sub" id="switchToParseBtn" style="display:none">🔍 이 표현식 해석하기</button>
+      <button class="btn-sub" id="switchToParseBtn" style="display:none">🔍 Parse this expression</button>
     </div>
 
-    <div style="margin:0 0 12px"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><!-- 카카오 애드핏 (2026-07-22, 쿠팡 파트너스 다이내믹 배너로 교체) — 복원 시 주석 해제: <div class="adfit-h-desktop"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-QD4pRIpdIj7i2mbt" data-ad-width="728" data-ad-height="90"></ins></div><div class="adfit-h-mobile"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-R4xA2niTT8HgGjoO" data-ad-width="320" data-ad-height="50"></ins></div> --><div class="adfit-h-desktop"><script src="https://ads-partners.coupang.com/g.js"></script><script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"728","height":"90","tsource":""});</script></div><div class="adfit-h-mobile"><script src="https://ads-partners.coupang.com/g.js"></script><script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"320","height":"50","tsource":""});</script></div></div>
+    <!-- Google AdSense Display Ad — pending approval, reserving space -->
+    <div class="ad-slot" id="adMiddle">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
 
     <div class="guide-summary">
-      <h2 class="guide-summary-title">사용법 요약</h2>
+      <h2 class="guide-summary-title">Quick guide</h2>
       <ol class="guide-steps">
-        <li>Cron 표현식 입력</li>
-        <li>설명과 다음 실행 시각 확인</li>
-        <li>필드별로 값 선택</li>
+        <li>Enter a cron expression</li>
+        <li>Check the description and next run times</li>
+        <li>Choose values per field</li>
       </ol>
-      <h3 class="guide-faq-title">자주 묻는 질문</h3>
+      <h3 class="guide-faq-title">Frequently asked questions</h3>
       <div class="guide-faq">
         <details>
-          <summary>Cron 표현식 도우미 도구는 정말 무료인가요?</summary>
-          <p>네, 회원가입이나 설치 없이 완전 무료로 사용할 수 있습니다. 횟수 제한도 없습니다.</p>
+          <summary>Is the Cron Expression Helper tool really free?</summary>
+          <p>Yes, it is completely free to use with no sign-up or installation required. There is no usage limit either.</p>
         </details>
         <details>
-          <summary>입력한 내용이 서버로 전송되나요?</summary>
-          <p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용이 외부 서버로 전송되거나 저장되지 않습니다.</p>
+          <summary>Is what I enter sent to a server?</summary>
+          <p>No. All processing happens entirely in your browser, and your input is never sent to or stored on an external server.</p>
         </details>
         <details>
-          <summary>Cron 표현식을 몰라도 사용할 수 있나요?</summary>
-          <p>네, 주기를 선택하면 표현식을 만들어주고, 기존 표현식을 붙여넣으면 의미를 해석해 알려줍니다.</p>
+          <summary>Can I use this without knowing cron syntax?</summary>
+          <p>Yes, choose a schedule and it will build the expression for you, or paste an existing expression to see what it means.</p>
         </details>
         <details>
-          <summary>모바일에서도 사용할 수 있나요?</summary>
-          <p>네, 별도의 앱 설치 없이 모바일 브라우저에서도 동일하게 사용할 수 있습니다.</p>
+          <summary>Can I use this on mobile?</summary>
+          <p>Yes, it works the same way in a mobile browser without needing to install any app.</p>
         </details>
       </div>
-      <a href="/blog/62-cronhelper-howto" class="guide-full-link">전체 가이드 보기 →</a>
+      <a href="/blog/62-cronhelper-howto" class="guide-full-link">View full guide →</a>
     </div>
 
-    <div style="margin:0 0 12px"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="9500090221"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><div class="adfit-rect-wrap"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-oePL4TCj742xAwqT" data-ad-width="300" data-ad-height="250"></ins></div></div>
+    <!-- Google AdSense Multiplex Ad — pending approval, reserving space -->
+    <div class="ad-slot ad-slot-rect" id="adBottom">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
   </div></main>
 
   <footer class="footer">
     <div class="container">
-      <p class="footer-copy">&#xa9; 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p>
+      <p class="footer-copy">&#xa9; 2026 BrowserKit. All processing happens in your browser.</p>
       <nav class="footer-nav">
-        <a href="/privacy">개인정보 처리방침</a>
-        <a href="/terms">이용약관</a>
-        <a href="/about">서비스 소개</a>
-        <a href="/blog/">블로그</a>
+        <a href="/en/privacy.html">Privacy Policy</a>
+        <a href="/en/terms.html">Terms of Service</a>
+        <a href="/en/about.html">About</a>
+        <a href="/en/blog/">Blog</a>
       </nav>
     </div>
   </footer>
@@ -299,38 +313,38 @@
   <div class="toast" id="toast"></div>
 
   <script>
-  var WEEKDAY_NAMES = ['일', '월', '화', '수', '목', '금', '토'];
+  var WEEKDAY_NAMES = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
-  // ── 필드 파서: "*", "*/n", "a-b", "a-b/n", "a,b,c" 지원, 유효 값들의 Set 반환 ──
+  // ── Field parser: supports "*", "*/n", "a-b", "a-b/n", "a,b,c"; returns a Set of valid values ──
   function parseField(spec, min, max) {
     var result = new Set();
     var parts = spec.split(',');
     for (var i = 0; i < parts.length; i++) {
       var part = parts[i].trim();
-      if (!part) throw new Error('빈 필드가 있습니다');
+      if (!part) throw new Error('There is an empty field');
       var step = 1;
       var rangePart = part;
       if (part.indexOf('/') !== -1) {
         var stepSplit = part.split('/');
-        if (stepSplit.length !== 2) throw new Error('"' + part + '" 형식이 올바르지 않습니다');
+        if (stepSplit.length !== 2) throw new Error('"' + part + '" is not a valid format');
         rangePart = stepSplit[0];
         step = parseInt(stepSplit[1], 10);
-        if (!(step > 0)) throw new Error('스텝 값은 1 이상이어야 합니다: ' + part);
+        if (!(step > 0)) throw new Error('Step value must be 1 or greater: ' + part);
       }
       var lo, hi;
       if (rangePart === '*') {
         lo = min; hi = max;
       } else if (rangePart.indexOf('-') !== -1) {
         var rangeSplit = rangePart.split('-');
-        if (rangeSplit.length !== 2) throw new Error('"' + part + '" 범위 형식이 올바르지 않습니다');
+        if (rangeSplit.length !== 2) throw new Error('"' + part + '" is not a valid range format');
         lo = parseInt(rangeSplit[0], 10);
         hi = parseInt(rangeSplit[1], 10);
       } else {
         lo = hi = parseInt(rangePart, 10);
       }
-      if (isNaN(lo) || isNaN(hi)) throw new Error('"' + part + '" 값을 숫자로 해석할 수 없습니다');
-      if (lo > hi) throw new Error('"' + part + '" 범위의 시작값이 끝값보다 큽니다');
-      if (lo < min || hi > max) throw new Error('"' + part + '" 값이 허용 범위(' + min + '~' + max + ')를 벗어났습니다');
+      if (isNaN(lo) || isNaN(hi)) throw new Error('"' + part + '" could not be parsed as a number');
+      if (lo > hi) throw new Error('"' + part + '" range start is greater than its end');
+      if (lo < min || hi > max) throw new Error('"' + part + '" is outside the allowed range (' + min + '-' + max + ')');
       for (var v = lo; v <= hi; v += step) result.add(v);
     }
     return result;
@@ -338,7 +352,7 @@
 
   function parseCron(expr) {
     var fields = expr.trim().split(/\s+/);
-    if (fields.length !== 5) throw new Error('Cron 표현식은 "분 시 일 월 요일" 5개 필드여야 합니다 (입력: ' + fields.length + '개)');
+    if (fields.length !== 5) throw new Error('A cron expression must have 5 fields: minute hour day month weekday (got ' + fields.length + ')');
     var minute = parseField(fields[0], 0, 59);
     var hour = parseField(fields[1], 0, 23);
     var day = parseField(fields[2], 1, 31);
@@ -356,7 +370,7 @@
     return true;
   }
 
-  // ── 사람이 읽는 문장 생성 (근사) ──
+  // ── Build a human-readable sentence (approximate) ──
   function humanize(p) {
     var minuteFull = isFull(p.minute, 0, 59);
     var hourFull = isFull(p.hour, 0, 23);
@@ -364,44 +378,44 @@
     var monthFull = isFull(p.month, 1, 12);
     var weekdayFull = isFull(p.weekday, 0, 6);
 
-    // 매 N분 반복 패턴 감지 ("*/N" 형태이고 다른 필드는 모두 전체일 때만)
+    // Detect "every N minutes" pattern (only when it's a "*/N" spec and every other field is unrestricted)
     if (hourFull && dayFull && monthFull && weekdayFull && p.raw.minute.indexOf('*/') === 0 && !minuteFull) {
       var step = p.raw.minute.split('/')[1];
-      return step + '분마다 실행';
+      return 'Runs every ' + step + ' minutes';
     }
 
     var sortedList = function(set) { return Array.from(set).sort(function(a, b) { return a - b; }); };
 
     var timePhrase;
     if (minuteFull && hourFull) {
-      timePhrase = '매분';
+      timePhrase = 'every minute';
     } else {
-      var hourList = hourFull ? ['매시'] : sortedList(p.hour).map(function(h) { return h + '시'; });
-      var minuteList = minuteFull ? ['매분'] : sortedList(p.minute).map(function(m) { return m + '분'; });
+      var hourDesc = hourFull ? 'every hour' : ('hour ' + sortedList(p.hour).join(', '));
+      var minuteDesc = minuteFull ? 'every minute' : ('minute ' + sortedList(p.minute).join(', '));
       if (hourFull) {
-        timePhrase = minuteList.join(', ') + '마다';
+        timePhrase = 'at ' + minuteDesc + ' past every hour';
       } else {
-        timePhrase = hourList.join(', ') + ' ' + minuteList.join(', ');
+        timePhrase = 'at ' + hourDesc + ', ' + minuteDesc;
       }
     }
 
     var dayPhrase = '';
-    var monthPhrase = monthFull ? '' : ('매년 ' + sortedList(p.month).join(', ') + '월 ');
+    var monthPhrase = monthFull ? '' : ('every year in month ' + sortedList(p.month).join(', ') + ', ');
 
     if (!dayFull && !weekdayFull) {
-      dayPhrase = sortedList(p.day).join(', ') + '일 또는 ' + sortedList(p.weekday).map(function(w) { return WEEKDAY_NAMES[w] + '요일'; }).join(', ') + '에';
+      dayPhrase = 'on day ' + sortedList(p.day).join(', ') + ' or ' + sortedList(p.weekday).map(function(w) { return WEEKDAY_NAMES[w]; }).join(', ') + ', ';
     } else if (!dayFull) {
-      dayPhrase = sortedList(p.day).join(', ') + '일에';
+      dayPhrase = 'on day ' + sortedList(p.day).join(', ') + ', ';
     } else if (!weekdayFull) {
-      dayPhrase = sortedList(p.weekday).map(function(w) { return WEEKDAY_NAMES[w] + '요일'; }).join(', ') + '에';
+      dayPhrase = 'on ' + sortedList(p.weekday).map(function(w) { return WEEKDAY_NAMES[w]; }).join(', ') + ', ';
     } else {
-      dayPhrase = '매일';
+      dayPhrase = 'every day, ';
     }
 
-    return (monthPhrase + dayPhrase + ' ' + timePhrase + ' 실행').replace(/\s+/g, ' ').trim();
+    return ('Runs ' + monthPhrase + dayPhrase + timePhrase).replace(/\s+/g, ' ').trim();
   }
 
-  // ── 다음 실행 시각 계산 (분 단위 브루트포스, 최대 1년) ──
+  // ── Compute next run times (brute-force by minute, up to 1 year) ──
   function computeNextRuns(p, count, fromDate) {
     var results = [];
     var dt = new Date(fromDate.getTime());
@@ -411,7 +425,7 @@
     var dayRestricted = !isFull(p.day, 1, 31);
     var weekdayRestricted = !isFull(p.weekday, 0, 6);
 
-    var maxIter = 60 * 24 * 366; // 최대 1년
+    var maxIter = 60 * 24 * 366; // up to 1 year
     for (var i = 0; i < maxIter && results.length < count; i++) {
       var mon = dt.getMonth() + 1;
       if (!p.month.has(mon)) {
@@ -459,7 +473,7 @@
   }
 
   // ══════════════════════════
-  // 탭 전환
+  // Tab switching
   // ══════════════════════════
   document.querySelectorAll('.tab-btn').forEach(function(btn) {
     btn.addEventListener('click', function() {
@@ -472,7 +486,7 @@
   });
 
   // ══════════════════════════
-  // 탭 1: 해석하기
+  // Tab 1: Parse
   // ══════════════════════════
   var cronInput = document.getElementById('cronInput');
   var parseError = document.getElementById('parseError');
@@ -493,7 +507,7 @@
       humanText.textContent = humanize(p);
       var runs = computeNextRuns(p, 5, new Date());
       if (!runs.length) {
-        nextList.innerHTML = '<div style="color:var(--subtext);font-size:13px">1년 이내에 실행될 시각을 찾지 못했습니다. 표현식을 확인해주세요.</div>';
+        nextList.innerHTML = '<div style="color:var(--subtext);font-size:13px">No run time was found within the next year. Please check your expression.</div>';
       } else {
         nextList.innerHTML = runs.map(function(d, i) {
           return '<div class="next-row"><span class="next-num">' + (i + 1) + '</span><span class="next-date">' + fmtDate(d) + '</span></div>';
@@ -516,14 +530,14 @@
   });
 
   // ══════════════════════════
-  // 탭 2: 시각적으로 만들기
+  // Tab 2: Visual builder
   // ══════════════════════════
   var FIELD_DEFS = [
-    { key: 'minute', label: '분', min: 0, max: 59, everyWord: '매 분' },
-    { key: 'hour', label: '시', min: 0, max: 23, everyWord: '매 시간' },
-    { key: 'day', label: '일', min: 1, max: 31, everyWord: '매일' },
-    { key: 'month', label: '월', min: 1, max: 12, everyWord: '매월' },
-    { key: 'weekday', label: '요일', min: 0, max: 6, everyWord: '매일(요일 무관)', names: WEEKDAY_NAMES }
+    { key: 'minute', label: 'Minute', min: 0, max: 59, everyWord: 'Every minute' },
+    { key: 'hour', label: 'Hour', min: 0, max: 23, everyWord: 'Every hour' },
+    { key: 'day', label: 'Day', min: 1, max: 31, everyWord: 'Every day' },
+    { key: 'month', label: 'Month', min: 1, max: 12, everyWord: 'Every month' },
+    { key: 'weekday', label: 'Weekday', min: 0, max: 6, everyWord: 'Every day (any weekday)', names: WEEKDAY_NAMES }
   ];
 
   var builderState = {};
@@ -547,10 +561,10 @@
       '<div class="builder-title">' + f.label + '</div>' +
       '<div class="builder-mode-row">' +
         '<label><input type="radio" name="mode-' + f.key + '" value="every" checked> ' + f.everyWord + '</label>' +
-        '<label><input type="radio" name="mode-' + f.key + '" value="step"> N' + f.label + '마다</label>' +
-        '<label><input type="radio" name="mode-' + f.key + '" value="specific"> 특정 값 선택</label>' +
+        '<label><input type="radio" name="mode-' + f.key + '" value="step"> Every N ' + f.label.toLowerCase() + '(s)</label>' +
+        '<label><input type="radio" name="mode-' + f.key + '" value="specific"> Choose specific values</label>' +
       '</div>' +
-      '<div class="step-row" data-step-row="' + f.key + '" style="display:none">매 <input type="number" min="1" max="' + f.max + '" value="2" data-step-input="' + f.key + '" /> ' + f.label + '마다</div>' +
+      '<div class="step-row" data-step-row="' + f.key + '" style="display:none">Every <input type="number" min="1" max="' + f.max + '" value="2" data-step-input="' + f.key + '" /> ' + f.label.toLowerCase() + '(s)</div>' +
       '<div data-value-wrap="' + f.key + '" style="display:none">' + valueGridHtml + '</div>' +
       '</div>';
   }).join('');
@@ -605,7 +619,7 @@
 
   document.getElementById('copyBuiltBtn').addEventListener('click', function() {
     navigator.clipboard.writeText(builtExprEl.textContent).then(function() {
-      showToast('✓ Cron 표현식이 복사되었습니다');
+      showToast('✓ Cron expression copied');
     });
   });
 
@@ -643,7 +657,7 @@
     try {
       if (document.cookie.indexOf('bk_lang_dismiss=1') !== -1) return;
       var lang = (navigator.language || navigator.userLanguage || '').toLowerCase();
-      if (lang.indexOf('ko') === 0) return;
+      if (lang.indexOf('ko') !== 0) return;
       var banner = document.getElementById('langBanner');
       if (!banner) return;
       banner.classList.add('show');
