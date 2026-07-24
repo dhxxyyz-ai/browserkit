@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
   <link rel="icon" href="/favicon.ico" sizes="32x32">
   <link rel="icon" href="/favicon-16.png" sizes="16x16" type="image/png">
@@ -8,18 +8,17 @@
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="CSV와 JSON을 서로 변환하는 무료 온라인 도구. CSV 붙여넣기/업로드로 JSON 배열 변환, 역변환도 지원하며 표 미리보기를 제공합니다. 서버 전송 없이 브라우저에서 바로 처리합니다." />
-  <meta property="og:title" content="CSVJSONConvert — CSV ↔ JSON 변환기" />
-  <meta property="og:description" content="CSV 붙여넣기/업로드로 JSON 배열 변환, 역변환도 지원하는 무료 온라인 도구입니다. 표 미리보기 포함." />
+  <meta name="description" content="Free online tool that converts between CSV and JSON. Paste or upload CSV to convert it to a JSON array, or convert back, with a table preview. Processed entirely in your browser, nothing is uploaded." />
+  <meta property="og:title" content="CSVJSONConvert — CSV ↔ JSON Converter" />
+  <meta property="og:description" content="A free online tool that converts pasted or uploaded CSV to a JSON array, or converts back, with a table preview." />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://browserkit.online/csv-json-convert/" />
-  <title>CSVJSONConvert — CSV ↔ JSON 변환기</title>
+  <meta property="og:url" content="https://browserkit.online/en/csv-json-convert/" />
+  <title>CSVJSONConvert — CSV ↔ JSON Converter</title>
   <link rel="stylesheet" href="/css/style.css?v=20260724c" />
-  <!-- Google AdSense 승인 대기 중 (2026-07-19 주석 처리, 카카오 애드핏으로 임시 전환) — 승인 후 주석 해제
+  <!-- Google AdSense — pending re-review. Uncomment once approved.
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506"
      crossorigin="anonymous"></script>
   -->
-  <script type="text/javascript" src="//t1.kakaocdn.net/kas/static/ba.min.js" async></script>
   <style>
     .guide-summary { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:24px; margin:0 0 12px; }
     .guide-summary-title { font-size:16px; font-weight:700; color:var(--text); margin:0 0 12px; }
@@ -31,13 +30,16 @@
     .guide-full-link { display:inline-block; margin-top:12px; font-size:14px; font-weight:600; color:var(--point-hover); text-decoration:none; }
     .guide-full-link:hover { text-decoration:underline; }
 
+    .ad-slot { min-height:90px; display:flex; align-items:center; justify-content:center; margin:0 0 12px; }
+    .ad-slot-rect { min-height:250px; }
+
     .setting-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:24px; margin-bottom:20px; }
     .setting-row { display:flex; align-items:center; gap:16px; margin-bottom:18px; flex-wrap:wrap; }
     .setting-row:last-child { margin-bottom:0; }
     .setting-label { font-size:14px; font-weight:600; color:var(--text); min-width:80px; flex-shrink:0; }
 
     .seg-btns { display:flex; gap:6px; flex-wrap:wrap; }
-    .seg-btn { background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:8px 16px; font-size:13px; color:var(--subtext); cursor:pointer; font-family:'Gowun Dodum',sans-serif; }
+    .seg-btn { background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:8px 16px; font-size:13px; color:var(--subtext); cursor:pointer; }
     .seg-btn:hover { border-color:var(--point); color:var(--text); }
     .seg-btn.active { background:rgba(123,108,255,0.15); border-color:var(--point); color:var(--point-hover); font-weight:700; }
 
@@ -57,13 +59,13 @@
     .file-drop:hover { border-color:var(--point); color:var(--text); }
     .file-drop.drag { border-color:var(--point); color:var(--point-hover); background:rgba(123,108,255,.08); }
 
-    .btn-convert { background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border:none; border-radius:12px; padding:14px 32px; font-size:16px; font-weight:700; cursor:pointer; font-family:'Gowun Dodum',sans-serif; width:100%; margin-bottom:20px; }
+    .btn-convert { background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border:none; border-radius:12px; padding:14px 32px; font-size:16px; font-weight:700; cursor:pointer; width:100%; margin-bottom:20px; }
     .btn-convert:hover { transform:translateY(-2px); box-shadow:0 8px 24px var(--glow); }
 
     .action-bar { display:flex; gap:10px; margin-bottom:20px; flex-wrap:wrap; }
-    .btn-sub { background:var(--card); color:var(--subtext); border:1px solid var(--border); border-radius:10px; padding:10px 18px; font-size:13px; cursor:pointer; font-family:'Gowun Dodum',sans-serif; }
+    .btn-sub { background:var(--card); color:var(--subtext); border:1px solid var(--border); border-radius:10px; padding:10px 18px; font-size:13px; cursor:pointer; }
     .btn-sub:hover { color:var(--text); border-color:var(--point); }
-    .btn-danger { background:var(--card); color:#F87171; border:1px solid var(--border); border-radius:10px; padding:10px 18px; font-size:13px; cursor:pointer; font-family:'Gowun Dodum',sans-serif; }
+    .btn-danger { background:var(--card); color:#F87171; border:1px solid var(--border); border-radius:10px; padding:10px 18px; font-size:13px; cursor:pointer; }
     .btn-danger:hover { border-color:#F87171; }
 
     .preview-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px 24px; margin-bottom:48px; }
@@ -93,9 +95,9 @@
     }
   </style>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <meta property="og:image" content="https://browserkit.online/img/og/csv-json-convert.png" />
-  <link rel="canonical" href="https://browserkit.online/csv-json-convert/" />
+  <link rel="canonical" href="https://browserkit.online/en/csv-json-convert/" />
   <link rel="alternate" hreflang="ko" href="https://browserkit.online/csv-json-convert/" />
   <link rel="alternate" hreflang="en" href="https://browserkit.online/en/csv-json-convert/" />
   <link rel="alternate" hreflang="x-default" href="https://browserkit.online/en/csv-json-convert/" />
@@ -105,18 +107,18 @@
 {
   "@context": "https://schema.org",
   "@type": "WebApplication",
-  "name": "CSVJSONConvert — CSV ↔ JSON 변환기",
-  "url": "https://browserkit.online/csv-json-convert/",
-  "description": "CSV와 JSON을 서로 변환하는 무료 온라인 도구. CSV 붙여넣기/업로드로 JSON 배열 변환, 역변환도 지원하며 표 미리보기를 제공합니다. 서버 전송 없이 브라우저에서 바로 처리합니다.",
+  "name": "CSVJSONConvert — CSV ↔ JSON Converter",
+  "url": "https://browserkit.online/en/csv-json-convert/",
+  "description": "Free online tool that converts between CSV and JSON. Paste or upload CSV to convert it to a JSON array, or convert back, with a table preview. Processed entirely in your browser, nothing is uploaded.",
   "applicationCategory": "UtilityApplication",
   "operatingSystem": "Any",
   "browserRequirements": "Requires JavaScript",
-  "inLanguage": "ko",
+  "inLanguage": "en",
   "isAccessibleForFree": true,
   "offers": {
     "@type": "Offer",
     "price": "0",
-    "priceCurrency": "KRW"
+    "priceCurrency": "USD"
   },
   "publisher": {
     "@type": "Organization",
@@ -133,14 +135,14 @@
     {
       "@type": "ListItem",
       "position": 1,
-      "name": "홈",
-      "item": "https://browserkit.online/"
+      "name": "Home",
+      "item": "https://browserkit.online/en/"
     },
     {
       "@type": "ListItem",
       "position": 2,
-      "name": "CSV ↔ JSON 변환기",
-      "item": "https://browserkit.online/csv-json-convert/"
+      "name": "CSV ↔ JSON Converter",
+      "item": "https://browserkit.online/en/csv-json-convert/"
     }
   ]
 }
@@ -149,132 +151,144 @@
 
 <body>
   <div class="lang-banner" id="langBanner">
-    <span>🌐 This page is also available in <a href="/en/csv-json-convert/">English</a>.</span>
+    <span>🌐 이 페이지는 <a href="/csv-json-convert/">한국어</a>로도 볼 수 있습니다.</span>
     <button class="lang-banner-close" id="langBannerClose" type="button" aria-label="close">&times;</button>
   </div>
   <header class="header">
     <div class="container">
-      <a href="/" class="header-brand">
-        <div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Gowun Dodum,sans-serif;flex-shrink:0">B</div>
+      <a href="/en/" class="header-brand">
+        <div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Poppins,sans-serif;flex-shrink:0">B</div>
         <span class="header-brand-text"><span style="color:var(--text)">Browser</span><span style="color:var(--point)">Kit</span></span>
       </a>
       <div class="header-right">
         <div class="lang-switcher">
-          <button class="lang-switcher-btn" type="button" data-lang-btn>🌐 <span class="lang-label-full">한국어</span></button>
+          <button class="lang-switcher-btn" type="button" data-lang-btn>🌐 <span class="lang-label-full">English</span></button>
           <div class="lang-switcher-menu" data-lang-menu>
-            <a href="/en/csv-json-convert/">English</a>
-            <a href="#" class="active">한국어</a>
+            <a href="#" class="active">English</a>
+            <a href="/csv-json-convert/">한국어</a>
           </div>
         </div>
-        <a href="/" class="header-back">&#x2190; <span class="header-back-label">BrowserKit 홈으로</span></a>
+        <a href="/en/" class="header-back">&#x2190; <span class="header-back-label">Back to BrowserKit</span></a>
       </div>
     </div>
   </header>
 
   <main><div class="container">
     <div class="hero">
-      <div class="hero-icon" style="height:78px;display:flex;justify-content:center;align-items:center"><div style="transform:scale(1.7);transform-origin:center"><div style="width:46px;height:46px;background:#a8e6cf;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="font:700 16px Gowun Dodum,sans-serif;color:#2a2433;line-height:1;letter-spacing:-.5px;white-space:nowrap">CSV</div></div></div></div>
-      <div class="hero-title-wrap"><h1 class="hero-title">CSV ↔ JSON 변환기</h1><a href="/blog/67-csvjsonconvert-howto" class="hero-guide-link">사용법 가이드 보기</a></div>
-      <p class="hero-desc">CSV를 JSON으로, JSON을 CSV로 즉시 변환하고 표로 미리보세요</p>
+      <div class="hero-icon" style="height:78px;display:flex;justify-content:center;align-items:center"><div style="transform:scale(1.7);transform-origin:center"><div style="width:46px;height:46px;background:#a8e6cf;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="font:700 16px Poppins,sans-serif;color:#2a2433;line-height:1;letter-spacing:-.5px;white-space:nowrap">CSV</div></div></div></div>
+      <div class="hero-title-wrap"><h1 class="hero-title">CSV ↔ JSON Converter</h1><a href="/blog/67-csvjsonconvert-howto" class="hero-guide-link">View usage guide</a></div>
+      <p class="hero-desc">Instantly convert CSV to JSON or JSON to CSV, with a table preview</p>
       <div class="hero-badges">
-        <span class="badge">🔒 완전 로컬 처리</span>
-        <span class="badge">⚡ 무료 사용</span>
-        <span class="badge">🛡️ 서버 전송 없음</span>
-        <span class="badge">📦 설치 불필요</span>
+        <span class="badge">🔒 Fully local processing</span>
+        <span class="badge">⚡ Free to use</span>
+        <span class="badge">🛡️ No server upload</span>
+        <span class="badge">📦 No installation</span>
       </div>
     </div>
-    <div style="margin:0 0 12px"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><div class="adfit-h-desktop"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-QD4pRIpdIj7i2mbt" data-ad-width="728" data-ad-height="90"></ins></div><div class="adfit-h-mobile"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-R4xA2niTT8HgGjoO" data-ad-width="320" data-ad-height="50"></ins></div></div>
+    <!-- Google AdSense Display Ad — pending approval, reserving space -->
+    <div class="ad-slot" id="adTop">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
 
-    <p class="notice">💡 간단한 자체 CSV 파서를 사용합니다. 큰따옴표로 감싼 필드 안의 쉼표·줄바꿈·이스케이프된 따옴미(&quot;&quot;)는 지원하지만, 매우 복잡하거나 표준을 벗어난 CSV는 결과가 다를 수 있으니 변환 후 표 미리보기로 꼭 확인하세요. 모든 처리는 브라우저에서만 이루어집니다.</p>
+    <p class="notice">💡 This tool uses a simple built-in CSV parser. Commas, line breaks, and escaped quotes (&quot;&quot;) inside quoted fields are supported, but results may vary for very complex or non-standard CSV — always double-check with the table preview after converting. All processing happens entirely in your browser.</p>
 
     <div class="setting-card">
       <div class="setting-row">
-        <span class="setting-label">변환 방향</span>
+        <span class="setting-label">Direction</span>
         <div class="seg-btns" id="dirBtns">
           <button class="seg-btn active" data-dir="csv2json">CSV → JSON</button>
           <button class="seg-btn" data-dir="json2csv">JSON → CSV</button>
         </div>
       </div>
       <div class="setting-row" id="csvOptsRow">
-        <span class="setting-label">구분자</span>
+        <span class="setting-label">Delimiter</span>
         <div class="seg-btns" id="delimBtns">
-          <button class="seg-btn active" data-delim=",">쉼표 (,)</button>
-          <button class="seg-btn" data-delim="	">탭</button>
-          <button class="seg-btn" data-delim=";">세미콜론 (;)</button>
+          <button class="seg-btn active" data-delim=",">Comma (,)</button>
+          <button class="seg-btn" data-delim="	">Tab</button>
+          <button class="seg-btn" data-delim=";">Semicolon (;)</button>
         </div>
-        <label class="toggle-row"><input type="checkbox" id="headerOpt" checked /> 첫 행을 헤더로 사용</label>
+        <label class="toggle-row"><input type="checkbox" id="headerOpt" checked /> Use first row as header</label>
       </div>
     </div>
 
     <div class="io-grid">
       <div class="io-card">
-        <div class="io-title"><span id="inputLabel">CSV 입력</span></div>
-        <textarea class="io-textarea" id="inputArea" placeholder="CSV 데이터를 붙여넣으세요. 예)&#10;name,age,city&#10;홍길동,28,서울&#10;김영희,34,부산"></textarea>
-        <div class="file-drop" id="fileDrop">📁 파일을 드래그하거나 클릭해서 업로드 (.csv, .json, .txt)</div>
+        <div class="io-title"><span id="inputLabel">CSV input</span></div>
+        <textarea class="io-textarea" id="inputArea" placeholder="Paste CSV data. e.g.&#10;name,age,city&#10;John Doe,28,New York&#10;Jane Smith,34,Boston"></textarea>
+        <div class="file-drop" id="fileDrop">📁 Drag a file or click to upload (.csv, .json, .txt)</div>
         <input type="file" id="fileInput" accept=".csv,.json,.txt" style="display:none" />
       </div>
       <div class="io-card">
-        <div class="io-title"><span id="outputLabel">JSON 결과</span></div>
-        <textarea class="io-textarea" id="outputArea" readonly placeholder="변환 버튼을 누르면 결과가 여기에 표시됩니다."></textarea>
+        <div class="io-title"><span id="outputLabel">JSON result</span></div>
+        <textarea class="io-textarea" id="outputArea" readonly placeholder="Click Convert and the result will appear here."></textarea>
         <div class="err-box" id="errBox"></div>
       </div>
     </div>
 
-    <button class="btn-convert" id="convertBtn">&#x1F504; 변환하기</button>
+    <button class="btn-convert" id="convertBtn">&#x1F504; Convert</button>
 
     <div class="action-bar">
-      <button class="btn-sub" id="copyBtn">&#x1F4CB; 결과 복사</button>
-      <button class="btn-sub" id="downloadBtn">&#x2B07; 파일 다운로드</button>
-      <button class="btn-danger" id="clearBtn">&#x21BA; 초기화</button>
+      <button class="btn-sub" id="copyBtn">&#x1F4CB; Copy result</button>
+      <button class="btn-sub" id="downloadBtn">&#x2B07; Download file</button>
+      <button class="btn-danger" id="clearBtn">&#x21BA; Reset</button>
     </div>
 
     <div class="preview-card">
-      <div class="preview-title">📊 표 미리보기</div>
-      <div class="preview-tablewrap"><div class="preview-empty" id="previewEmpty">변환 결과가 여기에 표로 표시됩니다.</div><table class="preview-table" id="previewTable" style="display:none"><thead id="previewHead"></thead><tbody id="previewBody"></tbody></table></div>
+      <div class="preview-title">📊 Table preview</div>
+      <div class="preview-tablewrap"><div class="preview-empty" id="previewEmpty">The converted result will appear here as a table.</div><table class="preview-table" id="previewTable" style="display:none"><thead id="previewHead"></thead><tbody id="previewBody"></tbody></table></div>
     </div>
 
-    <div style="margin:0 0 12px"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><!-- 카카오 애드핏 (2026-07-22, 쿠팡 파트너스 다이내믹 배너로 교체) — 복원 시 주석 해제: <div class="adfit-h-desktop"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-QD4pRIpdIj7i2mbt" data-ad-width="728" data-ad-height="90"></ins></div><div class="adfit-h-mobile"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-R4xA2niTT8HgGjoO" data-ad-width="320" data-ad-height="50"></ins></div> --><div class="adfit-h-desktop"><script src="https://ads-partners.coupang.com/g.js"></script><script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"728","height":"90","tsource":""});</script></div><div class="adfit-h-mobile"><script src="https://ads-partners.coupang.com/g.js"></script><script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"320","height":"50","tsource":""});</script></div></div>
+    <!-- Google AdSense Display Ad — pending approval, reserving space -->
+    <div class="ad-slot" id="adMiddle">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
 
     <div class="guide-summary">
-      <h2 class="guide-summary-title">사용법 요약</h2>
+      <h2 class="guide-summary-title">Quick guide</h2>
       <ol class="guide-steps">
-        <li>변환 방향 선택</li>
-        <li>데이터 입력</li>
-        <li>구분자·헤더 옵션 설정</li>
+        <li>Choose a direction</li>
+        <li>Enter your data</li>
+        <li>Set the delimiter and header options</li>
       </ol>
-      <h3 class="guide-faq-title">자주 묻는 질문</h3>
+      <h3 class="guide-faq-title">Frequently asked questions</h3>
       <div class="guide-faq">
         <details>
-          <summary>CSV ↔ JSON 변환기 도구는 정말 무료인가요?</summary>
-          <p>네, 회원가입이나 설치 없이 완전 무료로 사용할 수 있습니다. 횟수 제한도 없습니다.</p>
+          <summary>Is the CSV ↔ JSON Converter tool really free?</summary>
+          <p>Yes, it is completely free to use with no sign-up or installation required. There is no usage limit either.</p>
         </details>
         <details>
-          <summary>입력한 내용이 서버로 전송되나요?</summary>
-          <p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용이 외부 서버로 전송되거나 저장되지 않습니다.</p>
+          <summary>Is what I enter sent to a server?</summary>
+          <p>No. All processing happens entirely in your browser, and your input is never sent to or stored on an external server.</p>
         </details>
         <details>
-          <summary>용량이 큰 파일도 변환되나요?</summary>
-          <p>브라우저에서 처리 가능한 범위라면 문제없이 변환됩니다. 매우 큰 파일은 기기 성능에 따라 시간이 걸릴 수 있습니다.</p>
+          <summary>Can it convert large files?</summary>
+          <p>It converts without issue as long as your browser can handle it. Very large files may take longer depending on your device.</p>
         </details>
         <details>
-          <summary>모바일에서도 사용할 수 있나요?</summary>
-          <p>네, 별도의 앱 설치 없이 모바일 브라우저에서도 동일하게 사용할 수 있습니다.</p>
+          <summary>Can I use this on mobile?</summary>
+          <p>Yes, it works the same way in a mobile browser without needing to install any app.</p>
         </details>
       </div>
-      <a href="/blog/67-csvjsonconvert-howto" class="guide-full-link">전체 가이드 보기 →</a>
+      <a href="/blog/67-csvjsonconvert-howto" class="guide-full-link">View full guide →</a>
     </div>
 
-    <div style="margin:0 0 12px"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="9500090221"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><div class="adfit-rect-wrap"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-oePL4TCj742xAwqT" data-ad-width="300" data-ad-height="250"></ins></div></div>
+    <!-- Google AdSense Multiplex Ad — pending approval, reserving space -->
+    <div class="ad-slot ad-slot-rect" id="adBottom">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
   </div></main>
 
   <footer class="footer">
     <div class="container">
-      <p class="footer-copy">&#xa9; 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p>
+      <p class="footer-copy">&#xa9; 2026 BrowserKit. All processing happens in your browser.</p>
       <nav class="footer-nav">
-        <a href="/privacy">개인정보 처리방침</a>
-        <a href="/terms">이용약관</a>
-        <a href="/about">서비스 소개</a>
-        <a href="/blog/">블로그</a>
+        <a href="/en/privacy.html">Privacy Policy</a>
+        <a href="/en/terms.html">Terms of Service</a>
+        <a href="/en/about.html">About</a>
+        <a href="/en/blog/">Blog</a>
       </nav>
     </div>
   </footer>
@@ -334,7 +348,7 @@
   }
 
   function jsonToCSVRows(data, useHeader) {
-    if (!Array.isArray(data)) throw new Error('최상위 값은 배열이어야 합니다 (예: [ {...}, {...} ])');
+    if (!Array.isArray(data)) throw new Error('The top-level value must be an array (e.g. [ {...}, {...} ])');
     if (!data.length) return { headers: [], rows: [] };
     if (Array.isArray(data[0])) {
       return { headers: useHeader ? data[0] : null, rows: useHeader ? data.slice(1) : data };
@@ -359,14 +373,14 @@
       var outputLabel = document.getElementById('outputLabel');
       var csvOptsRow = document.getElementById('csvOptsRow');
       if (currentDir === 'csv2json') {
-        inputLabel.textContent = 'CSV 입력';
-        outputLabel.textContent = 'JSON 결과';
-        document.getElementById('inputArea').placeholder = 'CSV 데이터를 붙여넣으세요. 예)\nname,age,city\n홍길동,28,서울\n김영희,34,부산';
+        inputLabel.textContent = 'CSV input';
+        outputLabel.textContent = 'JSON result';
+        document.getElementById('inputArea').placeholder = 'Paste CSV data. e.g.\nname,age,city\nJohn Doe,28,New York\nJane Smith,34,Boston';
         csvOptsRow.style.display = '';
       } else {
-        inputLabel.textContent = 'JSON 입력';
-        outputLabel.textContent = 'CSV 결과';
-        document.getElementById('inputArea').placeholder = 'JSON 배열을 붙여넣으세요. 예)\n[\n  {"name":"홍길동","age":28,"city":"서울"},\n  {"name":"김영희","age":34,"city":"부산"}\n]';
+        inputLabel.textContent = 'JSON input';
+        outputLabel.textContent = 'CSV result';
+        document.getElementById('inputArea').placeholder = 'Paste a JSON array. e.g.\n[\n  {"name":"John Doe","age":28,"city":"New York"},\n  {"name":"Jane Smith","age":34,"city":"Boston"}\n]';
         csvOptsRow.style.display = '';
       }
       renderPreview([], []);
@@ -419,7 +433,7 @@
     hideErr();
     var input = document.getElementById('inputArea').value;
     var outputArea = document.getElementById('outputArea');
-    if (!input.trim()) { showErr('입력 내용이 없습니다.'); return; }
+    if (!input.trim()) { showErr('There is no input.'); return; }
 
     if (currentDir === 'csv2json') {
       try {
@@ -429,9 +443,9 @@
         outputArea.value = JSON.stringify(json, null, 2);
         var headers = useHeader ? (rows[0] || []) : (rows[0] ? rows[0].map(function(_, i) { return 'col' + (i + 1); }) : []);
         renderPreview(headers, useHeader ? rows.slice(1) : rows);
-        showToast('✓ JSON으로 변환했습니다');
+        showToast('✓ Converted to JSON');
       } catch (e) {
-        showErr('CSV 파싱 오류: ' + e.message);
+        showErr('CSV parsing error: ' + e.message);
         outputArea.value = '';
         renderPreview([], []);
       }
@@ -446,9 +460,9 @@
         outputArea.value = lines.join('\n');
         var previewHeaders = res.headers || (res.rows[0] ? res.rows[0].map(function(_, i) { return 'col' + (i + 1); }) : []);
         renderPreview(previewHeaders, res.rows);
-        showToast('✓ CSV로 변환했습니다');
+        showToast('✓ Converted to CSV');
       } catch (e) {
-        showErr('JSON 파싱 오류: ' + e.message);
+        showErr('JSON parsing error: ' + e.message);
         outputArea.value = '';
         renderPreview([], []);
       }
@@ -457,13 +471,13 @@
 
   document.getElementById('copyBtn').addEventListener('click', function() {
     var val = document.getElementById('outputArea').value;
-    if (!val) { showToast('먼저 변환해주세요'); return; }
-    navigator.clipboard.writeText(val).then(function() { showToast('✓ 결과가 복사되었습니다'); });
+    if (!val) { showToast('Please convert first'); return; }
+    navigator.clipboard.writeText(val).then(function() { showToast('✓ Result copied'); });
   });
 
   document.getElementById('downloadBtn').addEventListener('click', function() {
     var val = document.getElementById('outputArea').value;
-    if (!val) { showToast('먼저 변환해주세요'); return; }
+    if (!val) { showToast('Please convert first'); return; }
     var isJson = currentDir === 'csv2json';
     var blob = new Blob([val], { type: (isJson ? 'application/json' : 'text/csv') + ';charset=utf-8' });
     var a = document.createElement('a');
@@ -471,7 +485,7 @@
     a.download = isJson ? 'converted.json' : 'converted.csv';
     a.click();
     URL.revokeObjectURL(a.href);
-    showToast('✓ 파일이 저장됩니다');
+    showToast('✓ Your file has been saved');
   });
 
   document.getElementById('clearBtn').addEventListener('click', function() {
@@ -535,7 +549,7 @@
     try {
       if (document.cookie.indexOf('bk_lang_dismiss=1') !== -1) return;
       var lang = (navigator.language || navigator.userLanguage || '').toLowerCase();
-      if (lang.indexOf('ko') === 0) return;
+      if (lang.indexOf('ko') !== 0) return;
       var banner = document.getElementById('langBanner');
       if (!banner) return;
       banner.classList.add('show');
