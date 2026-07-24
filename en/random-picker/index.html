@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
   <link rel="icon" href="/favicon.ico" sizes="32x32">
   <link rel="icon" href="/favicon-16.png" sizes="16x16" type="image/png">
@@ -8,18 +8,17 @@
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="이름 목록을 입력하면 룰렛을 돌려 당첨자를 뽑거나 팀을 랜덤하게 나눠주는 무료 온라인 추첨기. 서버 전송 없이 브라우저에서 바로 처리합니다." />
-  <meta property="og:title" content="RandomPicker — 랜덤 추첨기" />
-  <meta property="og:description" content="이름 목록으로 룰렛 추첨하거나 팀을 랜덤하게 나누는 무료 온라인 도구입니다." />
+  <meta name="description" content="Free online random picker — enter a list of names and spin the wheel to pick a winner, or randomly split names into teams. Processed entirely in your browser, nothing is uploaded." />
+  <meta property="og:title" content="RandomPicker — Random Picker" />
+  <meta property="og:description" content="A free online tool that spins a wheel to pick a winner from a list of names, or randomly splits names into teams." />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://browserkit.online/random-picker/" />
-  <title>RandomPicker — 랜덤 추첨기</title>
+  <meta property="og:url" content="https://browserkit.online/en/random-picker/" />
+  <title>RandomPicker — Random Picker</title>
   <link rel="stylesheet" href="/css/style.css?v=20260724c" />
-  <!-- Google AdSense 승인 대기 중 (2026-07-19 주석 처리, 카카오 애드핏으로 임시 전환) — 승인 후 주석 해제
+  <!-- Google AdSense — pending re-review. Uncomment once approved.
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506"
      crossorigin="anonymous"></script>
   -->
-  <script type="text/javascript" src="//t1.kakaocdn.net/kas/static/ba.min.js" async></script>
   <style>
     .guide-summary { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:24px; margin:0 0 12px; }
     .guide-summary-title { font-size:16px; font-weight:700; color:var(--text); margin:0 0 12px; }
@@ -31,9 +30,12 @@
     .guide-full-link { display:inline-block; margin-top:12px; font-size:14px; font-weight:600; color:var(--point-hover); text-decoration:none; }
     .guide-full-link:hover { text-decoration:underline; }
 
+    .ad-slot { min-height:90px; display:flex; align-items:center; justify-content:center; margin:0 0 12px; }
+    .ad-slot-rect { min-height:250px; }
+
     /* 탭 */
     .tab-wrap { display:flex; gap:8px; margin-bottom:20px; }
-    .tab-btn { background:var(--card); color:var(--subtext); border:1px solid var(--border); border-radius:10px; padding:10px 24px; font-size:14px; font-weight:600; cursor:pointer; font-family:'Gowun Dodum',sans-serif; transition:all 0.2s; }
+    .tab-btn { background:var(--card); color:var(--subtext); border:1px solid var(--border); border-radius:10px; padding:10px 24px; font-size:14px; font-weight:600; cursor:pointer; transition:all 0.2s; }
     .tab-btn:hover { border-color:var(--point); color:var(--text); }
     .tab-btn.active { background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border-color:transparent; }
     .panel { display:none; }
@@ -42,7 +44,7 @@
     /* 입력 */
     .input-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px 24px; margin-bottom:20px; }
     .input-label { font-size:13px; font-weight:600; color:var(--subtext); margin-bottom:10px; display:flex; align-items:center; justify-content:space-between; }
-    .name-textarea { background:var(--bg); border:1px solid var(--border); border-radius:10px; padding:14px 16px; font-size:14px; color:var(--text); font-family:'Gowun Dodum',sans-serif; width:100%; min-height:120px; resize:vertical; outline:none; line-height:1.8; }
+    .name-textarea { background:var(--bg); border:1px solid var(--border); border-radius:10px; padding:14px 16px; font-size:14px; color:var(--text); width:100%; min-height:120px; resize:vertical; outline:none; line-height:1.8; }
     .name-textarea:focus { border-color:var(--point); }
     .name-count { font-size:12px; color:var(--subtext); }
     .quick-fill { display:flex; gap:8px; margin-top:10px; flex-wrap:wrap; }
@@ -56,14 +58,14 @@
     .wheel-canvas { width:320px; height:320px; max-width:100%; border-radius:50%; box-shadow:0 4px 20px rgba(0,0,0,.15); transition:transform 4s cubic-bezier(0.15,0.85,0.25,1); }
     .wheel-empty { width:320px; height:320px; max-width:100%; border-radius:50%; background:var(--card); border:2px dashed var(--border); display:flex; align-items:center; justify-content:center; color:var(--subtext); font-size:14px; text-align:center; padding:20px; box-sizing:border-box; }
 
-    .spin-btn { background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border:none; border-radius:14px; padding:16px 40px; font-size:17px; font-weight:700; cursor:pointer; font-family:'Gowun Dodum',sans-serif; margin-top:24px; }
+    .spin-btn { background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border:none; border-radius:14px; padding:16px 40px; font-size:17px; font-weight:700; cursor:pointer; margin-top:24px; }
     .spin-btn:hover:not(:disabled) { transform:translateY(-2px); box-shadow:0 8px 24px var(--glow); }
     .spin-btn:disabled { opacity:0.5; cursor:default; }
 
     .winner-card { background:var(--card); border:2px solid var(--point); border-radius:var(--radius); padding:24px; text-align:center; margin:24px 0; display:none; }
     .winner-card.show { display:block; }
     .winner-label { font-size:13px; color:var(--subtext); margin-bottom:6px; }
-    .winner-name { font-size:28px; font-weight:700; color:var(--point-hover); font-family:'Gowun Dodum',sans-serif; }
+    .winner-name { font-size:28px; font-weight:700; color:var(--point-hover); }
 
     .history-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:16px 20px; margin-bottom:20px; display:none; }
     .history-card.show { display:block; }
@@ -86,9 +88,9 @@
     .team-card-member { font-size:14px; color:var(--text); padding:4px 0; }
 
     .action-wrap { display:flex; justify-content:center; gap:12px; margin-bottom:48px; flex-wrap:wrap; }
-    .btn-primary { background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border:none; border-radius:12px; padding:13px 28px; font-size:15px; font-weight:600; cursor:pointer; font-family:'Gowun Dodum',sans-serif; }
+    .btn-primary { background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border:none; border-radius:12px; padding:13px 28px; font-size:15px; font-weight:600; cursor:pointer; }
     .btn-primary:hover { transform:translateY(-2px); box-shadow:0 8px 24px var(--glow); }
-    .btn-sub { background:var(--card); color:var(--subtext); border:1px solid var(--border); border-radius:12px; padding:13px 22px; font-size:15px; cursor:pointer; font-family:'Gowun Dodum',sans-serif; }
+    .btn-sub { background:var(--card); color:var(--subtext); border:1px solid var(--border); border-radius:12px; padding:13px 22px; font-size:15px; cursor:pointer; }
     .btn-sub:hover { transform:translateY(-2px); color:var(--text); border-color:var(--point); }
 
     .toast { position:fixed; bottom:32px; left:50%; transform:translateX(-50%) translateY(80px); background:var(--success); color:#fff; border-radius:999px; padding:10px 24px; font-size:14px; font-weight:600; opacity:0; pointer-events:none; z-index:999; transition:all 0.3s ease; }
@@ -106,9 +108,9 @@
     }
   </style>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <meta property="og:image" content="https://browserkit.online/img/og/random-picker.png" />
-  <link rel="canonical" href="https://browserkit.online/random-picker/" />
+  <link rel="canonical" href="https://browserkit.online/en/random-picker/" />
   <link rel="alternate" hreflang="ko" href="https://browserkit.online/random-picker/" />
   <link rel="alternate" hreflang="en" href="https://browserkit.online/en/random-picker/" />
   <link rel="alternate" hreflang="x-default" href="https://browserkit.online/en/random-picker/" />
@@ -118,18 +120,18 @@
 {
   "@context": "https://schema.org",
   "@type": "WebApplication",
-  "name": "RandomPicker — 랜덤 추첨기",
-  "url": "https://browserkit.online/random-picker/",
-  "description": "이름 목록을 입력하면 룰렛을 돌려 당첨자를 뽑거나 팀을 랜덤하게 나눠주는 무료 온라인 추첨기. 서버 전송 없이 브라우저에서 바로 처리합니다.",
+  "name": "RandomPicker — Random Picker",
+  "url": "https://browserkit.online/en/random-picker/",
+  "description": "Free online random picker — enter a list of names and spin the wheel to pick a winner, or randomly split names into teams. Processed entirely in your browser, nothing is uploaded.",
   "applicationCategory": "UtilityApplication",
   "operatingSystem": "Any",
   "browserRequirements": "Requires JavaScript",
-  "inLanguage": "ko",
+  "inLanguage": "en",
   "isAccessibleForFree": true,
   "offers": {
     "@type": "Offer",
     "price": "0",
-    "priceCurrency": "KRW"
+    "priceCurrency": "USD"
   },
   "publisher": {
     "@type": "Organization",
@@ -146,14 +148,14 @@
     {
       "@type": "ListItem",
       "position": 1,
-      "name": "홈",
-      "item": "https://browserkit.online/"
+      "name": "Home",
+      "item": "https://browserkit.online/en/"
     },
     {
       "@type": "ListItem",
       "position": 2,
-      "name": "랜덤 추첨기",
-      "item": "https://browserkit.online/random-picker/"
+      "name": "Random Picker",
+      "item": "https://browserkit.online/en/random-picker/"
     }
   ]
 }
@@ -162,24 +164,24 @@
 
 <body>
   <div class="lang-banner" id="langBanner">
-    <span>🌐 This page is also available in <a href="/en/random-picker/">English</a>.</span>
+    <span>🌐 이 페이지는 <a href="/random-picker/">한국어</a>로도 볼 수 있습니다.</span>
     <button class="lang-banner-close" id="langBannerClose" type="button" aria-label="close">&times;</button>
   </div>
   <header class="header">
     <div class="container">
-      <a href="/" class="header-brand">
-        <div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Gowun Dodum,sans-serif;flex-shrink:0">B</div>
+      <a href="/en/" class="header-brand">
+        <div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Poppins,sans-serif;flex-shrink:0">B</div>
         <span class="header-brand-text"><span style="color:var(--text)">Browser</span><span style="color:var(--point)">Kit</span></span>
       </a>
       <div class="header-right">
         <div class="lang-switcher">
-          <button class="lang-switcher-btn" type="button" data-lang-btn>🌐 <span class="lang-label-full">한국어</span></button>
+          <button class="lang-switcher-btn" type="button" data-lang-btn>🌐 <span class="lang-label-full">English</span></button>
           <div class="lang-switcher-menu" data-lang-menu>
-            <a href="/en/random-picker/">English</a>
-            <a href="#" class="active">한국어</a>
+            <a href="#" class="active">English</a>
+            <a href="/random-picker/">한국어</a>
           </div>
         </div>
-        <a href="/" class="header-back">&#x2190; <span class="header-back-label">BrowserKit 홈으로</span></a>
+        <a href="/en/" class="header-back">&#x2190; <span class="header-back-label">Back to BrowserKit</span></a>
       </div>
     </div>
   </header>
@@ -187,39 +189,43 @@
   <main><div class="container">
     <div class="hero">
       <div class="hero-icon" style="height:78px;display:flex;justify-content:center;align-items:center"><div style="transform:scale(1.7);transform-origin:center"><div style="width:46px;height:46px;background:#bcd4ff;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="position:relative;width:28px;height:28px;border-radius:50%;background:#fffdf9;border:2.5px solid #2a2433;box-sizing:border-box;overflow:hidden"><div style="position:absolute;left:0;top:0;width:14px;height:14px;background:#ff8a5e"></div><div style="position:absolute;right:0;top:0;width:14px;height:14px;background:#5dffb0"></div><div style="position:absolute;left:0;bottom:0;width:14px;height:14px;background:#6aa8ff"></div><div style="position:absolute;right:0;bottom:0;width:14px;height:14px;background:#ffe14d"></div></div></div></div></div>
-      <div class="hero-title-wrap"><h1 class="hero-title">랜덤 추첨기</h1><a href="/blog/55-randompicker-howto" class="hero-guide-link">사용법 가이드 보기</a></div>
-      <p class="hero-desc">이름 목록으로 룰렛을 돌려 당첨자를 뽑거나 팀을 랜덤하게 나눠보세요</p>
+      <div class="hero-title-wrap"><h1 class="hero-title">Random Picker</h1><a href="/blog/55-randompicker-howto" class="hero-guide-link">View usage guide</a></div>
+      <p class="hero-desc">Spin the wheel to pick a winner from a list of names, or randomly split names into teams</p>
       <div class="hero-badges">
-        <span class="badge">🔒 완전 로컬 처리</span>
-        <span class="badge">⚡ 무료 사용</span>
-        <span class="badge">🛡️ 서버 전송 없음</span>
-        <span class="badge">📦 설치 불필요</span>
+        <span class="badge">🔒 Fully local processing</span>
+        <span class="badge">⚡ Free to use</span>
+        <span class="badge">🛡️ No server upload</span>
+        <span class="badge">📦 No installation</span>
       </div>
     </div>
-    <div style="margin:0 0 12px"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><div class="adfit-h-desktop"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-QD4pRIpdIj7i2mbt" data-ad-width="728" data-ad-height="90"></ins></div><div class="adfit-h-mobile"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-R4xA2niTT8HgGjoO" data-ad-width="320" data-ad-height="50"></ins></div></div>
-
-    <div class="tab-wrap">
-      <button class="tab-btn active" data-tab="roulette">&#x1F3A1; 룰렛 뽑기</button>
-      <button class="tab-btn" data-tab="team">&#x1F465; 팀 나누기</button>
+    <!-- Google AdSense Display Ad — pending approval, reserving space -->
+    <div class="ad-slot" id="adTop">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
     </div>
 
-    <!-- ── 룰렛 뽑기 탭 ── -->
+    <div class="tab-wrap">
+      <button class="tab-btn active" data-tab="roulette">&#x1F3A1; Spin the Wheel</button>
+      <button class="tab-btn" data-tab="team">&#x1F465; Team Split</button>
+    </div>
+
+    <!-- ── Spin the Wheel tab ── -->
     <div class="panel active" id="panel-roulette">
       <div class="input-card">
         <div class="input-label">
-          <span>참가자 이름 (한 줄에 한 명씩)</span>
-          <span class="name-count" id="rouletteCount">0명</span>
+          <span>Participant names (one per line)</span>
+          <span class="name-count" id="rouletteCount">0</span>
         </div>
-        <textarea class="name-textarea" id="rouletteInput" placeholder="홍길동&#10;김철수&#10;이영희"></textarea>
+        <textarea class="name-textarea" id="rouletteInput" placeholder="John Doe&#10;Jane Smith&#10;Alex Kim"></textarea>
         <div class="quick-fill">
-          <button class="quick-fill-btn" id="sampleBtn">📋 예시 이름 채우기</button>
-          <button class="quick-fill-btn" id="clearNamesBtn">↺ 비우기</button>
+          <button class="quick-fill-btn" id="sampleBtn">📋 Fill sample names</button>
+          <button class="quick-fill-btn" id="clearNamesBtn">↺ Clear</button>
         </div>
-        <label class="option-row"><input type="checkbox" id="removeWinnerOpt" /> 당첨자는 다음 추첨에서 제외</label>
+        <label class="option-row"><input type="checkbox" id="removeWinnerOpt" /> Exclude the winner from the next draw</label>
       </div>
 
       <div class="history-card" id="historyCard">
-        <div class="history-title">🏆 당첨 이력</div>
+        <div class="history-title">🏆 Winner history</div>
         <div class="history-list" id="historyList"></div>
       </div>
 
@@ -228,86 +234,94 @@
           <div class="wheel-pointer"></div>
           <canvas class="wheel-canvas" id="wheelCanvas" width="320" height="320"></canvas>
         </div>
-        <button class="spin-btn" id="spinBtn">🎯 추첨 시작</button>
+        <button class="spin-btn" id="spinBtn">🎯 Spin</button>
       </div>
 
       <div class="winner-card" id="winnerCard">
-        <div class="winner-label">당첨자</div>
+        <div class="winner-label">Winner</div>
         <div class="winner-name" id="winnerName">—</div>
       </div>
     </div>
 
-    <!-- ── 팀 나누기 탭 ── -->
+    <!-- ── Team Split tab ── -->
     <div class="panel" id="panel-team">
       <div class="input-card">
         <div class="input-label">
-          <span>참가자 이름 (한 줄에 한 명씩)</span>
-          <span class="name-count" id="teamCount">0명</span>
+          <span>Participant names (one per line)</span>
+          <span class="name-count" id="teamCount">0</span>
         </div>
-        <textarea class="name-textarea" id="teamInput" placeholder="홍길동&#10;김철수&#10;이영희"></textarea>
+        <textarea class="name-textarea" id="teamInput" placeholder="John Doe&#10;Jane Smith&#10;Alex Kim"></textarea>
         <div class="quick-fill">
-          <button class="quick-fill-btn" id="teamSampleBtn">📋 예시 이름 채우기</button>
-          <button class="quick-fill-btn" id="teamClearBtn">↺ 비우기</button>
+          <button class="quick-fill-btn" id="teamSampleBtn">📋 Fill sample names</button>
+          <button class="quick-fill-btn" id="teamClearBtn">↺ Clear</button>
         </div>
       </div>
 
       <div class="team-count-row">
-        <span style="font-size:13px;color:var(--subtext);">나눌 팀 수</span>
+        <span style="font-size:13px;color:var(--subtext);">Number of teams</span>
         <button class="team-btn" id="teamMinusBtn">−</button>
         <input type="number" class="team-count-input" id="teamNumInput" value="2" min="2" max="20" />
         <button class="team-btn" id="teamPlusBtn">+</button>
-        <button class="btn-primary" id="divideBtn" style="margin-left:8px;">🔀 팀 나누기</button>
+        <button class="btn-primary" id="divideBtn" style="margin-left:8px;">🔀 Split into teams</button>
       </div>
 
       <div class="team-grid" id="teamGrid"></div>
     </div>
 
     <div class="action-wrap">
-      <button class="btn-sub" id="copyResultBtn">&#x1F4CB; 결과 복사</button>
+      <button class="btn-sub" id="copyResultBtn">&#x1F4CB; Copy result</button>
     </div>
 
-    <div style="margin:0 0 12px"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><!-- 카카오 애드핏 (2026-07-22, 쿠팡 파트너스 다이내믹 배너로 교체) — 복원 시 주석 해제: <div class="adfit-h-desktop"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-QD4pRIpdIj7i2mbt" data-ad-width="728" data-ad-height="90"></ins></div><div class="adfit-h-mobile"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-R4xA2niTT8HgGjoO" data-ad-width="320" data-ad-height="50"></ins></div> --><div class="adfit-h-desktop"><script src="https://ads-partners.coupang.com/g.js"></script><script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"728","height":"90","tsource":""});</script></div><div class="adfit-h-mobile"><script src="https://ads-partners.coupang.com/g.js"></script><script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"320","height":"50","tsource":""});</script></div></div>
+    <!-- Google AdSense Display Ad — pending approval, reserving space -->
+    <div class="ad-slot" id="adMiddle">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
 
     <div class="guide-summary">
-      <h2 class="guide-summary-title">사용법 요약</h2>
+      <h2 class="guide-summary-title">Quick guide</h2>
       <ol class="guide-steps">
-        <li>참가자 이름 입력</li>
-        <li>추첨 시작</li>
-        <li>당첨자 확인</li>
+        <li>Enter participant names</li>
+        <li>Start the draw</li>
+        <li>Check the winner</li>
       </ol>
-      <h3 class="guide-faq-title">자주 묻는 질문</h3>
+      <h3 class="guide-faq-title">Frequently asked questions</h3>
       <div class="guide-faq">
         <details>
-          <summary>랜덤 추첨기 도구는 정말 무료인가요?</summary>
-          <p>네, 회원가입이나 설치 없이 완전 무료로 사용할 수 있습니다. 횟수 제한도 없습니다.</p>
+          <summary>Is the Random Picker tool really free?</summary>
+          <p>Yes, it is completely free to use with no sign-up or installation required. There is no usage limit either.</p>
         </details>
         <details>
-          <summary>입력한 내용이 서버로 전송되나요?</summary>
-          <p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용이 외부 서버로 전송되거나 저장되지 않습니다.</p>
+          <summary>Is what I enter sent to a server?</summary>
+          <p>No. All processing happens entirely in your browser, and your input is never sent to or stored on an external server.</p>
         </details>
         <details>
-          <summary>추첨 결과는 공정한가요?</summary>
-          <p>난수 기반으로 무작위 추첨하므로 특정 항목에 유리하게 작동하지 않습니다.</p>
+          <summary>Is the draw result fair?</summary>
+          <p>The draw uses random number generation, so no entry is favored over another.</p>
         </details>
         <details>
-          <summary>모바일에서도 사용할 수 있나요?</summary>
-          <p>네, 별도의 앱 설치 없이 모바일 브라우저에서도 동일하게 사용할 수 있습니다.</p>
+          <summary>Can I use this on mobile?</summary>
+          <p>Yes, it works the same way in a mobile browser without needing to install any app.</p>
         </details>
       </div>
-      <a href="/blog/55-randompicker-howto" class="guide-full-link">전체 가이드 보기 →</a>
+      <a href="/blog/55-randompicker-howto" class="guide-full-link">View full guide →</a>
     </div>
 
-    <div style="margin:0 0 12px"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="9500090221"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><div class="adfit-rect-wrap"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-oePL4TCj742xAwqT" data-ad-width="300" data-ad-height="250"></ins></div></div>
+    <!-- Google AdSense Multiplex Ad — pending approval, reserving space -->
+    <div class="ad-slot ad-slot-rect" id="adBottom">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
   </div></main>
 
   <footer class="footer">
     <div class="container">
-      <p class="footer-copy">&#xa9; 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p>
+      <p class="footer-copy">&#xa9; 2026 BrowserKit. All processing happens in your browser.</p>
       <nav class="footer-nav">
-        <a href="/privacy">개인정보 처리방침</a>
-        <a href="/terms">이용약관</a>
-        <a href="/about">서비스 소개</a>
-        <a href="/blog/">블로그</a>
+        <a href="/en/privacy.html">Privacy Policy</a>
+        <a href="/en/terms.html">Terms of Service</a>
+        <a href="/en/about.html">About</a>
+        <a href="/en/blog/">Blog</a>
       </nav>
     </div>
   </footer>
@@ -315,11 +329,11 @@
   <div class="toast" id="toast"></div>
 
   <script>
-  var SAMPLE_NAMES = ['홍길동', '김철수', '이영희', '박민수', '최지우', '정다은'];
+  var SAMPLE_NAMES = ['John Doe', 'Jane Smith', 'Alex Kim', 'Emily Chen', 'Michael Lee', 'Sarah Park'];
   var WHEEL_COLORS = ['#ffd36e', '#ffb3c7', '#a8e6cf', '#bcd4ff', '#e0c3ff', '#ffd9a8', '#c2f0e8', '#ffc2d6'];
   var INK = '#2a2433';
 
-  // ── 탭 전환 ──
+  // ── Tab switching ──
   document.querySelectorAll('.tab-btn').forEach(function(btn) {
     btn.addEventListener('click', function() {
       document.querySelectorAll('.tab-btn').forEach(function(b) { b.classList.remove('active'); });
@@ -359,7 +373,7 @@
 
   function updateRouletteState() {
     currentNames = parseNames(rouletteInput.value);
-    rouletteCount.textContent = currentNames.length + '명';
+    rouletteCount.textContent = currentNames.length + '';
     drawWheel(currentNames);
     spinBtn.disabled = currentNames.length < 2;
   }
@@ -403,7 +417,7 @@
       ctx.strokeStyle = INK;
       ctx.stroke();
 
-      // 텍스트
+      // Label text
       ctx.save();
       ctx.translate(cx, cy);
       ctx.rotate(start + anglePer / 2);
@@ -416,7 +430,7 @@
       ctx.restore();
     }
 
-    // 중심 원
+    // Center circle
     ctx.beginPath();
     ctx.arc(cx, cy, 14, 0, Math.PI * 2);
     ctx.fillStyle = '#fffdf9';
@@ -436,7 +450,7 @@
     var winnerIndex = Math.floor(Math.random() * n);
     var anglePerDeg = 360 / n;
     var sliceCenterDeg = winnerIndex * anglePerDeg + anglePerDeg / 2;
-    // 약간의 무작위 오프셋(슬라이스 중심에서 ±40%)을 줘서 매번 다른 각도로 멈추게 함
+    // Add a small random offset (±40% of the slice) so it stops at a different angle each time
     var jitter = (Math.random() - 0.5) * anglePerDeg * 0.8;
     var targetWithinSpin = (360 - sliceCenterDeg + jitter + 360) % 360;
     var extraSpins = 6 * 360;
@@ -454,7 +468,7 @@
       winnerCard.classList.add('show');
       winHistory.unshift(winner);
       renderHistory();
-      showToast('🎉 ' + winner + '님 당첨!');
+      showToast('🎉 ' + winner + ' wins!');
 
       if (removeWinnerOpt.checked) {
         var lines = parseNames(rouletteInput.value);
@@ -485,7 +499,7 @@
   var lastTeams = [];
 
   function updateTeamState() {
-    teamCount.textContent = parseNames(teamInput.value).length + '명';
+    teamCount.textContent = parseNames(teamInput.value).length + '';
   }
   teamInput.addEventListener('input', updateTeamState);
 
@@ -522,7 +536,7 @@
     var names = parseNames(teamInput.value);
     var teamN = Math.max(2, Math.min(20, parseInt(teamNumInput.value, 10) || 2));
     if (names.length < teamN) {
-      showToast('인원(' + names.length + '명)보다 팀 수(' + teamN + '개)가 많습니다');
+      showToast('You have ' + teamN + ' teams but only ' + names.length + ' participant(s)');
       return;
     }
     var shuffled = shuffle(names);
@@ -531,30 +545,30 @@
     shuffled.forEach(function(name, i) { teams[i % teamN].push(name); });
     lastTeams = teams;
     renderTeams(teams);
-    showToast('✓ ' + teamN + '개 팀으로 나눴습니다');
+    showToast('✓ Split into ' + teamN + ' teams');
   });
 
   function renderTeams(teams) {
     teamGrid.innerHTML = teams.map(function(team, i) {
-      return '<div class="team-card"><div class="team-card-title">🏷️ ' + (i + 1) + '팀 (' + team.length + '명)</div>' +
+      return '<div class="team-card"><div class="team-card-title">🏷️ Team ' + (i + 1) + ' (' + team.length + ')</div>' +
         team.map(function(name) { return '<div class="team-card-member">' + escapeHtml(name) + '</div>'; }).join('') +
         '</div>';
     }).join('');
   }
 
-  // ── 결과 복사 ──
+  // ── Copy result ──
   document.getElementById('copyResultBtn').addEventListener('click', function() {
     var isRoulette = document.getElementById('panel-roulette').classList.contains('active');
     var text = '';
     if (isRoulette) {
-      if (!winHistory.length) { showToast('복사할 당첨 결과가 없습니다'); return; }
+      if (!winHistory.length) { showToast('There is no winner history to copy'); return; }
       text = winHistory.map(function(n, i) { return (winHistory.length - i) + '. ' + n; }).join('\n');
     } else {
-      if (!lastTeams.length) { showToast('복사할 팀 나누기 결과가 없습니다'); return; }
-      text = lastTeams.map(function(team, i) { return (i + 1) + '팀: ' + team.join(', '); }).join('\n');
+      if (!lastTeams.length) { showToast('There is no team split result to copy'); return; }
+      text = lastTeams.map(function(team, i) { return 'Team ' + (i + 1) + ': ' + team.join(', '); }).join('\n');
     }
     navigator.clipboard.writeText(text).then(function() {
-      showToast('✓ 결과가 클립보드에 복사되었습니다');
+      showToast('✓ Result copied to clipboard');
     });
   });
 
@@ -580,7 +594,7 @@
     try {
       if (document.cookie.indexOf('bk_lang_dismiss=1') !== -1) return;
       var lang = (navigator.language || navigator.userLanguage || '').toLowerCase();
-      if (lang.indexOf('ko') === 0) return;
+      if (lang.indexOf('ko') !== 0) return;
       var banner = document.getElementById('langBanner');
       if (!banner) return;
       banner.classList.add('show');
