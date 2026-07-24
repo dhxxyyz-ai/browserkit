@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
   <link rel="icon" href="/favicon.ico" sizes="32x32">
   <link rel="icon" href="/favicon-16.png" sizes="16x16" type="image/png">
@@ -8,18 +8,17 @@
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="사진 속 GPS 위치, 촬영 기기, 촬영 시각 등 EXIF 메타데이터를 확인하고 제거하는 무료 온라인 도구. 서버 전송 없이 브라우저에서 바로 처리합니다." />
-  <meta property="og:title" content="ExifRemover — 사진 위치정보 제거기" />
-  <meta property="og:description" content="사진 속 GPS 위치, 촬영 기기 등 EXIF 메타데이터를 확인하고 제거하는 무료 온라인 도구입니다." />
+  <meta name="description" content="Free online tool to view and remove EXIF metadata from photos — GPS location, camera model, capture time, and more. Processed entirely in your browser, nothing is uploaded." />
+  <meta property="og:title" content="ExifRemover — Photo Location Remover" />
+  <meta property="og:description" content="Free online tool to view and remove EXIF metadata such as GPS location and camera model from photos." />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://browserkit.online/exif-remover/" />
-  <title>ExifRemover — 사진 위치정보 제거기</title>
+  <meta property="og:url" content="https://browserkit.online/en/exif-remover/" />
+  <title>ExifRemover — Photo Location Remover</title>
   <link rel="stylesheet" href="/css/style.css?v=20260724b" />
-  <!-- Google AdSense 승인 대기 중 (2026-07-19 주석 처리, 카카오 애드핏으로 임시 전환) — 승인 후 주석 해제
+  <!-- Google AdSense — pending re-review. Uncomment once approved.
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506"
      crossorigin="anonymous"></script>
   -->
-  <script type="text/javascript" src="//t1.kakaocdn.net/kas/static/ba.min.js" async></script>
   <style>
     .guide-summary { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:24px; margin:0 0 12px; }
     .guide-summary-title { font-size:16px; font-weight:700; color:var(--text); margin:0 0 12px; }
@@ -31,7 +30,10 @@
     .guide-full-link { display:inline-block; margin-top:12px; font-size:14px; font-weight:600; color:var(--point-hover); text-decoration:none; }
     .guide-full-link:hover { text-decoration:underline; }
 
-    /* 업로드 존 */
+    .ad-slot { min-height:90px; display:flex; align-items:center; justify-content:center; margin:0 0 12px; }
+    .ad-slot-rect { min-height:250px; }
+
+    /* Upload zone */
     .upload-zone { background:var(--card); border:2px dashed var(--border); border-radius:var(--radius); padding:56px 40px; text-align:center; cursor:pointer; margin-bottom:16px; transition:all 0.2s; }
     .upload-zone:hover, .upload-zone.drag-over { border-color:var(--point); box-shadow:0 0 24px var(--glow); background:rgba(123,108,255,0.05); }
     .upload-icon { font-size:48px; margin-bottom:20px; }
@@ -64,9 +66,9 @@
     .exif-empty { padding:32px; text-align:center; color:var(--subtext); font-size:14px; }
 
     .action-wrap { display:flex; justify-content:center; gap:12px; margin-bottom:48px; flex-wrap:wrap; }
-    .btn-download { background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border:none; border-radius:12px; padding:14px 32px; font-size:15px; font-weight:600; cursor:pointer; font-family:'Gowun Dodum',sans-serif; }
+    .btn-download { background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border:none; border-radius:12px; padding:14px 32px; font-size:15px; font-weight:600; cursor:pointer; }
     .btn-download:hover { transform:translateY(-2px); box-shadow:0 8px 24px var(--glow); }
-    .btn-reset { background:var(--card); color:var(--subtext); border:1px solid var(--border); border-radius:12px; padding:14px 24px; font-size:15px; cursor:pointer; font-family:'Gowun Dodum',sans-serif; }
+    .btn-reset { background:var(--card); color:var(--subtext); border:1px solid var(--border); border-radius:12px; padding:14px 24px; font-size:15px; cursor:pointer; }
     .btn-reset:hover { transform:translateY(-2px); color:var(--text); border-color:var(--point); }
 
     .notice { margin:0 0 20px; padding:12px 16px; background:rgba(123,108,255,0.07); border:1px solid var(--border); border-radius:10px; font-size:13px; color:var(--subtext); line-height:1.7; }
@@ -88,9 +90,9 @@
     }
   </style>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <meta property="og:image" content="https://browserkit.online/img/og/exif-remover.png" />
-  <link rel="canonical" href="https://browserkit.online/exif-remover/" />
+  <link rel="canonical" href="https://browserkit.online/en/exif-remover/" />
   <link rel="alternate" hreflang="ko" href="https://browserkit.online/exif-remover/" />
   <link rel="alternate" hreflang="en" href="https://browserkit.online/en/exif-remover/" />
   <link rel="alternate" hreflang="x-default" href="https://browserkit.online/en/exif-remover/" />
@@ -100,18 +102,18 @@
 {
   "@context": "https://schema.org",
   "@type": "WebApplication",
-  "name": "ExifRemover — 사진 위치정보 제거기",
-  "url": "https://browserkit.online/exif-remover/",
-  "description": "사진 속 GPS 위치, 촬영 기기, 촬영 시각 등 EXIF 메타데이터를 확인하고 제거하는 무료 온라인 도구. 서버 전송 없이 브라우저에서 바로 처리합니다.",
+  "name": "ExifRemover — Photo Location Remover",
+  "url": "https://browserkit.online/en/exif-remover/",
+  "description": "Free online tool to view and remove EXIF metadata from photos — GPS location, camera model, capture time, and more. Processed entirely in your browser, nothing is uploaded.",
   "applicationCategory": "UtilityApplication",
   "operatingSystem": "Any",
   "browserRequirements": "Requires JavaScript",
-  "inLanguage": "ko",
+  "inLanguage": "en",
   "isAccessibleForFree": true,
   "offers": {
     "@type": "Offer",
     "price": "0",
-    "priceCurrency": "KRW"
+    "priceCurrency": "USD"
   },
   "publisher": {
     "@type": "Organization",
@@ -128,14 +130,14 @@
     {
       "@type": "ListItem",
       "position": 1,
-      "name": "홈",
-      "item": "https://browserkit.online/"
+      "name": "Home",
+      "item": "https://browserkit.online/en/"
     },
     {
       "@type": "ListItem",
       "position": 2,
-      "name": "사진 위치정보 제거기",
-      "item": "https://browserkit.online/exif-remover/"
+      "name": "Photo Location Remover",
+      "item": "https://browserkit.online/en/exif-remover/"
     }
   ]
 }
@@ -144,24 +146,24 @@
 
 <body>
   <div class="lang-banner" id="langBanner">
-    <span>🌐 This page is also available in <a href="/en/exif-remover/">English</a>.</span>
+    <span>🌐 이 페이지는 <a href="/exif-remover/">한국어</a>로도 볼 수 있습니다.</span>
     <button class="lang-banner-close" id="langBannerClose" type="button" aria-label="close">&times;</button>
   </div>
   <header class="header">
     <div class="container">
-      <a href="/" class="header-brand">
-        <div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Gowun Dodum,sans-serif;flex-shrink:0">B</div>
+      <a href="/en/" class="header-brand">
+        <div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Poppins,sans-serif;flex-shrink:0">B</div>
         <span class="header-brand-text"><span style="color:var(--text)">Browser</span><span style="color:var(--point)">Kit</span></span>
       </a>
       <div class="header-right">
         <div class="lang-switcher">
-          <button class="lang-switcher-btn" type="button" data-lang-btn>🌐 <span class="lang-label-full">한국어</span></button>
+          <button class="lang-switcher-btn" type="button" data-lang-btn>🌐 <span class="lang-label-full">English</span></button>
           <div class="lang-switcher-menu" data-lang-menu>
-            <a href="/en/exif-remover/">English</a>
-            <a href="#" class="active">한국어</a>
+            <a href="#" class="active">English</a>
+            <a href="/exif-remover/">한국어</a>
           </div>
         </div>
-        <a href="/" class="header-back">&#x2190; <span class="header-back-label">BrowserKit 홈으로</span></a>
+        <a href="/en/" class="header-back">&#x2190; <span class="header-back-label">Back to BrowserKit</span></a>
       </div>
     </div>
   </header>
@@ -169,97 +171,109 @@
   <main><div class="container">
     <div class="hero">
       <div class="hero-icon" style="height:78px;display:flex;justify-content:center;align-items:center"><div style="transform:scale(1.7);transform-origin:center"><div style="width:46px;height:46px;background:#ffd36e;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="position:relative;width:26px;height:30px"><div style="width:20px;height:20px;border-radius:50% 50% 50% 0;background:#fffdf9;border:2.5px solid #2a2433;box-sizing:border-box;transform:rotate(-45deg);margin:0 auto"></div><div style="position:absolute;left:50%;top:6px;transform:translateX(-50%);width:6px;height:6px;border-radius:50%;background:#2a2433"></div></div></div></div></div>
-      <div class="hero-title-wrap"><h1 class="hero-title">사진 위치정보 제거기</h1><a href="/blog/54-exifremover-howto" class="hero-guide-link">사용법 가이드 보기</a></div>
-      <p class="hero-desc">사진 속 GPS 위치, 촬영 기기, 촬영 시각 등 EXIF 정보를 확인하고 제거하세요</p>
+      <div class="hero-title-wrap"><h1 class="hero-title">Photo Location Remover</h1><a href="/blog/54-exifremover-howto" class="hero-guide-link">View usage guide</a></div>
+      <p class="hero-desc">View and remove EXIF info in your photos — GPS location, camera model, capture time, and more</p>
       <div class="hero-badges">
-        <span class="badge">🔒 완전 로컬 처리</span>
-        <span class="badge">⚡ 무료 사용</span>
-        <span class="badge">🛡️ 서버 전송 없음</span>
-        <span class="badge">📦 설치 불필요</span>
+        <span class="badge">🔒 Fully local processing</span>
+        <span class="badge">⚡ Free to use</span>
+        <span class="badge">🛡️ No server upload</span>
+        <span class="badge">📦 No installation</span>
       </div>
     </div>
-    <div style="margin:0 0 12px"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><div class="adfit-h-desktop"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-QD4pRIpdIj7i2mbt" data-ad-width="728" data-ad-height="90"></ins></div><div class="adfit-h-mobile"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-R4xA2niTT8HgGjoO" data-ad-width="320" data-ad-height="50"></ins></div></div>
+    <!-- Google AdSense Display Ad — pending approval, reserving space -->
+    <div class="ad-slot" id="adTop">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
 
-    <p class="notice">💡 사진을 업로드하면 그 안에 저장된 촬영 위치, 기기 정보, 촬영 시각 등을 먼저 보여드립니다. 확인 후 <strong>EXIF 제거하고 다운로드</strong> 버튼을 누르면 이 정보를 모두 지운 새 이미지를 받을 수 있습니다. JPEG가 아닌 형식은 EXIF가 없거나 매우 적을 수 있습니다.</p>
+    <p class="notice">💡 When you upload a photo, we first show you the capture location, device info, and timestamp stored inside it. After reviewing, click <strong>Remove EXIF &amp; Download</strong> to get a new image with all of this information stripped out. Non-JPEG formats may have little or no EXIF data.</p>
 
-    <!-- 업로드 존 -->
+    <!-- Upload zone -->
     <div class="upload-zone" id="uploadZone">
       <input type="file" id="fileInput" accept="image/*" style="display:none" />
       <div class="upload-icon">📷</div>
-      <div class="upload-title">사진을 업로드하세요</div>
-      <div class="upload-sub">클릭하거나 파일을 드래그하세요 (JPG, PNG, WEBP)</div>
-      <div class="upload-safe">🔒 파일은 서버로 전송되지 않습니다</div>
+      <div class="upload-title">Upload a photo</div>
+      <div class="upload-sub">Click or drag a file here (JPG, PNG, WEBP)</div>
+      <div class="upload-safe">🔒 Files are never uploaded to a server</div>
     </div>
 
-    <!-- 결과 -->
+    <!-- Result -->
     <div class="result-wrap" id="resultWrap">
       <div class="preview-card">
-        <div class="preview-img-wrap"><img id="previewImg" src="" alt="업로드한 이미지 미리보기" /></div>
+        <div class="preview-img-wrap"><img id="previewImg" src="" alt="Preview of uploaded image" /></div>
         <div class="file-meta">
-          <div class="file-meta-row"><span class="file-meta-label">파일명</span><span class="file-meta-value" id="fileName">—</span></div>
-          <div class="file-meta-row"><span class="file-meta-label">형식</span><span class="file-meta-value" id="fileType">—</span></div>
-          <div class="file-meta-row"><span class="file-meta-label">크기</span><span class="file-meta-value" id="fileSize">—</span></div>
-          <div class="file-meta-row"><span class="file-meta-label">해상도</span><span class="file-meta-value" id="fileDim">—</span></div>
+          <div class="file-meta-row"><span class="file-meta-label">Name</span><span class="file-meta-value" id="fileName">—</span></div>
+          <div class="file-meta-row"><span class="file-meta-label">Type</span><span class="file-meta-value" id="fileType">—</span></div>
+          <div class="file-meta-row"><span class="file-meta-label">Size</span><span class="file-meta-value" id="fileSize">—</span></div>
+          <div class="file-meta-row"><span class="file-meta-label">Resolution</span><span class="file-meta-value" id="fileDim">—</span></div>
         </div>
       </div>
 
       <div class="gps-warn" id="gpsWarn">
-        <div class="gps-warn-title">⚠️ 이 사진에 촬영 위치(GPS) 정보가 남아있습니다</div>
-        <div class="gps-warn-desc">이대로 SNS나 온라인에 공유하면 촬영 장소가 그대로 노출될 수 있습니다. <span id="gpsCoord"></span> — <a id="gpsMapLink" href="#" target="_blank" rel="noopener">지도에서 보기</a></div>
+        <div class="gps-warn-title">⚠️ This photo still contains GPS location data</div>
+        <div class="gps-warn-desc">If you share this as-is on social media or online, the location where it was taken could be exposed. <span id="gpsCoord"></span> — <a id="gpsMapLink" href="#" target="_blank" rel="noopener">View on map</a></div>
       </div>
 
       <div class="exif-card" id="exifCard">
-        <div class="exif-empty">분석 중...</div>
+        <div class="exif-empty">Analyzing...</div>
       </div>
 
       <div class="action-wrap">
-        <button class="btn-download" id="downloadBtn">&#x2B07; EXIF 제거하고 다운로드</button>
-        <button class="btn-reset" id="resetBtn">&#x21BA; 새 이미지 선택</button>
+        <button class="btn-download" id="downloadBtn">&#x2B07; Remove EXIF &amp; Download</button>
+        <button class="btn-reset" id="resetBtn">&#x21BA; Choose new image</button>
       </div>
     </div>
 
-    <div style="margin:0 0 12px"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><!-- 카카오 애드핏 (2026-07-22, 쿠팡 파트너스 다이내믹 배너로 교체) — 복원 시 주석 해제: <div class="adfit-h-desktop"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-QD4pRIpdIj7i2mbt" data-ad-width="728" data-ad-height="90"></ins></div><div class="adfit-h-mobile"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-R4xA2niTT8HgGjoO" data-ad-width="320" data-ad-height="50"></ins></div> --><div class="adfit-h-desktop"><script src="https://ads-partners.coupang.com/g.js"></script><script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"728","height":"90","tsource":""});</script></div><div class="adfit-h-mobile"><script src="https://ads-partners.coupang.com/g.js"></script><script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"320","height":"50","tsource":""});</script></div></div>
+    <!-- Google AdSense Display Ad — pending approval, reserving space -->
+    <div class="ad-slot" id="adMiddle">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
 
     <div class="guide-summary">
-      <h2 class="guide-summary-title">사용법 요약</h2>
+      <h2 class="guide-summary-title">Quick guide</h2>
       <ol class="guide-steps">
-        <li>사진 업로드</li>
-        <li>EXIF 정보 확인</li>
-        <li>EXIF 제거하고 다운로드</li>
+        <li>Upload a photo</li>
+        <li>Review EXIF info</li>
+        <li>Remove EXIF &amp; download</li>
       </ol>
-      <h3 class="guide-faq-title">자주 묻는 질문</h3>
+      <h3 class="guide-faq-title">Frequently asked questions</h3>
       <div class="guide-faq">
         <details>
-          <summary>사진 위치정보 제거기 도구는 정말 무료인가요?</summary>
-          <p>네, 회원가입이나 설치 없이 완전 무료로 사용할 수 있습니다. 횟수 제한도 없습니다.</p>
+          <summary>Is the Photo Location Remover tool really free?</summary>
+          <p>Yes, it is completely free to use with no sign-up or installation required. There is no usage limit either.</p>
         </details>
         <details>
-          <summary>업로드한 파일이 서버로 전송되나요?</summary>
-          <p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 업로드한 파일이 외부 서버로 전송되거나 저장되지 않습니다.</p>
+          <summary>Are uploaded files sent to a server?</summary>
+          <p>No. All processing happens entirely in your browser, and uploaded files are never sent to or stored on an external server.</p>
         </details>
         <details>
-          <summary>어떤 정보가 제거되나요?</summary>
-          <p>GPS 위치, 촬영 기기, 촬영 일시 등 사진에 숨어 있는 EXIF 메타데이터를 제거합니다.</p>
+          <summary>What information gets removed?</summary>
+          <p>It removes EXIF metadata hidden in the photo, such as GPS location, camera model, and capture date/time.</p>
         </details>
         <details>
-          <summary>모바일에서도 사용할 수 있나요?</summary>
-          <p>네, 별도의 앱 설치 없이 모바일 브라우저에서도 동일하게 사용할 수 있습니다.</p>
+          <summary>Can I use this on mobile?</summary>
+          <p>Yes, it works the same way in a mobile browser without needing to install any app.</p>
         </details>
       </div>
-      <a href="/blog/54-exifremover-howto" class="guide-full-link">전체 가이드 보기 →</a>
+      <a href="/blog/54-exifremover-howto" class="guide-full-link">View full guide →</a>
     </div>
 
-    <div style="margin:0 0 12px"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="9500090221"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><div class="adfit-rect-wrap"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-oePL4TCj742xAwqT" data-ad-width="300" data-ad-height="250"></ins></div></div>
+    <!-- Google AdSense Multiplex Ad — pending approval, reserving space -->
+    <div class="ad-slot ad-slot-rect" id="adBottom">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
   </div></main>
 
   <footer class="footer">
     <div class="container">
-      <p class="footer-copy">&#xa9; 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p>
+      <p class="footer-copy">&#xa9; 2026 BrowserKit. All processing happens in your browser.</p>
       <nav class="footer-nav">
-        <a href="/privacy">개인정보 처리방침</a>
-        <a href="/terms">이용약관</a>
-        <a href="/about">서비스 소개</a>
-        <a href="/blog/">블로그</a>
+        <a href="/en/privacy.html">Privacy Policy</a>
+        <a href="/en/terms.html">Terms of Service</a>
+        <a href="/en/about.html">About</a>
+        <a href="/en/blog/">Blog</a>
       </nav>
     </div>
   </footer>
@@ -296,16 +310,16 @@
   }
 
   function loadFile(file) {
-    if (!file.type.startsWith('image/')) { showToast('이미지 파일을 선택해주세요'); return; }
+    if (!file.type.startsWith('image/')) { showToast('Please select an image file'); return; }
     currentFile = file;
     if (currentObjectUrl) URL.revokeObjectURL(currentObjectUrl);
     currentObjectUrl = URL.createObjectURL(file);
     previewImg.src = currentObjectUrl;
 
     document.getElementById('fileName').textContent = file.name;
-    document.getElementById('fileType').textContent = file.type || '알 수 없음';
+    document.getElementById('fileType').textContent = file.type || 'Unknown';
     document.getElementById('fileSize').textContent = formatBytes(file.size);
-    document.getElementById('fileDim').textContent = '측정 중...';
+    document.getElementById('fileDim').textContent = 'Measuring...';
 
     previewImg.onload = function() {
       document.getElementById('fileDim').textContent = previewImg.naturalWidth + ' × ' + previewImg.naturalHeight + 'px';
@@ -314,7 +328,7 @@
     uploadZone.style.display = 'none';
     resultWrap.classList.add('show');
     gpsWarn.classList.remove('show');
-    exifCard.innerHTML = '<div class="exif-empty">분석 중...</div>';
+    exifCard.innerHTML = '<div class="exif-empty">Analyzing...</div>';
 
     var reader = new FileReader();
     reader.onload = function(e) {
@@ -322,13 +336,13 @@
         var tags = parseExif(e.target.result);
         renderExif(tags);
       } catch (err) {
-        exifCard.innerHTML = '<div class="exif-empty">EXIF 정보를 읽는 중 오류가 발생했습니다.</div>';
+        exifCard.innerHTML = '<div class="exif-empty">An error occurred while reading EXIF data.</div>';
       }
     };
     reader.readAsArrayBuffer(file);
   }
 
-  // ── 최소 EXIF 파서 (JPEG APP1 세그먼트 → TIFF 구조) ──
+  // ── Minimal EXIF parser (JPEG APP1 segment -> TIFF structure) ──
   var TAG_NAMES = {
     0x010F: 'Make', 0x0110: 'Model', 0x0112: 'Orientation', 0x0132: 'DateTime',
     0x829A: 'ExposureTime', 0x829D: 'FNumber', 0x8827: 'ISO', 0x920A: 'FocalLength',
@@ -342,14 +356,14 @@
 
   function parseExif(buffer) {
     var view = new DataView(buffer);
-    if (view.getUint16(0) !== 0xFFD8) return {}; // JPEG 아님
+    if (view.getUint16(0) !== 0xFFD8) return {}; // Not a JPEG
 
     var offset = 2;
     while (offset < view.byteLength - 1) {
       if (view.getUint8(offset) !== 0xFF) break;
       var marker = view.getUint8(offset + 1);
       if (marker === 0xD8 || marker === 0xD9) { offset += 2; continue; }
-      if (marker === 0xDA) break; // SOS: 스캔 데이터 시작, 더 이상 마커 없음
+      if (marker === 0xDA) break; // SOS: scan data starts, no more markers
       var segLen = view.getUint16(offset + 2);
       if (marker === 0xE1) {
         var segStart = offset + 4;
@@ -450,27 +464,27 @@
     var gps = result.gps || {};
     var rows = [];
 
-    if (tags.Make || tags.Model) rows.push(['촬영 기기', [tags.Make, tags.Model].filter(Boolean).join(' ')]);
-    if (tags.LensModel) rows.push(['렌즈', tags.LensModel]);
-    if (tags.DateTimeOriginal || tags.DateTime) rows.push(['촬영 일시', (tags.DateTimeOriginal || tags.DateTime).replace(/^(\d{4}):(\d{2}):(\d{2})/, '$1-$2-$3')]);
-    if (tags.FNumber) rows.push(['조리개', 'f/' + tags.FNumber.toFixed(1)]);
-    if (tags.ExposureTime) rows.push(['셔터 속도', tags.ExposureTime < 1 ? '1/' + Math.round(1 / tags.ExposureTime) + '초' : tags.ExposureTime + '초']);
+    if (tags.Make || tags.Model) rows.push(['Camera', [tags.Make, tags.Model].filter(Boolean).join(' ')]);
+    if (tags.LensModel) rows.push(['Lens', tags.LensModel]);
+    if (tags.DateTimeOriginal || tags.DateTime) rows.push(['Date taken', (tags.DateTimeOriginal || tags.DateTime).replace(/^(\d{4}):(\d{2}):(\d{2})/, '$1-$2-$3')]);
+    if (tags.FNumber) rows.push(['Aperture', 'f/' + tags.FNumber.toFixed(1)]);
+    if (tags.ExposureTime) rows.push(['Shutter speed', tags.ExposureTime < 1 ? '1/' + Math.round(1 / tags.ExposureTime) + 's' : tags.ExposureTime + 's']);
     if (tags.ISO) rows.push(['ISO', tags.ISO]);
-    if (tags.FocalLength) rows.push(['초점 거리', Math.round(tags.FocalLength) + 'mm']);
-    if (tags.Orientation) rows.push(['방향(Orientation)', tags.Orientation]);
+    if (tags.FocalLength) rows.push(['Focal length', Math.round(tags.FocalLength) + 'mm']);
+    if (tags.Orientation) rows.push(['Orientation', tags.Orientation]);
 
     gpsWarn.classList.remove('show');
     var lat = dmsToDecimal(gps.GPSLatitude, gps.GPSLatitudeRef);
     var lon = dmsToDecimal(gps.GPSLongitude, gps.GPSLongitudeRef);
     if (lat != null && lon != null) {
-      rows.push(['GPS 위치', lat.toFixed(6) + ', ' + lon.toFixed(6)]);
+      rows.push(['GPS location', lat.toFixed(6) + ', ' + lon.toFixed(6)]);
       gpsWarn.classList.add('show');
-      document.getElementById('gpsCoord').textContent = '위도 ' + lat.toFixed(6) + ', 경도 ' + lon.toFixed(6);
+      document.getElementById('gpsCoord').textContent = 'Lat ' + lat.toFixed(6) + ', Lon ' + lon.toFixed(6);
       document.getElementById('gpsMapLink').href = 'https://www.google.com/maps?q=' + lat + ',' + lon;
     }
 
     if (!rows.length) {
-      exifCard.innerHTML = '<div class="exif-empty">✓ 이 사진에서 EXIF 메타데이터를 찾을 수 없습니다.</div>';
+      exifCard.innerHTML = '<div class="exif-empty">✓ No EXIF metadata found in this photo.</div>';
       return;
     }
     exifCard.innerHTML = rows.map(function(r) {
@@ -482,7 +496,7 @@
     return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
   }
 
-  // ── EXIF 제거: Canvas로 다시 그려서 내보내면 메타데이터가 자동으로 사라짐 ──
+  // ── Remove EXIF: redrawing via canvas and exporting strips metadata automatically ──
   document.getElementById('downloadBtn').addEventListener('click', function() {
     if (!currentFile) return;
     var img = new Image();
@@ -496,7 +510,7 @@
       var mime = currentFile.type === 'image/png' ? 'image/png' : (currentFile.type === 'image/webp' ? 'image/webp' : 'image/jpeg');
       var quality = mime === 'image/png' ? undefined : 0.95;
       canvas.toBlob(function(blob) {
-        if (!blob) { showToast('변환 중 오류가 발생했습니다'); return; }
+        if (!blob) { showToast('An error occurred during conversion'); return; }
         var ext = mime === 'image/png' ? 'png' : (mime === 'image/webp' ? 'webp' : 'jpg');
         var baseName = currentFile.name.replace(/\.[^.]+$/, '');
         var a = document.createElement('a');
@@ -504,7 +518,7 @@
         a.download = baseName + '_no-exif.' + ext;
         a.click();
         URL.revokeObjectURL(a.href);
-        showToast('✓ EXIF가 제거된 이미지가 저장됩니다');
+        showToast('✓ Your image with EXIF removed has been saved');
       }, mime, quality);
     };
     img.src = currentObjectUrl;
@@ -546,7 +560,7 @@
     try {
       if (document.cookie.indexOf('bk_lang_dismiss=1') !== -1) return;
       var lang = (navigator.language || navigator.userLanguage || '').toLowerCase();
-      if (lang.indexOf('ko') === 0) return;
+      if (lang.indexOf('ko') !== 0) return;
       var banner = document.getElementById('langBanner');
       if (!banner) return;
       banner.classList.add('show');
