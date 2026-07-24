@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
   <link rel="icon" href="/favicon.ico" sizes="32x32">
   <link rel="icon" href="/favicon-16.png" sizes="16x16" type="image/png">
@@ -8,18 +8,17 @@
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="두 텍스트의 차이점을 줄 단위로 비교하는 무료 온라인 도구. 추가된 내용은 초록색, 삭제된 내용은 빨간색으로 표시합니다. 서버 전송 없이 브라우저에서 바로 처리합니다." />
-  <meta property="og:title" content="DiffChecker — 텍스트 비교 도구" />
-  <meta property="og:description" content="두 텍스트의 차이점을 줄 단위로 비교하는 무료 온라인 도구입니다." />
+  <meta name="description" content="Free online tool that compares two texts line by line. Added content is shown in green, removed content in red. Processed entirely in your browser, nothing is uploaded." />
+  <meta property="og:title" content="DiffChecker — Text Comparison Tool" />
+  <meta property="og:description" content="A free online tool that compares two texts line by line." />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://browserkit.online/diff-checker/" />
-  <title>DiffChecker — 텍스트 비교 도구</title>
+  <meta property="og:url" content="https://browserkit.online/en/diff-checker/" />
+  <title>DiffChecker — Text Comparison Tool</title>
   <link rel="stylesheet" href="/css/style.css?v=20260724c" />
-  <!-- Google AdSense 승인 대기 중 (2026-07-19 주석 처리, 카카오 애드핏으로 임시 전환) — 승인 후 주석 해제
+  <!-- Google AdSense — pending re-review. Uncomment once approved.
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506"
      crossorigin="anonymous"></script>
   -->
-  <script type="text/javascript" src="//t1.kakaocdn.net/kas/static/ba.min.js" async></script>
   <style>
     .guide-summary { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:24px; margin:0 0 12px; }
     .guide-summary-title { font-size:16px; font-weight:700; color:var(--text); margin:0 0 12px; }
@@ -31,31 +30,34 @@
     .guide-full-link { display:inline-block; margin-top:12px; font-size:14px; font-weight:600; color:var(--point-hover); text-decoration:none; }
     .guide-full-link:hover { text-decoration:underline; }
 
+    .ad-slot { min-height:90px; display:flex; align-items:center; justify-content:center; margin:0 0 12px; }
+    .ad-slot-rect { min-height:250px; }
 
-/* 입력 영역 */
+
+/* Input area */
     .input-section { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:16px; }
     .input-pane { display:flex; flex-direction:column; gap:8px; }
     .pane-label { font-size:13px; font-weight:600; color:var(--subtext); display:flex; align-items:center; justify-content:space-between; }
-    .pane-info { font-size:11px; color:var(--subtext); font-family:'Gowun Dodum',sans-serif; }
+    .pane-info { font-size:11px; color:var(--subtext); }
     .diff-textarea { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:14px 16px; font-family:'Fira Code','JetBrains Mono',monospace; font-size:13px; line-height:1.7; color:var(--text); resize:vertical; min-height:240px; width:100%; outline:none; transition:border-color 0.2s; }
     .diff-textarea:focus { border-color:var(--point); }
-    .diff-textarea::placeholder { color:var(--subtext); font-style:italic; font-family:'Gowun Dodum',sans-serif; font-size:13px; }
+    .diff-textarea::placeholder { color:var(--subtext); font-style:italic; font-size:13px; }
 
-    /* 액션 바 */
+    /* Action bar */
     .action-bar { display:flex; justify-content:center; gap:10px; margin-bottom:20px; flex-wrap:wrap; }
-    .btn-primary { background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border:none; border-radius:10px; padding:12px 28px; font-size:14px; font-weight:700; cursor:pointer; font-family:'Gowun Dodum',sans-serif; transition:all 0.2s; white-space:nowrap; }
+    .btn-primary { background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border:none; border-radius:10px; padding:12px 28px; font-size:14px; font-weight:700; cursor:pointer; transition:all 0.2s; white-space:nowrap; }
     .btn-primary:hover { transform:translateY(-2px); box-shadow:0 8px 24px var(--glow); }
-    .btn-sub { background:var(--card); color:var(--subtext); border:1px solid var(--border); border-radius:10px; padding:12px 20px; font-size:14px; cursor:pointer; font-family:'Gowun Dodum',sans-serif; transition:all 0.2s; white-space:nowrap; }
+    .btn-sub { background:var(--card); color:var(--subtext); border:1px solid var(--border); border-radius:10px; padding:12px 20px; font-size:14px; cursor:pointer; transition:all 0.2s; white-space:nowrap; }
     .btn-sub:hover { color:var(--text); border-color:var(--point); }
 
-    /* 요약 */
+    /* Summary */
     .diff-summary { display:flex; gap:12px; margin-bottom:16px; flex-wrap:wrap; align-items:center; }
     .summary-badge { display:inline-flex; align-items:center; gap:6px; font-size:13px; font-weight:600; padding:5px 14px; border-radius:999px; }
     .badge-add { background:rgba(52,211,153,0.12); color:#34D399; border:1px solid rgba(52,211,153,0.3); }
     .badge-del { background:rgba(248,113,113,0.12); color:#F87171; border:1px solid rgba(248,113,113,0.3); }
     .badge-same { background:var(--card); color:var(--subtext); border:1px solid var(--border); }
 
-    /* 결과 영역 */
+    /* Result area */
     .result-section { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:48px; }
     .result-pane { display:flex; flex-direction:column; gap:8px; }
     .result-label { font-size:13px; font-weight:600; color:var(--subtext); }
@@ -71,9 +73,9 @@
     .line-del .diff-line-num { background:rgba(248,113,113,0.18); color:#F87171; }
     .line-del .diff-line-content { color:#F87171; }
     .line-same .diff-line-content { color:var(--subtext); }
-    .diff-placeholder { padding:32px; text-align:center; color:var(--subtext); font-size:13px; font-family:'Gowun Dodum',sans-serif; font-style:italic; }
+    .diff-placeholder { padding:32px; text-align:center; color:var(--subtext); font-size:13px; font-style:italic; }
 
-    /* 범례 */
+    /* Legend */
     .legend { display:flex; gap:16px; margin-bottom:12px; flex-wrap:wrap; }
     .legend-item { display:flex; align-items:center; gap:6px; font-size:12px; color:var(--subtext); }
     .legend-dot { width:12px; height:12px; border-radius:3px; flex-shrink:0; }
@@ -81,15 +83,15 @@
     .legend-dot-del { background:rgba(248,113,113,0.4); border:1px solid #F87171; }
     .legend-dot-same { background:var(--card); border:1px solid var(--border); }
 
-    /* 샘플 */
-    .sample-btn { font-size:12px; color:var(--point-hover); cursor:pointer; background:none; border:none; font-family:'Gowun Dodum',sans-serif; text-decoration:underline; padding:0; }
+    /* Sample */
+    .sample-btn { font-size:12px; color:var(--point-hover); cursor:pointer; background:none; border:none; text-decoration:underline; padding:0; }
     .sample-btn:hover { color:var(--text); }
 
-    /* 토스트 */
+    /* Toast */
     .toast { position:fixed; bottom:32px; left:50%; transform:translateX(-50%) translateY(80px); background:var(--success); color:#fff; border-radius:999px; padding:10px 24px; font-size:14px; font-weight:600; opacity:0; pointer-events:none; z-index:999; transition:all 0.3s ease; }
     .toast.show { transform:translateX(-50%) translateY(0); opacity:1; }
 
-    /* 배너 */
+    /* Banner */
     .footer { border-top:1px solid var(--border); padding:32px 0; text-align:center; }
     .footer-copy { color:var(--subtext); font-size:13px; margin-bottom:12px; }
     .footer-nav { display:flex; justify-content:center; gap:20px; flex-wrap:wrap; }
@@ -103,9 +105,9 @@
     }
   </style>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <meta property="og:image" content="https://browserkit.online/img/og/diff-checker.png" />
-  <link rel="canonical" href="https://browserkit.online/diff-checker/" />
+  <link rel="canonical" href="https://browserkit.online/en/diff-checker/" />
   <link rel="alternate" hreflang="ko" href="https://browserkit.online/diff-checker/" />
   <link rel="alternate" hreflang="en" href="https://browserkit.online/en/diff-checker/" />
   <link rel="alternate" hreflang="x-default" href="https://browserkit.online/en/diff-checker/" />
@@ -115,18 +117,18 @@
 {
   "@context": "https://schema.org",
   "@type": "WebApplication",
-  "name": "DiffChecker — 텍스트 비교 도구",
-  "url": "https://browserkit.online/diff-checker/",
-  "description": "두 텍스트의 차이점을 줄 단위로 비교하는 무료 온라인 도구. 추가된 내용은 초록색, 삭제된 내용은 빨간색으로 표시합니다. 서버 전송 없이 브라우저에서 바로 처리합니다.",
+  "name": "DiffChecker — Text Comparison Tool",
+  "url": "https://browserkit.online/en/diff-checker/",
+  "description": "Free online tool that compares two texts line by line. Added content is shown in green, removed content in red. Processed entirely in your browser, nothing is uploaded.",
   "applicationCategory": "UtilityApplication",
   "operatingSystem": "Any",
   "browserRequirements": "Requires JavaScript",
-  "inLanguage": "ko",
+  "inLanguage": "en",
   "isAccessibleForFree": true,
   "offers": {
     "@type": "Offer",
     "price": "0",
-    "priceCurrency": "KRW"
+    "priceCurrency": "USD"
   },
   "publisher": {
     "@type": "Organization",
@@ -143,14 +145,14 @@
     {
       "@type": "ListItem",
       "position": 1,
-      "name": "홈",
-      "item": "https://browserkit.online/"
+      "name": "Home",
+      "item": "https://browserkit.online/en/"
     },
     {
       "@type": "ListItem",
       "position": 2,
-      "name": "텍스트 비교",
-      "item": "https://browserkit.online/diff-checker/"
+      "name": "Text Comparison",
+      "item": "https://browserkit.online/en/diff-checker/"
     }
   ]
 }
@@ -159,24 +161,24 @@
 
 <body>
   <div class="lang-banner" id="langBanner">
-    <span>🌐 This page is also available in <a href="/en/diff-checker/">English</a>.</span>
+    <span>🌐 이 페이지는 <a href="/diff-checker/">한국어</a>로도 볼 수 있습니다.</span>
     <button class="lang-banner-close" id="langBannerClose" type="button" aria-label="close">&times;</button>
   </div>
   <header class="header">
     <div class="container">
-      <a href="/" class="header-brand">
-        <div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Gowun Dodum,sans-serif;flex-shrink:0">B</div>
+      <a href="/en/" class="header-brand">
+        <div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Poppins,sans-serif;flex-shrink:0">B</div>
         <span class="header-brand-text"><span style="color:var(--text)">Browser</span><span style="color:var(--point)">Kit</span></span>
       </a>
       <div class="header-right">
         <div class="lang-switcher">
-          <button class="lang-switcher-btn" type="button" data-lang-btn>🌐 <span class="lang-label-full">한국어</span></button>
+          <button class="lang-switcher-btn" type="button" data-lang-btn>🌐 <span class="lang-label-full">English</span></button>
           <div class="lang-switcher-menu" data-lang-menu>
-            <a href="/en/diff-checker/">English</a>
-            <a href="#" class="active">한국어</a>
+            <a href="#" class="active">English</a>
+            <a href="/diff-checker/">한국어</a>
           </div>
         </div>
-        <a href="/" class="header-back">&#x2190; <span class="header-back-label">BrowserKit 홈으로</span></a>
+        <a href="/en/" class="header-back">&#x2190; <span class="header-back-label">Back to BrowserKit</span></a>
       </div>
     </div>
   </header>
@@ -184,114 +186,126 @@
   <main><div class="container">
     <div class="hero">
       <div class="hero-icon" style="height:78px;display:flex;justify-content:center;align-items:center"><div style="transform:scale(1.7);transform-origin:center"><div style="width:46px;height:46px;background:#a8e6cf;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="display:flex;gap:4px"><div style="width:15px;height:30px;background:#fffdf9;border:2.5px solid #2a2433;border-radius:3px;box-sizing:border-box;padding:4px 3px;display:flex;flex-direction:column;gap:3px"><div style="height:2.5px;background:rgba(42,36,51,.35);border-radius:2px"></div><div style="height:2.5px;background:#2a2433;border-radius:2px"></div><div style="height:2.5px;background:rgba(42,36,51,.35);border-radius:2px"></div></div><div style="width:15px;height:30px;background:#fffdf9;border:2.5px solid #2a2433;border-radius:3px;box-sizing:border-box;padding:4px 3px;display:flex;flex-direction:column;gap:3px"><div style="height:2.5px;background:rgba(42,36,51,.35);border-radius:2px"></div><div style="height:2.5px;background:#a8e6cf;border-radius:2px"></div><div style="height:2.5px;background:rgba(42,36,51,.35);border-radius:2px"></div></div></div></div></div></div>
-      <div class="hero-title-wrap"><h1 class="hero-title">텍스트 비교</h1><a href="/blog/28-diffchecker-howto" class="hero-guide-link">사용법 가이드 보기</a></div>
-      <p class="hero-desc">두 텍스트의 차이점을 줄 단위로 비교하세요. 추가된 줄은 초록색, 삭제된 줄은 빨간색으로 표시됩니다</p>
+      <div class="hero-title-wrap"><h1 class="hero-title">Text Comparison</h1><a href="/blog/28-diffchecker-howto" class="hero-guide-link">View usage guide</a></div>
+      <p class="hero-desc">Compare two texts line by line — added lines appear in green, removed lines in red</p>
       <div class="hero-badges">
-        <span class="badge">🔒 완전 로컬 처리</span>
-        <span class="badge">⚡ 무료 사용</span>
-        <span class="badge">🛡️ 서버 전송 없음</span>
-        <span class="badge">📦 설치 불필요</span>
+        <span class="badge">🔒 Fully local processing</span>
+        <span class="badge">⚡ Free to use</span>
+        <span class="badge">🛡️ No server upload</span>
+        <span class="badge">📦 No installation</span>
       </div>
     </div>
-    <div style="margin:0 0 12px"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><div class="adfit-h-desktop"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-QD4pRIpdIj7i2mbt" data-ad-width="728" data-ad-height="90"></ins></div><div class="adfit-h-mobile"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-R4xA2niTT8HgGjoO" data-ad-width="320" data-ad-height="50"></ins></div></div>
+    <!-- Google AdSense Display Ad — pending approval, reserving space -->
+    <div class="ad-slot" id="adTop">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
 
-<!-- 입력 -->
+<!-- Input -->
     <div class="input-section">
       <div class="input-pane">
         <div class="pane-label">
-          <span>원본 텍스트</span>
+          <span>Original text</span>
           <span class="pane-info" id="info-left"></span>
         </div>
-        <textarea class="diff-textarea" id="left-input" placeholder="비교할 원본 텍스트를 입력하세요&#10;&#10;(예: 수정 전 코드, 문서 초안 등)"></textarea>
+        <textarea class="diff-textarea" id="left-input" placeholder="Enter the original text to compare&#10;&#10;(e.g. code before edits, a document draft)"></textarea>
       </div>
       <div class="input-pane">
         <div class="pane-label">
-          <span>수정된 텍스트</span>
+          <span>Modified text</span>
           <span class="pane-info" id="info-right"></span>
         </div>
-        <textarea class="diff-textarea" id="right-input" placeholder="비교할 수정된 텍스트를 입력하세요&#10;&#10;(예: 수정 후 코드, 문서 수정본 등)"></textarea>
+        <textarea class="diff-textarea" id="right-input" placeholder="Enter the modified text to compare&#10;&#10;(e.g. code after edits, a revised document)"></textarea>
       </div>
     </div>
 
-    <!-- 액션 -->
+    <!-- Action -->
     <div class="action-bar">
-      <button class="btn-primary" id="compare-btn">&#x1F504; 비교하기</button>
-      <button class="btn-sub" id="sample-btn">&#x1F4CB; 샘플 불러오기</button>
-      <button class="btn-sub" id="clear-btn">&#x21BA; 초기화</button>
+      <button class="btn-primary" id="compare-btn">&#x1F504; Compare</button>
+      <button class="btn-sub" id="sample-btn">&#x1F4CB; Load sample</button>
+      <button class="btn-sub" id="clear-btn">&#x21BA; Reset</button>
     </div>
 
-    <!-- 요약 -->
+    <!-- Summary -->
     <div class="diff-summary" id="diff-summary" style="display:none;">
-      <span class="summary-badge badge-add" id="badge-add">+ 0줄 추가</span>
-      <span class="summary-badge badge-del" id="badge-del">- 0줄 삭제</span>
-      <span class="summary-badge badge-same" id="badge-same">= 0줄 동일</span>
+      <span class="summary-badge badge-add" id="badge-add">+ 0 lines added</span>
+      <span class="summary-badge badge-del" id="badge-del">- 0 lines removed</span>
+      <span class="summary-badge badge-same" id="badge-same">= 0 lines unchanged</span>
     </div>
 
-    <!-- 범례 -->
+    <!-- Legend -->
     <div class="legend" id="diff-legend" style="display:none;">
-      <div class="legend-item"><div class="legend-dot legend-dot-add"></div>추가된 줄</div>
-      <div class="legend-item"><div class="legend-dot legend-dot-del"></div>삭제된 줄</div>
-      <div class="legend-item"><div class="legend-dot legend-dot-same"></div>동일한 줄</div>
+      <div class="legend-item"><div class="legend-dot legend-dot-add"></div>Added line</div>
+      <div class="legend-item"><div class="legend-dot legend-dot-del"></div>Removed line</div>
+      <div class="legend-item"><div class="legend-dot legend-dot-same"></div>Unchanged line</div>
     </div>
 
-    <!-- 결과 -->
+    <!-- Result -->
     <div class="result-section" id="result-section" style="display:none;">
       <div class="result-pane">
-        <div class="result-label">원본</div>
+        <div class="result-label">Original</div>
         <div class="diff-view" id="left-view">
-          <div class="diff-placeholder">비교하기 버튼을 눌러주세요.</div>
+          <div class="diff-placeholder">Click the Compare button.</div>
         </div>
       </div>
       <div class="result-pane">
-        <div class="result-label">수정본</div>
+        <div class="result-label">Modified</div>
         <div class="diff-view" id="right-view">
-          <div class="diff-placeholder">비교하기 버튼을 눌러주세요.</div>
+          <div class="diff-placeholder">Click the Compare button.</div>
         </div>
       </div>
     </div>
 
-<div style="margin:0 0 12px"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><!-- 카카오 애드핏 (2026-07-22, 쿠팡 파트너스 다이내믹 배너로 교체) — 복원 시 주석 해제: <div class="adfit-h-desktop"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-QD4pRIpdIj7i2mbt" data-ad-width="728" data-ad-height="90"></ins></div><div class="adfit-h-mobile"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-R4xA2niTT8HgGjoO" data-ad-width="320" data-ad-height="50"></ins></div> --><div class="adfit-h-desktop"><script src="https://ads-partners.coupang.com/g.js"></script><script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"728","height":"90","tsource":""});</script></div><div class="adfit-h-mobile"><script src="https://ads-partners.coupang.com/g.js"></script><script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"320","height":"50","tsource":""});</script></div></div>
-
-    <div class="guide-summary">
-      <h2 class="guide-summary-title">사용법 요약</h2>
-      <ol class="guide-steps">
-        <li>텍스트 입력</li>
-        <li>비교하기</li>
-        <li>결과 확인</li>
-      </ol>
-      <h3 class="guide-faq-title">자주 묻는 질문</h3>
-      <div class="guide-faq">
-        <details>
-          <summary>텍스트 비교 도구는 정말 무료인가요?</summary>
-          <p>네, 회원가입이나 설치 없이 완전 무료로 사용할 수 있습니다. 횟수 제한도 없습니다.</p>
-        </details>
-        <details>
-          <summary>입력한 내용이 서버로 전송되나요?</summary>
-          <p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용이 외부 서버로 전송되거나 저장되지 않습니다.</p>
-        </details>
-        <details>
-          <summary>두 텍스트는 어떤 단위로 비교되나요?</summary>
-          <p>줄 단위로 비교해 추가·삭제·변경된 부분을 색상으로 하이라이트해 보여줍니다.</p>
-        </details>
-        <details>
-          <summary>모바일에서도 사용할 수 있나요?</summary>
-          <p>네, 별도의 앱 설치 없이 모바일 브라우저에서도 동일하게 사용할 수 있습니다.</p>
-        </details>
-      </div>
-      <a href="/blog/28-diffchecker-howto" class="guide-full-link">전체 가이드 보기 →</a>
+<!-- Google AdSense Display Ad — pending approval, reserving space -->
+    <div class="ad-slot" id="adMiddle">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
     </div>
 
-    <div style="margin:12px 0"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="9500090221"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><div class="adfit-rect-wrap"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-oePL4TCj742xAwqT" data-ad-width="300" data-ad-height="250"></ins></div></div>
+    <div class="guide-summary">
+      <h2 class="guide-summary-title">Quick guide</h2>
+      <ol class="guide-steps">
+        <li>Enter text</li>
+        <li>Click Compare</li>
+        <li>Review the results</li>
+      </ol>
+      <h3 class="guide-faq-title">Frequently asked questions</h3>
+      <div class="guide-faq">
+        <details>
+          <summary>Is the Text Comparison tool really free?</summary>
+          <p>Yes, it is completely free to use with no sign-up or installation required. There is no usage limit either.</p>
+        </details>
+        <details>
+          <summary>Is what I type sent to a server?</summary>
+          <p>No. All processing happens entirely in your browser, and your input is never sent to or stored on an external server.</p>
+        </details>
+        <details>
+          <summary>What unit are the two texts compared by?</summary>
+          <p>The comparison is done line by line, and added, removed, and changed parts are highlighted in color.</p>
+        </details>
+        <details>
+          <summary>Can I use this on mobile?</summary>
+          <p>Yes, it works the same way in a mobile browser without needing to install any app.</p>
+        </details>
+      </div>
+      <a href="/blog/28-diffchecker-howto" class="guide-full-link">View full guide →</a>
+    </div>
+
+    <!-- Google AdSense Multiplex Ad — pending approval, reserving space -->
+    <div class="ad-slot ad-slot-rect" id="adBottom">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
   </div></main>
 
   <footer class="footer">
     <div class="container">
-      <p class="footer-copy">&#xa9; 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p>
+      <p class="footer-copy">&#xa9; 2026 BrowserKit. All processing happens in your browser.</p>
       <nav class="footer-nav">
-        <a href="/privacy">개인정보 처리방침</a>
-        <a href="/terms">이용약관</a>
-        <a href="/about">서비스 소개</a>
-        <a href="/blog/">블로그</a>
+        <a href="/en/privacy.html">Privacy Policy</a>
+        <a href="/en/terms.html">Terms of Service</a>
+        <a href="/en/about.html">About</a>
+        <a href="/en/blog/">Blog</a>
       </nav>
     </div>
   </footer>
@@ -299,14 +313,14 @@
   <div class="toast" id="toast"></div>
 
   <script>
-  // ── LCS 기반 diff 알고리즘 ──
-  // 두 줄 배열을 비교해 각 줄의 타입('same'|'add'|'del')과 내용을 반환
+  // ── LCS-based diff algorithm ──
+  // Compares two line arrays and returns each line's type ('same'|'add'|'del') and content
   function computeDiff(leftLines, rightLines) {
     var n = leftLines.length;
     var m = rightLines.length;
 
-    // LCS DP 테이블 (메모리 절약: 현재·이전 행만 유지)
-    // 단, 역추적을 위해 전체 테이블을 저장
+    // LCS DP table
+    // (kept in full for backtracking)
     var dp = [];
     var i, j;
     for (i = 0; i <= n; i++) {
@@ -322,9 +336,9 @@
       }
     }
 
-    // 역추적으로 diff 생성
-    var leftResult = [];  // 왼쪽 패널에 표시할 줄들
-    var rightResult = []; // 오른쪽 패널에 표시할 줄들
+    // Build the diff via backtracking
+    var leftResult = [];  // lines to show in the left pane
+    var rightResult = []; // lines to show in the right pane
     i = n; j = m;
 
     while (i > 0 || j > 0) {
@@ -333,12 +347,12 @@
         rightResult.push({ type: 'same', text: rightLines[j - 1] });
         i--; j--;
       } else if (j > 0 && (i === 0 || dp[i][j - 1] >= dp[i - 1][j])) {
-        // 오른쪽에만 있음 = 추가
+        // only in the right side = added
         leftResult.push({ type: 'empty', text: '' });
         rightResult.push({ type: 'add', text: rightLines[j - 1] });
         j--;
       } else {
-        // 왼쪽에만 있음 = 삭제
+        // only in the left side = removed
         leftResult.push({ type: 'del', text: leftLines[i - 1] });
         rightResult.push({ type: 'empty', text: '' });
         i--;
@@ -350,7 +364,7 @@
     return { left: leftResult, right: rightResult };
   }
 
-  // ── 뷰 렌더링 ──
+  // ── Render view ──
   function renderView(container, lines, side) {
     var inner = document.createElement('div');
     inner.className = 'diff-view-inner';
@@ -375,7 +389,7 @@
       } else {
         lineNum++;
         numCell.textContent = lineNum;
-        // XSS 방지: textContent 사용
+        // XSS prevention: use textContent
         contentCell.textContent = item.text === '' ? '\u00a0' : item.text;
 
         if (item.type === 'add') {
@@ -399,7 +413,7 @@
     container.appendChild(inner);
   }
 
-  // ── 스크롤 동기화 ──
+  // ── Sync scroll ──
   var leftView = document.getElementById('left-view');
   var rightView = document.getElementById('right-view');
   var syncing = false;
@@ -417,10 +431,10 @@
     syncing = false;
   });
 
-  // ── 입력 정보 갱신 ──
+  // ── Update input info ──
   function updateInfo(input, infoEl) {
     var lines = input.value ? input.value.split('\n').length : 0;
-    infoEl.textContent = input.value ? lines + '줄' : '';
+    infoEl.textContent = input.value ? lines + ' lines' : '';
   }
 
   var leftInput = document.getElementById('left-input');
@@ -428,13 +442,13 @@
   leftInput.addEventListener('input', function() { updateInfo(leftInput, document.getElementById('info-left')); });
   rightInput.addEventListener('input', function() { updateInfo(rightInput, document.getElementById('info-right')); });
 
-  // ── 비교하기 ──
+  // ── Compare ──
   document.getElementById('compare-btn').addEventListener('click', function() {
     var leftText = leftInput.value;
     var rightText = rightInput.value;
 
     if (!leftText && !rightText) {
-      showToast('비교할 텍스트를 입력해주세요');
+      showToast('Please enter text to compare');
       return;
     }
 
@@ -446,7 +460,7 @@
     renderView(leftView, result.left, 'left');
     renderView(rightView, result.right, 'right');
 
-    // 요약 계산
+    // Compute summary
     var addCount = 0, delCount = 0, sameCount = 0;
     for (var i = 0; i < result.right.length; i++) {
       if (result.right[i].type === 'add') addCount++;
@@ -456,16 +470,16 @@
       if (result.left[i].type === 'same') sameCount++;
     }
 
-    document.getElementById('badge-add').textContent = '+ ' + addCount + '줄 추가';
-    document.getElementById('badge-del').textContent = '- ' + delCount + '줄 삭제';
-    document.getElementById('badge-same').textContent = '= ' + sameCount + '줄 동일';
+    document.getElementById('badge-add').textContent = '+ ' + addCount + ' line(s) added';
+    document.getElementById('badge-del').textContent = '- ' + delCount + ' line(s) removed';
+    document.getElementById('badge-same').textContent = '= ' + sameCount + ' line(s) unchanged';
 
     document.getElementById('diff-summary').style.display = 'flex';
     document.getElementById('diff-legend').style.display = 'flex';
     document.getElementById('result-section').style.display = 'grid';
   });
 
-  // ── 샘플 ──
+  // ── Sample ──
   var SAMPLE_LEFT = [
     'function greet(name) {',
     '  console.log("Hello, " + name);',
@@ -493,10 +507,10 @@
     updateInfo(leftInput, document.getElementById('info-left'));
     updateInfo(rightInput, document.getElementById('info-right'));
     document.getElementById('compare-btn').click();
-    showToast('\u2713 샘플이 로드되었습니다');
+    showToast('\u2713 Sample loaded');
   });
 
-  // ── 초기화 ──
+  // ── Reset ──
   document.getElementById('clear-btn').addEventListener('click', function() {
     leftInput.value = '';
     rightInput.value = '';
@@ -505,11 +519,11 @@
     document.getElementById('diff-summary').style.display = 'none';
     document.getElementById('diff-legend').style.display = 'none';
     document.getElementById('result-section').style.display = 'none';
-    leftView.innerHTML = '<div class="diff-placeholder">비교하기 버튼을 눌러주세요.</div>';
-    rightView.innerHTML = '<div class="diff-placeholder">비교하기 버튼을 눌러주세요.</div>';
+    leftView.innerHTML = '<div class="diff-placeholder">Click the Compare button.</div>';
+    rightView.innerHTML = '<div class="diff-placeholder">Click the Compare button.</div>';
   });
 
-  // ── 토스트 ──
+  // ── Toast ──
   function showToast(msg) {
     var t = document.getElementById('toast');
     t.textContent = msg;
@@ -536,7 +550,7 @@
     try {
       if (document.cookie.indexOf('bk_lang_dismiss=1') !== -1) return;
       var lang = (navigator.language || navigator.userLanguage || '').toLowerCase();
-      if (lang.indexOf('ko') === 0) return;
+      if (lang.indexOf('ko') !== 0) return;
       var banner = document.getElementById('langBanner');
       if (!banner) return;
       banner.classList.add('show');
