@@ -991,7 +991,9 @@ a:hover { color: var(--text); }
   .header .container { padding: 0 16px; }
   .header-right { gap: 8px; }
   .header-back-label { display: none; }
-  .header-back { font-size: 20px; }
+  .header-back { font-size: 15px; gap: 4px; }
+  html[lang="ko"] .header-back::after { content: "홈"; }
+  html[lang="en"] .header-back::after { content: "Home"; }
 }
 
 /* 브라우저 언어 감지 배너 */
