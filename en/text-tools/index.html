@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
   <link rel="icon" href="/favicon.ico" sizes="32x32">
   <link rel="icon" href="/favicon-16.png" sizes="16x16" type="image/png">
@@ -8,17 +8,16 @@
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="글자수 세기, 공백 정리, 대소문자 변환, 중복 제거까지 텍스트 작업을 브라우저에서 바로 처리하는 무료 도구." />
-  <meta property="og:title" content="TextTools — 텍스트 변환 / 정리 도구" />
-  <meta property="og:description" content="글자수 세기, 공백 정리, 대소문자 변환, 중복 제거까지 한 번에. 서버 전송 없이 브라우저에서 바로 처리하는 무료 텍스트 도구입니다." />
+  <meta name="description" content="Free tool for character counting, whitespace cleanup, case conversion, and duplicate removal — all processed instantly in your browser." />
+  <meta property="og:title" content="TextTools — Text Conversion / Cleanup Tool" />
+  <meta property="og:description" content="Character counting, whitespace cleanup, case conversion, and duplicate removal — all in one place. A free text tool that processes everything in your browser, with no server upload." />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://browserkit.online/text-tools/" />
-  <title>TextTools — 텍스트 변환 / 정리 도구</title>
-  <!-- Google AdSense 승인 대기 중 (2026-07-19 주석 처리, 카카오 애드핏으로 임시 전환) — 승인 후 주석 해제
+  <meta property="og:url" content="https://browserkit.online/en/text-tools/" />
+  <title>TextTools — Text Conversion / Cleanup Tool</title>
+  <!-- Google AdSense — pending re-review. Uncomment once approved.
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506"
      crossorigin="anonymous"></script>
   -->
-  <script type="text/javascript" src="//t1.kakaocdn.net/kas/static/ba.min.js" async></script>
   <link rel="stylesheet" href="/css/style.css?v=20260724c" />
   <style>
     .guide-summary { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:24px; margin:0 0 12px; }
@@ -30,6 +29,9 @@
     .guide-faq p { margin:8px 0 0; font-size:13px; color:var(--subtext); line-height:1.7; }
     .guide-full-link { display:inline-block; margin-top:12px; font-size:14px; font-weight:600; color:var(--point-hover); text-decoration:none; }
     .guide-full-link:hover { text-decoration:underline; }
+
+    .ad-slot { min-height:90px; display:flex; align-items:center; justify-content:center; margin:0 0 12px; }
+    .ad-slot-rect { min-height:250px; }
 
     
     *{margin:0;padding:0;box-sizing:border-box;transition:all 0.2s ease;}
@@ -76,9 +78,9 @@
     @media(max-width:640px){.editor-wrap{grid-template-columns:1fr;}.stats-grid{grid-template-columns:repeat(2,1fr);}.coupang-banner-pc{display:none;}.coupang-banner-mo{display:block;}.adfit-pc{display:none;}.adfit-mo{display:block;}}
   </style>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <meta property="og:image" content="https://browserkit.online/img/og/text-tools.png" />
-  <link rel="canonical" href="https://browserkit.online/text-tools/" />
+  <link rel="canonical" href="https://browserkit.online/en/text-tools/" />
   <link rel="alternate" hreflang="ko" href="https://browserkit.online/text-tools/" />
   <link rel="alternate" hreflang="en" href="https://browserkit.online/en/text-tools/" />
   <link rel="alternate" hreflang="x-default" href="https://browserkit.online/en/text-tools/" />
@@ -88,18 +90,18 @@
 {
   "@context": "https://schema.org",
   "@type": "WebApplication",
-  "name": "TextTools — 텍스트 변환 / 정리 도구",
-  "url": "https://browserkit.online/text-tools/",
-  "description": "글자수 세기, 공백 정리, 대소문자 변환, 중복 제거까지 텍스트 작업을 브라우저에서 바로 처리하는 무료 도구.",
+  "name": "TextTools — Text Conversion / Cleanup Tool",
+  "url": "https://browserkit.online/en/text-tools/",
+  "description": "Free tool for character counting, whitespace cleanup, case conversion, and duplicate removal — all processed instantly in your browser.",
   "applicationCategory": "UtilityApplication",
   "operatingSystem": "Any",
   "browserRequirements": "Requires JavaScript",
-  "inLanguage": "ko",
+  "inLanguage": "en",
   "isAccessibleForFree": true,
   "offers": {
     "@type": "Offer",
     "price": "0",
-    "priceCurrency": "KRW"
+    "priceCurrency": "USD"
   },
   "publisher": {
     "@type": "Organization",
@@ -116,14 +118,14 @@
     {
       "@type": "ListItem",
       "position": 1,
-      "name": "홈",
-      "item": "https://browserkit.online/"
+      "name": "Home",
+      "item": "https://browserkit.online/en/"
     },
     {
       "@type": "ListItem",
       "position": 2,
-      "name": "텍스트 변환",
-      "item": "https://browserkit.online/text-tools/"
+      "name": "Text Conversion",
+      "item": "https://browserkit.online/en/text-tools/"
     }
   ]
 }
@@ -131,145 +133,157 @@
 </head>
 <body>
   <div class="lang-banner" id="langBanner">
-    <span>🌐 This page is also available in <a href="/en/text-tools/">English</a>.</span>
+    <span>🌐 이 페이지는 <a href="/text-tools/">한국어</a>로도 볼 수 있습니다.</span>
     <button class="lang-banner-close" id="langBannerClose" type="button" aria-label="close">&times;</button>
   </div>
   <header class="header">
     <div class="container">
-      <a href="/" class="header-brand"><div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Gowun Dodum,sans-serif;flex-shrink:0">B</div><span class="header-brand-text"><span style="color:var(--text)">Browser</span><span style="color:var(--point)">Kit</span></span></a>
+      <a href="/en/" class="header-brand"><div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Poppins,sans-serif;flex-shrink:0">B</div><span class="header-brand-text"><span style="color:var(--text)">Browser</span><span style="color:var(--point)">Kit</span></span></a>
       <div class="header-right">
         <div class="lang-switcher">
-          <button class="lang-switcher-btn" type="button" data-lang-btn>🌐 <span class="lang-label-full">한국어</span></button>
+          <button class="lang-switcher-btn" type="button" data-lang-btn>🌐 <span class="lang-label-full">English</span></button>
           <div class="lang-switcher-menu" data-lang-menu>
-            <a href="/en/text-tools/">English</a>
-            <a href="#" class="active">한국어</a>
+            <a href="#" class="active">English</a>
+            <a href="/text-tools/">한국어</a>
           </div>
         </div>
-        <a href="/" class="header-back">← <span class="header-back-label">BrowserKit 홈으로</span></a>
+        <a href="/en/" class="header-back">← <span class="header-back-label">Back to BrowserKit</span></a>
       </div>
     </div>
   </header>
   <main><div class="container">
     <div class="hero">
-      <div class="hero-icon" style="height:78px;display:flex;justify-content:center;align-items:center"><div style="transform:scale(1.7);transform-origin:center"><div style="width:46px;height:46px;background:#a8e6cf;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="font:700 16px Gowun Dodum,sans-serif;color:#2a2433;line-height:1;letter-spacing:-.5px;white-space:nowrap">Aa</div></div></div></div>
-      <div class="hero-title-wrap"><h1 class="hero-title">텍스트 변환</h1><a href="/blog/20-texttools-howto" class="hero-guide-link">사용법 가이드 보기</a></div>
-      <p class="hero-desc">글자수 세기, 공백 정리, 대소문자 변환, 중복 제거까지 브라우저에서 바로 처리하는 무료 도구</p>
+      <div class="hero-icon" style="height:78px;display:flex;justify-content:center;align-items:center"><div style="transform:scale(1.7);transform-origin:center"><div style="width:46px;height:46px;background:#a8e6cf;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="font:700 16px Poppins,sans-serif;color:#2a2433;line-height:1;letter-spacing:-.5px;white-space:nowrap">Aa</div></div></div></div>
+      <div class="hero-title-wrap"><h1 class="hero-title">Text Conversion</h1><a href="/blog/20-texttools-howto" class="hero-guide-link">View usage guide</a></div>
+      <p class="hero-desc">Free tool for counting characters, cleaning whitespace, converting case, and removing duplicates — right in your browser</p>
       <div class="hero-badges">
-        <span class="badge">🔒 완전 로컬 처리</span>
-        <span class="badge">⚡ 무료 사용</span>
-        <span class="badge">🛡️ 서버 전송 없음</span>
-        <span class="badge">📦 설치 불필요</span>
+        <span class="badge">🔒 Fully local processing</span>
+        <span class="badge">⚡ Free to use</span>
+        <span class="badge">🛡️ No server upload</span>
+        <span class="badge">📦 No installation</span>
       </div>
     </div>
-    <div style="margin:0 0 12px"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><div class="adfit-h-desktop"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-QD4pRIpdIj7i2mbt" data-ad-width="728" data-ad-height="90"></ins></div><div class="adfit-h-mobile"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-R4xA2niTT8HgGjoO" data-ad-width="320" data-ad-height="50"></ins></div></div>
+    <!-- Google AdSense Display Ad — pending approval, reserving space -->
+    <div class="ad-slot" id="adTop">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
     <div class="tab-wrap">
-      <button class="tab-btn active" data-tab="stats">📊 글자수 세기</button>
-      <button class="tab-btn" data-tab="clean">🧹 공백/줄바꿈 정리</button>
-      <button class="tab-btn" data-tab="case">🔤 대소문자 변환</button>
-      <button class="tab-btn" data-tab="dedup">❌ 중복 제거</button>
+      <button class="tab-btn active" data-tab="stats">📊 Character Count</button>
+      <button class="tab-btn" data-tab="clean">🧹 Whitespace/Line Cleanup</button>
+      <button class="tab-btn" data-tab="case">🔤 Case Conversion</button>
+      <button class="tab-btn" data-tab="dedup">❌ Remove Duplicates</button>
     </div>
     <div id="tab-stats">
       <div class="stats-grid">
-        <div class="stat-card"><div class="stat-value" id="statTotal">0</div><div class="stat-label">전체 글자</div></div>
-        <div class="stat-card"><div class="stat-value" id="statNoSpace">0</div><div class="stat-label">공백 제외</div></div>
-        <div class="stat-card"><div class="stat-value" id="statWords">0</div><div class="stat-label">단어 수</div></div>
-        <div class="stat-card"><div class="stat-value" id="statLines">0</div><div class="stat-label">줄 수</div></div>
-        <div class="stat-card"><div class="stat-value" id="statBytes">0</div><div class="stat-label">바이트 (UTF-8)</div></div>
-        <div class="stat-card"><div class="stat-value" id="statSentences">0</div><div class="stat-label">문장 수</div></div>
+        <div class="stat-card"><div class="stat-value" id="statTotal">0</div><div class="stat-label">Total characters</div></div>
+        <div class="stat-card"><div class="stat-value" id="statNoSpace">0</div><div class="stat-label">Excluding spaces</div></div>
+        <div class="stat-card"><div class="stat-value" id="statWords">0</div><div class="stat-label">Word count</div></div>
+        <div class="stat-card"><div class="stat-value" id="statLines">0</div><div class="stat-label">Line count</div></div>
+        <div class="stat-card"><div class="stat-value" id="statBytes">0</div><div class="stat-label">Bytes (UTF-8)</div></div>
+        <div class="stat-card"><div class="stat-value" id="statSentences">0</div><div class="stat-label">Sentence count</div></div>
       </div>
       <div class="editor-wrap">
-        <div class="editor-box"><div class="editor-label">텍스트 입력</div><textarea class="editor-textarea" id="statsInput" placeholder="여기에 텍스트를 입력하세요..."></textarea></div>
-        <div class="editor-box"><div class="editor-label">분석 결과</div><div id="statsDetail" style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px;min-height:280px;font-size:14px;color:var(--subtext);line-height:1.9;">텍스트를 입력하면 상세 분석 결과가 표시됩니다.</div></div>
+        <div class="editor-box"><div class="editor-label">Enter text</div><textarea class="editor-textarea" id="statsInput" placeholder="Type or paste text here..."></textarea></div>
+        <div class="editor-box"><div class="editor-label">Analysis result</div><div id="statsDetail" style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px;min-height:280px;font-size:14px;color:var(--subtext);line-height:1.9;">Detailed analysis will appear here once you enter text.</div></div>
       </div>
-      <div class="action-wrap"><button class="btn-copy" id="statsCopyBtn" disabled>📋 결과 복사</button><button class="btn-sub" id="statsClearBtn">↺ 초기화</button></div>
+      <div class="action-wrap"><button class="btn-copy" id="statsCopyBtn" disabled>📋 Copy Result</button><button class="btn-sub" id="statsClearBtn">↺ Reset</button></div>
     </div>
     <div id="tab-clean" style="display:none;">
-      <div class="option-group"><div class="option-group-title">정리 방식 선택</div><div class="option-btns">
-        <button class="option-btn" data-clean="multiSpace">연속 공백 → 단일</button>
-        <button class="option-btn" data-clean="multiLine">연속 줄바꿈 → 단일</button>
-        <button class="option-btn" data-clean="trimAll">앞뒤 공백 제거 (trim)</button>
-        <button class="option-btn" data-clean="trimLines">각 줄 앞뒤 공백 제거</button>
-        <button class="option-btn" data-clean="removeAllSpace">모든 공백 제거</button>
-        <button class="option-btn" data-clean="removeAllLine">모든 줄바꿈 제거</button>
+      <div class="option-group"><div class="option-group-title">Choose cleanup method</div><div class="option-btns">
+        <button class="option-btn" data-clean="multiSpace">Collapse multiple spaces</button>
+        <button class="option-btn" data-clean="multiLine">Collapse multiple line breaks</button>
+        <button class="option-btn" data-clean="trimAll">Trim leading/trailing whitespace</button>
+        <button class="option-btn" data-clean="trimLines">Trim whitespace on each line</button>
+        <button class="option-btn" data-clean="removeAllSpace">Remove all spaces</button>
+        <button class="option-btn" data-clean="removeAllLine">Remove all line breaks</button>
       </div></div>
       <div class="editor-wrap">
-        <div class="editor-box"><div class="editor-label">입력</div><textarea class="editor-textarea" id="cleanInput" placeholder="정리할 텍스트..."></textarea><div class="editor-info" id="cleanInputInfo"></div></div>
-        <div class="editor-box"><div class="editor-label">결과</div><textarea class="editor-textarea" id="cleanOutput" readonly placeholder="결과..."></textarea><div class="editor-info" id="cleanOutputInfo"></div></div>
+        <div class="editor-box"><div class="editor-label">Input</div><textarea class="editor-textarea" id="cleanInput" placeholder="Text to clean up..."></textarea><div class="editor-info" id="cleanInputInfo"></div></div>
+        <div class="editor-box"><div class="editor-label">Result</div><textarea class="editor-textarea" id="cleanOutput" readonly placeholder="Result..."></textarea><div class="editor-info" id="cleanOutputInfo"></div></div>
       </div>
-      <div class="action-wrap"><button class="btn-copy" id="cleanCopyBtn" disabled>📋 결과 복사</button><button class="btn-sub" id="cleanSwapBtn">⇄ 결과→입력</button><button class="btn-sub" id="cleanClearBtn">↺ 초기화</button></div>
+      <div class="action-wrap"><button class="btn-copy" id="cleanCopyBtn" disabled>📋 Copy Result</button><button class="btn-sub" id="cleanSwapBtn">⇄ Result → Input</button><button class="btn-sub" id="cleanClearBtn">↺ Reset</button></div>
     </div>
     <div id="tab-case" style="display:none;">
-      <div class="option-group"><div class="option-group-title">변환 방식 선택</div><div class="option-btns">
-        <button class="option-btn" data-case="upper">전체 대문자 (UPPER)</button>
-        <button class="option-btn" data-case="lower">전체 소문자 (lower)</button>
-        <button class="option-btn" data-case="capitalize">첫 글자 대문자</button>
+      <div class="option-group"><div class="option-group-title">Choose conversion method</div><div class="option-btns">
+        <button class="option-btn" data-case="upper">All UPPERCASE</button>
+        <button class="option-btn" data-case="lower">All lowercase</button>
+        <button class="option-btn" data-case="capitalize">Capitalize First Letter</button>
         <button class="option-btn" data-case="camel">camelCase</button>
         <button class="option-btn" data-case="snake">snake_case</button>
         <button class="option-btn" data-case="kebab">kebab-case</button>
         <button class="option-btn" data-case="pascal">PascalCase</button>
       </div></div>
       <div class="editor-wrap">
-        <div class="editor-box"><div class="editor-label">입력</div><textarea class="editor-textarea" id="caseInput" placeholder="변환할 텍스트..."></textarea></div>
-        <div class="editor-box"><div class="editor-label">결과</div><textarea class="editor-textarea" id="caseOutput" readonly placeholder="결과..."></textarea></div>
+        <div class="editor-box"><div class="editor-label">Input</div><textarea class="editor-textarea" id="caseInput" placeholder="Text to convert..."></textarea></div>
+        <div class="editor-box"><div class="editor-label">Result</div><textarea class="editor-textarea" id="caseOutput" readonly placeholder="Result..."></textarea></div>
       </div>
-      <div class="action-wrap"><button class="btn-copy" id="caseCopyBtn" disabled>📋 결과 복사</button><button class="btn-sub" id="caseSwapBtn">⇄ 결과→입력</button><button class="btn-sub" id="caseClearBtn">↺ 초기화</button></div>
+      <div class="action-wrap"><button class="btn-copy" id="caseCopyBtn" disabled>📋 Copy Result</button><button class="btn-sub" id="caseSwapBtn">⇄ Result → Input</button><button class="btn-sub" id="caseClearBtn">↺ Reset</button></div>
     </div>
     <div id="tab-dedup" style="display:none;">
-      <div class="option-group"><div class="option-group-title">제거 방식 선택</div><div class="option-btns">
-        <button class="option-btn" data-dedup="dupLines">중복 줄 제거</button>
-        <button class="option-btn" data-dedup="emptyLines">빈 줄 제거</button>
-        <button class="option-btn" data-dedup="dupAndEmpty">중복+빈 줄 모두 제거</button>
+      <div class="option-group"><div class="option-group-title">Choose removal method</div><div class="option-btns">
+        <button class="option-btn" data-dedup="dupLines">Remove duplicate lines</button>
+        <button class="option-btn" data-dedup="emptyLines">Remove empty lines</button>
+        <button class="option-btn" data-dedup="dupAndEmpty">Remove duplicates and empty lines</button>
       </div></div>
       <div class="editor-wrap">
-        <div class="editor-box"><div class="editor-label">입력</div><textarea class="editor-textarea" id="dedupInput" placeholder="중복 제거할 텍스트..."></textarea><div class="editor-info" id="dedupInputInfo"></div></div>
-        <div class="editor-box"><div class="editor-label">결과</div><textarea class="editor-textarea" id="dedupOutput" readonly placeholder="결과..."></textarea><div class="editor-info" id="dedupOutputInfo"></div></div>
+        <div class="editor-box"><div class="editor-label">Input</div><textarea class="editor-textarea" id="dedupInput" placeholder="Text to de-duplicate..."></textarea><div class="editor-info" id="dedupInputInfo"></div></div>
+        <div class="editor-box"><div class="editor-label">Result</div><textarea class="editor-textarea" id="dedupOutput" readonly placeholder="Result..."></textarea><div class="editor-info" id="dedupOutputInfo"></div></div>
       </div>
-      <div class="action-wrap"><button class="btn-copy" id="dedupCopyBtn" disabled>📋 결과 복사</button><button class="btn-sub" id="dedupSwapBtn">⇄ 결과→입력</button><button class="btn-sub" id="dedupClearBtn">↺ 초기화</button></div>
+      <div class="action-wrap"><button class="btn-copy" id="dedupCopyBtn" disabled>📋 Copy Result</button><button class="btn-sub" id="dedupSwapBtn">⇄ Result → Input</button><button class="btn-sub" id="dedupClearBtn">↺ Reset</button></div>
     </div>
   
-    <div style="margin:0 0 12px"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><!-- 카카오 애드핏 (2026-07-22, 쿠팡 파트너스 다이내믹 배너로 교체) — 복원 시 주석 해제: <div class="adfit-h-desktop"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-QD4pRIpdIj7i2mbt" data-ad-width="728" data-ad-height="90"></ins></div><div class="adfit-h-mobile"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-R4xA2niTT8HgGjoO" data-ad-width="320" data-ad-height="50"></ins></div> --><div class="adfit-h-desktop"><script src="https://ads-partners.coupang.com/g.js"></script><script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"728","height":"90","tsource":""});</script></div><div class="adfit-h-mobile"><script src="https://ads-partners.coupang.com/g.js"></script><script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"320","height":"50","tsource":""});</script></div></div>
-
-    <div class="guide-summary">
-      <h2 class="guide-summary-title">사용법 요약</h2>
-      <ol class="guide-steps">
-        <li>탭 선택</li>
-        <li>텍스트 입력 또는 붙여넣기</li>
-        <li>방식 선택 및 결과 복사</li>
-      </ol>
-      <h3 class="guide-faq-title">자주 묻는 질문</h3>
-      <div class="guide-faq">
-        <details>
-          <summary>텍스트 변환 도구는 정말 무료인가요?</summary>
-          <p>네, 회원가입이나 설치 없이 완전 무료로 사용할 수 있습니다. 횟수 제한도 없습니다.</p>
-        </details>
-        <details>
-          <summary>입력한 내용이 서버로 전송되나요?</summary>
-          <p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용이 외부 서버로 전송되거나 저장되지 않습니다.</p>
-        </details>
-        <details>
-          <summary>긴 텍스트도 문제없이 처리되나요?</summary>
-          <p>네, 브라우저에서 즉시 처리되므로 일반적인 문서 분량은 무리 없이 변환할 수 있습니다.</p>
-        </details>
-        <details>
-          <summary>모바일에서도 사용할 수 있나요?</summary>
-          <p>네, 별도의 앱 설치 없이 모바일 브라우저에서도 동일하게 사용할 수 있습니다.</p>
-        </details>
-      </div>
-      <a href="/blog/20-texttools-howto" class="guide-full-link">전체 가이드 보기 →</a>
+    <!-- Google AdSense Display Ad — pending approval, reserving space -->
+    <div class="ad-slot" id="adMiddle">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
     </div>
 
-    <div style="margin:12px 0"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="9500090221"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><div class="adfit-rect-wrap"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-oePL4TCj742xAwqT" data-ad-width="300" data-ad-height="250"></ins></div></div>
+    <div class="guide-summary">
+      <h2 class="guide-summary-title">Quick guide</h2>
+      <ol class="guide-steps">
+        <li>Choose a tab</li>
+        <li>Enter or paste text</li>
+        <li>Choose a method and copy the result</li>
+      </ol>
+      <h3 class="guide-faq-title">Frequently asked questions</h3>
+      <div class="guide-faq">
+        <details>
+          <summary>Is the Text Conversion tool really free?</summary>
+          <p>Yes, it is completely free to use with no sign-up or installation required. There is no usage limit either.</p>
+        </details>
+        <details>
+          <summary>Is what I type sent to a server?</summary>
+          <p>No. All processing happens entirely in your browser, and your input is never sent to or stored on an external server.</p>
+        </details>
+        <details>
+          <summary>Can it handle long pieces of text?</summary>
+          <p>Yes, everything is processed instantly in your browser, so typical document-length text converts without issue.</p>
+        </details>
+        <details>
+          <summary>Can I use this on mobile?</summary>
+          <p>Yes, it works the same way in a mobile browser without needing to install any app.</p>
+        </details>
+      </div>
+      <a href="/blog/20-texttools-howto" class="guide-full-link">View full guide →</a>
+    </div>
+
+    <!-- Google AdSense Multiplex Ad — pending approval, reserving space -->
+    <div class="ad-slot ad-slot-rect" id="adBottom">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
   </div></main>
-  <footer class="footer"><div class="container"><p class="footer-copy">© 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p><nav class="footer-nav"><a href="/privacy">개인정보 처리방침</a><a href="/terms">이용약관</a><a href="/about">서비스 소개</a><a href="/blog/">블로그</a></nav></div></footer>
-  <div class="toast" id="toast">✓ 클립보드에 복사되었습니다</div>
+  <footer class="footer"><div class="container"><p class="footer-copy">© 2026 BrowserKit. All processing happens in your browser.</p><nav class="footer-nav"><a href="/en/privacy.html">Privacy Policy</a><a href="/en/terms.html">Terms of Service</a><a href="/en/about.html">About</a><a href="/en/blog/">Blog</a></nav></div></footer>
+  <div class="toast" id="toast">✓ Copied to clipboard</div>
   <script>
   document.querySelectorAll('.tab-btn').forEach(btn=>{btn.addEventListener('click',()=>{document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');['stats','clean','case','dedup'].forEach(t=>{document.getElementById('tab-'+t).style.display=(t===btn.dataset.tab)?'block':'none';});});});
   function getByteLength(s){return new TextEncoder().encode(s).length;}
   function showToast(){const t=document.getElementById('toast');t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2000);}
   function copyText(t){navigator.clipboard.writeText(t).then(showToast);}
-  function formatInfo(t){if(!t)return'';return t.length+'자 / '+t.split('\n').length+'줄';}
+  function formatInfo(t){if(!t)return'';return t.length+' chars / '+t.split('\n').length+' lines';}
   const sI=document.getElementById('statsInput'),sD=document.getElementById('statsDetail'),sCB=document.getElementById('statsCopyBtn');
-  sI.addEventListener('input',()=>{const t=sI.value,tot=t.length,ns=t.replace(/\s/g,'').length,wd=t.trim()===''?0:t.trim().split(/\s+/).length,ln=t===''?0:t.split('\n').length,by=getByteLength(t),st=t===''?0:(t.match(/[.!?。]+/g)||[]).length;document.getElementById('statTotal').textContent=tot.toLocaleString();document.getElementById('statNoSpace').textContent=ns.toLocaleString();document.getElementById('statWords').textContent=wd.toLocaleString();document.getElementById('statLines').textContent=ln.toLocaleString();document.getElementById('statBytes').textContent=by.toLocaleString();document.getElementById('statSentences').textContent=st.toLocaleString();const r='전체 글자 수: '+tot.toLocaleString()+'자\n공백 제외: '+ns.toLocaleString()+'자\n단어 수: '+wd.toLocaleString()+'개\n줄 수: '+ln.toLocaleString()+'줄\nUTF-8 바이트: '+by.toLocaleString()+' bytes\n문장 수: '+st.toLocaleString()+'개';sD.style.whiteSpace='pre-line';sD.textContent=tot>0?r:'텍스트를 입력하면 상세 분석 결과가 표시됩니다.';sCB.disabled=tot===0;});
+  sI.addEventListener('input',()=>{const t=sI.value,tot=t.length,ns=t.replace(/\s/g,'').length,wd=t.trim()===''?0:t.trim().split(/\s+/).length,ln=t===''?0:t.split('\n').length,by=getByteLength(t),st=t===''?0:(t.match(/[.!?。]+/g)||[]).length;document.getElementById('statTotal').textContent=tot.toLocaleString();document.getElementById('statNoSpace').textContent=ns.toLocaleString();document.getElementById('statWords').textContent=wd.toLocaleString();document.getElementById('statLines').textContent=ln.toLocaleString();document.getElementById('statBytes').textContent=by.toLocaleString();document.getElementById('statSentences').textContent=st.toLocaleString();const r='Total characters: '+tot.toLocaleString()+'\nExcluding spaces: '+ns.toLocaleString()+'\nWord count: '+wd.toLocaleString()+'\nLine count: '+ln.toLocaleString()+'\nUTF-8 bytes: '+by.toLocaleString()+' bytes\nSentence count: '+st.toLocaleString();sD.style.whiteSpace='pre-line';sD.textContent=tot>0?r:'Detailed analysis will appear here once you enter text.';sCB.disabled=tot===0;});
   sCB.addEventListener('click',()=>copyText(sD.textContent));
   document.getElementById('statsClearBtn').addEventListener('click',()=>{sI.value='';sI.dispatchEvent(new Event('input'));});
   const cI=document.getElementById('cleanInput'),cO=document.getElementById('cleanOutput'),cCB=document.getElementById('cleanCopyBtn');
@@ -288,7 +302,7 @@
   document.getElementById('caseClearBtn').addEventListener('click',()=>{caI.value='';caO.value='';caCB.disabled=true;});
   const dI=document.getElementById('dedupInput'),dO=document.getElementById('dedupOutput'),dCB=document.getElementById('dedupCopyBtn');
   dI.addEventListener('input',()=>{document.getElementById('dedupInputInfo').textContent=formatInfo(dI.value);});
-  document.querySelectorAll('.option-btn[data-dedup]').forEach(b=>{b.addEventListener('click',()=>{const lines=dI.value.split('\n');let res;if(b.dataset.dedup==='dupLines'){const s=new Set();res=lines.filter(l=>{if(s.has(l))return false;s.add(l);return true;});}else if(b.dataset.dedup==='emptyLines')res=lines.filter(l=>l.trim()!=='');else{const s=new Set();res=lines.filter(l=>{if(l.trim()===''||s.has(l))return false;s.add(l);return true;});}const out=res.join('\n');dO.value=out;const rm=lines.length-res.length;document.getElementById('dedupOutputInfo').textContent=formatInfo(out)+(rm>0?'  (줄 '+rm+'개 제거됨)':'');dCB.disabled=out.length===0;});});
+  document.querySelectorAll('.option-btn[data-dedup]').forEach(b=>{b.addEventListener('click',()=>{const lines=dI.value.split('\n');let res;if(b.dataset.dedup==='dupLines'){const s=new Set();res=lines.filter(l=>{if(s.has(l))return false;s.add(l);return true;});}else if(b.dataset.dedup==='emptyLines')res=lines.filter(l=>l.trim()!=='');else{const s=new Set();res=lines.filter(l=>{if(l.trim()===''||s.has(l))return false;s.add(l);return true;});}const out=res.join('\n');dO.value=out;const rm=lines.length-res.length;document.getElementById('dedupOutputInfo').textContent=formatInfo(out)+(rm>0?'  ('+rm+' line(s) removed)':'');dCB.disabled=out.length===0;});});
   dCB.addEventListener('click',()=>copyText(dO.value));
   document.getElementById('dedupSwapBtn').addEventListener('click',()=>{dI.value=dO.value;dO.value='';document.getElementById('dedupInputInfo').textContent=formatInfo(dI.value);document.getElementById('dedupOutputInfo').textContent='';dCB.disabled=true;});
   document.getElementById('dedupClearBtn').addEventListener('click',()=>{dI.value='';dO.value='';document.getElementById('dedupInputInfo').textContent='';document.getElementById('dedupOutputInfo').textContent='';dCB.disabled=true;});
@@ -312,7 +326,7 @@
     try {
       if (document.cookie.indexOf('bk_lang_dismiss=1') !== -1) return;
       var lang = (navigator.language || navigator.userLanguage || '').toLowerCase();
-      if (lang.indexOf('ko') === 0) return;
+      if (lang.indexOf('ko') !== 0) return;
       var banner = document.getElementById('langBanner');
       if (!banner) return;
       banner.classList.add('show');
