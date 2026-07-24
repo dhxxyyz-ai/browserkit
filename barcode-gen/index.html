@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <link rel="icon" href="/favicon.ico" sizes="32x32">
+  <link rel="icon" href="/favicon-16.png" sizes="16x16" type="image/png">
+  <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="/favicon-192.png" sizes="192x192" type="image/png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="바코드 생성기. CODE128·EAN13·EAN8·UPC·CODE39 형식의 바코드를 텍스트나 숫자로 즉시 생성하고 PNG로 다운로드합니다. 서버 전송 없이 브라우저에서 바로 처리합니다." />
+  <meta property="og:title" content="BarcodeGen — 바코드 생성기" />
+  <meta property="og:description" content="CODE128·EAN13·EAN8·UPC·CODE39 바코드를 즉시 생성해 PNG로 다운로드하는 무료 온라인 도구입니다." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://browserkit.online/barcode-gen/" />
+  <title>BarcodeGen — 바코드 생성기</title>
+  <link rel="stylesheet" href="/css/style.css?v=20260723a" />
+  <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+  <!-- Google AdSense 승인 대기 중 (2026-07-19 주석 처리, 카카오 애드핏으로 임시 전환) — 승인 후 주석 해제
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506"
+     crossorigin="anonymous"></script>
+  -->
+  <script type="text/javascript" src="//t1.kakaocdn.net/kas/static/ba.min.js" async></script>
+  <style>
+    .guide-summary { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:24px; margin:0 0 12px; }
+    .guide-summary-title { font-size:16px; font-weight:700; color:var(--text); margin:0 0 12px; }
+    .guide-steps { margin:0 0 20px; padding-left:20px; color:var(--subtext); font-size:14px; line-height:2; }
+    .guide-faq-title { font-size:14px; font-weight:700; color:var(--text); margin:0 0 10px; }
+    .guide-faq details { border:1px solid var(--border); border-radius:10px; padding:12px 16px; margin-bottom:8px; }
+    .guide-faq summary { cursor:pointer; font-weight:600; font-size:14px; color:var(--text); }
+    .guide-faq p { margin:8px 0 0; font-size:13px; color:var(--subtext); line-height:1.7; }
+    .guide-full-link { display:inline-block; margin-top:12px; font-size:14px; font-weight:600; color:var(--point-hover); text-decoration:none; }
+    .guide-full-link:hover { text-decoration:underline; }
+
+    .input-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:24px; margin-bottom:20px; }
+    .input-label { font-size:13px; font-weight:600; color:var(--subtext); margin-bottom:8px; display:block; }
+    .text-input { background:var(--bg); border:1px solid var(--border); border-radius:10px; padding:12px 16px; font-size:15px; font-weight:600; color:var(--text); font-family:'Fira Code',monospace; outline:none; width:100%; box-sizing:border-box; margin-bottom:16px; }
+    .text-input:focus { border-color:var(--point); }
+    .format-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:8px; margin-bottom:4px; }
+    .format-btn { background:var(--bg); border:1px solid var(--border); border-radius:10px; padding:10px 4px; font-size:12px; font-weight:600; color:var(--subtext); cursor:pointer; font-family:'Fira Code',monospace; text-align:center; }
+    .format-btn:hover { border-color:var(--point); color:var(--text); }
+    .format-btn.active { background:rgba(123,108,255,0.15); border-color:var(--point); color:var(--point-hover); }
+    .format-hint { font-size:12px; color:var(--subtext); margin-top:8px; }
+
+    .btn-gen { background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border:none; border-radius:12px; padding:14px 32px; font-size:16px; font-weight:700; cursor:pointer; font-family:'Gowun Dodum',sans-serif; width:100%; margin-bottom:20px; }
+    .btn-gen:hover { transform:translateY(-2px); box-shadow:0 8px 24px var(--glow); }
+
+    .preview-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:28px; text-align:center; margin-bottom:20px; }
+    .preview-label { font-size:13px; font-weight:600; color:var(--subtext); margin-bottom:16px; }
+    .barcode-wrap { display:flex; align-items:center; justify-content:center; min-height:120px; background:#fff; border-radius:8px; padding:12px; }
+    .barcode-empty { color:var(--subtext); font-size:14px; }
+    .btn-download { background:var(--card); color:var(--subtext); border:1px solid var(--border); border-radius:12px; padding:12px 20px; font-size:14px; font-weight:600; cursor:pointer; font-family:'Gowun Dodum',sans-serif; width:100%; margin-top:16px; }
+    .btn-download:hover { color:var(--text); border-color:var(--point); }
+    .btn-download:disabled { opacity:0.4; cursor:default; }
+
+    .footer { border-top:1px solid var(--border); padding:32px 0; text-align:center; }
+    .footer-copy { color:var(--subtext); font-size:13px; margin-bottom:12px; }
+    .footer-nav { display:flex; justify-content:center; gap:20px; flex-wrap:wrap; }
+    .footer-nav a { color:var(--subtext); font-size:13px; text-decoration:none; }
+    .footer-nav a:hover { color:var(--text); }
+
+    @media (max-width:640px) {
+      .hero-title { font-size:24px; }
+      .format-grid { grid-template-columns:repeat(3,1fr); }
+    }
+  </style>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+  <meta property="og:image" content="https://browserkit.online/img/og/barcode-gen.png" />
+  <link rel="canonical" href="https://browserkit.online/barcode-gen/" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://browserkit.online/img/og/barcode-gen.png" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "BarcodeGen — 바코드 생성기",
+  "url": "https://browserkit.online/barcode-gen/",
+  "description": "바코드 생성기. CODE128·EAN13·EAN8·UPC·CODE39 형식의 바코드를 텍스트나 숫자로 즉시 생성하고 PNG로 다운로드합니다. 서버 전송 없이 브라우저에서 바로 처리합니다.",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "Any",
+  "browserRequirements": "Requires JavaScript",
+  "inLanguage": "ko",
+  "isAccessibleForFree": true,
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "KRW" },
+  "publisher": { "@type": "Organization", "name": "BrowserKit", "url": "https://browserkit.online/" }
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "홈", "item": "https://browserkit.online/" },
+    { "@type": "ListItem", "position": 2, "name": "바코드 생성기", "item": "https://browserkit.online/barcode-gen/" }
+  ]
+}
+  </script>
+</head>
+
+<body>
+  <header class="header">
+    <div class="container">
+      <a href="/" class="header-brand">
+        <div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Gowun Dodum,sans-serif;flex-shrink:0">B</div>
+        <span class="header-brand-text"><span style="color:var(--text)">Browser</span><span style="color:var(--point)">Kit</span></span>
+      </a>
+      <a href="/" class="header-back">&#x2190; BrowserKit 홈으로</a>
+    </div>
+  </header>
+
+  <main><div class="container">
+    <div class="hero">
+      <div class="hero-icon" style="height:78px;display:flex;justify-content:center;align-items:center"><div style="transform:scale(1.7);transform-origin:center"><div style="width:46px;height:46px;background:#bcd4ff;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="display:flex;align-items:center;gap:1.5px;height:24px"><div style="width:2px;height:100%;background:#2a2433"></div><div style="width:1px;height:100%;background:#2a2433"></div><div style="width:3px;height:100%;background:#2a2433"></div><div style="width:1px;height:100%;background:#2a2433"></div><div style="width:2px;height:100%;background:#2a2433"></div><div style="width:1px;height:100%;background:#2a2433"></div><div style="width:2px;height:100%;background:#2a2433"></div></div></div></div></div>
+      <div class="hero-title-wrap"><h1 class="hero-title">바코드 생성기</h1><a href="/blog/97-barcodegen-howto" class="hero-guide-link">사용법 가이드 보기</a></div>
+      <p class="hero-desc">텍스트나 숫자를 입력하면 원하는 형식의 바코드를 바로 만들어드려요</p>
+      <div class="hero-badges">
+        <span class="badge">🔒 완전 로컬 처리</span>
+        <span class="badge">⚡ 무료 사용</span>
+        <span class="badge">🛡️ 서버 전송 없음</span>
+        <span class="badge">📦 설치 불필요</span>
+      </div>
+    </div>
+    <div style="margin:0 0 12px"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><div class="adfit-h-desktop"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-QD4pRIpdIj7i2mbt" data-ad-width="728" data-ad-height="90"></ins></div><div class="adfit-h-mobile"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-R4xA2niTT8HgGjoO" data-ad-width="320" data-ad-height="50"></ins></div></div>
+
+    <p class="notice">💡 텍스트나 숫자를 입력하고 원하는 바코드 형식을 선택하면 즉시 바코드가 생성됩니다. EAN13·EAN8·UPC는 정해진 자릿수의 숫자만 입력할 수 있습니다. 모든 생성은 브라우저에서만 이루어집니다.</p>
+
+    <div class="input-card">
+      <label class="input-label">바코드로 만들 텍스트/숫자</label>
+      <input type="text" class="text-input" id="valueInput" placeholder="예: 8801234567890" value="8801234567890" />
+      <label class="input-label">바코드 형식</label>
+      <div class="format-grid" id="formatGrid">
+        <div class="format-btn active" data-format="CODE128">CODE128</div>
+        <div class="format-btn" data-format="EAN13">EAN13</div>
+        <div class="format-btn" data-format="EAN8">EAN8</div>
+        <div class="format-btn" data-format="UPC">UPC</div>
+        <div class="format-btn" data-format="CODE39">CODE39</div>
+      </div>
+      <div class="format-hint" id="formatHint">CODE128은 영문·숫자·기호를 자유롭게 조합할 수 있는 범용 형식입니다.</div>
+    </div>
+
+    <button class="btn-gen" id="genBtn">📊 바코드 생성하기</button>
+
+    <div class="preview-card">
+      <div class="preview-label">미리보기</div>
+      <div class="barcode-wrap" id="barcodeWrap"><span class="barcode-empty">바코드 생성하기를 누르면 여기에 표시됩니다</span></div>
+      <button class="btn-download" id="downloadBtn" disabled>⬇️ PNG로 다운로드</button>
+    </div>
+
+    <div style="margin:0 0 12px"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><!-- 카카오 애드핏 (2026-07-24, 쿠팡 파트너스 다이내믹 배너로 교체) — 복원 시 주석 해제: <div class="adfit-h-desktop"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-QD4pRIpdIj7i2mbt" data-ad-width="728" data-ad-height="90"></ins></div><div class="adfit-h-mobile"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-R4xA2niTT8HgGjoO" data-ad-width="320" data-ad-height="50"></ins></div> --><div class="adfit-h-desktop"><script src="https://ads-partners.coupang.com/g.js"></script><script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"728","height":"90","tsource":""});</script></div><div class="adfit-h-mobile"><script src="https://ads-partners.coupang.com/g.js"></script><script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"320","height":"50","tsource":""});</script></div></div>
+
+    <div class="guide-summary">
+      <h2 class="guide-summary-title">사용법 요약</h2>
+      <ol class="guide-steps">
+        <li>텍스트·숫자 입력 후 바코드 형식 선택</li>
+        <li>바코드 생성하기 클릭</li>
+        <li>PNG로 다운로드</li>
+      </ol>
+      <h3 class="guide-faq-title">자주 묻는 질문</h3>
+      <div class="guide-faq">
+        <details>
+          <summary>바코드 생성기는 정말 무료인가요?</summary>
+          <p>네, 회원가입이나 설치 없이 완전 무료로 사용할 수 있습니다. 생성 횟수 제한도 없습니다.</p>
+        </details>
+        <details>
+          <summary>EAN13·EAN8·UPC는 아무 숫자나 입력해도 되나요?</summary>
+          <p>아니요. EAN13은 12~13자리, EAN8은 7~8자리, UPC는 11~12자리 숫자만 지원합니다. 자릿수가 맞지 않으면 오류 안내가 표시됩니다. 자유로운 값을 쓰려면 CODE128이나 CODE39를 선택하세요.</p>
+        </details>
+        <details>
+          <summary>생성한 바코드를 실제 상품에 사용할 수 있나요?</summary>
+          <p>바코드 이미지 자체는 표준 형식으로 정확히 생성되지만, 실제 유통용 바코드(GS1 등록 바코드 등)로 쓰려면 별도의 발급 기관 등록 절차가 필요할 수 있습니다.</p>
+        </details>
+        <details>
+          <summary>입력한 값이 서버로 전송되나요?</summary>
+          <p>아니요. 모든 생성은 브라우저 안에서만 이루어지며 입력한 값이 외부 서버로 전송되거나 저장되지 않습니다.</p>
+        </details>
+      </div>
+      <a href="/blog/97-barcodegen-howto" class="guide-full-link">전체 가이드 보기 →</a>
+    </div>
+
+    <div style="margin:0 0 12px"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="9500090221"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><div class="adfit-rect-wrap"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-oePL4TCj742xAwqT" data-ad-width="300" data-ad-height="250"></ins></div></div>
+  </div></main>
+
+  <footer class="footer">
+    <div class="container">
+      <p class="footer-copy">&#xa9; 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p>
+      <nav class="footer-nav">
+        <a href="/privacy">개인정보 처리방침</a>
+        <a href="/terms">이용약관</a>
+        <a href="/about">서비스 소개</a>
+        <a href="/blog/">블로그</a>
+      </nav>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+  var currentFormat = 'CODE128';
+  var FORMAT_HINTS = {
+    CODE128: 'CODE128은 영문·숫자·기호를 자유롭게 조합할 수 있는 범용 형식입니다.',
+    EAN13: 'EAN13은 12~13자리 숫자만 지원하는 유통용 국제 바코드 형식입니다.',
+    EAN8: 'EAN8은 7~8자리 숫자만 지원하는 소형 상품용 바코드 형식입니다.',
+    UPC: 'UPC는 11~12자리 숫자만 지원하는 북미 유통용 바코드 형식입니다.',
+    CODE39: 'CODE39는 영문 대문자·숫자·일부 기호를 지원하는 산업용 바코드 형식입니다.'
+  };
+
+  document.querySelectorAll('.format-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.format-btn').forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      currentFormat = btn.dataset.format;
+      document.getElementById('formatHint').textContent = FORMAT_HINTS[currentFormat];
+    });
+  });
+
+  var generatedSvg = null;
+
+  document.getElementById('genBtn').addEventListener('click', function() {
+    var value = document.getElementById('valueInput').value.trim();
+    if (!value) {
+      showToast('텍스트나 숫자를 입력해주세요');
+      return;
+    }
+    var wrap = document.getElementById('barcodeWrap');
+    wrap.innerHTML = '<svg id="barcodeSvg"></svg>';
+    try {
+      JsBarcode('#barcodeSvg', value, {
+        format: currentFormat,
+        lineColor: '#2a2433',
+        width: 2,
+        height: 90,
+        displayValue: true,
+        font: 'Fira Code',
+        fontSize: 16,
+        margin: 12
+      });
+      generatedSvg = document.getElementById('barcodeSvg');
+      document.getElementById('downloadBtn').disabled = false;
+      showToast('✓ 바코드를 생성했습니다');
+    } catch (e) {
+      wrap.innerHTML = '<span class="barcode-empty">' + FORMAT_HINTS[currentFormat] + '</span>';
+      generatedSvg = null;
+      document.getElementById('downloadBtn').disabled = true;
+      showToast('입력값이 ' + currentFormat + ' 형식에 맞지 않아요');
+    }
+  });
+
+  document.getElementById('downloadBtn').addEventListener('click', function() {
+    if (!generatedSvg) return;
+    var svgData = new XMLSerializer().serializeToString(generatedSvg);
+    var img = new Image();
+    var svgBlob = new Blob([svgData], { type: 'image/svg+xml;charset=utf-8' });
+    var url = URL.createObjectURL(svgBlob);
+    img.onload = function() {
+      var canvas = document.createElement('canvas');
+      var scale = 2;
+      canvas.width = img.width * scale;
+      canvas.height = img.height * scale;
+      var ctx = canvas.getContext('2d');
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.scale(scale, scale);
+      ctx.drawImage(img, 0, 0);
+      URL.revokeObjectURL(url);
+      var a = document.createElement('a');
+      a.download = 'barcode.png';
+      a.href = canvas.toDataURL('image/png');
+      a.click();
+      showToast('✓ 다운로드했습니다');
+    };
+    img.src = url;
+  });
+
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(function() { t.classList.remove('show'); }, 2000);
+  }
+  </script>
+</body>
+</html>

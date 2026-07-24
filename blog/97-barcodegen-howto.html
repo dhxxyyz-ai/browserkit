@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <link rel="icon" href="/favicon.ico" sizes="32x32">
+  <link rel="icon" href="/favicon-16.png" sizes="16x16" type="image/png">
+  <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="/favicon-192.png" sizes="192x192" type="image/png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="BarcodeGen의 모든 기능을 단계별로 설명하는 공식 사용 가이드입니다. CODE128·EAN13·EAN8·UPC·CODE39 바코드를 생성하고 PNG로 다운로드하는 방법을 알아보세요." />
+  <meta property="og:title" content="바코드 생성기 사용법 완전 가이드 — BrowserKit" />
+  <meta property="og:description" content="CODE128·EAN13·EAN8·UPC·CODE39 바코드를 생성하고 PNG로 다운로드하는 BarcodeGen 공식 가이드입니다." />
+  <meta property="og:type" content="article" />
+  <title>바코드 생성기 사용법 완전 가이드 — BrowserKit</title>
+  <link rel="stylesheet" href="/css/style.css?v=20260723a" />
+  <!-- Google AdSense 승인 대기 중 (2026-07-19 주석 처리, 카카오 애드핏으로 임시 전환) — 승인 후 주석 해제
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506"
+     crossorigin="anonymous"></script>
+  -->
+  <script type="text/javascript" src="//t1.kakaocdn.net/kas/static/ba.min.js" async></script>
+  <style>
+    .post-warn { background:rgba(248,113,113,0.08); border-left:3px solid #F87171; border-radius:8px; padding:16px 20px; margin:24px 0; font-size:15px; color:var(--subtext); line-height:1.8; }
+    .feature-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:20px 0; }
+    .feature-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px; }
+    .feature-card:hover { border-color:var(--point); }
+    .feature-icon { font-size:24px; margin-bottom:10px; }
+    .feature-title { font-size:14px; font-weight:600; color:var(--text); margin-bottom:6px; }
+    .feature-desc { font-size:13px; color:var(--subtext); line-height:1.7; }
+    .step-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px 24px; margin:16px 0; display:flex; gap:16px; align-items:flex-start; }
+    .step-num { min-width:36px; height:36px; background:linear-gradient(135deg,var(--point),var(--point-hover)); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:700; color:white; flex-shrink:0; font-family:'Gowun Dodum',sans-serif; }
+    .step-content h3 { font-size:15px; font-weight:600; margin:0 0 6px; color:var(--text); }
+    .step-content p { font-size:14px; color:var(--subtext); line-height:1.7; margin:0; }
+
+    .post-table { width:100%; border-collapse:collapse; margin:20px 0; font-size:15px; }
+    .post-table th { background:var(--card); padding:12px 16px; text-align:left; font-weight:600; border:1px solid var(--border); color:var(--text); }
+    .post-table td { padding:11px 16px; border:1px solid var(--border); color:var(--subtext); line-height:1.7; }
+    .post-table td code { background:var(--bg); border-radius:4px; padding:1px 6px; font-size:13px; color:var(--point-hover); font-family:'Fira Code',monospace; }
+    .post-table tr:hover td { background:rgba(123,108,255,0.04); }
+    .use-case-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:20px 0; }
+    .use-case-card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:18px; }
+    .use-case-icon { font-size:28px; margin-bottom:8px; }
+    .use-case-title { font-size:13px; font-weight:600; color:var(--text); margin-bottom:6px; }
+    .use-case-desc { font-size:12px; color:var(--subtext); line-height:1.7; }
+    .post-nav { display:flex; justify-content:space-between; margin-top:12px; padding-top:24px; border-top:1px solid var(--border); gap:12px; }
+    .post-nav a { font-size:15px; color:var(--subtext); text-decoration:none; }
+    .post-nav a:hover { color:var(--text); }
+    .cta-box { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:28px; text-align:center; margin:12px 0 0; }
+    .cta-box p { font-size:17px; color:var(--subtext); margin-bottom:16px; }
+    .cta-btn { display:inline-block; background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border-radius:10px; padding:12px 28px; font-size:14px; font-weight:600; text-decoration:none; }
+    .cta-btn:hover { transform:translateY(-2px); box-shadow:0 8px 24px var(--glow); color:white; }
+    .back-link:hover { color:var(--text); }
+    @media (max-width:640px) {
+      .feature-grid { grid-template-columns:1fr; }
+      .use-case-grid { grid-template-columns:1fr; }
+    }
+  </style>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+<meta property="og:image" content="https://browserkit.online/img/og/barcode-gen.png" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "바코드 생성기 사용법 완전 가이드",
+    "description": "BarcodeGen의 모든 기능을 단계별로 설명하는 공식 사용 가이드입니다. CODE128·EAN13·EAN8·UPC·CODE39 바코드를 생성하고 PNG로 다운로드하는 방법을 알아보세요.",
+    "datePublished": "2026-07-24T00:00:00+09:00",
+    "dateModified": "2026-07-24T00:00:00+09:00",
+    "author": { "@type": "Organization", "name": "BrowserKit", "url": "https://browserkit.online" },
+    "publisher": { "@type": "Organization", "name": "BrowserKit", "url": "https://browserkit.online", "logo": { "@type": "ImageObject", "url": "https://browserkit.online/img/og-browserkit.png" } },
+    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://browserkit.online/blog/97-barcodegen-howto" },
+    "image": "https://browserkit.online/img/og/barcode-gen.png"
+  }
+  </script>  <link rel="canonical" href="https://browserkit.online/blog/97-barcodegen-howto" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "홈", "item": "https://browserkit.online/" },
+    { "@type": "ListItem", "position": 2, "name": "블로그", "item": "https://browserkit.online/blog/" },
+    { "@type": "ListItem", "position": 3, "name": "바코드 생성기 사용법 완전 가이드", "item": "https://browserkit.online/blog/97-barcodegen-howto" }
+  ]
+}
+  </script>
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://browserkit.online/img/og/barcode-gen.png" />
+  <style>
+    .post-table-wrap { overflow-x:auto; }
+    .post-table th, .post-table td { white-space:nowrap; }
+    .post-nav a { word-break:keep-all; }
+    .post-nav .nav-label { display:block; font-size:13px; color:var(--subtext); opacity:0.7; margin-bottom:4px; }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "바코드 생성기는 정말 무료인가요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "네, 회원가입이나 설치 없이 완전 무료로 사용할 수 있습니다. 생성 횟수 제한도 없습니다."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "EAN13·EAN8·UPC는 아무 숫자나 입력해도 되나요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "아니요. EAN13은 12~13자리, EAN8은 7~8자리, UPC는 11~12자리 숫자만 지원합니다. 자릿수가 맞지 않으면 오류 안내가 표시됩니다. 자유로운 값을 쓰려면 CODE128이나 CODE39를 선택하세요."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "생성한 바코드를 실제 상품에 사용할 수 있나요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "바코드 이미지 자체는 표준 형식으로 정확히 생성되지만, 실제 유통용 바코드(GS1 등록 바코드 등)로 쓰려면 별도의 발급 기관 등록 절차가 필요할 수 있습니다."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "입력한 값이 서버로 전송되나요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "아니요. 모든 생성은 브라우저 안에서만 이루어지며 입력한 값이 외부 서버로 전송되거나 저장되지 않습니다."
+      }
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <header class="header">
+    <div class="container">
+      <a href="/" class="header-brand"><div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Gowun Dodum,sans-serif;flex-shrink:0">B</div><span class="header-brand-text"><span style="color:var(--text)">Browser</span><span style="color:var(--point)">Kit</span></span></a>
+      <a href="/" class="header-back">&#x2190; BrowserKit 홈으로</a>
+    </div>
+  </header>
+
+  <article class="post-wrap">
+    <a href="/blog/" class="back-link">&#x2190; 블로그 목록</a>
+    <span class="post-tag">가이드</span>
+    <h1 class="post-title"><span style="color:var(--point-hover)">바코드 생성기</span> 사용법 완전 가이드</h1>
+    <div class="post-date">2026년 7월 24일</div>
+    <div style="margin:12px 0"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><div class="adfit-h-desktop"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-QD4pRIpdIj7i2mbt" data-ad-width="728" data-ad-height="90"></ins></div><div class="adfit-h-mobile"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-R4xA2niTT8HgGjoO" data-ad-width="320" data-ad-height="50"></ins></div></div>
+
+    <div class="post-body">
+      <p>재고 관리용 엑셀에 상품별 바코드를 붙여야 하는데, 유료 바코드 생성 프로그램을 설치하기는 부담스러운 상황 있으신가요? 혹은 발표 자료나 포트폴리오에 쓸 샘플 바코드가 필요한데 실제 상품과 연결된 바코드 서비스에 가입하기는 번거로울 때도 있습니다. BarcodeGen은 텍스트나 숫자만 입력하면 CODE128·EAN13·EAN8·UPC·CODE39 형식의 바코드를 즉시 생성해 PNG로 다운로드할 수 있는 무료 온라인 도구입니다. 모든 생성은 브라우저에서만 이루어집니다.</p>
+
+      <h2>주요 기능</h2>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F4CA;</div>
+          <div class="feature-title">5가지 바코드 형식 지원</div>
+          <div class="feature-desc">CODE128·EAN13·EAN8·UPC·CODE39 형식을 선택해 바로 생성할 수 있습니다.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x26A1;</div>
+          <div class="feature-title">즉시 생성</div>
+          <div class="feature-desc">값과 형식만 정하면 버튼 클릭 한 번으로 바코드가 만들어집니다.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F4E5;</div>
+          <div class="feature-title">PNG 다운로드</div>
+          <div class="feature-desc">생성된 바코드를 고해상도 PNG 이미지로 바로 저장할 수 있습니다.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F512;</div>
+          <div class="feature-title">완전 로컬 처리</div>
+          <div class="feature-desc">입력한 값이 브라우저 안에서만 처리되고 서버로 전송되지 않습니다.</div>
+        </div>
+      </div>
+
+      <div style="margin:12px 0 0"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><div class="adfit-h-desktop"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-QD4pRIpdIj7i2mbt" data-ad-width="728" data-ad-height="90"></ins></div><div class="adfit-h-mobile"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-R4xA2niTT8HgGjoO" data-ad-width="320" data-ad-height="50"></ins></div></div>
+
+      <h2>사용법</h2>
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <h3>텍스트·숫자 입력 후 바코드 형식 선택</h3>
+          <p>바코드로 만들 값을 입력하고, CODE128·EAN13·EAN8·UPC·CODE39 중 원하는 형식을 고릅니다.</p>
+        </div>
+      </div>
+
+      <figure style="margin:12px 0 24px; text-align:center;">
+        <img src="/img/blog/barcodegen/01-input.png"
+             alt="BarcodeGen의 텍스트 입력과 바코드 형식 선택 화면"
+             style="width:100%; max-width:640px; border:1px solid var(--border); border-radius:var(--radius);"
+             loading="lazy" />
+        <figcaption style="font-size:13px; color:var(--subtext); margin-top:6px;">
+          텍스트 입력과 바코드 형식 선택 화면
+        </figcaption>
+      </figure>
+
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <h3>바코드 생성하기 클릭</h3>
+          <p><strong>📊 바코드 생성하기</strong> 버튼을 누르면 선택한 형식에 맞는 바코드가 즉시 만들어집니다.</p>
+        </div>
+      </div>
+
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <h3>PNG로 다운로드</h3>
+          <p><strong>⬇️ PNG로 다운로드</strong> 버튼으로 생성된 바코드를 이미지 파일로 저장합니다.</p>
+        </div>
+      </div>
+
+      <figure style="margin:12px 0 24px; text-align:center;">
+        <img src="/img/blog/barcodegen/02-result.png"
+             alt="BarcodeGen의 바코드 생성 결과와 다운로드 화면"
+             style="width:100%; max-width:640px; border:1px solid var(--border); border-radius:var(--radius);"
+             loading="lazy" />
+        <figcaption style="font-size:13px; color:var(--subtext); margin-top:6px;">
+          바코드 생성 결과 화면
+        </figcaption>
+      </figure>
+
+      <div class="post-warn">
+        <strong>⚠️ 참고:</strong> EAN13·EAN8·UPC는 표준 규격상 정해진 자릿수의 숫자만 입력할 수 있습니다(EAN13 12~13자리, EAN8 7~8자리, UPC 11~12자리). 자유로운 문자·기호를 쓰려면 CODE128이나 CODE39를 선택하세요.
+      </div>
+
+      <h2>바코드 형식별 특징</h2>
+      <div class="post-table-wrap"><table class="post-table">
+        <thead><tr><th>형식</th><th>지원 값</th><th>용도</th></tr></thead>
+        <tbody>
+          <tr><td>CODE128</td><td>영문·숫자·기호 자유 조합</td><td>물류·창고 관리 등 범용</td></tr>
+          <tr><td>EAN13</td><td>숫자 12~13자리</td><td>국제 유통 표준 바코드</td></tr>
+          <tr><td>EAN8</td><td>숫자 7~8자리</td><td>포장이 작은 상품용</td></tr>
+          <tr><td>UPC</td><td>숫자 11~12자리</td><td>북미 유통 표준 바코드</td></tr>
+          <tr><td>CODE39</td><td>영문 대문자·숫자·일부 기호</td><td>산업·재고 관리용</td></tr>
+        </tbody>
+      </table></div>
+
+      <h2>활용 예시</h2>
+      <div class="use-case-grid">
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F4E6;</div>
+          <div class="use-case-title">재고·물품 관리</div>
+          <div class="use-case-desc">사내 재고 목록에 붙일 관리용 바코드를 손쉽게 만듭니다.</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F4BC;</div>
+          <div class="use-case-title">발표·포트폴리오 자료</div>
+          <div class="use-case-desc">샘플 바코드 이미지가 필요한 자료 제작에 바로 활용합니다.</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F3F7;&#xFE0F;</div>
+          <div class="use-case-title">POS·키오스크 테스트</div>
+          <div class="use-case-desc">개발 중인 바코드 스캐너 프로그램을 테스트할 샘플을 생성합니다.</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F393;</div>
+          <div class="use-case-title">교육·학습 자료</div>
+          <div class="use-case-desc">바코드 원리를 설명하는 수업 자료에 실제 예시를 넣습니다.</div>
+        </div>
+      </div>
+
+      <div class="post-highlight">&#x1F512; BarcodeGen은 모든 생성이 내 PC 브라우저에서만 실행됩니다. 입력한 값이 외부 서버로 전송되지 않습니다.</div>
+
+      <h2>자주 묻는 질문</h2>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
+        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. 바코드 생성기는 정말 무료인가요?</p>
+        <p style="color:var(--subtext);margin:0;line-height:1.7">네, 회원가입이나 설치 없이 완전 무료로 사용할 수 있습니다. 생성 횟수 제한도 없습니다.</p>
+      </div>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
+        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. EAN13·EAN8·UPC는 아무 숫자나 입력해도 되나요?</p>
+        <p style="color:var(--subtext);margin:0;line-height:1.7">아니요. EAN13은 12~13자리, EAN8은 7~8자리, UPC는 11~12자리 숫자만 지원합니다. 자릿수가 맞지 않으면 오류 안내가 표시됩니다. 자유로운 값을 쓰려면 CODE128이나 CODE39를 선택하세요.</p>
+      </div>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
+        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. 생성한 바코드를 실제 상품에 사용할 수 있나요?</p>
+        <p style="color:var(--subtext);margin:0;line-height:1.7">바코드 이미지 자체는 표준 형식으로 정확히 생성되지만, 실제 유통용 바코드(GS1 등록 바코드 등)로 쓰려면 별도의 발급 기관 등록 절차가 필요할 수 있습니다.</p>
+      </div>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
+        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. 입력한 값이 서버로 전송되나요?</p>
+        <p style="color:var(--subtext);margin:0;line-height:1.7">아니요. 모든 생성은 브라우저 안에서만 이루어지며 입력한 값이 외부 서버로 전송되거나 저장되지 않습니다.</p>
+      </div>
+    </div>
+
+    <div style="margin:12px 0"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><div class="adfit-h-desktop"><script src="https://ads-partners.coupang.com/g.js"></script><script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"728","height":"90","tsource":""});</script></div><div class="adfit-h-mobile"><script src="https://ads-partners.coupang.com/g.js"></script><script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"320","height":"50","tsource":""});</script></div></div>
+
+    <div class="cta-box">
+      <p>지금 바로 바코드를 생성해보세요.<br />설치도 회원가입도 필요 없습니다.</p>
+      <a href="/barcode-gen/" class="cta-btn" style="display:inline-flex;align-items:center;gap:8px">
+        <span style="display:inline-block;width:26px;height:26px;overflow:hidden;flex-shrink:0"><span style="display:block;transform:scale(0.565);transform-origin:top left"><div style="width:46px;height:46px;background:#bcd4ff;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="display:flex;align-items:center;gap:1.5px;height:24px"><div style="width:2px;height:100%;background:#2a2433"></div><div style="width:1px;height:100%;background:#2a2433"></div><div style="width:3px;height:100%;background:#2a2433"></div><div style="width:1px;height:100%;background:#2a2433"></div><div style="width:2px;height:100%;background:#2a2433"></div><div style="width:1px;height:100%;background:#2a2433"></div><div style="width:2px;height:100%;background:#2a2433"></div></div></div></span></span>
+        무료로 바코드 생성하기
+      </a>
+    </div>
+    <div style="margin:12px 0"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="9500090221"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><div class="adfit-rect-wrap"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-oePL4TCj742xAwqT" data-ad-width="300" data-ad-height="250"></ins></div></div>
+
+<div class="post-nav">
+      <a href="/blog/71-laddergame-howto"><span class="nav-label">← 이전 글</span><span style="color:var(--point-hover)">사다리타기</span> 사용법 완전 가이드</a>
+      <a href="/blog/25-jsonformat-howto" style="text-align:right"><span class="nav-label">다음 글 →</span><span style="color:var(--point-hover)">JSON 포맷터</span> 사용법 완전 가이드</a>
+    </div></div>
+
+  </article>
+  <footer class="footer">
+    <div class="container">
+      <p class="footer-copy">&#xa9; 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p>
+      <nav class="footer-nav">
+        <a href="/privacy">개인정보 처리방침</a>
+        <a href="/terms">이용약관</a>
+        <a href="/about">서비스 소개</a>
+        <a href="/blog/">블로그</a>
+      </nav>
+    </div>
+  </footer>
+</body>
+</html>
