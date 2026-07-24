@@ -986,6 +986,14 @@ a:hover { color: var(--text); }
   .lang-switcher-btn .lang-label-full { display: none; }
 }
 
+/* 모바일에서 헤더 우측(언어 스위처 + 홈 버튼)이 좁아져 줄바꿈되는 문제 방지 */
+@media (max-width: 480px) {
+  .header .container { padding: 0 16px; }
+  .header-right { gap: 8px; }
+  .header-back-label { display: none; }
+  .header-back { font-size: 20px; }
+}
+
 /* 브라우저 언어 감지 배너 */
 .lang-banner { display: none; align-items: center; justify-content: center; gap: 14px; background: rgba(123,108,255,0.08); border-bottom: 1px solid var(--border); padding: 10px 20px; font-size: 13px; color: var(--text); text-align: center; flex-wrap: wrap; }
 .lang-banner.show { display: flex; }
