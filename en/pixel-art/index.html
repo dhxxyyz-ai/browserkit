@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
   <link rel="icon" href="/favicon.ico" sizes="32x32">
   <link rel="icon" href="/favicon-16.png" sizes="16x16" type="image/png">
@@ -8,18 +8,17 @@
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="이미지를 블록 단위 픽셀 아트 스타일로 변환하는 무료 온라인 도구. 서버 전송 없이 브라우저에서 바로 처리합니다." />
-  <meta property="og:title" content="PixelArt — 픽셀 아트 변환 도구" />
-  <meta property="og:description" content="이미지를 블록 단위 픽셀 아트 스타일로 변환하는 무료 온라인 도구입니다." />
+  <meta name="description" content="A free online tool to convert your image into blocky pixel-art style. Everything is processed right in your browser, with no server upload." />
+  <meta property="og:title" content="PixelArt — Convert to Pixel Art" />
+  <meta property="og:description" content="A free online tool that converts your image into blocky pixel-art style." />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://browserkit.online/pixel-art/" />
-  <title>PixelArt — 픽셀 아트 변환 도구</title>
+  <meta property="og:url" content="https://browserkit.online/en/pixel-art/" />
+  <title>PixelArt — Convert to Pixel Art</title>
   <link rel="stylesheet" href="/css/style.css?v=20260724c" />
-  <!-- Google AdSense 승인 대기 중 (2026-07-19 주석 처리, 카카오 애드핏으로 임시 전환) — 승인 후 주석 해제
+  <!-- Google AdSense — pending re-review. Uncomment once approved.
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506"
      crossorigin="anonymous"></script>
   -->
-  <script type="text/javascript" src="//t1.kakaocdn.net/kas/static/ba.min.js" async></script>
   <style>
     .guide-summary { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:24px; margin:0 0 12px; }
     .guide-summary-title { font-size:16px; font-weight:700; color:var(--text); margin:0 0 12px; }
@@ -30,6 +29,9 @@
     .guide-faq p { margin:8px 0 0; font-size:13px; color:var(--subtext); line-height:1.7; }
     .guide-full-link { display:inline-block; margin-top:12px; font-size:14px; font-weight:600; color:var(--point-hover); text-decoration:none; }
     .guide-full-link:hover { text-decoration:underline; }
+
+    .ad-slot { min-height:90px; display:flex; align-items:center; justify-content:center; margin:0 0 12px; }
+    .ad-slot-rect { min-height:250px; }
 
     .upload-zone { background:var(--card); border:2px dashed var(--border); border-radius:var(--radius); padding:48px 32px; text-align:center; cursor:pointer; margin-bottom:24px; transition:all 0.2s; }
     .upload-zone:hover, .upload-zone.drag-over { border-color:var(--point); box-shadow:0 0 24px var(--glow); }
@@ -45,7 +47,7 @@
     .pane-label { font-size:12px; font-weight:600; color:var(--subtext); padding:6px 0; }
     .canvas-wrap { background:repeating-conic-gradient(#1e1e2a 0% 25%,#26263a 0% 50%) 0 0/16px 16px; border-radius:12px; overflow:hidden; display:flex; align-items:center; justify-content:center; min-height:200px; }
     .canvas-wrap canvas { max-width:100%; max-height:400px; display:block; image-rendering:pixelated; }
-    .file-info { font-size:12px; color:var(--subtext); font-family:'Gowun Dodum',sans-serif; }
+    .file-info { font-size:12px; color:var(--subtext); }
 
     .slider-panel { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:24px; margin-bottom:20px; }
     .slider-panel-title { font-size:14px; font-weight:700; color:var(--text); margin-bottom:20px; display:flex; align-items:center; gap:8px; }
@@ -55,10 +57,10 @@
     .range-slider { -webkit-appearance:none; height:6px; border-radius:3px; background:var(--border); outline:none; width:100%; }
     .range-slider::-webkit-slider-thumb { -webkit-appearance:none; width:18px; height:18px; border-radius:50%; background:var(--point); cursor:pointer; box-shadow:0 0 0 3px rgba(123,108,255,0.2); }
     .range-slider::-moz-range-thumb { width:18px; height:18px; border-radius:50%; background:var(--point); cursor:pointer; border:none; }
-    .slider-val { font-size:13px; font-weight:600; color:var(--point-hover); font-family:'Gowun Dodum',sans-serif; text-align:right; }
+    .slider-val { font-size:13px; font-weight:600; color:var(--point-hover); text-align:right; }
 
     .preset-wrap { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:16px; }
-    .preset-btn { background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:7px 14px; font-size:12px; font-weight:600; color:var(--subtext); cursor:pointer; font-family:'Gowun Dodum',sans-serif; transition:all 0.2s; }
+    .preset-btn { background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:7px 14px; font-size:12px; font-weight:600; color:var(--subtext); cursor:pointer; transition:all 0.2s; }
     .preset-btn:hover { border-color:var(--point); color:var(--text); }
     .preset-btn.active { background:rgba(123,108,255,0.15); border-color:var(--point); color:var(--point-hover); }
 
@@ -67,11 +69,11 @@
     .toggle-row input { accent-color:var(--point); cursor:pointer; width:16px; height:16px; }
 
     .action-bar { display:flex; gap:10px; margin-bottom:48px; flex-wrap:wrap; }
-    .btn-primary { background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border:none; border-radius:10px; padding:12px 24px; font-size:14px; font-weight:700; cursor:pointer; font-family:'Gowun Dodum',sans-serif; transition:all 0.2s; white-space:nowrap; }
+    .btn-primary { background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border:none; border-radius:10px; padding:12px 24px; font-size:14px; font-weight:700; cursor:pointer; transition:all 0.2s; white-space:nowrap; }
     .btn-primary:hover { transform:translateY(-2px); box-shadow:0 8px 24px var(--glow); }
-    .btn-sub { background:var(--card); color:var(--subtext); border:1px solid var(--border); border-radius:10px; padding:12px 20px; font-size:14px; cursor:pointer; font-family:'Gowun Dodum',sans-serif; transition:all 0.2s; white-space:nowrap; }
+    .btn-sub { background:var(--card); color:var(--subtext); border:1px solid var(--border); border-radius:10px; padding:12px 20px; font-size:14px; cursor:pointer; transition:all 0.2s; white-space:nowrap; }
     .btn-sub:hover { color:var(--text); border-color:var(--point); }
-    .btn-danger { background:var(--card); color:#F87171; border:1px solid var(--border); border-radius:10px; padding:12px 20px; font-size:14px; cursor:pointer; font-family:'Gowun Dodum',sans-serif; transition:all 0.2s; white-space:nowrap; }
+    .btn-danger { background:var(--card); color:#F87171; border:1px solid var(--border); border-radius:10px; padding:12px 20px; font-size:14px; cursor:pointer; transition:all 0.2s; white-space:nowrap; }
     .btn-danger:hover { border-color:#F87171; }
 
     .toast { position:fixed; bottom:32px; left:50%; transform:translateX(-50%) translateY(80px); background:var(--success); color:#fff; border-radius:999px; padding:10px 24px; font-size:14px; font-weight:600; opacity:0; pointer-events:none; z-index:999; transition:all 0.3s ease; }
@@ -90,9 +92,9 @@
     }
   </style>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <meta property="og:image" content="https://browserkit.online/img/og/pixel-art.png" />
-  <link rel="canonical" href="https://browserkit.online/pixel-art/" />
+  <link rel="canonical" href="https://browserkit.online/en/pixel-art/" />
   <link rel="alternate" hreflang="ko" href="https://browserkit.online/pixel-art/" />
   <link rel="alternate" hreflang="en" href="https://browserkit.online/en/pixel-art/" />
   <link rel="alternate" hreflang="x-default" href="https://browserkit.online/en/pixel-art/" />
@@ -102,18 +104,18 @@
 {
   "@context": "https://schema.org",
   "@type": "WebApplication",
-  "name": "PixelArt — 픽셀 아트 변환 도구",
-  "url": "https://browserkit.online/pixel-art/",
-  "description": "이미지를 블록 단위 픽셀 아트 스타일로 변환하는 무료 온라인 도구. 서버 전송 없이 브라우저에서 바로 처리합니다.",
+  "name": "PixelArt — Convert to Pixel Art",
+  "url": "https://browserkit.online/en/pixel-art/",
+  "description": "A free online tool to convert your image into blocky pixel-art style. Everything is processed right in your browser, with no server upload.",
   "applicationCategory": "UtilityApplication",
   "operatingSystem": "Any",
   "browserRequirements": "Requires JavaScript",
-  "inLanguage": "ko",
+  "inLanguage": "en",
   "isAccessibleForFree": true,
   "offers": {
     "@type": "Offer",
     "price": "0",
-    "priceCurrency": "KRW"
+    "priceCurrency": "USD"
   },
   "publisher": {
     "@type": "Organization",
@@ -130,14 +132,14 @@
     {
       "@type": "ListItem",
       "position": 1,
-      "name": "홈",
-      "item": "https://browserkit.online/"
+      "name": "Home",
+      "item": "https://browserkit.online/en/"
     },
     {
       "@type": "ListItem",
       "position": 2,
-      "name": "픽셀 아트 변환",
-      "item": "https://browserkit.online/pixel-art/"
+      "name": "Convert to Pixel Art",
+      "item": "https://browserkit.online/en/pixel-art/"
     }
   ]
 }
@@ -146,24 +148,24 @@
 
 <body>
   <div class="lang-banner" id="langBanner">
-    <span>🌐 This page is also available in <a href="/en/pixel-art/">English</a>.</span>
+    <span>🌐 이 페이지는 <a href="/pixel-art/">한국어</a>로도 볼 수 있습니다.</span>
     <button class="lang-banner-close" id="langBannerClose" type="button" aria-label="close">&times;</button>
   </div>
   <header class="header">
     <div class="container">
-      <a href="/" class="header-brand">
-        <div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Gowun Dodum,sans-serif;flex-shrink:0">B</div>
+      <a href="/en/" class="header-brand">
+        <div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Poppins,sans-serif;flex-shrink:0">B</div>
         <span class="header-brand-text"><span style="color:var(--text)">Browser</span><span style="color:var(--point)">Kit</span></span>
       </a>
       <div class="header-right">
         <div class="lang-switcher">
-          <button class="lang-switcher-btn" type="button" data-lang-btn>🌐 <span class="lang-label-full">한국어</span></button>
+          <button class="lang-switcher-btn" type="button" data-lang-btn>🌐 <span class="lang-label-full">English</span></button>
           <div class="lang-switcher-menu" data-lang-menu>
-            <a href="/en/pixel-art/">English</a>
-            <a href="#" class="active">한국어</a>
+            <a href="#" class="active">English</a>
+            <a href="/pixel-art/">한국어</a>
           </div>
         </div>
-        <a href="/" class="header-back">&#x2190; <span class="header-back-label">BrowserKit 홈으로</span></a>
+        <a href="/en/" class="header-back">&#x2190; <span class="header-back-label">Back to BrowserKit</span></a>
       </div>
     </div>
   </header>
@@ -171,114 +173,126 @@
   <main><div class="container">
     <div class="hero">
       <div class="hero-icon" style="height:78px;display:flex;justify-content:center;align-items:center"><div style="transform:scale(1.7);transform-origin:center"><div style="width:46px;height:46px;background:#ffb3c7;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="display:grid;grid-template-columns:repeat(3,6px);grid-template-rows:repeat(3,6px);gap:2px"><div style="background:#fffdf9;border-radius:1px"></div><div style="background:#2a2433;border-radius:1px"></div><div style="background:#fffdf9;border-radius:1px"></div><div style="background:#2a2433;border-radius:1px"></div><div style="background:#fffdf9;border-radius:1px"></div><div style="background:#2a2433;border-radius:1px"></div><div style="background:#fffdf9;border-radius:1px"></div><div style="background:#2a2433;border-radius:1px"></div><div style="background:#fffdf9;border-radius:1px"></div></div></div></div></div>
-      <div class="hero-title-wrap"><h1 class="hero-title">픽셀 아트 변환</h1><a href="/blog/44-pixelart-howto" class="hero-guide-link">사용법 가이드 보기</a></div>
-      <p class="hero-desc">이미지를 블록 단위 픽셀 아트 스타일로 변환하세요. 브라우저에서 바로, 서버 전송 없이</p>
+      <div class="hero-title-wrap"><h1 class="hero-title">Convert to Pixel Art</h1><a href="/blog/44-pixelart-howto" class="hero-guide-link">View usage guide</a></div>
+      <p class="hero-desc">Convert your image into blocky pixel-art style, right in your browser, with no server upload</p>
       <div class="hero-badges">
-        <span class="badge">🔒 완전 로컬 처리</span>
-        <span class="badge">⚡ 무료 사용</span>
-        <span class="badge">🛡️ 서버 전송 없음</span>
-        <span class="badge">📦 설치 불필요</span>
+        <span class="badge">🔒 Fully local processing</span>
+        <span class="badge">⚡ Free to use</span>
+        <span class="badge">🛡️ No server upload</span>
+        <span class="badge">📦 No installation</span>
       </div>
     </div>
-    <div style="margin:0 0 12px"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><div class="adfit-h-desktop"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-QD4pRIpdIj7i2mbt" data-ad-width="728" data-ad-height="90"></ins></div><div class="adfit-h-mobile"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-R4xA2niTT8HgGjoO" data-ad-width="320" data-ad-height="50"></ins></div></div>
+    <!-- Google AdSense Display Ad — pending approval, reserving space -->
+    <div class="ad-slot" id="adTop">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
 
-    <!-- 업로드 존 -->
+    <!-- Upload zone -->
     <div class="upload-zone" id="uploadZone">
       <input type="file" id="fileInput" accept="image/*" style="display:none" />
       <div class="upload-icon" style="height:64px;display:flex;justify-content:center;align-items:center"><div style="transform:scale(1.4);transform-origin:center"><div style="width:46px;height:46px;background:#ffb3c7;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="display:grid;grid-template-columns:repeat(3,6px);grid-template-rows:repeat(3,6px);gap:2px"><div style="background:#fffdf9;border-radius:1px"></div><div style="background:#2a2433;border-radius:1px"></div><div style="background:#fffdf9;border-radius:1px"></div><div style="background:#2a2433;border-radius:1px"></div><div style="background:#fffdf9;border-radius:1px"></div><div style="background:#2a2433;border-radius:1px"></div><div style="background:#fffdf9;border-radius:1px"></div><div style="background:#2a2433;border-radius:1px"></div><div style="background:#fffdf9;border-radius:1px"></div></div></div></div></div>
-      <div class="upload-title">이미지를 업로드하세요</div>
-      <div class="upload-sub">클릭하거나 드래그하세요 (JPG, PNG, WEBP)</div>
+      <div class="upload-title">Upload an image</div>
+      <div class="upload-sub">Click or drag a file here (JPG, PNG, WEBP)</div>
     </div>
 
-    <!-- 작업 영역 -->
+    <!-- Work area -->
     <div class="work-area" id="workArea">
 
-      <!-- 미리보기 -->
+      <!-- Preview -->
       <div class="preview-wrap">
         <div class="preview-pane">
-          <div class="pane-label">&#x1F4F7; 원본</div>
+          <div class="pane-label">&#x1F4F7; Original</div>
           <div class="canvas-wrap"><canvas id="originalCanvas" style="image-rendering:auto"></canvas></div>
           <div class="file-info" id="fileInfo"></div>
         </div>
         <div class="preview-pane">
-          <div class="pane-label">&#x1F47E; 픽셀 아트 결과</div>
+          <div class="pane-label">&#x1F47E; Pixel Art Result</div>
           <div class="canvas-wrap"><canvas id="resultCanvas"></canvas></div>
           <div class="file-info" id="resultInfo"></div>
         </div>
       </div>
 
-      <!-- 슬라이더 패널 -->
+      <!-- Slider panel -->
       <div class="slider-panel">
-        <div class="slider-panel-title">&#x1F47E; 픽셀 아트 설정</div>
+        <div class="slider-panel-title">&#x1F47E; Pixel Art Settings</div>
 
         <div class="preset-wrap">
-          <button class="preset-btn" data-size="6">&#x1F50E; 세밀하게</button>
-          <button class="preset-btn active" data-size="12">&#x1F3AE; 기본</button>
-          <button class="preset-btn" data-size="24">&#x1F9F1; 큼직하게</button>
-          <button class="preset-btn" data-size="32">&#x1F47E; 도트 감성</button>
+          <button class="preset-btn" data-size="6">&#x1F50E; Fine</button>
+          <button class="preset-btn active" data-size="12">&#x1F3AE; Default</button>
+          <button class="preset-btn" data-size="24">&#x1F9F1; Chunky</button>
+          <button class="preset-btn" data-size="32">&#x1F47E; Retro Dots</button>
         </div>
 
         <div class="slider-row">
-          <span class="slider-label">&#x1F9CA; 블록 크기</span>
+          <span class="slider-label">&#x1F9CA; Block Size</span>
           <input type="range" class="range-slider" id="slBlock" min="4" max="32" value="12" />
           <span class="slider-val" id="valBlock">12px</span>
         </div>
 
         <div class="toggle-row">
-          <label><input type="checkbox" id="chkGrid" /> 격자선 표시</label>
+          <label><input type="checkbox" id="chkGrid" /> Show Grid Lines</label>
         </div>
       </div>
 
-      <!-- 액션 바 -->
+      <!-- Action bar -->
       <div class="action-bar">
-        <button class="btn-primary" id="downloadPng">&#x2B07; PNG 저장</button>
-        <button class="btn-sub" id="resetBtn">&#x21BA; 초기화</button>
-        <button class="btn-danger" id="newImageBtn">&#x1F5BC;&#xFE0F; 다른 이미지</button>
+        <button class="btn-primary" id="downloadPng">&#x2B07; Save PNG</button>
+        <button class="btn-sub" id="resetBtn">&#x21BA; Reset</button>
+        <button class="btn-danger" id="newImageBtn">&#x1F5BC;&#xFE0F; New Image</button>
       </div>
     </div>
 
-<div style="margin:0 0 12px"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><!-- 카카오 애드핏 (2026-07-22, 쿠팡 파트너스 다이내믹 배너로 교체) — 복원 시 주석 해제: <div class="adfit-h-desktop"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-QD4pRIpdIj7i2mbt" data-ad-width="728" data-ad-height="90"></ins></div><div class="adfit-h-mobile"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-R4xA2niTT8HgGjoO" data-ad-width="320" data-ad-height="50"></ins></div> --><div class="adfit-h-desktop"><script src="https://ads-partners.coupang.com/g.js"></script><script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"728","height":"90","tsource":""});</script></div><div class="adfit-h-mobile"><script src="https://ads-partners.coupang.com/g.js"></script><script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"320","height":"50","tsource":""});</script></div></div>
+<!-- Google AdSense Display Ad — pending approval, reserving space -->
+    <div class="ad-slot" id="adMiddle">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
 
     <div class="guide-summary">
-      <h2 class="guide-summary-title">사용법 요약</h2>
+      <h2 class="guide-summary-title">Quick guide</h2>
       <ol class="guide-steps">
-        <li>이미지 업로드</li>
-        <li>블록 크기 조절</li>
-        <li>격자선 표시 (선택)</li>
+        <li>Upload an image</li>
+        <li>Adjust the block size</li>
+        <li>Show grid lines (optional)</li>
       </ol>
-      <h3 class="guide-faq-title">자주 묻는 질문</h3>
+      <h3 class="guide-faq-title">Frequently asked questions</h3>
       <div class="guide-faq">
         <details>
-          <summary>픽셀 아트 변환 도구는 정말 무료인가요?</summary>
-          <p>네, 회원가입이나 설치 없이 완전 무료로 사용할 수 있습니다. 횟수 제한도 없습니다.</p>
+          <summary>Is the Convert to Pixel Art tool really free?</summary>
+          <p>Yes, it is completely free to use with no sign-up or installation required. There is no usage limit either.</p>
         </details>
         <details>
-          <summary>업로드한 파일이 서버로 전송되나요?</summary>
-          <p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 업로드한 파일이 외부 서버로 전송되거나 저장되지 않습니다.</p>
+          <summary>Are uploaded files sent to a server?</summary>
+          <p>No. All processing happens entirely in your browser, and uploaded files are never sent to or stored on an external server.</p>
         </details>
         <details>
-          <summary>픽셀 크기를 조절할 수 있나요?</summary>
-          <p>네, 픽셀 크기를 조절해 도트의 굵기와 느낌을 원하는 대로 바꿀 수 있습니다.</p>
+          <summary>Can I adjust the pixel size?</summary>
+          <p>Yes, you can adjust the pixel size to change the thickness and feel of the dots exactly how you want.</p>
         </details>
         <details>
-          <summary>모바일에서도 사용할 수 있나요?</summary>
-          <p>네, 별도의 앱 설치 없이 모바일 브라우저에서도 동일하게 사용할 수 있습니다.</p>
+          <summary>Can I use this on mobile?</summary>
+          <p>Yes, it works the same way in a mobile browser without needing to install any app.</p>
         </details>
       </div>
-      <a href="/blog/44-pixelart-howto" class="guide-full-link">전체 가이드 보기 →</a>
+      <a href="/blog/44-pixelart-howto" class="guide-full-link">View full guide →</a>
     </div>
 
-    <div style="margin:12px 0"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="9500090221"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><div class="adfit-rect-wrap"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-oePL4TCj742xAwqT" data-ad-width="300" data-ad-height="250"></ins></div></div>
+    <!-- Google AdSense Multiplex Ad — pending approval, reserving space -->
+    <div class="ad-slot ad-slot-rect" id="adBottom">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
   </div></main>
 
   <footer class="footer">
     <div class="container">
-      <p class="footer-copy">&#xa9; 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p>
+      <p class="footer-copy">&#xa9; 2026 BrowserKit. All processing happens in your browser.</p>
       <nav class="footer-nav">
-        <a href="/privacy">개인정보 처리방침</a>
-        <a href="/terms">이용약관</a>
-        <a href="/about">서비스 소개</a>
-        <a href="/blog/">블로그</a>
+        <a href="/en/privacy.html">Privacy Policy</a>
+        <a href="/en/terms.html">Terms of Service</a>
+        <a href="/en/about.html">About</a>
+        <a href="/en/blog/">Blog</a>
       </nav>
     </div>
   </footer>
@@ -286,14 +300,14 @@
   <div class="toast" id="toast"></div>
 
   <script>
-  // ── 상태 ──
+  // ── State ──
   var originalImage = null;
   var originalFile  = null;
 
   function clamp(v) { return Math.max(0, Math.min(255, Math.round(v))); }
   function formatBytes(b) { if (b < 1024) return b + ' B'; if (b < 1048576) return (b/1024).toFixed(1) + ' KB'; return (b/1048576).toFixed(2) + ' MB'; }
 
-  // ── 블록 평균값 픽셀레이트 (ImageBright getImageData 패턴 재사용) ──
+  // ── Block-average pixelation (reuses the ImageBright getImageData pattern) ──
   function pixelate(ctx, w, h, block) {
     var imgData = ctx.getImageData(0, 0, w, h);
     var d = imgData.data;
@@ -333,7 +347,7 @@
     ctx.restore();
   }
 
-  // ── 렌더링 ──
+  // ── Rendering ──
   function render() {
     if (!originalImage) return;
     var block = parseInt(document.getElementById('slBlock').value);
@@ -356,7 +370,7 @@
     } catch(e) {}
   }
 
-  // ── 슬라이더 / 프리셋 ──
+  // ── Slider / presets ──
   document.getElementById('slBlock').addEventListener('input', function() {
     document.getElementById('valBlock').textContent = this.value + 'px';
     document.querySelectorAll('.preset-btn').forEach(function(b) { b.classList.toggle('active', b.dataset.size === document.getElementById('slBlock').value); });
@@ -373,7 +387,7 @@
     });
   });
 
-  // ── 업로드 ──
+  // ── Upload ──
   var uploadZone = document.getElementById('uploadZone');
   var fileInput  = document.getElementById('fileInput');
 
@@ -428,7 +442,7 @@
     document.querySelectorAll('.preset-btn').forEach(function(b) { b.classList.toggle('active', b.dataset.size === '12'); });
   }
 
-  // ── 다운로드 ──
+  // ── Download ──
   document.getElementById('downloadPng').addEventListener('click', function() {
     var rc = document.getElementById('resultCanvas');
     rc.toBlob(function(blob) {
@@ -437,18 +451,18 @@
       a.download = 'pixelart_result.png';
       a.click();
       URL.revokeObjectURL(a.href);
-      showToast('✓ PNG 파일이 저장됩니다');
+      showToast('✓ PNG file saved');
     }, 'image/png');
   });
 
-  // ── 초기화 ──
+  // ── Reset ──
   document.getElementById('resetBtn').addEventListener('click', function() {
     resetControls();
     render();
-    showToast('↺ 초기화되었습니다');
+    showToast('↺ Reset');
   });
 
-  // ── 다른 이미지 ──
+  // ── New image ──
   document.getElementById('newImageBtn').addEventListener('click', function() {
     originalImage = null; originalFile = null;
     fileInput.value = '';
@@ -483,7 +497,7 @@
     try {
       if (document.cookie.indexOf('bk_lang_dismiss=1') !== -1) return;
       var lang = (navigator.language || navigator.userLanguage || '').toLowerCase();
-      if (lang.indexOf('ko') === 0) return;
+      if (lang.indexOf('ko') !== 0) return;
       var banner = document.getElementById('langBanner');
       if (!banner) return;
       banner.classList.add('show');
