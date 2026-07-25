@@ -1,0 +1,387 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="icon" href="/favicon.ico" sizes="32x32">
+  <link rel="icon" href="/favicon-16.png" sizes="16x16" type="image/png">
+  <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="/favicon-192.png" sizes="192x192" type="image/png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="The official step-by-step guide to every feature of JSONFormat. Learn how to pretty-print, minify, validate, and locate errors in JSON." />
+  <meta property="og:title" content="JSON Formatter: The Complete Guide — BrowserKit" />
+  <meta property="og:description" content="The official JSONFormat guide to pretty-printing, minifying, and validating JSON right in your browser." />
+  <meta property="og:type" content="article" />
+  <title>JSON Formatter: The Complete Guide — BrowserKit</title>
+  <link rel="stylesheet" href="/css/style.css?v=20260724c" />
+  <link rel="stylesheet" href="/css/style-en.css?v=20260724a" />
+  <!-- Google AdSense — pending re-review. Uncomment once approved.
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506"
+     crossorigin="anonymous"></script>
+  -->
+  <style>
+    .feature-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:20px 0; }
+    .feature-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px; }
+    .feature-card:hover { border-color:var(--point); }
+    .feature-icon { font-size:24px; margin-bottom:10px; }
+    .feature-title { font-size:14px; font-weight:600; color:var(--text); margin-bottom:6px; }
+    .feature-desc { font-size:13px; color:var(--subtext); line-height:1.7; }
+    .step-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px 24px; margin:16px 0; display:flex; gap:16px; align-items:flex-start; }
+    .step-num { min-width:36px; height:36px; background:linear-gradient(135deg,var(--point),var(--point-hover)); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:700; color:white; flex-shrink:0; }
+    .step-content h3 { font-size:15px; font-weight:600; margin:0 0 6px; color:var(--text); }
+    .step-content p { font-size:14px; color:var(--subtext); line-height:1.7; margin:0; }
+    .code-block { background:#0a0a12; border:1px solid var(--border); border-radius:10px; padding:16px 20px; margin:16px 0; font-family:'Fira Code','JetBrains Mono',monospace; font-size:13px; line-height:1.8; overflow-x:auto; }
+    .json-key { color:#b794f4; }
+    .json-string { color:#68d391; }
+    .json-number { color:#63b3ed; }
+    .json-boolean { color:#f6ad55; }
+    .json-null { color:#fc8181; }
+    .json-bracket { color:#e2e8f0; }
+    .status-demo { display:inline-flex; align-items:center; gap:6px; font-size:13px; font-weight:600; padding:5px 14px; border-radius:999px; margin:4px; }
+    .status-valid { color:#34D399; background:rgba(52,211,153,0.1); border:1px solid #34D399; }
+    .status-error { color:#F87171; background:rgba(248,113,113,0.1); border:1px solid #F87171; }
+    .post-table { width:100%; border-collapse:collapse; margin:20px 0; font-size:15px; }
+    .post-table th { background:var(--card); padding:12px 16px; text-align:left; font-weight:600; border:1px solid var(--border); color:var(--text); }
+    .post-table td { padding:11px 16px; border:1px solid var(--border); color:var(--subtext); line-height:1.7; }
+    .post-table td code { background:var(--bg); border-radius:4px; padding:1px 6px; font-size:13px; color:var(--point-hover); font-family:'Fira Code',monospace; }
+    .post-table tr:hover td { background:rgba(123,108,255,0.04); }
+    .post-nav { display:flex; justify-content:space-between; margin-top: 12px; padding-top:24px; border-top:1px solid var(--border); gap:12px; }
+    .post-nav a { font-size:15px; color:var(--subtext); text-decoration:none; }
+    .post-nav a:hover { color:var(--text); }
+    .cta-box { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:28px; text-align:center; margin: 12px 0 0; }
+    .cta-box p { font-size:17px; color:var(--subtext); margin-bottom:16px; }
+    .cta-btn { display:inline-block; background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border-radius:10px; padding:12px 28px; font-size:14px; font-weight:600; text-decoration:none; }
+    .cta-btn:hover { transform:translateY(-2px); box-shadow:0 8px 24px var(--glow); color:white; }
+    .back-link:hover { color:var(--text); }
+    @media (max-width:640px) {
+      .feature-grid { grid-template-columns:1fr; }
+    }
+  </style>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<meta property="og:image" content="https://browserkit.online/img/og/json-format.png" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "JSON Formatter: The Complete Guide",
+    "description": "The official step-by-step guide to every feature of JSONFormat. Learn how to pretty-print, minify, validate, and locate errors in JSON.",
+    "datePublished": "2026-06-20T00:00:00+09:00",
+    "dateModified": "2026-07-22T00:00:00+09:00",
+    "author": { "@type": "Organization", "name": "BrowserKit", "url": "https://browserkit.online" },
+    "publisher": { "@type": "Organization", "name": "BrowserKit", "url": "https://browserkit.online", "logo": { "@type": "ImageObject", "url": "https://browserkit.online/img/og-browserkit.png" } },
+    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://browserkit.online/en/blog/25-jsonformat-howto" },
+    "image": "https://browserkit.online/img/og/json-format.png"
+  }
+  </script>  <link rel="canonical" href="https://browserkit.online/en/blog/25-jsonformat-howto" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://browserkit.online/en/" },
+    { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://browserkit.online/en/blog/" },
+    { "@type": "ListItem", "position": 3, "name": "JSON Formatter: The Complete Guide", "item": "https://browserkit.online/en/blog/25-jsonformat-howto" }
+  ]
+}
+  </script>
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://browserkit.online/img/og/json-format.png" />
+  <style>
+    .post-table-wrap { overflow-x:auto; }
+    .post-table th, .post-table td { white-space:nowrap; }
+    .post-nav a { word-break:keep-all; }
+    .post-nav .nav-label { display:block; font-size:13px; color:var(--subtext); opacity:0.7; margin-bottom:4px; }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Is the JSON Formatter tool really free?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, it is completely free to use with no sign-up or installation required. There is no usage limit either."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is anything I enter sent to a server?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. All processing happens entirely in your browser, and nothing you enter is ever sent to or stored on an external server."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can it help me find problems in invalid JSON?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, the validation feature finds syntax errors and points them out, so you can quickly see exactly what's wrong."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I use this on mobile?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, it works the same way in a mobile browser without needing to install any app."
+      }
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <div class="lang-banner" id="langBanner">
+    <span>🌐 이 페이지는 <a href="/blog/25-jsonformat-howto">한국어</a>로도 볼 수 있습니다.</span>
+    <button class="lang-banner-close" id="langBannerClose" type="button" aria-label="close">&times;</button>
+  </div>
+  <header class="header">
+    <div class="container">
+      <a href="/en/" class="header-brand"><div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Poppins,sans-serif;flex-shrink:0">B</div><span class="header-brand-text"><span style="color:var(--text)">Browser</span><span style="color:var(--point)">Kit</span></span></a>
+      <div class="header-right">
+        <div class="lang-switcher">
+          <button class="lang-switcher-btn" type="button" data-lang-btn>🌐 <span class="lang-label-full">English</span></button>
+          <div class="lang-switcher-menu" data-lang-menu>
+            <a href="#" class="active">English</a>
+            <a href="/blog/25-jsonformat-howto">한국어</a>
+          </div>
+        </div>
+        <a href="/en/" class="header-back">← <span class="header-back-label">Back to BrowserKit</span></a>
+      </div>
+    </div>
+  </header>
+
+  <article class="post-wrap">
+    <a href="/en/blog/" class="back-link">← Blog</a>
+    <span class="post-tag">Guide</span>
+    <h1 class="post-title"><span style="color:var(--point-hover)">JSON Formatter</span>: The Complete Guide</h1>
+    <div class="post-date">June 19, 2026</div>
+    <!-- Google AdSense Display Ad — pending approval, reserving space -->
+    <div class="ad-slot" id="adExtra2">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
+
+    <div class="post-body">
+      <p>When an API response comes back as JSON crammed onto a single line with no line breaks, it can be hard to know where to even start reading it. JSONFormat is a free online tool that pretty-prints, minifies, and validates JSON like that. There's nothing to install and no sign-up required — it runs right in your browser, and the JSON you enter is processed only there, never sent to an external server. It's especially handy for debugging API responses or reviewing config files.</p>
+
+      <h2>Key Features</h2>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <div class="feature-icon">&#x2728;</div>
+          <div class="feature-title">Pretty Print</div>
+          <div class="feature-desc">Expand minified JSON into a readable format with 2- or 4-space indentation. Syntax highlighting colors keys, values, and types for easy reading.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F5DC;&#xFE0F;</div>
+          <div class="feature-title">Minify</div>
+          <div class="feature-desc">Strip all unnecessary whitespace and line breaks to collapse JSON onto a single line — handy for API request bodies or minimizing size.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x2705;</div>
+          <div class="feature-title">Live Validation</div>
+          <div class="feature-desc">Detects JSON syntax errors as you type. If there's an error, it shows the line and column so you can fix it quickly.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F3A8;</div>
+          <div class="feature-title">Syntax Highlighting</div>
+          <div class="feature-desc">Keys (purple), strings (green), numbers (blue), booleans (orange), and null (red) each get their own color, making the JSON structure easy to read at a glance.</div>
+        </div>
+      </div>
+
+      <!-- Google AdSense Display Ad — pending approval, reserving space -->
+    <div class="ad-slot" id="adTop">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
+      <h2>Basic Usage</h2>
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <h3>Enter JSON</h3>
+          <p>Paste your JSON into the input box on the left. Validation runs immediately, showing a ✅ Valid or ❌ Error status at the top.</p>
+        </div>
+      </div>
+      
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <h3>Pretty-Print or Minify</h3>
+          <p>Click <strong>✨ Format (2-space)</strong> or <strong>✨ Format (4-space)</strong> to apply indentation, or <strong>🗜️ Minify</strong> to strip whitespace.</p>
+        </div>
+      </div>
+      
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <h3>Copy the Result</h3>
+          <p>Click the <strong>Copy</strong> button at the top of the result panel on the right to copy the output JSON to your clipboard.</p>
+        </div>
+      </div>
+
+      <h2>Validation Status</h2>
+      <p>Validation runs automatically 300ms after you type into the input box.</p>
+      <div>
+        <span class="status-demo status-valid">✅ Valid JSON</span>
+        <span class="status-demo status-error">❌ JSON Error</span>
+      </div>
+      <p style="margin-top:16px;">If an error is detected, the input box border turns red and the error location (line/column) and message are shown, so you can fix the JSON accordingly.</p>
+      
+
+      <h2>Pretty-Print vs. Minify</h2>
+      <h3>Before (Minified)</h3>
+      <div class="code-block">{"name":"BrowserKit","tools":["JSONFormat","QRCode"],"free":true}</div>
+
+      <h3>After (2-Space Indent)</h3>
+      <div class="code-block"><span class="json-bracket">{</span>
+  <span class="json-key">"name"</span>: <span class="json-string">"BrowserKit"</span>,
+  <span class="json-key">"tools"</span>: <span class="json-bracket">[</span>
+    <span class="json-string">"JSONFormat"</span>,
+    <span class="json-string">"QRCode"</span>
+  <span class="json-bracket">]</span>,
+  <span class="json-key">"free"</span>: <span class="json-boolean">true</span>
+<span class="json-bracket">}</span></div>
+
+      <h2>Syntax Highlighting Colors</h2>
+      <div class="post-table-wrap"><table class="post-table">
+        <thead><tr><th>Type</th><th>Color</th><th>Example</th></tr></thead>
+        <tbody>
+          <tr><td>Key</td><td>Purple</td><td><code>"name"</code>, <code>"version"</code></td></tr>
+          <tr><td>String</td><td>Green</td><td><code>"BrowserKit"</code>, <code>"https://..."</code></td></tr>
+          <tr><td>Number</td><td>Blue</td><td><code>42</code>, <code>3.14</code>, <code>-1</code></td></tr>
+          <tr><td>Boolean</td><td>Orange</td><td><code>true</code>, <code>false</code></td></tr>
+          <tr><td>null</td><td>Red</td><td><code>null</code></td></tr>
+          <tr><td>Bracket</td><td>White</td><td><code>{</code>, <code>}</code>, <code>[</code>, <code>]</code></td></tr>
+        </tbody>
+      </table></div>
+
+      <h2>2-Space vs. 4-Space Indent</h2>
+      <div class="post-table-wrap"><table class="post-table">
+        <thead><tr><th>Option</th><th>Recommended For</th></tr></thead>
+        <tbody>
+          <tr><td>2-space</td><td>The JavaScript/Node.js and web dev standard. Uses screen space efficiently</td></tr>
+          <tr><td>4-space</td><td>The standard in Python, Java, and similar environments. More readable</td></tr>
+        </tbody>
+      </table></div>
+
+      <h2>Common JSON Errors</h2>
+      <div class="post-table-wrap"><table class="post-table">
+        <thead><tr><th>Error Type</th><th>Incorrect</th><th>Correct</th></tr></thead>
+        <tbody>
+          <tr><td>Single quotes</td><td><code>{'key': 'value'}</code></td><td><code>{"key": "value"}</code></td></tr>
+          <tr><td>Trailing comma</td><td><code>{"a": 1, "b": 2,}</code></td><td><code>{"a": 1, "b": 2}</code></td></tr>
+          <tr><td>Unquoted key</td><td><code>{key: "value"}</code></td><td><code>{"key": "value"}</code></td></tr>
+          <tr><td>Comments</td><td><code>{"a": 1 // comment}</code></td><td><code>{"a": 1}</code></td></tr>
+          <tr><td>undefined value</td><td><code>{"a": undefined}</code></td><td><code>{"a": null}</code></td></tr>
+        </tbody>
+      </table></div>
+
+      <h2>Use Cases</h2>
+
+      <h3>Analyzing API Responses</h3>
+      <p>Copy a REST API or GraphQL response from dev tools, paste it into JSONFormat, and pretty-print it to see the nested data structure at a glance.</p>
+
+      <h3>Validating Config Files</h3>
+      <p>Paste JSON config files like <code>package.json</code>, <code>tsconfig.json</code>, or <code>appsettings.json</code> to quickly find syntax errors — especially handy after hand-editing one and running into a problem.</p>
+
+      <h3>Minifying Request Bodies</h3>
+      <p>Write out a readable JSON payload for testing, then minify it to a single line and paste it straight into a curl command or Postman.</p>
+
+      <h3>Quick Testing with Sample JSON</h3>
+      <p>Click <strong>📋 Load Sample</strong> to automatically load sample JSON modeled on BrowserKit service data, so you can quickly see how the tool works.</p>
+
+      <div class="post-highlight">💡 JSONFormat processes everything entirely in your browser. Since the JSON you enter is never sent to an external server, you can safely analyze responses containing API keys or internal system config files.</div>
+    
+      <h2>Frequently Asked Questions</h2>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
+        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. Is the JSON Formatter tool really free?</p>
+        <p style="color:var(--subtext);margin:0;line-height:1.7">Yes, it is completely free to use with no sign-up or installation required. There is no usage limit either.</p>
+      </div>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
+        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. Is anything I enter sent to a server?</p>
+        <p style="color:var(--subtext);margin:0;line-height:1.7">No. All processing happens entirely in your browser, and nothing you enter is ever sent to or stored on an external server.</p>
+      </div>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
+        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. Can it help me find problems in invalid JSON?</p>
+        <p style="color:var(--subtext);margin:0;line-height:1.7">Yes, the validation feature finds syntax errors and points them out, so you can quickly see exactly what's wrong.</p>
+      </div>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
+        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. Can I use this on mobile?</p>
+        <p style="color:var(--subtext);margin:0;line-height:1.7">Yes, it works the same way in a mobile browser without needing to install any app.</p>
+      </div>
+    </div>
+
+    <div style="margin:12px 0"><!-- Google AdSense Display Ad — pending approval, reserving space -->
+    <div class="ad-slot" id="adMiddle">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
+
+    <div class="cta-box">
+      <p>Pretty-print API responses or config file JSON into something readable.<br />Live validation and syntax highlighting help you grasp the structure fast.</p>
+      <a href="/en/json-format/" class="cta-btn" style="display:inline-flex;align-items:center;gap:8px">
+        <span style="display:inline-block;width:26px;height:26px;overflow:hidden;flex-shrink:0"><span style="display:block;transform:scale(0.565);transform-origin:top left"><div style="width:46px;height:46px;background:#e0c3ff;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="font:700 16px Poppins,sans-serif;color:#2a2433;line-height:1;letter-spacing:-.5px;white-space:nowrap">{ }</div></div></span></span>
+        Start Formatting JSON for Free
+      </a>
+    </div>
+    <!-- Google AdSense Multiplex Ad — pending approval, reserving space -->
+    <div class="ad-slot ad-slot-rect" id="adBottom">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
+
+<div class="post-nav">
+      <a href="/en/blog/"><span class="nav-label">&larr; Blog</span>More Guides</a>
+      <a href="/en/blog/32-regextest-howto" style="text-align:right"><span class="nav-label">Next &rarr;</span><span style="color:var(--point-hover)">Regex Tester</span>: The Complete Guide</a>
+    </div></div>
+
+  </article>
+  <footer class="footer">
+    <div class="container">
+      <p class="footer-copy">&#xa9; 2026 BrowserKit. All processing happens in your browser.</p>
+      <nav class="footer-nav">
+        <a href="/en/privacy.html">Privacy Policy</a>
+        <a href="/en/terms.html">Terms of Service</a>
+        <a href="/en/about.html">About</a>
+        <a href="/en/blog/">Blog</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script>
+  document.querySelectorAll('[data-lang-btn]').forEach(function(btn){
+    btn.addEventListener('click', function(e){
+      e.stopPropagation();
+      var menu = btn.nextElementSibling;
+      menu.classList.toggle('show');
+    });
+  });
+  document.addEventListener('click', function(){
+    document.querySelectorAll('.lang-switcher-menu.show').forEach(function(m){ m.classList.remove('show'); });
+  });
+  </script>
+
+  <script>
+  (function(){
+    try {
+      if (document.cookie.indexOf('bk_lang_dismiss=1') !== -1) return;
+      var lang = (navigator.language || navigator.userLanguage || '').toLowerCase();
+      if (lang.indexOf('ko') !== 0) return;
+      var banner = document.getElementById('langBanner');
+      if (!banner) return;
+      banner.classList.add('show');
+      var closeBtn = document.getElementById('langBannerClose');
+      closeBtn.addEventListener('click', function(){
+        banner.classList.remove('show');
+        document.cookie = 'bk_lang_dismiss=1; max-age=' + (60*60*24*180) + '; path=/';
+      });
+    } catch(e) {}
+  })();
+  </script>
+</body>
+</html>
+

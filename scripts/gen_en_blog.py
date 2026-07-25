@@ -115,9 +115,11 @@ def transform(ko_html: str, slug: str, blog_filename: str) -> str:
         '<a href="/en/">English</a>\n            <a href="#" class="active">한국어</a>',
         f'<a href="#" class="active">English</a>\n            <a href="/blog/{blog_filename}">한국어</a>'
     )
-    # blog list "back to blog index" link
+    # blog list "back to blog index" link (entity-arrow and literal-arrow variants)
     c = c.replace('<a href="/blog/" class="back-link">&#x2190; 블로그 목록</a>',
                   '<a href="/en/blog/" class="back-link">&#x2190; Blog</a>')
+    c = c.replace('<a href="/blog/" class="back-link">← 블로그 목록</a>',
+                  '<a href="/en/blog/" class="back-link">← Blog</a>')
 
     # ── ad slots (identical constants to gen_en_page.py) ──
     AD_TOP_MARGIN0 = ('<div style="margin:0 0 12px"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><div class="adfit-h-desktop"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-QD4pRIpdIj7i2mbt" data-ad-width="728" data-ad-height="90"></ins></div><div class="adfit-h-mobile"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-R4xA2niTT8HgGjoO" data-ad-width="320" data-ad-height="50"></ins></div></div>')
