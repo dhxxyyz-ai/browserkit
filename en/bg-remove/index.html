@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
   <link rel="icon" href="/favicon.ico" sizes="32x32">
   <link rel="icon" href="/favicon-16.png" sizes="16x16" type="image/png">
@@ -8,18 +8,17 @@
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="이미지 배경을 AI로 자동 제거하는 무료 온라인 도구. 서버 전송 없이 브라우저에서 바로 처리합니다." />
-  <meta property="og:title" content="BGRemove — AI 배경 제거" />
-  <meta property="og:description" content="이미지 배경을 AI로 자동 제거합니다. 투명 PNG로 저장하세요." />
+  <meta name="description" content="A free online tool that automatically removes image backgrounds using AI. Everything is processed right in your browser, with no server upload." />
+  <meta property="og:title" content="BGRemove — AI Background Removal" />
+  <meta property="og:description" content="Automatically remove image backgrounds with AI. Save the result as a transparent PNG." />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://browserkit.online/bg-remove/" />
-  <title>BGRemove — AI 배경 제거</title>
+  <meta property="og:url" content="https://browserkit.online/en/bg-remove/" />
+  <title>BGRemove — AI Background Removal</title>
   <link rel="stylesheet" href="/css/style.css?v=20260724c" />
-  <!-- Google AdSense 승인 대기 중 (2026-07-19 주석 처리, 카카오 애드핏으로 임시 전환) — 승인 후 주석 해제
+  <!-- Google AdSense — pending re-review. Uncomment once approved.
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506"
      crossorigin="anonymous"></script>
   -->
-  <script type="text/javascript" src="//t1.kakaocdn.net/kas/static/ba.min.js" async></script>
   <style>
     .guide-summary { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:24px; margin:0 0 12px; }
     .guide-summary-title { font-size:16px; font-weight:700; color:var(--text); margin:0 0 12px; }
@@ -31,8 +30,11 @@
     .guide-full-link { display:inline-block; margin-top:12px; font-size:14px; font-weight:600; color:var(--point-hover); text-decoration:none; }
     .guide-full-link:hover { text-decoration:underline; }
 
+    .ad-slot { min-height:90px; display:flex; align-items:center; justify-content:center; margin:0 0 12px; }
+    .ad-slot-rect { min-height:250px; }
 
-/* 업로드 존 */
+
+/* Upload zone */
     .upload-zone { background:var(--card); border:2px dashed var(--border); border-radius:var(--radius); padding:48px 32px; text-align:center; cursor:pointer; margin-bottom:24px; transition:all 0.2s; }
     .upload-zone:hover, .upload-zone.drag-over { border-color:var(--point); box-shadow:0 0 24px var(--glow); }
     .upload-icon { font-size:40px; margin-bottom:12px; }
@@ -40,7 +42,7 @@
     .upload-sub { color:var(--subtext); font-size:13px; }
     .upload-notice { margin-top:16px; font-size:12px; color:var(--subtext); background:rgba(123,108,255,0.08); border-radius:8px; padding:10px 16px; line-height:1.7; }
 
-    /* 로딩 단계 */
+    /* Loading state */
     .loading-area { display:none; background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:32px; text-align:center; margin-bottom:24px; }
     .loading-area.show { display:block; }
     .loading-icon { font-size:40px; margin-bottom:16px; animation:spin 2s linear infinite; display:inline-block; }
@@ -49,9 +51,9 @@
     .loading-sub { color:var(--subtext); font-size:13px; margin-bottom:20px; }
     .progress-wrap { background:var(--bg); border-radius:999px; height:8px; overflow:hidden; margin-bottom:10px; }
     .progress-bar { height:100%; background:linear-gradient(90deg,var(--point),var(--point-hover)); border-radius:999px; transition:width 0.3s ease; width:0%; }
-    .progress-text { font-size:12px; color:var(--subtext); font-family:'Gowun Dodum',sans-serif; }
+    .progress-text { font-size:12px; color:var(--subtext); }
 
-    /* 결과 영역 */
+    /* Result area */
     .result-area { display:none; }
     .result-area.show { display:block; }
     .preview-wrap { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:24px; }
@@ -61,26 +63,26 @@
     .canvas-wrap.checker { background:repeating-conic-gradient(#1e1e2a 0% 25%,#26263a 0% 50%) 0 0/16px 16px; }
     .canvas-wrap img, .canvas-wrap canvas { max-width:100%; max-height:400px; display:block; }
 
-    /* 액션 버튼 */
+    /* Action buttons */
     .action-bar { display:flex; gap:10px; margin-bottom:48px; flex-wrap:wrap; }
-    .btn-primary { background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border:none; border-radius:10px; padding:12px 24px; font-size:14px; font-weight:700; cursor:pointer; font-family:'Gowun Dodum',sans-serif; transition:all 0.2s; white-space:nowrap; }
+    .btn-primary { background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border:none; border-radius:10px; padding:12px 24px; font-size:14px; font-weight:700; cursor:pointer; transition:all 0.2s; white-space:nowrap; }
     .btn-primary:hover { transform:translateY(-2px); box-shadow:0 8px 24px var(--glow); }
-    .btn-sub { background:var(--card); color:var(--subtext); border:1px solid var(--border); border-radius:10px; padding:12px 20px; font-size:14px; cursor:pointer; font-family:'Gowun Dodum',sans-serif; transition:all 0.2s; white-space:nowrap; }
+    .btn-sub { background:var(--card); color:var(--subtext); border:1px solid var(--border); border-radius:10px; padding:12px 20px; font-size:14px; cursor:pointer; transition:all 0.2s; white-space:nowrap; }
     .btn-sub:hover { color:var(--text); border-color:var(--point); }
 
-    /* 에러 */
+    /* Error */
     .error-area { display:none; background:rgba(248,113,113,0.08); border:1px solid rgba(248,113,113,0.3); border-radius:var(--radius); padding:20px 24px; margin-bottom:24px; text-align:center; }
     .error-area.show { display:block; }
     .error-msg { color:#F87171; font-size:14px; margin-bottom:12px; }
 
-    /* 배너 */
+    /* Banner */
     .footer { border-top:1px solid var(--border); padding:32px 0; text-align:center; }
     .footer-copy { color:var(--subtext); font-size:13px; margin-bottom:12px; }
     .footer-nav { display:flex; justify-content:center; gap:20px; flex-wrap:wrap; }
     .footer-nav a { color:var(--subtext); font-size:13px; text-decoration:none; }
     .footer-nav a:hover { color:var(--text); }
 
-    /* 토스트 */
+    /* Toast */
     .toast { position:fixed; bottom:32px; left:50%; transform:translateX(-50%) translateY(80px); background:var(--success); color:#fff; border-radius:999px; padding:10px 24px; font-size:14px; font-weight:600; opacity:0; pointer-events:none; z-index:999; transition:all 0.3s ease; }
     .toast.show { transform:translateX(-50%) translateY(0); opacity:1; }
 
@@ -90,9 +92,9 @@
     }
   </style>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <meta property="og:image" content="https://browserkit.online/img/og/bg-remove.png" />
-  <link rel="canonical" href="https://browserkit.online/bg-remove/" />
+  <link rel="canonical" href="https://browserkit.online/en/bg-remove/" />
   <link rel="alternate" hreflang="ko" href="https://browserkit.online/bg-remove/" />
   <link rel="alternate" hreflang="en" href="https://browserkit.online/en/bg-remove/" />
   <link rel="alternate" hreflang="x-default" href="https://browserkit.online/en/bg-remove/" />
@@ -102,18 +104,18 @@
 {
   "@context": "https://schema.org",
   "@type": "WebApplication",
-  "name": "BGRemove — AI 배경 제거",
-  "url": "https://browserkit.online/bg-remove/",
-  "description": "이미지 배경을 AI로 자동 제거하는 무료 온라인 도구. 서버 전송 없이 브라우저에서 바로 처리합니다.",
+  "name": "BGRemove — AI Background Removal",
+  "url": "https://browserkit.online/en/bg-remove/",
+  "description": "A free online tool that automatically removes image backgrounds using AI. Everything is processed right in your browser, with no server upload.",
   "applicationCategory": "UtilityApplication",
   "operatingSystem": "Any",
   "browserRequirements": "Requires JavaScript",
-  "inLanguage": "ko",
+  "inLanguage": "en",
   "isAccessibleForFree": true,
   "offers": {
     "@type": "Offer",
     "price": "0",
-    "priceCurrency": "KRW"
+    "priceCurrency": "USD"
   },
   "publisher": {
     "@type": "Organization",
@@ -130,14 +132,14 @@
     {
       "@type": "ListItem",
       "position": 1,
-      "name": "홈",
-      "item": "https://browserkit.online/"
+      "name": "Home",
+      "item": "https://browserkit.online/en/"
     },
     {
       "@type": "ListItem",
       "position": 2,
-      "name": "AI 배경 제거",
-      "item": "https://browserkit.online/bg-remove/"
+      "name": "AI Background Removal",
+      "item": "https://browserkit.online/en/bg-remove/"
     }
   ]
 }
@@ -146,138 +148,150 @@
 
 <body>
   <div class="lang-banner" id="langBanner">
-    <span>🌐 This page is also available in <a href="/en/bg-remove/">English</a>.</span>
+    <span>🌐 이 페이지는 <a href="/bg-remove/">한국어</a>로도 볼 수 있습니다.</span>
     <button class="lang-banner-close" id="langBannerClose" type="button" aria-label="close">&times;</button>
   </div>
   <header class="header">
     <div class="container">
-      <a href="/" class="header-brand">
-        <div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Gowun Dodum,sans-serif;flex-shrink:0">B</div>
+      <a href="/en/" class="header-brand">
+        <div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Poppins,sans-serif;flex-shrink:0">B</div>
         <span class="header-brand-text"><span style="color:var(--text)">Browser</span><span style="color:var(--point)">Kit</span></span>
       </a>
       <div class="header-right">
         <div class="lang-switcher">
-          <button class="lang-switcher-btn" type="button" data-lang-btn>🌐 <span class="lang-label-full">한국어</span></button>
+          <button class="lang-switcher-btn" type="button" data-lang-btn>🌐 <span class="lang-label-full">English</span></button>
           <div class="lang-switcher-menu" data-lang-menu>
-            <a href="/en/bg-remove/">English</a>
-            <a href="#" class="active">한국어</a>
+            <a href="#" class="active">English</a>
+            <a href="/bg-remove/">한국어</a>
           </div>
         </div>
-        <a href="/" class="header-back">&#x2190; <span class="header-back-label">BrowserKit 홈으로</span></a>
+        <a href="/en/" class="header-back">&#x2190; <span class="header-back-label">Back to BrowserKit</span></a>
       </div>
     </div>
   </header>
 
   <main><div class="container">
     <div class="hero">
-      <div class="hero-icon" style="height:78px;display:flex;justify-content:center;align-items:center"><div style="transform:scale(1.7);transform-origin:center"><div style="width:46px;height:46px;background:#ffb3c7;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="font:700 16px Gowun Dodum,sans-serif;color:#2a2433;line-height:1;letter-spacing:-.5px;white-space:nowrap">BG</div></div></div></div>
-      <div class="hero-title-wrap"><h1 class="hero-title">AI 배경 제거</h1><a href="/blog/33-bgremove-howto" class="hero-guide-link">사용법 가이드 보기</a></div>
-      <p class="hero-desc">AI가 이미지 배경을 자동으로 제거합니다. 투명 PNG로 저장하세요</p>
+      <div class="hero-icon" style="height:78px;display:flex;justify-content:center;align-items:center"><div style="transform:scale(1.7);transform-origin:center"><div style="width:46px;height:46px;background:#ffb3c7;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="font:700 16px Poppins,sans-serif;color:#2a2433;line-height:1;letter-spacing:-.5px;white-space:nowrap">BG</div></div></div></div>
+      <div class="hero-title-wrap"><h1 class="hero-title">AI Background Removal</h1><a href="/blog/33-bgremove-howto" class="hero-guide-link">View usage guide</a></div>
+      <p class="hero-desc">AI automatically removes the background from your image. Save it as a transparent PNG</p>
       <div class="hero-badges">
-        <span class="badge">🔒 완전 로컬 처리</span>
-        <span class="badge">⚡ 무료 사용</span>
-        <span class="badge">🛡️ 서버 전송 없음</span>
-        <span class="badge">📦 설치 불필요</span>
+        <span class="badge">🔒 Fully local processing</span>
+        <span class="badge">⚡ Free to use</span>
+        <span class="badge">🛡️ No server upload</span>
+        <span class="badge">📦 No installation</span>
       </div>
     </div>
-    <div style="margin:0 0 12px"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><div class="adfit-h-desktop"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-QD4pRIpdIj7i2mbt" data-ad-width="728" data-ad-height="90"></ins></div><div class="adfit-h-mobile"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-R4xA2niTT8HgGjoO" data-ad-width="320" data-ad-height="50"></ins></div></div>
+    <!-- Google AdSense Display Ad — pending approval, reserving space -->
+    <div class="ad-slot" id="adTop">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
 
-<!-- 업로드 존 -->
+<!-- Upload zone -->
     <div class="upload-zone" id="uploadZone">
       <input type="file" id="fileInput" accept="image/*" style="display:none" />
-      <div class="upload-icon" style="height:64px;display:flex;justify-content:center;align-items:center"><div style="transform:scale(1.4);transform-origin:center"><div style="width:46px;height:46px;background:#ffb3c7;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="font:700 16px Gowun Dodum,sans-serif;color:#2a2433;line-height:1;letter-spacing:-.5px;white-space:nowrap">BG</div></div></div></div>
-      <div class="upload-title">이미지를 업로드하세요</div>
-      <div class="upload-sub">클릭하거나 드래그하세요 (JPG, PNG, WEBP)</div>
+      <div class="upload-icon" style="height:64px;display:flex;justify-content:center;align-items:center"><div style="transform:scale(1.4);transform-origin:center"><div style="width:46px;height:46px;background:#ffb3c7;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="font:700 16px Poppins,sans-serif;color:#2a2433;line-height:1;letter-spacing:-.5px;white-space:nowrap">BG</div></div></div></div>
+      <div class="upload-title">Upload an image</div>
+      <div class="upload-sub">Click or drag a file here (JPG, PNG, WEBP)</div>
       <div class="upload-notice">
-        &#x1F916; <strong>AI 모델 안내:</strong> 첫 실행 시 약 40MB 모델을 다운로드합니다 (약 5~15초 소요).<br />
-        이후 브라우저 캐시에 저장되어 <strong>재방문 시 즉시 사용</strong>할 수 있습니다.<br />
-        모든 처리는 내 브라우저에서만 이루어지며, 이미지가 외부 서버로 전송되지 않습니다.<br />
-        &#x26A0;&#xFE0F; AI 인식률에 따라 배경이 완벽하게 제거되지 않을 수 있습니다.
+        &#x1F916; <strong>About the AI model:</strong> On first run, it downloads a model of about 40MB (takes roughly 5-15 seconds).<br />
+        After that it is cached in your browser, so it becomes <strong>instantly available on future visits</strong>.<br />
+        All processing happens only in your browser, and your image is never sent to an external server.<br />
+        &#x26A0;&#xFE0F; Depending on the AI's accuracy, the background may not be removed perfectly.
       </div>
     </div>
 
-    <!-- 로딩 -->
+    <!-- Loading -->
     <div class="loading-area" id="loadingArea">
       <div class="loading-icon">&#x2699;&#xFE0F;</div>
-      <div class="loading-title" id="loadingTitle">AI 모델을 준비하는 중...</div>
-      <div class="loading-sub" id="loadingSub">처음 실행 시 약 40MB를 다운로드합니다. 이후 캐시되어 즉시 사용 가능합니다.</div>
+      <div class="loading-title" id="loadingTitle">Preparing the AI model...</div>
+      <div class="loading-sub" id="loadingSub">On first run, it downloads about 40MB. After that it is cached and instantly available.</div>
       <div class="progress-wrap">
         <div class="progress-bar" id="progressBar"></div>
       </div>
-      <div class="progress-text" id="progressText">준비 중...</div>
+      <div class="progress-text" id="progressText">Preparing...</div>
     </div>
 
-    <!-- 에러 -->
+    <!-- Error -->
     <div class="error-area" id="errorArea">
-      <div class="error-msg" id="errorMsg">오류가 발생했습니다.</div>
-      <button class="btn-sub" id="retryBtn">&#x21BA; 다시 시도</button>
+      <div class="error-msg" id="errorMsg">An error occurred.</div>
+      <button class="btn-sub" id="retryBtn">&#x21BA; Try Again</button>
     </div>
 
-    <!-- 결과 -->
+    <!-- Result -->
     <div class="result-area" id="resultArea">
       <div class="preview-wrap">
         <div class="preview-pane">
-          <div class="pane-label">&#x1F4F7; 원본</div>
+          <div class="pane-label">&#x1F4F7; Original</div>
           <div class="canvas-wrap">
-            <img id="originalImg" src="" alt="원본 이미지" />
+            <img id="originalImg" src="" alt="Original image" />
           </div>
         </div>
         <div class="preview-pane">
-          <div class="pane-label">&#x2702;&#xFE0F; 배경 제거 결과</div>
+          <div class="pane-label">&#x2702;&#xFE0F; Background Removed</div>
           <div class="canvas-wrap checker">
-            <img id="resultImg" src="" alt="배경 제거 결과" />
+            <img id="resultImg" src="" alt="Background removed result" />
           </div>
         </div>
       </div>
       <div class="action-bar">
-        <button class="btn-primary" id="downloadBtn">&#x2B07; PNG 저장 (투명 배경)</button>
-        <button class="btn-sub" id="newImageBtn">&#x1F5BC;&#xFE0F; 다른 이미지</button>
+        <button class="btn-primary" id="downloadBtn">&#x2B07; Save PNG (Transparent)</button>
+        <button class="btn-sub" id="newImageBtn">&#x1F5BC;&#xFE0F; New Image</button>
       </div>
-      <p style="font-size:12px;color:var(--subtext);margin-bottom:32px;">&#x26A0;&#xFE0F; AI 인식률에 따라 배경이 완벽하게 제거되지 않을 수 있습니다.</p>
+      <p style="font-size:12px;color:var(--subtext);margin-bottom:32px;">&#x26A0;&#xFE0F; Depending on the AI's accuracy, the background may not be removed perfectly.</p>
     </div>
 
   </div></main>
-<div class="container"><div style="margin:0 0 12px"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><!-- 카카오 애드핏 (2026-07-22, 쿠팡 파트너스 다이내믹 배너로 교체) — 복원 시 주석 해제: <div class="adfit-h-desktop"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-QD4pRIpdIj7i2mbt" data-ad-width="728" data-ad-height="90"></ins></div><div class="adfit-h-mobile"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-R4xA2niTT8HgGjoO" data-ad-width="320" data-ad-height="50"></ins></div> --><div class="adfit-h-desktop"><script src="https://ads-partners.coupang.com/g.js"></script><script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"728","height":"90","tsource":""});</script></div><div class="adfit-h-mobile"><script src="https://ads-partners.coupang.com/g.js"></script><script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"320","height":"50","tsource":""});</script></div></div>
-
-    <div class="guide-summary">
-      <h2 class="guide-summary-title">사용법 요약</h2>
-      <ol class="guide-steps">
-        <li>이미지 업로드</li>
-        <li>AI 모델 로드 및 처리 (자동)</li>
-        <li>결과 확인</li>
-      </ol>
-      <h3 class="guide-faq-title">자주 묻는 질문</h3>
-      <div class="guide-faq">
-        <details>
-          <summary>AI 배경 제거 도구는 정말 무료인가요?</summary>
-          <p>네, 회원가입이나 설치 없이 완전 무료로 사용할 수 있습니다. 횟수 제한도 없습니다.</p>
-        </details>
-        <details>
-          <summary>업로드한 파일이 서버로 전송되나요?</summary>
-          <p>이미지 자체는 외부로 전송되지 않습니다. 첫 실행 시 AI 모델 파일만 내려받고, 배경 제거 처리는 브라우저 안에서 이루어집니다.</p>
-        </details>
-        <details>
-          <summary>처음 실행할 때 시간이 걸리는 이유가 뭔가요?</summary>
-          <p>첫 실행 시 AI 모델 파일을 내려받기 때문입니다. 모델이 준비된 뒤에는 이미지 처리 자체가 브라우저 안에서 이루어집니다.</p>
-        </details>
-        <details>
-          <summary>모바일에서도 사용할 수 있나요?</summary>
-          <p>네, 별도의 앱 설치 없이 모바일 브라우저에서도 동일하게 사용할 수 있습니다.</p>
-        </details>
-      </div>
-      <a href="/blog/33-bgremove-howto" class="guide-full-link">전체 가이드 보기 →</a>
+<div class="container"><!-- Google AdSense Display Ad — pending approval, reserving space -->
+    <div class="ad-slot" id="adMiddle">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
     </div>
 
-    <div style="margin:0 0 12px"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="9500090221"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><div class="adfit-rect-wrap"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-oePL4TCj742xAwqT" data-ad-width="300" data-ad-height="250"></ins></div></div></div>
+    <div class="guide-summary">
+      <h2 class="guide-summary-title">Quick guide</h2>
+      <ol class="guide-steps">
+        <li>Upload an image</li>
+        <li>AI model loads and processes automatically</li>
+        <li>Check the result</li>
+      </ol>
+      <h3 class="guide-faq-title">Frequently asked questions</h3>
+      <div class="guide-faq">
+        <details>
+          <summary>Is the AI Background Removal tool really free?</summary>
+          <p>Yes, it is completely free to use with no sign-up or installation required. There is no usage limit either.</p>
+        </details>
+        <details>
+          <summary>Are uploaded files sent to a server?</summary>
+          <p>The image itself is never sent anywhere. On first run only the AI model file is downloaded, and all background-removal processing happens in your browser.</p>
+        </details>
+        <details>
+          <summary>Why does the first run take longer?</summary>
+          <p>The first run needs to download the AI model file. Once the model is ready, image processing itself happens entirely in your browser.</p>
+        </details>
+        <details>
+          <summary>Can I use this on mobile?</summary>
+          <p>Yes, it works the same way in a mobile browser without needing to install any app.</p>
+        </details>
+      </div>
+      <a href="/blog/33-bgremove-howto" class="guide-full-link">View full guide →</a>
+    </div>
+
+    <!-- Google AdSense Multiplex Ad — pending approval, reserving space -->
+    <div class="ad-slot ad-slot-rect" id="adBottom">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div></div>
 
   <footer class="footer">
     <div class="container">
-      <p class="footer-copy">&#xa9; 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p>
+      <p class="footer-copy">&#xa9; 2026 BrowserKit. All processing happens in your browser.</p>
       <nav class="footer-nav">
-        <a href="/privacy">개인정보 처리방침</a>
-        <a href="/terms">이용약관</a>
-        <a href="/about">서비스 소개</a>
-        <a href="/blog/">블로그</a>
+        <a href="/en/privacy.html">Privacy Policy</a>
+        <a href="/en/terms.html">Terms of Service</a>
+        <a href="/en/about.html">About</a>
+        <a href="/en/blog/">Blog</a>
       </nav>
     </div>
   </footer>
@@ -285,7 +299,7 @@
   <div class="toast" id="toast"></div>
 
   <script type="module">
-  // ── 상태 ──
+  // ── State ──
   let removeBackgroundFn = null;
   let resultBlob = null;
   let originalFileName = 'image';
@@ -304,7 +318,7 @@
   const originalImg  = document.getElementById('originalImg');
   const resultImg    = document.getElementById('resultImg');
 
-  // ── 업로드 이벤트 ──
+  // ── Upload events ──
   uploadZone.addEventListener('click', () => fileInput.click());
   uploadZone.addEventListener('dragover', e => { e.preventDefault(); uploadZone.classList.add('drag-over'); });
   uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('drag-over'));
@@ -314,37 +328,37 @@
   });
   fileInput.addEventListener('change', () => { if (fileInput.files[0]) processFile(fileInput.files[0]); });
 
-  // ── 메인 처리 ──
+  // ── Main processing ──
   async function processFile(file) {
     originalFileName = file.name.replace(/\.[^.]+$/, '');
 
-    // 원본 미리보기
+    // Original preview
     const originalUrl = URL.createObjectURL(file);
     originalImg.src = originalUrl;
 
-    // UI 전환: 업로드 존 숨기고 로딩 표시
+    // UI transition: hide upload zone, show loading
     uploadZone.style.display = 'none';
     resultArea.classList.remove('show');
     errorArea.classList.remove('show');
     loadingArea.classList.add('show');
 
     try {
-      // ── 라이브러리 동적 로드 (첫 호출 시만) ──
+      // ── Dynamically load the library (first call only) ──
       if (!removeBackgroundFn) {
-        loadingTitle.textContent = 'AI 라이브러리를 불러오는 중...';
-        loadingSub.textContent = '처음 실행 시 약 40MB를 다운로드합니다. 이후 캐시되어 즉시 사용 가능합니다.';
+        loadingTitle.textContent = 'Loading the AI library...';
+        loadingSub.textContent = 'On first run, it downloads about 40MB. After that it is cached and instantly available.';
         progressBar.style.width = '0%';
-        progressText.textContent = '다운로드 준비 중...';
+        progressText.textContent = 'Preparing download...';
 
         const module = await import('https://cdn.jsdelivr.net/npm/@imgly/background-removal@1.5.5/+esm');
         removeBackgroundFn = module.removeBackground;
       }
 
-      // ── 배경 제거 실행 ──
-      loadingTitle.textContent = '배경을 제거하는 중...';
-      loadingSub.textContent = '이미지를 분석하고 있습니다. 잠시만 기다려주세요.';
+      // ── Run background removal ──
+      loadingTitle.textContent = 'Removing the background...';
+      loadingSub.textContent = 'Analyzing your image. Please wait a moment.';
       progressBar.style.width = '10%';
-      progressText.textContent = 'AI 추론 중...';
+      progressText.textContent = 'Running AI inference...';
 
       const config = {
         model: 'small',
@@ -352,16 +366,16 @@
           const pct = total > 0 ? Math.round(current / total * 100) : 0;
           progressBar.style.width = pct + '%';
           if (key.includes('fetch') || key.includes('load')) {
-            progressText.textContent = `모델 다운로드 중... ${pct}%`;
+            progressText.textContent = `Downloading model... ${pct}%`;
           } else {
-            progressText.textContent = `처리 중... ${pct}%`;
+            progressText.textContent = `Processing... ${pct}%`;
           }
         }
       };
 
       resultBlob = await removeBackgroundFn(file, config);
 
-      // ── 결과 표시 ──
+      // ── Show result ──
       const resultUrl = URL.createObjectURL(resultBlob);
       resultImg.src = resultUrl;
 
@@ -370,14 +384,14 @@
       progressBar.style.width = '100%';
 
     } catch (err) {
-      console.error('BGRemove 오류:', err);
+      console.error('BGRemove error:', err);
       loadingArea.classList.remove('show');
       errorArea.classList.add('show');
-      errorMsg.textContent = '배경 제거 중 오류가 발생했습니다: ' + (err.message || '알 수 없는 오류');
+      errorMsg.textContent = 'An error occurred while removing the background: ' + (err.message || 'Unknown error');
     }
   }
 
-  // ── PNG 저장 ──
+  // ── Save PNG ──
   document.getElementById('downloadBtn').addEventListener('click', () => {
     if (!resultBlob) return;
     const a = document.createElement('a');
@@ -385,10 +399,10 @@
     a.download = originalFileName + '_bgremoved.png';
     a.click();
     URL.revokeObjectURL(a.href);
-    showToast('\u2713 PNG \ud30c\uc77c\uc774 \uc800\uc7a5\ub429\ub2c8\ub2e4');
+    showToast('\u2713 PNG file saved');
   });
 
-  // ── 다른 이미지 ──
+  // ── New image ──
   document.getElementById('newImageBtn').addEventListener('click', () => {
     resultBlob = null;
     fileInput.value = '';
@@ -398,13 +412,13 @@
     uploadZone.style.display = '';
   });
 
-  // ── 다시 시도 ──
+  // ── Retry ──
   document.getElementById('retryBtn').addEventListener('click', () => {
     errorArea.classList.remove('show');
     uploadZone.style.display = '';
   });
 
-  // ── 토스트 ──
+  // ── Toast ──
   function showToast(msg) {
     const t = document.getElementById('toast');
     t.textContent = msg;
@@ -431,7 +445,7 @@
     try {
       if (document.cookie.indexOf('bk_lang_dismiss=1') !== -1) return;
       var lang = (navigator.language || navigator.userLanguage || '').toLowerCase();
-      if (lang.indexOf('ko') === 0) return;
+      if (lang.indexOf('ko') !== 0) return;
       var banner = document.getElementById('langBanner');
       if (!banner) return;
       banner.classList.add('show');
