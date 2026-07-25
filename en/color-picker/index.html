@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
   <link rel="icon" href="/favicon.ico" sizes="32x32">
   <link rel="icon" href="/favicon-16.png" sizes="16x16" type="image/png">
@@ -8,18 +8,17 @@
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="이미지에서 색상을 추출하는 무료 온라인 도구. 클릭 한 번으로 HEX, RGB, HSL 코드를 복사하세요. 서버 전송 없이 브라우저에서 바로 처리합니다." />
-  <meta property="og:title" content="ColorPicker — 이미지 색상 추출 도구" />
-  <meta property="og:description" content="이미지에서 색상을 추출하는 무료 온라인 도구. HEX, RGB, HSL 코드를 클릭 한 번으로 복사하세요." />
+  <meta name="description" content="A free online tool to pick colors from an image. Copy HEX, RGB, and HSL codes with a single click. Everything is processed right in your browser, with no server upload." />
+  <meta property="og:title" content="ColorPicker — Pick Colors from an Image" />
+  <meta property="og:description" content="A free online tool to pick colors from an image. Copy HEX, RGB, and HSL codes with a single click." />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://browserkit.online/color-picker/" />
-  <title>ColorPicker — 이미지 색상 추출 도구</title>
+  <meta property="og:url" content="https://browserkit.online/en/color-picker/" />
+  <title>ColorPicker — Pick Colors from an Image</title>
   <link rel="stylesheet" href="/css/style.css?v=20260724c" />
-  <!-- Google AdSense 승인 대기 중 (2026-07-19 주석 처리, 카카오 애드핏으로 임시 전환) — 승인 후 주석 해제
+  <!-- Google AdSense — pending re-review. Uncomment once approved.
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506"
      crossorigin="anonymous"></script>
   -->
-  <script type="text/javascript" src="//t1.kakaocdn.net/kas/static/ba.min.js" async></script>
   <style>
     .guide-summary { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:24px; margin:0 0 12px; }
     .guide-summary-title { font-size:16px; font-weight:700; color:var(--text); margin:0 0 12px; }
@@ -31,8 +30,11 @@
     .guide-full-link { display:inline-block; margin-top:12px; font-size:14px; font-weight:600; color:var(--point-hover); text-decoration:none; }
     .guide-full-link:hover { text-decoration:underline; }
 
+    .ad-slot { min-height:90px; display:flex; align-items:center; justify-content:center; margin:0 0 12px; }
+    .ad-slot-rect { min-height:250px; }
 
-    /* 업로드 */
+
+    /* Upload */
     .upload-zone{background:var(--card);border:2px dashed var(--border);border-radius:var(--radius);padding:48px 40px;text-align:center;cursor:pointer;margin-bottom:24px;}
     .upload-zone:hover,.upload-zone.drag-over{border-color:var(--point);box-shadow:0 0 24px var(--glow);}
     .upload-icon{font-size:44px;margin-bottom:16px;}
@@ -40,7 +42,7 @@
     .upload-sub{color:var(--subtext);font-size:13px;}
     .upload-safe{color:var(--success);font-size:13px;margin-top:8px;}
 
-    /* 작업 영역 */
+    /* Work area */
     .work-area{display:grid;grid-template-columns:1fr 340px;gap:24px;margin-bottom:24px;align-items:start;}
     .canvas-wrap{position:relative;background:repeating-conic-gradient(#1e1e2a 0% 25%,#26263a 0% 50%) 0 0/16px 16px;border-radius:var(--radius);overflow:hidden;cursor:crosshair;width:fit-content;max-width:100%;justify-self:start;}
     .canvas-wrap canvas{display:block;max-width:100%;height:auto;}
@@ -49,10 +51,10 @@
     .magnifier-crosshair{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:2px;height:20px;background:rgba(255,255,255,0.8);pointer-events:none;}
     .magnifier-crosshair::after{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:20px;height:2px;background:rgba(255,255,255,0.8);}
 
-    /* 사이드바 */
+    /* Sidebar */
     .sidebar{display:flex;flex-direction:column;gap:16px;}
 
-    /* 현재 색상 */
+    /* Current color */
     .current-color-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;}
     .current-color-preview{height:80px;background:#6C63FF;transition:background 0.1s;}
     .current-color-body{padding:16px;}
@@ -65,7 +67,7 @@
     .copy-btn:hover{background:rgba(123,108,255,0.3);}
     .copy-btn.copied{background:rgba(52,211,153,0.15);color:var(--success);border-color:var(--success);}
 
-    /* 팔레트 */
+    /* Palette */
     .palette-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px;}
     .palette-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
     .palette-title{font-size:14px;font-weight:600;color:var(--text);}
@@ -80,14 +82,14 @@
     .palette-swatch:hover .swatch-tooltip{opacity:1;}
     .palette-empty{grid-column:span 6;text-align:center;padding:24px;color:var(--subtext);font-size:13px;}
 
-    /* 추출 팔레트 */
+    /* Extracted palette */
     .extract-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px;}
     .extract-title{font-size:14px;font-weight:600;color:var(--text);margin-bottom:12px;}
     .extract-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;}
     .extract-swatch{border-radius:8px;aspect-ratio:1;cursor:pointer;border:2px solid transparent;}
     .extract-swatch:hover{transform:scale(1.05);border-color:white;}
 
-    /* 하단 버튼 */
+    /* Bottom buttons */
     .action-wrap{display:flex;justify-content:center;gap:12px;margin-bottom:0;flex-wrap:wrap;}
     .btn-primary{background:linear-gradient(135deg,var(--point),var(--point-hover));color:white;border:none;border-radius:12px;padding:13px 28px;font-size:15px;font-weight:600;cursor:pointer;font-family:'Gowun Dodum',sans-serif;}
     .btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 24px var(--glow);}
@@ -95,11 +97,11 @@
     .btn-sub{background:var(--card);color:var(--subtext);border:1px solid var(--border);border-radius:12px;padding:13px 22px;font-size:15px;cursor:pointer;font-family:'Gowun Dodum',sans-serif;}
     .btn-sub:hover{transform:translateY(-2px);color:var(--text);border-color:var(--point);}
 
-    /* 토스트 */
+    /* Toast */
     .toast{position:fixed;bottom:32px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--success);color:#fff;border-radius:999px;padding:10px 24px;font-size:14px;font-weight:600;opacity:0;pointer-events:none;z-index:999;transition:all 0.3s ease;}
     .toast.show{transform:translateX(-50%) translateY(0);opacity:1;}
 
-    /* 배너 */
+    /* Banner */
     .adfit-wrap{text-align:center;margin:24px 0;}.adfit-pc{display:block;}    .footer{border-top:1px solid var(--border);padding:32px 0;text-align:center;}
     .footer-copy{color:var(--subtext);font-size:13px;margin-bottom:12px;}
     .footer-nav{display:flex;justify-content:center;gap:20px;flex-wrap:wrap;}
@@ -111,9 +113,9 @@
       .adfit-pc{display:none;}      .coupang-banner-pc{display:none;}    }
   </style>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <meta property="og:image" content="https://browserkit.online/img/og/color-picker.png" />
-  <link rel="canonical" href="https://browserkit.online/color-picker/" />
+  <link rel="canonical" href="https://browserkit.online/en/color-picker/" />
   <link rel="alternate" hreflang="ko" href="https://browserkit.online/color-picker/" />
   <link rel="alternate" hreflang="en" href="https://browserkit.online/en/color-picker/" />
   <link rel="alternate" hreflang="x-default" href="https://browserkit.online/en/color-picker/" />
@@ -123,18 +125,18 @@
 {
   "@context": "https://schema.org",
   "@type": "WebApplication",
-  "name": "ColorPicker — 이미지 색상 추출 도구",
-  "url": "https://browserkit.online/color-picker/",
-  "description": "이미지에서 색상을 추출하는 무료 온라인 도구. 클릭 한 번으로 HEX, RGB, HSL 코드를 복사하세요. 서버 전송 없이 브라우저에서 바로 처리합니다.",
+  "name": "ColorPicker — Pick Colors from an Image",
+  "url": "https://browserkit.online/en/color-picker/",
+  "description": "A free online tool to pick colors from an image. Copy HEX, RGB, and HSL codes with a single click. Everything is processed right in your browser, with no server upload.",
   "applicationCategory": "UtilityApplication",
   "operatingSystem": "Any",
   "browserRequirements": "Requires JavaScript",
-  "inLanguage": "ko",
+  "inLanguage": "en",
   "isAccessibleForFree": true,
   "offers": {
     "@type": "Offer",
     "price": "0",
-    "priceCurrency": "KRW"
+    "priceCurrency": "USD"
   },
   "publisher": {
     "@type": "Organization",
@@ -151,14 +153,14 @@
     {
       "@type": "ListItem",
       "position": 1,
-      "name": "홈",
-      "item": "https://browserkit.online/"
+      "name": "Home",
+      "item": "https://browserkit.online/en/"
     },
     {
       "@type": "ListItem",
       "position": 2,
-      "name": "색상 추출",
-      "item": "https://browserkit.online/color-picker/"
+      "name": "Pick Color",
+      "item": "https://browserkit.online/en/color-picker/"
     }
   ]
 }
@@ -167,21 +169,21 @@
 
 <body>
   <div class="lang-banner" id="langBanner">
-    <span>🌐 This page is also available in <a href="/en/color-picker/">English</a>.</span>
+    <span>🌐 이 페이지는 <a href="/color-picker/">한국어</a>로도 볼 수 있습니다.</span>
     <button class="lang-banner-close" id="langBannerClose" type="button" aria-label="close">&times;</button>
   </div>
   <header class="header">
     <div class="container">
-      <a href="/" class="header-brand"><div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Gowun Dodum,sans-serif;flex-shrink:0">B</div><span class="header-brand-text"><span style="color:var(--text)">Browser</span><span style="color:var(--point)">Kit</span></span></a>
+      <a href="/en/" class="header-brand"><div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Poppins,sans-serif;flex-shrink:0">B</div><span class="header-brand-text"><span style="color:var(--text)">Browser</span><span style="color:var(--point)">Kit</span></span></a>
       <div class="header-right">
         <div class="lang-switcher">
-          <button class="lang-switcher-btn" type="button" data-lang-btn>🌐 <span class="lang-label-full">한국어</span></button>
+          <button class="lang-switcher-btn" type="button" data-lang-btn>🌐 <span class="lang-label-full">English</span></button>
           <div class="lang-switcher-menu" data-lang-menu>
-            <a href="/en/color-picker/">English</a>
-            <a href="#" class="active">한국어</a>
+            <a href="#" class="active">English</a>
+            <a href="/color-picker/">한국어</a>
           </div>
         </div>
-        <a href="/" class="header-back">← <span class="header-back-label">BrowserKit 홈으로</span></a>
+        <a href="/en/" class="header-back">← <span class="header-back-label">Back to BrowserKit</span></a>
       </div>
     </div>
   </header>
@@ -189,29 +191,33 @@
   <main><div class="container">
     <div class="hero">
       <div class="hero-icon" style="height:78px;display:flex;justify-content:center;align-items:center"><div style="transform:scale(1.7);transform-origin:center"><div style="width:46px;height:46px;background:#ffb3c7;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="width:20px;height:20px;background:#fffdf9;border:2.5px solid #2a2433;box-sizing:border-box;border-radius:50% 50% 50% 0;transform:rotate(45deg)"><div style="width:7px;height:7px;border-radius:50%;background:#ffb3c7;margin:4px 0 0 4px;transform:rotate(-45deg)"></div></div></div></div></div>
-      <div class="hero-title-wrap"><h1 class="hero-title">색상 추출</h1><a href="/blog/23-colorpicker-howto" class="hero-guide-link">사용법 가이드 보기</a></div>
-      <p class="hero-desc">이미지를 클릭해 색상을 추출하고 HEX, RGB, HSL 코드를 바로 복사하세요</p>
+      <div class="hero-title-wrap"><h1 class="hero-title">Pick Color</h1><a href="/blog/23-colorpicker-howto" class="hero-guide-link">View usage guide</a></div>
+      <p class="hero-desc">Click on an image to pick a color, and copy the HEX, RGB, or HSL code instantly</p>
       <div class="hero-badges">
-        <span class="badge">🔒 완전 로컬 처리</span>
-        <span class="badge">⚡ 무료 사용</span>
-        <span class="badge">🛡️ 서버 전송 없음</span>
-        <span class="badge">📦 설치 불필요</span>
+        <span class="badge">🔒 Fully local processing</span>
+        <span class="badge">⚡ Free to use</span>
+        <span class="badge">🛡️ No server upload</span>
+        <span class="badge">📦 No installation</span>
       </div>
     </div>
-    <div style="margin:0 0 12px"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><div class="adfit-h-desktop"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-QD4pRIpdIj7i2mbt" data-ad-width="728" data-ad-height="90"></ins></div><div class="adfit-h-mobile"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-R4xA2niTT8HgGjoO" data-ad-width="320" data-ad-height="50"></ins></div></div>
+    <!-- Google AdSense Display Ad — pending approval, reserving space -->
+    <div class="ad-slot" id="adTop">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
 
-<!-- 업로드 존 -->
+<!-- Upload zone -->
     <div class="upload-zone" id="uploadZone">
       <div class="upload-icon" style="height:64px;display:flex;justify-content:center;align-items:center"><div style="transform:scale(1.4);transform-origin:center"><div style="width:46px;height:46px;background:#ffb3c7;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="width:20px;height:20px;background:#fffdf9;border:2.5px solid #2a2433;box-sizing:border-box;border-radius:50% 50% 50% 0;transform:rotate(45deg)"><div style="width:7px;height:7px;border-radius:50%;background:#ffb3c7;margin:4px 0 0 4px;transform:rotate(-45deg)"></div></div></div></div></div>
-      <div class="upload-title">이미지를 업로드하세요</div>
-      <div class="upload-sub">클릭하거나 파일을 여기로 드래그하세요 (JPG, PNG, WEBP)</div>
-      <div class="upload-safe">&#x1F512; 파일이 서버로 전송되지 않습니다</div>
+      <div class="upload-title">Upload an image</div>
+      <div class="upload-sub">Click or drag a file here (JPG, PNG, WEBP)</div>
+      <div class="upload-safe">&#x1F512; Files are never uploaded to a server</div>
       <input type="file" id="fileInput" accept="image/*" style="display:none" />
     </div>
 
-    <!-- 작업 영역 -->
+    <!-- Work area -->
     <div class="work-area" id="workArea" style="display:none;">
-      <!-- 캔버스 -->
+      <!-- Canvas -->
       <div class="canvas-wrap" id="canvasWrap">
         <canvas id="mainCanvas"></canvas>
         <div class="magnifier" id="magnifier">
@@ -220,108 +226,116 @@
         </div>
       </div>
 
-      <!-- 사이드바 -->
+      <!-- Sidebar -->
       <div class="sidebar">
-        <!-- 현재 색상 -->
+        <!-- Current color -->
         <div class="current-color-card">
           <div class="current-color-preview" id="colorPreview"></div>
           <div class="current-color-body">
-            <div class="current-color-label">현재 선택 색상</div>
+            <div class="current-color-label">Currently Selected Color</div>
             <div class="color-format-row">
               <span class="color-format-name">HEX</span>
               <span class="color-format-value" id="hexValue">#6C63FF</span>
-              <button class="copy-btn" data-format="hex">복사</button>
+              <button class="copy-btn" data-format="hex">Copy</button>
             </div>
             <div class="color-format-row">
               <span class="color-format-name">RGB</span>
               <span class="color-format-value" id="rgbValue">rgb(108, 99, 255)</span>
-              <button class="copy-btn" data-format="rgb">복사</button>
+              <button class="copy-btn" data-format="rgb">Copy</button>
             </div>
             <div class="color-format-row">
               <span class="color-format-name">HSL</span>
               <span class="color-format-value" id="hslValue">hsl(243, 100%, 70%)</span>
-              <button class="copy-btn" data-format="hsl">복사</button>
+              <button class="copy-btn" data-format="hsl">Copy</button>
             </div>
           </div>
         </div>
 
-        <!-- 저장된 팔레트 -->
+        <!-- Saved palette -->
         <div class="palette-card">
           <div class="palette-header">
-            <span class="palette-title">&#x1F4CB; 저장된 색상</span>
+            <span class="palette-title">&#x1F4CB; Saved Colors</span>
             <div class="palette-actions">
-              <button class="palette-btn" id="exportBtn">내보내기</button>
-              <button class="palette-btn" id="clearPaletteBtn">초기화</button>
+              <button class="palette-btn" id="exportBtn">Export</button>
+              <button class="palette-btn" id="clearPaletteBtn">Clear</button>
             </div>
           </div>
           <div class="palette-grid" id="paletteGrid">
-            <div class="palette-empty">이미지를 클릭하면<br />색상이 여기 저장됩니다</div>
+            <div class="palette-empty">Colors you click on the<br />image will be saved here</div>
           </div>
         </div>
 
-        <!-- 대표 색상 추출 -->
+        <!-- Dominant color extraction -->
         <div class="extract-card" id="extractCard" style="display:none;">
-          <div class="extract-title">&#x2728; 이미지 대표 색상</div>
+          <div class="extract-title">&#x2728; Dominant Colors</div>
           <div class="extract-grid" id="extractGrid"></div>
         </div>
       </div>
     </div>
 
-    <!-- 버튼 -->
+    <!-- Buttons -->
     <div class="action-wrap" id="actionWrap" style="display:none;">
-      <button class="btn-primary" id="extractBtn">&#x2728; 대표 색상 자동 추출</button>
-      <button class="btn-sub" id="resetBtn">↺ 처음부터</button>
+      <button class="btn-primary" id="extractBtn">&#x2728; Auto-Extract Dominant Colors</button>
+      <button class="btn-sub" id="resetBtn">↺ Start Over</button>
     </div>
 
     <div style="margin:32px 0 0;"></div>
   
-    <div style="margin:0 0 12px"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><!-- 카카오 애드핏 (2026-07-22, 쿠팡 파트너스 다이내믹 배너로 교체) — 복원 시 주석 해제: <div class="adfit-h-desktop"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-QD4pRIpdIj7i2mbt" data-ad-width="728" data-ad-height="90"></ins></div><div class="adfit-h-mobile"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-R4xA2niTT8HgGjoO" data-ad-width="320" data-ad-height="50"></ins></div> --><div class="adfit-h-desktop"><script src="https://ads-partners.coupang.com/g.js"></script><script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"728","height":"90","tsource":""});</script></div><div class="adfit-h-mobile"><script src="https://ads-partners.coupang.com/g.js"></script><script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"320","height":"50","tsource":""});</script></div></div>
-
-    <div class="guide-summary">
-      <h2 class="guide-summary-title">사용법 요약</h2>
-      <ol class="guide-steps">
-        <li>이미지 업로드</li>
-        <li>마우스를 올려 색상 미리보기</li>
-        <li>클릭해 색상 저장</li>
-      </ol>
-      <h3 class="guide-faq-title">자주 묻는 질문</h3>
-      <div class="guide-faq">
-        <details>
-          <summary>색상 추출 도구는 정말 무료인가요?</summary>
-          <p>네, 회원가입이나 설치 없이 완전 무료로 사용할 수 있습니다. 횟수 제한도 없습니다.</p>
-        </details>
-        <details>
-          <summary>업로드한 파일이 서버로 전송되나요?</summary>
-          <p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 업로드한 파일이 외부 서버로 전송되거나 저장되지 않습니다.</p>
-        </details>
-        <details>
-          <summary>추출한 색상 코드는 어떤 형식으로 제공되나요?</summary>
-          <p>HEX, RGB 등 웹에서 바로 사용할 수 있는 형식으로 제공되며, 클릭 한 번으로 복사해 사용할 수 있습니다.</p>
-        </details>
-        <details>
-          <summary>모바일에서도 사용할 수 있나요?</summary>
-          <p>네, 별도의 앱 설치 없이 모바일 브라우저에서도 동일하게 사용할 수 있습니다.</p>
-        </details>
-      </div>
-      <a href="/blog/23-colorpicker-howto" class="guide-full-link">전체 가이드 보기 →</a>
+    <!-- Google AdSense Display Ad — pending approval, reserving space -->
+    <div class="ad-slot" id="adMiddle">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
     </div>
 
-    <div style="margin:12px 0"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="9500090221"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><div class="adfit-rect-wrap"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-oePL4TCj742xAwqT" data-ad-width="300" data-ad-height="250"></ins></div></div>
+    <div class="guide-summary">
+      <h2 class="guide-summary-title">Quick guide</h2>
+      <ol class="guide-steps">
+        <li>Upload an image</li>
+        <li>Hover to preview a color</li>
+        <li>Click to save the color</li>
+      </ol>
+      <h3 class="guide-faq-title">Frequently asked questions</h3>
+      <div class="guide-faq">
+        <details>
+          <summary>Is the Pick Color tool really free?</summary>
+          <p>Yes, it is completely free to use with no sign-up or installation required. There is no usage limit either.</p>
+        </details>
+        <details>
+          <summary>Are uploaded files sent to a server?</summary>
+          <p>No. All processing happens entirely in your browser, and uploaded files are never sent to or stored on an external server.</p>
+        </details>
+        <details>
+          <summary>What format are the extracted color codes provided in?</summary>
+          <p>They are provided in formats you can use directly on the web, like HEX and RGB, and you can copy them with a single click.</p>
+        </details>
+        <details>
+          <summary>Can I use this on mobile?</summary>
+          <p>Yes, it works the same way in a mobile browser without needing to install any app.</p>
+        </details>
+      </div>
+      <a href="/blog/23-colorpicker-howto" class="guide-full-link">View full guide →</a>
+    </div>
+
+    <!-- Google AdSense Multiplex Ad — pending approval, reserving space -->
+    <div class="ad-slot ad-slot-rect" id="adBottom">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
   </div></main>
 
-  <footer class="footer"><div class="container"><p class="footer-copy">© 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p><nav class="footer-nav"><a href="/privacy">개인정보 처리방침</a><a href="/terms">이용약관</a><a href="/about">서비스 소개</a><a href="/blog/">블로그</a></nav></div></footer>
+  <footer class="footer"><div class="container"><p class="footer-copy">&#xa9; 2026 BrowserKit. All processing happens in your browser.</p><nav class="footer-nav"><a href="/en/privacy.html">Privacy Policy</a><a href="/en/terms.html">Terms of Service</a><a href="/en/about.html">About</a><a href="/en/blog/">Blog</a></nav></div></footer>
 
-  <div class="toast" id="toast">✓ 클립보드에 복사되었습니다</div>
+  <div class="toast" id="toast">✓ Copied to clipboard</div>
 
   <script>
-  // ── 상태 ──
+  // ── State ──
   let img = null;
-  let palette = []; // 저장된 색상 배열 {hex,rgb,hsl}
+  let palette = []; // Saved color array {hex,rgb,hsl}
   let currentColor = {r:108,g:99,b:255};
-  let scale = 1; // canvas 표시 배율
+  let scale = 1; // canvas display scale
   const MAG_SIZE = 120, MAG_ZOOM = 8, MAG_SAMPLE = MAG_SIZE / MAG_ZOOM;
 
-  // ── 유틸 ──
+  // ── Utils ──
   function showToast(msg){
     const t=document.getElementById('toast');
     t.textContent=msg;
@@ -351,13 +365,13 @@
     document.getElementById('hexValue').textContent=hex;
     document.getElementById('rgbValue').textContent=rgb;
     document.getElementById('hslValue').textContent=hsl;
-    // 복사 버튼 data 업데이트
+    // Update copy button data
     document.querySelectorAll('.copy-btn').forEach(btn=>{
       btn.dataset.hex=hex; btn.dataset.rgb=rgb; btn.dataset.hsl=hsl;
     });
   }
 
-  // ── 업로드 ──
+  // ── Upload ──
   const uploadZone=document.getElementById('uploadZone');
   const fileInput=document.getElementById('fileInput');
   uploadZone.addEventListener('click',()=>fileInput.click());
@@ -374,7 +388,7 @@
         img=image;
         const canvas=document.getElementById('mainCanvas');
         const wrap=document.getElementById('canvasWrap');
-        // 최대 너비 맞추기
+        // Fit to max width
         const maxW=wrap.clientWidth||600;
         scale=Math.min(1,maxW/image.width);
         canvas.width=Math.round(image.width*scale);
@@ -383,7 +397,7 @@
         uploadZone.style.display='none';
         document.getElementById('workArea').style.display='grid';
         document.getElementById('actionWrap').style.display='flex';
-        // 초기 색상: 중앙 픽셀
+        // Initial color: center pixel
         pickColorAt(Math.floor(canvas.width/2),Math.floor(canvas.height/2));
       };
       image.src=e.target.result;
@@ -391,7 +405,7 @@
     reader.readAsDataURL(file);
   }
 
-  // ── 색상 피킹 ──
+  // ── Color picking ──
   function pickColorAt(cx,cy){
     const canvas=document.getElementById('mainCanvas');
     const ctx=canvas.getContext('2d');
@@ -399,7 +413,7 @@
     setCurrentColor(d[0],d[1],d[2]);
   }
 
-  // ── 확대경 ──
+  // ── Magnifier ──
   const canvasWrap=document.getElementById('canvasWrap');
   const magnifier=document.getElementById('magnifier');
   const magCtx=document.getElementById('magnifierCanvas').getContext('2d');
@@ -422,13 +436,13 @@
     const canvas=document.getElementById('mainCanvas');
     const ctx=canvas.getContext('2d');
 
-    // 색상 업데이트
+    // Update color
     const cx=Math.max(0,Math.min(Math.round(x),canvas.width-1));
     const cy=Math.max(0,Math.min(Math.round(y),canvas.height-1));
     const d=ctx.getImageData(cx,cy,1,1).data;
     setCurrentColor(d[0],d[1],d[2]);
 
-    // 확대경 위치
+    // Magnifier position
     const mw=MAG_SIZE,mh=MAG_SIZE;
     let left=px+20,top=py-mh/2;
     if(left+mw>canvasWrap.clientWidth)left=px-mw-20;
@@ -437,7 +451,7 @@
     magnifier.style.top=top+'px';
     magnifier.style.display='block';
 
-    // 확대경 내용 그리기
+    // Draw magnifier content
     const sx=Math.max(0,x-MAG_SAMPLE/2);
     const sy=Math.max(0,y-MAG_SAMPLE/2);
     magCtx.clearRect(0,0,MAG_SIZE,MAG_SIZE);
@@ -458,13 +472,13 @@
     const r=d[0],g=d[1],b=d[2];
     setCurrentColor(r,g,b);
     addToPalette(r,g,b);
-    showToast('✓ 색상이 팔레트에 저장되었습니다');
+    showToast('✓ Color saved to palette');
   });
 
-  // ── 팔레트 ──
+  // ── Palette ──
   function addToPalette(r,g,b){
     const hex=rgbToHex(r,g,b);
-    if(palette.find(c=>c.hex===hex))return; // 중복 제거
+    if(palette.find(c=>c.hex===hex))return; // Skip duplicates
     palette.push({hex,rgb:`rgb(${r},${g},${b})`,hsl:rgbToHsl(r,g,b)});
     renderPalette();
   }
@@ -472,7 +486,7 @@
   function renderPalette(){
     const grid=document.getElementById('paletteGrid');
     if(palette.length===0){
-      grid.innerHTML='<div class="palette-empty">이미지를 클릭하면<br />색상이 여기 저장됩니다</div>';
+      grid.innerHTML='<div class="palette-empty">Colors you click on the<br />image will be saved here</div>';
       return;
     }
     grid.innerHTML=palette.map((c,i)=>`
@@ -490,7 +504,7 @@
     });
   }
 
-  // 팔레트 초기화
+  // Clear palette
   document.getElementById('clearPaletteBtn').addEventListener('click',()=>{
     palette=[];
     renderPalette();
@@ -498,34 +512,34 @@
     document.getElementById('extractGrid').innerHTML='';
   });
 
-  // 팔레트 내보내기 (텍스트 복사)
+  // Export palette (copy as text)
   document.getElementById('exportBtn').addEventListener('click',()=>{
-    if(palette.length===0){showToast('저장된 색상이 없습니다');return;}
+    if(palette.length===0){showToast('No colors saved yet');return;}
     const text=palette.map(c=>`${c.hex}  |  ${c.rgb}  |  ${c.hsl}`).join('\n');
-    navigator.clipboard.writeText(text).then(()=>showToast('✓ 팔레트가 클립보드에 복사되었습니다'));
+    navigator.clipboard.writeText(text).then(()=>showToast('✓ Palette copied to clipboard'));
   });
 
-  // ── 복사 버튼 ──
+  // ── Copy buttons ──
   document.querySelectorAll('.copy-btn').forEach(btn=>{
     btn.addEventListener('click',()=>{
       const fmt=btn.dataset.format;
       const val=document.getElementById(fmt+'Value').textContent;
       navigator.clipboard.writeText(val).then(()=>{
-        btn.textContent='✓ 복사됨';
+        btn.textContent='✓ Copied';
         btn.classList.add('copied');
-        setTimeout(()=>{btn.textContent='복사';btn.classList.remove('copied');},1500);
+        setTimeout(()=>{btn.textContent='Copy';btn.classList.remove('copied');},1500);
       });
     });
   });
 
-  // ── 대표 색상 자동 추출 ──
+  // ── Auto-extract dominant colors ──
   document.getElementById('extractBtn').addEventListener('click',()=>{
     if(!img)return;
     const canvas=document.getElementById('mainCanvas');
     const ctx=canvas.getContext('2d');
     const w=canvas.width,h=canvas.height;
 
-    // 5×5 격자로 샘플링 후 k-means 없이 단순 구획 대표색
+    // Sample a 5x5 grid and take a simple block-average color (no k-means)
     const ROWS=5,COLS=5;
     const colors=[];
     for(let r=0;r<ROWS;r++){
@@ -535,21 +549,21 @@
         const data=ctx.getImageData(sx,sy,sw,sh).data;
         let rSum=0,gSum=0,bSum=0,count=0;
         for(let i=0;i<data.length;i+=4){
-          if(data[i+3]<128)continue; // 투명 무시
+          if(data[i+3]<128)continue; // Skip transparent pixels
           rSum+=data[i];gSum+=data[i+1];bSum+=data[i+2];count++;
         }
         if(count>0)colors.push([Math.round(rSum/count),Math.round(gSum/count),Math.round(bSum/count)]);
       }
     }
 
-    // 유사 색상 병합 (거리 50 이하)
+    // Merge similar colors (distance <= 60)
     const merged=[];
     colors.forEach(c=>{
       const found=merged.find(m=>Math.abs(m[0]-c[0])+Math.abs(m[1]-c[1])+Math.abs(m[2]-c[2])<60);
       if(!found)merged.push(c);
     });
 
-    // 상위 10개
+    // Top 10
     const top=merged.slice(0,10);
     const grid=document.getElementById('extractGrid');
     grid.innerHTML=top.map(([r,g,b])=>{
@@ -562,15 +576,15 @@
         const r=+sw.dataset.r,g=+sw.dataset.g,b=+sw.dataset.b;
         setCurrentColor(r,g,b);
         addToPalette(r,g,b);
-        showToast('✓ 색상이 팔레트에 저장되었습니다');
+        showToast('✓ Color saved to palette');
       });
     });
 
     document.getElementById('extractCard').style.display='block';
-    showToast('✓ 대표 색상 추출 완료');
+    showToast('✓ Dominant colors extracted');
   });
 
-  // ── 초기화 ──
+  // ── Reset ──
   document.getElementById('resetBtn').addEventListener('click',()=>{
     img=null; palette=[];
     fileInput.value='';
@@ -585,7 +599,7 @@
     setCurrentColor(108,99,255);
   });
 
-  // 초기 색상 세팅
+  // Set initial color
   setCurrentColor(108,99,255);
   </script>
 
@@ -607,7 +621,7 @@
     try {
       if (document.cookie.indexOf('bk_lang_dismiss=1') !== -1) return;
       var lang = (navigator.language || navigator.userLanguage || '').toLowerCase();
-      if (lang.indexOf('ko') === 0) return;
+      if (lang.indexOf('ko') !== 0) return;
       var banner = document.getElementById('langBanner');
       if (!banner) return;
       banner.classList.add('show');
