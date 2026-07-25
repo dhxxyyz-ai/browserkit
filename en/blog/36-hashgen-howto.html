@@ -1,0 +1,531 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="icon" href="/favicon.ico" sizes="32x32">
+  <link rel="icon" href="/favicon-16.png" sizes="16x16" type="image/png">
+  <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="/favicon-192.png" sizes="192x192" type="image/png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="The official step-by-step guide to every feature of HashGen. Learn how to generate MD5, SHA-1, SHA-256, and SHA-512 hashes and verify file integrity." />
+  <meta property="og:title" content="Hash Generator: The Complete Guide — BrowserKit" />
+  <meta property="og:description" content="The official HashGen guide to instantly generating hashes for text and files and verifying integrity." />
+  <meta property="og:type" content="article" />
+  <title>Hash Generator: The Complete Guide — BrowserKit</title>
+  <link rel="stylesheet" href="/css/style.css?v=20260724c" />
+  <link rel="stylesheet" href="/css/style-en.css?v=20260724a" />
+  <!-- Google AdSense — pending re-review. Uncomment once approved.
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506"
+     crossorigin="anonymous"></script>
+  -->
+  <style>
+    .post-warn { background:rgba(248,113,113,0.08); border-left:3px solid #F87171; border-radius:8px; padding:16px 20px; margin:24px 0; font-size:15px; color:var(--subtext); line-height:1.8; }
+    .feature-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:20px 0; }
+    .feature-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px; }
+    .feature-card:hover { border-color:var(--point); }
+    .feature-icon { font-size:24px; margin-bottom:10px; }
+    .feature-title { font-size:14px; font-weight:600; color:var(--text); margin-bottom:6px; }
+    .feature-desc { font-size:13px; color:var(--subtext); line-height:1.7; }
+    .step-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px 24px; margin:16px 0; display:flex; gap:16px; align-items:flex-start; }
+    .step-num { min-width:36px; height:36px; background:linear-gradient(135deg,var(--point),var(--point-hover)); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:700; color:white; flex-shrink:0; }
+    .step-content h3 { font-size:15px; font-weight:600; margin:0 0 6px; color:var(--text); }
+    .step-content p { font-size:14px; color:var(--subtext); line-height:1.7; margin:0; }
+
+    /* Tab demo */
+    .tab-demo { display:flex; gap:4px; background:var(--card); border:1px solid var(--border); border-radius:12px; padding:4px; margin:16px 0; }
+    .tab-demo-btn { flex:1; padding:8px; font-size:13px; font-weight:600; border-radius:9px; text-align:center; color:var(--subtext); }
+    .tab-demo-btn.on { background:linear-gradient(135deg,var(--point),var(--point-hover)); color:#fff; }
+
+    /* Hash result demo */
+    .hash-result-demo { background:var(--card); border:1px solid var(--border); border-radius:12px; overflow:hidden; margin:16px 0; }
+    .hash-row-demo { padding:13px 18px; display:grid; grid-template-columns:80px 1fr auto; gap:12px; align-items:center; border-bottom:1px solid var(--border); }
+    .hash-row-demo:last-child { border-bottom:none; }
+    .hash-algo-demo { font-size:12px; font-weight:700; color:var(--subtext); font-family:'Fira Code',monospace; }
+    .hash-val-demo { font-size:11px; font-family:'Fira Code',monospace; color:var(--text); word-break:break-all; line-height:1.5; }
+    .hash-copy-demo { font-size:11px; background:var(--bg); border:1px solid var(--border); border-radius:6px; padding:4px 10px; color:var(--subtext); white-space:nowrap; }
+
+    /* Algorithm toggle demo */
+    .algo-demo { display:flex; gap:8px; flex-wrap:wrap; margin:12px 0; }
+    .algo-chip { background:rgba(123,108,255,0.15); border:1px solid var(--point); border-radius:8px; padding:6px 14px; font-size:12px; font-weight:700; color:var(--point-hover); font-family:'Fira Code',monospace; }
+    .algo-chip.off { background:var(--bg); border-color:var(--border); color:var(--subtext); }
+
+    /* Verification demo */
+    .verify-demo { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:16px 20px; margin:16px 0; }
+    .verify-label-demo { font-size:12px; font-weight:600; color:var(--subtext); margin-bottom:8px; }
+    .verify-input-demo { background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:9px 13px; font-size:12px; font-family:'Fira Code',monospace; color:var(--subtext); width:100%; margin-bottom:10px; }
+    .verify-ok-demo { font-size:13px; font-weight:600; color:var(--success); display:flex; align-items:center; gap:6px; }
+    .verify-fail-demo { font-size:13px; font-weight:600; color:#F87171; display:flex; align-items:center; gap:6px; }
+
+    /* Algorithm comparison table */
+    .post-table { width:100%; border-collapse:collapse; margin:20px 0; font-size:15px; }
+    .post-table th { background:var(--card); padding:12px 16px; text-align:left; font-weight:600; border:1px solid var(--border); color:var(--text); }
+    .post-table td { padding:11px 16px; border:1px solid var(--border); color:var(--subtext); line-height:1.7; }
+    .post-table tr:hover td { background:rgba(123,108,255,0.04); }
+    .badge-safe { display:inline-block; font-size:11px; background:rgba(52,211,153,0.12); color:var(--success); border:1px solid rgba(52,211,153,0.25); border-radius:999px; padding:1px 8px; }
+    .badge-warn { display:inline-block; font-size:11px; background:rgba(248,113,113,0.1); color:#F87171; border:1px solid rgba(248,113,113,0.25); border-radius:999px; padding:1px 8px; }
+
+    .use-case-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:20px 0; }
+    .use-case-card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:18px; }
+    .use-case-icon { font-size:28px; margin-bottom:8px; }
+    .use-case-title { font-size:13px; font-weight:600; color:var(--text); margin-bottom:6px; }
+    .use-case-desc { font-size:12px; color:var(--subtext); line-height:1.7; }
+    .post-nav { display:flex; justify-content:space-between; margin-top: 12px; padding-top:24px; border-top:1px solid var(--border); gap:12px; }
+    .post-nav a { font-size:15px; color:var(--subtext); text-decoration:none; }
+    .post-nav a:hover { color:var(--text); }
+    .cta-box { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:28px; text-align:center; margin: 12px 0 0; }
+    .cta-box p { font-size:17px; color:var(--subtext); margin-bottom:16px; }
+    .cta-btn { display:inline-block; background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border-radius:10px; padding:12px 28px; font-size:14px; font-weight:600; text-decoration:none; }
+    .cta-btn:hover { transform:translateY(-2px); box-shadow:0 8px 24px var(--glow); color:white; }
+    .back-link:hover { color:var(--text); }
+    @media (max-width:640px) {
+      .feature-grid { grid-template-columns:1fr; }
+      .use-case-grid { grid-template-columns:1fr; }
+      .hash-row-demo { grid-template-columns:60px 1fr; }
+      .hash-copy-demo { display:none; }
+    }
+  </style>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<meta property="og:image" content="https://browserkit.online/img/og/hash-gen.png" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Hash Generator: The Complete Guide",
+    "description": "The official step-by-step guide to every feature of HashGen. Learn how to generate MD5, SHA-1, SHA-256, and SHA-512 hashes and verify file integrity.",
+    "datePublished": "2026-06-25T00:00:00+09:00",
+    "dateModified": "2026-07-22T00:00:00+09:00",
+    "author": { "@type": "Organization", "name": "BrowserKit", "url": "https://browserkit.online" },
+    "publisher": { "@type": "Organization", "name": "BrowserKit", "url": "https://browserkit.online", "logo": { "@type": "ImageObject", "url": "https://browserkit.online/img/og-browserkit.png" } },
+    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://browserkit.online/en/blog/36-hashgen-howto" },
+    "image": "https://browserkit.online/img/og/hash-gen.png"
+  }
+  </script>  <link rel="canonical" href="https://browserkit.online/en/blog/36-hashgen-howto" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://browserkit.online/en/" },
+    { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://browserkit.online/en/blog/" },
+    { "@type": "ListItem", "position": 3, "name": "Hash Generator: The Complete Guide", "item": "https://browserkit.online/en/blog/36-hashgen-howto" }
+  ]
+}
+  </script>
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://browserkit.online/img/og/hash-gen.png" />
+  <style>
+    .post-table-wrap { overflow-x:auto; }
+    .post-table th, .post-table td { white-space:nowrap; }
+    .post-nav a { word-break:keep-all; }
+    .post-nav .nav-label { display:block; font-size:13px; color:var(--subtext); opacity:0.7; margin-bottom:4px; }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Is the Hash Generator tool really free?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, it is completely free to use with no sign-up or installation required. There is no usage limit either."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is anything I enter sent to a server?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. All processing happens entirely in your browser, and nothing you enter is ever sent to or stored on an external server."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Which hash algorithms are supported?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "You can generate MD5, SHA-1, SHA-256, and SHA-512 hashes."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I use this on mobile?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, it works the same way in a mobile browser without needing to install any app."
+      }
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <div class="lang-banner" id="langBanner">
+    <span>🌐 이 페이지는 <a href="/blog/36-hashgen-howto">한국어</a>로도 볼 수 있습니다.</span>
+    <button class="lang-banner-close" id="langBannerClose" type="button" aria-label="close">&times;</button>
+  </div>
+  <header class="header">
+    <div class="container">
+      <a href="/en/" class="header-brand"><div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Poppins,sans-serif;flex-shrink:0">B</div><span class="header-brand-text"><span style="color:var(--text)">Browser</span><span style="color:var(--point)">Kit</span></span></a>
+      <div class="header-right">
+        <div class="lang-switcher">
+          <button class="lang-switcher-btn" type="button" data-lang-btn>🌐 <span class="lang-label-full">English</span></button>
+          <div class="lang-switcher-menu" data-lang-menu>
+            <a href="#" class="active">English</a>
+            <a href="/blog/36-hashgen-howto">한국어</a>
+          </div>
+        </div>
+        <a href="/en/" class="header-back">&#x2190; <span class="header-back-label">Back to BrowserKit</span></a>
+      </div>
+    </div>
+  </header>
+
+  <article class="post-wrap">
+    <a href="/en/blog/" class="back-link">&#x2190; Blog</a>
+    <span class="post-tag">Guide</span>
+    <h1 class="post-title"><span style="color:var(--point-hover)">Hash Generator</span>: The Complete Guide</h1>
+    <div class="post-date">June 23, 2026</div>
+    <!-- Google AdSense Display Ad — pending approval, reserving space -->
+    <div class="ad-slot" id="adExtra2">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
+
+    <div class="post-body">
+      <p>Ever downloaded a file from an official site that listed "SHA-256: a1b2c3..." on the download page, and checked whether your file actually matched? Most people skip it, but a single hash value is all it takes to verify nothing was tampered with. HashGen is a free online tool that instantly generates and compares MD5, SHA-1, SHA-256, and SHA-512 hashes for text and files. Everything happens entirely in your browser, so your text or files are never sent to an external server.</p>
+
+      <h2>Key Features</h2>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F4DD;</div>
+          <div class="feature-title">Text Hashing</div>
+          <div class="feature-desc">Type in some text and MD5, SHA-1, SHA-256, and SHA-512 hashes are generated live, updating as you type.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F4C2;</div>
+          <div class="feature-title">File Hashing</div>
+          <div class="feature-desc">Upload a file and it computes the hash of the entire file. Just drag and drop to upload.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F50D;</div>
+          <div class="feature-title">Hash Verification</div>
+          <div class="feature-desc">Paste in a hash to compare, and it's automatically checked against the generated hash — a way to verify integrity against a hash the file provider published.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F526;</div>
+          <div class="feature-title">Algorithm Selection</div>
+          <div class="feature-desc">Toggle MD5, SHA-1, SHA-256, and SHA-512 on or off individually to keep results focused on just what you need.</div>
+        </div>
+      </div>
+
+      <!-- Google AdSense Display Ad — pending approval, reserving space -->
+    <div class="ad-slot" id="adTop">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
+      <h2>Tabs</h2>
+      <div class="tab-demo">
+        <div class="tab-demo-btn on">&#x1F4DD; Text Hash</div>
+        <div class="tab-demo-btn">&#x1F4C2; File Hash</div>
+      </div>
+      <p>The Text Hash tab generates a hash for text you type directly, while the File Hash tab computes the hash of an uploaded file.</p>
+
+      <h2>How to Hash Text</h2>
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <h3>Enter Text</h3>
+          <p>Type the text you want to hash into the input box. Hash values appear live below as you type, and you can check the character count in the top right.</p>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <h3>Choose Algorithms (Optional)</h3>
+          <p>MD5, SHA-1, SHA-256, and SHA-512 are all enabled by default. If you only need certain algorithms, click a button to disable the rest.</p>
+        </div>
+      </div>
+
+      <h3>Toggle Example</h3>
+      <div class="algo-demo">
+        <span class="algo-chip">MD5</span>
+        <span class="algo-chip off">SHA-1</span>
+        <span class="algo-chip">SHA-256</span>
+        <span class="algo-chip off">SHA-512</span>
+      </div>
+      <p>Disabling SHA-1 and SHA-512 as shown above leaves only the MD5 and SHA-256 results visible.</p>
+
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <h3>Copy the Results</h3>
+          <p>Click the copy button next to each hash to copy it individually, or use the copy-all button at the bottom to copy every hash at once.</p>
+        </div>
+      </div>
+
+      
+
+      <h3>Example Text Hash Results</h3>
+      <p>These are the hash values generated for the text <code>hello</code>.</p>
+      <div class="hash-result-demo">
+        <div class="hash-row-demo">
+          <span class="hash-algo-demo">MD5</span>
+          <span class="hash-val-demo">5d41402abc4b2a76b9719d911017c592</span>
+          <span class="hash-copy-demo">Copy</span>
+        </div>
+        <div class="hash-row-demo">
+          <span class="hash-algo-demo">SHA-1</span>
+          <span class="hash-val-demo">aaf4c61ddcc5e8a2dabede0f3b482cd9aea9434d</span>
+          <span class="hash-copy-demo">Copy</span>
+        </div>
+        <div class="hash-row-demo">
+          <span class="hash-algo-demo">SHA-256</span>
+          <span class="hash-val-demo">2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824</span>
+          <span class="hash-copy-demo">Copy</span>
+        </div>
+        <div class="hash-row-demo">
+          <span class="hash-algo-demo">SHA-512</span>
+          <span class="hash-val-demo">9b71d224bd62f3785d96d46ad3ea3d73319bfbc2890caadae2dff72519673ca72323c3d99ba5c11d7c7acc6e14b8c5da0c4663475c2e5c3adef46f73bcdec043</span>
+          <span class="hash-copy-demo">Copy</span>
+        </div>
+      </div>
+
+      <h2>How to Hash Files</h2>
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <h3>Upload a File</h3>
+          <p>Click the upload zone or drag a file onto it. Any file type is supported, and since files are never sent to an external server, you can process sensitive files with confidence.</p>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <h3>Hash Calculation (Automatic)</h3>
+          <p>Uploading a file automatically starts the hash calculation. A progress bar shows the calculation running through MD5 &rarr; SHA-1 &rarr; SHA-256 &rarr; SHA-512.</p>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <h3>Check and Copy the Results</h3>
+          <p>Once the calculation finishes, each algorithm's hash value is displayed. Copy them individually, or use the copy-all button (includes the filename).</p>
+        </div>
+      </div>
+
+      
+
+      <h2>Hash Verification</h2>
+      <p>Compare your file's hash against the one published on the software's official site or download page to confirm the file hasn't been tampered with.</p>
+
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <h3>Copy the Published Hash</h3>
+          <p>Copy the SHA-256 or MD5 hash value from the site providing the file.</p>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <h3>Paste into the Verification Box</h3>
+          <p>Paste it into the verification box below the results card, and it's automatically compared against the generated hash.</p>
+        </div>
+      </div>
+
+      
+
+      <h3>Example Verification Results</h3>
+      <div class="verify-demo">
+        <div class="verify-label-demo">&#x1F50D; Hash Verification — compare against the hash from the file provider</div>
+        <div class="verify-input-demo">2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824</div>
+        <div class="verify-ok-demo">&#x2705; Match (SHA-256) — the file has not been tampered with.</div>
+      </div>
+      <div class="verify-demo" style="margin-top:12px;">
+        <div class="verify-label-demo">&#x1F50D; Hash Verification — a mismatch example</div>
+        <div class="verify-input-demo">abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890</div>
+        <div class="verify-fail-demo">&#x274C; No matching hash found. The file may have been tampered with.</div>
+      </div>
+
+      <div class="post-warn">
+        <strong>⚠️ Caution:</strong> If the hash doesn't match, the file may have been corrupted in transit or tampered with. We recommend re-downloading it from the official source.
+      </div>
+
+      <h2>Algorithm Characteristics and Use Cases</h2>
+      <div class="post-table-wrap"><table class="post-table">
+        <thead>
+          <tr><th>Algorithm</th><th>Hash Length</th><th>Speed</th><th>Security Level</th><th>Common Uses</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>MD5</strong></td>
+            <td>32 chars (128-bit)</td>
+            <td>Fast</td>
+            <td><span class="badge-warn">Low</span></td>
+            <td>Quick file integrity checks, checksums</td>
+          </tr>
+          <tr>
+            <td><strong>SHA-1</strong></td>
+            <td>40 chars (160-bit)</td>
+            <td>Fast</td>
+            <td><span class="badge-warn">Low</span></td>
+            <td>Legacy systems, Git commit IDs</td>
+          </tr>
+          <tr>
+            <td><strong>SHA-256</strong></td>
+            <td>64 chars (256-bit)</td>
+            <td>Moderate</td>
+            <td><span class="badge-safe">High</span></td>
+            <td>File integrity verification (recommended), security applications, Bitcoin</td>
+          </tr>
+          <tr>
+            <td><strong>SHA-512</strong></td>
+            <td>128 chars (512-bit)</td>
+            <td>Moderate</td>
+            <td><span class="badge-safe">Very High</span></td>
+            <td>High-security environments, password hashing, digital signatures</td>
+          </tr>
+        </tbody>
+      </table></div>
+
+      <p><strong>SHA-256</strong> is the most commonly used algorithm for file integrity verification. Most software distribution sites (Linux ISOs, Python installers, open-source tools, and more) provide SHA-256 or SHA-512 hashes.</p>
+
+      <h2>Use Cases</h2>
+      <div class="use-case-grid">
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F4E5;</div>
+          <div class="use-case-title">Verify Downloaded Files</div>
+          <div class="use-case-desc">After downloading official software like Ubuntu, Python, or Node.js, compare it against the published SHA-256 hash to confirm it wasn't corrupted.</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F4BE;</div>
+          <div class="use-case-title">Backup Integrity Checks</div>
+          <div class="use-case-desc">Compare an important file's hash before and after backup to confirm the data was preserved exactly.</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F511;</div>
+          <div class="use-case-title">Password Hashing Reference</div>
+          <div class="use-case-desc">Check what hash a given piece of text produces — useful for understanding and testing hash function behavior during development.</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F4C4;</div>
+          <div class="use-case-title">Detect Document Tampering</div>
+          <div class="use-case-desc">Record the original hash of an important document, like a contract or report, and later confirm it hasn't been altered by comparing hashes.</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F6E1;&#xFE0F;</div>
+          <div class="use-case-title">API Signature Checks</div>
+          <div class="use-case-desc">Manually compute or verify a simple hash-based API signature (without HMAC).</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F50E;</div>
+          <div class="use-case-title">Find Duplicate Files</div>
+          <div class="use-case-desc">Two files with the same hash have identical content — a quick way to spot duplicate files with different names.</div>
+        </div>
+      </div>
+
+      <h2>How It Works</h2>
+      <p>HashGen computes SHA-family hashes using the browser's built-in <code>Web Crypto API</code>. Since the Web Crypto API doesn't support MD5, that's handled by loading the lightweight open-source <code>js-md5</code> library from a CDN.</p>
+      <div class="post-table-wrap"><table class="post-table">
+        <thead><tr><th>Algorithm</th><th>Implementation</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>MD5</td><td>js-md5 (CDN)</td><td>Web Crypto API doesn't support MD5 -- handled by a lightweight library</td></tr>
+          <tr><td>SHA-1, SHA-256, SHA-512</td><td>Web Crypto API (built-in)</td><td>Native browser support, no extra library needed</td></tr>
+          <tr><td>File handling</td><td>file.arrayBuffer()</td><td>The entire file is processed directly in memory, with no server upload</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="post-highlight">&#x1F512; HashGen runs every hash calculation right in your browser. The text you enter and files you upload are never sent to an external server, so you can use it confidently even for confidential documents and personal files.</div>
+    
+      <h2>Frequently Asked Questions</h2>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
+        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. Is the Hash Generator tool really free?</p>
+        <p style="color:var(--subtext);margin:0;line-height:1.7">Yes, it is completely free to use with no sign-up or installation required. There is no usage limit either.</p>
+      </div>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
+        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. Is anything I enter sent to a server?</p>
+        <p style="color:var(--subtext);margin:0;line-height:1.7">No. All processing happens entirely in your browser, and nothing you enter is ever sent to or stored on an external server.</p>
+      </div>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
+        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. Which hash algorithms are supported?</p>
+        <p style="color:var(--subtext);margin:0;line-height:1.7">You can generate MD5, SHA-1, SHA-256, and SHA-512 hashes.</p>
+      </div>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
+        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. Can I use this on mobile?</p>
+        <p style="color:var(--subtext);margin:0;line-height:1.7">Yes, it works the same way in a mobile browser without needing to install any app.</p>
+      </div>
+    </div>
+
+    <div style="margin:12px 0"><!-- Google AdSense Display Ad — pending approval, reserving space -->
+    <div class="ad-slot" id="adMiddle">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
+
+    <div class="cta-box">
+      <p>Generate MD5, SHA-256, and SHA-512 hashes for files or text and verify integrity.<br />Instantly confirm a downloaded file hasn't been tampered with.</p>
+      <a href="/en/hash-gen/" class="cta-btn" style="display:inline-flex;align-items:center;gap:8px">
+        <span style="display:inline-block;width:26px;height:26px;overflow:hidden;flex-shrink:0"><span style="display:block;transform:scale(0.565);transform-origin:top left"><div style="width:46px;height:46px;background:#e0c3ff;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="font:700 16px Poppins,sans-serif;color:#2a2433;line-height:1;letter-spacing:-.5px;white-space:nowrap">#</div></div></span></span>
+        Start Hashing for Free
+      </a>
+    </div>
+    <!-- Google AdSense Multiplex Ad — pending approval, reserving space -->
+    <div class="ad-slot ad-slot-rect" id="adBottom">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
+
+<div class="post-nav">
+      <a href="/en/blog/"><span class="nav-label">&larr; Blog</span>More Guides</a>
+      <a href="/en/blog/" style="text-align:right"><span class="nav-label">Blog &rarr;</span>More Guides</a>
+    </div></div>
+
+  </article>
+  <footer class="footer">
+    <div class="container">
+      <p class="footer-copy">&#xa9; 2026 BrowserKit. All processing happens in your browser.</p>
+      <nav class="footer-nav">
+        <a href="/en/privacy.html">Privacy Policy</a>
+        <a href="/en/terms.html">Terms of Service</a>
+        <a href="/en/about.html">About</a>
+        <a href="/en/blog/">Blog</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script>
+  document.querySelectorAll('[data-lang-btn]').forEach(function(btn){
+    btn.addEventListener('click', function(e){
+      e.stopPropagation();
+      var menu = btn.nextElementSibling;
+      menu.classList.toggle('show');
+    });
+  });
+  document.addEventListener('click', function(){
+    document.querySelectorAll('.lang-switcher-menu.show').forEach(function(m){ m.classList.remove('show'); });
+  });
+  </script>
+
+  <script>
+  (function(){
+    try {
+      if (document.cookie.indexOf('bk_lang_dismiss=1') !== -1) return;
+      var lang = (navigator.language || navigator.userLanguage || '').toLowerCase();
+      if (lang.indexOf('ko') !== 0) return;
+      var banner = document.getElementById('langBanner');
+      if (!banner) return;
+      banner.classList.add('show');
+      var closeBtn = document.getElementById('langBannerClose');
+      closeBtn.addEventListener('click', function(){
+        banner.classList.remove('show');
+        document.cookie = 'bk_lang_dismiss=1; max-age=' + (60*60*24*180) + '; path=/';
+      });
+    } catch(e) {}
+  })();
+  </script>
+</body>
+</html>
+
