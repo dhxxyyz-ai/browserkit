@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
   <link rel="icon" href="/favicon.ico" sizes="32x32">
   <link rel="icon" href="/favicon-16.png" sizes="16x16" type="image/png">
@@ -8,18 +8,17 @@
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="D-day 계산기, 날짜 차이 계산, 나이 계산을 브라우저에서 바로 사용하세요. 서버 전송 없이 무료로 이용 가능합니다." />
-  <meta property="og:title" content="DateCalc — 날짜 계산기" />
-  <meta property="og:description" content="D-day 계산, 날짜 차이, 나이 계산을 한 번에. 무료 온라인 날짜 계산기." />
+  <meta name="description" content="Use a D-day counter, date-difference calculator, and age calculator right in your browser. Free, with no server upload." />
+  <meta property="og:title" content="DateCalc — Date Calculator" />
+  <meta property="og:description" content="D-day countdown, date difference, and age calculation all in one. A free online date calculator." />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://browserkit.online/date-calc/" />
-  <title>DateCalc — 날짜 계산기</title>
+  <meta property="og:url" content="https://browserkit.online/en/date-calc/" />
+  <title>DateCalc — Date Calculator</title>
   <link rel="stylesheet" href="/css/style.css?v=20260724c" />
-  <!-- Google AdSense 승인 대기 중 (2026-07-19 주석 처리, 카카오 애드핏으로 임시 전환) — 승인 후 주석 해제
+  <!-- Google AdSense — pending re-review. Uncomment once approved.
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506"
      crossorigin="anonymous"></script>
   -->
-  <script type="text/javascript" src="//t1.kakaocdn.net/kas/static/ba.min.js" async></script>
   <style>
     .guide-summary { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:24px; margin:0 0 12px; }
     .guide-summary-title { font-size:16px; font-weight:700; color:var(--text); margin:0 0 12px; }
@@ -31,64 +30,67 @@
     .guide-full-link { display:inline-block; margin-top:12px; font-size:14px; font-weight:600; color:var(--point-hover); text-decoration:none; }
     .guide-full-link:hover { text-decoration:underline; }
 
+    .ad-slot { min-height:90px; display:flex; align-items:center; justify-content:center; margin:0 0 12px; }
+    .ad-slot-rect { min-height:250px; }
 
-/* 탭 */
+
+/* Tabs */
     .tab-bar { display:flex; gap:4px; background:var(--card); border:1px solid var(--border); border-radius:14px; padding:5px; margin-bottom:24px; }
-    .tab-btn { flex:1; padding:10px; font-size:14px; font-weight:600; border:none; border-radius:10px; cursor:pointer; font-family:'Gowun Dodum',sans-serif; background:transparent; color:var(--subtext); transition:all 0.2s; }
+    .tab-btn { flex:1; padding:10px; font-size:14px; font-weight:600; border:none; border-radius:10px; cursor:pointer; background:transparent; color:var(--subtext); transition:all 0.2s; }
     .tab-btn.active { background:linear-gradient(135deg,var(--point),var(--point-hover)); color:#fff; }
     .tab-btn:hover:not(.active) { color:var(--text); background:rgba(123,108,255,0.08); }
 
-    /* 패널 */
+    /* Panels */
     .panel { display:none; }
     .panel.show { display:block; }
 
-    /* 카드 */
+    /* Card */
     .calc-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:28px; margin-bottom:20px; }
 
-    /* 입력 */
+    /* Input */
     .field-label { font-size:13px; font-weight:600; color:var(--subtext); margin-bottom:8px; display:block; }
-    .date-input { width:100%; background:var(--bg); border:1px solid var(--border); border-radius:10px; padding:12px 16px; font-size:15px; color:var(--text); font-family:'Gowun Dodum',sans-serif; outline:none; transition:border-color 0.2s; }
+    .date-input { width:100%; background:var(--bg); border:1px solid var(--border); border-radius:10px; padding:12px 16px; font-size:15px; color:var(--text); outline:none; transition:border-color 0.2s; }
     .date-input:focus { border-color:var(--point); }
     .date-input::-webkit-calendar-picker-indicator { filter:invert(0.5); cursor:pointer; }
     .field-row { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:20px; }
-    .today-btn { background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:6px 14px; font-size:12px; font-weight:600; color:var(--subtext); cursor:pointer; margin-top:8px; font-family:'Gowun Dodum',sans-serif; transition:all 0.15s; }
+    .today-btn { background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:6px 14px; font-size:12px; font-weight:600; color:var(--subtext); cursor:pointer; margin-top:8px; transition:all 0.15s; }
     .today-btn:hover { border-color:var(--point); color:var(--text); }
 
-    /* 결과 */
+    /* Result */
     .result-area { background:var(--bg); border-radius:12px; padding:20px 24px; margin-top:4px; }
     .result-empty { color:var(--subtext); font-size:14px; text-align:center; padding:8px 0; font-style:italic; }
     .result-dday { text-align:center; padding:12px 0 8px; }
-    .result-dday-num { font-size:56px; font-weight:700; font-family:'Gowun Dodum',sans-serif; background:linear-gradient(135deg,var(--point),var(--point-hover)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; line-height:1.1; }
+    .result-dday-num { font-size:56px; font-weight:700; background:linear-gradient(135deg,var(--point),var(--point-hover)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; line-height:1.1; }
     .result-dday-label { font-size:14px; color:var(--subtext); margin-top:6px; }
     .result-dday-today { font-size:22px; font-weight:700; color:var(--success); }
 
     .result-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-top:16px; }
     .result-item { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:14px; text-align:center; }
-    .result-item-num { font-size:24px; font-weight:700; color:var(--point-hover); font-family:'Gowun Dodum',sans-serif; }
+    .result-item-num { font-size:24px; font-weight:700; color:var(--point-hover); }
     .result-item-label { font-size:12px; color:var(--subtext); margin-top:4px; }
 
     .result-row-list { display:flex; flex-direction:column; gap:10px; margin-top:4px; }
     .result-row { display:flex; justify-content:space-between; align-items:center; padding:10px 0; border-bottom:1px solid var(--border); }
     .result-row:last-child { border-bottom:none; }
     .result-row-label { font-size:14px; color:var(--subtext); }
-    .result-row-val { font-size:15px; font-weight:700; color:var(--text); font-family:'Gowun Dodum',sans-serif; }
+    .result-row-val { font-size:15px; font-weight:700; color:var(--text); }
     .result-row-val.accent { color:var(--point-hover); }
 
-    /* 나이 탭 특화 */
+    /* Age tab specific */
     .age-big { text-align:center; padding:16px 0 8px; }
-    .age-big-num { font-size:72px; font-weight:700; font-family:'Gowun Dodum',sans-serif; background:linear-gradient(135deg,var(--point),var(--point-hover)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; line-height:1; }
+    .age-big-num { font-size:72px; font-weight:700; background:linear-gradient(135deg,var(--point),var(--point-hover)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; line-height:1; }
     .age-big-label { font-size:13px; color:var(--subtext); margin-top:4px; }
     .age-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; margin-top:16px; }
     .age-item { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:14px; text-align:center; }
-    .age-item-num { font-size:20px; font-weight:700; color:var(--text); font-family:'Gowun Dodum',sans-serif; }
+    .age-item-num { font-size:20px; font-weight:700; color:var(--text); }
     .age-item-label { font-size:11px; color:var(--subtext); margin-top:4px; line-height:1.4; }
     .age-item-sub { font-size:12px; color:var(--subtext); margin-top:2px; }
 
-    /* 토스트 */
+    /* Toast */
     .toast { position:fixed; bottom:32px; left:50%; transform:translateX(-50%) translateY(80px); background:var(--success); color:#fff; border-radius:999px; padding:10px 24px; font-size:14px; font-weight:600; opacity:0; pointer-events:none; z-index:999; transition:all 0.3s ease; }
     .toast.show { transform:translateX(-50%) translateY(0); opacity:1; }
 
-    /* 배너 */
+    /* Banner */
     .footer { border-top:1px solid var(--border); padding:32px 0; text-align:center; }
     .footer-copy { color:var(--subtext); font-size:13px; margin-bottom:12px; }
     .footer-nav { display:flex; justify-content:center; gap:20px; flex-wrap:wrap; }
@@ -104,9 +106,9 @@
     }
   </style>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <meta property="og:image" content="https://browserkit.online/img/og/date-calc.png" />
-  <link rel="canonical" href="https://browserkit.online/date-calc/" />
+  <link rel="canonical" href="https://browserkit.online/en/date-calc/" />
   <link rel="alternate" hreflang="ko" href="https://browserkit.online/date-calc/" />
   <link rel="alternate" hreflang="en" href="https://browserkit.online/en/date-calc/" />
   <link rel="alternate" hreflang="x-default" href="https://browserkit.online/en/date-calc/" />
@@ -116,18 +118,18 @@
 {
   "@context": "https://schema.org",
   "@type": "WebApplication",
-  "name": "DateCalc — 날짜 계산기",
-  "url": "https://browserkit.online/date-calc/",
-  "description": "D-day 계산기, 날짜 차이 계산, 나이 계산을 브라우저에서 바로 사용하세요. 서버 전송 없이 무료로 이용 가능합니다.",
+  "name": "DateCalc — Date Calculator",
+  "url": "https://browserkit.online/en/date-calc/",
+  "description": "Use a D-day counter, date-difference calculator, and age calculator right in your browser. Free, with no server upload.",
   "applicationCategory": "UtilityApplication",
   "operatingSystem": "Any",
   "browserRequirements": "Requires JavaScript",
-  "inLanguage": "ko",
+  "inLanguage": "en",
   "isAccessibleForFree": true,
   "offers": {
     "@type": "Offer",
     "price": "0",
-    "priceCurrency": "KRW"
+    "priceCurrency": "USD"
   },
   "publisher": {
     "@type": "Organization",
@@ -144,14 +146,14 @@
     {
       "@type": "ListItem",
       "position": 1,
-      "name": "홈",
-      "item": "https://browserkit.online/"
+      "name": "Home",
+      "item": "https://browserkit.online/en/"
     },
     {
       "@type": "ListItem",
       "position": 2,
-      "name": "날짜 계산기",
-      "item": "https://browserkit.online/date-calc/"
+      "name": "Date Calculator",
+      "item": "https://browserkit.online/en/date-calc/"
     }
   ]
 }
@@ -160,24 +162,24 @@
 
 <body>
   <div class="lang-banner" id="langBanner">
-    <span>🌐 This page is also available in <a href="/en/date-calc/">English</a>.</span>
+    <span>🌐 이 페이지는 <a href="/date-calc/">한국어</a>로도 볼 수 있습니다.</span>
     <button class="lang-banner-close" id="langBannerClose" type="button" aria-label="close">&times;</button>
   </div>
   <header class="header">
     <div class="container">
-      <a href="/" class="header-brand">
-        <div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Gowun Dodum,sans-serif;flex-shrink:0">B</div>
+      <a href="/en/" class="header-brand">
+        <div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Poppins,sans-serif;flex-shrink:0">B</div>
         <span class="header-brand-text"><span style="color:var(--text)">Browser</span><span style="color:var(--point)">Kit</span></span>
       </a>
       <div class="header-right">
         <div class="lang-switcher">
-          <button class="lang-switcher-btn" type="button" data-lang-btn>🌐 <span class="lang-label-full">한국어</span></button>
+          <button class="lang-switcher-btn" type="button" data-lang-btn>🌐 <span class="lang-label-full">English</span></button>
           <div class="lang-switcher-menu" data-lang-menu>
-            <a href="/en/date-calc/">English</a>
-            <a href="#" class="active">한국어</a>
+            <a href="#" class="active">English</a>
+            <a href="/date-calc/">한국어</a>
           </div>
         </div>
-        <a href="/" class="header-back">&#x2190; <span class="header-back-label">BrowserKit 홈으로</span></a>
+        <a href="/en/" class="header-back">&#x2190; <span class="header-back-label">Back to BrowserKit</span></a>
       </div>
     </div>
   </header>
@@ -185,118 +187,130 @@
   <main><div class="container">
     <div class="hero">
       <div class="hero-icon" style="height:78px;display:flex;justify-content:center;align-items:center"><div style="transform:scale(1.7);transform-origin:center"><div style="width:46px;height:46px;background:#bcd4ff;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="position:relative;width:30px;height:30px;background:#fffdf9;border:2.5px solid #2a2433;border-radius:4px;box-sizing:border-box;overflow:hidden"><div style="position:absolute;top:0;left:0;width:100%;height:8px;background:#bcd4ff;border-bottom:2.5px solid #2a2433"></div><div style="position:absolute;top:13px;left:4px;width:4px;height:4px;background:#2a2433;border-radius:1px"></div><div style="position:absolute;top:13px;left:13px;width:4px;height:4px;background:rgba(42,36,51,.3);border-radius:1px"></div><div style="position:absolute;top:13px;left:22px;width:4px;height:4px;background:rgba(42,36,51,.3);border-radius:1px"></div><div style="position:absolute;top:21px;left:4px;width:4px;height:4px;background:rgba(42,36,51,.3);border-radius:1px"></div><div style="position:absolute;top:21px;left:13px;width:4px;height:4px;background:#2a2433;border-radius:1px"></div></div></div></div></div>
-      <div class="hero-title-wrap"><h1 class="hero-title">날짜 계산기</h1><a href="/blog/34-datecalc-howto" class="hero-guide-link">사용법 가이드 보기</a></div>
-      <p class="hero-desc">D-day 계산, 날짜 차이, 나이 계산을 한 번에</p>
+      <div class="hero-title-wrap"><h1 class="hero-title">Date Calculator</h1><a href="/blog/34-datecalc-howto" class="hero-guide-link">View usage guide</a></div>
+      <p class="hero-desc">D-day countdown, date difference, and age calculation all in one</p>
       <div class="hero-badges">
-        <span class="badge">🔒 완전 로컬 처리</span>
-        <span class="badge">⚡ 무료 사용</span>
-        <span class="badge">🛡️ 서버 전송 없음</span>
-        <span class="badge">📦 설치 불필요</span>
+        <span class="badge">🔒 Fully local processing</span>
+        <span class="badge">⚡ Free to use</span>
+        <span class="badge">🛡️ No server upload</span>
+        <span class="badge">📦 No installation</span>
       </div>
     </div>
-    <div style="margin:0 0 12px"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><div class="adfit-h-desktop"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-QD4pRIpdIj7i2mbt" data-ad-width="728" data-ad-height="90"></ins></div><div class="adfit-h-mobile"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-R4xA2niTT8HgGjoO" data-ad-width="320" data-ad-height="50"></ins></div></div>
-
-<!-- 탭 -->
-    <div class="tab-bar">
-      <button class="tab-btn active" data-tab="dday">&#x1F3AF; D-day 계산</button>
-      <button class="tab-btn" data-tab="diff">&#x1F4CF; 날짜 차이</button>
-      <button class="tab-btn" data-tab="age">&#x1F382; 나이 계산</button>
+    <!-- Google AdSense Display Ad — pending approval, reserving space -->
+    <div class="ad-slot" id="adTop">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
     </div>
 
-    <!-- ─── D-day 탭 ─── -->
+<!-- Tabs -->
+    <div class="tab-bar">
+      <button class="tab-btn active" data-tab="dday">&#x1F3AF; D-day Countdown</button>
+      <button class="tab-btn" data-tab="diff">&#x1F4CF; Date Difference</button>
+      <button class="tab-btn" data-tab="age">&#x1F382; Age Calculator</button>
+    </div>
+
+    <!-- ─── D-day tab ─── -->
     <div class="panel show" id="panel-dday">
       <div class="calc-card">
-        <label class="field-label">&#x1F3AF; 목표 날짜</label>
+        <label class="field-label">&#x1F3AF; Target Date</label>
         <input type="date" class="date-input" id="dday-target" />
         <div>
-          <button class="today-btn" id="dday-today-btn">&#x1F4C5; 오늘로 설정</button>
+          <button class="today-btn" id="dday-today-btn">&#x1F4C5; Set to Today</button>
         </div>
       </div>
       <div class="calc-card">
         <div class="result-area" id="dday-result">
-          <div class="result-empty">목표 날짜를 선택하면 D-day가 표시됩니다.</div>
+          <div class="result-empty">Choose a target date and the D-day countdown will show here.</div>
         </div>
       </div>
     </div>
 
-    <!-- ─── 날짜 차이 탭 ─── -->
+    <!-- ─── Date difference tab ─── -->
     <div class="panel" id="panel-diff">
       <div class="calc-card">
         <div class="field-row">
           <div>
-            <label class="field-label">&#x1F4C5; 시작일</label>
+            <label class="field-label">&#x1F4C5; Start Date</label>
             <input type="date" class="date-input" id="diff-start" />
-            <button class="today-btn" id="diff-start-today">&#x1F4C5; 오늘</button>
+            <button class="today-btn" id="diff-start-today">&#x1F4C5; Today</button>
           </div>
           <div>
-            <label class="field-label">&#x1F4C5; 종료일</label>
+            <label class="field-label">&#x1F4C5; End Date</label>
             <input type="date" class="date-input" id="diff-end" />
-            <button class="today-btn" id="diff-end-today">&#x1F4C5; 오늘</button>
+            <button class="today-btn" id="diff-end-today">&#x1F4C5; Today</button>
           </div>
         </div>
       </div>
       <div class="calc-card">
         <div class="result-area" id="diff-result">
-          <div class="result-empty">시작일과 종료일을 선택하면 날짜 차이가 표시됩니다.</div>
+          <div class="result-empty">Choose a start and end date and the difference will show here.</div>
         </div>
       </div>
     </div>
 
-    <!-- ─── 나이 계산 탭 ─── -->
+    <!-- ─── Age calculator tab ─── -->
     <div class="panel" id="panel-age">
       <div class="calc-card">
-        <label class="field-label">&#x1F382; 생년월일</label>
+        <label class="field-label">&#x1F382; Date of Birth</label>
         <input type="date" class="date-input" id="age-birth" />
       </div>
       <div class="calc-card">
         <div class="result-area" id="age-result">
-          <div class="result-empty">생년월일을 입력하면 나이가 표시됩니다.</div>
+          <div class="result-empty">Enter a date of birth and the age will show here.</div>
         </div>
       </div>
     </div>
 
-<div style="margin:0 0 12px"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><!-- 카카오 애드핏 (2026-07-22, 쿠팡 파트너스 다이내믹 배너로 교체) — 복원 시 주석 해제: <div class="adfit-h-desktop"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-QD4pRIpdIj7i2mbt" data-ad-width="728" data-ad-height="90"></ins></div><div class="adfit-h-mobile"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-R4xA2niTT8HgGjoO" data-ad-width="320" data-ad-height="50"></ins></div> --><div class="adfit-h-desktop"><script src="https://ads-partners.coupang.com/g.js"></script><script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"728","height":"90","tsource":""});</script></div><div class="adfit-h-mobile"><script src="https://ads-partners.coupang.com/g.js"></script><script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"320","height":"50","tsource":""});</script></div></div>
-
-    <div class="guide-summary">
-      <h2 class="guide-summary-title">사용법 요약</h2>
-      <ol class="guide-steps">
-        <li>D-day 계산 탭 선택</li>
-        <li>목표 날짜 선택</li>
-        <li>결과 확인</li>
-      </ol>
-      <h3 class="guide-faq-title">자주 묻는 질문</h3>
-      <div class="guide-faq">
-        <details>
-          <summary>날짜 계산기 도구는 정말 무료인가요?</summary>
-          <p>네, 회원가입이나 설치 없이 완전 무료로 사용할 수 있습니다. 횟수 제한도 없습니다.</p>
-        </details>
-        <details>
-          <summary>입력한 내용이 서버로 전송되나요?</summary>
-          <p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용이 외부 서버로 전송되거나 저장되지 않습니다.</p>
-        </details>
-        <details>
-          <summary>어떤 계산을 지원하나요?</summary>
-          <p>D-day 계산, 두 날짜 사이의 차이 계산, 나이 계산을 지원합니다.</p>
-        </details>
-        <details>
-          <summary>모바일에서도 사용할 수 있나요?</summary>
-          <p>네, 별도의 앱 설치 없이 모바일 브라우저에서도 동일하게 사용할 수 있습니다.</p>
-        </details>
-      </div>
-      <a href="/blog/34-datecalc-howto" class="guide-full-link">전체 가이드 보기 →</a>
+<!-- Google AdSense Display Ad — pending approval, reserving space -->
+    <div class="ad-slot" id="adMiddle">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
     </div>
 
-    <div style="margin:12px 0"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="9500090221"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><div class="adfit-rect-wrap"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-oePL4TCj742xAwqT" data-ad-width="300" data-ad-height="250"></ins></div></div>
+    <div class="guide-summary">
+      <h2 class="guide-summary-title">Quick guide</h2>
+      <ol class="guide-steps">
+        <li>Choose the D-day Countdown tab</li>
+        <li>Choose the target date</li>
+        <li>Check the result</li>
+      </ol>
+      <h3 class="guide-faq-title">Frequently asked questions</h3>
+      <div class="guide-faq">
+        <details>
+          <summary>Is the Date Calculator tool really free?</summary>
+          <p>Yes, it is completely free to use with no sign-up or installation required. There is no usage limit either.</p>
+        </details>
+        <details>
+          <summary>Is anything I enter sent to a server?</summary>
+          <p>No. All processing happens entirely in your browser, and nothing you enter is ever sent to or stored on an external server.</p>
+        </details>
+        <details>
+          <summary>What kinds of calculations does it support?</summary>
+          <p>It supports a D-day countdown, calculating the difference between two dates, and age calculation.</p>
+        </details>
+        <details>
+          <summary>Can I use this on mobile?</summary>
+          <p>Yes, it works the same way in a mobile browser without needing to install any app.</p>
+        </details>
+      </div>
+      <a href="/blog/34-datecalc-howto" class="guide-full-link">View full guide →</a>
+    </div>
+
+    <!-- Google AdSense Multiplex Ad — pending approval, reserving space -->
+    <div class="ad-slot ad-slot-rect" id="adBottom">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
   </div></main>
 
   <footer class="footer">
     <div class="container">
-      <p class="footer-copy">&#xa9; 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p>
+      <p class="footer-copy">&#xa9; 2026 BrowserKit. All processing happens in your browser.</p>
       <nav class="footer-nav">
-        <a href="/privacy">개인정보 처리방침</a>
-        <a href="/terms">이용약관</a>
-        <a href="/about">서비스 소개</a>
-        <a href="/blog/">블로그</a>
+        <a href="/en/privacy.html">Privacy Policy</a>
+        <a href="/en/terms.html">Terms of Service</a>
+        <a href="/en/about.html">About</a>
+        <a href="/en/blog/">Blog</a>
       </nav>
     </div>
   </footer>
@@ -304,7 +318,7 @@
   <div class="toast" id="toast"></div>
 
   <script>
-  // ── 유틸 ──
+  // ── Utils ──
   function today() {
     var d = new Date();
     var y = d.getFullYear();
@@ -328,14 +342,15 @@
   }
 
   function weekday(d) {
-    return ['일','월','화','수','목','금','토'][d.getDay()];
+    return ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'][d.getDay()];
   }
 
   function formatDate(d) {
-    return d.getFullYear()+'년 '+(d.getMonth()+1)+'월 '+d.getDate()+'일 ('+weekday(d)+')';
+    var MONTHS=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    return MONTHS[d.getMonth()]+' '+d.getDate()+', '+d.getFullYear()+' ('+weekday(d)+')';
   }
 
-  // ── 탭 ──
+  // ── Tabs ──
   document.querySelectorAll('.tab-btn').forEach(function(btn) {
     btn.addEventListener('click', function() {
       document.querySelectorAll('.tab-btn').forEach(function(b){ b.classList.remove('active'); });
@@ -346,7 +361,7 @@
   });
 
   // ════════════════════════════
-  // D-day 계산
+  // D-day countdown
   // ════════════════════════════
   var ddayTarget = document.getElementById('dday-target');
   ddayTarget.value = today();
@@ -361,25 +376,25 @@
   function calcDday() {
     var tStr = ddayTarget.value;
     var el   = document.getElementById('dday-result');
-    if (!tStr) { el.innerHTML = '<div class="result-empty">목표 날짜를 선택하면 D-day가 표시됩니다.</div>'; return; }
+    if (!tStr) { el.innerHTML = '<div class="result-empty">Choose a target date and the D-day countdown will show here.</div>'; return; }
 
     var t  = parseDate(tStr);
     var now = parseDate(today());
-    var diff = diffDays(now, t); // 양수=미래, 음수=과거
+    var diff = diffDays(now, t); // positive = future, negative = past
 
     var label, numHtml;
     if (diff === 0) {
       numHtml = '<div class="result-dday-today">D-DAY</div>';
-      label   = '오늘이 바로 그 날입니다! 🎉';
+      label   = 'Today is the day! 🎉';
     } else if (diff > 0) {
       numHtml = '<div class="result-dday-num">D-' + comma(diff) + '</div>';
-      label   = formatDate(t) + ' 까지 <strong>' + comma(diff) + '일</strong> 남았습니다.';
+      label   = '<strong>' + comma(diff) + ' days</strong> until ' + formatDate(t) + '.';
     } else {
       numHtml = '<div class="result-dday-num">D+' + comma(Math.abs(diff)) + '</div>';
-      label   = formatDate(t) + ' 로부터 <strong>' + comma(Math.abs(diff)) + '일</strong> 지났습니다.';
+      label   = '<strong>' + comma(Math.abs(diff)) + ' days</strong> since ' + formatDate(t) + '.';
     }
 
-    // 추가 정보
+    // Additional info
     var weeks   = Math.floor(Math.abs(diff) / 7);
     var months  = Math.abs(Math.round(diff / 30.4375));
     var years   = Math.abs(+(diff / 365.25).toFixed(1));
@@ -389,14 +404,14 @@
       '<div class="result-dday-label" style="margin-top:10px;font-size:14px;color:var(--subtext);">' + label + '</div>' +
       '</div>' +
       '<div class="result-grid">' +
-        '<div class="result-item"><div class="result-item-num">' + comma(Math.abs(diff)) + '</div><div class="result-item-label">일</div></div>' +
-        '<div class="result-item"><div class="result-item-num">' + weeks.toLocaleString() + '</div><div class="result-item-label">주</div></div>' +
-        '<div class="result-item"><div class="result-item-num">' + months.toLocaleString() + '</div><div class="result-item-label">개월 (약)</div></div>' +
+        '<div class="result-item"><div class="result-item-num">' + comma(Math.abs(diff)) + '</div><div class="result-item-label">Days</div></div>' +
+        '<div class="result-item"><div class="result-item-num">' + weeks.toLocaleString() + '</div><div class="result-item-label">Weeks</div></div>' +
+        '<div class="result-item"><div class="result-item-num">' + months.toLocaleString() + '</div><div class="result-item-label">Months (approx.)</div></div>' +
       '</div>';
   }
 
   // ════════════════════════════
-  // 날짜 차이 계산
+  // Date difference
   // ════════════════════════════
   var diffStart = document.getElementById('diff-start');
   var diffEnd   = document.getElementById('diff-end');
@@ -411,14 +426,14 @@
   function calcDiff() {
     var sStr = diffStart.value, eStr = diffEnd.value;
     var el   = document.getElementById('diff-result');
-    if (!sStr || !eStr) { el.innerHTML = '<div class="result-empty">시작일과 종료일을 선택하면 날짜 차이가 표시됩니다.</div>'; return; }
+    if (!sStr || !eStr) { el.innerHTML = '<div class="result-empty">Choose a start and end date and the difference will show here.</div>'; return; }
 
     var s = parseDate(sStr), e = parseDate(eStr);
     var totalDays = diffDays(s, e);
     var absDays   = Math.abs(totalDays);
-    var direction = totalDays >= 0 ? '이후' : '이전';
+    var direction = totalDays >= 0 ? 'after' : 'before';
 
-    // 년/월/일 분해
+    // Break down into years/months/days
     var big = totalDays >= 0 ? e : s;
     var sml = totalDays >= 0 ? s : e;
     var y   = big.getFullYear()  - sml.getFullYear();
@@ -433,18 +448,18 @@
 
     el.innerHTML =
       '<div class="result-row-list">' +
-        '<div class="result-row"><span class="result-row-label">&#x1F4C5; 시작일</span><span class="result-row-val">' + formatDate(s) + '</span></div>' +
-        '<div class="result-row"><span class="result-row-label">&#x1F4C5; 종료일</span><span class="result-row-val">' + formatDate(e) + '</span></div>' +
-        '<div class="result-row"><span class="result-row-label">&#x1F4CF; 총 일수</span><span class="result-row-val accent">' + absDays.toLocaleString() + '일 ' + direction + '</span></div>' +
-        '<div class="result-row"><span class="result-row-label">&#x1F551; 년/월/일</span><span class="result-row-val accent">' + y + '년 ' + mo + '개월 ' + d + '일</span></div>' +
-        '<div class="result-row"><span class="result-row-label">&#x1F4C6; 주 수</span><span class="result-row-val">' + weeks.toLocaleString() + '주 ' + (absDays % 7) + '일</span></div>' +
-        '<div class="result-row"><span class="result-row-label">&#x1F552; 시간</span><span class="result-row-val">' + hours.toLocaleString() + '시간</span></div>' +
-        '<div class="result-row"><span class="result-row-label">&#x23F1;&#xFE0F; 분</span><span class="result-row-val">' + minutes.toLocaleString() + '분</span></div>' +
+        '<div class="result-row"><span class="result-row-label">&#x1F4C5; Start Date</span><span class="result-row-val">' + formatDate(s) + '</span></div>' +
+        '<div class="result-row"><span class="result-row-label">&#x1F4C5; End Date</span><span class="result-row-val">' + formatDate(e) + '</span></div>' +
+        '<div class="result-row"><span class="result-row-label">&#x1F4CF; Total Days</span><span class="result-row-val accent">' + absDays.toLocaleString() + ' days ' + direction + '</span></div>' +
+        '<div class="result-row"><span class="result-row-label">&#x1F551; Years/Months/Days</span><span class="result-row-val accent">' + y + 'y ' + mo + 'm ' + d + 'd</span></div>' +
+        '<div class="result-row"><span class="result-row-label">&#x1F4C6; Weeks</span><span class="result-row-val">' + weeks.toLocaleString() + ' wk ' + (absDays % 7) + ' d</span></div>' +
+        '<div class="result-row"><span class="result-row-label">&#x1F552; Hours</span><span class="result-row-val">' + hours.toLocaleString() + ' hours</span></div>' +
+        '<div class="result-row"><span class="result-row-label">&#x23F1;&#xFE0F; Minutes</span><span class="result-row-val">' + minutes.toLocaleString() + ' minutes</span></div>' +
       '</div>';
   }
 
   // ════════════════════════════
-  // 나이 계산
+  // Age calculation
   // ════════════════════════════
   var ageBirth = document.getElementById('age-birth');
   ageBirth.addEventListener('change', calcAge);
@@ -452,51 +467,51 @@
   function calcAge() {
     var bStr = ageBirth.value;
     var el   = document.getElementById('age-result');
-    if (!bStr) { el.innerHTML = '<div class="result-empty">생년월일을 입력하면 나이가 표시됩니다.</div>'; return; }
+    if (!bStr) { el.innerHTML = '<div class="result-empty">Enter a date of birth and the age will show here.</div>'; return; }
 
     var b    = parseDate(bStr);
     var now  = new Date();
     var todayStr = today();
     var t    = parseDate(todayStr);
 
-    // 만 나이 계산
+    // International age (full age)
     var fullAge = now.getFullYear() - b.getFullYear();
     var mDiff   = now.getMonth() - b.getMonth();
     if (mDiff < 0 || (mDiff === 0 && now.getDate() < b.getDate())) fullAge--;
 
-    // 한국 나이
+    // Korean age (traditional counting-age system: +1 at birth, +1 every New Year)
     var korAge = now.getFullYear() - b.getFullYear() + 1;
 
-    // 연 나이 (올해 - 출생연도)
+    // Year age (current year minus birth year, used in some Korean legal contexts)
     var yearAge = now.getFullYear() - b.getFullYear();
 
-    // 태어난 날로부터 총 일수
+    // Total days since birth
     var totalDays = diffDays(b, t);
     var totalWeeks = Math.floor(totalDays / 7);
 
-    // 다음 생일
+    // Next birthday
     var nextBday = new Date(now.getFullYear(), b.getMonth(), b.getDate());
     if (nextBday < now) nextBday.setFullYear(now.getFullYear() + 1);
     var daysToNextBday = diffDays(t, nextBday);
 
-    // 생일 여부
+    // Whether today is the birthday
     var isBirthday = (b.getMonth() === now.getMonth() && b.getDate() === now.getDate());
 
     el.innerHTML =
       '<div class="age-big">' +
         '<div class="age-big-num">' + fullAge + '</div>' +
-        '<div class="age-big-label">만 나이' + (isBirthday ? ' 🎂 오늘이 생일입니다!' : '') + '</div>' +
+        '<div class="age-big-label">International Age' + (isBirthday ? ' 🎂 It\'s your birthday today!' : '') + '</div>' +
       '</div>' +
       '<div class="age-grid">' +
-        '<div class="age-item"><div class="age-item-num">' + korAge + '세</div><div class="age-item-label">한국 나이<br>(세는 나이)</div></div>' +
-        '<div class="age-item"><div class="age-item-num">' + yearAge + '세</div><div class="age-item-label">연 나이<br>(올해 - 출생연도)</div></div>' +
-        '<div class="age-item"><div class="age-item-num">' + fullAge + '세</div><div class="age-item-label">만 나이<br>(국제 기준)</div></div>' +
+        '<div class="age-item"><div class="age-item-num">' + korAge + '</div><div class="age-item-label">Korean Age<br>(traditional counting)</div></div>' +
+        '<div class="age-item"><div class="age-item-num">' + yearAge + '</div><div class="age-item-label">Year Age<br>(current year - birth year)</div></div>' +
+        '<div class="age-item"><div class="age-item-num">' + fullAge + '</div><div class="age-item-label">International Age<br>(standard worldwide)</div></div>' +
       '</div>' +
       '<div class="result-row-list" style="margin-top:16px;">' +
-        '<div class="result-row"><span class="result-row-label">&#x1F382; 생년월일</span><span class="result-row-val">' + formatDate(b) + '</span></div>' +
-        '<div class="result-row"><span class="result-row-label">&#x1F4C5; 오늘</span><span class="result-row-val">' + formatDate(t) + '</span></div>' +
-        '<div class="result-row"><span class="result-row-label">&#x23F3; 태어난 지</span><span class="result-row-val accent">' + totalDays.toLocaleString() + '일 (' + totalWeeks.toLocaleString() + '주)</span></div>' +
-        '<div class="result-row"><span class="result-row-label">&#x1F382; 다음 생일까지</span><span class="result-row-val accent">' + (isBirthday ? '오늘이 생일! 🎉' : daysToNextBday.toLocaleString() + '일') + '</span></div>' +
+        '<div class="result-row"><span class="result-row-label">&#x1F382; Date of Birth</span><span class="result-row-val">' + formatDate(b) + '</span></div>' +
+        '<div class="result-row"><span class="result-row-label">&#x1F4C5; Today</span><span class="result-row-val">' + formatDate(t) + '</span></div>' +
+        '<div class="result-row"><span class="result-row-label">&#x23F3; Days Since Birth</span><span class="result-row-val accent">' + totalDays.toLocaleString() + ' days (' + totalWeeks.toLocaleString() + ' wk)</span></div>' +
+        '<div class="result-row"><span class="result-row-label">&#x1F382; Until Next Birthday</span><span class="result-row-val accent">' + (isBirthday ? 'Today is the birthday! 🎉' : daysToNextBday.toLocaleString() + ' days') + '</span></div>' +
       '</div>';
   }
   </script>
@@ -519,7 +534,7 @@
     try {
       if (document.cookie.indexOf('bk_lang_dismiss=1') !== -1) return;
       var lang = (navigator.language || navigator.userLanguage || '').toLowerCase();
-      if (lang.indexOf('ko') === 0) return;
+      if (lang.indexOf('ko') !== 0) return;
       var banner = document.getElementById('langBanner');
       if (!banner) return;
       banner.classList.add('show');
