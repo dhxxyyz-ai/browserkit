@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="icon" href="/favicon.ico" sizes="32x32">
+  <link rel="icon" href="/favicon-16.png" sizes="16x16" type="image/png">
+  <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="/favicon-192.png" sizes="192x192" type="image/png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="The official step-by-step guide to every feature of UnitPriceCalc. Learn how to convert products with different prices and sizes into unit prices to compare and find the best deal." />
+  <meta property="og:title" content="Unit Price Calculator: The Complete Guide — BrowserKit" />
+  <meta property="og:description" content="The official UnitPriceCalc guide to converting products with different prices and sizes into unit prices to find the best deal." />
+  <meta property="og:type" content="article" />
+  <title>Unit Price Calculator: The Complete Guide — BrowserKit</title>
+  <link rel="stylesheet" href="/css/style.css?v=20260724c" />
+  <link rel="stylesheet" href="/css/style-en.css?v=20260724a" />
+  <!-- Google AdSense — pending re-review. Uncomment once approved.
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506"
+     crossorigin="anonymous"></script>
+  -->
+  <style>
+    .post-warn { background:rgba(248,113,113,0.08); border-left:3px solid #F87171; border-radius:8px; padding:16px 20px; margin:24px 0; font-size:15px; color:var(--subtext); line-height:1.8; }
+    .feature-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:20px 0; }
+    .feature-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px; }
+    .feature-card:hover { border-color:var(--point); }
+    .feature-icon { font-size:24px; margin-bottom:10px; }
+    .feature-title { font-size:14px; font-weight:600; color:var(--text); margin-bottom:6px; }
+    .feature-desc { font-size:13px; color:var(--subtext); line-height:1.7; }
+    .step-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px 24px; margin:16px 0; display:flex; gap:16px; align-items:flex-start; }
+    .step-num { min-width:36px; height:36px; background:linear-gradient(135deg,var(--point),var(--point-hover)); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:700; color:white; flex-shrink:0; }
+    .step-content h3 { font-size:15px; font-weight:600; margin:0 0 6px; color:var(--text); }
+    .step-content p { font-size:14px; color:var(--subtext); line-height:1.7; margin:0; }
+
+    .post-table { width:100%; border-collapse:collapse; margin:20px 0; font-size:15px; }
+    .post-table th { background:var(--card); padding:12px 16px; text-align:left; font-weight:600; border:1px solid var(--border); color:var(--text); }
+    .post-table td { padding:11px 16px; border:1px solid var(--border); color:var(--subtext); line-height:1.7; }
+    .post-table td code { background:var(--bg); border-radius:4px; padding:1px 6px; font-size:13px; color:var(--point-hover); font-family:'Fira Code',monospace; }
+    .post-table tr:hover td { background:rgba(123,108,255,0.04); }
+    .use-case-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:20px 0; }
+    .use-case-card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:18px; }
+    .use-case-icon { font-size:28px; margin-bottom:8px; }
+    .use-case-title { font-size:13px; font-weight:600; color:var(--text); margin-bottom:6px; }
+    .use-case-desc { font-size:12px; color:var(--subtext); line-height:1.7; }
+    .post-nav { display:flex; justify-content:space-between; margin-top:12px; padding-top:24px; border-top:1px solid var(--border); gap:12px; }
+    .post-nav a { font-size:15px; color:var(--subtext); text-decoration:none; }
+    .post-nav a:hover { color:var(--text); }
+    .cta-box { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:28px; text-align:center; margin:12px 0 0; }
+    .cta-box p { font-size:17px; color:var(--subtext); margin-bottom:16px; }
+    .cta-btn { display:inline-block; background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border-radius:10px; padding:12px 28px; font-size:14px; font-weight:600; text-decoration:none; }
+    .cta-btn:hover { transform:translateY(-2px); box-shadow:0 8px 24px var(--glow); color:white; }
+    .back-link:hover { color:var(--text); }
+    @media (max-width:640px) {
+      .feature-grid { grid-template-columns:1fr; }
+      .use-case-grid { grid-template-columns:1fr; }
+    }
+  </style>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<meta property="og:image" content="https://browserkit.online/img/og/unit-price-calc.png" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Unit Price Calculator: The Complete Guide",
+    "description": "The official step-by-step guide to every feature of UnitPriceCalc. Learn how to convert products with different prices and sizes into unit prices to compare and find the best deal.",
+    "datePublished": "2026-07-22T00:00:00+09:00",
+    "dateModified": "2026-07-22T00:00:00+09:00",
+    "author": { "@type": "Organization", "name": "BrowserKit", "url": "https://browserkit.online" },
+    "publisher": { "@type": "Organization", "name": "BrowserKit", "url": "https://browserkit.online", "logo": { "@type": "ImageObject", "url": "https://browserkit.online/img/og-browserkit.png" } },
+    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://browserkit.online/en/blog/95-unitpricecalc-howto" },
+    "image": "https://browserkit.online/img/og/unit-price-calc.png"
+  }
+  </script>  <link rel="canonical" href="https://browserkit.online/en/blog/95-unitpricecalc-howto" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://browserkit.online/en/" },
+    { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://browserkit.online/en/blog/" },
+    { "@type": "ListItem", "position": 3, "name": "Unit Price Calculator: The Complete Guide", "item": "https://browserkit.online/en/blog/95-unitpricecalc-howto" }
+  ]
+}
+  </script>
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://browserkit.online/img/og/unit-price-calc.png" />
+  <style>
+    .post-table-wrap { overflow-x:auto; }
+    .post-table th, .post-table td { white-space:nowrap; }
+    .post-nav a { word-break:keep-all; }
+    .post-nav .nav-label { display:block; font-size:13px; color:var(--subtext); opacity:0.7; margin-bottom:4px; }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Is the Unit Price Calculator really free?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, it is completely free to use with no sign-up or installation required. There is no limit on the number of comparisons either."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I compare weight-based and volume-based products together?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Weight (g/kg) and volume (ml/L) are different measures and can't be directly compared. The lowest price is only compared within the same category (weight/volume/count)."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I compare products sold per item?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, choosing the 'count' unit lets you compare based on the price per item."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is the price information I enter sent to a server?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. All calculations happen entirely in your browser, and nothing you enter is ever sent to or stored on an external server."
+      }
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <div class="lang-banner" id="langBanner">
+    <span>🌐 이 페이지는 <a href="/blog/95-unitpricecalc-howto">한국어</a>로도 볼 수 있습니다.</span>
+    <button class="lang-banner-close" id="langBannerClose" type="button" aria-label="close">&times;</button>
+  </div>
+  <header class="header">
+    <div class="container">
+      <a href="/en/" class="header-brand"><div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Poppins,sans-serif;flex-shrink:0">B</div><span class="header-brand-text"><span style="color:var(--text)">Browser</span><span style="color:var(--point)">Kit</span></span></a>
+      <div class="header-right">
+        <div class="lang-switcher">
+          <button class="lang-switcher-btn" type="button" data-lang-btn>🌐 <span class="lang-label-full">English</span></button>
+          <div class="lang-switcher-menu" data-lang-menu>
+            <a href="#" class="active">English</a>
+            <a href="/blog/95-unitpricecalc-howto">한국어</a>
+          </div>
+        </div>
+        <a href="/en/" class="header-back">&#x2190; <span class="header-back-label">Back to BrowserKit</span></a>
+      </div>
+    </div>
+  </header>
+
+  <article class="post-wrap">
+    <a href="/en/blog/" class="back-link">&#x2190; Blog</a>
+    <span class="post-tag">Guide</span>
+    <h1 class="post-title"><span style="color:var(--point-hover)">Unit Price Calculator</span>: The Complete Guide</h1>
+    <div class="post-date">July 22, 2026</div>
+    <!-- Google AdSense Display Ad — pending approval, reserving space -->
+    <div class="ad-slot" id="adExtra2">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
+
+    <div class="post-body">
+      <p>At the store, which is cheaper: a 500g pack for $3.90, or a 1kg pack for $7.20? It's not obvious at a glance, but converting to a per-100g price makes it clear (500g works out to $0.78 per 100g, while 1kg works out to $0.72 per 100g — the 1kg pack is cheaper). UnitPriceCalc is a free online tool that automatically converts price, size, and unit into a per-g, per-ml, or per-item unit price so you can instantly see which product is the better deal. All calculations happen right in your browser.</p>
+
+      <h2>Key Features</h2>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <div class="feature-icon">&#x2696;&#xFE0F;</div>
+          <div class="feature-title">Automatic Unit Price Conversion</div>
+          <div class="feature-desc">Enter the price, size, and unit, and it automatically calculates the price per 100g, per 100ml, or per item.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F4CB;</div>
+          <div class="feature-title">Compare Multiple Products at Once</div>
+          <div class="feature-desc">Freely add products to compare three, four, or more at the same time.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F3F7;&#xFE0F;</div>
+          <div class="feature-title">Best-Price Highlight by Category</div>
+          <div class="feature-desc">Products with different measures, like weight, volume, or count, are only compared for best price within their own category.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F512;</div>
+          <div class="feature-title">Fully Local Processing</div>
+          <div class="feature-desc">Price information you enter is calculated only in your browser and never sent to a server.</div>
+        </div>
+      </div>
+
+      <!-- Google AdSense Display Ad — pending approval, reserving space -->
+    <div class="ad-slot" id="adTop">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
+
+      <h2>How to Use It</h2>
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <h3>Enter Price, Size, and Unit for Each Product</h3>
+          <p>For each product you want to compare, enter the price and size, then choose the matching unit (g/kg/ml/L/count).</p>
+        </div>
+      </div>
+
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <h3>Add More Products if Needed</h3>
+          <p>Use the <strong>+ Add Product</strong> button to add as many products as you want to compare.</p>
+        </div>
+      </div>
+
+      
+
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <h3>Check the Results</h3>
+          <p>Click the <strong>⚖️ Compare</strong> button and the unit prices are organized by category, with the cheapest product flagged as the best price.</p>
+        </div>
+      </div>
+
+      
+
+      <div class="post-warn">
+        <strong>⚠️ Note:</strong> Weight (g/kg) and volume (ml/L) are different measures and can't be directly compared. This calculator only compares best price within the same category (weight/volume/count).
+      </div>
+
+      <h2>How the Unit Price Is Calculated</h2>
+      <div class="post-table-wrap"><table class="post-table">
+        <thead><tr><th>Unit</th><th>Conversion</th></tr></thead>
+        <tbody>
+          <tr><td>g / kg</td><td><code>Price per 100g = price ÷ (size in g) × 100</code></td></tr>
+          <tr><td>ml / L</td><td><code>Price per 100ml = price ÷ (size in ml) × 100</code></td></tr>
+          <tr><td>count</td><td><code>Price per item = price ÷ quantity</code></td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="post-warn" style="background:rgba(123,108,255,0.06);border-left-color:var(--point)">
+        <strong>💡 Real example:</strong> Say you're choosing between a 500g pack for $3.90 and a 1kg pack for $7.20 → the 500g pack works out to $0.78 per 100g ($3.90÷5), while the 1kg pack works out to $0.72 per 100g ($7.20÷10). The larger 1kg pack is actually cheaper per 100g — a difference you can't see just by looking at the sticker price ($7.20 vs $3.90).
+      </div>
+
+      <h2>Use Cases</h2>
+      <div class="use-case-grid">
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F6D2;</div>
+          <div class="use-case-title">Grocery Shopping</div>
+          <div class="use-case-desc">Pick the cheaper option among different sizes of the same product.</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F4E6;</div>
+          <div class="use-case-title">Online Shopping</div>
+          <div class="use-case-desc">Compare on the same basis even when different stores list different units.</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F9FC;</div>
+          <div class="use-case-title">Bulk vs. Regular Size</div>
+          <div class="use-case-desc">Check whether the small or bulk size is actually the better deal.</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F4B0;</div>
+          <div class="use-case-title">Finding the Best Value</div>
+          <div class="use-case-desc">Add products from multiple brands at once and compare for the lowest price.</div>
+        </div>
+      </div>
+
+      <div class="post-highlight">&#x1F512; UnitPriceCalc runs every calculation right in your browser. The price information you enter is never sent to an external server.</div>
+
+      <h2>Frequently Asked Questions</h2>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
+        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. Is the Unit Price Calculator really free?</p>
+        <p style="color:var(--subtext);margin:0;line-height:1.7">Yes, it is completely free to use with no sign-up or installation required. There is no limit on the number of comparisons either.</p>
+      </div>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
+        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. Can I compare weight-based and volume-based products together?</p>
+        <p style="color:var(--subtext);margin:0;line-height:1.7">Weight (g/kg) and volume (ml/L) are different measures and can't be directly compared. The lowest price is only compared within the same category (weight/volume/count).</p>
+      </div>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
+        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. Can I compare products sold per item?</p>
+        <p style="color:var(--subtext);margin:0;line-height:1.7">Yes, choosing the 'count' unit lets you compare based on the price per item.</p>
+      </div>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
+        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. Is the price information I enter sent to a server?</p>
+        <p style="color:var(--subtext);margin:0;line-height:1.7">No. All calculations happen entirely in your browser, and nothing you enter is ever sent to or stored on an external server.</p>
+      </div>
+    </div>
+
+    <div style="margin:12px 0"><!-- Google AdSense Display Ad — pending approval, reserving space -->
+    <div class="ad-slot" id="adMiddle">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
+
+    <div class="cta-box">
+      <p>Compare unit prices right now.<br />No installation or sign-up required.</p>
+      <a href="/en/unit-price-calc/" class="cta-btn" style="display:inline-flex;align-items:center;gap:8px">
+        <span style="display:inline-block;width:26px;height:26px;overflow:hidden;flex-shrink:0"><span style="display:block;transform:scale(0.565);transform-origin:top left"><div style="width:46px;height:46px;background:#a0e8e0;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="position:relative;width:22px;height:22px;background:#fffdf9;border:2.5px solid #2a2433;border-radius:4px 11px 4px 4px;box-sizing:border-box;transform:rotate(-45deg)"><div style="position:absolute;left:3px;top:3px;width:5px;height:5px;border-radius:50%;background:#2a2433"></div></div></div></span></span>
+        Compare Unit Prices for Free
+      </a>
+    </div>
+    <!-- Google AdSense Multiplex Ad — pending approval, reserving space -->
+    <div class="ad-slot ad-slot-rect" id="adBottom">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
+
+<div class="post-nav">
+      <a href="/en/blog/"><span class="nav-label">&larr; Blog</span>More Guides</a>
+      <a href="/en/blog/" style="text-align:right"><span class="nav-label">Blog &rarr;</span>More Guides</a>
+    </div></div>
+
+  </article>
+  <footer class="footer">
+    <div class="container">
+      <p class="footer-copy">&#xa9; 2026 BrowserKit. All processing happens in your browser.</p>
+      <nav class="footer-nav">
+        <a href="/en/privacy.html">Privacy Policy</a>
+        <a href="/en/terms.html">Terms of Service</a>
+        <a href="/en/about.html">About</a>
+        <a href="/en/blog/">Blog</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script>
+  document.querySelectorAll('[data-lang-btn]').forEach(function(btn){
+    btn.addEventListener('click', function(e){
+      e.stopPropagation();
+      var menu = btn.nextElementSibling;
+      menu.classList.toggle('show');
+    });
+  });
+  document.addEventListener('click', function(){
+    document.querySelectorAll('.lang-switcher-menu.show').forEach(function(m){ m.classList.remove('show'); });
+  });
+  </script>
+
+  <script>
+  (function(){
+    try {
+      if (document.cookie.indexOf('bk_lang_dismiss=1') !== -1) return;
+      var lang = (navigator.language || navigator.userLanguage || '').toLowerCase();
+      if (lang.indexOf('ko') !== 0) return;
+      var banner = document.getElementById('langBanner');
+      if (!banner) return;
+      banner.classList.add('show');
+      var closeBtn = document.getElementById('langBannerClose');
+      closeBtn.addEventListener('click', function(){
+        banner.classList.remove('show');
+        document.cookie = 'bk_lang_dismiss=1; max-age=' + (60*60*24*180) + '; path=/';
+      });
+    } catch(e) {}
+  })();
+  </script>
+</body>
+</html>

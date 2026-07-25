@@ -1,0 +1,81 @@
+"""
+Tool-slug -> blog-filename (no .html) mapping for the 66 already-translated
+tools (63 from 해외사업기획서.md §5.1 + date-calc/world-clock/pet-age-calc
+from §5.2). Built by matching each blog post's canonical-url slug / og:title
+to the corresponding tool folder slug -- filename spelling does NOT always
+match the tool slug exactly (e.g. "unitpricecalc" vs "unit-price-calc").
+"""
+
+BLOG_MAP = {
+    'exif-remover':            '54-exifremover-howto',
+    'mask-face':                '19-maskface-howto',
+    'image-tools':               '17-fitimage-howto',
+    'crop-image':                '39-cropimage-howto',
+    'watermark-image':           '22-watermarkimage-howto',
+    'color-picker':              '23-colorpicker-howto',
+    'image-bright':              '31-imagebright-howto',
+    'bg-remove':                 '33-bgremove-howto',
+    'image-text':                '41-imagetext-howto',
+    'image-filter':              '42-imagefilter-howto',
+    'image-collage':             '43-imagecollage-howto',
+    'pixel-art':                 '44-pixelart-howto',
+    'mosaic-maker':              '45-mosaicmaker-howto',
+    'favicon-gen':                '57-favicongen-howto',
+    'svg-to-png':                 '58-svgtopng-howto',
+    'image-compare':              '65-imagecompare-howto',
+    'image-frame':                 '66-imageframe-howto',
+    'mockup-frame':                 '77-mockupframe-howto',
+    'gif-maker':                     '81-gifmaker-howto',
+    'pdf-merge':                '18-pdfmerge-howto',
+    'pdf-split':                 '46-pdfsplit-howto',
+    'text-tools':                '20-texttools-howto',
+    'diff-checker':               '28-diffchecker-howto',
+    'markdown-editor':            '30-markdowneditor-howto',
+    'find-replace':                '37-findreplace-howto',
+    'line-number':                  '47-linenumber-howto',
+    'lorem-gen':                     '64-loremgen-howto',
+    'csv-json-convert':               '67-csvjsonconvert-howto',
+    'yaml-json-convert':               '68-yamljsonconvert-howto',
+    'text-stats':                        '72-textstats-howto',
+    'markdown-table-convert':             '74-markdowntableconvert-howto',
+    'pdf-password-remove':                 '78-pdfpasswordremove-howto',
+    'pdf-password-set':                     '79-pdfpasswordset-howto',
+    'xlsx-csv-convert':                       '88-xlsxcsvconvert-howto',
+    'qr-code':                   '24-qrcode-howto',
+    'password-gen':               '26-passwordgen-howto',
+    'unit-convert':                '29-unitconvert-howto',
+    'random-picker':                 '55-randompicker-howto',
+    'pomodoro-timer':                 '59-pomodorotimer-howto',
+    'qr-scanner':                       '69-qrscanner-howto',
+    'barcode-gen':                       '97-barcodegen-howto',
+    'json-format':                '25-jsonformat-howto',
+    'regex-test':                  '32-regextest-howto',
+    'base64-tool':                 '27-base64tool-howto',
+    'hash-gen':                     '36-hashgen-howto',
+    'minifier':                       '49-minifier-howto',
+    'url-encode':                      '50-urlencode-howto',
+    'css-unit':                         '51-cssunit-howto',
+    'uuid-gen':                           '60-uuidgen-howto',
+    'jwt-decoder':                         '61-jwtdecoder-howto',
+    'cron-helper':                           '62-cronhelper-howto',
+    'sql-formatter':                          '63-sqlformatter-howto',
+    'color-converter':                          '73-colorconverter-howto',
+    'code-snapshot':                              '76-codesnapshot-howto',
+    'color-contrast-checker':                       '96-colorcontrastchecker-howto',
+    'http-status-ref':                                '86-httpstatusref-howto',
+    'chart-maker':                '38-chartmaker-howto',
+    'diagram-maker':                '52-diagrammaker-howto',
+    'palette-gen':                    '53-palettegen-howto',
+    'word-cloud':                       '56-wordcloud-howto',
+    'bmi-calc':                  '85-bmicalc-howto',
+    'split-bill-calc':             '91-splitbillcalc-howto',
+    'unit-price-calc':               '95-unitpricecalc-howto',
+    'date-calc':                '34-datecalc-howto',
+    'world-clock':                '35-worldclock-howto',
+    'pet-age-calc':                 '90-petagecalc-howto',
+}
+
+# All 66 target tools (63 from §5.1 + 3 from §5.2). Used to decide whether a
+# post-nav prev/next target will (eventually) have an EN page.
+TRANSLATED_TOOLS = set(BLOG_MAP.keys())
+assert len(TRANSLATED_TOOLS) == 66, f'expected 66 tools, got {len(TRANSLATED_TOOLS)}'
