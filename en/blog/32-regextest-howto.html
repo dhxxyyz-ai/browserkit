@@ -1,0 +1,528 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="icon" href="/favicon.ico" sizes="32x32">
+  <link rel="icon" href="/favicon-16.png" sizes="16x16" type="image/png">
+  <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="/favicon-192.png" sizes="192x192" type="image/png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="The official step-by-step guide to every feature of RegexTest. Learn how live matching, flags, and presets work." />
+  <meta property="og:title" content="Regex Tester: The Complete Guide — BrowserKit" />
+  <meta property="og:description" content="The official RegexTest guide to testing regular expressions live and highlighting matches." />
+  <meta property="og:type" content="article" />
+  <title>Regex Tester: The Complete Guide — BrowserKit</title>
+  <link rel="stylesheet" href="/css/style.css?v=20260724c" />
+  <link rel="stylesheet" href="/css/style-en.css?v=20260724a" />
+  <!-- Google AdSense — pending re-review. Uncomment once approved.
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506"
+     crossorigin="anonymous"></script>
+  -->
+  <style>
+    .feature-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:20px 0; }
+    .feature-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px; }
+    .feature-card:hover { border-color:var(--point); }
+    .feature-icon { font-size:24px; margin-bottom:10px; }
+    .feature-title { font-size:14px; font-weight:600; color:var(--text); margin-bottom:6px; }
+    .feature-desc { font-size:13px; color:var(--subtext); line-height:1.7; }
+    .step-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px 24px; margin:16px 0; display:flex; gap:16px; align-items:flex-start; }
+    .step-num { min-width:36px; height:36px; background:linear-gradient(135deg,var(--point),var(--point-hover)); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:700; color:white; flex-shrink:0; }
+    .step-content h3 { font-size:15px; font-weight:600; margin:0 0 6px; color:var(--text); }
+    .step-content p { font-size:14px; color:var(--subtext); line-height:1.7; margin:0; }
+
+    /* Regex UI demo */
+    .regex-demo-wrap { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:20px 24px; margin:16px 0; }
+    .regex-demo-row { display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:12px; }
+    .regex-demo-slash { font-size:20px; color:var(--subtext); font-family:'Fira Code',monospace; font-weight:600; }
+    .regex-demo-input { flex:1; background:var(--bg); border:1px solid var(--point); border-radius:8px; padding:9px 14px; font-family:'Fira Code',monospace; font-size:14px; color:var(--text); min-width:160px; }
+    .flag-demo-wrap { display:flex; gap:6px; }
+    .flag-chip { background:rgba(123,108,255,0.15); border:1px solid var(--point); border-radius:6px; padding:5px 10px; font-size:12px; font-weight:700; color:var(--point-hover); font-family:'Fira Code',monospace; }
+    .flag-chip.off { background:var(--bg); border-color:var(--border); color:var(--subtext); }
+    .regex-demo-status { font-size:12px; color:var(--success); font-family:'Fira Code',monospace; }
+    /* Highlight demo */
+    .highlight-demo { background:#0a0a12; border:1px solid var(--border); border-radius:10px; padding:14px 16px; font-family:'Fira Code',monospace; font-size:13px; color:#e2e8f0; line-height:1.8; white-space:pre-wrap; margin:12px 0; }
+    .highlight-demo mark { background:rgba(251,191,36,0.3); color:#FBBF24; border-radius:3px; padding:0 2px; font-family:inherit; }
+
+    /* Flag table */
+    .post-table { width:100%; border-collapse:collapse; margin:20px 0; font-size:15px; }
+    .post-table th { background:var(--card); padding:12px 16px; text-align:left; font-weight:600; border:1px solid var(--border); color:var(--text); }
+    .post-table td { padding:11px 16px; border:1px solid var(--border); color:var(--subtext); line-height:1.7; }
+    .post-table td code { background:var(--bg); border-radius:4px; padding:1px 6px; font-size:13px; color:var(--point-hover); font-family:'Fira Code',monospace; }
+    .post-table td.mono { font-family:'Fira Code',monospace; color:var(--text); }
+    .post-table tr:hover td { background:rgba(123,108,255,0.04); }
+
+    /* Preset demo */
+    .preset-demo { display:flex; gap:8px; flex-wrap:wrap; margin:16px 0; }
+    .preset-chip { background:var(--card); border:1px solid var(--border); border-radius:8px; padding:7px 14px; font-size:13px; font-weight:600; color:var(--subtext); }
+    .preset-chip.active { background:rgba(123,108,255,0.12); border-color:var(--point); color:var(--point-hover); }
+
+    /* Match result demo */
+    .match-demo { display:flex; flex-direction:column; gap:8px; margin:16px 0; }
+    .match-item-demo { background:var(--card); border:1px solid var(--border); border-radius:10px; padding:10px 14px; display:flex; gap:10px; align-items:center; font-size:13px; }
+    .match-idx-demo { font-size:11px; font-weight:700; color:var(--subtext); min-width:20px; }
+    .match-val-demo { font-family:'Fira Code',monospace; color:#FBBF24; font-weight:600; }
+    .match-pos-demo { font-size:11px; color:var(--subtext); margin-left:auto; }
+
+    .use-case-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:20px 0; }
+    .use-case-card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:18px; }
+    .use-case-icon { font-size:28px; margin-bottom:8px; }
+    .use-case-title { font-size:13px; font-weight:600; color:var(--text); margin-bottom:6px; }
+    .use-case-desc { font-size:12px; color:var(--subtext); line-height:1.7; }
+    .post-nav { display:flex; justify-content:space-between; margin-top: 12px; padding-top:24px; border-top:1px solid var(--border); gap:12px; }
+    .post-nav a { font-size:15px; color:var(--subtext); text-decoration:none; }
+    .post-nav a:hover { color:var(--text); }
+    .cta-box { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:28px; text-align:center; margin: 12px 0 0; }
+    .cta-box p { font-size:17px; color:var(--subtext); margin-bottom:16px; }
+    .cta-btn { display:inline-block; background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border-radius:10px; padding:12px 28px; font-size:14px; font-weight:600; text-decoration:none; }
+    .cta-btn:hover { transform:translateY(-2px); box-shadow:0 8px 24px var(--glow); color:white; }
+    .back-link:hover { color:var(--text); }
+    @media (max-width:640px) {
+      .feature-grid { grid-template-columns:1fr; }
+      .use-case-grid { grid-template-columns:1fr; }
+      .regex-demo-row { flex-direction:column; align-items:flex-start; }
+    }
+  </style>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<meta property="og:image" content="https://browserkit.online/img/og/regex-test.png" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Regex Tester: The Complete Guide",
+    "description": "The official step-by-step guide to every feature of RegexTest. Learn how live matching, flags, and presets work.",
+    "datePublished": "2026-06-23T00:00:00+09:00",
+    "dateModified": "2026-07-22T00:00:00+09:00",
+    "author": { "@type": "Organization", "name": "BrowserKit", "url": "https://browserkit.online" },
+    "publisher": { "@type": "Organization", "name": "BrowserKit", "url": "https://browserkit.online", "logo": { "@type": "ImageObject", "url": "https://browserkit.online/img/og-browserkit.png" } },
+    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://browserkit.online/en/blog/32-regextest-howto" },
+    "image": "https://browserkit.online/img/og/regex-test.png"
+  }
+  </script>  <link rel="canonical" href="https://browserkit.online/en/blog/32-regextest-howto" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://browserkit.online/en/" },
+    { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://browserkit.online/en/blog/" },
+    { "@type": "ListItem", "position": 3, "name": "Regex Tester: The Complete Guide", "item": "https://browserkit.online/en/blog/32-regextest-howto" }
+  ]
+}
+  </script>
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://browserkit.online/img/og/regex-test.png" />
+  <style>
+    .post-table-wrap { overflow-x:auto; }
+    .post-table th, .post-table td { white-space:nowrap; }
+    .post-nav a { word-break:keep-all; }
+    .post-nav .nav-label { display:block; font-size:13px; color:var(--subtext); opacity:0.7; margin-bottom:4px; }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Is the Regex Tester tool really free?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, it is completely free to use with no sign-up or installation required. There is no usage limit either."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is anything I enter sent to a server?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. All processing happens entirely in your browser, and nothing you enter is ever sent to or stored on an external server."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Which regex syntax does it follow?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "It highlights live matches based on JavaScript regular expression syntax."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I use this on mobile?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, it works the same way in a mobile browser without needing to install any app."
+      }
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <div class="lang-banner" id="langBanner">
+    <span>🌐 이 페이지는 <a href="/blog/32-regextest-howto">한국어</a>로도 볼 수 있습니다.</span>
+    <button class="lang-banner-close" id="langBannerClose" type="button" aria-label="close">&times;</button>
+  </div>
+  <header class="header">
+    <div class="container">
+      <a href="/en/" class="header-brand"><div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Poppins,sans-serif;flex-shrink:0">B</div><span class="header-brand-text"><span style="color:var(--text)">Browser</span><span style="color:var(--point)">Kit</span></span></a>
+      <div class="header-right">
+        <div class="lang-switcher">
+          <button class="lang-switcher-btn" type="button" data-lang-btn>🌐 <span class="lang-label-full">English</span></button>
+          <div class="lang-switcher-menu" data-lang-menu>
+            <a href="#" class="active">English</a>
+            <a href="/blog/32-regextest-howto">한국어</a>
+          </div>
+        </div>
+        <a href="/en/" class="header-back">&#x2190; <span class="header-back-label">Back to BrowserKit</span></a>
+      </div>
+    </div>
+  </header>
+
+  <article class="post-wrap">
+    <a href="/en/blog/" class="back-link">&#x2190; Blog</a>
+    <span class="post-tag">Guide</span>
+    <h1 class="post-title"><span style="color:var(--point-hover)">Regex Tester</span>: The Complete Guide</h1>
+    <div class="post-date">June 22, 2026</div>
+    <!-- Google AdSense Display Ad — pending approval, reserving space -->
+    <div class="ad-slot" id="adExtra2">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
+
+    <div class="post-body">
+      <p>Ever write a regex and keep console.logging the match results to check them? Even a slightly complex pattern gets tedious to verify by eye. RegexTest is a free online regex tester that highlights matches live in your test text as you type. Eight ready-made presets for common patterns like email, phone number, and URL let you get started immediately, and everything you enter is processed only in your browser, never sent to an external server.</p>
+
+      <h2>Key Features</h2>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <div class="feature-icon">&#x26A1;</div>
+          <div class="feature-title">Live Match Highlighting</div>
+          <div class="feature-desc">Matches are highlighted in yellow the instant you type a regex or test text — no run button needed.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F6A9;</div>
+          <div class="feature-title">Flag Toggle Buttons</div>
+          <div class="feature-desc">Toggle the g (global), i (case-insensitive), m (multiline), and s (dotAll) flags instantly with a click.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F4CB;</div>
+          <div class="feature-title">Match Result List</div>
+          <div class="feature-desc">Lists each match's order, value, index position, and captured groups. The status bar also shows the total match count.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F4C4;</div>
+          <div class="feature-title">8 Quick Presets</div>
+          <div class="feature-desc">Instantly load regex patterns with sample text for email, phone number, URL, date, Korean Resident ID (KRRN), bank account, IP address, and HEX color.</div>
+        </div>
+      </div>
+
+      <!-- Google AdSense Display Ad — pending approval, reserving space -->
+    <div class="ad-slot" id="adTop">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
+      <h2>Basic Usage</h2>
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <h3>Enter a Regex</h3>
+          <p>Type your pattern into the input box at the top. Just enter the pattern itself between the <code>/</code> slashes. An invalid regex shows an error message immediately.</p>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <h3>Choose Flags (Optional)</h3>
+          <p>Click the g, i, m, s flag buttons to toggle them. The g (global match) flag is enabled by default.</p>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <h3>Enter Test Text</h3>
+          <p>Type the text you want to test into the box below. The highlighted results and match list update as you type.</p>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <h3>Check the Results</h3>
+          <p>See match positions visually in the highlighted text, and check the details of each match (value, index, groups) in the list below.</p>
+        </div>
+      </div>
+
+      <h2>Interface Overview</h2>
+
+      <h3>Regex Input</h3>
+      <div class="regex-demo-wrap">
+        <div class="regex-demo-row">
+          <span class="regex-demo-slash">/</span>
+          <div class="regex-demo-input">[\w.+-]+@[\w-]+\.[\w.]+</div>
+          <span class="regex-demo-slash">/</span>
+          <div class="flag-demo-wrap">
+            <span class="flag-chip">g</span>
+            <span class="flag-chip">i</span>
+            <span class="flag-chip off">m</span>
+            <span class="flag-chip off">s</span>
+          </div>
+        </div>
+        <div class="regex-demo-status">&#x2705; 2 matches</div>
+      </div>
+      <p>Type your pattern between the slashes (<code>/</code>). Four flag buttons appear on the right, and enabled flags are shown in purple. The status bar shows the match count or an error message.</p>
+
+      <h3>Match Highlighting</h3>
+      <div class="highlight-demo">Email address: <mark>support@browserkit.online</mark>
+Contact us at <mark>user.name+tag@example.co.kr</mark>.
+test@test is not valid.</div>
+      <p>The same content is shown below the test text input, with matches highlighted in yellow. Text that doesn't match stays in its original color.</p>
+
+      <h3>Match Result List</h3>
+      <div class="match-demo">
+        <div class="match-item-demo">
+          <span class="match-idx-demo">1</span>
+          <span class="match-val-demo">support@browserkit.online</span>
+          <span class="match-pos-demo">index: 4</span>
+        </div>
+        <div class="match-item-demo">
+          <span class="match-idx-demo">2</span>
+          <span class="match-val-demo">user.name+tag@example.co.kr</span>
+          <span class="match-pos-demo">index: 36</span>
+        </div>
+      </div>
+      <p>Each match shows its order number, the matched value, and its starting index in the text. If you used capture groups, the per-group results are shown too.</p>
+      
+
+      <h2>Flag Reference</h2>
+      <div class="post-table-wrap"><table class="post-table">
+        <thead><tr><th>Flag</th><th>What It Does</th><th>Example Use</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="mono">g</td>
+            <td>Global. Finds every match in the text. Without it, only the first match is returned.</td>
+            <td>Finding every IP address in a log file</td>
+          </tr>
+          <tr>
+            <td class="mono">i</td>
+            <td>Case-insensitive. Treats <code>Hello</code> and <code>hello</code> as the same.</td>
+            <td>Finding <code>Error</code>, <code>error</code>, and <code>ERROR</code> together</td>
+          </tr>
+          <tr>
+            <td class="mono">m</td>
+            <td>Multiline. Makes <code>^</code> and <code>$</code> match the start and end of each line.</td>
+            <td>Finding a pattern line by line in multi-line text</td>
+          </tr>
+          <tr>
+            <td class="mono">s</td>
+            <td>DotAll. Makes the dot (<code>.</code>) also match newline characters (<code>\n</code>).</td>
+            <td>Matching an HTML tag that spans multiple lines</td>
+          </tr>
+        </tbody>
+      </table></div>
+
+      <h2>Quick Presets</h2>
+      <p>Instantly load commonly used regex patterns along with sample text. Clicking a preset auto-fills both the regex input and the test text.</p>
+      
+      <div class="preset-demo">
+        <span class="preset-chip active">&#x1F4E7; Email</span>
+        <span class="preset-chip">&#x1F4F1; Phone</span>
+        <span class="preset-chip">&#x1F517; URL</span>
+        <span class="preset-chip">&#x1F4C5; Date</span>
+        <span class="preset-chip">&#x1F4C4; Korean ID (KRRN)</span>
+        <span class="preset-chip">&#x1F4B3; Bank Account</span>
+        <span class="preset-chip">&#x1F310; IP Address</span>
+        <span class="preset-chip">&#x1F3A8; HEX Color</span>
+      </div>
+      <div class="post-table-wrap"><table class="post-table">
+        <thead><tr><th>Preset</th><th>Regex Pattern</th><th>Example Match</th></tr></thead>
+        <tbody>
+          <tr><td>&#x1F4E7; Email</td><td><code>[\w.+-]+@[\w-]+\.[\w.]+</code></td><td>user@example.com</td></tr>
+          <tr><td>&#x1F4F1; Phone</td><td><code>01[0-9]-?\d{3,4}-?\d{4}</code></td><td>010-1234-5678</td></tr>
+          <tr><td>&#x1F517; URL</td><td><code>https?://[\w\-._~:/?#...]+</code></td><td>https://browserkit.online</td></tr>
+          <tr><td>&#x1F4C5; Date</td><td><code>\d{4}[-./](?:0[1-9]|1[0-2])[-./](?:0[1-9]|[12]\d|3[01])</code></td><td>2026-06-22</td></tr>
+          <tr><td>&#x1F4C4; Korean ID (KRRN)</td><td><code>\d{6}-[1-4]\d{6}</code></td><td>900101-1234567</td></tr>
+          <tr><td>&#x1F4B3; Bank Account</td><td><code>\d{3,6}-\d{2,6}-\d{2,6}(?:-\d{2,3})?</code></td><td>110-123-456789</td></tr>
+          <tr><td>&#x1F310; IP Address</td><td><code>(?:(?:25[0-5]|2[0-4]\d|[01]?\d\d?)\.){3}...</code></td><td>192.168.0.1</td></tr>
+          <tr><td>&#x1F3A8; HEX Color</td><td><code>#(?:[0-9a-fA-F]{6}|[0-9a-fA-F]{3})\b</code></td><td>#FF5733, #fff</td></tr>
+        </tbody>
+      </table></div>
+
+      <h2>Quick Regex Syntax Reference</h2>
+      <div class="post-table-wrap"><table class="post-table">
+        <thead><tr><th>Pattern</th><th>Meaning</th><th>Example</th></tr></thead>
+        <tbody>
+          <tr><td><code>.</code></td><td>Any single character (except newline)</td><td><code>a.c</code> &rarr; abc, aXc</td></tr>
+          <tr><td><code>\d</code></td><td>A digit (0-9)</td><td><code>\d{4}</code> &rarr; 2026</td></tr>
+          <tr><td><code>\w</code></td><td>Letter, digit, or underscore</td><td><code>\w+</code> &rarr; hello_123</td></tr>
+          <tr><td><code>\s</code></td><td>Whitespace (space, tab, newline)</td><td><code>a\sb</code> &rarr; a b</td></tr>
+          <tr><td><code>^</code></td><td>Start of string (or line)</td><td><code>^Hello</code></td></tr>
+          <tr><td><code>$</code></td><td>End of string (or line)</td><td><code>world$</code></td></tr>
+          <tr><td><code>*</code></td><td>0 or more repetitions</td><td><code>ab*c</code> &rarr; ac, abc, abbc</td></tr>
+          <tr><td><code>+</code></td><td>1 or more repetitions</td><td><code>ab+c</code> &rarr; abc, abbc</td></tr>
+          <tr><td><code>?</code></td><td>0 or 1 repetition</td><td><code>colou?r</code> &rarr; color, colour</td></tr>
+          <tr><td><code>{n,m}</code></td><td>Between n and m repetitions</td><td><code>\d{2,4}</code> &rarr; 12, 1234</td></tr>
+          <tr><td><code>[abc]</code></td><td>Character class (one of a, b, c)</td><td><code>[aeiou]</code> &rarr; vowels</td></tr>
+          <tr><td><code>(abc)</code></td><td>Capture group</td><td><code>(\d{4})-(\d{2})</code></td></tr>
+          <tr><td><code>(?:abc)</code></td><td>Non-capturing group</td><td>Groups without including it in the results</td></tr>
+          <tr><td><code>a|b</code></td><td>a or b</td><td><code>cat|dog</code></td></tr>
+        </tbody>
+      </table></div>
+
+      <h2>Using Capture Groups</h2>
+      <p>Wrap part of a pattern in parentheses <code>()</code> and RegexTest shows each group's match separately — useful, for example, when you want to extract year, month, and day from a date individually.</p>
+      <div class="regex-demo-wrap">
+        <div class="regex-demo-row">
+          <span class="regex-demo-slash">/</span>
+          <div class="regex-demo-input">(\d{4})-(0[1-9]|1[0-2])-([0-2]\d|3[01])</div>
+          <span class="regex-demo-slash">/</span>
+          <div class="flag-demo-wrap">
+            <span class="flag-chip">g</span>
+            <span class="flag-chip off">i</span>
+            <span class="flag-chip off">m</span>
+            <span class="flag-chip off">s</span>
+          </div>
+        </div>
+        <div class="regex-demo-status">&#x2705; 1 match &middot; 3 groups</div>
+      </div>
+      <p>Testing this regex against <code>2026-06-22</code> shows Group 1: <code>2026</code>, Group 2: <code>06</code>, and Group 3: <code>22</code> separately in the match list.</p>
+      
+
+      <h2>Use Cases</h2>
+      <div class="use-case-grid">
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F4BB;</div>
+          <div class="use-case-title">Validating Patterns During Development</div>
+          <div class="use-case-desc">Test a regex you're about to put into code against real data to confirm it works without false positives or misses.</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F50D;</div>
+          <div class="use-case-title">Log File Analysis</div>
+          <div class="use-case-desc">Paste server logs or error messages and quickly see how often a pattern (IP, date, error code) shows up.</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F4DD;</div>
+          <div class="use-case-title">Writing Extraction Patterns</div>
+          <div class="use-case-desc">Test and refine a regex for pulling specific data out of a scraping or parsing job before you use it.</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F9FC;</div>
+          <div class="use-case-title">Reviewing PII Patterns</div>
+          <div class="use-case-desc">Test a regex meant for masking IDs or phone numbers against a range of sample formats to confirm it's solid.</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F4DA;</div>
+          <div class="use-case-title">Learning Regex</div>
+          <div class="use-case-desc">Learn regex syntax faster by typing patterns yourself and immediately seeing the results.</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x2705;</div>
+          <div class="use-case-title">Validating Form Input</div>
+          <div class="use-case-desc">Verify that an email, phone, or URL regex for form validation handles edge cases correctly.</div>
+        </div>
+      </div>
+
+      <h2>Error Handling</h2>
+      <p>If the regex syntax is invalid, an error message appears in red in the status bar immediately — for example, an unclosed parenthesis or a quantifier with nothing after it.</p>
+      
+      <div class="post-table-wrap"><table class="post-table">
+        <thead><tr><th>Status</th><th>What's Shown</th></tr></thead>
+        <tbody>
+          <tr><td>✅ Matched</td><td>Shows N matches in green</td></tr>
+          <tr><td>⚪ No match</td><td>Shows "No match" in gray</td></tr>
+          <tr><td>❌ Error</td><td>Shows an error message in red (e.g. Invalid regular expression)</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="post-highlight">&#x1F50D; RegexTest processes everything entirely in your browser. Since the regex and text you test are never sent to an external server, you can safely test sensitive data patterns too.</div>
+    
+      <h2>Frequently Asked Questions</h2>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
+        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. Is the Regex Tester tool really free?</p>
+        <p style="color:var(--subtext);margin:0;line-height:1.7">Yes, it is completely free to use with no sign-up or installation required. There is no usage limit either.</p>
+      </div>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
+        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. Is anything I enter sent to a server?</p>
+        <p style="color:var(--subtext);margin:0;line-height:1.7">No. All processing happens entirely in your browser, and nothing you enter is ever sent to or stored on an external server.</p>
+      </div>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
+        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. Which regex syntax does it follow?</p>
+        <p style="color:var(--subtext);margin:0;line-height:1.7">It highlights live matches based on JavaScript regular expression syntax.</p>
+      </div>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
+        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. Can I use this on mobile?</p>
+        <p style="color:var(--subtext);margin:0;line-height:1.7">Yes, it works the same way in a mobile browser without needing to install any app.</p>
+      </div>
+    </div>
+
+    <div style="margin:12px 0"><!-- Google AdSense Display Ad — pending approval, reserving space -->
+    <div class="ad-slot" id="adMiddle">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
+
+    <div class="cta-box">
+      <p>Write a regex pattern and see matches update live.<br />Load ready-made examples for common patterns like email and phone number instantly.</p>
+      <a href="/en/regex-test/" class="cta-btn" style="display:inline-flex;align-items:center;gap:8px">
+        <span style="display:inline-block;width:26px;height:26px;overflow:hidden;flex-shrink:0"><span style="display:block;transform:scale(0.565);transform-origin:top left"><div style="width:46px;height:46px;background:#e0c3ff;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="font:700 16px Poppins,sans-serif;color:#2a2433;line-height:1;letter-spacing:-.5px;white-space:nowrap">.*</div></div></span></span>
+        Start Testing Regex for Free
+      </a>
+    </div>
+    <!-- Google AdSense Multiplex Ad — pending approval, reserving space -->
+    <div class="ad-slot ad-slot-rect" id="adBottom">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
+
+<div class="post-nav">
+      <a href="/en/blog/25-jsonformat-howto"><span class="nav-label">&larr; Previous</span><span style="color:var(--point-hover)">JSON Formatter</span>: The Complete Guide</a>
+      <a href="/en/blog/" style="text-align:right"><span class="nav-label">Blog &rarr;</span>More Guides</a>
+    </div></div>
+
+  </article>
+  <footer class="footer">
+    <div class="container">
+      <p class="footer-copy">&#xa9; 2026 BrowserKit. All processing happens in your browser.</p>
+      <nav class="footer-nav">
+        <a href="/en/privacy.html">Privacy Policy</a>
+        <a href="/en/terms.html">Terms of Service</a>
+        <a href="/en/about.html">About</a>
+        <a href="/en/blog/">Blog</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script>
+  document.querySelectorAll('[data-lang-btn]').forEach(function(btn){
+    btn.addEventListener('click', function(e){
+      e.stopPropagation();
+      var menu = btn.nextElementSibling;
+      menu.classList.toggle('show');
+    });
+  });
+  document.addEventListener('click', function(){
+    document.querySelectorAll('.lang-switcher-menu.show').forEach(function(m){ m.classList.remove('show'); });
+  });
+  </script>
+
+  <script>
+  (function(){
+    try {
+      if (document.cookie.indexOf('bk_lang_dismiss=1') !== -1) return;
+      var lang = (navigator.language || navigator.userLanguage || '').toLowerCase();
+      if (lang.indexOf('ko') !== 0) return;
+      var banner = document.getElementById('langBanner');
+      if (!banner) return;
+      banner.classList.add('show');
+      var closeBtn = document.getElementById('langBannerClose');
+      closeBtn.addEventListener('click', function(){
+        banner.classList.remove('show');
+        document.cookie = 'bk_lang_dismiss=1; max-age=' + (60*60*24*180) + '; path=/';
+      });
+    } catch(e) {}
+  })();
+  </script>
+</body>
+</html>
+
