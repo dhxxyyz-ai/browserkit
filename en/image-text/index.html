@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
   <link rel="icon" href="/favicon.ico" sizes="32x32">
   <link rel="icon" href="/favicon-16.png" sizes="16x16" type="image/png">
@@ -8,18 +8,17 @@
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="이미지 위에 텍스트를 자유롭게 배치하는 무료 온라인 도구. 여러 개의 텍스트를 추가하고 드래그로 위치를 조절하세요. 서버 전송 없이 브라우저에서 바로 처리합니다." />
-  <meta property="og:title" content="ImageText — 이미지 텍스트 추가 도구" />
-  <meta property="og:description" content="이미지 위에 텍스트를 자유롭게 배치하는 무료 온라인 도구." />
+  <meta name="description" content="A free online tool to freely place text on an image. Add multiple text layers and drag them into position. Everything is processed right in your browser, with no server upload." />
+  <meta property="og:title" content="ImageText — Add Text to Images" />
+  <meta property="og:description" content="A free online tool to freely place text on an image." />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://browserkit.online/image-text/" />
-  <title>ImageText — 이미지 텍스트 추가 도구</title>
+  <meta property="og:url" content="https://browserkit.online/en/image-text/" />
+  <title>ImageText — Add Text to Images</title>
   <link rel="stylesheet" href="/css/style.css?v=20260724c" />
-  <!-- Google AdSense 승인 대기 중 (2026-07-19 주석 처리, 카카오 애드핏으로 임시 전환) — 승인 후 주석 해제
+  <!-- Google AdSense — pending re-review. Uncomment once approved.
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506"
      crossorigin="anonymous"></script>
   -->
-  <script type="text/javascript" src="//t1.kakaocdn.net/kas/static/ba.min.js" async></script>
   <style>
     .guide-summary { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:24px; margin:0 0 12px; }
     .guide-summary-title { font-size:16px; font-weight:700; color:var(--text); margin:0 0 12px; }
@@ -30,6 +29,9 @@
     .guide-faq p { margin:8px 0 0; font-size:13px; color:var(--subtext); line-height:1.7; }
     .guide-full-link { display:inline-block; margin-top:12px; font-size:14px; font-weight:600; color:var(--point-hover); text-decoration:none; }
     .guide-full-link:hover { text-decoration:underline; }
+
+    .ad-slot { min-height:90px; display:flex; align-items:center; justify-content:center; margin:0 0 12px; }
+    .ad-slot-rect { min-height:250px; }
 
     .upload-zone{background:var(--card);border:2px dashed var(--border);border-radius:var(--radius);padding:48px 40px;text-align:center;cursor:pointer;margin-bottom:16px;}
     .upload-zone:hover,.upload-zone.drag-over{border-color:var(--point);box-shadow:0 0 24px var(--glow);}
@@ -101,9 +103,9 @@
     }
   </style>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <meta property="og:image" content="https://browserkit.online/img/og/image-text.png" />
-  <link rel="canonical" href="https://browserkit.online/image-text/" />
+  <link rel="canonical" href="https://browserkit.online/en/image-text/" />
   <link rel="alternate" hreflang="ko" href="https://browserkit.online/image-text/" />
   <link rel="alternate" hreflang="en" href="https://browserkit.online/en/image-text/" />
   <link rel="alternate" hreflang="x-default" href="https://browserkit.online/en/image-text/" />
@@ -113,18 +115,18 @@
 {
   "@context": "https://schema.org",
   "@type": "WebApplication",
-  "name": "ImageText — 이미지 텍스트 추가 도구",
-  "url": "https://browserkit.online/image-text/",
-  "description": "이미지 위에 텍스트를 자유롭게 배치하는 무료 온라인 도구. 여러 개의 텍스트를 추가하고 드래그로 위치를 조절하세요. 서버 전송 없이 브라우저에서 바로 처리합니다.",
+  "name": "ImageText — Add Text to Images",
+  "url": "https://browserkit.online/en/image-text/",
+  "description": "A free online tool to freely place text on an image. Add multiple text layers and drag them into position. Everything is processed right in your browser, with no server upload.",
   "applicationCategory": "UtilityApplication",
   "operatingSystem": "Any",
   "browserRequirements": "Requires JavaScript",
-  "inLanguage": "ko",
+  "inLanguage": "en",
   "isAccessibleForFree": true,
   "offers": {
     "@type": "Offer",
     "price": "0",
-    "priceCurrency": "KRW"
+    "priceCurrency": "USD"
   },
   "publisher": {
     "@type": "Organization",
@@ -141,14 +143,14 @@
     {
       "@type": "ListItem",
       "position": 1,
-      "name": "홈",
-      "item": "https://browserkit.online/"
+      "name": "Home",
+      "item": "https://browserkit.online/en/"
     },
     {
       "@type": "ListItem",
       "position": 2,
-      "name": "이미지 텍스트 추가",
-      "item": "https://browserkit.online/image-text/"
+      "name": "Add Text to Image",
+      "item": "https://browserkit.online/en/image-text/"
     }
   ]
 }
@@ -157,105 +159,109 @@
 
 <body>
   <div class="lang-banner" id="langBanner">
-    <span>🌐 This page is also available in <a href="/en/image-text/">English</a>.</span>
+    <span>🌐 이 페이지는 <a href="/image-text/">한국어</a>로도 볼 수 있습니다.</span>
     <button class="lang-banner-close" id="langBannerClose" type="button" aria-label="close">&times;</button>
   </div>
   <header class="header">
     <div class="container">
-      <a href="/" class="header-brand"><div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Gowun Dodum,sans-serif;flex-shrink:0">B</div><span class="header-brand-text"><span style="color:var(--text)">Browser</span><span style="color:var(--point)">Kit</span></span></a>
+      <a href="/en/" class="header-brand"><div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Poppins,sans-serif;flex-shrink:0">B</div><span class="header-brand-text"><span style="color:var(--text)">Browser</span><span style="color:var(--point)">Kit</span></span></a>
       <div class="header-right">
         <div class="lang-switcher">
-          <button class="lang-switcher-btn" type="button" data-lang-btn>🌐 <span class="lang-label-full">한국어</span></button>
+          <button class="lang-switcher-btn" type="button" data-lang-btn>🌐 <span class="lang-label-full">English</span></button>
           <div class="lang-switcher-menu" data-lang-menu>
-            <a href="/en/image-text/">English</a>
-            <a href="#" class="active">한국어</a>
+            <a href="#" class="active">English</a>
+            <a href="/image-text/">한국어</a>
           </div>
         </div>
-        <a href="/" class="header-back">← <span class="header-back-label">BrowserKit 홈으로</span></a>
+        <a href="/en/" class="header-back">← <span class="header-back-label">Back to BrowserKit</span></a>
       </div>
     </div>
   </header>
 
   <main><div class="container">
     <div class="hero">
-      <div class="hero-icon" style="height:78px;display:flex;justify-content:center;align-items:center"><div style="transform:scale(1.7);transform-origin:center"><div style="width:46px;height:46px;background:#ffb3c7;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="font:700 18px Gowun Dodum,sans-serif;color:#2a2433;line-height:1">T</div></div></div></div>
-      <div class="hero-title-wrap"><h1 class="hero-title">이미지 텍스트 추가</h1><a href="/blog/41-imagetext-howto" class="hero-guide-link">사용법 가이드 보기</a></div>
-      <p class="hero-desc">이미지 위에 여러 개의 텍스트를 자유롭게 배치하고 드래그로 위치를 조절하세요</p>
+      <div class="hero-icon" style="height:78px;display:flex;justify-content:center;align-items:center"><div style="transform:scale(1.7);transform-origin:center"><div style="width:46px;height:46px;background:#ffb3c7;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="font:700 18px Poppins,sans-serif;color:#2a2433;line-height:1">T</div></div></div></div>
+      <div class="hero-title-wrap"><h1 class="hero-title">Add Text to Image</h1><a href="/blog/41-imagetext-howto" class="hero-guide-link">View usage guide</a></div>
+      <p class="hero-desc">Freely place multiple text layers on your image and drag them into position</p>
       <div class="hero-badges">
-        <span class="badge">🔒 완전 로컬 처리</span>
-        <span class="badge">⚡ 무료 사용</span>
-        <span class="badge">🛡️ 서버 전송 없음</span>
-        <span class="badge">📦 설치 불필요</span>
+        <span class="badge">🔒 Fully local processing</span>
+        <span class="badge">⚡ Free to use</span>
+        <span class="badge">🛡️ No server upload</span>
+        <span class="badge">📦 No installation</span>
       </div>
     </div>
-    <div style="margin:0 0 12px"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><div class="adfit-h-desktop"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-QD4pRIpdIj7i2mbt" data-ad-width="728" data-ad-height="90"></ins></div><div class="adfit-h-mobile"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-R4xA2niTT8HgGjoO" data-ad-width="320" data-ad-height="50"></ins></div></div>
+    <!-- Google AdSense Display Ad — pending approval, reserving space -->
+    <div class="ad-slot" id="adTop">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
 
-    <!-- 업로드 -->
+    <!-- Upload -->
     <div class="upload-zone" id="uploadZone">
-      <div class="upload-icon" style="height:64px;display:flex;justify-content:center;align-items:center"><div style="transform:scale(1.4);transform-origin:center"><div style="width:46px;height:46px;background:#ffb3c7;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="font:700 18px Gowun Dodum,sans-serif;color:#2a2433;line-height:1">T</div></div></div></div>
-      <div class="upload-title">이미지를 업로드하세요</div>
-      <div class="upload-sub">클릭하거나 파일을 여기로 드래그하세요 (JPG, PNG, WEBP)</div>
-      <div class="upload-safe">🔒 파일이 서버로 전송되지 않습니다</div>
+      <div class="upload-icon" style="height:64px;display:flex;justify-content:center;align-items:center"><div style="transform:scale(1.4);transform-origin:center"><div style="width:46px;height:46px;background:#ffb3c7;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="font:700 18px Poppins,sans-serif;color:#2a2433;line-height:1">T</div></div></div></div>
+      <div class="upload-title">Upload an image</div>
+      <div class="upload-sub">Click or drag a file here (JPG, PNG, WEBP)</div>
+      <div class="upload-safe">🔒 Files are never uploaded to a server</div>
       <input type="file" id="fileInput" accept="image/*" style="display:none" />
     </div>
 
-    <!-- 에디터 -->
+    <!-- Editor -->
     <div class="editor-wrap" id="editorWrap">
       <div class="canvas-panel">
-        <div class="canvas-hint">캔버스에서 텍스트를 클릭하고 드래그해 위치를 옮기세요</div>
+        <div class="canvas-hint">Click and drag text on the canvas to move it</div>
         <div class="canvas-wrap-outer"><canvas id="mainCanvas"></canvas></div>
         <div class="canvas-info" id="canvasInfo"></div>
       </div>
 
       <div class="side-panel">
         <div class="layer-card">
-          <div class="layer-card-title"><span>텍스트 레이어</span></div>
+          <div class="layer-card-title"><span>Text Layers</span></div>
           <div class="layer-list" id="layerList"></div>
-          <button class="add-layer-btn" id="addLayerBtn">＋ 텍스트 추가</button>
+          <button class="add-layer-btn" id="addLayerBtn">＋ Add Text</button>
         </div>
 
         <div class="layer-card" id="editPanel" style="display:none;">
-          <div class="layer-card-title"><span>선택된 텍스트 편집</span></div>
+          <div class="layer-card-title"><span>Edit Selected Text</span></div>
           <div class="option-row">
-            <input class="option-input" type="text" id="layerText" placeholder="텍스트 입력" />
+            <input class="option-input" type="text" id="layerText" placeholder="Enter text" />
           </div>
           <div class="option-row">
-            <span class="option-label">폰트</span>
+            <span class="option-label">Font</span>
             <select class="option-input" id="layerFont">
               <option value="Pretendard, sans-serif">Pretendard</option>
-              <option value="'Gowun Dodum', sans-serif">둥근 고딕</option>
-              <option value="Georgia, serif">세리프</option>
-              <option value="'Courier New', monospace">고정폭</option>
+              <option value="Inter, sans-serif">Inter</option>
+              <option value="Georgia, serif">Serif</option>
+              <option value="'Courier New', monospace">Monospace</option>
             </select>
           </div>
           <div class="option-row">
-            <span class="option-label">크기</span>
+            <span class="option-label">Size</span>
             <input class="option-input" type="range" id="layerSize" min="10" max="160" value="48" />
             <span class="option-value" id="layerSizeVal">48px</span>
           </div>
           <div class="option-row">
-            <span class="option-label">투명도</span>
+            <span class="option-label">Opacity</span>
             <input class="option-input" type="range" id="layerOpacity" min="5" max="100" value="100" />
             <span class="option-value" id="layerOpacityVal">100%</span>
           </div>
           <div class="option-row">
-            <span class="option-label">색상</span>
+            <span class="option-label">Color</span>
             <div class="color-presets">
-              <div class="color-preset active" style="background:#ffffff;" data-color="#ffffff" title="흰색"></div>
-              <div class="color-preset" style="background:#000000;" data-color="#000000" title="검정"></div>
-              <div class="color-preset" style="background:#ff0000;" data-color="#ff0000" title="빨강"></div>
-              <div class="color-preset" style="background:#ffff00;" data-color="#ffff00" title="노랑"></div>
-              <div class="color-preset" style="background:#6C63FF;" data-color="#6C63FF" title="보라"></div>
-              <div class="color-swatch" title="직접 선택"><input type="color" id="layerColor" value="#ffffff" /></div>
+              <div class="color-preset active" style="background:#ffffff;" data-color="#ffffff" title="White"></div>
+              <div class="color-preset" style="background:#000000;" data-color="#000000" title="Black"></div>
+              <div class="color-preset" style="background:#ff0000;" data-color="#ff0000" title="Red"></div>
+              <div class="color-preset" style="background:#ffff00;" data-color="#ffff00" title="Yellow"></div>
+              <div class="color-preset" style="background:#6C63FF;" data-color="#6C63FF" title="Purple"></div>
+              <div class="color-swatch" title="Custom color"><input type="color" id="layerColor" value="#ffffff" /></div>
             </div>
           </div>
           <div class="option-row">
-            <label class="bold-toggle"><input type="checkbox" id="layerBold" /> 굵게</label>
+            <label class="bold-toggle"><input type="checkbox" id="layerBold" /> Bold</label>
           </div>
         </div>
 
         <div class="layer-card">
-          <div class="layer-card-title"><span>출력 형식</span></div>
+          <div class="layer-card-title"><span>Output Format</span></div>
           <div class="format-row">
             <button class="fmt-btn active" data-fmt="png">PNG</button>
             <button class="fmt-btn" data-fmt="jpg">JPG</button>
@@ -266,48 +272,56 @@
     </div>
 
     <div class="action-wrap" id="actionWrap">
-      <button class="btn-primary" id="downloadBtn">⬇ 이미지 다운로드</button>
-      <button class="btn-sub" id="resetBtn">↺ 처음부터</button>
+      <button class="btn-primary" id="downloadBtn">⬇ Download Image</button>
+      <button class="btn-sub" id="resetBtn">↺ Start Over</button>
     </div>
 
-<div style="margin:0 0 12px"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><!-- 카카오 애드핏 (2026-07-22, 쿠팡 파트너스 다이내믹 배너로 교체) — 복원 시 주석 해제: <div class="adfit-h-desktop"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-QD4pRIpdIj7i2mbt" data-ad-width="728" data-ad-height="90"></ins></div><div class="adfit-h-mobile"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-R4xA2niTT8HgGjoO" data-ad-width="320" data-ad-height="50"></ins></div> --><div class="adfit-h-desktop"><script src="https://ads-partners.coupang.com/g.js"></script><script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"728","height":"90","tsource":""});</script></div><div class="adfit-h-mobile"><script src="https://ads-partners.coupang.com/g.js"></script><script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"320","height":"50","tsource":""});</script></div></div>
+<!-- Google AdSense Display Ad — pending approval, reserving space -->
+    <div class="ad-slot" id="adMiddle">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
 
     <div class="guide-summary">
-      <h2 class="guide-summary-title">사용법 요약</h2>
+      <h2 class="guide-summary-title">Quick guide</h2>
       <ol class="guide-steps">
-        <li>이미지 업로드</li>
-        <li>텍스트 추가 및 선택</li>
-        <li>내용 및 스타일 편집</li>
+        <li>Upload an image</li>
+        <li>Add and select text</li>
+        <li>Edit the content and style</li>
       </ol>
-      <h3 class="guide-faq-title">자주 묻는 질문</h3>
+      <h3 class="guide-faq-title">Frequently asked questions</h3>
       <div class="guide-faq">
         <details>
-          <summary>이미지 텍스트 추가 도구는 정말 무료인가요?</summary>
-          <p>네, 회원가입이나 설치 없이 완전 무료로 사용할 수 있습니다. 횟수 제한도 없습니다.</p>
+          <summary>Is the Add Text to Image tool really free?</summary>
+          <p>Yes, it is completely free to use with no sign-up or installation required. There is no usage limit either.</p>
         </details>
         <details>
-          <summary>업로드한 파일이 서버로 전송되나요?</summary>
-          <p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 업로드한 파일이 외부 서버로 전송되거나 저장되지 않습니다.</p>
+          <summary>Are uploaded files sent to a server?</summary>
+          <p>No. All processing happens entirely in your browser, and uploaded files are never sent to or stored on an external server.</p>
         </details>
         <details>
-          <summary>글꼴이나 색상을 바꿀 수 있나요?</summary>
-          <p>네, 텍스트의 크기, 색상, 위치를 조절해 원하는 스타일로 이미지에 합성할 수 있습니다.</p>
+          <summary>Can I change the font or color?</summary>
+          <p>Yes, you can adjust the text size, color, and position to composite it onto your image exactly how you want.</p>
         </details>
         <details>
-          <summary>모바일에서도 사용할 수 있나요?</summary>
-          <p>네, 별도의 앱 설치 없이 모바일 브라우저에서도 동일하게 사용할 수 있습니다.</p>
+          <summary>Can I use this on mobile?</summary>
+          <p>Yes, it works the same way in a mobile browser without needing to install any app.</p>
         </details>
       </div>
-      <a href="/blog/41-imagetext-howto" class="guide-full-link">전체 가이드 보기 →</a>
+      <a href="/blog/41-imagetext-howto" class="guide-full-link">View full guide →</a>
     </div>
 
-    <div style="margin:12px 0"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="9500090221"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><div class="adfit-rect-wrap"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-oePL4TCj742xAwqT" data-ad-width="300" data-ad-height="250"></ins></div></div>
+    <!-- Google AdSense Multiplex Ad — pending approval, reserving space -->
+    <div class="ad-slot ad-slot-rect" id="adBottom">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
   </div></main>
 
-  <footer class="footer"><div class="container"><p class="footer-copy">© 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p><nav class="footer-nav"><a href="/privacy">개인정보 처리방침</a><a href="/terms">이용약관</a><a href="/about">서비스 소개</a><a href="/blog/">블로그</a></nav></div></footer>
+  <footer class="footer"><div class="container"><p class="footer-copy">&#xa9; 2026 BrowserKit. All processing happens in your browser.</p><nav class="footer-nav"><a href="/en/privacy.html">Privacy Policy</a><a href="/en/terms.html">Terms of Service</a><a href="/en/about.html">About</a><a href="/en/blog/">Blog</a></nav></div></footer>
 
   <script>
-  // ── 상태 ──
+  // ── State ──
   let originalImg = null, originalFile = null;
   let layers = [];
   let selectedId = null;
@@ -320,7 +334,7 @@
   function uid(){ return 'l' + Math.random().toString(36).slice(2, 9); }
   function formatBytes(b){ if(b<1024) return b+'B'; if(b<1048576) return (b/1024).toFixed(1)+'KB'; return (b/1048576).toFixed(2)+'MB'; }
 
-  // ── 업로드 ──
+  // ── Upload ──
   const uploadZone = document.getElementById('uploadZone');
   const fileInput = document.getElementById('fileInput');
   uploadZone.addEventListener('click', () => fileInput.click());
@@ -357,14 +371,14 @@
     document.getElementById('canvasInfo').textContent = originalImg ? (originalImg.width+'×'+originalImg.height) : '';
   }
 
-  // ── 레이어 관리 ──
+  // ── Layer management ──
   function addLayer(){
     if(!originalImg) return;
     const id = uid();
     layers.push({
-      id, text: '텍스트를 입력하세요', font: "Pretendard, sans-serif",
+      id, text: 'Enter your text', font: "Pretendard, sans-serif",
       size: 48, opacity: 1, color: '#ffffff', bold: false,
-      xPct: 0.5, yPct: 0.5 // 중심 좌표(비율)
+      xPct: 0.5, yPct: 0.5 // center coordinates (ratio)
     });
     selectedId = id;
     renderLayerList();
@@ -392,10 +406,10 @@
 
   function renderLayerList(){
     const wrap = document.getElementById('layerList');
-    if(!layers.length){ wrap.innerHTML = '<div class="layer-empty">텍스트를 추가해보세요</div>'; return; }
+    if(!layers.length){ wrap.innerHTML = '<div class="layer-empty">Add some text to get started</div>'; return; }
     wrap.innerHTML = layers.map(l => `
       <div class="layer-item ${l.id===selectedId?'active':''}" data-id="${l.id}">
-        <span class="layer-item-text">${escHtml(l.text || '(빈 텍스트)')}</span>
+        <span class="layer-item-text">${escHtml(l.text || '(empty text)')}</span>
         <button class="layer-item-del" data-id="${l.id}">✕</button>
       </div>
     `).join('');
@@ -467,7 +481,7 @@
     redraw();
   });
 
-  // ── 출력 형식 ──
+  // ── Output format ──
   document.querySelectorAll('.fmt-btn').forEach(b => {
     b.addEventListener('click', () => {
       document.querySelectorAll('.fmt-btn').forEach(x => x.classList.remove('active'));
@@ -476,7 +490,7 @@
     });
   });
 
-  // ── 렌더링 ──
+  // ── Rendering ──
   function layerFont(l){ return (l.bold ? 'bold ' : '') + l.size + 'px ' + l.font; }
   function layerBox(l){
     ctx.font = layerFont(l);
@@ -510,7 +524,7 @@
     });
   }
 
-  // ── 드래그 (마우스/터치 공용) ──
+  // ── Drag (mouse/touch shared) ──
   function canvasPoint(e){
     const rect = canvas.getBoundingClientRect();
     const cx = (e.touches ? e.touches[0].clientX : e.clientX) - rect.left;
@@ -554,7 +568,7 @@
   window.addEventListener('touchmove', moveDrag, { passive: false });
   window.addEventListener('touchend', endDrag);
 
-  // ── 다운로드 ──
+  // ── Download ──
   document.getElementById('downloadBtn').addEventListener('click', () => {
     if(!originalImg) return;
     const mimeMap = { png:'image/png', jpg:'image/jpeg', webp:'image/webp' };
@@ -562,7 +576,7 @@
     const mime = mimeMap[currentFmt];
     const quality = currentFmt === 'png' ? undefined : 0.92;
 
-    // 다운로드용 캔버스(선택 표시 점선 제외)
+    // Canvas for download (excludes the selection dashed outline)
     const out = document.createElement('canvas');
     out.width = canvas.width; out.height = canvas.height;
     const octx = out.getContext('2d');
@@ -588,7 +602,7 @@
     }, mime, quality);
   });
 
-  // ── 초기화 ──
+  // ── Reset ──
   document.getElementById('resetBtn').addEventListener('click', () => {
     originalImg = null; originalFile = null; layers = []; selectedId = null;
     fileInput.value = '';
@@ -621,7 +635,7 @@
     try {
       if (document.cookie.indexOf('bk_lang_dismiss=1') !== -1) return;
       var lang = (navigator.language || navigator.userLanguage || '').toLowerCase();
-      if (lang.indexOf('ko') === 0) return;
+      if (lang.indexOf('ko') !== 0) return;
       var banner = document.getElementById('langBanner');
       if (!banner) return;
       banner.classList.add('show');
