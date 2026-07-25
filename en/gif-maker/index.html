@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
   <link rel="icon" href="/favicon.ico" sizes="32x32">
   <link rel="icon" href="/favicon-16.png" sizes="16x16" type="image/png">
@@ -8,18 +8,17 @@
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="여러 장의 이미지를 업로드해 순서와 프레임 간격을 지정하면 GIF 애니메이션으로 합성하는 무료 온라인 도구. 반복 재생 여부와 출력 크기도 선택할 수 있습니다. 서버 전송 없이 브라우저에서 바로 처리합니다." />
-  <meta property="og:title" content="GifMaker — GIF 애니메이션 생성기" />
-  <meta property="og:description" content="여러 이미지를 순서대로 합쳐 GIF 애니메이션을 만드는 무료 온라인 도구입니다." />
+  <meta name="description" content="A free online tool that composites uploaded images into a GIF animation once you set the order and frame delay. Choose whether it loops and the output size too. Everything is processed right in your browser, with no server upload." />
+  <meta property="og:title" content="GifMaker — GIF Animation Maker" />
+  <meta property="og:description" content="A free online tool that combines multiple images in order into a GIF animation." />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://browserkit.online/gif-maker/" />
-  <title>GifMaker — GIF 애니메이션 생성기</title>
+  <meta property="og:url" content="https://browserkit.online/en/gif-maker/" />
+  <title>GifMaker — GIF Animation Maker</title>
   <link rel="stylesheet" href="/css/style.css?v=20260724c" />
-  <!-- Google AdSense 승인 대기 중 (2026-07-19 주석 처리, 카카오 애드핏으로 임시 전환) — 승인 후 주석 해제
+  <!-- Google AdSense — pending re-review. Uncomment once approved.
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506"
      crossorigin="anonymous"></script>
   -->
-  <script type="text/javascript" src="//t1.kakaocdn.net/kas/static/ba.min.js" async></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gif.js/0.2.0/gif.js"></script>
   <style>
     .guide-summary { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:24px; margin:0 0 12px; }
@@ -31,6 +30,9 @@
     .guide-faq p { margin:8px 0 0; font-size:13px; color:var(--subtext); line-height:1.7; }
     .guide-full-link { display:inline-block; margin-top:12px; font-size:14px; font-weight:600; color:var(--point-hover); text-decoration:none; }
     .guide-full-link:hover { text-decoration:underline; }
+
+    .ad-slot { min-height:90px; display:flex; align-items:center; justify-content:center; margin:0 0 12px; }
+    .ad-slot-rect { min-height:250px; }
 
     .upload-zone { background:var(--card); border:2px dashed var(--border); border-radius:var(--radius); padding:44px 32px; text-align:center; cursor:pointer; margin-bottom:20px; transition:all 0.2s; }
     .upload-zone:hover, .upload-zone.drag-over { border-color:var(--point); box-shadow:0 0 24px var(--glow); }
@@ -45,14 +47,14 @@
     .preview-panel { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px; display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:320px; }
     .canvas-wrap-outer { background:repeating-conic-gradient(#1e1e2a 0% 25%,#26263a 0% 50%) 0 0/16px 16px; border-radius:8px; overflow:hidden; max-width:100%; }
     #previewCanvas, #resultImg { display:block; max-width:100%; max-height:420px; }
-    .canvas-info { font-size:12px; color:var(--subtext); margin-top:10px; font-family:'Gowun Dodum',sans-serif; }
+    .canvas-info { font-size:12px; color:var(--subtext); margin-top:10px; }
     .preview-empty { color:var(--subtext); font-size:13px; text-align:center; }
 
     .side-panel { display:flex; flex-direction:column; gap:14px; }
     .side-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:16px; }
     .side-card-title { font-size:13px; font-weight:600; color:var(--subtext); margin-bottom:10px; }
 
-    .add-more-btn { width:100%; padding:9px; background:var(--bg); border:1px dashed var(--border); border-radius:8px; font-size:13px; color:var(--subtext); cursor:pointer; font-family:'Gowun Dodum',sans-serif; margin-bottom:10px; }
+    .add-more-btn { width:100%; padding:9px; background:var(--bg); border:1px dashed var(--border); border-radius:8px; font-size:13px; color:var(--subtext); cursor:pointer; margin-bottom:10px; }
     .add-more-btn:hover { border-color:var(--point); color:var(--point-hover); }
     .thumb-list { display:flex; flex-direction:column; gap:6px; max-height:260px; overflow-y:auto; }
     .thumb-item { display:flex; align-items:center; gap:8px; background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:6px; cursor:grab; }
@@ -68,19 +70,19 @@
     .option-label { font-size:12px; color:var(--subtext); min-width:64px; }
     .range-slider { -webkit-appearance:none; height:6px; border-radius:3px; background:var(--border); outline:none; flex:1; }
     .range-slider::-webkit-slider-thumb { -webkit-appearance:none; width:16px; height:16px; border-radius:50%; background:var(--point); cursor:pointer; }
-    .option-value { font-size:12px; font-weight:600; color:var(--point-hover); min-width:44px; text-align:right; font-family:'Gowun Dodum',sans-serif; }
+    .option-value { font-size:12px; font-weight:600; color:var(--point-hover); min-width:44px; text-align:right; }
     .seg-btns { display:flex; gap:6px; flex-wrap:wrap; }
-    .seg-btn { background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:7px 12px; font-size:12px; color:var(--subtext); cursor:pointer; font-family:'Gowun Dodum',sans-serif; }
+    .seg-btn { background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:7px 12px; font-size:12px; color:var(--subtext); cursor:pointer; }
     .seg-btn:hover { border-color:var(--point); color:var(--text); }
     .seg-btn.active { background:rgba(123,108,255,0.15); border-color:var(--point); color:var(--point-hover); font-weight:700; }
     .check-row { display:flex; align-items:center; gap:8px; font-size:13px; color:var(--subtext); cursor:pointer; user-select:none; }
     .check-row input { width:16px; height:16px; accent-color:var(--point); cursor:pointer; }
 
     .action-bar { display:flex; gap:10px; margin-bottom:20px; flex-wrap:wrap; }
-    .btn-primary { background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border:none; border-radius:10px; padding:12px 24px; font-size:14px; font-weight:700; cursor:pointer; font-family:'Gowun Dodum',sans-serif; }
+    .btn-primary { background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border:none; border-radius:10px; padding:12px 24px; font-size:14px; font-weight:700; cursor:pointer; }
     .btn-primary:hover { transform:translateY(-2px); box-shadow:0 8px 24px var(--glow); }
     .btn-primary:disabled { opacity:0.5; cursor:not-allowed; transform:none; box-shadow:none; }
-    .btn-sub { background:var(--card); color:var(--subtext); border:1px solid var(--border); border-radius:10px; padding:12px 20px; font-size:14px; cursor:pointer; font-family:'Gowun Dodum',sans-serif; }
+    .btn-sub { background:var(--card); color:var(--subtext); border:1px solid var(--border); border-radius:10px; padding:12px 20px; font-size:14px; cursor:pointer; }
     .btn-sub:hover { color:var(--text); border-color:var(--point); }
 
     .progress-wrap { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:16px 20px; margin-bottom:20px; display:none; }
@@ -106,9 +108,9 @@
     @media (max-width:640px) { .hero-title { font-size:24px; } }
   </style>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <meta property="og:image" content="https://browserkit.online/img/og/gif-maker.png" />
-  <link rel="canonical" href="https://browserkit.online/gif-maker/" />
+  <link rel="canonical" href="https://browserkit.online/en/gif-maker/" />
   <link rel="alternate" hreflang="ko" href="https://browserkit.online/gif-maker/" />
   <link rel="alternate" hreflang="en" href="https://browserkit.online/en/gif-maker/" />
   <link rel="alternate" hreflang="x-default" href="https://browserkit.online/en/gif-maker/" />
@@ -118,18 +120,18 @@
 {
   "@context": "https://schema.org",
   "@type": "WebApplication",
-  "name": "GifMaker — GIF 애니메이션 생성기",
-  "url": "https://browserkit.online/gif-maker/",
-  "description": "여러 장의 이미지를 업로드해 순서와 프레임 간격을 지정하면 GIF 애니메이션으로 합성하는 무료 온라인 도구. 반복 재생 여부와 출력 크기도 선택할 수 있습니다. 서버 전송 없이 브라우저에서 바로 처리합니다.",
+  "name": "GifMaker — GIF Animation Maker",
+  "url": "https://browserkit.online/en/gif-maker/",
+  "description": "A free online tool that composites uploaded images into a GIF animation once you set the order and frame delay. Choose whether it loops and the output size too. Everything is processed right in your browser, with no server upload.",
   "applicationCategory": "UtilityApplication",
   "operatingSystem": "Any",
   "browserRequirements": "Requires JavaScript",
-  "inLanguage": "ko",
+  "inLanguage": "en",
   "isAccessibleForFree": true,
   "offers": {
     "@type": "Offer",
     "price": "0",
-    "priceCurrency": "KRW"
+    "priceCurrency": "USD"
   },
   "publisher": {
     "@type": "Organization",
@@ -146,14 +148,14 @@
     {
       "@type": "ListItem",
       "position": 1,
-      "name": "홈",
-      "item": "https://browserkit.online/"
+      "name": "Home",
+      "item": "https://browserkit.online/en/"
     },
     {
       "@type": "ListItem",
       "position": 2,
-      "name": "GIF 애니메이션 생성기",
-      "item": "https://browserkit.online/gif-maker/"
+      "name": "GIF Animation Maker",
+      "item": "https://browserkit.online/en/gif-maker/"
     }
   ]
 }
@@ -162,24 +164,24 @@
 
 <body>
   <div class="lang-banner" id="langBanner">
-    <span>🌐 This page is also available in <a href="/en/gif-maker/">English</a>.</span>
+    <span>🌐 이 페이지는 <a href="/gif-maker/">한국어</a>로도 볼 수 있습니다.</span>
     <button class="lang-banner-close" id="langBannerClose" type="button" aria-label="close">&times;</button>
   </div>
   <header class="header">
     <div class="container">
-      <a href="/" class="header-brand">
-        <div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Gowun Dodum,sans-serif;flex-shrink:0">B</div>
+      <a href="/en/" class="header-brand">
+        <div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Poppins,sans-serif;flex-shrink:0">B</div>
         <span class="header-brand-text"><span style="color:var(--text)">Browser</span><span style="color:var(--point)">Kit</span></span>
       </a>
       <div class="header-right">
         <div class="lang-switcher">
-          <button class="lang-switcher-btn" type="button" data-lang-btn>🌐 <span class="lang-label-full">한국어</span></button>
+          <button class="lang-switcher-btn" type="button" data-lang-btn>🌐 <span class="lang-label-full">English</span></button>
           <div class="lang-switcher-menu" data-lang-menu>
-            <a href="/en/gif-maker/">English</a>
-            <a href="#" class="active">한국어</a>
+            <a href="#" class="active">English</a>
+            <a href="/gif-maker/">한국어</a>
           </div>
         </div>
-        <a href="/" class="header-back">&#x2190; <span class="header-back-label">BrowserKit 홈으로</span></a>
+        <a href="/en/" class="header-back">&#x2190; <span class="header-back-label">Back to BrowserKit</span></a>
       </div>
     </div>
   </header>
@@ -187,53 +189,57 @@
   <main><div class="container">
     <div class="hero">
       <div class="hero-icon" style="height:78px;display:flex;justify-content:center;align-items:center"><div style="transform:scale(1.7);transform-origin:center"><div style="width:46px;height:46px;background:#ffb3c7;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="position:relative;width:26px;height:22px"><div style="position:absolute;left:0;top:6px;width:14px;height:14px;background:#fffdf9;border:2px solid #2a2433;border-radius:2px;box-sizing:border-box;opacity:.4"></div><div style="position:absolute;left:6px;top:3px;width:14px;height:14px;background:#fffdf9;border:2px solid #2a2433;border-radius:2px;box-sizing:border-box;opacity:.7"></div><div style="position:absolute;left:12px;top:0;width:14px;height:14px;background:#fffdf9;border:2px solid #2a2433;border-radius:2px;box-sizing:border-box"></div></div></div></div></div>
-      <div class="hero-title-wrap"><h1 class="hero-title">GIF 애니메이션 생성기</h1><a href="/blog/81-gifmaker-howto" class="hero-guide-link">사용법 가이드 보기</a></div>
-      <p class="hero-desc">여러 장의 이미지를 순서대로 합쳐 움직이는 GIF를 만들어보세요</p>
+      <div class="hero-title-wrap"><h1 class="hero-title">GIF Animation Maker</h1><a href="/blog/81-gifmaker-howto" class="hero-guide-link">View usage guide</a></div>
+      <p class="hero-desc">Combine multiple images in order into an animated GIF</p>
       <div class="hero-badges">
-        <span class="badge">🔒 완전 로컬 처리</span>
-        <span class="badge">⚡ 무료 사용</span>
-        <span class="badge">🛡️ 서버 전송 없음</span>
-        <span class="badge">📦 설치 불필요</span>
+        <span class="badge">🔒 Fully local processing</span>
+        <span class="badge">⚡ Free to use</span>
+        <span class="badge">🛡️ No server upload</span>
+        <span class="badge">📦 No installation</span>
       </div>
     </div>
-    <div style="margin:0 0 12px"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><div class="adfit-h-desktop"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-QD4pRIpdIj7i2mbt" data-ad-width="728" data-ad-height="90"></ins></div><div class="adfit-h-mobile"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-R4xA2niTT8HgGjoO" data-ad-width="320" data-ad-height="50"></ins></div></div>
+    <!-- Google AdSense Display Ad — pending approval, reserving space -->
+    <div class="ad-slot" id="adTop">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
 
-    <p class="notice">💡 이미지 개수와 크기가 많을수록 GIF 생성에 시간이 걸릴 수 있습니다. 원활한 처리를 위해 10장 이하, 출력 크기는 640px 이하를 권장합니다. 모든 처리는 브라우저에서만 이루어집니다.</p>
+    <p class="notice">💡 More or larger images will take longer to generate the GIF. For best performance, we recommend 10 images or fewer and an output size of 640px or less. All processing happens only in your browser.</p>
 
-    <!-- 업로드 -->
+    <!-- Upload -->
     <div class="upload-zone" id="uploadZone">
       <input type="file" id="fileInput" accept="image/*" multiple style="display:none" />
       <div class="upload-icon" style="height:64px;display:flex;justify-content:center;align-items:center"><div style="transform:scale(1.4);transform-origin:center"><div style="width:46px;height:46px;background:#ffb3c7;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="position:relative;width:26px;height:22px"><div style="position:absolute;left:0;top:6px;width:14px;height:14px;background:#fffdf9;border:2px solid #2a2433;border-radius:2px;box-sizing:border-box;opacity:.4"></div><div style="position:absolute;left:6px;top:3px;width:14px;height:14px;background:#fffdf9;border:2px solid #2a2433;border-radius:2px;box-sizing:border-box;opacity:.7"></div><div style="position:absolute;left:12px;top:0;width:14px;height:14px;background:#fffdf9;border:2px solid #2a2433;border-radius:2px;box-sizing:border-box"></div></div></div></div></div>
-      <div class="upload-title">이미지 여러 장을 업로드하세요</div>
-      <div class="upload-sub">클릭하거나 드래그하세요 (JPG, PNG, WEBP · 2장 이상 선택 권장)</div>
+      <div class="upload-title">Upload multiple images</div>
+      <div class="upload-sub">Click or drag files here (JPG, PNG, WEBP - 2 or more recommended)</div>
     </div>
 
-    <!-- 작업 영역 -->
+    <!-- Work area -->
     <div class="work-area" id="workArea">
       <div class="main-grid">
         <div class="preview-panel">
-          <div id="previewEmpty" class="preview-empty">이미지를 추가하면 첫 프레임이 여기 표시됩니다</div>
+          <div id="previewEmpty" class="preview-empty">Add images and the first frame will show here</div>
           <div class="canvas-wrap-outer" id="canvasWrap" style="display:none"><canvas id="previewCanvas"></canvas></div>
           <div class="canvas-info" id="canvasInfo"></div>
         </div>
 
         <div class="side-panel">
           <div class="side-card">
-            <div class="side-card-title">🖼️ 프레임 목록 (드래그로 순서 변경)</div>
+            <div class="side-card-title">🖼️ Frame List (drag to reorder)</div>
             <div class="thumb-list" id="thumbList"></div>
             <input type="file" id="addFileInput" accept="image/*" multiple style="display:none" />
-            <button class="add-more-btn" id="addMoreBtn" style="margin-top:10px;">＋ 이미지 추가</button>
+            <button class="add-more-btn" id="addMoreBtn" style="margin-top:10px;">＋ Add Images</button>
           </div>
 
           <div class="side-card">
-            <div class="side-card-title">⚙️ GIF 옵션</div>
+            <div class="side-card-title">⚙️ GIF Options</div>
             <div class="option-row">
-              <span class="option-label">프레임 간격</span>
+              <span class="option-label">Frame Delay</span>
               <input type="range" class="range-slider" id="slDelay" min="50" max="2000" step="10" value="300" />
               <span class="option-value" id="valDelay">300ms</span>
             </div>
             <div class="option-row">
-              <span class="option-label">출력 크기</span>
+              <span class="option-label">Output Size</span>
               <div class="seg-btns" id="sizeBtns">
                 <button class="seg-btn" data-size="320">320px</button>
                 <button class="seg-btn active" data-size="480">480px</button>
@@ -242,71 +248,79 @@
             </div>
             <div class="option-row">
               <span class="option-label">&nbsp;</span>
-              <label class="check-row"><input type="checkbox" id="loopCheck" checked /> 반복 재생 (무한 루프)</label>
+              <label class="check-row"><input type="checkbox" id="loopCheck" checked /> Loop playback (infinite)</label>
             </div>
           </div>
         </div>
       </div>
 
       <div class="progress-wrap" id="progressWrap">
-        <div class="progress-label" id="progressLabel">GIF 생성 중...</div>
+        <div class="progress-label" id="progressLabel">Generating GIF...</div>
         <div class="progress-bar-outer"><div class="progress-bar-inner" id="progressBar"></div></div>
       </div>
 
       <div class="action-bar">
-        <button class="btn-primary" id="generateBtn">🎞️ GIF 생성하기</button>
-        <button class="btn-sub" id="resetBtn">&#x21BA; 초기화</button>
+        <button class="btn-primary" id="generateBtn">🎞️ Generate GIF</button>
+        <button class="btn-sub" id="resetBtn">&#x21BA; Reset</button>
       </div>
 
       <div class="result-card" id="resultCard">
-        <div class="canvas-wrap-outer" style="display:inline-block"><img id="resultImg" alt="생성된 GIF 미리보기" /></div>
+        <div class="canvas-wrap-outer" style="display:inline-block"><img id="resultImg" alt="Preview of the generated GIF" /></div>
         <div class="result-info" id="resultInfo"></div>
-        <button class="btn-primary" id="downloadBtn">&#x2B07; GIF 다운로드</button>
+        <button class="btn-primary" id="downloadBtn">&#x2B07; Download GIF</button>
       </div>
     </div>
 
-<div style="margin:0 0 12px"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><!-- 카카오 애드핏 (2026-07-22, 쿠팡 파트너스 다이내믹 배너로 교체) — 복원 시 주석 해제: <div class="adfit-h-desktop"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-QD4pRIpdIj7i2mbt" data-ad-width="728" data-ad-height="90"></ins></div><div class="adfit-h-mobile"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-R4xA2niTT8HgGjoO" data-ad-width="320" data-ad-height="50"></ins></div> --><div class="adfit-h-desktop"><script src="https://ads-partners.coupang.com/g.js"></script><script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"728","height":"90","tsource":""});</script></div><div class="adfit-h-mobile"><script src="https://ads-partners.coupang.com/g.js"></script><script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"320","height":"50","tsource":""});</script></div></div>
+<!-- Google AdSense Display Ad — pending approval, reserving space -->
+    <div class="ad-slot" id="adMiddle">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
 
     <div class="guide-summary">
-      <h2 class="guide-summary-title">사용법 요약</h2>
+      <h2 class="guide-summary-title">Quick guide</h2>
       <ol class="guide-steps">
-        <li>이미지 업로드</li>
-        <li>프레임 간격·출력 크기·반복 재생 설정</li>
-        <li>GIF 생성 및 다운로드</li>
+        <li>Upload images</li>
+        <li>Set the frame delay, output size, and looping</li>
+        <li>Generate and download the GIF</li>
       </ol>
-      <h3 class="guide-faq-title">자주 묻는 질문</h3>
+      <h3 class="guide-faq-title">Frequently asked questions</h3>
       <div class="guide-faq">
         <details>
-          <summary>GIF 애니메이션 생성기 도구는 정말 무료인가요?</summary>
-          <p>네, 회원가입이나 설치 없이 완전 무료로 사용할 수 있습니다. 횟수 제한도 없습니다.</p>
+          <summary>Is the GIF Animation Maker tool really free?</summary>
+          <p>Yes, it is completely free to use with no sign-up or installation required. There is no usage limit either.</p>
         </details>
         <details>
-          <summary>업로드한 이미지가 서버로 전송되나요?</summary>
-          <p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 업로드한 이미지가 외부 서버로 전송되거나 저장되지 않습니다.</p>
+          <summary>Are uploaded images sent to a server?</summary>
+          <p>No. All processing happens entirely in your browser, and uploaded images are never sent to or stored on an external server.</p>
         </details>
         <details>
-          <summary>이미지를 몇 장까지 넣을 수 있나요?</summary>
-          <p>장수 제한은 없지만, 이미지 개수와 출력 크기가 클수록 GIF 생성에 시간이 걸립니다. 원활한 처리를 위해 10장 이하, 출력 크기 640px 이하를 권장합니다.</p>
+          <summary>How many images can I use?</summary>
+          <p>There's no hard limit, but more images or a larger output size will take longer to generate. For best performance, we recommend 10 images or fewer and an output size of 640px or less.</p>
         </details>
         <details>
-          <summary>모바일에서도 사용할 수 있나요?</summary>
-          <p>네, 별도의 앱 설치 없이 모바일 브라우저에서도 동일하게 사용할 수 있습니다.</p>
+          <summary>Can I use this on mobile?</summary>
+          <p>Yes, it works the same way in a mobile browser without needing to install any app.</p>
         </details>
       </div>
-      <a href="/blog/81-gifmaker-howto" class="guide-full-link">전체 가이드 보기 →</a>
+      <a href="/blog/81-gifmaker-howto" class="guide-full-link">View full guide →</a>
     </div>
 
-    <div style="margin:12px 0"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="9500090221"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><div class="adfit-rect-wrap"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-oePL4TCj742xAwqT" data-ad-width="300" data-ad-height="250"></ins></div></div>
+    <!-- Google AdSense Multiplex Ad — pending approval, reserving space -->
+    <div class="ad-slot ad-slot-rect" id="adBottom">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
   </div></main>
 
   <footer class="footer">
     <div class="container">
-      <p class="footer-copy">&#xa9; 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p>
+      <p class="footer-copy">&#xa9; 2026 BrowserKit. All processing happens in your browser.</p>
       <nav class="footer-nav">
-        <a href="/privacy">개인정보 처리방침</a>
-        <a href="/terms">이용약관</a>
-        <a href="/about">서비스 소개</a>
-        <a href="/blog/">블로그</a>
+        <a href="/en/privacy.html">Privacy Policy</a>
+        <a href="/en/terms.html">Terms of Service</a>
+        <a href="/en/about.html">About</a>
+        <a href="/en/blog/">Blog</a>
       </nav>
     </div>
   </footer>
@@ -324,7 +338,7 @@
   function escHtml(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
   function formatBytes(b) { if (b<1024) return b+'B'; if (b<1048576) return (b/1024).toFixed(1)+'KB'; return (b/1048576).toFixed(2)+'MB'; }
 
-  // ── 업로드 ──
+  // ── Upload ──
   var uploadZone = document.getElementById('uploadZone');
   var fileInput  = document.getElementById('fileInput');
   var addFileInput = document.getElementById('addFileInput');
@@ -368,10 +382,10 @@
     renderPreview();
   }
 
-  // ── 썸네일 목록 (드래그 순서 변경) ──
+  // ── Thumbnail list (drag to reorder) ──
   function renderThumbs() {
     var wrap = document.getElementById('thumbList');
-    if (!images.length) { wrap.innerHTML = '<div class="thumb-empty">이미지를 추가해보세요</div>'; return; }
+    if (!images.length) { wrap.innerHTML = '<div class="thumb-empty">Add some images to get started</div>'; return; }
     wrap.innerHTML = images.map(function(item, i) {
       return '<div class="thumb-item" draggable="true" data-idx="' + i + '">' +
         '<img src="' + item.img.src + '" alt="" />' +
@@ -407,7 +421,7 @@
     });
   }
 
-  // ── 첫 프레임 미리보기 ──
+  // ── First frame preview ──
   function drawCover(ctx, img, dx, dy, dw, dh) {
     var ir = img.width / img.height, dr = dw / dh;
     var sx, sy, sw, sh;
@@ -430,7 +444,7 @@
     ctx.fillStyle = '#ffffff';
     ctx.fillRect(0, 0, outputSize, h);
     drawCover(ctx, images[0].img, 0, 0, outputSize, h);
-    document.getElementById('canvasInfo').textContent = '첫 프레임 미리보기 · ' + outputSize + '×' + h + 'px · 총 ' + images.length + '프레임';
+    document.getElementById('canvasInfo').textContent = 'First frame preview · ' + outputSize + '×' + h + 'px · ' + images.length + ' frames total';
   }
 
   document.querySelectorAll('#sizeBtns .seg-btn').forEach(function(btn) {
@@ -446,7 +460,7 @@
     document.getElementById('valDelay').textContent = this.value + 'ms';
   });
 
-  // ── GIF 생성 ──
+  // ── Generate GIF ──
   function getWorkerBlobUrl() {
     if (workerBlobUrl) return Promise.resolve(workerBlobUrl);
     return fetch(GIF_WORKER_URL).then(function(r) { return r.blob(); }).then(function(blob) {
@@ -456,7 +470,7 @@
   }
 
   document.getElementById('generateBtn').addEventListener('click', function() {
-    if (images.length < 2) { showToast('이미지를 2장 이상 추가해주세요'); return; }
+    if (images.length < 2) { showToast('Please add at least 2 images'); return; }
     var delay = parseInt(document.getElementById('slDelay').value);
     var loop = document.getElementById('loopCheck').checked;
     var genBtn = document.getElementById('generateBtn');
@@ -467,7 +481,7 @@
     var progressLabel = document.getElementById('progressLabel');
     progressWrap.classList.add('show');
     progressBar.style.width = '0%';
-    progressLabel.textContent = '준비 중...';
+    progressLabel.textContent = 'Preparing...';
     hideResult();
 
     getWorkerBlobUrl().then(function(workerUrl) {
@@ -495,22 +509,22 @@
 
       gif.on('progress', function(p) {
         progressBar.style.width = Math.round(p * 100) + '%';
-        progressLabel.textContent = 'GIF 생성 중... ' + Math.round(p * 100) + '%';
+        progressLabel.textContent = 'Generating GIF... ' + Math.round(p * 100) + '%';
       });
 
       gif.on('finished', function(blob) {
         progressWrap.classList.remove('show');
         genBtn.disabled = false;
         showResult(blob, outputSize, h);
-        showToast('✓ GIF 생성이 완료됐습니다');
+        showToast('✓ GIF generated successfully');
       });
 
-      progressLabel.textContent = 'GIF 생성 중...';
+      progressLabel.textContent = 'Generating GIF...';
       gif.render();
     }).catch(function() {
       progressWrap.classList.remove('show');
       genBtn.disabled = false;
-      showToast('GIF 생성 중 오류가 발생했습니다. 다시 시도해주세요');
+      showToast('An error occurred while generating the GIF. Please try again');
     });
   });
 
@@ -519,7 +533,7 @@
     if (currentResultUrl) URL.revokeObjectURL(currentResultUrl);
     currentResultUrl = URL.createObjectURL(blob);
     document.getElementById('resultImg').src = currentResultUrl;
-    document.getElementById('resultInfo').textContent = w + '×' + h + 'px · ' + formatBytes(blob.size) + ' · ' + images.length + '프레임';
+    document.getElementById('resultInfo').textContent = w + '×' + h + 'px · ' + formatBytes(blob.size) + ' · ' + images.length + ' frames';
     document.getElementById('resultCard').classList.add('show');
     document.getElementById('resultCard').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }
@@ -533,10 +547,10 @@
     a.href = currentResultUrl;
     a.download = 'gifmaker_result.gif';
     a.click();
-    showToast('✓ GIF 파일이 저장됩니다');
+    showToast('✓ GIF file saved');
   });
 
-  // ── 초기화 ──
+  // ── Reset ──
   document.getElementById('resetBtn').addEventListener('click', function() {
     images = [];
     fileInput.value = ''; addFileInput.value = '';
@@ -577,7 +591,7 @@
     try {
       if (document.cookie.indexOf('bk_lang_dismiss=1') !== -1) return;
       var lang = (navigator.language || navigator.userLanguage || '').toLowerCase();
-      if (lang.indexOf('ko') === 0) return;
+      if (lang.indexOf('ko') !== 0) return;
       var banner = document.getElementById('langBanner');
       if (!banner) return;
       banner.classList.add('show');
