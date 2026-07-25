@@ -1,0 +1,768 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="icon" href="/favicon.ico" sizes="32x32">
+  <link rel="icon" href="/favicon-16.png" sizes="16x16" type="image/png">
+  <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="/favicon-192.png" sizes="192x192" type="image/png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="A free online world clock to check live times in cities around the world and convert between time zones. Everything is processed right in your browser, with no server upload." />
+  <meta property="og:title" content="WorldClock — World Time Converter" />
+  <meta property="og:description" content="A free online world clock to check live times in cities around the world and convert between time zones." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://browserkit.online/en/world-clock/" />
+  <title>WorldClock — World Time Converter</title>
+  <link rel="stylesheet" href="/css/style.css?v=20260724c" />
+  <!-- Google AdSense — pending re-review. Uncomment once approved.
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506"
+     crossorigin="anonymous"></script>
+  -->
+  <style>
+    .guide-summary { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:24px; margin:0 0 12px; }
+    .guide-summary-title { font-size:16px; font-weight:700; color:var(--text); margin:0 0 12px; }
+    .guide-steps { margin:0 0 20px; padding-left:20px; color:var(--subtext); font-size:14px; line-height:2; }
+    .guide-faq-title { font-size:14px; font-weight:700; color:var(--text); margin:0 0 10px; }
+    .guide-faq details { border:1px solid var(--border); border-radius:10px; padding:12px 16px; margin-bottom:8px; }
+    .guide-faq summary { cursor:pointer; font-weight:600; font-size:14px; color:var(--text); }
+    .guide-faq p { margin:8px 0 0; font-size:13px; color:var(--subtext); line-height:1.7; }
+    .guide-full-link { display:inline-block; margin-top:12px; font-size:14px; font-weight:600; color:var(--point-hover); text-decoration:none; }
+    .guide-full-link:hover { text-decoration:underline; }
+
+    .ad-slot { min-height:90px; display:flex; align-items:center; justify-content:center; margin:0 0 12px; }
+    .ad-slot-rect { min-height:250px; }
+
+
+/* Tabs */
+    .tab-bar { display:flex; gap:4px; background:var(--card); border:1px solid var(--border); border-radius:14px; padding:5px; margin-bottom:24px; }
+    .tab-btn { flex:1; padding:10px; font-size:14px; font-weight:600; border:none; border-radius:10px; cursor:pointer; background:transparent; color:var(--subtext); transition:all 0.2s; }
+    .tab-btn.active { background:linear-gradient(135deg,var(--point),var(--point-hover)); color:#fff; }
+    .tab-btn:hover:not(.active) { color:var(--text); background:rgba(123,108,255,0.08); }
+
+    /* Panels */
+    .panel { display:none; }
+    .panel.show { display:block; }
+
+    /* City search */
+    .search-wrap { position:relative; margin-bottom:20px; }
+    .search-input { width:100%; background:var(--card); border:1px solid var(--border); border-radius:12px; padding:13px 48px 13px 18px; font-size:14px; color:var(--text); outline:none; transition:border-color 0.2s; }
+    .search-input:focus { border-color:var(--point); }
+    .search-input::placeholder { color:var(--subtext); }
+    .search-icon { position:absolute; right:16px; top:50%; transform:translateY(-50%); font-size:18px; pointer-events:none; }
+    .search-dropdown { position:absolute; top:calc(100% + 4px); left:0; right:0; background:var(--card); border:1px solid var(--border); border-radius:12px; z-index:50; max-height:240px; overflow-y:auto; display:none; box-shadow:0 8px 24px rgba(0,0,0,0.3); }
+    .search-dropdown.show { display:block; }
+    .search-item { padding:10px 16px; font-size:13px; cursor:pointer; display:flex; align-items:center; gap:10px; transition:background 0.1s; }
+    .search-item:hover { background:rgba(123,108,255,0.1); }
+    .search-item-flag { font-size:18px; flex-shrink:0; }
+    .search-item-info { display:flex; flex-direction:column; }
+    .search-item-city { font-weight:600; color:var(--text); }
+    .search-item-tz { font-size:11px; color:var(--subtext); margin-top:1px; }
+    .search-empty { padding:16px; text-align:center; font-size:13px; color:var(--subtext); }
+
+    /* Clock grid */
+    .clock-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-bottom:32px; }
+    .clock-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px; position:relative; transition:border-color 0.2s; }
+    .clock-card:hover { border-color:var(--point); }
+    .clock-card.home { border-color:var(--point); background:rgba(123,108,255,0.06); }
+    .clock-remove { position:absolute; top:10px; right:12px; background:none; border:none; font-size:16px; color:var(--subtext); cursor:pointer; padding:2px 6px; border-radius:6px; line-height:1; }
+    .clock-remove:hover { color:#F87171; background:rgba(248,113,113,0.1); }
+    .clock-flag { font-size:24px; margin-bottom:8px; }
+    .clock-city { font-size:14px; font-weight:700; color:var(--text); margin-bottom:2px; }
+    .clock-country { font-size:12px; color:var(--subtext); margin-bottom:12px; }
+    .clock-time { font-size:30px; font-weight:700; color:var(--text); letter-spacing:-0.5px; line-height:1; margin-bottom:4px; }
+    .clock-date { font-size:12px; color:var(--subtext); margin-bottom:4px; }
+    .clock-offset { font-size:11px; color:var(--subtext); }
+    .clock-home-badge { font-size:10px; background:rgba(123,108,255,0.2); color:var(--point-hover); border-radius:999px; padding:2px 8px; margin-left:6px; font-weight:600; }
+
+    /* Time zone converter */
+    .converter-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:24px; margin-bottom:24px; }
+    .converter-title { font-size:14px; font-weight:700; color:var(--text); margin-bottom:16px; }
+    .converter-row { display:grid; grid-template-columns:1fr auto 1fr; gap:12px; align-items:end; margin-bottom:16px; }
+    .conv-field { display:flex; flex-direction:column; gap:6px; }
+    .conv-label { font-size:12px; font-weight:600; color:var(--subtext); }
+    .conv-select { background:var(--bg); border:1px solid var(--border); border-radius:10px; padding:10px 14px; font-size:14px; color:var(--text); outline:none; cursor:pointer; }
+    .conv-select:focus { border-color:var(--point); }
+    .conv-time-input { background:var(--bg); border:1px solid var(--border); border-radius:10px; padding:10px 14px; font-size:14px; color:var(--text); outline:none; width:100%; }
+    .conv-time-input:focus { border-color:var(--point); }
+    .conv-arrow { font-size:20px; color:var(--subtext); padding-bottom:10px; text-align:center; }
+    .conv-result { background:var(--bg); border-radius:12px; padding:16px; margin-top:4px; }
+    .conv-result-time { font-size:32px; font-weight:700; color:var(--point-hover); }
+    .conv-result-info { font-size:13px; color:var(--subtext); margin-top:4px; }
+
+    /* My time display */
+    .my-time-bar { display:flex; align-items:center; justify-content:space-between; background:rgba(123,108,255,0.08); border:1px solid var(--border); border-radius:12px; padding:12px 20px; margin-bottom:20px; flex-wrap:wrap; gap:8px; }
+    .my-time-label { font-size:13px; color:var(--subtext); }
+    .my-time-val { font-size:18px; font-weight:700; color:var(--text); }
+    .my-time-tz { font-size:12px; color:var(--subtext); }
+
+    /* Buttons */
+    .btn-sub { background:var(--card); color:var(--subtext); border:1px solid var(--border); border-radius:10px; padding:10px 18px; font-size:13px; cursor:pointer; transition:all 0.2s; }
+    .btn-sub:hover { color:var(--text); border-color:var(--point); }
+
+    /* Banner */
+    .footer { border-top:1px solid var(--border); padding:32px 0; text-align:center; }
+    .footer-copy { color:var(--subtext); font-size:13px; margin-bottom:12px; }
+    .footer-nav { display:flex; justify-content:center; gap:20px; flex-wrap:wrap; }
+    .footer-nav a { color:var(--subtext); font-size:13px; text-decoration:none; }
+    .footer-nav a:hover { color:var(--text); }
+
+    /* Toast */
+    .toast { position:fixed; bottom:32px; left:50%; transform:translateX(-50%) translateY(80px); background:var(--success); color:#fff; border-radius:999px; padding:10px 24px; font-size:14px; font-weight:600; opacity:0; pointer-events:none; z-index:999; transition:all 0.3s ease; }
+    .toast.show { transform:translateX(-50%) translateY(0); opacity:1; }
+
+    @media (max-width:768px) {
+      .clock-grid { grid-template-columns:repeat(2,1fr); }
+      .converter-row { grid-template-columns:1fr; }
+      .conv-arrow { transform:rotate(90deg); padding-bottom:0; }
+    }
+    @media (max-width:480px) {
+      .clock-grid { grid-template-columns:1fr; }
+      .hero-title { font-size:24px; }
+    }
+  </style>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta property="og:image" content="https://browserkit.online/img/og/world-clock.png" />
+  <link rel="canonical" href="https://browserkit.online/en/world-clock/" />
+  <link rel="alternate" hreflang="ko" href="https://browserkit.online/world-clock/" />
+  <link rel="alternate" hreflang="en" href="https://browserkit.online/en/world-clock/" />
+  <link rel="alternate" hreflang="x-default" href="https://browserkit.online/en/world-clock/" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://browserkit.online/img/og/world-clock.png" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "WorldClock — World Time Converter",
+  "url": "https://browserkit.online/en/world-clock/",
+  "description": "A free online world clock to check live times in cities around the world and convert between time zones. Everything is processed right in your browser, with no server upload.",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "Any",
+  "browserRequirements": "Requires JavaScript",
+  "inLanguage": "en",
+  "isAccessibleForFree": true,
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "BrowserKit",
+    "url": "https://browserkit.online/"
+  }
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://browserkit.online/en/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "World Clock",
+      "item": "https://browserkit.online/en/world-clock/"
+    }
+  ]
+}
+  </script>
+</head>
+
+<body>
+  <div class="lang-banner" id="langBanner">
+    <span>🌐 이 페이지는 <a href="/world-clock/">한국어</a>로도 볼 수 있습니다.</span>
+    <button class="lang-banner-close" id="langBannerClose" type="button" aria-label="close">&times;</button>
+  </div>
+  <header class="header">
+    <div class="container">
+      <a href="/en/" class="header-brand">
+        <div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Poppins,sans-serif;flex-shrink:0">B</div>
+        <span class="header-brand-text"><span style="color:var(--text)">Browser</span><span style="color:var(--point)">Kit</span></span>
+      </a>
+      <div class="header-right">
+        <div class="lang-switcher">
+          <button class="lang-switcher-btn" type="button" data-lang-btn>🌐 <span class="lang-label-full">English</span></button>
+          <div class="lang-switcher-menu" data-lang-menu>
+            <a href="#" class="active">English</a>
+            <a href="/world-clock/">한국어</a>
+          </div>
+        </div>
+        <a href="/en/" class="header-back">&#x2190; <span class="header-back-label">Back to BrowserKit</span></a>
+      </div>
+    </div>
+  </header>
+
+  <main><div class="container">
+    <div class="hero">
+      <div class="hero-icon" style="height:78px;display:flex;justify-content:center;align-items:center"><div style="transform:scale(1.7);transform-origin:center"><div style="width:46px;height:46px;background:#bcd4ff;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="position:relative;width:28px;height:28px;border-radius:50%;background:#fffdf9;border:2.5px solid #2a2433;box-sizing:border-box"><div style="position:absolute;left:50%;top:50%;width:2.5px;height:9px;background:#2a2433;border-radius:2px;transform-origin:bottom center;transform:translate(-50%,-100%)"></div><div style="position:absolute;left:50%;top:50%;width:2.5px;height:7px;background:#2a2433;border-radius:2px;transform-origin:bottom center;transform:translate(-50%,-100%) rotate(90deg)"></div></div></div></div></div>
+      <div class="hero-title-wrap"><h1 class="hero-title">World Clock</h1><a href="/blog/35-worldclock-howto" class="hero-guide-link">View usage guide</a></div>
+      <p class="hero-desc">Check live times in cities around the world and convert between time zones</p>
+      <div class="hero-badges">
+        <span class="badge">🔒 Fully local processing</span>
+        <span class="badge">⚡ Free to use</span>
+        <span class="badge">🛡️ No server upload</span>
+        <span class="badge">📦 No installation</span>
+      </div>
+    </div>
+    <!-- Google AdSense Display Ad — pending approval, reserving space -->
+    <div class="ad-slot" id="adTop">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
+
+<!-- Tabs -->
+    <div class="tab-bar">
+      <button class="tab-btn active" data-tab="clocks">&#x1F551; World Clock</button>
+      <button class="tab-btn" data-tab="converter">&#x1F504; Time Zone Converter</button>
+    </div>
+
+    <!-- ─── World clock tab ─── -->
+    <div class="panel show" id="panel-clocks">
+
+      <!-- My time -->
+      <div class="my-time-bar">
+        <div>
+          <div class="my-time-label">&#x1F4CD; My Current Time</div>
+          <div class="my-time-tz" id="myTz"></div>
+        </div>
+        <div class="my-time-val" id="myTime"></div>
+      </div>
+
+      <!-- City search -->
+      <div class="search-wrap">
+        <input type="text" class="search-input" id="citySearch" placeholder="&#x1F50D; Search for a city (e.g. New York, Tokyo, London...)" autocomplete="off" />
+        <span class="search-icon">&#x1F50D;</span>
+        <div class="search-dropdown" id="searchDropdown"></div>
+      </div>
+
+      <!-- Clock card grid -->
+      <div class="clock-grid" id="clockGrid"></div>
+
+      <div style="text-align:center;margin-bottom:48px;">
+        <button class="btn-sub" id="resetBtn">&#x21BA; Reset to Default Cities</button>
+      </div>
+    </div>
+
+    <!-- ─── Time zone converter tab ─── -->
+    <div class="panel" id="panel-converter">
+      <div class="converter-card">
+        <div class="converter-title">&#x1F504; Time Zone Converter</div>
+        <div class="converter-row">
+          <div class="conv-field">
+            <label class="conv-label">From City</label>
+            <select class="conv-select" id="convFrom"></select>
+          </div>
+          <div class="conv-arrow">&#x2192;</div>
+          <div class="conv-field">
+            <label class="conv-label">To City</label>
+            <select class="conv-select" id="convTo"></select>
+          </div>
+        </div>
+        <div class="conv-field" style="margin-bottom:16px;">
+          <label class="conv-label">Time to Convert</label>
+          <input type="datetime-local" class="conv-time-input" id="convTime" />
+        </div>
+        <div class="conv-result" id="convResult">
+          <div class="conv-result-time" id="convResultTime">—</div>
+          <div class="conv-result-info" id="convResultInfo">Choose a from-city and a to-city.</div>
+        </div>
+      </div>
+    </div>
+
+<!-- Google AdSense Display Ad — pending approval, reserving space -->
+    <div class="ad-slot" id="adMiddle">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
+
+    <div class="guide-summary">
+      <h2 class="guide-summary-title">Quick guide</h2>
+      <ol class="guide-steps">
+        <li>Type a city name in the search box</li>
+        <li>Click a city to add it</li>
+        <li>Reset</li>
+      </ol>
+      <h3 class="guide-faq-title">Frequently asked questions</h3>
+      <div class="guide-faq">
+        <details>
+          <summary>Is the World Clock tool really free?</summary>
+          <p>Yes, it is completely free to use with no sign-up or installation required. There is no usage limit either.</p>
+        </details>
+        <details>
+          <summary>Is anything I enter sent to a server?</summary>
+          <p>No. All processing happens entirely in your browser, and nothing you enter is ever sent to or stored on an external server.</p>
+        </details>
+        <details>
+          <summary>Is the displayed time accurate?</summary>
+          <p>The times are converted from your device's current time, so as long as your device clock is accurate, the displayed times are accurate too.</p>
+        </details>
+        <details>
+          <summary>Can I use this on mobile?</summary>
+          <p>Yes, it works the same way in a mobile browser without needing to install any app.</p>
+        </details>
+      </div>
+      <a href="/blog/35-worldclock-howto" class="guide-full-link">View full guide →</a>
+    </div>
+
+    <!-- Google AdSense Multiplex Ad — pending approval, reserving space -->
+    <div class="ad-slot ad-slot-rect" id="adBottom">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
+  </div></main>
+
+  <footer class="footer">
+    <div class="container">
+      <p class="footer-copy">&#xa9; 2026 BrowserKit. All processing happens in your browser.</p>
+      <nav class="footer-nav">
+        <a href="/en/privacy.html">Privacy Policy</a>
+        <a href="/en/terms.html">Terms of Service</a>
+        <a href="/en/about.html">About</a>
+        <a href="/en/blog/">Blog</a>
+      </nav>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+  // ── City data (IANA timezone) ──
+  var CITIES = [
+    { city:'Seoul',            country:'South Korea',        flag:'🇰🇷', tz:'Asia/Seoul',                     utc:'+9:00'  },
+    { city:'Tokyo',             country:'Japan',               flag:'🇯🇵', tz:'Asia/Tokyo',                     utc:'+9:00'  },
+    { city:'Beijing',           country:'China',               flag:'🇨🇳', tz:'Asia/Shanghai',                  utc:'+8:00'  },
+    { city:'Hong Kong',         country:'Hong Kong',           flag:'🇭🇰', tz:'Asia/Hong_Kong',                 utc:'+8:00'  },
+    { city:'Singapore',         country:'Singapore',           flag:'🇸🇬', tz:'Asia/Singapore',                 utc:'+8:00'  },
+    { city:'Bangkok',           country:'Thailand',            flag:'🇹🇭', tz:'Asia/Bangkok',                   utc:'+7:00'  },
+    { city:'Jakarta',           country:'Indonesia',           flag:'🇮🇩', tz:'Asia/Jakarta',                   utc:'+7:00'  },
+    { city:'Mumbai',            country:'India',               flag:'🇮🇳', tz:'Asia/Kolkata',                   utc:'+5:30'  },
+    { city:'Dubai',             country:'UAE',                 flag:'🇦🇪', tz:'Asia/Dubai',                     utc:'+4:00'  },
+    { city:'Moscow',            country:'Russia',              flag:'🇷🇺', tz:'Europe/Moscow',                  utc:'+3:00'  },
+    { city:'Istanbul',          country:'Turkey',              flag:'🇹🇷', tz:'Europe/Istanbul',                utc:'+3:00'  },
+    { city:'Nairobi',           country:'Kenya',                flag:'🇰🇪', tz:'Africa/Nairobi',                 utc:'+3:00'  },
+    { city:'Cairo',             country:'Egypt',                flag:'🇪🇬', tz:'Africa/Cairo',                   utc:'+2:00'  },
+    { city:'Johannesburg',      country:'South Africa',        flag:'🇿🇦', tz:'Africa/Johannesburg',            utc:'+2:00'  },
+    { city:'Paris',             country:'France',              flag:'🇫🇷', tz:'Europe/Paris',                   utc:'+1:00'  },
+    { city:'Berlin',            country:'Germany',              flag:'🇩🇪', tz:'Europe/Berlin',                  utc:'+1:00'  },
+    { city:'Rome',              country:'Italy',                flag:'🇮🇹', tz:'Europe/Rome',                    utc:'+1:00'  },
+    { city:'London',            country:'UK',                   flag:'🇬🇧', tz:'Europe/London',                  utc:'±0:00'  },
+    { city:'Lisbon',            country:'Portugal',            flag:'🇵🇹', tz:'Europe/Lisbon',                  utc:'±0:00'  },
+    { city:'Lagos',             country:'Nigeria',              flag:'🇳🇬', tz:'Africa/Lagos',                   utc:'+1:00'  },
+    { city:'Sao Paulo',         country:'Brazil',               flag:'🇧🇷', tz:'America/Sao_Paulo',              utc:'-3:00'  },
+    { city:'Buenos Aires',      country:'Argentina',            flag:'🇦🇷', tz:'America/Argentina/Buenos_Aires', utc:'-3:00'  },
+    { city:'New York',          country:'USA',                  flag:'🇺🇸', tz:'America/New_York',               utc:'-5:00'  },
+    { city:'Toronto',           country:'Canada',               flag:'🇨🇦', tz:'America/Toronto',                utc:'-5:00'  },
+    { city:'Chicago',           country:'USA',                  flag:'🇺🇸', tz:'America/Chicago',                utc:'-6:00'  },
+    { city:'Mexico City',       country:'Mexico',               flag:'🇲🇽', tz:'America/Mexico_City',            utc:'-6:00'  },
+    { city:'Denver',            country:'USA',                  flag:'🇺🇸', tz:'America/Denver',                 utc:'-7:00'  },
+    { city:'Los Angeles',       country:'USA',                  flag:'🇺🇸', tz:'America/Los_Angeles',            utc:'-8:00'  },
+    { city:'San Francisco',     country:'USA',                  flag:'🇺🇸', tz:'America/Los_Angeles',            utc:'-8:00'  },
+    { city:'Vancouver',         country:'Canada',               flag:'🇨🇦', tz:'America/Vancouver',              utc:'-8:00'  },
+    { city:'Anchorage',         country:'USA',                  flag:'🇺🇸', tz:'America/Anchorage',              utc:'-9:00'  },
+    { city:'Honolulu',          country:'USA',                  flag:'🇺🇸', tz:'Pacific/Honolulu',               utc:'-10:00' },
+    { city:'Sydney',            country:'Australia',            flag:'🇦🇺', tz:'Australia/Sydney',               utc:'+11:00' },
+    { city:'Melbourne',         country:'Australia',            flag:'🇦🇺', tz:'Australia/Melbourne',            utc:'+11:00' },
+    { city:'Auckland',          country:'New Zealand',         flag:'🇳🇿', tz:'Pacific/Auckland',               utc:'+13:00' },
+    // Additional cities
+    { city:'Taipei',            country:'Taiwan',               flag:'🇹🇼', tz:'Asia/Taipei',                    utc:'+8:00'  },
+    { city:'Kuala Lumpur',      country:'Malaysia',            flag:'🇲🇾', tz:'Asia/Kuala_Lumpur',              utc:'+8:00'  },
+    { city:'Manila',            country:'Philippines',         flag:'🇵🇭', tz:'Asia/Manila',                    utc:'+8:00'  },
+    { city:'Ho Chi Minh City',  country:'Vietnam',              flag:'🇻🇳', tz:'Asia/Ho_Chi_Minh',               utc:'+7:00'  },
+    { city:'Yangon',            country:'Myanmar',              flag:'🇲🇲', tz:'Asia/Rangoon',                   utc:'+6:30'  },
+    { city:'Dhaka',             country:'Bangladesh',          flag:'🇧🇩', tz:'Asia/Dhaka',                     utc:'+6:00'  },
+    { city:'Colombo',           country:'Sri Lanka',           flag:'🇱🇰', tz:'Asia/Colombo',                   utc:'+5:30'  },
+    { city:'Karachi',           country:'Pakistan',            flag:'🇵🇰', tz:'Asia/Karachi',                   utc:'+5:00'  },
+    { city:'Kabul',             country:'Afghanistan',         flag:'🇦🇫', tz:'Asia/Kabul',                     utc:'+4:30'  },
+    { city:'Doha',              country:'Qatar',                flag:'🇶🇦', tz:'Asia/Qatar',                     utc:'+3:00'  },
+    { city:'Riyadh',            country:'Saudi Arabia',        flag:'🇸🇦', tz:'Asia/Riyadh',                    utc:'+3:00'  },
+    { city:'Kuwait City',       country:'Kuwait',               flag:'🇰🇼', tz:'Asia/Kuwait',                    utc:'+3:00'  },
+    { city:'Baghdad',           country:'Iraq',                 flag:'🇮🇶', tz:'Asia/Baghdad',                   utc:'+3:00'  },
+    { city:'Addis Ababa',       country:'Ethiopia',            flag:'🇪🇹', tz:'Africa/Addis_Ababa',             utc:'+3:00'  },
+    { city:'Tel Aviv',          country:'Israel',               flag:'🇮🇱', tz:'Asia/Jerusalem',                 utc:'+2:00'  },
+    { city:'Athens',            country:'Greece',               flag:'🇬🇷', tz:'Europe/Athens',                  utc:'+2:00'  },
+    { city:'Helsinki',          country:'Finland',              flag:'🇫🇮', tz:'Europe/Helsinki',                utc:'+2:00'  },
+    { city:'Bucharest',         country:'Romania',              flag:'🇷🇴', tz:'Europe/Bucharest',               utc:'+2:00'  },
+    { city:'Kyiv',              country:'Ukraine',              flag:'🇺🇦', tz:'Europe/Kiev',                    utc:'+2:00'  },
+    { city:'Madrid',            country:'Spain',                flag:'🇪🇸', tz:'Europe/Madrid',                  utc:'+1:00'  },
+    { city:'Amsterdam',         country:'Netherlands',         flag:'🇳🇱', tz:'Europe/Amsterdam',               utc:'+1:00'  },
+    { city:'Brussels',          country:'Belgium',              flag:'🇧🇪', tz:'Europe/Brussels',                utc:'+1:00'  },
+    { city:'Vienna',            country:'Austria',              flag:'🇦🇹', tz:'Europe/Vienna',                  utc:'+1:00'  },
+    { city:'Warsaw',            country:'Poland',               flag:'🇵🇱', tz:'Europe/Warsaw',                  utc:'+1:00'  },
+    { city:'Prague',            country:'Czechia',              flag:'🇨🇿', tz:'Europe/Prague',                  utc:'+1:00'  },
+    { city:'Budapest',          country:'Hungary',              flag:'🇭🇺', tz:'Europe/Budapest',                utc:'+1:00'  },
+    { city:'Stockholm',         country:'Sweden',               flag:'🇸🇪', tz:'Europe/Stockholm',               utc:'+1:00'  },
+    { city:'Oslo',              country:'Norway',               flag:'🇳🇴', tz:'Europe/Oslo',                    utc:'+1:00'  },
+    { city:'Copenhagen',        country:'Denmark',              flag:'🇩🇰', tz:'Europe/Copenhagen',              utc:'+1:00'  },
+    { city:'Zurich',            country:'Switzerland',         flag:'🇨🇭', tz:'Europe/Zurich',                  utc:'+1:00'  },
+    { city:'Dublin',            country:'Ireland',              flag:'🇮🇪', tz:'Europe/Dublin',                  utc:'±0:00'  },
+    { city:'Reykjavik',         country:'Iceland',              flag:'🇮🇸', tz:'Atlantic/Reykjavik',             utc:'±0:00'  },
+    { city:'Casablanca',        country:'Morocco',              flag:'🇲🇦', tz:'Africa/Casablanca',              utc:'±0:00'  },
+    { city:'Accra',             country:'Ghana',                flag:'🇬🇭', tz:'Africa/Accra',                   utc:'±0:00'  },
+    { city:'Rio de Janeiro',    country:'Brazil',               flag:'🇧🇷', tz:'America/Sao_Paulo',              utc:'-3:00'  },
+    { city:'Santiago',          country:'Chile',                flag:'🇨🇱', tz:'America/Santiago',               utc:'-3:00'  },
+    { city:'Montevideo',        country:'Uruguay',              flag:'🇺🇾', tz:'America/Montevideo',             utc:'-3:00'  },
+    { city:'Halifax',           country:'Canada',               flag:'🇨🇦', tz:'America/Halifax',                utc:'-4:00'  },
+    { city:'Caracas',           country:'Venezuela',           flag:'🇻🇪', tz:'America/Caracas',                utc:'-4:00'  },
+    { city:'La Paz',            country:'Bolivia',              flag:'🇧🇴', tz:'America/La_Paz',                 utc:'-4:00'  },
+    { city:'Lima',              country:'Peru',                 flag:'🇵🇪', tz:'America/Lima',                   utc:'-5:00'  },
+    { city:'Bogota',            country:'Colombia',            flag:'🇨🇴', tz:'America/Bogota',                 utc:'-5:00'  },
+    { city:'Dallas',            country:'USA',                  flag:'🇺🇸', tz:'America/Chicago',                utc:'-6:00'  },
+    { city:'Houston',           country:'USA',                  flag:'🇺🇸', tz:'America/Chicago',                utc:'-6:00'  },
+    { city:'Guatemala City',    country:'Guatemala',            flag:'🇬🇹', tz:'America/Guatemala',              utc:'-6:00'  },
+    { city:'Phoenix',           country:'USA',                  flag:'🇺🇸', tz:'America/Phoenix',                utc:'-7:00'  },
+    { city:'Calgary',           country:'Canada',               flag:'🇨🇦', tz:'America/Edmonton',               utc:'-7:00'  },
+    { city:'Seattle',           country:'USA',                  flag:'🇺🇸', tz:'America/Los_Angeles',            utc:'-8:00'  },
+    { city:'Las Vegas',         country:'USA',                  flag:'🇺🇸', tz:'America/Los_Angeles',            utc:'-8:00'  },
+    { city:'Pago Pago',         country:'American Samoa',      flag:'🇦🇸', tz:'Pacific/Pago_Pago',              utc:'-11:00' },
+    { city:'Brisbane',          country:'Australia',            flag:'🇦🇺', tz:'Australia/Brisbane',             utc:'+10:00' },
+    { city:'Perth',             country:'Australia',            flag:'🇦🇺', tz:'Australia/Perth',                utc:'+8:00'  },
+    { city:'Suva',              country:'Fiji',                 flag:'🇫🇯', tz:'Pacific/Fiji',                   utc:'+12:00' },
+    { city:'Guam',              country:'Guam',                 flag:'🇬🇺', tz:'Pacific/Guam',                   utc:'+10:00' },
+  ];
+
+  // Default displayed cities (global timezone spread, tz-deduped). Seoul stays available
+  // via search/picker and in the converter, just not pinned as a default card for the EN page.
+  var DEFAULT_TZS = [
+    'America/New_York','Europe/London','Europe/Paris',
+    'Asia/Dubai','Asia/Shanghai','Asia/Tokyo',
+    'Australia/Sydney','America/Los_Angeles'
+  ];
+
+  // LocalStorage key
+  var LS_KEY = 'worldclock_cities';
+
+  // Currently selected cities (array of tz)
+  var selectedTzs = [];
+
+  // ── Init ──
+  (function init() {
+    var saved = localStorage.getItem(LS_KEY);
+    selectedTzs = saved ? JSON.parse(saved) : DEFAULT_TZS.slice();
+    renderClocks();
+    renderMyTime();
+    buildConverterOptions();
+    setDefaultConvTime();
+    calcConversion();
+  })();
+
+  // ── Tabs ──
+  document.querySelectorAll('.tab-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.tab-btn').forEach(function(b){ b.classList.remove('active'); });
+      document.querySelectorAll('.panel').forEach(function(p){ p.classList.remove('show'); });
+      btn.classList.add('active');
+      document.getElementById('panel-'+btn.dataset.tab).classList.add('show');
+    });
+  });
+
+  // ── My time ──
+  function renderMyTime() {
+    var now = new Date();
+    var hm = now.toLocaleTimeString('en-US', { hour:'2-digit', minute:'2-digit', second:'2-digit', hour12:false });
+    document.getElementById('myTime').textContent = hm;
+    var tzName = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    var offset = -now.getTimezoneOffset();
+    var sign = offset >= 0 ? '+' : '-';
+    var h = Math.floor(Math.abs(offset)/60);
+    var m = Math.abs(offset)%60;
+    var offsetStr = 'UTC'+sign+h+(m?':'+String(m).padStart(2,'0'):'');
+    document.getElementById('myTz').textContent = tzName + ' (' + offsetStr + ')';
+  }
+
+  // ── Render clocks ──
+  function renderClocks() {
+    var grid = document.getElementById('clockGrid');
+    var myTz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    var html = '';
+    selectedTzs.forEach(function(tz, idx) {
+      var cityData = getCityByTz(tz);
+      var isHome = (tz === myTz);
+      html += renderClockCard(cityData, tz, idx, isHome);
+    });
+    grid.innerHTML = html;
+    // Remove button events
+    grid.querySelectorAll('.clock-remove').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var i = parseInt(btn.dataset.idx);
+        selectedTzs.splice(i, 1);
+        saveAndRender();
+      });
+    });
+  }
+
+  function renderClockCard(cityData, tz, idx, isHome) {
+    var now = new Date();
+    var timeStr = now.toLocaleTimeString('en-US', { timeZone:tz, hour:'2-digit', minute:'2-digit', second:'2-digit', hour12:false });
+    var dateStr = now.toLocaleDateString('en-US', { timeZone:tz, year:'numeric', month:'long', day:'numeric', weekday:'short' });
+    var flag = cityData ? cityData.flag : '🌐';
+    var city = cityData ? cityData.city : tz.split('/').pop().replace(/_/g,' ');
+    var country = cityData ? cityData.country : '';
+    var utcOffset = getUtcOffset(tz, now);
+
+    return '<div class="clock-card' + (isHome ? ' home' : '') + '">' +
+      (idx > 0 || !isHome ? '<button class="clock-remove" data-idx="'+idx+'" title="Remove">&#x2715;</button>' : '') +
+      '<div class="clock-flag">'+flag+'</div>' +
+      '<div class="clock-city">'+city+(isHome ? '<span class="clock-home-badge">My Location</span>' : '')+'</div>' +
+      '<div class="clock-country">'+country+'</div>' +
+      '<div class="clock-time" data-tz="'+tz+'">'+timeStr+'</div>' +
+      '<div class="clock-date" data-tz-date="'+tz+'">'+dateStr+'</div>' +
+      '<div class="clock-offset">UTC '+utcOffset+'</div>' +
+      '</div>';
+  }
+
+  // ── Update clocks every second ──
+  setInterval(function() {
+    var now = new Date();
+    // My time
+    renderMyTime();
+    // Update only the clock card times
+    document.querySelectorAll('.clock-time[data-tz]').forEach(function(el) {
+      var tz = el.dataset.tz;
+      el.textContent = now.toLocaleTimeString('en-US', { timeZone:tz, hour:'2-digit', minute:'2-digit', second:'2-digit', hour12:false });
+    });
+    document.querySelectorAll('.clock-date[data-tz-date]').forEach(function(el) {
+      var tz = el.dataset.tzDate;
+      el.textContent = now.toLocaleDateString('en-US', { timeZone:tz, year:'numeric', month:'long', day:'numeric', weekday:'short' });
+    });
+  }, 1000);
+
+  // ── Calculate UTC offset ──
+  function getUtcOffset(tz, now) {
+    try {
+      var date = now || new Date();
+      var utcDate = new Date(date.toLocaleString('en-US', { timeZone:'UTC' }));
+      var tzDate  = new Date(date.toLocaleString('en-US', { timeZone:tz }));
+      var diffMin = (tzDate - utcDate) / 60000;
+      var sign = diffMin >= 0 ? '+' : '-';
+      var h = Math.floor(Math.abs(diffMin)/60);
+      var m = Math.abs(diffMin)%60;
+      return sign + h + ':' + String(m).padStart(2,'0');
+    } catch(e) { return '?'; }
+  }
+
+  // ── Find city by tz ──
+  function getCityByTz(tz) {
+    return CITIES.find(function(c) { return c.tz === tz; }) || null;
+  }
+
+  // ── Save & render ──
+  function saveAndRender() {
+    localStorage.setItem(LS_KEY, JSON.stringify(selectedTzs));
+    renderClocks();
+    buildConverterOptions();
+  }
+
+  // ── Reset ──
+  document.getElementById('resetBtn').addEventListener('click', function() {
+    selectedTzs = DEFAULT_TZS.slice();
+    saveAndRender();
+    showToast('\u21BA Reset to default cities');
+  });
+
+  // ── City search ──
+  var searchInput = document.getElementById('citySearch');
+  var dropdown    = document.getElementById('searchDropdown');
+
+  searchInput.addEventListener('input', function() {
+    var q = searchInput.value.trim().toLowerCase();
+    if (!q) { dropdown.classList.remove('show'); return; }
+
+    // Build a unique list, deduped by tz
+    var seen = {};
+    var results = CITIES.filter(function(c) {
+      if (seen[c.tz]) return false;
+      var match = c.city.toLowerCase().includes(q) || c.country.toLowerCase().includes(q);
+      if (match) seen[c.tz] = true;
+      return match;
+    }).slice(0, 8);
+
+    if (!results.length) {
+      dropdown.innerHTML = '<div class="search-empty">No results found.</div>';
+    } else {
+      dropdown.innerHTML = results.map(function(c) {
+        return '<div class="search-item" data-tz="'+c.tz+'">' +
+          '<span class="search-item-flag">'+c.flag+'</span>' +
+          '<span class="search-item-info">' +
+            '<span class="search-item-city">'+c.city+'</span>' +
+            '<span class="search-item-tz">'+c.country+' · UTC '+c.utc+'</span>' +
+          '</span></div>';
+      }).join('');
+      dropdown.querySelectorAll('.search-item').forEach(function(item) {
+        item.addEventListener('click', function() {
+          var tz = item.dataset.tz;
+          if (selectedTzs.includes(tz)) {
+            showToast('This city is already added');
+          } else {
+            selectedTzs.push(tz);
+            saveAndRender();
+            showToast('\u2713 ' + item.querySelector('.search-item-city').textContent + ' added');
+          }
+          searchInput.value = '';
+          dropdown.classList.remove('show');
+        });
+      });
+    }
+    dropdown.classList.add('show');
+  });
+
+  document.addEventListener('click', function(e) {
+    if (!searchInput.contains(e.target) && !dropdown.contains(e.target)) {
+      dropdown.classList.remove('show');
+    }
+  });
+
+  // ── Time zone converter ──
+  function buildConverterOptions() {
+    var fromSel = document.getElementById('convFrom');
+    var toSel   = document.getElementById('convTo');
+    var fromVal = fromSel.value;
+    var toVal   = toSel.value;
+
+    // Build the full city list, deduped by tz
+    // City name lookup order
+    var seen = {};
+    var list = [];
+
+    // Pass 1: primary cities (one per tz)
+    CITIES.forEach(function(c) {
+      if (!seen[c.tz]) { list.push(c); seen[c.tz] = true; }
+    });
+
+    // Sort by UTC offset (+13 to -11)
+    list.sort(function(a, b) {
+      var toMin = function(utc) {
+        var m = utc.replace('±','').match(/([+-]?)(\d+):(\d+)/);
+        if (!m) return 0;
+        var sign = m[1] === '-' ? -1 : 1;
+        return sign * (parseInt(m[2]) * 60 + parseInt(m[3]));
+      };
+      return toMin(b.utc) - toMin(a.utc);
+    });
+
+    var opts = list.map(function(c) {
+      return '<option value="'+c.tz+'">'+c.flag+' '+c.city+' (UTC '+c.utc+')</option>';
+    }).join('');
+    fromSel.innerHTML = opts;
+    toSel.innerHTML   = opts;
+
+    // Default from-city: auto-detect my timezone
+    var myTz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    if (fromVal) fromSel.value = fromVal;
+    if (!fromSel.value) fromSel.value = myTz;
+    if (!fromSel.value) fromSel.value = 'America/New_York';
+
+    if (toVal) toSel.value = toVal;
+    if (!toSel.value) toSel.value = 'America/New_York';
+  }
+
+  function setDefaultConvTime() {
+    var now = new Date();
+    var y = now.getFullYear();
+    var mo = String(now.getMonth()+1).padStart(2,'0');
+    var d  = String(now.getDate()).padStart(2,'0');
+    var h  = String(now.getHours()).padStart(2,'0');
+    var mi = String(now.getMinutes()).padStart(2,'0');
+    document.getElementById('convTime').value = y+'-'+mo+'-'+d+'T'+h+':'+mi;
+  }
+
+  function calcConversion() {
+    var fromTz   = document.getElementById('convFrom').value;
+    var toTz     = document.getElementById('convTo').value;
+    var timeVal  = document.getElementById('convTime').value;
+    var resultTime = document.getElementById('convResultTime');
+    var resultInfo = document.getElementById('convResultInfo');
+
+    if (!timeVal) { resultTime.textContent = '—'; resultInfo.textContent = 'Please enter a time.'; return; }
+
+    try {
+      var localDate = new Date(timeVal);
+
+      // Display in the from-timezone
+      var fromStr = localDate.toLocaleString('en-US', {
+        timeZone: fromTz,
+        year:'numeric', month:'long', day:'numeric',
+        hour:'2-digit', minute:'2-digit', weekday:'short', hour12:false
+      });
+      // Convert to the to-timezone
+      var toStr = localDate.toLocaleString('en-US', {
+        timeZone: toTz,
+        hour:'2-digit', minute:'2-digit', second:'2-digit', hour12:false
+      });
+      var toDateStr = localDate.toLocaleString('en-US', {
+        timeZone: toTz,
+        year:'numeric', month:'long', day:'numeric', weekday:'short'
+      });
+
+      var fromCity = getCityByTz(fromTz);
+      var toCity   = getCityByTz(toTz);
+      var fromName = fromCity ? fromCity.city : fromTz;
+      var toName   = toCity   ? toCity.city   : toTz;
+      var fromOff  = getUtcOffset(fromTz, localDate);
+      var toOff    = getUtcOffset(toTz,   localDate);
+
+      resultTime.textContent = toStr;
+      resultInfo.innerHTML =
+        '<strong>'+fromName+'</strong> (UTC '+fromOff+') ' + fromStr +
+        ' → <strong>'+toName+'</strong> (UTC '+toOff+') ' + toDateStr;
+    } catch(e) {
+      resultTime.textContent = '—';
+      resultInfo.textContent = 'Conversion error: ' + e.message;
+    }
+  }
+
+  document.getElementById('convFrom').addEventListener('change', calcConversion);
+  document.getElementById('convTo').addEventListener('change', calcConversion);
+  document.getElementById('convTime').addEventListener('change', calcConversion);
+
+  // ── Toast ──
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(function() { t.classList.remove('show'); }, 2000);
+  }
+  </script>
+
+  <script>
+  document.querySelectorAll('[data-lang-btn]').forEach(function(btn){
+    btn.addEventListener('click', function(e){
+      e.stopPropagation();
+      var menu = btn.nextElementSibling;
+      menu.classList.toggle('show');
+    });
+  });
+  document.addEventListener('click', function(){
+    document.querySelectorAll('.lang-switcher-menu.show').forEach(function(m){ m.classList.remove('show'); });
+  });
+  </script>
+
+  <script>
+  (function(){
+    try {
+      if (document.cookie.indexOf('bk_lang_dismiss=1') !== -1) return;
+      var lang = (navigator.language || navigator.userLanguage || '').toLowerCase();
+      if (lang.indexOf('ko') !== 0) return;
+      var banner = document.getElementById('langBanner');
+      if (!banner) return;
+      banner.classList.add('show');
+      var closeBtn = document.getElementById('langBannerClose');
+      closeBtn.addEventListener('click', function(){
+        banner.classList.remove('show');
+        document.cookie = 'bk_lang_dismiss=1; max-age=' + (60*60*24*180) + '; path=/';
+      });
+    } catch(e) {}
+  })();
+  </script>
+</body>
+</html>
+
+
+
