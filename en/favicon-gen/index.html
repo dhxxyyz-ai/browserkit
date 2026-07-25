@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
   <link rel="icon" href="/favicon.ico" sizes="32x32">
   <link rel="icon" href="/favicon-16.png" sizes="16x16" type="image/png">
@@ -8,19 +8,18 @@
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="이미지 1장으로 16/32/48/180/192/512px 파비콘 세트와 favicon.ico를 생성하는 무료 온라인 도구. HTML 코드까지 바로 복사할 수 있습니다. 서버 전송 없이 브라우저에서 바로 처리합니다." />
-  <meta property="og:title" content="FaviconGen — 즐겨찾기 아이콘 생성기" />
-  <meta property="og:description" content="이미지 1장으로 다양한 크기의 파비콘 세트와 favicon.ico를 즉시 생성하는 무료 온라인 도구입니다." />
+  <meta name="description" content="A free online tool that generates a full favicon set (16/32/48/180/192/512px) and favicon.ico from a single image. Copy the ready-to-use HTML code too. Everything is processed right in your browser, with no server upload." />
+  <meta property="og:title" content="FaviconGen — Favicon Generator" />
+  <meta property="og:description" content="A free online tool that instantly generates a full set of favicons in multiple sizes plus favicon.ico from a single image." />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://browserkit.online/favicon-gen/" />
-  <title>FaviconGen — 즐겨찾기 아이콘 생성기</title>
+  <meta property="og:url" content="https://browserkit.online/en/favicon-gen/" />
+  <title>FaviconGen — Favicon Generator</title>
   <link rel="stylesheet" href="/css/style.css?v=20260724c" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-  <!-- Google AdSense 승인 대기 중 (2026-07-19 주석 처리, 카카오 애드핏으로 임시 전환) — 승인 후 주석 해제
+  <!-- Google AdSense — pending re-review. Uncomment once approved.
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506"
      crossorigin="anonymous"></script>
   -->
-  <script type="text/javascript" src="//t1.kakaocdn.net/kas/static/ba.min.js" async></script>
   <style>
     .guide-summary { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:24px; margin:0 0 12px; }
     .guide-summary-title { font-size:16px; font-weight:700; color:var(--text); margin:0 0 12px; }
@@ -31,6 +30,9 @@
     .guide-faq p { margin:8px 0 0; font-size:13px; color:var(--subtext); line-height:1.7; }
     .guide-full-link { display:inline-block; margin-top:12px; font-size:14px; font-weight:600; color:var(--point-hover); text-decoration:none; }
     .guide-full-link:hover { text-decoration:underline; }
+
+    .ad-slot { min-height:90px; display:flex; align-items:center; justify-content:center; margin:0 0 12px; }
+    .ad-slot-rect { min-height:250px; }
 
     .upload-zone { background:var(--card); border:2px dashed var(--border); border-radius:var(--radius); padding:56px 40px; text-align:center; cursor:pointer; margin-bottom:16px; transition:all 0.2s; }
     .upload-zone:hover, .upload-zone.drag-over { border-color:var(--point); box-shadow:0 0 24px var(--glow); background:rgba(123,108,255,0.05); }
@@ -66,9 +68,9 @@
     .snippet-code { background:#0a0a12; border:1px solid var(--border); border-radius:10px; padding:16px; font-family:'Fira Code',monospace; font-size:12px; line-height:1.8; color:#68d391; overflow-x:auto; white-space:pre; margin-bottom:12px; }
 
     .action-wrap { display:flex; justify-content:center; gap:12px; margin-bottom:48px; flex-wrap:wrap; }
-    .btn-primary { background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border:none; border-radius:12px; padding:13px 28px; font-size:15px; font-weight:600; cursor:pointer; font-family:'Gowun Dodum',sans-serif; }
+    .btn-primary { background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border:none; border-radius:12px; padding:13px 28px; font-size:15px; font-weight:600; cursor:pointer; }
     .btn-primary:hover { transform:translateY(-2px); box-shadow:0 8px 24px var(--glow); }
-    .btn-sub { background:var(--card); color:var(--subtext); border:1px solid var(--border); border-radius:12px; padding:13px 22px; font-size:15px; cursor:pointer; font-family:'Gowun Dodum',sans-serif; }
+    .btn-sub { background:var(--card); color:var(--subtext); border:1px solid var(--border); border-radius:12px; padding:13px 22px; font-size:15px; cursor:pointer; }
     .btn-sub:hover { transform:translateY(-2px); color:var(--text); border-color:var(--point); }
 
     .notice { margin:0 0 20px; padding:12px 16px; background:rgba(123,108,255,0.07); border:1px solid var(--border); border-radius:10px; font-size:13px; color:var(--subtext); line-height:1.7; }
@@ -88,9 +90,9 @@
     }
   </style>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <meta property="og:image" content="https://browserkit.online/img/og/favicon-gen.png" />
-  <link rel="canonical" href="https://browserkit.online/favicon-gen/" />
+  <link rel="canonical" href="https://browserkit.online/en/favicon-gen/" />
   <link rel="alternate" hreflang="ko" href="https://browserkit.online/favicon-gen/" />
   <link rel="alternate" hreflang="en" href="https://browserkit.online/en/favicon-gen/" />
   <link rel="alternate" hreflang="x-default" href="https://browserkit.online/en/favicon-gen/" />
@@ -100,18 +102,18 @@
 {
   "@context": "https://schema.org",
   "@type": "WebApplication",
-  "name": "FaviconGen — 즐겨찾기 아이콘 생성기",
-  "url": "https://browserkit.online/favicon-gen/",
-  "description": "이미지 1장으로 16/32/48/180/192/512px 파비콘 세트와 favicon.ico를 생성하는 무료 온라인 도구. HTML 코드까지 바로 복사할 수 있습니다. 서버 전송 없이 브라우저에서 바로 처리합니다.",
+  "name": "FaviconGen — Favicon Generator",
+  "url": "https://browserkit.online/en/favicon-gen/",
+  "description": "A free online tool that generates a full favicon set (16/32/48/180/192/512px) and favicon.ico from a single image. Copy the ready-to-use HTML code too. Everything is processed right in your browser, with no server upload.",
   "applicationCategory": "UtilityApplication",
   "operatingSystem": "Any",
   "browserRequirements": "Requires JavaScript",
-  "inLanguage": "ko",
+  "inLanguage": "en",
   "isAccessibleForFree": true,
   "offers": {
     "@type": "Offer",
     "price": "0",
-    "priceCurrency": "KRW"
+    "priceCurrency": "USD"
   },
   "publisher": {
     "@type": "Organization",
@@ -128,14 +130,14 @@
     {
       "@type": "ListItem",
       "position": 1,
-      "name": "홈",
-      "item": "https://browserkit.online/"
+      "name": "Home",
+      "item": "https://browserkit.online/en/"
     },
     {
       "@type": "ListItem",
       "position": 2,
-      "name": "즐겨찾기 아이콘 생성기",
-      "item": "https://browserkit.online/favicon-gen/"
+      "name": "Favicon Generator",
+      "item": "https://browserkit.online/en/favicon-gen/"
     }
   ]
 }
@@ -144,119 +146,131 @@
 
 <body>
   <div class="lang-banner" id="langBanner">
-    <span>🌐 This page is also available in <a href="/en/favicon-gen/">English</a>.</span>
+    <span>🌐 이 페이지는 <a href="/favicon-gen/">한국어</a>로도 볼 수 있습니다.</span>
     <button class="lang-banner-close" id="langBannerClose" type="button" aria-label="close">&times;</button>
   </div>
   <header class="header">
     <div class="container">
-      <a href="/" class="header-brand">
-        <div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Gowun Dodum,sans-serif;flex-shrink:0">B</div>
+      <a href="/en/" class="header-brand">
+        <div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Poppins,sans-serif;flex-shrink:0">B</div>
         <span class="header-brand-text"><span style="color:var(--text)">Browser</span><span style="color:var(--point)">Kit</span></span>
       </a>
       <div class="header-right">
         <div class="lang-switcher">
-          <button class="lang-switcher-btn" type="button" data-lang-btn>🌐 <span class="lang-label-full">한국어</span></button>
+          <button class="lang-switcher-btn" type="button" data-lang-btn>🌐 <span class="lang-label-full">English</span></button>
           <div class="lang-switcher-menu" data-lang-menu>
-            <a href="/en/favicon-gen/">English</a>
-            <a href="#" class="active">한국어</a>
+            <a href="#" class="active">English</a>
+            <a href="/favicon-gen/">한국어</a>
           </div>
         </div>
-        <a href="/" class="header-back">&#x2190; <span class="header-back-label">BrowserKit 홈으로</span></a>
+        <a href="/en/" class="header-back">&#x2190; <span class="header-back-label">Back to BrowserKit</span></a>
       </div>
     </div>
   </header>
 
   <main><div class="container">
     <div class="hero">
-      <div class="hero-icon" style="height:78px;display:flex;justify-content:center;align-items:center"><div style="transform:scale(1.7);transform-origin:center"><div style="width:46px;height:46px;background:#ffb3c7;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="width:24px;height:24px;border-radius:50%;background:#fffdf9;border:2.5px solid #2a2433;box-sizing:border-box;display:flex;align-items:center;justify-content:center;font:700 12px Gowun Dodum,sans-serif;color:#2a2433">B</div></div></div></div>
-      <div class="hero-title-wrap"><h1 class="hero-title">즐겨찾기 아이콘 생성기</h1><a href="/blog/57-favicongen-howto" class="hero-guide-link">사용법 가이드 보기</a></div>
-      <p class="hero-desc">이미지 1장으로 다양한 크기의 파비콘 세트와 favicon.ico를 즉시 생성하세요</p>
+      <div class="hero-icon" style="height:78px;display:flex;justify-content:center;align-items:center"><div style="transform:scale(1.7);transform-origin:center"><div style="width:46px;height:46px;background:#ffb3c7;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="width:24px;height:24px;border-radius:50%;background:#fffdf9;border:2.5px solid #2a2433;box-sizing:border-box;display:flex;align-items:center;justify-content:center;font:700 12px Poppins,sans-serif;color:#2a2433">B</div></div></div></div>
+      <div class="hero-title-wrap"><h1 class="hero-title">Favicon Generator</h1><a href="/blog/57-favicongen-howto" class="hero-guide-link">View usage guide</a></div>
+      <p class="hero-desc">Instantly generate a full favicon set in multiple sizes plus favicon.ico from a single image</p>
       <div class="hero-badges">
-        <span class="badge">🔒 완전 로컬 처리</span>
-        <span class="badge">⚡ 무료 사용</span>
-        <span class="badge">🛡️ 서버 전송 없음</span>
-        <span class="badge">📦 설치 불필요</span>
+        <span class="badge">🔒 Fully local processing</span>
+        <span class="badge">⚡ Free to use</span>
+        <span class="badge">🛡️ No server upload</span>
+        <span class="badge">📦 No installation</span>
       </div>
     </div>
-    <div style="margin:0 0 12px"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><div class="adfit-h-desktop"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-QD4pRIpdIj7i2mbt" data-ad-width="728" data-ad-height="90"></ins></div><div class="adfit-h-mobile"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-R4xA2niTT8HgGjoO" data-ad-width="320" data-ad-height="50"></ins></div></div>
+    <!-- Google AdSense Display Ad — pending approval, reserving space -->
+    <div class="ad-slot" id="adTop">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
 
-    <p class="notice">💡 정사각형이 아닌 이미지는 가운데를 기준으로 정사각형으로 자동으로 잘라 사용합니다. 로고나 아이콘처럼 미리 정사각형으로 준비된 이미지를 사용하면 더 깔끔한 결과를 얻을 수 있습니다.</p>
+    <p class="notice">💡 If your image isn't square, it's automatically center-cropped to a square. For the cleanest results, use an image that's already square, like a logo or icon.</p>
 
-    <!-- 업로드 존 -->
+    <!-- Upload zone -->
     <div class="upload-zone" id="uploadZone">
       <input type="file" id="fileInput" accept="image/*" style="display:none" />
       <div class="upload-icon">🖼️</div>
-      <div class="upload-title">이미지를 업로드하세요</div>
-      <div class="upload-sub">클릭하거나 파일을 드래그하세요 (JPG, PNG, WEBP, SVG)</div>
-      <div class="upload-safe">🔒 파일은 서버로 전송되지 않습니다</div>
+      <div class="upload-title">Upload an image</div>
+      <div class="upload-sub">Click or drag a file here (JPG, PNG, WEBP, SVG)</div>
+      <div class="upload-safe">🔒 Files are never uploaded to a server</div>
     </div>
 
-    <!-- 결과 -->
+    <!-- Result -->
     <div class="result-wrap" id="resultWrap">
       <div class="preview-card">
-        <div class="preview-src-wrap"><img id="previewImg" src="" alt="업로드한 이미지 미리보기" /></div>
+        <div class="preview-src-wrap"><img id="previewImg" src="" alt="Preview of the uploaded image" /></div>
         <div class="file-meta">
-          <div class="file-meta-row"><span class="file-meta-label">파일명</span><span class="file-meta-value" id="fileName">—</span></div>
-          <div class="file-meta-row"><span class="file-meta-label">원본 크기</span><span class="file-meta-value" id="fileDim">—</span></div>
+          <div class="file-meta-row"><span class="file-meta-label">File name</span><span class="file-meta-value" id="fileName">—</span></div>
+          <div class="file-meta-row"><span class="file-meta-label">Original size</span><span class="file-meta-value" id="fileDim">—</span></div>
         </div>
       </div>
 
       <div class="size-grid" id="sizeGrid"></div>
 
       <div class="snippet-card">
-        <div class="snippet-title">📤 HTML 코드</div>
+        <div class="snippet-title">📤 HTML Code</div>
         <div class="snippet-code" id="snippetCode"></div>
-        <button class="btn-sub" id="copySnippetBtn">📋 HTML 코드 복사</button>
+        <button class="btn-sub" id="copySnippetBtn">📋 Copy HTML Code</button>
       </div>
 
       <div class="action-wrap">
-        <button class="btn-primary" id="downloadZipBtn">&#x2B07; 전체 ZIP 다운로드 (PNG + favicon.ico)</button>
-        <button class="btn-sub" id="resetBtn">&#x21BA; 새 이미지 선택</button>
+        <button class="btn-primary" id="downloadZipBtn">&#x2B07; Download All as ZIP (PNG + favicon.ico)</button>
+        <button class="btn-sub" id="resetBtn">&#x21BA; Choose New Image</button>
       </div>
     </div>
 
-    <div style="margin:0 0 12px"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><!-- 카카오 애드핏 (2026-07-22, 쿠팡 파트너스 다이내믹 배너로 교체) — 복원 시 주석 해제: <div class="adfit-h-desktop"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-QD4pRIpdIj7i2mbt" data-ad-width="728" data-ad-height="90"></ins></div><div class="adfit-h-mobile"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-R4xA2niTT8HgGjoO" data-ad-width="320" data-ad-height="50"></ins></div> --><div class="adfit-h-desktop"><script src="https://ads-partners.coupang.com/g.js"></script><script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"728","height":"90","tsource":""});</script></div><div class="adfit-h-mobile"><script src="https://ads-partners.coupang.com/g.js"></script><script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"320","height":"50","tsource":""});</script></div></div>
+    <!-- Google AdSense Display Ad — pending approval, reserving space -->
+    <div class="ad-slot" id="adMiddle">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
 
     <div class="guide-summary">
-      <h2 class="guide-summary-title">사용법 요약</h2>
+      <h2 class="guide-summary-title">Quick guide</h2>
       <ol class="guide-steps">
-        <li>이미지 업로드</li>
-        <li>크기별 미리보기 확인</li>
-        <li>HTML 코드 복사</li>
+        <li>Upload an image</li>
+        <li>Check the preview for each size</li>
+        <li>Copy the HTML code</li>
       </ol>
-      <h3 class="guide-faq-title">자주 묻는 질문</h3>
+      <h3 class="guide-faq-title">Frequently asked questions</h3>
       <div class="guide-faq">
         <details>
-          <summary>즐겨찾기 아이콘 생성기 도구는 정말 무료인가요?</summary>
-          <p>네, 회원가입이나 설치 없이 완전 무료로 사용할 수 있습니다. 횟수 제한도 없습니다.</p>
+          <summary>Is the Favicon Generator tool really free?</summary>
+          <p>Yes, it is completely free to use with no sign-up or installation required. There is no usage limit either.</p>
         </details>
         <details>
-          <summary>업로드한 파일이 서버로 전송되나요?</summary>
-          <p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 업로드한 파일이 외부 서버로 전송되거나 저장되지 않습니다.</p>
+          <summary>Are uploaded files sent to a server?</summary>
+          <p>No. All processing happens entirely in your browser, and uploaded files are never sent to or stored on an external server.</p>
         </details>
         <details>
-          <summary>어떤 크기의 파비콘이 만들어지나요?</summary>
-          <p>16px, 32px 등 웹사이트에서 필요한 표준 크기의 파비콘을 한 번에 생성합니다.</p>
+          <summary>What favicon sizes are generated?</summary>
+          <p>It generates all the standard sizes a website needs at once, including 16px and 32px.</p>
         </details>
         <details>
-          <summary>모바일에서도 사용할 수 있나요?</summary>
-          <p>네, 별도의 앱 설치 없이 모바일 브라우저에서도 동일하게 사용할 수 있습니다.</p>
+          <summary>Can I use this on mobile?</summary>
+          <p>Yes, it works the same way in a mobile browser without needing to install any app.</p>
         </details>
       </div>
-      <a href="/blog/57-favicongen-howto" class="guide-full-link">전체 가이드 보기 →</a>
+      <a href="/blog/57-favicongen-howto" class="guide-full-link">View full guide →</a>
     </div>
 
-    <div style="margin:0 0 12px"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="9500090221"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><div class="adfit-rect-wrap"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-oePL4TCj742xAwqT" data-ad-width="300" data-ad-height="250"></ins></div></div>
+    <!-- Google AdSense Multiplex Ad — pending approval, reserving space -->
+    <div class="ad-slot ad-slot-rect" id="adBottom">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
   </div></main>
 
   <footer class="footer">
     <div class="container">
-      <p class="footer-copy">&#xa9; 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p>
+      <p class="footer-copy">&#xa9; 2026 BrowserKit. All processing happens in your browser.</p>
       <nav class="footer-nav">
-        <a href="/privacy">개인정보 처리방침</a>
-        <a href="/terms">이용약관</a>
-        <a href="/about">서비스 소개</a>
-        <a href="/blog/">블로그</a>
+        <a href="/en/privacy.html">Privacy Policy</a>
+        <a href="/en/terms.html">Terms of Service</a>
+        <a href="/en/about.html">About</a>
+        <a href="/en/blog/">Blog</a>
       </nav>
     </div>
   </footer>
@@ -296,14 +310,14 @@
   });
 
   function loadFile(file) {
-    if (!file.type.startsWith('image/')) { showToast('이미지 파일을 선택해주세요'); return; }
+    if (!file.type.startsWith('image/')) { showToast('Please choose an image file'); return; }
     currentFile = file;
     if (currentObjectUrl) URL.revokeObjectURL(currentObjectUrl);
     currentObjectUrl = URL.createObjectURL(file);
     previewImg.src = currentObjectUrl;
 
     document.getElementById('fileName').textContent = file.name;
-    document.getElementById('fileDim').textContent = '측정 중...';
+    document.getElementById('fileDim').textContent = 'Measuring...';
 
     var img = new Image();
     img.onload = function() {
@@ -312,11 +326,11 @@
       resultWrap.classList.add('show');
       generateAll(img);
     };
-    img.onerror = function() { showToast('이미지를 불러올 수 없습니다'); };
+    img.onerror = function() { showToast('Could not load the image'); };
     img.src = currentObjectUrl;
   }
 
-  // 정사각형으로 가운데 크롭한 소스 캔버스 생성
+  // Create a center-cropped square source canvas
   function makeSquareSource(img) {
     var side = Math.min(img.naturalWidth, img.naturalHeight);
     var sx = (img.naturalWidth - side) / 2;
@@ -367,7 +381,7 @@
       use.textContent = entry.use;
       var btn = document.createElement('button');
       btn.className = 'size-download';
-      btn.textContent = '⬇ PNG 다운로드';
+      btn.textContent = '⬇ Download PNG';
 
       card.appendChild(wrap);
       card.appendChild(label);
@@ -403,7 +417,7 @@
     URL.revokeObjectURL(a.href);
   }
 
-  // ── ICO 파일 생성 (PNG 임베드 방식, Vista 이후 표준) ──
+  // ── Build the ICO file (PNG-embedded format, standard since Vista) ──
   async function buildIco(blobsBySize, sizes) {
     var images = [];
     for (var i = 0; i < sizes.length; i++) {
@@ -445,12 +459,12 @@
 
   document.getElementById('copySnippetBtn').addEventListener('click', function() {
     navigator.clipboard.writeText(snippetCode.textContent).then(function() {
-      showToast('✓ HTML 코드가 복사되었습니다');
+      showToast('✓ HTML code copied');
     });
   });
 
   document.getElementById('downloadZipBtn').addEventListener('click', async function() {
-    if (!Object.keys(generatedBlobs).length) { showToast('먼저 이미지를 업로드해주세요'); return; }
+    if (!Object.keys(generatedBlobs).length) { showToast('Please upload an image first'); return; }
     try {
       var zip = new JSZip();
       for (var i = 0; i < allSizes.length; i++) {
@@ -463,9 +477,9 @@
 
       var content = await zip.generateAsync({ type: 'blob' });
       downloadBlob(content, 'favicon-set.zip');
-      showToast('✓ ZIP 파일이 저장됩니다');
+      showToast('✓ ZIP file saved');
     } catch (e) {
-      showToast('ZIP 생성 중 오류가 발생했습니다');
+      showToast('An error occurred while creating the ZIP');
     }
   });
 
@@ -506,7 +520,7 @@
     try {
       if (document.cookie.indexOf('bk_lang_dismiss=1') !== -1) return;
       var lang = (navigator.language || navigator.userLanguage || '').toLowerCase();
-      if (lang.indexOf('ko') === 0) return;
+      if (lang.indexOf('ko') !== 0) return;
       var banner = document.getElementById('langBanner');
       if (!banner) return;
       banner.classList.add('show');
