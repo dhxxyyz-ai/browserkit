@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="icon" href="/favicon.ico" sizes="32x32">
+  <link rel="icon" href="/favicon-16.png" sizes="16x16" type="image/png">
+  <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="/favicon-192.png" sizes="192x192" type="image/png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="The official step-by-step guide to every feature of SplitBillCalc. Learn how to split a total bill evenly, and how to settle up when everyone paid a different amount." />
+  <meta property="og:title" content="Split Bill Calculator: The Complete Guide — BrowserKit" />
+  <meta property="og:description" content="The official SplitBillCalc guide to splitting a bill evenly and calculating who owes what." />
+  <meta property="og:type" content="article" />
+  <title>Split Bill Calculator: The Complete Guide — BrowserKit</title>
+  <link rel="stylesheet" href="/css/style.css?v=20260724c" />
+  <link rel="stylesheet" href="/css/style-en.css?v=20260724a" />
+  <!-- Google AdSense — pending re-review. Uncomment once approved.
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506"
+     crossorigin="anonymous"></script>
+  -->
+  <style>
+    .post-warn { background:rgba(248,113,113,0.08); border-left:3px solid #F87171; border-radius:8px; padding:16px 20px; margin:24px 0; font-size:15px; color:var(--subtext); line-height:1.8; }
+    .feature-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:20px 0; }
+    .feature-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px; }
+    .feature-card:hover { border-color:var(--point); }
+    .feature-icon { font-size:24px; margin-bottom:10px; }
+    .feature-title { font-size:14px; font-weight:600; color:var(--text); margin-bottom:6px; }
+    .feature-desc { font-size:13px; color:var(--subtext); line-height:1.7; }
+    .step-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px 24px; margin:16px 0; display:flex; gap:16px; align-items:flex-start; }
+    .step-num { min-width:36px; height:36px; background:linear-gradient(135deg,var(--point),var(--point-hover)); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:700; color:white; flex-shrink:0; }
+    .step-content h3 { font-size:15px; font-weight:600; margin:0 0 6px; color:var(--text); }
+    .step-content p { font-size:14px; color:var(--subtext); line-height:1.7; margin:0; }
+
+    .post-table { width:100%; border-collapse:collapse; margin:20px 0; font-size:15px; }
+    .post-table th { background:var(--card); padding:12px 16px; text-align:left; font-weight:600; border:1px solid var(--border); color:var(--text); }
+    .post-table td { padding:11px 16px; border:1px solid var(--border); color:var(--subtext); line-height:1.7; }
+    .post-table td code { background:var(--bg); border-radius:4px; padding:1px 6px; font-size:13px; color:var(--point-hover); font-family:'Fira Code',monospace; }
+    .post-table tr:hover td { background:rgba(123,108,255,0.04); }
+    .use-case-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:20px 0; }
+    .use-case-card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:18px; }
+    .use-case-icon { font-size:28px; margin-bottom:8px; }
+    .use-case-title { font-size:13px; font-weight:600; color:var(--text); margin-bottom:6px; }
+    .use-case-desc { font-size:12px; color:var(--subtext); line-height:1.7; }
+    .post-nav { display:flex; justify-content:space-between; margin-top:12px; padding-top:24px; border-top:1px solid var(--border); gap:12px; }
+    .post-nav a { font-size:15px; color:var(--subtext); text-decoration:none; }
+    .post-nav a:hover { color:var(--text); }
+    .cta-box { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:28px; text-align:center; margin:12px 0 0; }
+    .cta-box p { font-size:17px; color:var(--subtext); margin-bottom:16px; }
+    .cta-btn { display:inline-block; background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border-radius:10px; padding:12px 28px; font-size:14px; font-weight:600; text-decoration:none; }
+    .cta-btn:hover { transform:translateY(-2px); box-shadow:0 8px 24px var(--glow); color:white; }
+    .back-link:hover { color:var(--text); }
+    @media (max-width:640px) {
+      .feature-grid { grid-template-columns:1fr; }
+      .use-case-grid { grid-template-columns:1fr; }
+    }
+  </style>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<meta property="og:image" content="https://browserkit.online/img/og/split-bill-calc.png" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Split Bill Calculator: The Complete Guide",
+    "description": "The official step-by-step guide to every feature of SplitBillCalc. Learn how to split a total bill evenly, and how to settle up when everyone paid a different amount.",
+    "datePublished": "2026-07-21T00:00:00+09:00",
+    "dateModified": "2026-07-22T00:00:00+09:00",
+    "author": { "@type": "Organization", "name": "BrowserKit", "url": "https://browserkit.online" },
+    "publisher": { "@type": "Organization", "name": "BrowserKit", "url": "https://browserkit.online", "logo": { "@type": "ImageObject", "url": "https://browserkit.online/img/og-browserkit.png" } },
+    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://browserkit.online/en/blog/91-splitbillcalc-howto" },
+    "image": "https://browserkit.online/img/og/split-bill-calc.png"
+  }
+  </script>  <link rel="canonical" href="https://browserkit.online/en/blog/91-splitbillcalc-howto" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://browserkit.online/en/" },
+    { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://browserkit.online/en/blog/" },
+    { "@type": "ListItem", "position": 3, "name": "Split Bill Calculator: The Complete Guide", "item": "https://browserkit.online/en/blog/91-splitbillcalc-howto" }
+  ]
+}
+  </script>
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://browserkit.online/img/og/split-bill-calc.png" />
+  <style>
+    .post-table-wrap { overflow-x:auto; }
+    .post-table th, .post-table td { white-space:nowrap; }
+    .post-nav a { word-break:keep-all; }
+    .post-nav .nav-label { display:block; font-size:13px; color:var(--subtext); opacity:0.7; margin-bottom:4px; }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Is the Split Bill Calculator really free?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, it is completely free to use with no sign-up or installation required. There is no limit on the number of calculations either."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What happens if the total doesn't divide evenly among everyone?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Any leftover cents are automatically distributed by having the first person(s) in line pay one cent more. For example, splitting $10 three ways shows as $3.34 / $3.33 / $3.33."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How is Settle Up mode different?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Split Evenly assumes everyone pays the same amount, while Settle Up handles the case where everyone paid a different amount (e.g. one person covered the whole bill), comparing each person to the average and calculating who should pay whom, using the fewest possible transfers."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is the amount I enter sent to a server?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. All calculations happen entirely in your browser, and no amount or name you enter is ever sent to an external server."
+      }
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <div class="lang-banner" id="langBanner">
+    <span>🌐 이 페이지는 <a href="/blog/91-splitbillcalc-howto">한국어</a>로도 볼 수 있습니다.</span>
+    <button class="lang-banner-close" id="langBannerClose" type="button" aria-label="close">&times;</button>
+  </div>
+  <header class="header">
+    <div class="container">
+      <a href="/en/" class="header-brand"><div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Poppins,sans-serif;flex-shrink:0">B</div><span class="header-brand-text"><span style="color:var(--text)">Browser</span><span style="color:var(--point)">Kit</span></span></a>
+      <div class="header-right">
+        <div class="lang-switcher">
+          <button class="lang-switcher-btn" type="button" data-lang-btn>🌐 <span class="lang-label-full">English</span></button>
+          <div class="lang-switcher-menu" data-lang-menu>
+            <a href="#" class="active">English</a>
+            <a href="/blog/91-splitbillcalc-howto">한국어</a>
+          </div>
+        </div>
+        <a href="/en/" class="header-back">&#x2190; <span class="header-back-label">Back to BrowserKit</span></a>
+      </div>
+    </div>
+  </header>
+
+  <article class="post-wrap">
+    <a href="/en/blog/" class="back-link">&#x2190; Blog</a>
+    <span class="post-tag">Guide</span>
+    <h1 class="post-title"><span style="color:var(--point-hover)">Split Bill Calculator</span>: The Complete Guide</h1>
+    <div class="post-date">July 21, 2026</div>
+    <!-- Google AdSense Display Ad — pending approval, reserving space -->
+    <div class="ad-slot" id="adExtra2">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
+
+    <div class="post-body">
+      <p>You've probably been there: dinner with friends, one person pays the whole bill, and now everyone says "let's just split it." But when the total doesn't divide evenly, or someone paid less because they skipped the drinks, the math gets surprisingly fiddly. SplitBillCalc is a free online tool that either splits a total evenly, or, when everyone paid different amounts, automatically figures out who owes whom and how much. All calculations happen right in your browser.</p>
+
+      <h2>Key Features</h2>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F465;</div>
+          <div class="feature-title">Split Evenly</div>
+          <div class="feature-desc">Enter the total and the number of people, and instantly get each person's share.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F4B8;</div>
+          <div class="feature-title">Settle Up Mode</div>
+          <div class="feature-desc">When everyone paid a different amount, compares each person to the average and works out how to settle up.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x27A1;&#xFE0F;</div>
+          <div class="feature-title">Minimal Transfers</div>
+          <div class="feature-desc">Shows who should pay whom, using the fewest possible transfers.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F512;</div>
+          <div class="feature-title">Fully Local Processing</div>
+          <div class="feature-desc">Amounts and names you enter are processed only in your browser and never sent to a server.</div>
+        </div>
+      </div>
+
+      <!-- Google AdSense Display Ad — pending approval, reserving space -->
+    <div class="ad-slot" id="adTop">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
+
+      <h2>How to Use It</h2>
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <h3>Choose a Mode</h3>
+          <p>If everyone is paying the same amount, choose <strong>Split Evenly</strong>. If everyone already paid different amounts, choose <strong>Settle Up</strong>.</p>
+        </div>
+      </div>
+
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <h3>Enter the Amounts</h3>
+          <p>For Split Evenly, enter the total and the number of people. For Settle Up, enter each person's name (optional) and how much they paid, and use <strong>+ Add Person</strong> to add more.</p>
+        </div>
+      </div>
+
+      
+
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <h3>Calculate</h3>
+          <p>Click the <strong>🧮 Calculate</strong> button and see each person's share, or the settle-up result. In Settle Up mode, it also spells out exactly who should pay whom.</p>
+        </div>
+      </div>
+
+      
+
+      <div class="post-warn">
+        <strong>⚠️ Note:</strong> In Split Evenly, any leftover cents that don't divide evenly are distributed by having the first person(s) in line pay one cent more. Feel free to round however's convenient when actually settling up.
+      </div>
+
+      <div class="post-warn" style="background:rgba(123,108,255,0.06);border-left-color:var(--point)">
+        <strong>💡 Real example:</strong> Three friends have dinner, total $60, and Alex pays for everyone → the average share is $20 per person. Blake and Casey each send Alex $20 and they're settled. If instead $10 is split three ways evenly, it comes to $3.34 / $3.33 / $3.33 — the extra cent goes to whoever's first in line.
+      </div>
+
+      <h2>Which Mode Should You Use?</h2>
+      <div class="post-table-wrap"><table class="post-table">
+        <thead><tr><th>Mode</th><th>When to Use It</th></tr></thead>
+        <tbody>
+          <tr><td>Split Evenly</td><td>Everyone ordered the same thing, or you agreed up front to split evenly</td></tr>
+          <tr><td>Settle Up</td><td>One person paid the whole bill up front, or everyone already paid different amounts</td></tr>
+        </tbody>
+      </table></div>
+
+      <h2>Use Cases</h2>
+      <div class="use-case-grid">
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F37D;&#xFE0F;</div>
+          <div class="use-case-title">Group Dinners</div>
+          <div class="use-case-desc">Split the total evenly across everyone at the table.</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x2708;&#xFE0F;</div>
+          <div class="use-case-title">Trip Expenses</div>
+          <div class="use-case-desc">Figure out who owes whom when lodging and transport were paid by different people.</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F3E0;</div>
+          <div class="use-case-title">Shared Living Expenses</div>
+          <div class="use-case-desc">Split utility bills or shared household costs between roommates.</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F3AF;</div>
+          <div class="use-case-title">Club Dues</div>
+          <div class="use-case-desc">Split or settle up group activity costs among club members.</div>
+        </div>
+      </div>
+
+      <div class="post-highlight">&#x1F512; SplitBillCalc runs every calculation right in your browser. No amount or name you enter is ever sent to an external server.</div>
+
+      <h2>Frequently Asked Questions</h2>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
+        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. Is the Split Bill Calculator really free?</p>
+        <p style="color:var(--subtext);margin:0;line-height:1.7">Yes, it is completely free to use with no sign-up or installation required. There is no limit on the number of calculations either.</p>
+      </div>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
+        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. What happens if the total doesn't divide evenly among everyone?</p>
+        <p style="color:var(--subtext);margin:0;line-height:1.7">Any leftover cents are automatically distributed by having the first person(s) in line pay one cent more. For example, splitting $10 three ways shows as $3.34 / $3.33 / $3.33.</p>
+      </div>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
+        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. How is Settle Up mode different?</p>
+        <p style="color:var(--subtext);margin:0;line-height:1.7">Split Evenly assumes everyone pays the same amount, while Settle Up handles the case where everyone paid a different amount (e.g. one person covered the whole bill), comparing each person to the average and calculating who should pay whom, using the fewest possible transfers.</p>
+      </div>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
+        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. Is the amount I enter sent to a server?</p>
+        <p style="color:var(--subtext);margin:0;line-height:1.7">No. All calculations happen entirely in your browser, and no amount or name you enter is ever sent to an external server.</p>
+      </div>
+    </div>
+
+    <div style="margin:12px 0"><!-- Google AdSense Display Ad — pending approval, reserving space -->
+    <div class="ad-slot" id="adMiddle">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
+
+    <div class="cta-box">
+      <p>Split your bill right now.<br />No installation or sign-up required.</p>
+      <a href="/en/split-bill-calc/" class="cta-btn" style="display:inline-flex;align-items:center;gap:8px">
+        <span style="display:inline-block;width:26px;height:26px;overflow:hidden;flex-shrink:0"><span style="display:block;transform:scale(0.565);transform-origin:top left"><div style="width:46px;height:46px;background:#a0e8e0;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="font:700 13px Poppins,sans-serif;color:#2a2433;line-height:1;letter-spacing:-.5px;white-space:nowrap">1/N</div></div></span></span>
+        Split a Bill for Free
+      </a>
+    </div>
+    <!-- Google AdSense Multiplex Ad — pending approval, reserving space -->
+    <div class="ad-slot ad-slot-rect" id="adBottom">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
+
+<div class="post-nav">
+      <a href="/en/blog/85-bmicalc-howto"><span class="nav-label">&larr; Previous</span><span style="color:var(--point-hover)">BMI Calculator</span>: The Complete Guide</a>
+      <a href="/en/blog/" style="text-align:right"><span class="nav-label">Blog &rarr;</span>More Guides</a>
+    </div></div>
+
+  </article>
+  <footer class="footer">
+    <div class="container">
+      <p class="footer-copy">&#xa9; 2026 BrowserKit. All processing happens in your browser.</p>
+      <nav class="footer-nav">
+        <a href="/en/privacy.html">Privacy Policy</a>
+        <a href="/en/terms.html">Terms of Service</a>
+        <a href="/en/about.html">About</a>
+        <a href="/en/blog/">Blog</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script>
+  document.querySelectorAll('[data-lang-btn]').forEach(function(btn){
+    btn.addEventListener('click', function(e){
+      e.stopPropagation();
+      var menu = btn.nextElementSibling;
+      menu.classList.toggle('show');
+    });
+  });
+  document.addEventListener('click', function(){
+    document.querySelectorAll('.lang-switcher-menu.show').forEach(function(m){ m.classList.remove('show'); });
+  });
+  </script>
+
+  <script>
+  (function(){
+    try {
+      if (document.cookie.indexOf('bk_lang_dismiss=1') !== -1) return;
+      var lang = (navigator.language || navigator.userLanguage || '').toLowerCase();
+      if (lang.indexOf('ko') !== 0) return;
+      var banner = document.getElementById('langBanner');
+      if (!banner) return;
+      banner.classList.add('show');
+      var closeBtn = document.getElementById('langBannerClose');
+      closeBtn.addEventListener('click', function(){
+        banner.classList.remove('show');
+        document.cookie = 'bk_lang_dismiss=1; max-age=' + (60*60*24*180) + '; path=/';
+      });
+    } catch(e) {}
+  })();
+  </script>
+</body>
+</html>
