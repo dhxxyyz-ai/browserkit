@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
   <link rel="icon" href="/favicon.ico" sizes="32x32">
   <link rel="icon" href="/favicon-16.png" sizes="16x16" type="image/png">
@@ -8,18 +8,17 @@
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="이미지 밝기, 대비, 채도, 색온도를 실시간으로 보정하는 무료 온라인 도구. 서버 전송 없이 브라우저에서 바로 처리합니다." />
-  <meta property="og:title" content="ImageBright — 이미지 보정 도구" />
-  <meta property="og:description" content="밝기, 대비, 채도, 색온도를 슬라이더로 실시간 조절하는 무료 온라인 이미지 보정 도구입니다." />
+  <meta name="description" content="A free online tool to adjust image brightness, contrast, saturation, and color temperature in real time. Everything is processed right in your browser, with no server upload." />
+  <meta property="og:title" content="ImageBright — Adjust Image Colors" />
+  <meta property="og:description" content="A free online image-adjustment tool that lets you tune brightness, contrast, saturation, and color temperature in real time with sliders." />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://browserkit.online/image-bright/" />
-  <title>ImageBright — 이미지 보정 도구</title>
+  <meta property="og:url" content="https://browserkit.online/en/image-bright/" />
+  <title>ImageBright — Adjust Image Colors</title>
   <link rel="stylesheet" href="/css/style.css?v=20260724c" />
-  <!-- Google AdSense 승인 대기 중 (2026-07-19 주석 처리, 카카오 애드핏으로 임시 전환) — 승인 후 주석 해제
+  <!-- Google AdSense — pending re-review. Uncomment once approved.
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506"
      crossorigin="anonymous"></script>
   -->
-  <script type="text/javascript" src="//t1.kakaocdn.net/kas/static/ba.min.js" async></script>
   <style>
     .guide-summary { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:24px; margin:0 0 12px; }
     .guide-summary-title { font-size:16px; font-weight:700; color:var(--text); margin:0 0 12px; }
@@ -31,29 +30,32 @@
     .guide-full-link { display:inline-block; margin-top:12px; font-size:14px; font-weight:600; color:var(--point-hover); text-decoration:none; }
     .guide-full-link:hover { text-decoration:underline; }
 
+    .ad-slot { min-height:90px; display:flex; align-items:center; justify-content:center; margin:0 0 12px; }
+    .ad-slot-rect { min-height:250px; }
 
-/* 업로드 존 */
+
+/* Upload zone */
     .upload-zone { background:var(--card); border:2px dashed var(--border); border-radius:var(--radius); padding:48px 32px; text-align:center; cursor:pointer; margin-bottom:24px; transition:all 0.2s; }
     .upload-zone:hover, .upload-zone.drag-over { border-color:var(--point); box-shadow:0 0 24px var(--glow); }
     .upload-icon { font-size:40px; margin-bottom:12px; }
     .upload-title { font-size:16px; font-weight:600; margin-bottom:6px; }
     .upload-sub { color:var(--subtext); font-size:13px; }
 
-    /* 작업 영역 */
+    /* Work area */
     .work-area { display:none; }
     .work-area.show { display:block; }
 
-    /* 미리보기 */
+    /* Preview */
     .preview-wrap { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:24px; }
     .preview-pane { display:flex; flex-direction:column; gap:8px; }
     .pane-label { font-size:12px; font-weight:600; color:var(--subtext); padding:6px 0; }
     .canvas-wrap { background:repeating-conic-gradient(#1e1e2a 0% 25%,#26263a 0% 50%) 0 0/16px 16px; border-radius:12px; overflow:hidden; display:flex; align-items:center; justify-content:center; min-height:240px; }
     .canvas-wrap canvas { max-width:100%; max-height:400px; display:block; }
 
-    /* 파일 정보 */
-    .file-info { font-size:12px; color:var(--subtext); font-family:'Gowun Dodum',sans-serif; }
+    /* File info */
+    .file-info { font-size:12px; color:var(--subtext); }
 
-    /* 슬라이더 패널 */
+    /* Slider panel */
     .slider-panel { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:24px; margin-bottom:20px; }
     .slider-panel-title { font-size:14px; font-weight:700; color:var(--text); margin-bottom:20px; display:flex; align-items:center; gap:8px; }
     .slider-row { display:grid; grid-template-columns:90px 1fr 52px; align-items:center; gap:12px; margin-bottom:16px; }
@@ -62,27 +64,27 @@
     .range-slider { -webkit-appearance:none; height:6px; border-radius:3px; background:var(--border); outline:none; width:100%; }
     .range-slider::-webkit-slider-thumb { -webkit-appearance:none; width:18px; height:18px; border-radius:50%; background:var(--point); cursor:pointer; box-shadow:0 0 0 3px rgba(123,108,255,0.2); }
     .range-slider::-moz-range-thumb { width:18px; height:18px; border-radius:50%; background:var(--point); cursor:pointer; border:none; }
-    .slider-val { font-size:13px; font-weight:600; color:var(--point-hover); font-family:'Gowun Dodum',sans-serif; text-align:right; }
+    .slider-val { font-size:13px; font-weight:600; color:var(--point-hover); text-align:right; }
 
-    /* 액션 버튼 */
+    /* Action buttons */
     .action-bar { display:flex; gap:10px; margin-bottom:48px; flex-wrap:wrap; }
-    .btn-primary { background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border:none; border-radius:10px; padding:12px 24px; font-size:14px; font-weight:700; cursor:pointer; font-family:'Gowun Dodum',sans-serif; transition:all 0.2s; white-space:nowrap; }
+    .btn-primary { background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border:none; border-radius:10px; padding:12px 24px; font-size:14px; font-weight:700; cursor:pointer; transition:all 0.2s; white-space:nowrap; }
     .btn-primary:hover { transform:translateY(-2px); box-shadow:0 8px 24px var(--glow); }
-    .btn-sub { background:var(--card); color:var(--subtext); border:1px solid var(--border); border-radius:10px; padding:12px 20px; font-size:14px; cursor:pointer; font-family:'Gowun Dodum',sans-serif; transition:all 0.2s; white-space:nowrap; }
+    .btn-sub { background:var(--card); color:var(--subtext); border:1px solid var(--border); border-radius:10px; padding:12px 20px; font-size:14px; cursor:pointer; transition:all 0.2s; white-space:nowrap; }
     .btn-sub:hover { color:var(--text); border-color:var(--point); }
-    .btn-danger { background:var(--card); color:#F87171; border:1px solid var(--border); border-radius:10px; padding:12px 20px; font-size:14px; cursor:pointer; font-family:'Gowun Dodum',sans-serif; transition:all 0.2s; white-space:nowrap; }
+    .btn-danger { background:var(--card); color:#F87171; border:1px solid var(--border); border-radius:10px; padding:12px 20px; font-size:14px; cursor:pointer; transition:all 0.2s; white-space:nowrap; }
     .btn-danger:hover { border-color:#F87171; }
 
-    /* 빠른 프리셋 */
+    /* Quick presets */
     .preset-wrap { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:16px; }
-    .preset-btn { background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:7px 14px; font-size:12px; font-weight:600; color:var(--subtext); cursor:pointer; font-family:'Gowun Dodum',sans-serif; transition:all 0.2s; }
+    .preset-btn { background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:7px 14px; font-size:12px; font-weight:600; color:var(--subtext); cursor:pointer; transition:all 0.2s; }
     .preset-btn:hover { border-color:var(--point); color:var(--text); }
 
-    /* 토스트 */
+    /* Toast */
     .toast { position:fixed; bottom:32px; left:50%; transform:translateX(-50%) translateY(80px); background:var(--success); color:#fff; border-radius:999px; padding:10px 24px; font-size:14px; font-weight:600; opacity:0; pointer-events:none; z-index:999; transition:all 0.3s ease; }
     .toast.show { transform:translateX(-50%) translateY(0); opacity:1; }
 
-    /* 배너 */
+    /* Banner */
     .footer { border-top:1px solid var(--border); padding:32px 0; text-align:center; }
     .footer-copy { color:var(--subtext); font-size:13px; margin-bottom:12px; }
     .footer-nav { display:flex; justify-content:center; gap:20px; flex-wrap:wrap; }
@@ -96,9 +98,9 @@
     }
   </style>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <meta property="og:image" content="https://browserkit.online/img/og/image-bright.png" />
-  <link rel="canonical" href="https://browserkit.online/image-bright/" />
+  <link rel="canonical" href="https://browserkit.online/en/image-bright/" />
   <link rel="alternate" hreflang="ko" href="https://browserkit.online/image-bright/" />
   <link rel="alternate" hreflang="en" href="https://browserkit.online/en/image-bright/" />
   <link rel="alternate" hreflang="x-default" href="https://browserkit.online/en/image-bright/" />
@@ -108,18 +110,18 @@
 {
   "@context": "https://schema.org",
   "@type": "WebApplication",
-  "name": "ImageBright — 이미지 보정 도구",
-  "url": "https://browserkit.online/image-bright/",
-  "description": "이미지 밝기, 대비, 채도, 색온도를 실시간으로 보정하는 무료 온라인 도구. 서버 전송 없이 브라우저에서 바로 처리합니다.",
+  "name": "ImageBright — Adjust Image Colors",
+  "url": "https://browserkit.online/en/image-bright/",
+  "description": "A free online tool to adjust image brightness, contrast, saturation, and color temperature in real time. Everything is processed right in your browser, with no server upload.",
   "applicationCategory": "UtilityApplication",
   "operatingSystem": "Any",
   "browserRequirements": "Requires JavaScript",
-  "inLanguage": "ko",
+  "inLanguage": "en",
   "isAccessibleForFree": true,
   "offers": {
     "@type": "Offer",
     "price": "0",
-    "priceCurrency": "KRW"
+    "priceCurrency": "USD"
   },
   "publisher": {
     "@type": "Organization",
@@ -136,14 +138,14 @@
     {
       "@type": "ListItem",
       "position": 1,
-      "name": "홈",
-      "item": "https://browserkit.online/"
+      "name": "Home",
+      "item": "https://browserkit.online/en/"
     },
     {
       "@type": "ListItem",
       "position": 2,
-      "name": "이미지 보정",
-      "item": "https://browserkit.online/image-bright/"
+      "name": "Adjust Image",
+      "item": "https://browserkit.online/en/image-bright/"
     }
   ]
 }
@@ -152,24 +154,24 @@
 
 <body>
   <div class="lang-banner" id="langBanner">
-    <span>🌐 This page is also available in <a href="/en/image-bright/">English</a>.</span>
+    <span>🌐 이 페이지는 <a href="/image-bright/">한국어</a>로도 볼 수 있습니다.</span>
     <button class="lang-banner-close" id="langBannerClose" type="button" aria-label="close">&times;</button>
   </div>
   <header class="header">
     <div class="container">
-      <a href="/" class="header-brand">
-        <div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Gowun Dodum,sans-serif;flex-shrink:0">B</div>
+      <a href="/en/" class="header-brand">
+        <div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Poppins,sans-serif;flex-shrink:0">B</div>
         <span class="header-brand-text"><span style="color:var(--text)">Browser</span><span style="color:var(--point)">Kit</span></span>
       </a>
       <div class="header-right">
         <div class="lang-switcher">
-          <button class="lang-switcher-btn" type="button" data-lang-btn>🌐 <span class="lang-label-full">한국어</span></button>
+          <button class="lang-switcher-btn" type="button" data-lang-btn>🌐 <span class="lang-label-full">English</span></button>
           <div class="lang-switcher-menu" data-lang-menu>
-            <a href="/en/image-bright/">English</a>
-            <a href="#" class="active">한국어</a>
+            <a href="#" class="active">English</a>
+            <a href="/image-bright/">한국어</a>
           </div>
         </div>
-        <a href="/" class="header-back">&#x2190; <span class="header-back-label">BrowserKit 홈으로</span></a>
+        <a href="/en/" class="header-back">&#x2190; <span class="header-back-label">Back to BrowserKit</span></a>
       </div>
     </div>
   </header>
@@ -177,39 +179,43 @@
   <main><div class="container">
     <div class="hero">
       <div class="hero-icon" style="height:78px;display:flex;justify-content:center;align-items:center"><div style="transform:scale(1.7);transform-origin:center"><div style="width:46px;height:46px;background:#ffb3c7;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="position:relative;width:30px;height:30px;display:flex;align-items:center;justify-content:center"><div style="width:16px;height:16px;border-radius:50%;background:#fffdf9;border:2.5px solid #2a2433;box-sizing:border-box"></div><div style="position:absolute;top:0;left:50%;transform:translateX(-50%);width:2.5px;height:5px;background:#2a2433;border-radius:2px"></div><div style="position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:2.5px;height:5px;background:#2a2433;border-radius:2px"></div><div style="position:absolute;left:0;top:50%;transform:translateY(-50%);width:5px;height:2.5px;background:#2a2433;border-radius:2px"></div><div style="position:absolute;right:0;top:50%;transform:translateY(-50%);width:5px;height:2.5px;background:#2a2433;border-radius:2px"></div></div></div></div></div>
-      <div class="hero-title-wrap"><h1 class="hero-title">이미지 보정</h1><a href="/blog/31-imagebright-howto" class="hero-guide-link">사용법 가이드 보기</a></div>
-      <p class="hero-desc">밝기, 대비, 채도, 색온도를 슬라이더로 실시간 조절하세요. 브라우저에서 바로, 서버 전송 없이</p>
+      <div class="hero-title-wrap"><h1 class="hero-title">Adjust Image</h1><a href="/blog/31-imagebright-howto" class="hero-guide-link">View usage guide</a></div>
+      <p class="hero-desc">Fine-tune brightness, contrast, saturation, and color temperature with sliders, right in your browser, with no server upload</p>
       <div class="hero-badges">
-        <span class="badge">🔒 완전 로컬 처리</span>
-        <span class="badge">⚡ 무료 사용</span>
-        <span class="badge">🛡️ 서버 전송 없음</span>
-        <span class="badge">📦 설치 불필요</span>
+        <span class="badge">🔒 Fully local processing</span>
+        <span class="badge">⚡ Free to use</span>
+        <span class="badge">🛡️ No server upload</span>
+        <span class="badge">📦 No installation</span>
       </div>
     </div>
-    <div style="margin:0 0 12px"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><div class="adfit-h-desktop"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-QD4pRIpdIj7i2mbt" data-ad-width="728" data-ad-height="90"></ins></div><div class="adfit-h-mobile"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-R4xA2niTT8HgGjoO" data-ad-width="320" data-ad-height="50"></ins></div></div>
+    <!-- Google AdSense Display Ad — pending approval, reserving space -->
+    <div class="ad-slot" id="adTop">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
 
-<!-- 업로드 존 -->
+<!-- Upload zone -->
     <div class="upload-zone" id="uploadZone">
       <input type="file" id="fileInput" accept="image/*" style="display:none" />
       <div class="upload-icon" style="height:64px;display:flex;justify-content:center;align-items:center"><div style="transform:scale(1.4);transform-origin:center"><div style="width:46px;height:46px;background:#ffb3c7;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="position:relative;width:30px;height:30px;display:flex;align-items:center;justify-content:center"><div style="width:16px;height:16px;border-radius:50%;background:#fffdf9;border:2.5px solid #2a2433;box-sizing:border-box"></div><div style="position:absolute;top:0;left:50%;transform:translateX(-50%);width:2.5px;height:5px;background:#2a2433;border-radius:2px"></div><div style="position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:2.5px;height:5px;background:#2a2433;border-radius:2px"></div><div style="position:absolute;left:0;top:50%;transform:translateY(-50%);width:5px;height:2.5px;background:#2a2433;border-radius:2px"></div><div style="position:absolute;right:0;top:50%;transform:translateY(-50%);width:5px;height:2.5px;background:#2a2433;border-radius:2px"></div></div></div></div></div>
-      <div class="upload-title">이미지를 업로드하세요</div>
-      <div class="upload-sub">클릭하거나 드래그하세요 (JPG, PNG, WEBP, GIF)</div>
+      <div class="upload-title">Upload an image</div>
+      <div class="upload-sub">Click or drag a file here (JPG, PNG, WEBP, GIF)</div>
     </div>
 
-    <!-- 작업 영역 -->
+    <!-- Work area -->
     <div class="work-area" id="workArea">
 
-      <!-- 미리보기 -->
+      <!-- Preview -->
       <div class="preview-wrap">
         <div class="preview-pane">
-          <div class="pane-label">&#x1F4F7; 원본</div>
+          <div class="pane-label">&#x1F4F7; Original</div>
           <div class="canvas-wrap">
             <canvas id="originalCanvas"></canvas>
           </div>
           <div class="file-info" id="fileInfo"></div>
         </div>
         <div class="preview-pane">
-          <div class="pane-label">&#x2728; 보정 결과</div>
+          <div class="pane-label">&#x2728; Adjusted Result</div>
           <div class="canvas-wrap">
             <canvas id="resultCanvas"></canvas>
           </div>
@@ -217,98 +223,106 @@
         </div>
       </div>
 
-      <!-- 빠른 프리셋 -->
+      <!-- Quick presets -->
       <div class="preset-wrap">
-        <button class="preset-btn" data-preset="vivid">&#x1F31F; 선명하게</button>
-        <button class="preset-btn" data-preset="warm">&#x1F9E1; 따뜻하게</button>
-        <button class="preset-btn" data-preset="cool">&#x1F4D8; 차갑게</button>
-        <button class="preset-btn" data-preset="bright">&#x2600;&#xFE0F; 밝게</button>
-        <button class="preset-btn" data-preset="dark">&#x1F319; 어둡게</button>
-        <button class="preset-btn" data-preset="bw">&#x26AB; 흑백</button>
+        <button class="preset-btn" data-preset="vivid">&#x1F31F; Vivid</button>
+        <button class="preset-btn" data-preset="warm">&#x1F9E1; Warm</button>
+        <button class="preset-btn" data-preset="cool">&#x1F4D8; Cool</button>
+        <button class="preset-btn" data-preset="bright">&#x2600;&#xFE0F; Brighten</button>
+        <button class="preset-btn" data-preset="dark">&#x1F319; Darken</button>
+        <button class="preset-btn" data-preset="bw">&#x26AB; B&amp;W</button>
       </div>
 
-      <!-- 슬라이더 패널 -->
+      <!-- Slider panel -->
       <div class="slider-panel">
-        <div class="slider-panel-title">&#x1F3A8; 보정 설정</div>
+        <div class="slider-panel-title">&#x1F3A8; Adjustment Settings</div>
 
         <div class="slider-row">
-          <span class="slider-label">&#x2600;&#xFE0F; 밝기</span>
+          <span class="slider-label">&#x2600;&#xFE0F; Brightness</span>
           <input type="range" class="range-slider" id="slBright" min="-100" max="100" value="0" />
           <span class="slider-val" id="valBright">0</span>
         </div>
         <div class="slider-row">
-          <span class="slider-label">&#x25D0; 대비</span>
+          <span class="slider-label">&#x25D0; Contrast</span>
           <input type="range" class="range-slider" id="slContrast" min="-100" max="100" value="0" />
           <span class="slider-val" id="valContrast">0</span>
         </div>
         <div class="slider-row">
-          <span class="slider-label">&#x1F308; 채도</span>
+          <span class="slider-label">&#x1F308; Saturation</span>
           <input type="range" class="range-slider" id="slSaturate" min="-100" max="100" value="0" />
           <span class="slider-val" id="valSaturate">0</span>
         </div>
         <div class="slider-row">
-          <span class="slider-label">&#x1F321;&#xFE0F; 색온도</span>
+          <span class="slider-label">&#x1F321;&#xFE0F; Color Temp</span>
           <input type="range" class="range-slider" id="slTemp" min="-100" max="100" value="0" />
           <span class="slider-val" id="valTemp">0</span>
         </div>
         <div class="slider-row">
-          <span class="slider-label">&#x1F4F7; 샤프니스</span>
+          <span class="slider-label">&#x1F4F7; Sharpness</span>
           <input type="range" class="range-slider" id="slSharp" min="0" max="100" value="0" />
           <span class="slider-val" id="valSharp">0</span>
         </div>
       </div>
 
-      <!-- 액션 바 -->
+      <!-- Action bar -->
       <div class="action-bar">
-        <button class="btn-primary" id="downloadJpg">&#x2B07; JPG 저장</button>
-        <button class="btn-primary" id="downloadPng">&#x2B07; PNG 저장</button>
-        <button class="btn-sub" id="resetBtn">&#x21BA; 초기화</button>
-        <button class="btn-danger" id="newImageBtn">&#x1F5BC;&#xFE0F; 다른 이미지</button>
+        <button class="btn-primary" id="downloadJpg">&#x2B07; Save JPG</button>
+        <button class="btn-primary" id="downloadPng">&#x2B07; Save PNG</button>
+        <button class="btn-sub" id="resetBtn">&#x21BA; Reset</button>
+        <button class="btn-danger" id="newImageBtn">&#x1F5BC;&#xFE0F; New Image</button>
       </div>
     </div>
 
-<div style="margin:0 0 12px"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><!-- 카카오 애드핏 (2026-07-22, 쿠팡 파트너스 다이내믹 배너로 교체) — 복원 시 주석 해제: <div class="adfit-h-desktop"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-QD4pRIpdIj7i2mbt" data-ad-width="728" data-ad-height="90"></ins></div><div class="adfit-h-mobile"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-R4xA2niTT8HgGjoO" data-ad-width="320" data-ad-height="50"></ins></div> --><div class="adfit-h-desktop"><script src="https://ads-partners.coupang.com/g.js"></script><script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"728","height":"90","tsource":""});</script></div><div class="adfit-h-mobile"><script src="https://ads-partners.coupang.com/g.js"></script><script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"320","height":"50","tsource":""});</script></div></div>
+<!-- Google AdSense Display Ad — pending approval, reserving space -->
+    <div class="ad-slot" id="adMiddle">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
 
     <div class="guide-summary">
-      <h2 class="guide-summary-title">사용법 요약</h2>
+      <h2 class="guide-summary-title">Quick guide</h2>
       <ol class="guide-steps">
-        <li>이미지 업로드</li>
-        <li>슬라이더 조절 또는 프리셋 선택</li>
-        <li>저장</li>
+        <li>Upload an image</li>
+        <li>Adjust the sliders or pick a preset</li>
+        <li>Save</li>
       </ol>
-      <h3 class="guide-faq-title">자주 묻는 질문</h3>
+      <h3 class="guide-faq-title">Frequently asked questions</h3>
       <div class="guide-faq">
         <details>
-          <summary>이미지 보정 도구는 정말 무료인가요?</summary>
-          <p>네, 회원가입이나 설치 없이 완전 무료로 사용할 수 있습니다. 횟수 제한도 없습니다.</p>
+          <summary>Is the Adjust Image tool really free?</summary>
+          <p>Yes, it is completely free to use with no sign-up or installation required. There is no usage limit either.</p>
         </details>
         <details>
-          <summary>업로드한 파일이 서버로 전송되나요?</summary>
-          <p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 업로드한 파일이 외부 서버로 전송되거나 저장되지 않습니다.</p>
+          <summary>Are uploaded files sent to a server?</summary>
+          <p>No. All processing happens entirely in your browser, and uploaded files are never sent to or stored on an external server.</p>
         </details>
         <details>
-          <summary>보정하면 원본 이미지가 훼손되나요?</summary>
-          <p>아니요. 원본 파일은 그대로 두고 보정된 결과물을 새 파일로 다운로드하는 방식이라 원본이 변경되지 않습니다.</p>
+          <summary>Does adjusting the image damage the original file?</summary>
+          <p>No. The original file is left untouched — the adjusted result is downloaded as a new file, so the original never changes.</p>
         </details>
         <details>
-          <summary>모바일에서도 사용할 수 있나요?</summary>
-          <p>네, 별도의 앱 설치 없이 모바일 브라우저에서도 동일하게 사용할 수 있습니다.</p>
+          <summary>Can I use this on mobile?</summary>
+          <p>Yes, it works the same way in a mobile browser without needing to install any app.</p>
         </details>
       </div>
-      <a href="/blog/31-imagebright-howto" class="guide-full-link">전체 가이드 보기 →</a>
+      <a href="/blog/31-imagebright-howto" class="guide-full-link">View full guide →</a>
     </div>
 
-    <div style="margin:12px 0"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="9500090221"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><div class="adfit-rect-wrap"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-oePL4TCj742xAwqT" data-ad-width="300" data-ad-height="250"></ins></div></div>
+    <!-- Google AdSense Multiplex Ad — pending approval, reserving space -->
+    <div class="ad-slot ad-slot-rect" id="adBottom">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
   </div></main>
 
   <footer class="footer">
     <div class="container">
-      <p class="footer-copy">&#xa9; 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p>
+      <p class="footer-copy">&#xa9; 2026 BrowserKit. All processing happens in your browser.</p>
       <nav class="footer-nav">
-        <a href="/privacy">개인정보 처리방침</a>
-        <a href="/terms">이용약관</a>
-        <a href="/about">서비스 소개</a>
-        <a href="/blog/">블로그</a>
+        <a href="/en/privacy.html">Privacy Policy</a>
+        <a href="/en/terms.html">Terms of Service</a>
+        <a href="/en/about.html">About</a>
+        <a href="/en/blog/">Blog</a>
       </nav>
     </div>
   </footer>
@@ -316,11 +330,11 @@
   <div class="toast" id="toast"></div>
 
   <script>
-  // ── 상태 ──
+  // ── State ──
   var originalImage = null;
   var originalFile  = null;
 
-  // ── RGB ↔ HSL 변환 ──
+  // ── RGB <-> HSL conversion ──
   function rgbToHsl(r, g, b) {
     r /= 255; g /= 255; b /= 255;
     var max = Math.max(r, g, b), min = Math.min(r, g, b);
@@ -364,33 +378,33 @@
 
   function clamp(v) { return Math.max(0, Math.min(255, Math.round(v))); }
 
-  // ── 픽셀 보정 ──
+  // ── Pixel adjustment ──
   function applyAdjustments(imageData, bright, contrast, saturate, temp, sharp) {
     var d = imageData.data;
     var len = d.length;
 
-    // 대비 계산 인수
+    // Contrast calculation factor
     var cFactor = contrast === 0 ? 1 : (259 * (contrast + 255)) / (255 * (259 - contrast));
 
     for (var i = 0; i < len; i += 4) {
       var r = d[i], g = d[i+1], b = d[i+2];
 
-      // 1. 밝기 (덧셈)
+      // 1. Brightness (additive)
       r += bright; g += bright; b += bright;
 
-      // 2. 대비 (중간점 기준 스케일)
+      // 2. Contrast (scale around the midpoint)
       r = cFactor * (r - 128) + 128;
       g = cFactor * (g - 128) + 128;
       b = cFactor * (b - 128) + 128;
 
-      // 3. 색온도 (R↑B↓ = 따뜻, R↓B↑ = 차가움)
+      // 3. Color temperature (R up/B down = warm, R down/B up = cool)
       if (temp !== 0) {
         var t = temp * 0.5;
         r += t;
         b -= t;
       }
 
-      // 4. 채도 (RGB → HSL → S 조절 → RGB)
+      // 4. Saturation (RGB -> HSL -> adjust S -> RGB)
       if (saturate !== 0) {
         var hsl = rgbToHsl(clamp(r), clamp(g), clamp(b));
         hsl[1] = Math.max(0, Math.min(100, hsl[1] + saturate));
@@ -405,13 +419,13 @@
     return imageData;
   }
 
-  // ── 샤프니스 (언샤프 마스크) ──
+  // ── Sharpness (unsharp mask) ──
   function applySharpen(ctx, w, h, amount) {
     if (amount <= 0) return;
     var src = ctx.getImageData(0, 0, w, h);
     var dst = ctx.createImageData(w, h);
     var s = src.data, d = dst.data;
-    var k = amount / 100 * 1.2; // 최대 1.2 강도
+    var k = amount / 100 * 1.2; // Max strength 1.2
 
     for (var y = 1; y < h - 1; y++) {
       for (var x = 1; x < w - 1; x++) {
@@ -428,7 +442,7 @@
         d[idx + 3] = s[idx + 3];
       }
     }
-    // 가장자리는 원본 복사
+    // Copy the original along the edges
     for (var y = 0; y < h; y++) {
       for (var x = 0; x < w; x++) {
         if (y === 0 || y === h-1 || x === 0 || x === w-1) {
@@ -440,7 +454,7 @@
     ctx.putImageData(dst, 0, 0);
   }
 
-  // ── 슬라이더 값 읽기 ──
+  // ── Read slider values ──
   function getSliders() {
     return {
       bright:   parseInt(document.getElementById('slBright').value),
@@ -451,28 +465,28 @@
     };
   }
 
-  // ── 보정 적용 ──
+  // ── Apply adjustments ──
   function render() {
     if (!originalImage) return;
     var v = getSliders();
     var rc = document.getElementById('resultCanvas');
     var ctx = rc.getContext('2d');
 
-    // 원본 이미지 다시 그리기
+    // Redraw the original image
     ctx.drawImage(originalImage, 0, 0, rc.width, rc.height);
 
-    // 픽셀 보정 (밝기/대비/채도/색온도)
+    // Pixel adjustment (brightness/contrast/saturation/temperature)
     var imgData = ctx.getImageData(0, 0, rc.width, rc.height);
     applyAdjustments(imgData, v.bright, v.contrast, v.saturate, v.temp, v.sharp);
     ctx.putImageData(imgData, 0, 0);
 
-    // 샤프니스
+    // Sharpness
     applySharpen(ctx, rc.width, rc.height, v.sharp);
 
     updateResultInfo(rc);
   }
 
-  // ── 결과 파일 크기 예측 ──
+  // ── Estimate result file size ──
   function updateResultInfo(canvas) {
     try {
       var dataUrl = canvas.toDataURL('image/jpeg', 0.92);
@@ -488,7 +502,7 @@
     return (b/1048576).toFixed(2) + ' MB';
   }
 
-  // ── 슬라이더 이벤트 ──
+  // ── Slider events ──
   ['slBright','slContrast','slSaturate','slTemp','slSharp'].forEach(function(id) {
     var el = document.getElementById(id);
     var valId = 'val' + id.replace('sl','');
@@ -498,7 +512,7 @@
     });
   });
 
-  // ── 업로드 ──
+  // ── Upload ──
   var uploadZone = document.getElementById('uploadZone');
   var fileInput  = document.getElementById('fileInput');
 
@@ -521,30 +535,30 @@
       img.onload = function() {
         originalImage = img;
 
-        // 캔버스 크기 설정 (최대 2000px)
+        // Set canvas size (max 2000px)
         var maxW = 2000, maxH = 2000;
         var w = img.width, h = img.height;
         if (w > maxW) { h = Math.round(h * maxW / w); w = maxW; }
         if (h > maxH) { w = Math.round(w * maxH / h); h = maxH; }
 
-        // 원본 캔버스
+        // Original canvas
         var oc = document.getElementById('originalCanvas');
         oc.width = w; oc.height = h;
         oc.getContext('2d').drawImage(img, 0, 0, w, h);
 
-        // 결과 캔버스
+        // Result canvas
         var rc = document.getElementById('resultCanvas');
         rc.width = w; rc.height = h;
 
-        // 파일 정보
+        // File info
         document.getElementById('fileInfo').textContent =
           file.name + ' · ' + w + ' × ' + h + ' px · ' + formatBytes(file.size);
 
-        // 슬라이더 초기화
+        // Reset sliders
         resetSliders();
         render();
 
-        // 작업 영역 표시
+        // Show the work area
         document.getElementById('uploadZone').style.display = 'none';
         document.getElementById('workArea').classList.add('show');
       };
@@ -553,7 +567,7 @@
     reader.readAsDataURL(file);
   }
 
-  // ── 슬라이더 초기화 ──
+  // ── Reset sliders ──
   function resetSliders() {
     ['slBright','slContrast','slSaturate','slTemp','slSharp'].forEach(function(id) {
       document.getElementById(id).value = 0;
@@ -565,7 +579,7 @@
     document.getElementById('valSharp').textContent = '0';
   }
 
-  // ── 프리셋 ──
+  // ── Presets ──
   var PRESETS = {
     vivid:  { bright: 10, contrast: 20, saturate: 30, temp: 0,   sharp: 20 },
     warm:   { bright: 5,  contrast: 5,  saturate: 10, temp: 40,  sharp: 0  },
@@ -590,11 +604,11 @@
       document.getElementById('valTemp').textContent     = p.temp;
       document.getElementById('valSharp').textContent    = p.sharp;
       render();
-      showToast('\u2713 \'' + btn.textContent.trim() + '\' \ud504\ub9ac\uc14b \uc801\uc6a9');
+      showToast('\u2713 \'' + btn.textContent.trim() + '\' preset applied');
     });
   });
 
-  // ── 다운로드 ──
+  // ── Download ──
   function download(ext, quality) {
     var rc = document.getElementById('resultCanvas');
     var type = ext === 'jpg' ? 'image/jpeg' : 'image/png';
@@ -604,21 +618,21 @@
       a.download = 'imagebright_result.' + ext;
       a.click();
       URL.revokeObjectURL(a.href);
-      showToast('\u2713 ' + ext.toUpperCase() + ' \ud30c\uc77c\uc774 \uc800\uc7a5\ub429\ub2c8\ub2e4');
+      showToast('\u2713 ' + ext.toUpperCase() + ' file saved');
     }, type, quality);
   }
 
   document.getElementById('downloadJpg').addEventListener('click', function() { download('jpg', 0.92); });
   document.getElementById('downloadPng').addEventListener('click', function() { download('png', 1); });
 
-  // ── 초기화 ──
+  // ── Reset ──
   document.getElementById('resetBtn').addEventListener('click', function() {
     resetSliders();
     render();
-    showToast('\u21BA \ubcf4\uc815\uac12\uc774 \ucd08\uae30\ud654\ub418\uc5c8\uc2b5\ub2c8\ub2e4');
+    showToast('\u21BA Adjustments reset');
   });
 
-  // ── 다른 이미지 ──
+  // ── New image ──
   document.getElementById('newImageBtn').addEventListener('click', function() {
     originalImage = null; originalFile = null;
     fileInput.value = '';
@@ -627,7 +641,7 @@
     resetSliders();
   });
 
-  // ── 토스트 ──
+  // ── Toast ──
   function showToast(msg) {
     var t = document.getElementById('toast');
     t.textContent = msg;
@@ -654,7 +668,7 @@
     try {
       if (document.cookie.indexOf('bk_lang_dismiss=1') !== -1) return;
       var lang = (navigator.language || navigator.userLanguage || '').toLowerCase();
-      if (lang.indexOf('ko') === 0) return;
+      if (lang.indexOf('ko') !== 0) return;
       var banner = document.getElementById('langBanner');
       if (!banner) return;
       banner.classList.add('show');
