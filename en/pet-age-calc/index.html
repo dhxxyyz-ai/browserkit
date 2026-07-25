@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
   <link rel="icon" href="/favicon.ico" sizes="32x32">
   <link rel="icon" href="/favicon-16.png" sizes="16x16" type="image/png">
@@ -8,18 +8,17 @@
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="강아지·고양이 나이를 사람 나이로 환산하는 무료 온라인 계산기입니다. 강아지는 몸무게(체구)별 노화 속도를 반영하고, 고양이는 별도 환산표를 사용합니다. 서버 전송 없이 브라우저에서 바로 처리합니다." />
-  <meta property="og:title" content="PetAgeCalc — 반려동물 나이 계산기" />
-  <meta property="og:description" content="강아지·고양이 나이를 사람 나이로 환산합니다. 강아지는 체구(소형/중형/대형/초대형)별로 다른 환산표를 사용합니다." />
+  <meta name="description" content="A free online calculator that converts dog and cat age to human age. Dogs factor in aging speed by size (weight), and cats use a separate conversion table. Everything is processed right in your browser, with no server upload." />
+  <meta property="og:title" content="PetAgeCalc — Pet Age Calculator" />
+  <meta property="og:description" content="Convert dog and cat age to human age. Dogs use a different conversion table depending on size (small/medium/large/giant)." />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://browserkit.online/pet-age-calc/" />
-  <title>PetAgeCalc — 반려동물 나이 계산기</title>
+  <meta property="og:url" content="https://browserkit.online/en/pet-age-calc/" />
+  <title>PetAgeCalc — Pet Age Calculator</title>
   <link rel="stylesheet" href="/css/style.css?v=20260724c" />
-  <!-- Google AdSense 승인 대기 중 (2026-07-19 주석 처리, 카카오 애드핏으로 임시 전환) — 승인 후 주석 해제
+  <!-- Google AdSense — pending re-review. Uncomment once approved.
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506"
      crossorigin="anonymous"></script>
   -->
-  <script type="text/javascript" src="//t1.kakaocdn.net/kas/static/ba.min.js" async></script>
   <style>
     .guide-summary { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:24px; margin:0 0 12px; }
     .guide-summary-title { font-size:16px; font-weight:700; color:var(--text); margin:0 0 12px; }
@@ -31,6 +30,9 @@
     .guide-full-link { display:inline-block; margin-top:12px; font-size:14px; font-weight:600; color:var(--point-hover); text-decoration:none; }
     .guide-full-link:hover { text-decoration:underline; }
 
+    .ad-slot { min-height:90px; display:flex; align-items:center; justify-content:center; margin:0 0 12px; }
+    .ad-slot-rect { min-height:250px; }
+
     .input-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:24px; margin-bottom:20px; }
     .input-row { display:flex; gap:12px; flex-wrap:wrap; align-items:flex-end; margin-bottom:16px; }
     .input-row:last-child { margin-bottom:0; }
@@ -40,11 +42,11 @@
     .amount-input:focus { border-color:var(--point); }
 
     .seg-btns { display:flex; gap:6px; flex-wrap:wrap; }
-    .seg-btn { background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:8px 16px; font-size:13px; color:var(--subtext); cursor:pointer; font-family:'Gowun Dodum',sans-serif; }
+    .seg-btn { background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:8px 16px; font-size:13px; color:var(--subtext); cursor:pointer; }
     .seg-btn:hover { border-color:var(--point); color:var(--text); }
     .seg-btn.active { background:rgba(123,108,255,0.15); border-color:var(--point); color:var(--point-hover); font-weight:700; }
 
-    .btn-calc { background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border:none; border-radius:12px; padding:14px 32px; font-size:16px; font-weight:700; cursor:pointer; font-family:'Gowun Dodum',sans-serif; width:100%; margin-bottom:20px; }
+    .btn-calc { background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border:none; border-radius:12px; padding:14px 32px; font-size:16px; font-weight:700; cursor:pointer; width:100%; margin-bottom:20px; }
     .btn-calc:hover { transform:translateY(-2px); box-shadow:0 8px 24px var(--glow); }
 
     .result-hero { background:var(--card); border:1px solid var(--point); border-radius:var(--radius); padding:28px; text-align:center; margin-bottom:20px; display:none; }
@@ -77,9 +79,9 @@
     }
   </style>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <meta property="og:image" content="https://browserkit.online/img/og/pet-age-calc.png" />
-  <link rel="canonical" href="https://browserkit.online/pet-age-calc/" />
+  <link rel="canonical" href="https://browserkit.online/en/pet-age-calc/" />
   <link rel="alternate" hreflang="ko" href="https://browserkit.online/pet-age-calc/" />
   <link rel="alternate" hreflang="en" href="https://browserkit.online/en/pet-age-calc/" />
   <link rel="alternate" hreflang="x-default" href="https://browserkit.online/en/pet-age-calc/" />
@@ -89,18 +91,18 @@
 {
   "@context": "https://schema.org",
   "@type": "WebApplication",
-  "name": "PetAgeCalc — 반려동물 나이 계산기",
-  "url": "https://browserkit.online/pet-age-calc/",
-  "description": "강아지·고양이 나이를 사람 나이로 환산하는 무료 온라인 계산기입니다. 강아지는 몸무게(체구)별 노화 속도를 반영하고, 고양이는 별도 환산표를 사용합니다. 서버 전송 없이 브라우저에서 바로 처리합니다.",
+  "name": "PetAgeCalc — Pet Age Calculator",
+  "url": "https://browserkit.online/en/pet-age-calc/",
+  "description": "A free online calculator that converts dog and cat age to human age. Dogs factor in aging speed by size (weight), and cats use a separate conversion table. Everything is processed right in your browser, with no server upload.",
   "applicationCategory": "UtilityApplication",
   "operatingSystem": "Any",
   "browserRequirements": "Requires JavaScript",
-  "inLanguage": "ko",
+  "inLanguage": "en",
   "isAccessibleForFree": true,
   "offers": {
     "@type": "Offer",
     "price": "0",
-    "priceCurrency": "KRW"
+    "priceCurrency": "USD"
   },
   "publisher": {
     "@type": "Organization",
@@ -117,14 +119,14 @@
     {
       "@type": "ListItem",
       "position": 1,
-      "name": "홈",
-      "item": "https://browserkit.online/"
+      "name": "Home",
+      "item": "https://browserkit.online/en/"
     },
     {
       "@type": "ListItem",
       "position": 2,
-      "name": "반려동물 나이 계산기",
-      "item": "https://browserkit.online/pet-age-calc/"
+      "name": "Pet Age Calculator",
+      "item": "https://browserkit.online/en/pet-age-calc/"
     }
   ]
 }
@@ -133,24 +135,24 @@
 
 <body>
   <div class="lang-banner" id="langBanner">
-    <span>🌐 This page is also available in <a href="/en/pet-age-calc/">English</a>.</span>
+    <span>🌐 이 페이지는 <a href="/pet-age-calc/">한국어</a>로도 볼 수 있습니다.</span>
     <button class="lang-banner-close" id="langBannerClose" type="button" aria-label="close">&times;</button>
   </div>
   <header class="header">
     <div class="container">
-      <a href="/" class="header-brand">
-        <div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Gowun Dodum,sans-serif;flex-shrink:0">B</div>
+      <a href="/en/" class="header-brand">
+        <div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Poppins,sans-serif;flex-shrink:0">B</div>
         <span class="header-brand-text"><span style="color:var(--text)">Browser</span><span style="color:var(--point)">Kit</span></span>
       </a>
       <div class="header-right">
         <div class="lang-switcher">
-          <button class="lang-switcher-btn" type="button" data-lang-btn>🌐 <span class="lang-label-full">한국어</span></button>
+          <button class="lang-switcher-btn" type="button" data-lang-btn>🌐 <span class="lang-label-full">English</span></button>
           <div class="lang-switcher-menu" data-lang-menu>
-            <a href="/en/pet-age-calc/">English</a>
-            <a href="#" class="active">한국어</a>
+            <a href="#" class="active">English</a>
+            <a href="/pet-age-calc/">한국어</a>
           </div>
         </div>
-        <a href="/" class="header-back">&#x2190; <span class="header-back-label">BrowserKit 홈으로</span></a>
+        <a href="/en/" class="header-back">&#x2190; <span class="header-back-label">Back to BrowserKit</span></a>
       </div>
     </div>
   </header>
@@ -158,105 +160,117 @@
   <main><div class="container">
     <div class="hero">
       <div class="hero-icon" style="height:78px;display:flex;justify-content:center;align-items:center"><div style="transform:scale(1.7);transform-origin:center"><div style="width:46px;height:46px;background:#ffc2d6;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="position:relative;width:30px;height:24px"><div style="position:absolute;left:-2px;top:3px;width:9px;height:13px;background:#fffdf9;border:2.5px solid #2a2433;border-radius:50% 50% 45% 45%/60% 60% 40% 40%;transform:rotate(-18deg);box-sizing:border-box"></div><div style="position:absolute;right:-2px;top:3px;width:9px;height:13px;background:#fffdf9;border:2.5px solid #2a2433;border-radius:50% 50% 45% 45%/60% 60% 40% 40%;transform:rotate(18deg);box-sizing:border-box"></div><div style="position:absolute;left:4px;top:5px;width:22px;height:19px;border-radius:50%;background:#fffdf9;border:2.5px solid #2a2433;box-sizing:border-box"></div><div style="position:absolute;left:10px;top:13px;width:3px;height:3px;border-radius:50%;background:#2a2433"></div><div style="position:absolute;right:10px;top:13px;width:3px;height:3px;border-radius:50%;background:#2a2433"></div><div style="position:absolute;left:50%;top:16px;width:5px;height:4px;border-radius:50%;background:#2a2433;transform:translateX(-50%)"></div></div></div></div></div>
-      <div class="hero-title-wrap"><h1 class="hero-title">반려동물 나이 계산기</h1><a href="/blog/90-petagecalc-howto" class="hero-guide-link">사용법 가이드 보기</a></div>
-      <p class="hero-desc">강아지·고양이 나이를 입력하면 사람 나이로 환산해드려요</p>
+      <div class="hero-title-wrap"><h1 class="hero-title">Pet Age Calculator</h1><a href="/blog/90-petagecalc-howto" class="hero-guide-link">View usage guide</a></div>
+      <p class="hero-desc">Enter your dog or cat's age and we'll convert it to human years</p>
       <div class="hero-badges">
-        <span class="badge">🔒 완전 로컬 처리</span>
-        <span class="badge">⚡ 무료 사용</span>
-        <span class="badge">🛡️ 서버 전송 없음</span>
-        <span class="badge">📦 설치 불필요</span>
+        <span class="badge">🔒 Fully local processing</span>
+        <span class="badge">⚡ Free to use</span>
+        <span class="badge">🛡️ No server upload</span>
+        <span class="badge">📦 No installation</span>
       </div>
     </div>
-    <div style="margin:0 0 12px"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><div class="adfit-h-desktop"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-QD4pRIpdIj7i2mbt" data-ad-width="728" data-ad-height="90"></ins></div><div class="adfit-h-mobile"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-R4xA2niTT8HgGjoO" data-ad-width="320" data-ad-height="50"></ins></div></div>
+    <!-- Google AdSense Display Ad — pending approval, reserving space -->
+    <div class="ad-slot" id="adTop">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
 
-    <p class="notice">💡 강아지는 미국수의사회(AVMA)가 소개한 체구별 노화 환산표를, 고양이는 국제고양이수의학회(ICatCare) 환산표를 참고했습니다. 개체별 건강 상태에 따라 실제 노화 속도는 다를 수 있으니 참고용으로만 활용하세요. 모든 계산은 브라우저에서만 이루어집니다.</p>
+    <p class="notice">💡 Dog conversions are based on the size-based aging chart from the American Veterinary Medical Association (AVMA), and cat conversions are based on the International Cat Care (ICatCare) chart. Actual aging speed can vary by individual health, so use this as a reference only. All calculations happen only in your browser.</p>
 
     <div class="input-card">
       <div class="input-row">
         <div class="input-group">
-          <span class="input-label">반려동물 종류</span>
+          <span class="input-label">Pet Type</span>
           <div class="seg-btns" id="speciesBtns">
-            <button class="seg-btn active" data-species="dog">🐶 강아지</button>
-            <button class="seg-btn" data-species="cat">🐱 고양이</button>
+            <button class="seg-btn active" data-species="dog">🐶 Dog</button>
+            <button class="seg-btn" data-species="cat">🐱 Cat</button>
           </div>
         </div>
       </div>
       <div class="input-row" id="sizeRow">
         <div class="input-group">
-          <span class="input-label">체구(성견 기준 몸무게)</span>
+          <span class="input-label">Size (adult weight)</span>
           <div class="seg-btns" id="sizeBtns">
-            <button class="seg-btn active" data-size="small">소형견 (~9kg)</button>
-            <button class="seg-btn" data-size="medium">중형견 (9~23kg)</button>
-            <button class="seg-btn" data-size="large">대형견 (23~41kg)</button>
-            <button class="seg-btn" data-size="giant">초대형견 (41kg~)</button>
+            <button class="seg-btn active" data-size="small">Small (~9kg / 20lb)</button>
+            <button class="seg-btn" data-size="medium">Medium (9-23kg / 20-50lb)</button>
+            <button class="seg-btn" data-size="large">Large (23-41kg / 50-90lb)</button>
+            <button class="seg-btn" data-size="giant">Giant (41kg+ / 90lb+)</button>
           </div>
         </div>
       </div>
       <div class="input-row">
         <div class="input-group">
-          <span class="input-label">나이 (년)</span>
-          <input type="number" class="amount-input" id="ageInput" placeholder="예: 3.5" min="0" step="0.1" />
+          <span class="input-label">Age (years)</span>
+          <input type="number" class="amount-input" id="ageInput" placeholder="e.g. 3.5" min="0" step="0.1" />
         </div>
       </div>
     </div>
 
-    <button class="btn-calc" id="calcBtn">🐾 계산하기</button>
+    <button class="btn-calc" id="calcBtn">🐾 Calculate</button>
 
     <div class="result-hero" id="resultHero">
-      <div class="result-hero-label" id="resultLabel">사람 나이로 환산하면</div>
+      <div class="result-hero-label" id="resultLabel">In human years, that's</div>
       <div class="result-hero-value" id="resultValue">-</div>
       <div class="result-hero-sub" id="resultSub"></div>
     </div>
 
     <div class="breakdown-card" id="breakdownCard">
-      <div class="breakdown-title">📋 환산 기준</div>
-      <div class="breakdown-row"><span class="breakdown-label">종류</span><span class="breakdown-value" id="rowSpecies">-</span></div>
-      <div class="breakdown-row" id="rowSizeWrap"><span class="breakdown-label">체구</span><span class="breakdown-value" id="rowSize">-</span></div>
-      <div class="breakdown-row"><span class="breakdown-label">입력 나이</span><span class="breakdown-value" id="rowAge">-</span></div>
+      <div class="breakdown-title">📋 Conversion Details</div>
+      <div class="breakdown-row"><span class="breakdown-label">Type</span><span class="breakdown-value" id="rowSpecies">-</span></div>
+      <div class="breakdown-row" id="rowSizeWrap"><span class="breakdown-label">Size</span><span class="breakdown-value" id="rowSize">-</span></div>
+      <div class="breakdown-row"><span class="breakdown-label">Entered Age</span><span class="breakdown-value" id="rowAge">-</span></div>
     </div>
 
-    <div style="margin:0 0 12px"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="6825825428" data-ad-format="horizontal" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><!-- 카카오 애드핏 (2026-07-22, 쿠팡 파트너스 다이내믹 배너로 교체) — 복원 시 주석 해제: <div class="adfit-h-desktop"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-QD4pRIpdIj7i2mbt" data-ad-width="728" data-ad-height="90"></ins></div><div class="adfit-h-mobile"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-R4xA2niTT8HgGjoO" data-ad-width="320" data-ad-height="50"></ins></div> --><div class="adfit-h-desktop"><script src="https://ads-partners.coupang.com/g.js"></script><script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"728","height":"90","tsource":""});</script></div><div class="adfit-h-mobile"><script src="https://ads-partners.coupang.com/g.js"></script><script>new PartnersCoupang.G({"id":996719,"template":"carousel","trackingCode":"AF9398669","width":"320","height":"50","tsource":""});</script></div></div>
+    <!-- Google AdSense Display Ad — pending approval, reserving space -->
+    <div class="ad-slot" id="adMiddle">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
 
     <div class="guide-summary">
-      <h2 class="guide-summary-title">사용법 요약</h2>
+      <h2 class="guide-summary-title">Quick guide</h2>
       <ol class="guide-steps">
-        <li>강아지 또는 고양이 선택</li>
-        <li>체구 선택(강아지만 해당)</li>
-        <li>나이 입력 후 계산</li>
+        <li>Choose Dog or Cat</li>
+        <li>Choose a size (dogs only)</li>
+        <li>Enter the age and calculate</li>
       </ol>
-      <h3 class="guide-faq-title">자주 묻는 질문</h3>
+      <h3 class="guide-faq-title">Frequently asked questions</h3>
       <div class="guide-faq">
         <details>
-          <summary>반려동물 나이 계산기는 정말 무료인가요?</summary>
-          <p>네, 회원가입이나 설치 없이 완전 무료로 사용할 수 있습니다. 계산 횟수 제한도 없습니다.</p>
+          <summary>Is the Pet Age Calculator really free?</summary>
+          <p>Yes, it is completely free to use with no sign-up or installation required. There is no limit on the number of calculations either.</p>
         </details>
         <details>
-          <summary>왜 강아지는 체구를 따로 입력해야 하나요?</summary>
-          <p>소형견보다 대형견이 노화 속도가 더 빠르기 때문입니다. 미국수의사회(AVMA) 환산표에 따르면 소형견은 매년 4살씩, 초대형견은 매년 7살씩 사람 나이가 늘어납니다.</p>
+          <summary>Why do I need to enter a size separately for dogs?</summary>
+          <p>Because larger dogs age faster than smaller ones. According to the AVMA chart, a small dog gains about 4 human years per year, while a giant dog gains about 7.</p>
         </details>
         <details>
-          <summary>고양이도 품종별로 다르게 계산하나요?</summary>
-          <p>아니요. 고양이는 강아지와 달리 품종 간 크기 차이가 크지 않아 단일 환산표를 사용합니다.</p>
+          <summary>Does the calculation differ by cat breed too?</summary>
+          <p>No. Unlike dogs, cats don't vary much in size between breeds, so a single conversion table is used.</p>
         </details>
         <details>
-          <summary>이 계산 결과가 정확한 건강 상태를 의미하나요?</summary>
-          <p>아니요. 환산표는 평균적인 노화 속도를 기준으로 한 참고용 수치이며, 개체별 건강 상태나 유전적 요인에 따라 실제 노화 속도는 다를 수 있습니다. 정확한 건강 상태는 반드시 동물병원에서 확인하세요.</p>
+          <summary>Does this result reflect my pet's exact health status?</summary>
+          <p>No. The conversion table is a reference figure based on average aging speed; actual aging can vary based on individual health and genetics. Always check with a veterinarian for an accurate assessment of your pet's health.</p>
         </details>
       </div>
-      <a href="/blog/90-petagecalc-howto" class="guide-full-link">전체 가이드 보기 →</a>
+      <a href="/blog/90-petagecalc-howto" class="guide-full-link">View full guide →</a>
     </div>
 
-    <div style="margin:0 0 12px"><!-- Google AdSense (승인 후 복원): <ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="9500090221"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> --><div class="adfit-rect-wrap"><ins class="kakao_ad_area" style="display:none" data-ad-unit="DAN-oePL4TCj742xAwqT" data-ad-width="300" data-ad-height="250"></ins></div></div>
+    <!-- Google AdSense Multiplex Ad — pending approval, reserving space -->
+    <div class="ad-slot ad-slot-rect" id="adBottom">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
   </div></main>
 
   <footer class="footer">
     <div class="container">
-      <p class="footer-copy">&#xa9; 2026 BrowserKit. 모든 처리는 브라우저 내에서 이루어집니다.</p>
+      <p class="footer-copy">&#xa9; 2026 BrowserKit. All processing happens in your browser.</p>
       <nav class="footer-nav">
-        <a href="/privacy">개인정보 처리방침</a>
-        <a href="/terms">이용약관</a>
-        <a href="/about">서비스 소개</a>
-        <a href="/blog/">블로그</a>
+        <a href="/en/privacy.html">Privacy Policy</a>
+        <a href="/en/terms.html">Terms of Service</a>
+        <a href="/en/about.html">About</a>
+        <a href="/en/blog/">Blog</a>
       </nav>
     </div>
   </footer>
@@ -267,7 +281,7 @@
   var species = 'dog';
   var dogSize = 'small';
 
-  // 체구별 노화 환산표: [1년차, 2년차, 3년차 이후 연간 증가폭]
+  // Aging chart by size: [year 1, year 2, annual increase after year 3]
   var DOG_TABLE = {
     small:  { y1: 15, y2: 24, perYear: 4 },
     medium: { y1: 15, y2: 24, perYear: 5 },
@@ -282,7 +296,7 @@
     return table.y2 + table.perYear * (petAge - 2);
   }
 
-  var SIZE_LABEL = { small: '소형견 (~9kg)', medium: '중형견 (9~23kg)', large: '대형견 (23~41kg)', giant: '초대형견 (41kg~)' };
+  var SIZE_LABEL = { small: 'Small (~9kg / 20lb)', medium: 'Medium (9-23kg / 20-50lb)', large: 'Large (23-41kg / 50-90lb)', giant: 'Giant (41kg+ / 90lb+)' };
 
   document.querySelectorAll('#speciesBtns .seg-btn').forEach(function(btn) {
     btn.addEventListener('click', function() {
@@ -304,18 +318,18 @@
   document.getElementById('calcBtn').addEventListener('click', function() {
     var age = parseFloat(document.getElementById('ageInput').value);
     if (!age || age <= 0) {
-      showToast('나이를 입력해주세요');
+      showToast('Please enter an age');
       return;
     }
 
     var table = species === 'dog' ? DOG_TABLE[dogSize] : CAT_TABLE;
     var result = humanAge(age, table);
 
-    document.getElementById('resultValue').textContent = '약 ' + result.toFixed(1) + '세';
-    document.getElementById('resultSub').textContent = (species === 'dog' ? '강아지 ' : '고양이 ') + age + '살 기준';
+    document.getElementById('resultValue').textContent = 'About ' + result.toFixed(1) + ' years old';
+    document.getElementById('resultSub').textContent = 'Based on a ' + age + '-year-old ' + (species === 'dog' ? 'dog' : 'cat');
     document.getElementById('resultHero').classList.add('show');
 
-    document.getElementById('rowSpecies').textContent = species === 'dog' ? '🐶 강아지' : '🐱 고양이';
+    document.getElementById('rowSpecies').textContent = species === 'dog' ? '🐶 Dog' : '🐱 Cat';
     var sizeWrap = document.getElementById('rowSizeWrap');
     if (species === 'dog') {
       sizeWrap.style.display = 'flex';
@@ -323,11 +337,11 @@
     } else {
       sizeWrap.style.display = 'none';
     }
-    document.getElementById('rowAge').textContent = age + '살';
+    document.getElementById('rowAge').textContent = age + ' years';
     document.getElementById('breakdownCard').classList.add('show');
 
     document.getElementById('resultHero').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-    showToast('✓ 계산했습니다');
+    showToast('✓ Calculated');
   });
 
   function showToast(msg) {
@@ -356,7 +370,7 @@
     try {
       if (document.cookie.indexOf('bk_lang_dismiss=1') !== -1) return;
       var lang = (navigator.language || navigator.userLanguage || '').toLowerCase();
-      if (lang.indexOf('ko') === 0) return;
+      if (lang.indexOf('ko') !== 0) return;
       var banner = document.getElementById('langBanner');
       if (!banner) return;
       banner.classList.add('show');
