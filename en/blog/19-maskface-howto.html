@@ -1,0 +1,358 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="icon" href="/favicon.ico" sizes="32x32">
+  <link rel="icon" href="/favicon-16.png" sizes="16x16" type="image/png">
+  <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="/favicon-192.png" sizes="192x192" type="image/png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="The official step-by-step guide to every feature of MaskFace. Follow along with automatic face detection, mosaic blurring, and manual drag masking." />
+  <meta property="og:title" content="Face Blur: The Complete Guide — BrowserKit" />
+  <meta property="og:description" content="The official step-by-step guide to every feature of MaskFace." />
+  <meta property="og:type" content="article" />
+  <title>Face Blur: The Complete Guide — BrowserKit</title>
+  <link rel="stylesheet" href="/css/style.css?v=20260724c" />
+  <link rel="stylesheet" href="/css/style-en.css?v=20260724a" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Google AdSense — pending re-review. Uncomment once approved.
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506"
+     crossorigin="anonymous"></script>
+  -->
+  <style>
+    .feature-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:20px 0; }
+    .feature-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px; }
+    .feature-card:hover { border-color:var(--point); }
+    .feature-icon { font-size:24px; margin-bottom:10px; }
+    .feature-title { font-size:14px; font-weight:600; color:var(--text); margin-bottom:6px; }
+    .feature-desc { font-size:13px; color:var(--subtext); line-height:1.7; }
+    .step-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px 24px; margin:16px 0; display:flex; gap:16px; align-items:flex-start; }
+    .step-num { min-width:36px; height:36px; background:linear-gradient(135deg,var(--point),var(--point-hover)); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:700; color:white; flex-shrink:0; }
+    .step-content h3 { font-size:15px; font-weight:600; margin:0 0 6px; color:var(--text); }
+    .step-content p { font-size:14px; color:var(--subtext); line-height:1.7; margin:0; }
+    .post-table { width:100%; border-collapse:collapse; margin:20px 0; font-size:15px; }
+    .post-table th { background:var(--card); padding:12px 16px; text-align:left; font-weight:600; border:1px solid var(--border); color:var(--text); }
+    .post-table td { padding:11px 16px; border:1px solid var(--border); color:var(--subtext); line-height:1.7; }
+    .post-table tr:hover td { background:rgba(123,108,255,0.04); }
+    .post-nav { display:flex; justify-content:space-between; margin-top: 12px; padding-top:24px; border-top:1px solid var(--border); gap:12px; }
+    .post-nav a { font-size:15px; color:var(--subtext); }
+    .post-nav a:hover { color:var(--text); }
+    .cta-box { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:28px; text-align:center; margin: 12px 0 0; }
+    .cta-box p { font-size:17px; color:var(--subtext); margin-bottom:16px; }
+    .cta-btn { display:inline-block; background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border-radius:10px; padding:12px 28px; font-size:14px; font-weight:600; text-decoration:none; }
+    .cta-btn:hover { transform:translateY(-2px); box-shadow:0 8px 24px var(--glow); color:white; }
+    .back-link:hover { color:var(--text); }
+    @media (max-width:640px) {
+      .feature-grid { grid-template-columns:1fr; }
+    }
+  </style>
+<meta property="og:image" content="https://browserkit.online/img/og/mask-face.png" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Face Blur: The Complete Guide",
+    "description": "The official step-by-step guide to every feature of MaskFace. Follow along with automatic face detection, mosaic blurring, and manual drag masking.",
+    "datePublished": "2026-06-17T00:00:00+09:00",
+    "dateModified": "2026-07-22T00:00:00+09:00",
+    "author": { "@type": "Organization", "name": "BrowserKit", "url": "https://browserkit.online" },
+    "publisher": { "@type": "Organization", "name": "BrowserKit", "url": "https://browserkit.online", "logo": { "@type": "ImageObject", "url": "https://browserkit.online/img/og-browserkit.png" } },
+    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://browserkit.online/en/blog/19-maskface-howto" },
+    "image": "https://browserkit.online/img/og/mask-face.png"
+  }
+  </script>  <link rel="canonical" href="https://browserkit.online/en/blog/19-maskface-howto" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://browserkit.online/en/" },
+    { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://browserkit.online/en/blog/" },
+    { "@type": "ListItem", "position": 3, "name": "Face Blur: The Complete Guide", "item": "https://browserkit.online/en/blog/19-maskface-howto" }
+  ]
+}
+  </script>
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://browserkit.online/img/og/mask-face.png" />
+  <style>
+    .post-table-wrap { overflow-x:auto; }
+    .post-table th, .post-table td { white-space:nowrap; }
+    .post-nav a { word-break:keep-all; }
+    .post-nav .nav-label { display:block; font-size:13px; color:var(--subtext); opacity:0.7; margin-bottom:4px; }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Is the Face Blur tool really free?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, it is completely free to use with no sign-up or installation required. There is no usage limit either."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Are uploaded files sent to a server?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. All processing happens entirely in your browser, and uploaded files are never sent to or stored on an external server."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What if a face isn't detected automatically?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "You can manually select an area to mask any face automatic detection misses. Faces at a sharp angle may have a lower detection rate."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I use this on mobile?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, it works the same way in a mobile browser without needing to install any app."
+      }
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <div class="lang-banner" id="langBanner">
+    <span>🌐 이 페이지는 <a href="/blog/19-maskface-howto">한국어</a>로도 볼 수 있습니다.</span>
+    <button class="lang-banner-close" id="langBannerClose" type="button" aria-label="close">&times;</button>
+  </div>
+  <header class="header">
+    <div class="container">
+      <a href="/en/" class="header-brand"><div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Poppins,sans-serif;flex-shrink:0">B</div><span class="header-brand-text"><span style="color:var(--text)">Browser</span><span style="color:var(--point)">Kit</span></span></a>
+      <div class="header-right">
+        <div class="lang-switcher">
+          <button class="lang-switcher-btn" type="button" data-lang-btn>🌐 <span class="lang-label-full">English</span></button>
+          <div class="lang-switcher-menu" data-lang-menu>
+            <a href="#" class="active">English</a>
+            <a href="/blog/19-maskface-howto">한국어</a>
+          </div>
+        </div>
+        <a href="/en/" class="header-back">← <span class="header-back-label">Back to BrowserKit</span></a>
+      </div>
+    </div>
+  </header>
+
+  <article class="post-wrap">
+    <a href="/en/blog/" class="back-link">← Blog</a>
+    <span class="post-tag">Guide</span>
+    <h1 class="post-title"><span style="color:var(--point-hover)">Face Blur</span>: The Complete Guide</h1>
+    <div class="post-date">June 17, 2026 (updated July 3, 2026)</div>
+    <!-- Google AdSense Display Ad — pending approval, reserving space -->
+    <div class="ad-slot" id="adExtra2">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
+
+    <div class="post-body">
+      <p>Before posting a group photo, do you find yourself manually editing out the faces of people who didn't consent to being shown? With a lot of people in frame, that takes a while. MaskFace is a free online tool that uses AI to automatically detect faces in an image and mask them with a mosaic or a black box. Face detection runs entirely in your browser, so the original image is never sent to an external server.</p>
+
+      <h2>Key Features</h2>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F916;</div>
+          <div class="feature-title">Automatic Face Detection</div>
+          <div class="feature-desc">An AI model automatically detects faces in the image, handling multiple people at once.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F532;</div>
+          <div class="feature-title">Mosaic Blur</div>
+          <div class="feature-desc">Pixelates detected face areas so they're unrecognizable.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x2B1B;</div>
+          <div class="feature-title">Black Box</div>
+          <div class="feature-desc">Completely covers face areas with a solid black box.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F39A;&#xFE0F;</div>
+          <div class="feature-title">Adjustable Mosaic Strength</div>
+          <div class="feature-desc">Fine-tune the mosaic block size from 4px to 32px with a slider.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x270D;&#xFE0F;</div>
+          <div class="feature-title">Manual Drag Masking</div>
+          <div class="feature-desc">Drag directly over the result image to mask any face that's hard to auto-detect.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F4E5;</div>
+          <div class="feature-title">Download PNG</div>
+          <div class="feature-desc">Download the finished image instantly as maskface_result.png.</div>
+        </div>
+      </div>
+
+      <!-- Google AdSense Display Ad — pending approval, reserving space -->
+    <div class="ad-slot" id="adTop">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
+      <h2>Basic Usage</h2>
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <h3>Wait for the Model to Load</h3>
+          <p>The AI model loads automatically when you open the page. This takes about 5-10 seconds, and uploading is enabled once the <strong>Face detection model ready</strong> message appears.</p>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <h3>Upload an Image</h3>
+          <p>Drag an image onto the upload area or click to choose a file. JPG, PNG, and WEBP are supported.</p>
+        </div>
+      </div>
+      
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <h3>Automatic Face Detection</h3>
+          <p>Once the image is uploaded, the AI model automatically detects faces and shows the count of detected faces in the result area.</p>
+        </div>
+      </div>
+      
+      <div class="step-card">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <h3>Choose Masking Options</h3>
+          <p>Choose <strong>Mosaic</strong> or <strong>Black Box</strong>, and adjust the block size with the mosaic strength slider. The result image updates live as you change the options.</p>
+        </div>
+      </div>
+      
+      <div class="step-card">
+        <div class="step-num">5</div>
+        <div class="step-content">
+          <h3>Manual Touch-Up and Download</h3>
+          <p>If automatic detection missed a face, drag over it on the result image to mask it manually. When you're done, click <strong>Download PNG</strong> to save it as <code>maskface_result.png</code>.</p>
+        </div>
+      </div>
+      
+      
+
+      <h2>When Automatic Detection Struggles</h2>
+      <p>The AI model is trained mostly on front-facing faces, so detection may fail or be less accurate in the situations below. Use manual drag masking to fill in the gaps.</p>
+      <div class="post-table-wrap"><table class="post-table">
+        <thead><tr><th>Situation</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td>Side / three-quarter profile</td><td>Since the model is trained mostly on front-facing faces, profile detection is limited.</td></tr>
+          <tr><td>Wearing a mask</td><td>Detection rate may drop when a face is partly covered by a mask.</td></tr>
+          <tr><td>Very small faces</td><td>Faces that are too small in the image may not be detected.</td></tr>
+          <tr><td>Strong backlighting</td><td>Detection can be difficult when facial outlines aren't clear.</td></tr>
+        </tbody>
+      </table></div>
+
+      <h2>Which Masking Mode Should You Use?</h2>
+      <div class="post-table-wrap"><table class="post-table">
+        <thead><tr><th>Mode</th><th>Characteristics</th><th>Recommended For</th></tr></thead>
+        <tbody>
+          <tr><td>Mosaic</td><td>Pixelated, retains some outline</td><td>When you want a more natural-looking edit</td></tr>
+          <tr><td>Black Box</td><td>Fully covered, zero facial information</td><td>When privacy matters most</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="post-highlight">&#x1F4A1; MaskFace takes about 5-10 seconds to load the face detection model. Uploading is disabled while it loads, so wait for the <strong>Face detection model ready</strong> message before uploading an image. All processing happens only in your browser, and images are never sent to an external server.</div>
+    
+      <h2>Frequently Asked Questions</h2>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
+        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. Is the Face Blur tool really free?</p>
+        <p style="color:var(--subtext);margin:0;line-height:1.7">Yes, it is completely free to use with no sign-up or installation required. There is no usage limit either.</p>
+      </div>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
+        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. Are uploaded files sent to a server?</p>
+        <p style="color:var(--subtext);margin:0;line-height:1.7">No. All processing happens entirely in your browser, and uploaded files are never sent to or stored on an external server.</p>
+      </div>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
+        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. What if a face isn't detected automatically?</p>
+        <p style="color:var(--subtext);margin:0;line-height:1.7">You can manually select an area to mask any face automatic detection misses. Faces at a sharp angle may have a lower detection rate.</p>
+      </div>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
+        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. Can I use this on mobile?</p>
+        <p style="color:var(--subtext);margin:0;line-height:1.7">Yes, it works the same way in a mobile browser without needing to install any app.</p>
+      </div>
+    </div>
+
+    <div style="margin:12px 0"><!-- Google AdSense Display Ad — pending approval, reserving space -->
+    <div class="ad-slot" id="adMiddle">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
+
+    <div class="cta-box">
+      <p>Automatically detects and masks faces in group photos, YouTube thumbnails, and social posts.<br />It recognizes multiple faces in one image at once.</p>
+      <a href="/en/mask-face/" class="cta-btn" style="display:inline-flex;align-items:center;gap:8px">
+        <span style="display:inline-block;width:26px;height:26px;overflow:hidden;flex-shrink:0">
+          <span style="display:block;transform:scale(0.565);transform-origin:top left">
+            <div style="width:46px;height:46px;background:#ffd36e;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="position:relative;width:27px;height:27px;border-radius:50%;background:#fffdf9;border:2.5px solid #2a2433;box-sizing:border-box;overflow:hidden"><div style="position:absolute;left:6px;top:8px;width:3px;height:3px;border-radius:50%;background:#2a2433"></div><div style="position:absolute;right:6px;top:8px;width:3px;height:3px;border-radius:50%;background:#2a2433"></div><div style="position:absolute;left:7px;bottom:5px;width:11px;height:3px;border-radius:3px;background:rgba(42,36,51,.4)"></div><div style="position:absolute;left:-3px;bottom:4px;width:34px;height:3px;background:rgba(255,255,255,.85)"></div><div style="position:absolute;left:-3px;bottom:9px;width:34px;height:3px;background:rgba(255,255,255,.7)"></div></div></div>
+          </span>
+        </span>
+        Start Masking Faces for Free
+      </a>
+    </div>
+    <!-- Google AdSense Multiplex Ad — pending approval, reserving space -->
+    <div class="ad-slot ad-slot-rect" id="adBottom">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
+
+<div class="post-nav">
+      <a href="/en/blog/"><span class="nav-label">&larr; Blog</span>More Guides</a>
+      <a href="/en/blog/" style="text-align:right"><span class="nav-label">Blog &rarr;</span>More Guides</a>
+    </div></div>
+
+  </article>
+  <footer class="footer">
+    <div class="container">
+      <p class="footer-copy">&#xa9; 2026 BrowserKit. All processing happens in your browser.</p>
+      <nav class="footer-nav">
+        <a href="/en/privacy.html">Privacy Policy</a>
+        <a href="/en/terms.html">Terms of Service</a>
+        <a href="/en/about.html">About</a>
+        <a href="/en/blog/">Blog</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script>
+  document.querySelectorAll('[data-lang-btn]').forEach(function(btn){
+    btn.addEventListener('click', function(e){
+      e.stopPropagation();
+      var menu = btn.nextElementSibling;
+      menu.classList.toggle('show');
+    });
+  });
+  document.addEventListener('click', function(){
+    document.querySelectorAll('.lang-switcher-menu.show').forEach(function(m){ m.classList.remove('show'); });
+  });
+  </script>
+
+  <script>
+  (function(){
+    try {
+      if (document.cookie.indexOf('bk_lang_dismiss=1') !== -1) return;
+      var lang = (navigator.language || navigator.userLanguage || '').toLowerCase();
+      if (lang.indexOf('ko') !== 0) return;
+      var banner = document.getElementById('langBanner');
+      if (!banner) return;
+      banner.classList.add('show');
+      var closeBtn = document.getElementById('langBannerClose');
+      closeBtn.addEventListener('click', function(){
+        banner.classList.remove('show');
+        document.cookie = 'bk_lang_dismiss=1; max-age=' + (60*60*24*180) + '; path=/';
+      });
+    } catch(e) {}
+  })();
+  </script>
+</body>
+</html>
+
