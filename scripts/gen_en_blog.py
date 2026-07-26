@@ -51,6 +51,18 @@ def transform(ko_html: str, slug: str, blog_filename: str) -> str:
     # ── screenshots: strip entirely (per 해외사업기획서.md §11) ──
     c = strip_figures(c)
 
+    # ── KO-source structural bug fix: post-nav block closes with an extra,
+    # unmatched </div> (e.g. "...완전 가이드</a>\n    </div></div>") in most blog
+    # posts -- confirmed via stack-based div-balance check across 10 of 11 posts
+    # audited (crop-image was the lone exception, which has the correct single
+    # close). This must be fixed in the KO source too, not just papered over
+    # here -- flag it loudly so the caller remembers to patch blog/{file}.html.
+    _post_nav_bug = re.search(r'(가이드</a>\s*\n\s*)</div></div>(?!\s*</div>)', c)
+    if _post_nav_bug:
+        c = c[:_post_nav_bug.end(1)] + '</div>' + c[_post_nav_bug.end():]
+        print(f'  [FIXED] {blog_filename}: post-nav extra </div> auto-corrected in EN output -- '
+              f'VERIFY the KO source (blog/{blog_filename}.html) needs the same fix.')
+
     # ── html lang / kakao script / css / adsense-comment / fonts (same as tool pages) ──
     c = c.replace('<html lang="ko">', '<html lang="en">', 1)
     c = re.sub(r'\s*<script type="text/javascript" src="//t1\.kakaocdn\.net/kas/static/ba\.min\.js" async></script>\n?', '\n', c)
