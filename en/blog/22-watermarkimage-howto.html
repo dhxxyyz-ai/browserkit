@@ -1,0 +1,385 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="icon" href="/favicon.ico" sizes="32x32">
+  <link rel="icon" href="/favicon-16.png" sizes="16x16" type="image/png">
+  <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="/favicon-192.png" sizes="192x192" type="image/png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="The official step-by-step guide to every feature of WatermarkImage. Learn how to add text or image watermarks and set opacity, position, and tiling." />
+  <meta property="og:title" content="Add Watermark: The Complete Guide — BrowserKit" />
+  <meta property="og:description" content="The official WatermarkImage guide to adding a text or image watermark to your photos." />
+  <meta property="og:type" content="article" />
+  <title>Add Watermark: The Complete Guide — BrowserKit</title>
+  <link rel="stylesheet" href="/css/style.css?v=20260724c" />
+  <link rel="stylesheet" href="/css/style-en.css?v=20260724a" />
+  <!-- Google AdSense — pending re-review. Uncomment once approved.
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506"
+     crossorigin="anonymous"></script>
+  -->
+  <style>
+    .feature-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:20px 0; }
+    .feature-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px; }
+    .feature-card:hover { border-color:var(--point); }
+    .feature-icon { font-size:24px; margin-bottom:10px; }
+    .feature-title { font-size:14px; font-weight:600; color:var(--text); margin-bottom:6px; }
+    .feature-desc { font-size:13px; color:var(--subtext); line-height:1.7; }
+    .step-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px 24px; margin:16px 0; display:flex; gap:16px; align-items:flex-start; }
+    .step-num { min-width:36px; height:36px; background:linear-gradient(135deg,var(--point),var(--point-hover)); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:700; color:white; flex-shrink:0; }
+    .step-content h3 { font-size:15px; font-weight:600; margin:0 0 6px; color:var(--text); }
+    .step-content p { font-size:14px; color:var(--subtext); line-height:1.7; margin:0; }
+    .post-table { width:100%; border-collapse:collapse; margin:20px 0; font-size:15px; }
+    .post-table th { background:var(--card); padding:12px 16px; text-align:left; font-weight:600; border:1px solid var(--border); color:var(--text); }
+    .post-table td { padding:11px 16px; border:1px solid var(--border); color:var(--subtext); line-height:1.7; }
+    .post-table tr:hover td { background:rgba(123,108,255,0.04); }
+    .pos-demo { display:inline-grid; grid-template-columns:repeat(3,32px); gap:4px; vertical-align:middle; }
+    .pos-cell { width:32px; height:32px; background:var(--bg); border:1px solid var(--border); border-radius:6px; display:flex; align-items:center; justify-content:center; font-size:11px; color:var(--subtext); }
+    .pos-cell.active { background:rgba(123,108,255,0.2); border-color:var(--point); color:var(--point-hover); font-weight:700; }
+    .post-nav { display:flex; justify-content:space-between; margin-top: 12px; padding-top:24px; border-top:1px solid var(--border); gap:12px; }
+    .post-nav a { font-size:15px; color:var(--subtext); }
+    .post-nav a:hover { color:var(--text); }
+    .cta-box { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:28px; text-align:center; margin: 12px 0 0; }
+    .cta-box p { font-size:17px; color:var(--subtext); margin-bottom:16px; }
+    .cta-btn { display:inline-block; background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border-radius:10px; padding:12px 28px; font-size:14px; font-weight:600; text-decoration:none; }
+    .cta-btn:hover { transform:translateY(-2px); box-shadow:0 8px 24px var(--glow); color:white; }
+    .back-link:hover { color:var(--text); }
+    @media (max-width:640px) {
+      .feature-grid { grid-template-columns:1fr; }
+    }
+  </style>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<meta property="og:image" content="https://browserkit.online/img/og/watermark-image.png" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Add Watermark: The Complete Guide",
+    "description": "The official step-by-step guide to every feature of WatermarkImage. Learn how to add text or image watermarks and set opacity, position, and tiling.",
+    "datePublished": "2026-06-18T00:00:00+09:00",
+    "dateModified": "2026-07-22T00:00:00+09:00",
+    "author": { "@type": "Organization", "name": "BrowserKit", "url": "https://browserkit.online" },
+    "publisher": { "@type": "Organization", "name": "BrowserKit", "url": "https://browserkit.online", "logo": { "@type": "ImageObject", "url": "https://browserkit.online/img/og-browserkit.png" } },
+    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://browserkit.online/en/blog/22-watermarkimage-howto" },
+    "image": "https://browserkit.online/img/og/watermark-image.png"
+  }
+  </script>  <link rel="canonical" href="https://browserkit.online/en/blog/22-watermarkimage-howto" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://browserkit.online/en/" },
+    { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://browserkit.online/en/blog/" },
+    { "@type": "ListItem", "position": 3, "name": "Add Watermark: The Complete Guide", "item": "https://browserkit.online/en/blog/22-watermarkimage-howto" }
+  ]
+}
+  </script>
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://browserkit.online/img/og/watermark-image.png" />
+  <style>
+    .post-table-wrap { overflow-x:auto; }
+    .post-table th, .post-table td { white-space:nowrap; }
+    .post-nav a { word-break:keep-all; }
+    .post-nav .nav-label { display:block; font-size:13px; color:var(--subtext); opacity:0.7; margin-bottom:4px; }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Is the Add Watermark tool really free?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, it is completely free to use with no sign-up or installation required. There is no usage limit either."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Are uploaded files sent to a server?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. All processing happens entirely in your browser, and uploaded files are never sent to or stored on an external server."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I adjust the watermark position or opacity?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, for both text and image watermarks you can adjust the position, size, and opacity to composite them exactly how you want."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I use this on mobile?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, it works the same way in a mobile browser without needing to install any app."
+      }
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <div class="lang-banner" id="langBanner">
+    <span>🌐 이 페이지는 <a href="/blog/22-watermarkimage-howto">한국어</a>로도 볼 수 있습니다.</span>
+    <button class="lang-banner-close" id="langBannerClose" type="button" aria-label="close">&times;</button>
+  </div>
+  <header class="header">
+    <div class="container">
+      <a href="/en/" class="header-brand"><div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Poppins,sans-serif;flex-shrink:0">B</div><span class="header-brand-text"><span style="color:var(--text)">Browser</span><span style="color:var(--point)">Kit</span></span></a>
+      <div class="header-right">
+        <div class="lang-switcher">
+          <button class="lang-switcher-btn" type="button" data-lang-btn>🌐 <span class="lang-label-full">English</span></button>
+          <div class="lang-switcher-menu" data-lang-menu>
+            <a href="#" class="active">English</a>
+            <a href="/blog/22-watermarkimage-howto">한국어</a>
+          </div>
+        </div>
+        <a href="/en/" class="header-back">← <span class="header-back-label">Back to BrowserKit</span></a>
+      </div>
+    </div>
+  </header>
+
+  <article class="post-wrap">
+    <a href="/en/blog/" class="back-link">← Blog</a>
+    <span class="post-tag">Guide</span>
+    <h1 class="post-title"><span style="color:var(--point-hover)">Add Watermark</span>: The Complete Guide</h1>
+    <div class="post-date">June 19, 2026</div>
+    <!-- Google AdSense Display Ad — pending approval, reserving space -->
+    <div class="ad-slot" id="adExtra2">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
+
+    <div class="post-body">
+      <p>Post a portfolio or product photo online, and it can end up copied without credit. A single watermark cuts unauthorized use way down, but firing up Photoshop every time gets old. WatermarkImage is a free online tool that freely composites a text or image watermark onto your photos. There's nothing to install — it runs right in your browser, and since everything happens only there, your original image is never sent to an external server.</p>
+
+      <h2>Key Features</h2>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F524;</div>
+          <div class="feature-title">Text Watermark</div>
+          <div class="feature-desc">Type any text and freely adjust its size, color, and opacity. Choose from 5 color presets or pick a custom color.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F5BC;&#xFE0F;</div>
+          <div class="feature-title">Image Watermark</div>
+          <div class="feature-desc">Upload a separate logo or signature image to composite onto the photo. Supports transparent PNG backgrounds, ideal for logos.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F4CD;</div>
+          <div class="feature-title">9-Way Position Picker</div>
+          <div class="feature-desc">Set the watermark position intuitively with 9 buttons spanning top/middle/bottom &times; left/center/right.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F4CB;</div>
+          <div class="feature-title">Tiled Repeat</div>
+          <div class="feature-desc">Repeat the watermark across the entire image — effective for deterring unauthorized use.</div>
+        </div>
+      </div>
+
+      <!-- Google AdSense Display Ad — pending approval, reserving space -->
+    <div class="ad-slot" id="adTop">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
+      <h2>Basic Usage</h2>
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <h3>Upload the Original Image</h3>
+          <p>Click the upload area or drag an image onto it to load your original photo. JPG, PNG, and WEBP are supported.</p>
+        </div>
+      </div>
+      
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <h3>Choose the Watermark Type</h3>
+          <p>Choose the <strong>🔤 Text Watermark</strong> or <strong>🖼️ Image Watermark</strong> tab.</p>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <h3>Set the Options</h3>
+          <p>Adjust the text (or watermark image), size, color, opacity, and position however you like.</p>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <h3>Preview and Download</h3>
+          <p>Click <strong>✨ Preview Watermark</strong> to check the result, then <strong>⬇ Download Image</strong> to save it. You can choose PNG, JPG, or WEBP as the output format.</p>
+        </div>
+      </div>
+      
+
+      <h2>Text Watermark Options in Detail</h2>
+      
+
+      <h3>Size Slider</h3>
+      <p>Adjustable from 10px to 120px. Pick a size that fits your image resolution — around 3-5% of the shorter side usually looks natural.</p>
+
+      <h3>Choosing a Color</h3>
+      <div class="post-table-wrap"><table class="post-table">
+        <thead><tr><th>Color</th><th>Recommended For</th></tr></thead>
+        <tbody>
+          <tr><td>White (#ffffff)</td><td>Dark background images (default)</td></tr>
+          <tr><td>Black (#000000)</td><td>Light background images</td></tr>
+          <tr><td>Red (#ff0000)</td><td>Emphasis or warning purposes</td></tr>
+          <tr><td>Yellow (#ffff00)</td><td>Highly visible against dark backgrounds</td></tr>
+          <tr><td>Purple (#6C63FF)</td><td>BrowserKit brand color</td></tr>
+          <tr><td>Custom</td><td>Set freely to match your brand color</td></tr>
+        </tbody>
+      </table></div>
+
+      <h3>Opacity Slider</h3>
+      <p>Adjustable from 5% to 100%. Too opaque covers the photo, too faint and the watermark disappears — 50-70% is usually a good middle ground.</p>
+
+      <h3>9-Way Position Grid</h3>
+      <p>Choose one of the nine positions below. The default is bottom-right (&#8600;).</p>
+      <div class="post-table-wrap"><table class="post-table">
+        <thead><tr><th>Position</th><th>Button</th><th>Recommended For</th></tr></thead>
+        <tbody>
+          <tr><td>Top-left</td><td>&#8598;</td><td>Document-style images</td></tr>
+          <tr><td>Top-center</td><td>&#8593;</td><td>Landscape banners</td></tr>
+          <tr><td>Top-right</td><td>&#8599;</td><td>Corner placement on photos</td></tr>
+          <tr><td>Middle-left</td><td>&#8592;</td><td>Portrait images</td></tr>
+          <tr><td>Center</td><td>&#10022;</td><td>Strong anti-theft placement</td></tr>
+          <tr><td>Middle-right</td><td>&#8594;</td><td>Portrait images (opposite side)</td></tr>
+          <tr><td>Bottom-left</td><td>&#8601;</td><td>Corner placement (opposite side)</td></tr>
+          <tr><td>Bottom-center</td><td>&#8595;</td><td>Landscape banners (opposite side)</td></tr>
+          <tr><td>Bottom-right</td><td>&#8600;</td><td>Typical copyright placement (default)</td></tr>
+          <tr><td>Tile Repeat</td><td>Checkbox</td><td>Full-coverage watermark, stronger anti-theft</td></tr>
+        </tbody>
+      </table></div>
+
+      <h2>Image Watermark Tips</h2>
+      
+
+      <h3>Use a Transparent PNG Background</h3>
+      <p>A logo or signature prepared with a transparent PNG background blends naturally into the original image. A white-background image can show up as a visible white box.</p>
+
+      <h3>Setting the Size</h3>
+      <p>The size slider sets a percentage relative to the original image's width. A range of 5-20% usually looks natural. If the logo covers too much of the photo, check the preview and adjust.</p>
+
+      <h2>Choosing an Output Format</h2>
+      <div class="post-table-wrap"><table class="post-table">
+        <thead><tr><th>Format</th><th>Characteristics</th><th>Recommended For</th></tr></thead>
+        <tbody>
+          <tr><td>PNG</td><td>Lossless, keeps transparency</td><td>When preserving original quality matters</td></tr>
+          <tr><td>JPG</td><td>Small file size, transparency becomes white</td><td>When you need to reduce file size</td></tr>
+          <tr><td>WEBP</td><td>High compression, high quality, modern format</td><td>Web publishing, when fast loading matters</td></tr>
+        </tbody>
+      </table></div>
+
+      <h2>Use Cases</h2>
+
+      <h3>Copyright Notices on Photos</h3>
+      <p>Type <code>&#169; 2026 Jane Doe</code> into the text watermark, set opacity to 60%, and position it bottom-right for a natural-looking copyright notice on your photo.</p>
+
+      <h3>Branding Product Photos</h3>
+      <p>Upload a PNG logo as an image watermark, set the size to 15%, and place it bottom-right to quickly brand your product photos.</p>
+
+      <h3>Deterring Unauthorized Use</h3>
+      <p>Turn on the Tile Repeat checkbox to repeat the watermark across the whole image. Setting the text to semi-transparent deters copying without overwhelming the photo.</p>
+
+      <div class="post-highlight">💡 WatermarkImage processes everything entirely in your browser. Since your original and watermark images are never sent to an external server, you can safely process even confidential images. No installation or sign-up required.</div>
+    
+      <h2>Frequently Asked Questions</h2>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
+        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. Is the Add Watermark tool really free?</p>
+        <p style="color:var(--subtext);margin:0;line-height:1.7">Yes, it is completely free to use with no sign-up or installation required. There is no usage limit either.</p>
+      </div>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
+        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. Are uploaded files sent to a server?</p>
+        <p style="color:var(--subtext);margin:0;line-height:1.7">No. All processing happens entirely in your browser, and uploaded files are never sent to or stored on an external server.</p>
+      </div>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
+        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. Can I adjust the watermark position or opacity?</p>
+        <p style="color:var(--subtext);margin:0;line-height:1.7">Yes, for both text and image watermarks you can adjust the position, size, and opacity to composite them exactly how you want.</p>
+      </div>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
+        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. Can I use this on mobile?</p>
+        <p style="color:var(--subtext);margin:0;line-height:1.7">Yes, it works the same way in a mobile browser without needing to install any app.</p>
+      </div>
+    </div>
+
+    <!-- Google AdSense Display Ad — pending approval, reserving space -->
+    <div class="ad-slot" id="adMiddle">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
+
+    <div class="cta-box">
+      <p>Need a copyright mark on your images? Use WatermarkImage.<br />Freely set opacity, position, and size for text or image watermarks.</p>
+      <a href="/en/watermark-image/" class="cta-btn" style="display:inline-flex;align-items:center;gap:8px">
+        <span style="display:inline-block;width:26px;height:26px;overflow:hidden;flex-shrink:0"><span style="display:block;transform:scale(0.565);transform-origin:top left"><div style="width:46px;height:46px;background:#ffb3c7;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="position:relative;width:32px;height:28px;background:#fffdf9;border:2.5px solid #2a2433;border-radius:4px;box-sizing:border-box;overflow:hidden;display:flex;align-items:center;justify-content:center"><div style="position:absolute;left:4px;bottom:4px;width:9px;height:9px;border-radius:50%;background:#ffb3c7;border:2px solid #2a2433;box-sizing:border-box"></div><div style="font:700 14px Poppins,sans-serif;color:rgba(42,36,51,.55)">W</div></div></div></span></span>
+        Start Adding Watermarks for Free
+      </a>
+    </div>
+    <!-- Google AdSense Multiplex Ad — pending approval, reserving space -->
+    <div class="ad-slot ad-slot-rect" id="adBottom">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
+
+<div class="post-nav">
+      <a href="/en/blog/39-cropimage-howto"><span class="nav-label">&larr; Previous</span><span style="color:var(--point-hover)">Crop Image</span>: The Complete Guide</a>
+      <a href="/en/blog/23-colorpicker-howto" style="text-align:right"><span class="nav-label">Next &rarr;</span><span style="color:var(--point-hover)">Pick Color</span>: The Complete Guide</a>
+    </div>
+
+  </article>
+  <footer class="footer">
+    <div class="container">
+      <p class="footer-copy">&#xa9; 2026 BrowserKit. All processing happens in your browser.</p>
+      <nav class="footer-nav">
+        <a href="/en/privacy.html">Privacy Policy</a>
+        <a href="/en/terms.html">Terms of Service</a>
+        <a href="/en/about.html">About</a>
+        <a href="/en/blog/">Blog</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script>
+  document.querySelectorAll('[data-lang-btn]').forEach(function(btn){
+    btn.addEventListener('click', function(e){
+      e.stopPropagation();
+      var menu = btn.nextElementSibling;
+      menu.classList.toggle('show');
+    });
+  });
+  document.addEventListener('click', function(){
+    document.querySelectorAll('.lang-switcher-menu.show').forEach(function(m){ m.classList.remove('show'); });
+  });
+  </script>
+
+  <script>
+  (function(){
+    try {
+      if (document.cookie.indexOf('bk_lang_dismiss=1') !== -1) return;
+      var lang = (navigator.language || navigator.userLanguage || '').toLowerCase();
+      if (lang.indexOf('ko') !== 0) return;
+      var banner = document.getElementById('langBanner');
+      if (!banner) return;
+      banner.classList.add('show');
+      var closeBtn = document.getElementById('langBannerClose');
+      closeBtn.addEventListener('click', function(){
+        banner.classList.remove('show');
+        document.cookie = 'bk_lang_dismiss=1; max-age=' + (60*60*24*180) + '; path=/';
+      });
+    } catch(e) {}
+  })();
+  </script>
+</body>
+</html>
+
