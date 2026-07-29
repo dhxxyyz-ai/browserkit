@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="icon" href="/favicon.ico" sizes="32x32">
+  <link rel="icon" href="/favicon-16.png" sizes="16x16" type="image/png">
+  <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="/favicon-192.png" sizes="192x192" type="image/png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="The official step-by-step guide to every feature of PixelArt. Learn how to convert an image into a blocky pixel-art style." />
+  <meta property="og:title" content="Convert to Pixel Art: The Complete Guide — BrowserKit" />
+  <meta property="og:description" content="The official PixelArt guide to converting an image into a blocky pixel-art style. Processed right in your browser, with no server upload." />
+  <meta property="og:type" content="article" />
+  <title>Convert to Pixel Art: The Complete Guide — BrowserKit</title>
+  <link rel="stylesheet" href="/css/style.css?v=20260724c" />
+  <link rel="stylesheet" href="/css/style-en.css?v=20260724a" />
+  <!-- Google AdSense — pending re-review. Uncomment once approved.
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506"
+     crossorigin="anonymous"></script>
+  -->
+  <style>
+    .feature-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:20px 0; }
+    .feature-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px; }
+    .feature-card:hover { border-color:var(--point); }
+    .feature-icon { font-size:24px; margin-bottom:10px; }
+    .feature-title { font-size:14px; font-weight:600; color:var(--text); margin-bottom:6px; }
+    .feature-desc { font-size:13px; color:var(--subtext); line-height:1.7; }
+    .step-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px 24px; margin:16px 0; display:flex; gap:16px; align-items:flex-start; }
+    .step-num { min-width:36px; height:36px; background:linear-gradient(135deg,var(--point),var(--point-hover)); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:700; color:white; flex-shrink:0; }
+    .step-content h3 { font-size:15px; font-weight:600; margin:0 0 6px; color:var(--text); }
+    .step-content p { font-size:14px; color:var(--subtext); line-height:1.7; margin:0; }
+    .preset-demo-grid { display:flex; gap:8px; flex-wrap:wrap; margin:16px 0; }
+    .preset-demo-chip { background:var(--card); border:1px solid var(--border); border-radius:10px; padding:8px 14px; font-size:13px; font-weight:600; color:var(--subtext); }
+    .preset-demo-chip.on { background:rgba(123,108,255,0.15); border-color:var(--point); color:var(--point-hover); }
+    .post-table { width:100%; border-collapse:collapse; margin:20px 0; font-size:15px; }
+    .post-table th { background:var(--card); padding:12px 16px; text-align:left; font-weight:600; border:1px solid var(--border); color:var(--text); }
+    .post-table td { padding:11px 16px; border:1px solid var(--border); color:var(--subtext); line-height:1.7; }
+    .post-table tr:hover td { background:rgba(123,108,255,0.04); }
+    .use-case-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:20px 0; }
+    .use-case-card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:18px; }
+    .use-case-icon { font-size:28px; margin-bottom:8px; }
+    .use-case-title { font-size:13px; font-weight:600; color:var(--text); margin-bottom:6px; }
+    .use-case-desc { font-size:12px; color:var(--subtext); line-height:1.7; }
+    .post-nav { display:flex; justify-content:space-between; margin-top: 12px; padding-top:24px; border-top:1px solid var(--border); gap:12px; }
+    .post-nav a { font-size:15px; color:var(--subtext); text-decoration:none; }
+    .post-nav a:hover { color:var(--text); }
+    .cta-box { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:28px; text-align:center; margin: 12px 0 0; }
+    .cta-box p { font-size:17px; color:var(--subtext); margin-bottom:16px; }
+    .cta-btn { display:inline-block; background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border-radius:10px; padding:12px 28px; font-size:14px; font-weight:600; text-decoration:none; }
+    .cta-btn:hover { transform:translateY(-2px); box-shadow:0 8px 24px var(--glow); color:white; }
+    .back-link:hover { color:var(--text); }
+    @media (max-width:640px) {
+      .feature-grid { grid-template-columns:1fr; }
+      .use-case-grid { grid-template-columns:1fr; }
+    }
+  </style>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<meta property="og:image" content="https://browserkit.online/img/og/pixel-art.png" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Convert to Pixel Art: The Complete Guide",
+    "description": "The official step-by-step guide to every feature of PixelArt. Learn how to convert an image into a blocky pixel-art style.",
+    "datePublished": "2026-07-09T00:00:00+09:00",
+    "dateModified": "2026-07-22T00:00:00+09:00",
+    "author": { "@type": "Organization", "name": "BrowserKit", "url": "https://browserkit.online" },
+    "publisher": { "@type": "Organization", "name": "BrowserKit", "url": "https://browserkit.online", "logo": { "@type": "ImageObject", "url": "https://browserkit.online/img/og-browserkit.png" } },
+    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://browserkit.online/en/blog/44-pixelart-howto" },
+    "image": "https://browserkit.online/img/og/pixel-art.png"
+  }
+  </script>  <link rel="canonical" href="https://browserkit.online/en/blog/44-pixelart-howto" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://browserkit.online/en/" },
+    { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://browserkit.online/en/blog/" },
+    { "@type": "ListItem", "position": 3, "name": "Convert to Pixel Art: The Complete Guide", "item": "https://browserkit.online/en/blog/44-pixelart-howto" }
+  ]
+}
+  </script>
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://browserkit.online/img/og/pixel-art.png" />
+  <style>
+    .post-table-wrap { overflow-x:auto; }
+    .post-table th, .post-table td { white-space:nowrap; }
+    .post-nav a { word-break:keep-all; }
+    .post-nav .nav-label { display:block; font-size:13px; color:var(--subtext); opacity:0.7; margin-bottom:4px; }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Is the Convert to Pixel Art tool really free?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, it is completely free to use with no sign-up or installation required. There is no usage limit either."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Are uploaded files sent to a server?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. All processing happens entirely in your browser, and uploaded files are never sent to or stored on an external server."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I adjust the pixel size?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, you can adjust the pixel size to change the chunkiness and feel of the dots however you like."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I use this on mobile?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, it works the same way in a mobile browser without needing to install any app."
+      }
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <div class="lang-banner" id="langBanner">
+    <span>🌐 이 페이지는 <a href="/blog/44-pixelart-howto">한국어</a>로도 볼 수 있습니다.</span>
+    <button class="lang-banner-close" id="langBannerClose" type="button" aria-label="close">&times;</button>
+  </div>
+  <header class="header">
+    <div class="container">
+      <a href="/en/" class="header-brand"><div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Poppins,sans-serif;flex-shrink:0">B</div><span class="header-brand-text"><span style="color:var(--text)">Browser</span><span style="color:var(--point)">Kit</span></span></a>
+      <div class="header-right">
+        <div class="lang-switcher">
+          <button class="lang-switcher-btn" type="button" data-lang-btn>🌐 <span class="lang-label-full">English</span></button>
+          <div class="lang-switcher-menu" data-lang-menu>
+            <a href="#" class="active">English</a>
+            <a href="/blog/44-pixelart-howto">한국어</a>
+          </div>
+        </div>
+        <a href="/en/" class="header-back">&#x2190; <span class="header-back-label">Back to BrowserKit</span></a>
+      </div>
+    </div>
+  </header>
+
+  <article class="post-wrap">
+    <a href="/en/blog/" class="back-link">&#x2190; Blog</a>
+    <span class="post-tag">Guide</span>
+    <h1 class="post-title"><span style="color:var(--point-hover)">Convert to Pixel Art</span>: The Complete Guide</h1>
+    <div class="post-date">July 9, 2026</div>
+    <!-- Google AdSense Display Ad — pending approval, reserving space -->
+    <div class="ad-slot" id="adExtra2">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
+
+    <div class="post-body">
+      <p>Want to give a profile photo that 8-bit game look, but drawing pixel art by hand feels out of reach? PixelArt is a free online tool that instantly converts an image into a pixel-art style by averaging blocks of pixels, just like retro dot-graphic game art. Control the level of detail with block size, and turn on grid lines to make each pixel stand out. Everything happens entirely in your browser, so your uploaded image is never sent to an external server.</p>
+
+      <h2>Key Features</h2>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F9CA;</div>
+          <div class="feature-title">Adjustable Block Size</div>
+          <div class="feature-desc">Adjust block size from 4px to 32px. The larger the value, the chunkier the dots and the simpler the original shape becomes.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F3AE;</div>
+          <div class="feature-title">Quick Presets</div>
+          <div class="feature-desc">Apply with one click using 4 presets: Fine (6px) / Default (12px) / Chunky (24px) / Retro Dots (32px).</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F53A;</div>
+          <div class="feature-title">Grid Lines</div>
+          <div class="feature-desc">Turn on the checkbox to show faint grid lines between blocks, making each pixel unit stand out more clearly.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F5BC;&#xFE0F;</div>
+          <div class="feature-title">Live Preview</div>
+          <div class="feature-desc">Adjusting the slider or a preset is reflected on the result canvas on the right instantly.</div>
+        </div>
+      </div>
+
+      <!-- Google AdSense Display Ad — pending approval, reserving space -->
+    <div class="ad-slot" id="adTop">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
+      <h2>How to Use It</h2>
+
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <h3>Upload an Image</h3>
+          <p>Click the upload zone or drag an image onto it. JPG, PNG, and WEBP are supported. Once uploaded, the converted result appears instantly at the default value (12px blocks).</p>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <h3>Adjust Block Size</h3>
+          <p>Click a preset button or drag the slider directly to adjust block size. The larger the blocks, the bigger each dot in the image and the simpler the shape becomes.</p>
+        </div>
+      </div>
+
+      
+
+      <h3>Quick Presets</h3>
+      <div class="preset-demo-grid">
+        <span class="preset-demo-chip">&#x1F50E; Fine (6px)</span>
+        <span class="preset-demo-chip on">&#x1F3AE; Default (12px)</span>
+        <span class="preset-demo-chip">&#x1F9F1; Chunky (24px)</span>
+        <span class="preset-demo-chip">&#x1F47E; Retro Dots (32px)</span>
+      </div>
+
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <h3>Show Grid Lines (Optional)</h3>
+          <p>Turn on the <strong>Show Grid Lines</strong> checkbox to draw faint lines between blocks so each pixel appears separated. Useful when you want to emphasize a retro game sprite look.</p>
+        </div>
+      </div>
+
+      
+      <div class="step-card">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <h3>Download</h3>
+          <p>Click the <strong>&#x2B07; Save PNG</strong> button to download the finished pixel art image.</p>
+        </div>
+      </div>
+
+      
+
+      <h2>Comparing the Look of Each Block Size</h2>
+      <div class="post-table-wrap"><table class="post-table">
+        <thead><tr><th>Block Size</th><th>Look</th><th>Best For</th></tr></thead>
+        <tbody>
+          <tr><td><strong>6px (Fine)</strong></td><td>Keeps most of the original shape, adding just a subtle dot texture.</td><td>Adding a light retro touch to a portrait</td></tr>
+          <tr><td><strong>12px (Default)</strong></td><td>Still recognizable while giving a clear pixel-art feel.</td><td>Works well for most photos</td></tr>
+          <tr><td><strong>24px (Chunky)</strong></td><td>Color blocks get larger and the shape simplifies.</td><td>Simple images like icons or profile photos</td></tr>
+          <tr><td><strong>32px (Retro Dots)</strong></td><td>Becomes a fully abstract dot graphic.</td><td>8-bit game-style icons, making an avatar</td></tr>
+        </tbody>
+      </table></div>
+
+      <h2>Use Cases</h2>
+      <div class="use-case-grid">
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F47E;</div>
+          <div class="use-case-title">Making Retro Game Icons</div>
+          <div class="use-case-desc">Convert a photo into an 8-bit game-style dot icon to use as a profile picture or avatar.</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F4F1;</div>
+          <div class="use-case-title">Styling a Social Profile Photo</div>
+          <div class="use-case-desc">Apply a pixel-art filter to an ordinary photo to make a distinctive profile picture.</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F3A8;</div>
+          <div class="use-case-title">Making Stickers and Emoticons</div>
+          <div class="use-case-desc">Use a simplified dot image as source art for a sticker or emoticon.</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F3AF;</div>
+          <div class="use-case-title">A Decorative Alternative to a Mosaic Effect</div>
+          <div class="use-case-desc">Not for hiding a face or a specific area -- use it just for fun to pixelate an entire image.</div>
+        </div>
+      </div>
+
+      <div class="post-highlight">&#x1F512; PixelArt processes everything entirely in your browser. Since uploaded images are never sent to an external server, you can safely convert photos you haven't published yet.</div>
+    
+      <h2>Frequently Asked Questions</h2>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
+        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. Is the Convert to Pixel Art tool really free?</p>
+        <p style="color:var(--subtext);margin:0;line-height:1.7">Yes, it is completely free to use with no sign-up or installation required. There is no usage limit either.</p>
+      </div>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
+        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. Are uploaded files sent to a server?</p>
+        <p style="color:var(--subtext);margin:0;line-height:1.7">No. All processing happens entirely in your browser, and uploaded files are never sent to or stored on an external server.</p>
+      </div>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
+        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. Can I adjust the pixel size?</p>
+        <p style="color:var(--subtext);margin:0;line-height:1.7">Yes, you can adjust the pixel size to change the chunkiness and feel of the dots however you like.</p>
+      </div>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
+        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. Can I use this on mobile?</p>
+        <p style="color:var(--subtext);margin:0;line-height:1.7">Yes, it works the same way in a mobile browser without needing to install any app.</p>
+      </div>
+    </div>
+
+    <!-- Google AdSense Display Ad — pending approval, reserving space -->
+    <div class="ad-slot" id="adMiddle">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
+
+    <div class="cta-box">
+      <p>Convert an image into a blocky pixel-art style.<br />Find the look you want instantly with 4 presets.</p>
+      <a href="/en/pixel-art/" class="cta-btn" style="display:inline-flex;align-items:center;gap:8px">
+        <span style="display:inline-block;width:26px;height:26px;overflow:hidden;flex-shrink:0"><span style="display:block;transform:scale(0.565);transform-origin:top left"><div style="width:46px;height:46px;background:#ffb3c7;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="display:grid;grid-template-columns:repeat(3,6px);grid-template-rows:repeat(3,6px);gap:2px"><div style="background:#fffdf9;border-radius:1px"></div><div style="background:#2a2433;border-radius:1px"></div><div style="background:#fffdf9;border-radius:1px"></div><div style="background:#2a2433;border-radius:1px"></div><div style="background:#fffdf9;border-radius:1px"></div><div style="background:#2a2433;border-radius:1px"></div><div style="background:#fffdf9;border-radius:1px"></div><div style="background:#2a2433;border-radius:1px"></div><div style="background:#fffdf9;border-radius:1px"></div></div></div></span></span>
+        Make Pixel Art for Free
+      </a>
+    </div>
+    <!-- Google AdSense Multiplex Ad — pending approval, reserving space -->
+    <div class="ad-slot ad-slot-rect" id="adBottom">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
+
+<div class="post-nav">
+      <a href="/en/blog/43-imagecollage-howto"><span class="nav-label">&larr; Previous</span><span style="color:var(--point-hover)">Image Collage</span>: The Complete Guide</a>
+      <a href="/en/blog/45-mosaicmaker-howto" style="text-align:right"><span class="nav-label">Next &rarr;</span><span style="color:var(--point-hover)">Mosaic Maker</span>: The Complete Guide</a>
+    </div>
+
+  </article>
+  <footer class="footer">
+    <div class="container">
+      <p class="footer-copy">&#xa9; 2026 BrowserKit. All processing happens in your browser.</p>
+      <nav class="footer-nav">
+        <a href="/en/privacy.html">Privacy Policy</a>
+        <a href="/en/terms.html">Terms of Service</a>
+        <a href="/en/about.html">About</a>
+        <a href="/en/blog/">Blog</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script>
+  document.querySelectorAll('[data-lang-btn]').forEach(function(btn){
+    btn.addEventListener('click', function(e){
+      e.stopPropagation();
+      var menu = btn.nextElementSibling;
+      menu.classList.toggle('show');
+    });
+  });
+  document.addEventListener('click', function(){
+    document.querySelectorAll('.lang-switcher-menu.show').forEach(function(m){ m.classList.remove('show'); });
+  });
+  </script>
+
+  <script>
+  (function(){
+    try {
+      if (document.cookie.indexOf('bk_lang_dismiss=1') !== -1) return;
+      var lang = (navigator.language || navigator.userLanguage || '').toLowerCase();
+      if (lang.indexOf('ko') !== 0) return;
+      var banner = document.getElementById('langBanner');
+      if (!banner) return;
+      banner.classList.add('show');
+      var closeBtn = document.getElementById('langBannerClose');
+      closeBtn.addEventListener('click', function(){
+        banner.classList.remove('show');
+        document.cookie = 'bk_lang_dismiss=1; max-age=' + (60*60*24*180) + '; path=/';
+      });
+    } catch(e) {}
+  })();
+  </script>
+</body>
+</html>
