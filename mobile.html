@@ -27,6 +27,14 @@
     a { text-decoration: none; }
     ::-webkit-scrollbar { width: 6px; }
     ::-webkit-scrollbar-thumb { background: #cdbce8; border-radius: 3px; }
+    /* Language switcher (mirrors en/mobile.html's ported .lang-switcher component) */
+    .lang-switcher { position: relative; font-family: 'Gowun Dodum', sans-serif; }
+    .lang-switcher-btn { background: rgba(255,255,255,.7); border: 2px solid #2a2433; border-radius: 999px; padding: 3px 10px; font-size: 12px; color: #2a2433; cursor: pointer; font-family: 'Gowun Dodum',sans-serif; display: flex; align-items: center; gap: 5px; }
+    .lang-switcher-menu { position: absolute; right: 0; top: calc(100% + 6px); background: #fbf6ff; border: 2px solid #2a2433; border-radius: 12px; padding: 6px; min-width: 120px; box-shadow: 0 8px 24px rgba(40,30,55,.22); display: none; flex-direction: column; gap: 2px; z-index: 9800; }
+    .lang-switcher-menu.show { display: flex; }
+    .lang-switcher-menu a { padding: 8px 10px; border-radius: 8px; font-size: 13px; color: #4a4256; text-decoration: none; font-family: 'Gowun Dodum',sans-serif; }
+    .lang-switcher-menu a:hover { background: rgba(123,108,255,.1); color: #2a2433; }
+    .lang-switcher-menu a.active { color: #7b6cff; font-weight: 700; }
   </style>
   <meta property="og:image" content="https://browserkit.online/img/og-browserkit.png" />
   <link rel="canonical" href="https://browserkit.online/" />
@@ -334,7 +342,7 @@ function recycleIcon(fill, ink) {
 function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 
 // ── 상태 ──────────────────────────────────────────────────────────────────────
-const S = {};
+const S = { langOpen:false };
 
 // ── 렌더 ──────────────────────────────────────────────────────────────────────
 function render() {
@@ -356,12 +364,21 @@ function render() {
     </fieldset>`;
   }).join('');
 
+  const langMenuHtml = `<div class="lang-switcher">
+    <button class="lang-switcher-btn" type="button" id="bk-lang-btn">🌐 <span>한국어</span></button>
+    <div class="lang-switcher-menu${S.langOpen?' show':''}" id="bk-lang-menu">
+      <a href="#" class="active">한국어</a>
+      <a href="/en/mobile.html">English</a>
+    </div>
+  </div>`;
+
   document.getElementById('bk-app').innerHTML = `
   <div style="min-height:100vh;background:${wallpaper};padding-bottom:120px">
 
     <!-- 고정 헤더 -->
     <div style="position:sticky;top:0;z-index:100;background:#fbf6ff;box-shadow:0 2px 16px rgba(42,36,51,.08)">
       <div style="padding:10px 16px 10px;display:flex;flex-direction:column;align-items:center;gap:6px">
+        <div style="width:100%;display:flex;justify-content:flex-end">${langMenuHtml}</div>
         <div style="display:flex;align-items:center;gap:8px">
           <div style="width:28px;height:28px;border-radius:50%;background:${accent};border:2.5px solid ${ink};display:flex;align-items:center;justify-content:center;color:#fff;font:700 16px Gowun Dodum,sans-serif;transform:rotate(-6deg)">B</div>
           <div style="font:700 28px Gowun Dodum,sans-serif;letter-spacing:-.5px"><span style="color:${ink}">Browser</span><span style="color:${accent}">Kit</span></div>
@@ -392,6 +409,15 @@ function render() {
   <div style="position:fixed;bottom:0;left:0;right:0;z-index:200;background:rgba(251,246,255,.82);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);box-shadow:0 -2px 16px rgba(42,36,51,.08);display:flex;justify-content:center;padding:6px 0">
     <ins class="kakao_ad_area bk-ad-bottom" style="display:none" data-ad-unit="DAN-R4xA2niTT8HgGjoO" data-ad-width="320" data-ad-height="50"></ins>
   </div>`;
+
+  const langBtn = document.getElementById('bk-lang-btn');
+  const langMenu = document.getElementById('bk-lang-menu');
+  if (langBtn && langMenu) {
+    langBtn.onclick = e => { e.stopPropagation(); S.langOpen = !S.langOpen; langMenu.classList.toggle('show', S.langOpen); };
+    document.addEventListener('click', e => {
+      if (S.langOpen && !e.target.closest('.lang-switcher')) { S.langOpen = false; langMenu.classList.remove('show'); }
+    });
+  }
 
   // Google AdSense (승인 후 복원):
   // document.querySelectorAll('.bk-ad-top, .bk-ad-bottom').forEach(el => {

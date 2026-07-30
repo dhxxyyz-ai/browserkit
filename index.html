@@ -44,6 +44,15 @@
     .bk-task-btn:hover { background: rgba(255,255,255,.7) !important; }
     .bk-cta:hover { transform: translateY(2px) !important; box-shadow: 0 2px 0 currentColor !important; }
     #root { transform: scale(0.05); opacity: 0; border-radius: 30px; transform-origin: center center; }
+    /* Language switcher (mirrors en/index.html's ported .lang-switcher component) */
+    .lang-switcher { position: relative; font-family: 'Gowun Dodum', sans-serif; }
+    .lang-switcher-btn { background: rgba(255,255,255,.7); border: 2px solid #2a2433; border-radius: 999px; padding: 4px 12px; font-size: 14px; color: #2a2433; cursor: pointer; font-family: 'Gowun Dodum',sans-serif; display: flex; align-items: center; gap: 6px; }
+    .lang-switcher-btn:hover { background: rgba(255,255,255,.95); }
+    .lang-switcher-menu { position: absolute; right: 0; top: calc(100% + 6px); background: #fbf6ff; border: 2px solid #2a2433; border-radius: 12px; padding: 6px; min-width: 130px; box-shadow: 0 8px 24px rgba(40,30,55,.22); display: none; flex-direction: column; gap: 2px; z-index: 9800; }
+    .lang-switcher-menu.show { display: flex; }
+    .lang-switcher-menu a { padding: 8px 10px; border-radius: 8px; font-size: 14px; color: #4a4256; text-decoration: none; font-family: 'Gowun Dodum',sans-serif; }
+    .lang-switcher-menu a:hover { background: rgba(123,108,255,.1); color: #2a2433; }
+    .lang-switcher-menu a.active { color: #7b6cff; font-weight: 700; }
   </style>
   <meta property="og:image" content="https://browserkit.online/img/og-browserkit.png" />
   <link rel="canonical" href="https://browserkit.online/" />
@@ -471,7 +480,7 @@ function getNode(path) {
 
 // ── State ─────────────────────────────────────────────────────────────────────
 let _idc=0, _zc=20, _drag=null, _searchMD=null, _toolboxEl=null;
-const S = { windows:[], startOpen:false, time:'', dateStr:'', dateShort:'', palette:'msn' };
+const S = { windows:[], startOpen:false, langOpen:false, time:'', dateStr:'', dateShort:'', palette:'msn' };
 
 function tick() {
   const d=new Date(), h=d.getHours(), ampm=h<12?'오전':'오후';
@@ -762,6 +771,14 @@ function render() {
 
   const infoFile={title:'서비스 소개',code:'',kind:'info'};
 
+  const langMenuHtml=`<div class="lang-switcher" style="margin-left:6px">
+    <button class="lang-switcher-btn" type="button" id="bk-lang-btn">🌐 <span>한국어</span></button>
+    <div class="lang-switcher-menu${S.langOpen?' show':''}" id="bk-lang-menu">
+      <a href="#" class="active">한국어</a>
+      <a href="/en/index.html">English</a>
+    </div>
+  </div>`;
+
   const _html=`
   <div id="bk-shell" style="width:100%;height:100vh;display:flex;flex-direction:column;background:${pal.wallpaper};overflow:hidden;user-select:none">
     <div style="flex:0 0 auto;height:48px;display:flex;align-items:center;gap:20px;padding:0 16px;background:${barBg};border-bottom:3px solid ${ink};position:relative;z-index:9000">
@@ -777,6 +794,7 @@ function render() {
       <div style="margin-left:auto;display:flex;align-items:center;gap:14px">
         <div style="display:flex;align-items:center;gap:6px;font:400 15px Gowun Dodum,sans-serif;color:${ink};border:2px solid ${ink};padding:2px 11px;border-radius:20px;background:rgba(255,255,255,.5)"><span style="width:9px;height:9px;border-radius:50%;background:${accent};display:inline-block"></span>100% 무료 \xb7 서버 전송 없음</div>
         <div style="font:400 17px Gowun Dodum,sans-serif;color:${ink}">${esc(S.dateStr)}</div>
+        ${langMenuHtml}
       </div>
     </div>
     <div id="bk-desktop" style="flex:1 1 auto;position:relative;overflow:hidden">
@@ -882,6 +900,16 @@ function wireEvents() {
   if (desk) desk.onclick = e => {
     if (S.startOpen && !e.target.closest('.bk-start-btn')) { S.startOpen = false; render(); }
   };
+
+  // Language switcher dropdown
+  const langBtn = document.getElementById('bk-lang-btn');
+  const langMenu = document.getElementById('bk-lang-menu');
+  if (langBtn && langMenu) {
+    langBtn.onclick = e => { e.stopPropagation(); S.langOpen = !S.langOpen; langMenu.classList.toggle('show', S.langOpen); };
+    document.addEventListener('click', e => {
+      if (S.langOpen && !e.target.closest('.lang-switcher')) { S.langOpen = false; langMenu.classList.remove('show'); }
+    });
+  }
 
   // Search box
   const searchInput = document.getElementById('bk-search-input');
