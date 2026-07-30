@@ -1,0 +1,507 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="icon" href="/favicon.ico" sizes="32x32">
+  <link rel="icon" href="/favicon-16.png" sizes="16x16" type="image/png">
+  <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="/favicon-192.png" sizes="192x192" type="image/png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="The official step-by-step guide to every feature of MarkdownEditor. Learn about live Markdown preview, using the toolbar buttons, and saving as HTML." />
+  <meta property="og:title" content="Markdown Editor: The Complete Guide — BrowserKit" />
+  <meta property="og:description" content="The official MarkdownEditor guide to converting Markdown to HTML in real time." />
+  <meta property="og:type" content="article" />
+  <title>Markdown Editor: The Complete Guide — BrowserKit</title>
+  <link rel="stylesheet" href="/css/style.css?v=20260724c" />
+  <link rel="stylesheet" href="/css/style-en.css?v=20260724a" />
+  <!-- Google AdSense — pending re-review. Uncomment once approved.
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506"
+     crossorigin="anonymous"></script>
+  -->
+  <style>
+    .feature-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:20px 0; }
+    .feature-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px; }
+    .feature-card:hover { border-color:var(--point); }
+    .feature-icon { font-size:24px; margin-bottom:10px; }
+    .feature-title { font-size:14px; font-weight:600; color:var(--text); margin-bottom:6px; }
+    .feature-desc { font-size:13px; color:var(--subtext); line-height:1.7; }
+    .step-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px 24px; margin:16px 0; display:flex; gap:16px; align-items:flex-start; }
+    .step-num { min-width:36px; height:36px; background:linear-gradient(135deg,var(--point),var(--point-hover)); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:700; color:white; flex-shrink:0; }
+    .step-content h3 { font-size:15px; font-weight:600; margin:0 0 6px; color:var(--text); }
+    .step-content p { font-size:14px; color:var(--subtext); line-height:1.7; margin:0; }
+    /* 툴바 데모 */
+    .toolbar-demo { display:flex; gap:6px; flex-wrap:wrap; background:var(--card); border:1px solid var(--border); border-radius:10px; padding:12px 14px; margin:16px 0; }
+    .tb-btn { background:var(--bg); border:1px solid var(--border); border-radius:6px; padding:5px 10px; font-size:12px; font-weight:600; color:var(--subtext); white-space:nowrap; }
+    .tb-btn.active { background:rgba(123,108,255,0.12); border-color:var(--point); color:var(--point-hover); }
+    .tb-sep { width:1px; background:var(--border); margin:0 2px; }
+    /* 마크다운 예시 */
+    .md-demo { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:16px 0; }
+    .md-pane { border-radius:10px; overflow:hidden; }
+    .md-pane-label { font-size:11px; font-weight:600; color:var(--subtext); padding:7px 12px; background:var(--bg); border:1px solid var(--border); border-bottom:none; border-radius:10px 10px 0 0; }
+    .md-code { background:#0a0a12; border:1px solid var(--border); padding:14px 16px; font-family:'Fira Code','JetBrains Mono',monospace; font-size:12px; line-height:1.8; color:#e2e8f0; white-space:pre-wrap; border-radius:0 0 10px 10px; margin:0; }
+    .md-result { background:var(--card); border:1px solid var(--border); padding:14px 16px; border-radius:0 0 10px 10px; }
+    .md-result h1, .md-result .md-h1-demo { font-size:18px; font-weight:700; color:var(--text); margin:0 0 8px; border-bottom:1px solid var(--border); padding-bottom:6px; }
+    .md-result h2 { font-size:15px; font-weight:700; color:var(--text); margin:12px 0 6px; }
+    .md-result h3 { font-size:13px; font-weight:600; color:var(--point-hover); margin:10px 0 4px; }
+    .md-result p { font-size:13px; color:var(--subtext); line-height:1.7; margin:0 0 8px; }
+    .md-result ul { padding-left:18px; margin:0 0 8px; }
+    .md-result li { font-size:13px; color:var(--subtext); margin:2px 0; }
+    .md-result code { background:rgba(123,108,255,0.12); border-radius:4px; padding:1px 5px; font-family:'Fira Code',monospace; font-size:11px; color:var(--point-hover); }
+    .md-result blockquote { border-left:3px solid var(--point); margin:8px 0; padding:6px 12px; background:rgba(123,108,255,0.06); font-size:13px; color:var(--text); border-radius:0 6px 6px 0; }
+    .md-result strong { color:var(--text); font-weight:700; }
+    .md-result em { color:var(--subtext); font-style:italic; }
+    .md-result del { color:var(--subtext); text-decoration:line-through; }
+    .post-table { width:100%; border-collapse:collapse; margin:20px 0; font-size:15px; }
+    .post-table th { background:var(--card); padding:12px 16px; text-align:left; font-weight:600; border:1px solid var(--border); color:var(--text); }
+    .post-table td { padding:11px 16px; border:1px solid var(--border); color:var(--subtext); line-height:1.7; }
+    .post-table td code { background:var(--bg); border-radius:4px; padding:1px 6px; font-size:13px; color:var(--point-hover); font-family:'Fira Code',monospace; }
+    .post-table tr:hover td { background:rgba(123,108,255,0.04); }
+    .use-case-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:20px 0; }
+    .use-case-card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:18px; }
+    .use-case-icon { font-size:28px; margin-bottom:8px; }
+    .use-case-title { font-size:13px; font-weight:600; color:var(--text); margin-bottom:6px; }
+    .use-case-desc { font-size:12px; color:var(--subtext); line-height:1.7; }
+    .post-nav { display:flex; justify-content:space-between; margin-top: 12px; padding-top:24px; border-top:1px solid var(--border); gap:12px; }
+    .post-nav a { font-size:15px; color:var(--subtext); text-decoration:none; }
+    .post-nav a:hover { color:var(--text); }
+    .cta-box { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:28px; text-align:center; margin: 12px 0 0; }
+    .cta-box p { font-size:17px; color:var(--subtext); margin-bottom:16px; }
+    .cta-btn { display:inline-block; background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border-radius:10px; padding:12px 28px; font-size:14px; font-weight:600; text-decoration:none; }
+    .cta-btn:hover { transform:translateY(-2px); box-shadow:0 8px 24px var(--glow); color:white; }
+    .back-link:hover { color:var(--text); }
+    @media (max-width:640px) {
+      .feature-grid { grid-template-columns:1fr; }
+      .md-demo { grid-template-columns:1fr; }
+      .use-case-grid { grid-template-columns:1fr; }
+    }
+  </style>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<meta property="og:image" content="https://browserkit.online/img/og/markdown-editor.png" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Markdown Editor: The Complete Guide",
+    "description": "The official step-by-step guide to every feature of MarkdownEditor. Learn about live Markdown preview, using the toolbar buttons, and saving as HTML.",
+    "datePublished": "2026-06-22T00:00:00+09:00",
+    "dateModified": "2026-07-22T00:00:00+09:00",
+    "author": { "@type": "Organization", "name": "BrowserKit", "url": "https://browserkit.online" },
+    "publisher": { "@type": "Organization", "name": "BrowserKit", "url": "https://browserkit.online", "logo": { "@type": "ImageObject", "url": "https://browserkit.online/img/og-browserkit.png" } },
+    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://browserkit.online/en/blog/30-markdowneditor-howto" },
+    "image": "https://browserkit.online/img/og/markdown-editor.png"
+  }
+  </script>  <link rel="canonical" href="https://browserkit.online/en/blog/30-markdowneditor-howto" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://browserkit.online/en/" },
+    { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://browserkit.online/en/blog/" },
+    { "@type": "ListItem", "position": 3, "name": "Markdown Editor: The Complete Guide", "item": "https://browserkit.online/en/blog/30-markdowneditor-howto" }
+  ]
+}
+  </script>
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://browserkit.online/img/og/markdown-editor.png" />
+  <style>
+    .post-table-wrap { overflow-x:auto; }
+    .post-table th, .post-table td { white-space:nowrap; }
+    .post-nav a { word-break:keep-all; }
+    .post-nav .nav-label { display:block; font-size:13px; color:var(--subtext); opacity:0.7; margin-bottom:4px; }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Is the Markdown Editor tool really free?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, it is completely free to use with no sign-up or installation required. There is no usage limit either."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is what I enter sent to a server?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. All processing happens entirely in your browser, and what you enter is never sent to or stored on an external server."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is what I write saved automatically?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Since your content is processed entirely in your browser, be sure to copy or save your result separately once you're done."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I use this on mobile?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, it works the same way in a mobile browser without needing to install any app."
+      }
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <div class="lang-banner" id="langBanner">
+    <span>🌐 이 페이지는 <a href="/blog/30-markdowneditor-howto">한국어</a>로도 볼 수 있습니다.</span>
+    <button class="lang-banner-close" id="langBannerClose" type="button" aria-label="close">&times;</button>
+  </div>
+  <header class="header">
+    <div class="container">
+      <a href="/en/" class="header-brand"><div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Poppins,sans-serif;flex-shrink:0">B</div><span class="header-brand-text"><span style="color:var(--text)">Browser</span><span style="color:var(--point)">Kit</span></span></a>
+      <div class="header-right">
+        <div class="lang-switcher">
+          <button class="lang-switcher-btn" type="button" data-lang-btn>🌐 <span class="lang-label-full">English</span></button>
+          <div class="lang-switcher-menu" data-lang-menu>
+            <a href="#" class="active">English</a>
+            <a href="/blog/30-markdowneditor-howto">한국어</a>
+          </div>
+        </div>
+        <a href="/en/" class="header-back">&#x2190; <span class="header-back-label">Back to BrowserKit</span></a>
+      </div>
+    </div>
+  </header>
+
+  <article class="post-wrap">
+    <a href="/en/blog/" class="back-link">&#x2190; Blog</a>
+    <span class="post-tag">Guide</span>
+    <h1 class="post-title"><span style="color:var(--point-hover)">Markdown Editor</span>: The Complete Guide</h1>
+    <div class="post-date">June 21, 2026</div>
+    <!-- Google AdSense Display Ad — pending approval, reserving space -->
+    <div class="ad-slot" id="adExtra2">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
+
+    <div class="post-body">
+      <p>Writing a GitHub README or a blog post in Markdown means having to commit or save it every time just to see if it rendered correctly -- frustrating. MarkdownEditor is a free online editor that shows a live HTML preview as you type Markdown. Use it right in your browser with no install or sign-up, and save what you write as HTML or a .md file. Whatever you enter is processed entirely in your browser and never sent to an external server.</p>
+
+      <h2>Key Features</h2>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <div class="feature-icon">&#x26A1;</div>
+          <div class="feature-title">Live Preview</div>
+          <div class="feature-desc">The instant you type Markdown, an HTML preview appears in the panel on the right. No separate convert button needed.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F6E0;&#xFE0F;</div>
+          <div class="feature-title">Toolbar Buttons</div>
+          <div class="feature-desc">Insert common Markdown syntax -- H1-H3, bold, italic, strikethrough, code, lists, quotes, links -- with a single button click.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F4BE;</div>
+          <div class="feature-title">Save Files</div>
+          <div class="feature-desc">Download what you've written as an HTML file or a .md file. Saving as HTML includes default styling.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F6E1;&#xFE0F;</div>
+          <div class="feature-title">XSS-Safe</div>
+          <div class="feature-desc">Uses the DOMPurify library to automatically strip any malicious script embedded in your Markdown.</div>
+        </div>
+      </div>
+
+      <!-- Google AdSense Display Ad — pending approval, reserving space -->
+    <div class="ad-slot" id="adTop">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
+      <h2>Basic Usage</h2>
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <h3>Enter Markdown</h3>
+          <p>Type Markdown into the input box on the left. An HTML preview appears on the right the instant you type. You can also load a sample document right away with the sample button.</p>
+        </div>
+      </div>
+      
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <h3>Use the Toolbar Buttons (Optional)</h3>
+          <p>Click the formatting button you want from the toolbar at the top. With text selected, clicking a button applies formatting to the selection.</p>
+        </div>
+      </div>
+      
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <h3>Save or Copy</h3>
+          <p>Export using the buttons at the bottom: Copy HTML, Copy Markdown, Save HTML File, or Save .md File.</p>
+        </div>
+      </div>
+      
+
+      <h2>Toolbar Button Reference</h2>
+      <div class="toolbar-demo">
+        <span class="tb-btn active">H1</span>
+        <span class="tb-btn active">H2</span>
+        <span class="tb-btn active">H3</span>
+        <span class="tb-sep"></span>
+        <span class="tb-btn active"><strong>B</strong></span>
+        <span class="tb-btn active"><em>I</em></span>
+        <span class="tb-btn active"><del>S</del></span>
+        <span class="tb-btn active">&lt;/&gt;</span>
+        <span class="tb-sep"></span>
+        <span class="tb-btn active">&#x2022; List</span>
+        <span class="tb-btn active">1. List</span>
+        <span class="tb-btn active">&quot; Quote</span>
+        <span class="tb-sep"></span>
+        <span class="tb-btn active">Code</span>
+        <span class="tb-btn active">Link</span>
+        <span class="tb-btn active">Image</span>
+        <span class="tb-btn active">HR</span>
+      </div>
+
+      <div class="post-table-wrap"><table class="post-table">
+        <thead><tr><th>Button</th><th>Function</th><th>Markdown Inserted</th></tr></thead>
+        <tbody>
+          <tr><td>H1 / H2 / H3</td><td>Headings 1-3</td><td><code># </code> / <code>## </code> / <code>### </code></td></tr>
+          <tr><td>B (Bold)</td><td>Bolds the selected text</td><td><code>**text**</code></td></tr>
+          <tr><td>I (Italic)</td><td>Italicizes the selected text</td><td><code>*text*</code></td></tr>
+          <tr><td>S (Strikethrough)</td><td>Strikes through the selected text</td><td><code>~~text~~</code></td></tr>
+          <tr><td>&lt;/&gt; (Code)</td><td>Inline code</td><td><code>`code`</code></td></tr>
+          <tr><td>&#x2022; List</td><td>Unordered list</td><td><code>- </code></td></tr>
+          <tr><td>1. List</td><td>Ordered list</td><td><code>1. </code></td></tr>
+          <tr><td>&quot; Quote</td><td>Blockquote</td><td><code>&gt; </code></td></tr>
+          <tr><td>Code</td><td>Code block</td><td><code>```\n\n```</code></td></tr>
+          <tr><td>Link</td><td>Hyperlink</td><td><code>[text](URL)</code></td></tr>
+          <tr><td>Image</td><td>Insert an image</td><td><code>![alt](URL)</code></td></tr>
+          <tr><td>HR</td><td>Horizontal rule</td><td><code>---</code></td></tr>
+        </tbody>
+      </table></div>
+
+      <h2>Markdown Syntax Quick Reference</h2>
+
+      <h3>Headings and Emphasis</h3>
+      <div class="md-demo">
+        <div class="md-pane">
+          <div class="md-pane-label">Markdown Input</div>
+          <pre class="md-code"># Heading 1
+## Heading 2
+### Heading 3
+
+**Bold text**
+*Italic text*
+~~Strikethrough text~~</pre>
+        </div>
+        <div class="md-pane">
+          <div class="md-pane-label">HTML Preview</div>
+          <div class="md-result">
+            <div class="md-h1-demo">Heading 1</div>
+            <h2>Heading 2</h2>
+            <h3>Heading 3</h3>
+            <p><strong>Bold text</strong><br /><em>Italic text</em><br /><del>Strikethrough text</del></p>
+          </div>
+        </div>
+      </div>
+
+      <h3>Lists and Quotes</h3>
+      <div class="md-demo">
+        <div class="md-pane">
+          <div class="md-pane-label">Markdown Input</div>
+          <pre class="md-code">- Item 1
+- Item 2
+  - Nested item
+
+1. First
+2. Second
+
+&gt; Quoted content
+&gt; can span multiple lines too</pre>
+        </div>
+        <div class="md-pane">
+          <div class="md-pane-label">HTML Preview</div>
+          <div class="md-result">
+            <ul>
+              <li>Item 1</li>
+              <li>Item 2<ul><li>Nested item</li></ul></li>
+            </ul>
+            <ol style="padding-left:18px;margin:8px 0;font-size:13px;color:var(--subtext);">
+              <li>First</li>
+              <li>Second</li>
+            </ol>
+            <blockquote>Quoted content<br />can span multiple lines too</blockquote>
+          </div>
+        </div>
+      </div>
+
+      <h3>Code and Links</h3>
+      <div class="md-demo">
+        <div class="md-pane">
+          <div class="md-pane-label">Markdown Input</div>
+          <pre class="md-code">Inline `code` uses backticks
+
+```javascript
+function hello() {
+  return "world";
+}
+```
+
+[BrowserKit](https://browserkit.online)</pre>
+        </div>
+        <div class="md-pane">
+          <div class="md-pane-label">HTML Preview</div>
+          <div class="md-result">
+            <p>Inline <code>code</code> uses backticks</p>
+            <pre style="background:#0a0a12;border:1px solid var(--border);border-radius:8px;padding:10px 12px;font-family:'Fira Code',monospace;font-size:11px;color:#e2e8f0;overflow-x:auto;">function hello() {
+  return "world";
+}</pre>
+            <p><a href="#" style="color:var(--point-hover);">BrowserKit</a></p>
+          </div>
+        </div>
+      </div>
+
+      <h2>File-Saving Options</h2>
+      <div class="post-table-wrap"><table class="post-table">
+        <thead><tr><th>Button</th><th>Filename</th><th>Content</th><th>Use</th></tr></thead>
+        <tbody>
+          <tr><td>Copy HTML</td><td>--</td><td>The rendered HTML tags</td><td>Paste into a blog or WYSIWYG editor</td></tr>
+          <tr><td>Copy Markdown</td><td>--</td><td>The raw Markdown text</td><td>Paste into GitHub, Notion, and similar</td></tr>
+          <tr><td>Save HTML</td><td><code>markdown_export.html</code></td><td>HTML with default CSS styling included</td><td>Share as a standalone webpage</td></tr>
+          <tr><td>Save .md</td><td><code>document.md</code></td><td>Plain Markdown text</td><td>Edit in GitHub, VS Code, and similar</td></tr>
+        </tbody>
+      </table></div>
+
+      <h2>Tab Key Indentation</h2>
+      <p>Pressing Tab in the input box inserts 2 spaces. Handy for indenting inside a code block or building a nested list.</p>
+
+      <h2>Use Cases</h2>
+      <div class="use-case-grid">
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F4DD;</div>
+          <div class="use-case-title">Drafting Blog Posts</div>
+          <div class="use-case-desc">Write a post in Markdown, then copy it as HTML to paste into your blogging platform's HTML editing mode.</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F4BB;</div>
+          <div class="use-case-title">Writing a README</div>
+          <div class="use-case-desc">Write a GitHub repo's README.md, check it in the preview, then save it as a .md file.</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F4CA;</div>
+          <div class="use-case-title">Quickly Organizing Documents</div>
+          <div class="use-case-desc">Quickly structure meeting notes, proposals, and memos in Markdown, then save and share them as an HTML file.</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F393;</div>
+          <div class="use-case-title">Learning Markdown</div>
+          <div class="use-case-desc">Great for beginners since you can see the result immediately as you type Markdown syntax.</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F4E7;</div>
+          <div class="use-case-title">HTML Email Bodies</div>
+          <div class="use-case-desc">Write email content in Markdown, then copy it as HTML to paste into your email HTML editor.</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F4C4;</div>
+          <div class="use-case-title">Writing Technical Docs</div>
+          <div class="use-case-desc">Write API docs, dev guides, and more in Markdown, then export as HTML to upload to your team wiki.</div>
+        </div>
+      </div>
+
+      <h2>What Is Markdown?</h2>
+      <p>Markdown is a lightweight markup language created by John Gruber in 2004. Simple symbols like <code>#</code>, <code>**</code>, and <code>-</code> express headings, bold text, and lists, making it far easier to read and write than HTML. Most modern services support Markdown, including GitHub, Notion, Obsidian, Discord, and Slack.</p>
+
+      <div class="post-highlight">&#x1F4DD; MarkdownEditor converts Markdown to HTML with marked.js and strips malicious scripts with DOMPurify. Everything happens entirely in your browser, so what you enter is never sent to an external server.</div>
+    
+      <h2>Frequently Asked Questions</h2>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
+        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. Is the Markdown Editor tool really free?</p>
+        <p style="color:var(--subtext);margin:0;line-height:1.7">Yes, it is completely free to use with no sign-up or installation required. There is no usage limit either.</p>
+      </div>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
+        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. Is what I enter sent to a server?</p>
+        <p style="color:var(--subtext);margin:0;line-height:1.7">No. All processing happens entirely in your browser, and what you enter is never sent to or stored on an external server.</p>
+      </div>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
+        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. Is what I write saved automatically?</p>
+        <p style="color:var(--subtext);margin:0;line-height:1.7">Since your content is processed entirely in your browser, be sure to copy or save your result separately once you're done.</p>
+      </div>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
+        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. Can I use this on mobile?</p>
+        <p style="color:var(--subtext);margin:0;line-height:1.7">Yes, it works the same way in a mobile browser without needing to install any app.</p>
+      </div>
+    </div>
+
+    <!-- Google AdSense Display Ad — pending approval, reserving space -->
+    <div class="ad-slot" id="adMiddle">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
+
+    <div class="cta-box">
+      <p>Write a document in Markdown and check it with a live preview.<br />Export the finished document as HTML or a .md file right away.</p>
+      <a href="/en/markdown-editor/" class="cta-btn" style="display:inline-flex;align-items:center;gap:8px">
+        <span style="display:inline-block;width:26px;height:26px;overflow:hidden;flex-shrink:0"><span style="display:block;transform:scale(0.565);transform-origin:top left"><div style="width:46px;height:46px;background:#a8e6cf;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="font:700 16px Poppins,sans-serif;color:#2a2433;line-height:1;letter-spacing:-.5px;white-space:nowrap">M↓</div></div></span></span>
+        Start Editing Markdown for Free
+      </a>
+    </div>
+    <!-- Google AdSense Multiplex Ad — pending approval, reserving space -->
+    <div class="ad-slot ad-slot-rect" id="adBottom">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
+
+<div class="post-nav">
+      <a href="/en/blog/28-diffchecker-howto"><span class="nav-label">&larr; Previous</span><span style="color:var(--point-hover)">Diff Checker</span>: The Complete Guide</a>
+      <a href="/en/blog/37-findreplace-howto" style="text-align:right"><span class="nav-label">Next &rarr;</span><span style="color:var(--point-hover)">Find & Replace</span>: The Complete Guide</a>
+    </div>
+
+  </article>
+  <footer class="footer">
+    <div class="container">
+      <p class="footer-copy">&#xa9; 2026 BrowserKit. All processing happens in your browser.</p>
+      <nav class="footer-nav">
+        <a href="/en/privacy.html">Privacy Policy</a>
+        <a href="/en/terms.html">Terms of Service</a>
+        <a href="/en/about.html">About</a>
+        <a href="/en/blog/">Blog</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script>
+  document.querySelectorAll('[data-lang-btn]').forEach(function(btn){
+    btn.addEventListener('click', function(e){
+      e.stopPropagation();
+      var menu = btn.nextElementSibling;
+      menu.classList.toggle('show');
+    });
+  });
+  document.addEventListener('click', function(){
+    document.querySelectorAll('.lang-switcher-menu.show').forEach(function(m){ m.classList.remove('show'); });
+  });
+  </script>
+
+  <script>
+  (function(){
+    try {
+      if (document.cookie.indexOf('bk_lang_dismiss=1') !== -1) return;
+      var lang = (navigator.language || navigator.userLanguage || '').toLowerCase();
+      if (lang.indexOf('ko') !== 0) return;
+      var banner = document.getElementById('langBanner');
+      if (!banner) return;
+      banner.classList.add('show');
+      var closeBtn = document.getElementById('langBannerClose');
+      closeBtn.addEventListener('click', function(){
+        banner.classList.remove('show');
+        document.cookie = 'bk_lang_dismiss=1; max-age=' + (60*60*24*180) + '; path=/';
+      });
+    } catch(e) {}
+  })();
+  </script>
+</body>
+</html>
+
