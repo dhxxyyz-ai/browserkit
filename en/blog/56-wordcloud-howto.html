@@ -8,11 +8,11 @@
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="The official step-by-step guide to every feature of PaletteGen. Learn how to generate a harmonious palette -- complementary, analogous, triadic, and more -- from a single color." />
-  <meta property="og:title" content="Palette Generator: The Complete Guide — BrowserKit" />
-  <meta property="og:description" content="The official PaletteGen guide to instantly generating a harmonious palette -- complementary, analogous, triadic, and more -- from a single color." />
+  <meta name="description" content="The official step-by-step guide to every feature of WordCloudGen. Learn how to generate a word-frequency-based word cloud from text." />
+  <meta property="og:title" content="Word Cloud Generator: The Complete Guide — BrowserKit" />
+  <meta property="og:description" content="The official WordCloudGen guide to instantly generating a word-frequency-based word cloud from pasted text." />
   <meta property="og:type" content="article" />
-  <title>Palette Generator: The Complete Guide — BrowserKit</title>
+  <title>Word Cloud Generator: The Complete Guide — BrowserKit</title>
   <link rel="stylesheet" href="/css/style.css?v=20260724c" />
   <link rel="stylesheet" href="/css/style-en.css?v=20260724a" />
   <!-- Google AdSense — pending re-review. Uncomment once approved.
@@ -31,17 +31,6 @@
     .step-num { min-width:36px; height:36px; background:linear-gradient(135deg,var(--point),var(--point-hover)); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:700; color:white; flex-shrink:0; }
     .step-content h3 { font-size:15px; font-weight:600; margin:0 0 6px; color:var(--text); }
     .step-content p { font-size:14px; color:var(--subtext); line-height:1.7; margin:0; }
-
-    .harmony-demo { display:flex; gap:6px; flex-wrap:wrap; margin:16px 0; }
-    .harmony-chip { background:var(--card); border:1px solid var(--border); border-radius:10px; padding:8px 14px; font-size:12px; font-weight:600; color:var(--subtext); }
-    .harmony-chip.on { background:rgba(123,108,255,0.15); border-color:var(--point); color:var(--point-hover); }
-
-    .swatch-demo { display:flex; gap:10px; margin:16px 0; flex-wrap:wrap; }
-    .swatch-demo-item { text-align:center; }
-    .swatch-demo-color { width:64px; height:64px; border-radius:10px; border:1px solid var(--border); margin-bottom:6px; }
-    .swatch-demo-code { font-size:11px; font-family:'Fira Code',monospace; color:var(--subtext); }
-
-    .code-block { background:#0a0a12; border:1px solid var(--border); border-radius:10px; padding:16px; font-family:'Fira Code',monospace; font-size:13px; line-height:1.8; color:#68d391; margin:16px 0; overflow-x:auto; white-space:pre; }
 
     .post-table { width:100%; border-collapse:collapse; margin:20px 0; font-size:15px; }
     .post-table th { background:var(--card); padding:12px 16px; text-align:left; font-weight:600; border:1px solid var(--border); color:var(--text); }
@@ -68,21 +57,21 @@
   </style>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<meta property="og:image" content="https://browserkit.online/img/og/palette-gen.png" />
+<meta property="og:image" content="https://browserkit.online/img/og/word-cloud.png" />
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
-    "headline": "Palette Generator: The Complete Guide",
-    "description": "The official step-by-step guide to every feature of PaletteGen. Learn how to generate a harmonious palette -- complementary, analogous, triadic, and more -- from a single color.",
+    "headline": "Word Cloud Generator: The Complete Guide",
+    "description": "The official step-by-step guide to every feature of WordCloudGen. Learn how to generate a word-frequency-based word cloud from text.",
     "datePublished": "2026-07-10T00:00:00+09:00",
     "dateModified": "2026-07-22T00:00:00+09:00",
     "author": { "@type": "Organization", "name": "BrowserKit", "url": "https://browserkit.online" },
     "publisher": { "@type": "Organization", "name": "BrowserKit", "url": "https://browserkit.online", "logo": { "@type": "ImageObject", "url": "https://browserkit.online/img/og-browserkit.png" } },
-    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://browserkit.online/en/blog/53-palettegen-howto" },
-    "image": "https://browserkit.online/img/og/palette-gen.png"
+    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://browserkit.online/en/blog/56-wordcloud-howto" },
+    "image": "https://browserkit.online/img/og/word-cloud.png"
   }
-  </script>  <link rel="canonical" href="https://browserkit.online/en/blog/53-palettegen-howto" />
+  </script>  <link rel="canonical" href="https://browserkit.online/en/blog/56-wordcloud-howto" />
   <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -90,12 +79,12 @@
   "itemListElement": [
     { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://browserkit.online/en/" },
     { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://browserkit.online/en/blog/" },
-    { "@type": "ListItem", "position": 3, "name": "Palette Generator: The Complete Guide", "item": "https://browserkit.online/en/blog/53-palettegen-howto" }
+    { "@type": "ListItem", "position": 3, "name": "Word Cloud Generator: The Complete Guide", "item": "https://browserkit.online/en/blog/56-wordcloud-howto" }
   ]
 }
   </script>
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:image" content="https://browserkit.online/img/og/palette-gen.png" />
+  <meta name="twitter:image" content="https://browserkit.online/img/og/word-cloud.png" />
   <style>
     .post-table-wrap { overflow-x:auto; }
     .post-table th, .post-table td { white-space:nowrap; }
@@ -109,7 +98,7 @@
   "mainEntity": [
     {
       "@type": "Question",
-      "name": "Is the Palette Generator tool really free?",
+      "name": "Is the Word Cloud Generator tool really free?",
       "acceptedAnswer": {
         "@type": "Answer",
         "text": "Yes, it is completely free to use with no sign-up or installation required. There is no usage limit either."
@@ -117,18 +106,18 @@
     },
     {
       "@type": "Question",
-      "name": "Is the file I upload sent to a server?",
+      "name": "Is what I enter sent to a server?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "No. All processing happens entirely in your browser, and uploaded files are never sent to or stored on an external server."
+        "text": "No. All processing happens entirely in your browser, and what you enter is never sent to or stored on an external server."
       }
     },
     {
       "@type": "Question",
-      "name": "How do I use a palette I generated?",
+      "name": "Does it support non-English text?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Copy each color code from the palette to use directly in a design tool or CSS."
+        "text": "Yes, you can create a word-frequency-based word cloud from non-English text too."
       }
     },
     {
@@ -145,7 +134,7 @@
 </head>
 <body>
   <div class="lang-banner" id="langBanner">
-    <span>🌐 이 페이지는 <a href="/blog/53-palettegen-howto">한국어</a>로도 볼 수 있습니다.</span>
+    <span>🌐 이 페이지는 <a href="/blog/56-wordcloud-howto">한국어</a>로도 볼 수 있습니다.</span>
     <button class="lang-banner-close" id="langBannerClose" type="button" aria-label="close">&times;</button>
   </div>
   <header class="header">
@@ -156,7 +145,7 @@
           <button class="lang-switcher-btn" type="button" data-lang-btn>🌐 <span class="lang-label-full">English</span></button>
           <div class="lang-switcher-menu" data-lang-menu>
             <a href="#" class="active">English</a>
-            <a href="/blog/53-palettegen-howto">한국어</a>
+            <a href="/blog/56-wordcloud-howto">한국어</a>
           </div>
         </div>
         <a href="/en/" class="header-back">&#x2190; <span class="header-back-label">Back to BrowserKit</span></a>
@@ -167,7 +156,7 @@
   <article class="post-wrap">
     <a href="/en/blog/" class="back-link">&#x2190; Blog</a>
     <span class="post-tag">Guide</span>
-    <h1 class="post-title"><span style="color:var(--point-hover)">Palette Generator</span>: The Complete Guide</h1>
+    <h1 class="post-title"><span style="color:var(--point-hover)">Word Cloud Generator</span>: The Complete Guide</h1>
     <div class="post-date">July 10, 2026</div>
     <!-- Google AdSense Display Ad — pending approval, reserving space -->
     <div class="ad-slot" id="adExtra2">
@@ -176,29 +165,29 @@
     </div>
 
     <div class="post-body">
-      <p>You've settled on one main color, but picking the rest that go well with it feels like it requires knowing color theory. PaletteGen is a free online tool that automatically generates 5 kinds of harmonious palettes -- complementary, analogous, triadic, split-complementary, and monochromatic -- from a single color. Copy each color directly as HEX, RGB, or HSL, or export the finished palette as CSS variables all at once. Since all calculations happen entirely in your browser, your color is never sent to an external server.</p>
+      <p>Reading through dozens of open-ended survey responses one by one just to pull out the key words is a chore for your eyes. WordCloudGen is a free online tool that analyzes word frequency in pasted text and generates a word cloud image, with more frequent words shown larger. Use it to grasp key terms in meeting notes, survey responses, or a blog post at a glance, or to create an eye-catching image to share -- all analysis and image generation happens entirely in your browser, so your text is never sent to an external server.</p>
 
       <h2>Key Features</h2>
       <div class="feature-grid">
         <div class="feature-card">
+          <div class="feature-icon">&#x1F4CA;</div>
+          <div class="feature-title">Word Frequency Analysis</div>
+          <div class="feature-desc">Splits text on spaces and punctuation and counts how often each word appears.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F6AB;</div>
+          <div class="feature-title">Stop Word Removal</div>
+          <div class="feature-desc">Automatically filters out meaningless connector words like "and" or "but," leaving only the key terms.</div>
+        </div>
+        <div class="feature-card">
           <div class="feature-icon">&#x1F3A8;</div>
-          <div class="feature-title">5 Color Harmonies</div>
-          <div class="feature-desc">Choose the harmony you want -- complementary, analogous, triadic, split-complementary, or monochromatic.</div>
-        </div>
-        <div class="feature-card">
-          <div class="feature-icon">&#x1F522;</div>
-          <div class="feature-title">HEX/RGB/HSL Shown Together</div>
-          <div class="feature-desc">See all three notations on each color card and copy them individually to your clipboard.</div>
-        </div>
-        <div class="feature-card">
-          <div class="feature-icon">&#x1F4E4;</div>
-          <div class="feature-title">Export as CSS Variables</div>
-          <div class="feature-desc">Instantly copy the generated palette as CSS variable code in the form <code>:root { --color-primary: ... }</code>.</div>
+          <div class="feature-title">Automatic Layout</div>
+          <div class="feature-desc">Fills the canvas with no gaps using its own spiral-placement algorithm that keeps words from overlapping.</div>
         </div>
         <div class="feature-card">
           <div class="feature-icon">&#x1F512;</div>
           <div class="feature-title">Fully Local Processing</div>
-          <div class="feature-desc">All color calculations run inside your browser. Your color is never sent to a server.</div>
+          <div class="feature-desc">All analysis and image generation runs inside your browser. Your text is never sent to a server.</div>
         </div>
       </div>
 
@@ -212,34 +201,25 @@
       <div class="step-card">
         <div class="step-num">1</div>
         <div class="step-content">
-          <h3>Enter a Base Color</h3>
-          <p>Click the color picker or type a code directly into the HEX box (e.g. <code>#7B6CFF</code>). A 3-digit shorthand (<code>#F0A</code>) is recognized too.</p>
+          <h3>Enter Text</h3>
+          <p>Paste the text you want to turn into a word cloud into the input box. Use the <strong>&#x1F4CB; Fill Example Text</strong> button to try it with sample text right away.</p>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <h3>Set Options</h3>
+          <p>Adjust the <strong>Remove Stop Words</strong> checkbox, <strong>Max Words</strong> (60 by default), and <strong>Color Theme</strong> (color/monochrome) as you like.</p>
         </div>
       </div>
 
       
 
       <div class="step-card">
-        <div class="step-num">2</div>
-        <div class="step-content">
-          <h3>Choose a Harmony</h3>
-          <p>Click the harmony you want from the 5 buttons. The palette is regenerated instantly based on your choice.</p>
-        </div>
-      </div>
-
-      <div class="harmony-demo">
-        <span class="harmony-chip on">Complementary</span>
-        <span class="harmony-chip">Analogous</span>
-        <span class="harmony-chip">Triadic</span>
-        <span class="harmony-chip">Split-Complementary</span>
-        <span class="harmony-chip">Monochromatic</span>
-      </div>
-
-      <div class="step-card">
         <div class="step-num">3</div>
         <div class="step-content">
-          <h3>Check and Copy the Palette</h3>
-          <p>Click a swatch on a generated color card, or the <strong>Copy</strong> button next to HEX/RGB/HSL, to copy the value you want to your clipboard. The card for your base color is marked with a "Base Color" badge.</p>
+          <h3>Generate the Word Cloud</h3>
+          <p>Click the <strong>&#x1F3A8; Generate Word Cloud</strong> button and an image is created where more frequent words appear larger and less frequent ones smaller. Change the options and click again to regenerate with a new layout.</p>
         </div>
       </div>
 
@@ -248,79 +228,64 @@
       <div class="step-card">
         <div class="step-num">4</div>
         <div class="step-content">
-          <h3>Export as CSS Variables</h3>
-          <p>Check the CSS variable code auto-generated starting from <code>--color-primary</code> in the <strong>&#x1F4E4; Export as CSS Variables</strong> card at the bottom, then copy it straight into your stylesheet with the <strong>&#x1F4CB; Copy CSS Variables</strong> button.</p>
+          <h3>Download as PNG</h3>
+          <p>Save the finished word cloud as an image file with the <strong>&#x2B07; Download PNG</strong> button. Use it directly for a blog thumbnail, a presentation, or a social media post.</p>
         </div>
       </div>
 
       
 
-      <h2>How Each Harmony Works</h2>
+      <div class="post-warn">
+        <strong>&#x26A0;&#xFE0F; Note:</strong> Since words are split on spaces and punctuation, inflected forms in languages with particles or suffixes attached to a root word are counted as separate words without morphological analysis. If you need an exact count, prepare text with those forms normalized, or treat the result as a rough reference.
+      </div>
+
+      <h2>How Stop Word Removal Works</h2>
       <div class="post-table-wrap"><table class="post-table">
-        <thead><tr><th>Harmony</th><th>Composition</th><th>Feel</th></tr></thead>
+        <thead><tr><th></th><th>What Happens</th></tr></thead>
         <tbody>
-          <tr><td>Complementary</td><td>Base color + H+180&deg;</td><td>Strong contrast, vibrant</td></tr>
-          <tr><td>Analogous</td><td>Base color, H&plusmn;30&deg;</td><td>Natural and comfortable</td></tr>
-          <tr><td>Triadic</td><td>Base color, H+120&deg;, H+240&deg;</td><td>Balanced contrast and variety</td></tr>
-          <tr><td>Split-Complementary</td><td>Base color, H+150&deg;, H+210&deg;</td><td>Contrast that's not as strong as complementary</td></tr>
-          <tr><td>Monochromatic</td><td>Same H, 5 lightness (L) steps (20/35/50/65/80%)</td><td>A cohesive single-hue gradient</td></tr>
+          <tr><td>Remove Stop Words on (default)</td><td>Counts words while excluding those on the built-in stop word list (like "and," "but," "is") and tokens made up only of numbers</td></tr>
+          <tr><td>Remove Stop Words off</td><td>Counts every token as-is -- use this when you want to see the frequency of the raw text, unmodified</td></tr>
         </tbody>
       </table></div>
-
-      <h3>Example with Base Color #7B6CFF</h3>
-      <div class="swatch-demo">
-        <div class="swatch-demo-item"><div class="swatch-demo-color" style="background:#7B6CFF"></div><div class="swatch-demo-code">#7B6CFF</div></div>
-        <div class="swatch-demo-item"><div class="swatch-demo-color" style="background:#F0FF6C"></div><div class="swatch-demo-code">#F0FF6C (complementary)</div></div>
-      </div>
-
-      <h3>Example CSS Variable Output</h3>
-      <div class="code-block">:root {
-  --color-primary: #7B6CFF;
-  --color-secondary: #F0FF6C;
-}</div>
-
-      <div class="post-warn">
-        <strong>&#x26A0;&#xFE0F; Note:</strong> "Analogous" and "monochromatic" are easy to confuse -- analogous varies the hue (H) slightly while keeping saturation and lightness the same, while monochromatic fixes the hue (H) completely and only steps through lightness (L). Use monochromatic when you need a unified tone, like for a website's background or text, and analogous when you want to vary your accent colors.
-      </div>
 
       <h2>Use Cases</h2>
       <div class="use-case-grid">
         <div class="use-case-card">
-          <div class="use-case-icon">&#x1F3A8;</div>
-          <div class="use-case-title">Expanding Brand Colors</div>
-          <div class="use-case-desc">Automatically generate secondary and accent colors from one main brand color to quickly build a design system's color palette.</div>
+          <div class="use-case-icon">&#x1F4DD;</div>
+          <div class="use-case-title">Grasping Key Terms in Meeting Notes</div>
+          <div class="use-case-desc">Paste in a long meeting record or interview transcript to see the most-mentioned topics at a glance.</div>
         </div>
         <div class="use-case-card">
-          <div class="use-case-icon">&#x1F4BB;</div>
-          <div class="use-case-title">Initial CSS Variable Setup</div>
-          <div class="use-case-desc">At the start of a new project, instantly create <code>:root</code> color tokens with CSS variable export and paste them into your stylesheet.</div>
+          <div class="use-case-icon">&#x1F4E2;</div>
+          <div class="use-case-title">Social Media/Blog Thumbnails</div>
+          <div class="use-case-desc">Quickly create an eye-catching thumbnail image from a post's key words.</div>
         </div>
         <div class="use-case-card">
-          <div class="use-case-icon">&#x1F4CA;</div>
-          <div class="use-case-title">Chart/Graph Color Schemes</div>
-          <div class="use-case-desc">Quickly generate a set of distinguishable colors for data visualization using triadic or split-complementary harmony.</div>
+          <div class="use-case-icon">&#x1F4CB;</div>
+          <div class="use-case-title">Analyzing Survey Responses</div>
+          <div class="use-case-desc">Collect open-ended survey answers, paste them in, and visualize the keywords respondents mentioned most.</div>
         </div>
         <div class="use-case-card">
           <div class="use-case-icon">&#x1F393;</div>
-          <div class="use-case-title">Learning Color Theory</div>
-          <div class="use-case-desc">Learn what combinations complementary, triadic, and other color wheel relationships actually produce by trying them yourself.</div>
+          <div class="use-case-title">Creating Presentation Materials</div>
+          <div class="use-case-desc">Create a word cloud from text related to your presentation topic to use as a slide background or intro image.</div>
         </div>
       </div>
 
-      <div class="post-highlight">&#x1F512; PaletteGen runs all color calculations entirely in your browser. Your color is never sent to an external server.</div>
+      <div class="post-highlight">&#x1F512; WordCloudGen runs all analysis and image generation entirely in your browser. Your text is never sent to an external server.</div>
     
       <h2>Frequently Asked Questions</h2>
       <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
-        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. Is the Palette Generator tool really free?</p>
+        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. Is the Word Cloud Generator tool really free?</p>
         <p style="color:var(--subtext);margin:0;line-height:1.7">Yes, it is completely free to use with no sign-up or installation required. There is no usage limit either.</p>
       </div>
       <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
-        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. Is the file I upload sent to a server?</p>
-        <p style="color:var(--subtext);margin:0;line-height:1.7">No. All processing happens entirely in your browser, and uploaded files are never sent to or stored on an external server.</p>
+        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. Is what I enter sent to a server?</p>
+        <p style="color:var(--subtext);margin:0;line-height:1.7">No. All processing happens entirely in your browser, and what you enter is never sent to or stored on an external server.</p>
       </div>
       <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
-        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. How do I use a palette I generated?</p>
-        <p style="color:var(--subtext);margin:0;line-height:1.7">Copy each color code from the palette to use directly in a design tool or CSS.</p>
+        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. Does it support non-English text?</p>
+        <p style="color:var(--subtext);margin:0;line-height:1.7">Yes, you can create a word-frequency-based word cloud from non-English text too.</p>
       </div>
       <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
         <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. Can I use this on mobile?</p>
@@ -335,10 +300,10 @@
     </div>
 
     <div class="cta-box">
-      <p>Generate a harmonious palette -- complementary, analogous, triadic, and more -- from a single color.<br />Export it directly as CSS variables to use in your project.</p>
-      <a href="/en/palette-gen/" class="cta-btn" style="display:inline-flex;align-items:center;gap:8px">
-        <span style="display:inline-block;width:26px;height:26px;overflow:hidden;flex-shrink:0"><span style="display:block;transform:scale(0.565);transform-origin:top left"><div style="width:46px;height:46px;background:#ffd9a8;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="display:flex;gap:3px"><div style="width:11px;height:11px;border-radius:50%;background:#ff8a5e;border:2px solid #2a2433;box-sizing:border-box"></div><div style="width:11px;height:11px;border-radius:50%;background:#5dffb0;border:2px solid #2a2433;box-sizing:border-box;margin-top:8px"></div><div style="width:11px;height:11px;border-radius:50%;background:#6aa8ff;border:2px solid #2a2433;box-sizing:border-box"></div></div></div></span></span>
-        Start Generating Palettes for Free
+      <p>Paste in text and create a word-frequency-based word cloud.<br />Save it directly as PNG to use on a blog or social media.</p>
+      <a href="/en/word-cloud/" class="cta-btn" style="display:inline-flex;align-items:center;gap:8px">
+        <span style="display:inline-block;width:26px;height:26px;overflow:hidden;flex-shrink:0"><span style="display:block;transform:scale(0.565);transform-origin:top left"><div style="width:46px;height:46px;background:#ffd9a8;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="display:flex;flex-direction:column;align-items:center;gap:2px"><div style="font:700 13px Poppins,sans-serif;color:#2a2433;line-height:1">Aa</div><div style="font:700 8px Poppins,sans-serif;color:rgba(42,36,51,.55);line-height:1">가나다</div><div style="font:700 10px Poppins,sans-serif;color:rgba(42,36,51,.75);line-height:1">Word</div></div></div></span></span>
+        Start Making Word Clouds for Free
       </a>
     </div>
     <!-- Google AdSense Multiplex Ad — pending approval, reserving space -->
@@ -348,8 +313,8 @@
     </div>
 
 <div class="post-nav">
-      <a href="/en/blog/52-diagrammaker-howto"><span class="nav-label">&larr; Previous</span><span style="color:var(--point-hover)">Diagram Maker</span>: The Complete Guide</a>
-      <a href="/en/blog/56-wordcloud-howto" style="text-align:right"><span class="nav-label">Next &rarr;</span><span style="color:var(--point-hover)">Word Cloud Generator</span>: The Complete Guide</a>
+      <a href="/en/blog/53-palettegen-howto"><span class="nav-label">&larr; Previous</span><span style="color:var(--point-hover)">Palette Generator</span>: The Complete Guide</a>
+      <a href="/en/blog/" style="text-align:right"><span class="nav-label">Next &rarr;</span><span style="color:var(--point-hover)">More Guides</span></a>
     </div>
 
   </article>
