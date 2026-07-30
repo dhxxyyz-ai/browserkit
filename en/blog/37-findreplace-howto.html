@@ -1,0 +1,568 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="icon" href="/favicon.ico" sizes="32x32">
+  <link rel="icon" href="/favicon-16.png" sizes="16x16" type="image/png">
+  <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="/favicon-192.png" sizes="192x192" type="image/png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="The official step-by-step guide to every feature of FindReplace. Learn how to find and replace text, use regex mode, and use the personal-info masking presets." />
+  <meta property="og:title" content="Find & Replace: The Complete Guide — BrowserKit" />
+  <meta property="og:description" content="The official FindReplace guide to finding and bulk-replacing words in text. Includes regex mode and personal-info masking presets." />
+  <meta property="og:type" content="article" />
+  <title>Find & Replace: The Complete Guide — BrowserKit</title>
+  <link rel="stylesheet" href="/css/style.css?v=20260724c" />
+  <link rel="stylesheet" href="/css/style-en.css?v=20260724a" />
+  <!-- Google AdSense — pending re-review. Uncomment once approved.
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506"
+     crossorigin="anonymous"></script>
+  -->
+  <style>
+    .feature-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:20px 0; }
+    .feature-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px; }
+    .feature-card:hover { border-color:var(--point); }
+    .feature-icon { font-size:24px; margin-bottom:10px; }
+    .feature-title { font-size:14px; font-weight:600; color:var(--text); margin-bottom:6px; }
+    .feature-desc { font-size:13px; color:var(--subtext); line-height:1.7; }
+    .step-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px 24px; margin:16px 0; display:flex; gap:16px; align-items:flex-start; }
+    .step-num { min-width:36px; height:36px; background:linear-gradient(135deg,var(--point),var(--point-hover)); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:700; color:white; flex-shrink:0; }
+    .step-content h3 { font-size:15px; font-weight:600; margin:0 0 6px; color:var(--text); }
+    .step-content p { font-size:14px; color:var(--subtext); line-height:1.7; margin:0; }
+
+    /* 레이아웃 데모 */
+    .layout-demo { background:var(--card); border:1px solid var(--border); border-radius:12px; overflow:hidden; margin:16px 0; }
+    .layout-top { background:rgba(123,108,255,0.08); border-bottom:1px solid var(--border); padding:12px 16px; font-size:12px; font-weight:600; color:var(--point-hover); }
+    .layout-bottom { display:grid; grid-template-columns:1fr 1fr; }
+    .layout-left { border-right:1px solid var(--border); padding:12px 16px; font-size:12px; color:var(--subtext); }
+    .layout-right { padding:12px 16px; font-size:12px; color:var(--subtext); }
+    .layout-label { font-weight:600; color:var(--text); margin-bottom:6px; font-size:11px; }
+    .layout-item { padding:3px 0; color:var(--subtext); font-size:12px; }
+
+    /* 옵션 토글 데모 */
+    .opt-demo { display:flex; gap:8px; flex-wrap:wrap; margin:12px 0; }
+    .opt-chip { background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:5px 14px; font-size:12px; font-weight:600; color:var(--subtext); }
+    .opt-chip.on { background:rgba(123,108,255,0.15); border-color:var(--point); color:var(--point-hover); }
+
+    /* 프리셋 데모 */
+    .preset-demo { display:flex; flex-wrap:wrap; gap:6px; margin:12px 0; }
+    .preset-chip { background:var(--bg); border:1px solid var(--border); border-radius:7px; padding:5px 12px; font-size:13px; color:var(--subtext); }
+    .preset-chip.active { border-color:var(--point); color:var(--point-hover); }
+
+    /* 결과 데모 */
+    .result-demo { background:var(--card); border:1px solid var(--border); border-radius:12px; overflow:hidden; margin:16px 0; }
+    .result-demo-header { padding:10px 16px; font-size:11px; font-weight:600; color:var(--subtext); border-bottom:1px solid var(--border); display:flex; justify-content:space-between; }
+    .result-demo-body { padding:14px 16px; font-size:13px; font-family:'Fira Code',monospace; line-height:1.8; color:var(--text); white-space:pre-wrap; word-break:break-all; }
+    .result-demo-body mark { background:rgba(123,108,255,0.35); color:var(--text); border-radius:3px; padding:1px 2px; }
+    .badge-found { display:inline-flex; align-items:center; gap:5px; font-size:12px; font-weight:600; padding:4px 12px; border-radius:999px; background:rgba(123,108,255,0.15); color:var(--point-hover); border:1px solid rgba(123,108,255,0.3); }
+
+    /* 정규식 표 */
+    .regex-table-demo { width:100%; border-collapse:collapse; margin:12px 0; font-size:13px; }
+    .regex-table-demo th { background:var(--card); padding:10px 14px; text-align:left; font-weight:600; border:1px solid var(--border); color:var(--text); }
+    .regex-table-demo td { padding:9px 14px; border:1px solid var(--border); color:var(--subtext); line-height:1.6; }
+    .regex-table-demo td:first-child { font-family:'Fira Code',monospace; color:var(--point-hover); white-space:nowrap; }
+    .regex-table-demo tr:hover td { background:rgba(123,108,255,0.04); }
+
+    /* 마스킹 예시 */
+    .mask-example { background:var(--bg); border:1px solid var(--border); border-radius:10px; padding:14px 18px; margin:12px 0; font-size:13px; }
+    .mask-row { display:grid; grid-template-columns:auto 1fr auto 1fr; gap:8px; align-items:center; padding:5px 0; border-bottom:1px solid var(--border); }
+    .mask-row:last-child { border-bottom:none; }
+    .mask-label { font-size:11px; font-weight:600; color:var(--subtext); }
+    .mask-val { font-family:'Fira Code',monospace; font-size:12px; color:var(--text); }
+    .mask-arrow { color:var(--subtext); font-size:14px; text-align:center; }
+    .mask-result { font-family:'Fira Code',monospace; font-size:12px; color:var(--success); }
+
+    .use-case-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:20px 0; }
+    .use-case-card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:18px; }
+    .use-case-icon { font-size:28px; margin-bottom:8px; }
+    .use-case-title { font-size:13px; font-weight:600; color:var(--text); margin-bottom:6px; }
+    .use-case-desc { font-size:12px; color:var(--subtext); line-height:1.7; }
+    .post-table { width:100%; border-collapse:collapse; margin:20px 0; font-size:15px; }
+    .post-table th { background:var(--card); padding:12px 16px; text-align:left; font-weight:600; border:1px solid var(--border); color:var(--text); }
+    .post-table td { padding:11px 16px; border:1px solid var(--border); color:var(--subtext); line-height:1.7; }
+    .post-table tr:hover td { background:rgba(123,108,255,0.04); }
+    .post-nav { display:flex; justify-content:space-between; margin-top: 12px; padding-top:24px; border-top:1px solid var(--border); gap:12px; }
+    .post-nav a { font-size:15px; color:var(--subtext); text-decoration:none; }
+    .post-nav a:hover { color:var(--text); }
+    .cta-box { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:28px; text-align:center; margin: 12px 0 0; }
+    .cta-box p { font-size:17px; color:var(--subtext); margin-bottom:16px; }
+    .cta-btn { display:inline-block; background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border-radius:10px; padding:12px 28px; font-size:14px; font-weight:600; text-decoration:none; }
+    .cta-btn:hover { transform:translateY(-2px); box-shadow:0 8px 24px var(--glow); color:white; }
+    .adfit-pc { display:block; }
+    .back-link:hover { color:var(--text); }
+    @media (max-width:640px) {
+      .feature-grid { grid-template-columns:1fr; }
+      .use-case-grid { grid-template-columns:1fr; }
+      .layout-bottom { grid-template-columns:1fr; }
+      .mask-row { grid-template-columns:auto 1fr; }
+      .mask-arrow, .mask-result { display:none; }
+      .adfit-pc { display:none; }      .coupang-banner-pc { display:none; }    }
+  </style>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<meta property="og:image" content="https://browserkit.online/img/og/find-replace.png" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Find & Replace: The Complete Guide",
+    "description": "The official step-by-step guide to every feature of FindReplace. Learn how to find and replace text, use regex mode, and use the personal-info masking presets.",
+    "datePublished": "2026-06-25T00:00:00+09:00",
+    "dateModified": "2026-07-22T00:00:00+09:00",
+    "author": { "@type": "Organization", "name": "BrowserKit", "url": "https://browserkit.online" },
+    "publisher": { "@type": "Organization", "name": "BrowserKit", "url": "https://browserkit.online", "logo": { "@type": "ImageObject", "url": "https://browserkit.online/img/og-browserkit.png" } },
+    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://browserkit.online/en/blog/37-findreplace-howto" },
+    "image": "https://browserkit.online/img/og/find-replace.png"
+  }
+  </script>  <link rel="canonical" href="https://browserkit.online/en/blog/37-findreplace-howto" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://browserkit.online/en/" },
+    { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://browserkit.online/en/blog/" },
+    { "@type": "ListItem", "position": 3, "name": "Find & Replace: The Complete Guide", "item": "https://browserkit.online/en/blog/37-findreplace-howto" }
+  ]
+}
+  </script>
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://browserkit.online/img/og/find-replace.png" />
+  <style>
+    .post-table-wrap { overflow-x:auto; }
+    .post-table th, .post-table td { white-space:nowrap; }
+    .post-nav a { word-break:keep-all; }
+    .post-nav .nav-label { display:block; font-size:13px; color:var(--subtext); opacity:0.7; margin-bottom:4px; }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Is the Find & Replace tool really free?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, it is completely free to use with no sign-up or installation required. There is no usage limit either."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is what I enter sent to a server?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. All processing happens entirely in your browser, and what you enter is never sent to or stored on an external server."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I replace using regular expressions?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, turning on regex mode enables precise, pattern-based bulk replacement."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I use this on mobile?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, it works the same way in a mobile browser without needing to install any app."
+      }
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <div class="lang-banner" id="langBanner">
+    <span>🌐 이 페이지는 <a href="/blog/37-findreplace-howto">한국어</a>로도 볼 수 있습니다.</span>
+    <button class="lang-banner-close" id="langBannerClose" type="button" aria-label="close">&times;</button>
+  </div>
+  <header class="header">
+    <div class="container">
+      <a href="/en/" class="header-brand"><div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Poppins,sans-serif;flex-shrink:0">B</div><span class="header-brand-text"><span style="color:var(--text)">Browser</span><span style="color:var(--point)">Kit</span></span></a>
+      <div class="header-right">
+        <div class="lang-switcher">
+          <button class="lang-switcher-btn" type="button" data-lang-btn>🌐 <span class="lang-label-full">English</span></button>
+          <div class="lang-switcher-menu" data-lang-menu>
+            <a href="#" class="active">English</a>
+            <a href="/blog/37-findreplace-howto">한국어</a>
+          </div>
+        </div>
+        <a href="/en/" class="header-back">&#x2190; <span class="header-back-label">Back to BrowserKit</span></a>
+      </div>
+    </div>
+  </header>
+
+  <article class="post-wrap">
+    <a href="/en/blog/" class="back-link">&#x2190; Blog</a>
+    <span class="post-tag">Guide</span>
+    <h1 class="post-title"><span style="color:var(--point-hover)">Find & Replace</span>: The Complete Guide</h1>
+    <div class="post-date">June 23, 2026</div>
+    <!-- Google AdSense Display Ad — pending approval, reserving space -->
+    <div class="ad-slot" id="adExtra2">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
+
+    <div class="post-body">
+      <p>Need to replace a specific word throughout hundreds of lines of text, but Notepad's find/replace can't do regex and a spreadsheet doesn't work on plain text files? FindReplace is a free online tool for finding and bulk-replacing words in text. Turn on regex mode for advanced, pattern-based replacement, and built-in presets for masking ID numbers, phone numbers, and emails make it ready to use for personal-info cleanup right away. Everything happens entirely in your browser, so your text is never sent to an external server.</p>
+
+      <h2>Key Features</h2>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F504;</div>
+          <div class="feature-title">Find & Replace</div>
+          <div class="feature-desc">Finds a specific word in your text and bulk-replaces it with another. Choose to replace every match or just the first.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F526;</div>
+          <div class="feature-title">Match Preview</div>
+          <div class="feature-desc">Highlights matches in purple before you run the replacement, so you can preview them and avoid accidentally replacing the wrong spot.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F9EA;</div>
+          <div class="feature-title">Regex Mode</div>
+          <div class="feature-desc">Replace using regular expression patterns. Also supports complex replacements using capture groups ($1, $2).</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F6E1;&#xFE0F;</div>
+          <div class="feature-title">Personal-Info Masking Presets</div>
+          <div class="feature-desc">Mask ID numbers, phone numbers, and emails in bulk with a single click. No regex knowledge needed.</div>
+        </div>
+      </div>
+
+      <!-- Google AdSense Display Ad — pending approval, reserving space -->
+    <div class="ad-slot" id="adTop">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
+      <h2>Layout</h2>
+      <div class="layout-demo">
+        <div class="layout-top">&#x1F4DD; (1) Input Text -- enter all the text to replace (full width at the top)</div>
+        <div class="layout-bottom">
+          <div class="layout-left">
+            <div class="layout-label">(2) Left Controls</div>
+            <div class="layout-item">&#x1F50D; Enter what to find</div>
+            <div class="layout-item">Aa &middot; All &middot; .* &middot; ^$ option toggles</div>
+            <div class="layout-item">Regex quick reference table</div>
+            <div class="layout-item">6 masking presets</div>
+            <div class="layout-item">&#x270F; Enter the replacement</div>
+            <div class="layout-item">&#x2728; Match count badge</div>
+            <div class="layout-item">&#x1F504; Run Replace button</div>
+            <div class="layout-item">Copy &middot; Save &middot; Swap &middot; Reset</div>
+          </div>
+          <div class="layout-right">
+            <div class="layout-label">(3) Right: Result</div>
+            <div class="layout-item">&#x1F526; Match preview</div>
+            <div class="layout-item">&nbsp;&nbsp; (purple highlighting)</div>
+            <div class="layout-item">&nbsp;</div>
+            <div class="layout-item">&#x2705; Replacement result</div>
+            <div class="layout-item">&nbsp;&nbsp; (read-only textarea)</div>
+          </div>
+        </div>
+      </div>
+
+      <h2>Basic Usage</h2>
+
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <h3>Paste the Input Text</h3>
+          <p>Type or paste the text you want to replace into the input area at the top. Character and line counts update live on the right.</p>
+        </div>
+      </div>
+      
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <h3>Enter What to Find</h3>
+          <p>Type the text you're looking for into the "find" field on the left panel. Matches are highlighted in purple in the preview on the right the instant you type.</p>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <h3>Enter the Replacement</h3>
+          <p>Enter the text you want to appear after replacement in the "replace" field. Leave it blank to delete the found text instead.</p>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <h3>Run the Replacement</h3>
+          <p>Check how many matches will be replaced in the match count badge, then click the <strong>Run Replace</strong> button. The result appears in the replacement result area at the bottom right.</p>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">5</div>
+        <div class="step-content">
+          <h3>Copy or Save the Result</h3>
+          <p>Use the <strong>Copy Result</strong> button to copy it to your clipboard, or <strong>Save .txt</strong> to download it as a file. Click <strong>Swap</strong> to move the result back into the input box for another round of replacement.</p>
+        </div>
+      </div>
+
+      <h3>Match Preview Example</h3>
+      <p>Below is what the preview area shows when <code>Jane Doe</code> is entered as the text to find.</p>
+      
+      <div class="result-demo">
+        <div class="result-demo-header">
+          <span>&#x1F526; Match Preview</span>
+          <span class="badge-found">&#x2728; 3 matches</span>
+        </div>
+        <div class="result-demo-body">Name: <mark>Jane Doe</mark>
+Phone: 010-1234-5678
+Contact: <mark>Jane Doe</mark>, Manager
+Signature: <mark>Jane Doe</mark></div>
+      </div>
+
+      <h2>Option Toggles</h2>
+      <div class="opt-demo">
+        <span class="opt-chip">Aa</span>
+        <span class="opt-chip on">All</span>
+        <span class="opt-chip">.*</span>
+        <span class="opt-chip">^$</span>
+      </div>
+      <div class="post-table-wrap"><table class="post-table">
+        <thead><tr><th>Button</th><th>Function</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Aa</strong></td><td>Case sensitivity</td><td>When on, matching is case-sensitive -- <code>Hello</code> and <code>hello</code> are treated as different words. Default: off (case-insensitive)</td></tr>
+          <tr><td><strong>All</strong></td><td>Replace all</td><td>When on, replaces every match. When off, replaces only the first. Default: on</td></tr>
+          <tr><td><strong>.*</strong></td><td>Regex mode</td><td>When on, interprets the search text as a regular expression. Use it when you need pattern-based replacement.</td></tr>
+          <tr><td><strong>^$</strong></td><td>Multi-line mode</td><td>Applies the regex <code>^</code> (start of line) and <code>$</code> (end of line) to each line. Used by presets like removing empty lines.</td></tr>
+        </tbody>
+      </table></div>
+
+      <h2>Using Regex Mode</h2>
+      <p>Turn on the regex mode (.*) button to interpret the search text as a regex pattern. A quick regex reference table automatically expands below the input field once it's on.</p>
+
+      <table class="regex-table-demo">
+        <thead><tr><th>Pattern</th><th>Meaning</th><th>Example</th></tr></thead>
+        <tbody>
+          <tr><td>.</td><td>Any single character</td><td><code>h.t</code> &rarr; matches hat, hit, hot, etc.</td></tr>
+          <tr><td>\d</td><td>A digit [0-9]</td><td><code>\d\d\d</code> &rarr; a 3-digit number</td></tr>
+          <tr><td>\w</td><td>A word character [a-zA-Z0-9_]</td><td></td></tr>
+          <tr><td>\s</td><td>Whitespace (space, tab)</td><td><code>\s+</code> &rarr; one or more whitespace characters</td></tr>
+          <tr><td>+</td><td>One or more of the preceding pattern</td><td><code>\d+</code> &rarr; one or more digits</td></tr>
+          <tr><td>*</td><td>Zero or more of the preceding pattern</td><td></td></tr>
+          <tr><td>{n,m}</td><td>n to m of the preceding pattern</td><td><code>\d{6}</code> &rarr; exactly 6 digits</td></tr>
+          <tr><td>(abc)</td><td>Capture group</td><td>Referenceable as <code>$1</code> in the replacement</td></tr>
+          <tr><td>^</td><td>Start of line (needs multi-line mode)</td><td></td></tr>
+          <tr><td>$</td><td>End of line (needs multi-line mode)</td><td></td></tr>
+          <tr><td>|</td><td>Or</td><td><code>cat|dog</code> &rarr; cat or dog</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Example: Using Capture Groups</h3>
+      <p>Anything wrapped in a regex capture group <code>()</code> can be referenced as <code>$1</code>, <code>$2</code>, and so on in the replacement. Masking part of a phone number is a classic example.</p>
+      
+      <div class="mask-example">
+        <div class="mask-row">
+          <span class="mask-label">Find</span>
+          <span class="mask-val">(01[0-9])-(\d{3,4})-(\d{4})</span>
+          <span class="mask-arrow">→</span>
+          <span class="mask-result">Replace: $1-****-$3</span>
+        </div>
+        <div class="mask-row">
+          <span class="mask-label">Original</span>
+          <span class="mask-val">010-1234-5678</span>
+          <span class="mask-arrow">→</span>
+          <span class="mask-result">010-****-5678</span>
+        </div>
+      </div>
+      <p>The first group <code>$1</code> (010) and third group <code>$3</code> (5678) are kept as is, while only the middle number is replaced with <code>****</code>.</p>
+
+      <h2>Personal-Info Masking Presets</h2>
+      <p>You don't have to write regex yourself -- clicking a preset button automatically fills in the find and replace fields, and turns on regex mode automatically too.</p>
+      
+      <div class="preset-demo">
+        <span class="preset-chip">Repeated spaces &rarr; single space</span>
+        <span class="preset-chip">Trim leading/trailing whitespace</span>
+        <span class="preset-chip">Remove empty lines</span>
+        <span class="preset-chip active">Mask Korean ID (KRRN)</span>
+        <span class="preset-chip">Mask phone number</span>
+        <span class="preset-chip">Mask email</span>
+      </div>
+      <div class="mask-example">
+        <div class="mask-row">
+          <span class="mask-label">Korean ID</span>
+          <span class="mask-val">901225-1234567</span>
+          <span class="mask-arrow">→</span>
+          <span class="mask-result">******-*******</span>
+        </div>
+        <div class="mask-row">
+          <span class="mask-label">Phone</span>
+          <span class="mask-val">010-1234-5678</span>
+          <span class="mask-arrow">→</span>
+          <span class="mask-result">010-****-5678</span>
+        </div>
+        <div class="mask-row">
+          <span class="mask-label">Email</span>
+          <span class="mask-val">user@example.com</span>
+          <span class="mask-arrow">→</span>
+          <span class="mask-result">***@***.***</span>
+        </div>
+      </div>
+
+      <h3>Text-Cleaning Presets</h3>
+      <div class="post-table-wrap"><table class="post-table">
+        <thead><tr><th>Preset</th><th>Effect</th><th>When to Use</th></tr></thead>
+        <tbody>
+          <tr><td>Repeated spaces &rarr; single space</td><td>Collapses two or more spaces into one</td><td>Cleaning up pasted text</td></tr>
+          <tr><td>Trim leading/trailing whitespace</td><td>Removes only leading/trailing whitespace from the whole text (interior line whitespace is kept)</td><td>Cleaning up the start/end of copied text</td></tr>
+          <tr><td>Remove empty lines</td><td>Deletes every empty line</td><td>Compacting documents, cleaning up logs</td></tr>
+        </tbody>
+      </table></div>
+
+      <h2>Use Cases</h2>
+      <div class="use-case-grid">
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F4CB;</div>
+          <div class="use-case-title">Masking Personal Info in Contracts</div>
+          <div class="use-case-desc">Paste in contract text and click the ID, phone, and email presets in sequence to mask them all. Use the Swap button to chain multiple replacements.</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F4CA;</div>
+          <div class="use-case-title">Cleaning Spreadsheet Data</div>
+          <div class="use-case-desc">Quickly trim whitespace, collapse repeated spaces, and remove empty lines from text copied out of a spreadsheet, using the presets.</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F4DD;</div>
+          <div class="use-case-title">Bulk Terminology Changes</div>
+          <div class="use-case-desc">Bulk-change a specific term throughout a document -- for example, replacing every "customer" with "client," or "handler" with "manager."</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F4BB;</div>
+          <div class="use-case-title">Replacing Text in Code</div>
+          <div class="use-case-desc">When renaming a variable or function throughout code, regex mode lets you replace with precise pattern matching.</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F4AC;</div>
+          <div class="use-case-title">Converting Date Formats</div>
+          <div class="use-case-desc">Use regex to find the pattern <code>(\d{4})-(\d{2})-(\d{2})</code> and replace it with <code>$3/$2/$1</code> to convert a date format (YYYY-MM-DD &rarr; DD/MM/YYYY).</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F5D1;&#xFE0F;</div>
+          <div class="use-case-title">Cleaning Up Log Files</div>
+          <div class="use-case-desc">Use regex to remove empty lines, replace a specific error pattern, or change a timestamp format in log text.</div>
+        </div>
+      </div>
+
+      <h2>Tip: Chaining Replacements</h2>
+      <p>When you need to apply another replacement to the result of one you already ran, use the <strong>Swap (&#x2195;) button</strong>.</p>
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <h3>Run the First Replacement</h3>
+          <p>Complete the first replacement with the Korean ID masking preset.</p>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <h3>Click the Swap Button</h3>
+          <p>Click the Swap (&#x2195;) button and the replacement result moves into the input text area.</p>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <h3>Run the Second Replacement</h3>
+          <p>Now run a second replacement with the phone number masking preset. You can chain multiple presets this way.</p>
+        </div>
+      </div>
+
+      <div class="post-highlight">&#x1F504; FindReplace runs all processing entirely in your browser. Even text containing sensitive personal information like ID numbers or emails is never sent to an external server, so you can use it with confidence.</div>
+    
+      <h2>Frequently Asked Questions</h2>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
+        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. Is the Find & Replace tool really free?</p>
+        <p style="color:var(--subtext);margin:0;line-height:1.7">Yes, it is completely free to use with no sign-up or installation required. There is no usage limit either.</p>
+      </div>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
+        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. Is what I enter sent to a server?</p>
+        <p style="color:var(--subtext);margin:0;line-height:1.7">No. All processing happens entirely in your browser, and what you enter is never sent to or stored on an external server.</p>
+      </div>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
+        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. Can I replace using regular expressions?</p>
+        <p style="color:var(--subtext);margin:0;line-height:1.7">Yes, turning on regex mode enables precise, pattern-based bulk replacement.</p>
+      </div>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
+        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. Can I use this on mobile?</p>
+        <p style="color:var(--subtext);margin:0;line-height:1.7">Yes, it works the same way in a mobile browser without needing to install any app.</p>
+      </div>
+    </div>
+
+    <!-- Google AdSense Display Ad — pending approval, reserving space -->
+    <div class="ad-slot" id="adMiddle">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
+
+    <div class="cta-box">
+      <p>Use FindReplace whenever you need to bulk-replace a word throughout a long document.<br />Regex mode handles complex patterns in one pass.</p>
+      <a href="/en/find-replace/" class="cta-btn" style="display:inline-flex;align-items:center;gap:8px">
+        <span style="display:inline-block;width:26px;height:26px;overflow:hidden;flex-shrink:0"><span style="display:block;transform:scale(0.565);transform-origin:top left"><div style="width:46px;height:46px;background:#a8e6cf;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="position:relative;width:30px;height:30px"><div style="position:absolute;left:2px;top:2px;width:18px;height:18px;border-radius:50%;background:#fffdf9;border:3px solid #2a2433;box-sizing:border-box"></div><div style="position:absolute;right:1px;bottom:1px;width:11px;height:4px;background:#2a2433;border-radius:3px;transform:rotate(45deg);transform-origin:right bottom"></div></div></div></span></span>
+        Start Using Find & Replace for Free
+      </a>
+    </div>
+    <!-- Google AdSense Multiplex Ad — pending approval, reserving space -->
+    <div class="ad-slot ad-slot-rect" id="adBottom">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
+
+<div class="post-nav">
+      <a href="/en/blog/30-markdowneditor-howto"><span class="nav-label">&larr; Previous</span><span style="color:var(--point-hover)">Markdown Editor</span>: The Complete Guide</a>
+      <a href="/en/blog/47-linenumber-howto" style="text-align:right"><span class="nav-label">Next &rarr;</span><span style="color:var(--point-hover)">Add Line Numbers</span>: The Complete Guide</a>
+    </div>
+
+  </article>
+  <footer class="footer">
+    <div class="container">
+      <p class="footer-copy">&#xa9; 2026 BrowserKit. All processing happens in your browser.</p>
+      <nav class="footer-nav">
+        <a href="/en/privacy.html">Privacy Policy</a>
+        <a href="/en/terms.html">Terms of Service</a>
+        <a href="/en/about.html">About</a>
+        <a href="/en/blog/">Blog</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script>
+  document.querySelectorAll('[data-lang-btn]').forEach(function(btn){
+    btn.addEventListener('click', function(e){
+      e.stopPropagation();
+      var menu = btn.nextElementSibling;
+      menu.classList.toggle('show');
+    });
+  });
+  document.addEventListener('click', function(){
+    document.querySelectorAll('.lang-switcher-menu.show').forEach(function(m){ m.classList.remove('show'); });
+  });
+  </script>
+
+  <script>
+  (function(){
+    try {
+      if (document.cookie.indexOf('bk_lang_dismiss=1') !== -1) return;
+      var lang = (navigator.language || navigator.userLanguage || '').toLowerCase();
+      if (lang.indexOf('ko') !== 0) return;
+      var banner = document.getElementById('langBanner');
+      if (!banner) return;
+      banner.classList.add('show');
+      var closeBtn = document.getElementById('langBannerClose');
+      closeBtn.addEventListener('click', function(){
+        banner.classList.remove('show');
+        document.cookie = 'bk_lang_dismiss=1; max-age=' + (60*60*24*180) + '; path=/';
+      });
+    } catch(e) {}
+  })();
+  </script>
+</body>
+</html>
+
