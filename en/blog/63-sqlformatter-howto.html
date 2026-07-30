@@ -8,11 +8,11 @@
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="The official step-by-step guide to every feature of CronHelper. Learn how to parse a cron expression or build one yourself with just a few clicks." />
-  <meta property="og:title" content="Cron Expression Helper: The Complete Guide — BrowserKit" />
-  <meta property="og:description" content="The official CronHelper guide to parsing or visually building a cron expression and previewing its next run times." />
+  <meta name="description" content="The official step-by-step guide to every feature of SQLFormatter. Learn how to indent and organize a SQL query so it's easy to read." />
+  <meta property="og:title" content="SQL Formatter: The Complete Guide — BrowserKit" />
+  <meta property="og:description" content="The official SQLFormatter guide to indenting and organizing a SQL query for readability." />
   <meta property="og:type" content="article" />
-  <title>Cron Expression Helper: The Complete Guide — BrowserKit</title>
+  <title>SQL Formatter: The Complete Guide — BrowserKit</title>
   <link rel="stylesheet" href="/css/style.css?v=20260724c" />
   <link rel="stylesheet" href="/css/style-en.css?v=20260724a" />
   <!-- Google AdSense — pending re-review. Uncomment once approved.
@@ -57,21 +57,21 @@
   </style>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<meta property="og:image" content="https://browserkit.online/img/og/cron-helper.png" />
+<meta property="og:image" content="https://browserkit.online/img/og/sql-formatter.png" />
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
-    "headline": "Cron Expression Helper: The Complete Guide",
-    "description": "The official step-by-step guide to every feature of CronHelper. Learn how to parse a cron expression or build one yourself with just a few clicks.",
+    "headline": "SQL Formatter: The Complete Guide",
+    "description": "The official step-by-step guide to every feature of SQLFormatter. Learn how to indent and organize a SQL query so it's easy to read.",
     "datePublished": "2026-07-10T00:00:00+09:00",
     "dateModified": "2026-07-22T00:00:00+09:00",
     "author": { "@type": "Organization", "name": "BrowserKit", "url": "https://browserkit.online" },
     "publisher": { "@type": "Organization", "name": "BrowserKit", "url": "https://browserkit.online", "logo": { "@type": "ImageObject", "url": "https://browserkit.online/img/og-browserkit.png" } },
-    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://browserkit.online/en/blog/62-cronhelper-howto" },
-    "image": "https://browserkit.online/img/og/cron-helper.png"
+    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://browserkit.online/en/blog/63-sqlformatter-howto" },
+    "image": "https://browserkit.online/img/og/sql-formatter.png"
   }
-  </script>  <link rel="canonical" href="https://browserkit.online/en/blog/62-cronhelper-howto" />
+  </script>  <link rel="canonical" href="https://browserkit.online/en/blog/63-sqlformatter-howto" />
   <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -79,12 +79,12 @@
   "itemListElement": [
     { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://browserkit.online/en/" },
     { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://browserkit.online/en/blog/" },
-    { "@type": "ListItem", "position": 3, "name": "Cron Expression Helper: The Complete Guide", "item": "https://browserkit.online/en/blog/62-cronhelper-howto" }
+    { "@type": "ListItem", "position": 3, "name": "SQL Formatter: The Complete Guide", "item": "https://browserkit.online/en/blog/63-sqlformatter-howto" }
   ]
 }
   </script>
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:image" content="https://browserkit.online/img/og/cron-helper.png" />
+  <meta name="twitter:image" content="https://browserkit.online/img/og/sql-formatter.png" />
   <style>
     .post-table-wrap { overflow-x:auto; }
     .post-table th, .post-table td { white-space:nowrap; }
@@ -98,7 +98,7 @@
   "mainEntity": [
     {
       "@type": "Question",
-      "name": "Is the Cron Expression Helper tool really free?",
+      "name": "Is the SQL Formatter tool really free?",
       "acceptedAnswer": {
         "@type": "Answer",
         "text": "Yes, it is completely free to use with no sign-up or installation required. There is no usage limit either."
@@ -114,10 +114,10 @@
     },
     {
       "@type": "Question",
-      "name": "Can I use it without knowing cron syntax?",
+      "name": "What SQL syntax does it support?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Yes, choosing a schedule builds the expression for you, and pasting an existing expression explains what it means."
+        "text": "It organizes indentation and line breaks based on general standard SQL syntax to make queries easier to read."
       }
     },
     {
@@ -134,7 +134,7 @@
 </head>
 <body>
   <div class="lang-banner" id="langBanner">
-    <span>🌐 이 페이지는 <a href="/blog/62-cronhelper-howto">한국어</a>로도 볼 수 있습니다.</span>
+    <span>🌐 이 페이지는 <a href="/blog/63-sqlformatter-howto">한국어</a>로도 볼 수 있습니다.</span>
     <button class="lang-banner-close" id="langBannerClose" type="button" aria-label="close">&times;</button>
   </div>
   <header class="header">
@@ -145,7 +145,7 @@
           <button class="lang-switcher-btn" type="button" data-lang-btn>🌐 <span class="lang-label-full">English</span></button>
           <div class="lang-switcher-menu" data-lang-menu>
             <a href="#" class="active">English</a>
-            <a href="/blog/62-cronhelper-howto">한국어</a>
+            <a href="/blog/63-sqlformatter-howto">한국어</a>
           </div>
         </div>
         <a href="/en/" class="header-back">&#x2190; <span class="header-back-label">Back to BrowserKit</span></a>
@@ -156,7 +156,7 @@
   <article class="post-wrap">
     <a href="/en/blog/" class="back-link">&#x2190; Blog</a>
     <span class="post-tag">Guide</span>
-    <h1 class="post-title"><span style="color:var(--point-hover)">Cron Expression Helper</span>: The Complete Guide</h1>
+    <h1 class="post-title"><span style="color:var(--point-hover)">SQL Formatter</span>: The Complete Guide</h1>
     <div class="post-date">July 10, 2026</div>
     <!-- Google AdSense Display Ad — pending approval, reserving space -->
     <div class="ad-slot" id="adExtra2">
@@ -165,29 +165,29 @@
     </div>
 
     <div class="post-body">
-      <p>When you see a cron expression like "0 3 * * 1-5" in a server config file, can you tell exactly when it runs? Misreading one can lead to a job firing at an unintended time. CronHelper is a free online tool that parses a cron expression into a human-readable sentence, or lets you build one by selecting minute, hour, day, month, and weekday values with just a few clicks. It calculates the next 5 run times in advance so you can verify the schedule before deploying it, and all parsing and calculation happens entirely in your browser.</p>
+      <p>When a SQL query copied from a DB log or tool is one long unbroken line, figuring out how many JOINs it has or what the WHERE condition is can take forever. SQLFormatter is a free online tool that neatly organizes queries like that. It breaks the line at each major clause -- SELECT, FROM, WHERE, JOIN, GROUP BY -- and indents AND/OR conditions and column lists for readability. You can also choose to standardize keyword casing and pick your indent size (2 spaces/4 spaces/tab), and everything runs entirely in your browser.</p>
 
       <h2>Key Features</h2>
       <div class="feature-grid">
         <div class="feature-card">
-          <div class="feature-icon">&#x1F50D;</div>
-          <div class="feature-title">Expression Parsing</div>
-          <div class="feature-desc">Paste a cron expression and it's instantly converted into a human-readable sentence.</div>
+          <div class="feature-icon">&#x1F4D0;</div>
+          <div class="feature-title">Automatic Line Breaks per Clause</div>
+          <div class="feature-desc">Puts each major clause -- SELECT, FROM, WHERE, JOIN, GROUP BY, and so on -- on its own line.</div>
         </div>
         <div class="feature-card">
-          <div class="feature-icon">&#x23F1;&#xFE0F;</div>
-          <div class="feature-title">Next 5 Run Times</div>
-          <div class="feature-desc">Calculates and shows the exact next 5 run times based on the current time.</div>
+          <div class="feature-icon">&#x1F517;</div>
+          <div class="feature-title">Indenting AND/OR and Column Lists</div>
+          <div class="feature-desc">Indents AND/OR in condition clauses and the SELECT column list by one level for readability.</div>
         </div>
         <div class="feature-card">
-          <div class="feature-icon">&#x1F528;</div>
-          <div class="feature-title">Visual Builder</div>
-          <div class="feature-desc">Choose Every/Every N/Specific value for each field, and the cron expression is assembled in real time.</div>
+          <div class="feature-icon">&#x1F520;</div>
+          <div class="feature-title">Standardizing Keyword Casing</div>
+          <div class="feature-desc">Choose whether to uppercase keywords like SELECT, FROM, and JOIN.</div>
         </div>
         <div class="feature-card">
           <div class="feature-icon">&#x1F512;</div>
           <div class="feature-title">Fully Local Processing</div>
-          <div class="feature-desc">All parsing and calculation runs inside your browser. Nothing is sent to a server.</div>
+          <div class="feature-desc">All formatting runs inside your browser. Your query is never sent to a server.</div>
         </div>
       </div>
 
@@ -197,12 +197,12 @@
       <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
     </div>
 
-      <h2>How to Use It -- Parsing an Expression</h2>
+      <h2>How to Use It</h2>
       <div class="step-card">
         <div class="step-num">1</div>
         <div class="step-content">
-          <h3>Enter a Cron Expression</h3>
-          <p>In the <strong>&#x1F50D; Parse Expression</strong> tab, enter a 5-field cron expression in <code>minute hour day month weekday</code> order. Common patterns (every minute, weekdays at 9am, etc.) can be filled in instantly with the preset buttons below.</p>
+          <h3>Enter a SQL Query</h3>
+          <p>Paste the query you want to organize into the <strong>Input SQL</strong> box on the left. Use the <strong>&#x1F4CB; Fill Example Query</strong> button if you want a sample.</p>
         </div>
       </div>
 
@@ -211,76 +211,63 @@
       <div class="step-card">
         <div class="step-num">2</div>
         <div class="step-content">
-          <h3>Check the Description and Next Run Times</h3>
-          <p>The <strong>human-readable description</strong> and <strong>next 5 run times</strong> update the moment you type. The sentence is an approximation, so verify the exact schedule against the next-run-times list.</p>
+          <h3>Adjust the Style with Options</h3>
+          <p>Instantly try out the style you want with the <strong>Uppercase Keywords</strong> checkbox and the <strong>Indent</strong> (2 spaces/4 spaces/tab) choice. The result on the right updates in real time whenever you change the input or an option.</p>
         </div>
       </div>
 
-      <h2>How to Use It -- Building One by Selection</h2>
       <div class="step-card">
         <div class="step-num">3</div>
         <div class="step-content">
-          <h3>Choose a Value for Each Field</h3>
-          <p>In the <strong>&#x1F528; Build by Selection</strong> tab, choose <strong>Every</strong>, <strong>Every N</strong>, or <strong>Specific value</strong> for each of minute, hour, day, month, and weekday. For specific values, you can click to select multiple numbers (or weekdays).</p>
+          <h3>Copy or Download the Result</h3>
+          <p>Copy it straight to your clipboard with <strong>&#x1F4CB; Copy Result</strong>, or save it as a <code>.sql</code> file with <strong>&#x2B07; Download SQL File</strong>.</p>
         </div>
       </div>
 
       
 
-      <div class="step-card">
-        <div class="step-num">4</div>
-        <div class="step-content">
-          <h3>Copy the Result or Check Its Parsing</h3>
-          <p>Copy the expression assembled live in the card at the top with the <strong>&#x1F4CB; Copy</strong> button, or jump to the parsing tab with the <strong>&#x1F50D; Parse This Expression</strong> button to see its description and next run times right away.</p>
-        </div>
-      </div>
-
       <div class="post-warn">
-        <strong>&#x26A0;&#xFE0F; Note:</strong> The sentence description is a mechanically generated <strong>approximation</strong> of the expression. It can sound a bit unnatural for complex combinations (like specifying both day and weekday), so always double-check that the actual schedule matches your intent using the <strong>next run times</strong> list. This tool also only supports standard 5-field cron, not 6-field extensions with a seconds field (like Quartz).
+        <strong>&#x26A0;&#xFE0F; Note:</strong> SQLFormatter is a lightweight, <strong>token-based formatter</strong>, not a full SQL parser. Content inside parentheses (subqueries, function arguments) stays on one line without breaking, and very complex or dialect-specific queries may not format as expected. Always check the result before using it, and for automated formatting in a production pipeline, a dedicated tool like sqlfluff is recommended.
       </div>
 
-      <h2>Common Cron Patterns</h2>
+      <h2>Before and After Formatting</h2>
       <div class="post-table-wrap"><table class="post-table">
-        <thead><tr><th>Expression</th><th>Meaning</th></tr></thead>
+        <thead><tr><th></th><th>Content</th></tr></thead>
         <tbody>
-          <tr><td><code>* * * * *</code></td><td>Runs every minute</td></tr>
-          <tr><td><code>*/10 * * * *</code></td><td>Runs every 10 minutes</td></tr>
-          <tr><td><code>0 * * * *</code></td><td>Runs at the top of every hour</td></tr>
-          <tr><td><code>0 0 * * *</code></td><td>Runs at midnight every day</td></tr>
-          <tr><td><code>0 9 * * 1-5</code></td><td>Runs at 9am on weekdays (Mon-Fri)</td></tr>
-          <tr><td><code>0 0 1 * *</code></td><td>Runs at midnight on the 1st of every month</td></tr>
+          <tr><td>Input (one line)</td><td><code>select id,name from users where age &gt;= 20 and status = 'active' order by id;</code></td></tr>
+          <tr><td>Output (formatted)</td><td><code>SELECT id, name &rarr; FROM users &rarr; WHERE age &gt;= 20 &rarr; &nbsp;&nbsp;AND status = 'active' &rarr; ORDER BY id;</code> (&rarr; represents a line break)</td></tr>
         </tbody>
       </table></div>
 
       <h2>Use Cases</h2>
       <div class="use-case-grid">
         <div class="use-case-card">
-          <div class="use-case-icon">&#x1F5A5;&#xFE0F;</div>
-          <div class="use-case-title">Scheduling Server Batch Jobs</div>
-          <div class="use-case-desc">Verify an expression before registering it in crontab or a CI/CD scheduler.</div>
-        </div>
-        <div class="use-case-card">
-          <div class="use-case-icon">&#x2601;&#xFE0F;</div>
-          <div class="use-case-title">Configuring a Cloud Scheduler</div>
-          <div class="use-case-desc">Build and check a cron expression in advance before entering it into AWS EventBridge, GCP Cloud Scheduler, and similar services.</div>
-        </div>
-        <div class="use-case-card">
           <div class="use-case-icon">&#x1F41B;</div>
-          <div class="use-case-title">Debugging an Existing Expression</div>
-          <div class="use-case-desc">Verify that a colleague's cron expression behaves as intended by checking its next run times.</div>
+          <div class="use-case-title">Debugging a Query</div>
+          <div class="use-case-desc">Organize a single-line SQL query from a log to quickly grasp its conditions and join structure.</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F4DD;</div>
+          <div class="use-case-title">Preparing for Code Review</div>
+          <div class="use-case-desc">Clean up a query into a consistent style for readability before opening a PR.</div>
         </div>
         <div class="use-case-card">
           <div class="use-case-icon">&#x1F4DA;</div>
-          <div class="use-case-title">Learning Cron Syntax</div>
-          <div class="use-case-desc">Learn what each field means by hands-on experimenting with the visual builder.</div>
+          <div class="use-case-title">Learning and Documenting SQL</div>
+          <div class="use-case-desc">Break a complex query into clauses to understand its structure or write it up in documentation.</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F504;</div>
+          <div class="use-case-title">Standardizing Style</div>
+          <div class="use-case-desc">Align inconsistent keyword casing and indentation across a team into one style.</div>
         </div>
       </div>
 
-      <div class="post-highlight">&#x1F512; CronHelper runs all parsing and calculation entirely in your browser. Your expression is never sent to an external server.</div>
+      <div class="post-highlight">&#x1F512; SQLFormatter runs all formatting entirely in your browser. Your query is never sent to an external server.</div>
     
       <h2>Frequently Asked Questions</h2>
       <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
-        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. Is the Cron Expression Helper tool really free?</p>
+        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. Is the SQL Formatter tool really free?</p>
         <p style="color:var(--subtext);margin:0;line-height:1.7">Yes, it is completely free to use with no sign-up or installation required. There is no usage limit either.</p>
       </div>
       <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
@@ -288,8 +275,8 @@
         <p style="color:var(--subtext);margin:0;line-height:1.7">No. All processing happens entirely in your browser, and what you enter is never sent to or stored on an external server.</p>
       </div>
       <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
-        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. Can I use it without knowing cron syntax?</p>
-        <p style="color:var(--subtext);margin:0;line-height:1.7">Yes, choosing a schedule builds the expression for you, and pasting an existing expression explains what it means.</p>
+        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. What SQL syntax does it support?</p>
+        <p style="color:var(--subtext);margin:0;line-height:1.7">It organizes indentation and line breaks based on general standard SQL syntax to make queries easier to read.</p>
       </div>
       <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
         <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. Can I use this on mobile?</p>
@@ -304,10 +291,10 @@
     </div>
 
     <div class="cta-box">
-      <p>Parse a cron expression, or build one yourself with just a few clicks.<br />Check its next run times right away.</p>
-      <a href="/en/cron-helper/" class="cta-btn" style="display:inline-flex;align-items:center;gap:8px">
-        <span style="display:inline-block;width:26px;height:26px;overflow:hidden;flex-shrink:0"><span style="display:block;transform:scale(0.565);transform-origin:top left"><div style="width:46px;height:46px;background:#e0c3ff;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="font:700 13px Poppins,sans-serif;color:#2a2433;line-height:1;letter-spacing:-.5px;white-space:nowrap">CRON</div></div></span></span>
-        Start Building Cron Expressions for Free
+      <p>Organize a complex SQL query into an easy-to-read format.<br />Freely choose keyword casing and indent options too.</p>
+      <a href="/en/sql-formatter/" class="cta-btn" style="display:inline-flex;align-items:center;gap:8px">
+        <span style="display:inline-block;width:26px;height:26px;overflow:hidden;flex-shrink:0"><span style="display:block;transform:scale(0.565);transform-origin:top left"><div style="width:46px;height:46px;background:#e0c3ff;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="font:700 15px Poppins,sans-serif;color:#2a2433;line-height:1;letter-spacing:-.5px;white-space:nowrap">SQL</div></div></span></span>
+        Start Formatting SQL for Free
       </a>
     </div>
     <!-- Google AdSense Multiplex Ad — pending approval, reserving space -->
@@ -317,8 +304,8 @@
     </div>
 
 <div class="post-nav">
-      <a href="/en/blog/61-jwtdecoder-howto"><span class="nav-label">&larr; Previous</span><span style="color:var(--point-hover)">JWT Decoder</span>: The Complete Guide</a>
-      <a href="/en/blog/63-sqlformatter-howto" style="text-align:right"><span class="nav-label">Next &rarr;</span><span style="color:var(--point-hover)">SQL Formatter</span>: The Complete Guide</a>
+      <a href="/en/blog/62-cronhelper-howto"><span class="nav-label">&larr; Previous</span><span style="color:var(--point-hover)">Cron Expression Helper</span>: The Complete Guide</a>
+      <a href="/en/blog/" style="text-align:right"><span class="nav-label">Next &rarr;</span><span style="color:var(--point-hover)">Color Code Converter</span>: The Complete Guide</a>
     </div>
 
   </article>
