@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="icon" href="/favicon.ico" sizes="32x32">
+  <link rel="icon" href="/favicon-16.png" sizes="16x16" type="image/png">
+  <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="/favicon-192.png" sizes="192x192" type="image/png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="The official step-by-step guide to every feature of LineNumber. Learn how to add line numbers to text or code and copy the result." />
+  <meta property="og:title" content="Add Line Numbers: The Complete Guide — BrowserKit" />
+  <meta property="og:description" content="The official LineNumber guide to adding line numbers to text or code and copying the result. Processed right in your browser, with no server upload." />
+  <meta property="og:type" content="article" />
+  <title>Add Line Numbers: The Complete Guide — BrowserKit</title>
+  <link rel="stylesheet" href="/css/style.css?v=20260724c" />
+  <link rel="stylesheet" href="/css/style-en.css?v=20260724a" />
+  <!-- Google AdSense — pending re-review. Uncomment once approved.
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506"
+     crossorigin="anonymous"></script>
+  -->
+  <style>
+    .feature-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:20px 0; }
+    .feature-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px; }
+    .feature-card:hover { border-color:var(--point); }
+    .feature-icon { font-size:24px; margin-bottom:10px; }
+    .feature-title { font-size:14px; font-weight:600; color:var(--text); margin-bottom:6px; }
+    .feature-desc { font-size:13px; color:var(--subtext); line-height:1.7; }
+    .step-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px 24px; margin:16px 0; display:flex; gap:16px; align-items:flex-start; }
+    .step-num { min-width:36px; height:36px; background:linear-gradient(135deg,var(--point),var(--point-hover)); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:700; color:white; flex-shrink:0; }
+    .step-content h3 { font-size:15px; font-weight:600; margin:0 0 6px; color:var(--text); }
+    .step-content p { font-size:14px; color:var(--subtext); line-height:1.7; margin:0; }
+    .code-block { background:#0a0a12; border:1px solid var(--border); border-radius:10px; padding:16px 20px; margin:14px 0; font-family:'Fira Code','JetBrains Mono',monospace; font-size:13px; line-height:1.8; overflow-x:auto; color:#e2e8f0; white-space:pre-wrap; }
+    .code-label { font-size:11px; font-weight:600; color:var(--subtext); margin-bottom:8px; }
+    .post-table { width:100%; border-collapse:collapse; margin:20px 0; font-size:15px; }
+    .post-table th { background:var(--card); padding:12px 16px; text-align:left; font-weight:600; border:1px solid var(--border); color:var(--text); }
+    .post-table td { padding:11px 16px; border:1px solid var(--border); color:var(--subtext); line-height:1.7; }
+    .post-table td code { background:var(--bg); border-radius:4px; padding:1px 6px; font-size:13px; color:var(--point-hover); font-family:'Fira Code',monospace; }
+    .post-table tr:hover td { background:rgba(123,108,255,0.04); }
+    .use-case-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:20px 0; }
+    .use-case-card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:18px; }
+    .use-case-icon { font-size:28px; margin-bottom:8px; }
+    .use-case-title { font-size:13px; font-weight:600; color:var(--text); margin-bottom:6px; }
+    .use-case-desc { font-size:12px; color:var(--subtext); line-height:1.7; }
+    .post-nav { display:flex; justify-content:space-between; margin-top: 12px; padding-top:24px; border-top:1px solid var(--border); gap:12px; }
+    .post-nav a { font-size:15px; color:var(--subtext); text-decoration:none; }
+    .post-nav a:hover { color:var(--text); }
+    .cta-box { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:28px; text-align:center; margin: 12px 0 0; }
+    .cta-box p { font-size:17px; color:var(--subtext); margin-bottom:16px; }
+    .cta-btn { display:inline-block; background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border-radius:10px; padding:12px 28px; font-size:14px; font-weight:600; text-decoration:none; }
+    .cta-btn:hover { transform:translateY(-2px); box-shadow:0 8px 24px var(--glow); color:white; }
+    .back-link:hover { color:var(--text); }
+    @media (max-width:640px) {
+      .feature-grid { grid-template-columns:1fr; }
+      .use-case-grid { grid-template-columns:1fr; }
+    }
+  </style>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<meta property="og:image" content="https://browserkit.online/img/og/line-number.png" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Add Line Numbers: The Complete Guide",
+    "description": "The official step-by-step guide to every feature of LineNumber. Learn how to add line numbers to text or code and copy the result.",
+    "datePublished": "2026-07-09T00:00:00+09:00",
+    "dateModified": "2026-07-22T00:00:00+09:00",
+    "author": { "@type": "Organization", "name": "BrowserKit", "url": "https://browserkit.online" },
+    "publisher": { "@type": "Organization", "name": "BrowserKit", "url": "https://browserkit.online", "logo": { "@type": "ImageObject", "url": "https://browserkit.online/img/og-browserkit.png" } },
+    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://browserkit.online/en/blog/47-linenumber-howto" },
+    "image": "https://browserkit.online/img/og/line-number.png"
+  }
+  </script>  <link rel="canonical" href="https://browserkit.online/en/blog/47-linenumber-howto" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://browserkit.online/en/" },
+    { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://browserkit.online/en/blog/" },
+    { "@type": "ListItem", "position": 3, "name": "Add Line Numbers: The Complete Guide", "item": "https://browserkit.online/en/blog/47-linenumber-howto" }
+  ]
+}
+  </script>
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://browserkit.online/img/og/line-number.png" />
+  <style>
+    .post-table-wrap { overflow-x:auto; }
+    .post-table th, .post-table td { white-space:nowrap; }
+    .post-nav a { word-break:keep-all; }
+    .post-nav .nav-label { display:block; font-size:13px; color:var(--subtext); opacity:0.7; margin-bottom:4px; }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Is the Add Line Numbers tool really free?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, it is completely free to use with no sign-up or installation required. There is no usage limit either."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is what I enter sent to a server?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. All processing happens entirely in your browser, and what you enter is never sent to or stored on an external server."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I change the line number format?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "It automatically adds line numbers to your text, making it easy to refer to a specific line during code review or when citing a document."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I use this on mobile?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, it works the same way in a mobile browser without needing to install any app."
+      }
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <div class="lang-banner" id="langBanner">
+    <span>🌐 이 페이지는 <a href="/blog/47-linenumber-howto">한국어</a>로도 볼 수 있습니다.</span>
+    <button class="lang-banner-close" id="langBannerClose" type="button" aria-label="close">&times;</button>
+  </div>
+  <header class="header">
+    <div class="container">
+      <a href="/en/" class="header-brand"><div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Poppins,sans-serif;flex-shrink:0">B</div><span class="header-brand-text"><span style="color:var(--text)">Browser</span><span style="color:var(--point)">Kit</span></span></a>
+      <div class="header-right">
+        <div class="lang-switcher">
+          <button class="lang-switcher-btn" type="button" data-lang-btn>🌐 <span class="lang-label-full">English</span></button>
+          <div class="lang-switcher-menu" data-lang-menu>
+            <a href="#" class="active">English</a>
+            <a href="/blog/47-linenumber-howto">한국어</a>
+          </div>
+        </div>
+        <a href="/en/" class="header-back">&#x2190; <span class="header-back-label">Back to BrowserKit</span></a>
+      </div>
+    </div>
+  </header>
+
+  <article class="post-wrap">
+    <a href="/en/blog/" class="back-link">&#x2190; Blog</a>
+    <span class="post-tag">Guide</span>
+    <h1 class="post-title"><span style="color:var(--point-hover)">Add Line Numbers</span>: The Complete Guide</h1>
+    <div class="post-date">July 9, 2026</div>
+    <!-- Google AdSense Display Ad — pending approval, reserving space -->
+    <div class="ad-slot" id="adExtra2">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
+
+    <div class="post-body">
+      <p>Trying to point out "line 3 has the bug" in a code review or presentation, but the original text has no line numbers so you keep counting by hand? LineNumber is a free online tool for adding line numbers to text or code and copying the result. Freely set the starting number, separator, and digit padding (zero-filling) exactly how you want, and everything happens entirely in your browser, so your text is never sent to an external server.</p>
+
+      <h2>Key Features</h2>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F522;</div>
+          <div class="feature-title">Set the Starting Number</div>
+          <div class="feature-desc">Set a custom starting number when you want to begin from something other than 1.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x270F;&#xFE0F;</div>
+          <div class="feature-title">Custom Separator</div>
+          <div class="feature-desc">Choose from <code>1. </code>, <code>1: </code>, <code>1) </code>, or a tab character, or type in whatever separator you want.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F522;</div>
+          <div class="feature-title">Digit Padding (Zero-Fill)</div>
+          <div class="feature-desc">Pad numbers to a fixed width, filling in leading zeros like <code>001</code>, <code>002</code>.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x2705;</div>
+          <div class="feature-title">Empty-Line Handling</div>
+          <div class="feature-desc">Choose whether to number empty lines too, or skip them and continue numbering from the next line with content.</div>
+        </div>
+      </div>
+
+      <!-- Google AdSense Display Ad — pending approval, reserving space -->
+    <div class="ad-slot" id="adTop">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
+      <h2>How to Use It</h2>
+
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <h3>Enter Text</h3>
+          <p>Type or paste the text or code you want to number into the input box on the left. The numbered text appears live in the result box on the right the instant you type.</p>
+        </div>
+      </div>
+
+      
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <h3>Set the Starting Number and Digit Padding</h3>
+          <p>Enter the number you want to start from in <strong>Starting Number</strong>. Enter a value in <strong>Digit Padding</strong> and leading digits are filled with zeros to that width (e.g., width 3 &rarr; <code>001</code>).</p>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <h3>Choose a Separator</h3>
+          <p>Click one of the provided separator buttons (<code>. </code> / <code>: </code> / <code>) </code> / tab), or type your own separator directly into the field on the right.</p>
+        </div>
+      </div>
+
+      
+      <div class="step-card">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <h3>Choose Whether to Number Empty Lines</h3>
+          <p>With the checkbox on (the default), empty lines get numbered too. Turn it off and empty lines stay unnumbered, with numbering continuing from the next line that has content.</p>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">5</div>
+        <div class="step-content">
+          <h3>Copy or Download the Result</h3>
+          <p>Use the <strong>&#x1F4CB; Copy Result</strong> button to copy it to your clipboard, or <strong>&#x2B07; Download .txt</strong> to save it as a file.</p>
+        </div>
+      </div>
+
+      
+
+      <h3>Example Result</h3>
+      <p>Below is the result of applying a starting number of 1 and the <code>. </code> separator to the following text.</p>
+      <div class="code-block">apple
+banana
+cherry</div>
+      <div class="code-block">1. apple
+2. banana
+3. cherry</div>
+
+      <h2>Use Cases by Separator</h2>
+      <div class="post-table-wrap"><table class="post-table">
+        <thead><tr><th>Separator</th><th>Result Format</th><th>Commonly Used For</th></tr></thead>
+        <tbody>
+          <tr><td><code>. </code></td><td><code>1. content</code></td><td>Numbered lists, organizing document items</td></tr>
+          <tr><td><code>: </code></td><td><code>1: content</code></td><td>Log files, line-reference markers</td></tr>
+          <tr><td><code>) </code></td><td><code>1) content</code></td><td>Surveys, checklists</td></tr>
+          <tr><td>Tab</td><td><code>1[Tab]content</code></td><td>Tabular data to paste into a spreadsheet</td></tr>
+        </tbody>
+      </table></div>
+
+      <h2>Use Cases</h2>
+      <div class="use-case-grid">
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F41B;</div>
+          <div class="use-case-title">Referencing Lines in Code Reviews and Questions</div>
+          <div class="use-case-desc">Add line numbers to a code snippet so you can communicate clearly, like saying "there's a bug on line 3."</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F4CB;</div>
+          <div class="use-case-title">Analyzing Log Files</div>
+          <div class="use-case-desc">Number a long log so you can quickly point to and explain or share a specific line.</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F4DD;</div>
+          <div class="use-case-title">Writing Numbered-List Documents</div>
+          <div class="use-case-desc">Paste in multiple items and quickly turn them into a sequentially numbered list.</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F4CA;</div>
+          <div class="use-case-title">Preparing Spreadsheet Data</div>
+          <div class="use-case-desc">Use the tab separator to format numbers and content so they paste into separate spreadsheet cells.</div>
+        </div>
+      </div>
+
+      <div class="post-highlight">&#x1F512; LineNumber processes everything entirely in your browser. Since what you enter is never sent to an external server, you can safely process sensitive content like internal code or logs.</div>
+    
+      <h2>Frequently Asked Questions</h2>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
+        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. Is the Add Line Numbers tool really free?</p>
+        <p style="color:var(--subtext);margin:0;line-height:1.7">Yes, it is completely free to use with no sign-up or installation required. There is no usage limit either.</p>
+      </div>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
+        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. Is what I enter sent to a server?</p>
+        <p style="color:var(--subtext);margin:0;line-height:1.7">No. All processing happens entirely in your browser, and what you enter is never sent to or stored on an external server.</p>
+      </div>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
+        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. Can I change the line number format?</p>
+        <p style="color:var(--subtext);margin:0;line-height:1.7">It automatically adds line numbers to your text, making it easy to refer to a specific line during code review or when citing a document.</p>
+      </div>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
+        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. Can I use this on mobile?</p>
+        <p style="color:var(--subtext);margin:0;line-height:1.7">Yes, it works the same way in a mobile browser without needing to install any app.</p>
+      </div>
+    </div>
+
+    <!-- Google AdSense Display Ad — pending approval, reserving space -->
+    <div class="ad-slot" id="adMiddle">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
+
+    <div class="cta-box">
+      <p>Add line numbers to text or code.<br />Set the starting number and separator freely.</p>
+      <a href="/en/line-number/" class="cta-btn" style="display:inline-flex;align-items:center;gap:8px">
+        <span style="display:inline-block;width:26px;height:26px;overflow:hidden;flex-shrink:0"><span style="display:block;transform:scale(0.565);transform-origin:top left"><div style="width:46px;height:46px;background:#a8e6cf;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="width:30px;height:26px;display:flex;flex-direction:column;justify-content:space-between"><div style="display:flex;align-items:center;gap:3px"><div style="width:6px;height:6px;background:#2a2433;border-radius:1px"></div><div style="flex:1;height:3px;background:#2a2433;border-radius:2px"></div></div><div style="display:flex;align-items:center;gap:3px"><div style="width:6px;height:6px;background:#2a2433;border-radius:1px"></div><div style="flex:1;height:3px;background:#2a2433;border-radius:2px"></div></div><div style="display:flex;align-items:center;gap:3px"><div style="width:6px;height:6px;background:#2a2433;border-radius:1px"></div><div style="flex:1;height:3px;background:#2a2433;border-radius:2px"></div></div></div></div></span></span>
+        Add Line Numbers for Free
+      </a>
+    </div>
+    <!-- Google AdSense Multiplex Ad — pending approval, reserving space -->
+    <div class="ad-slot ad-slot-rect" id="adBottom">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
+
+<div class="post-nav">
+      <a href="/en/blog/37-findreplace-howto"><span class="nav-label">&larr; Previous</span><span style="color:var(--point-hover)">Find & Replace</span>: The Complete Guide</a>
+      <a href="/en/blog/64-loremgen-howto" style="text-align:right"><span class="nav-label">Next &rarr;</span><span style="color:var(--point-hover)">Lorem Ipsum Generator</span>: The Complete Guide</a>
+    </div>
+
+  </article>
+  <footer class="footer">
+    <div class="container">
+      <p class="footer-copy">&#xa9; 2026 BrowserKit. All processing happens in your browser.</p>
+      <nav class="footer-nav">
+        <a href="/en/privacy.html">Privacy Policy</a>
+        <a href="/en/terms.html">Terms of Service</a>
+        <a href="/en/about.html">About</a>
+        <a href="/en/blog/">Blog</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script>
+  document.querySelectorAll('[data-lang-btn]').forEach(function(btn){
+    btn.addEventListener('click', function(e){
+      e.stopPropagation();
+      var menu = btn.nextElementSibling;
+      menu.classList.toggle('show');
+    });
+  });
+  document.addEventListener('click', function(){
+    document.querySelectorAll('.lang-switcher-menu.show').forEach(function(m){ m.classList.remove('show'); });
+  });
+  </script>
+
+  <script>
+  (function(){
+    try {
+      if (document.cookie.indexOf('bk_lang_dismiss=1') !== -1) return;
+      var lang = (navigator.language || navigator.userLanguage || '').toLowerCase();
+      if (lang.indexOf('ko') !== 0) return;
+      var banner = document.getElementById('langBanner');
+      if (!banner) return;
+      banner.classList.add('show');
+      var closeBtn = document.getElementById('langBannerClose');
+      closeBtn.addEventListener('click', function(){
+        banner.classList.remove('show');
+        document.cookie = 'bk_lang_dismiss=1; max-age=' + (60*60*24*180) + '; path=/';
+      });
+    } catch(e) {}
+  })();
+  </script>
+</body>
+</html>
