@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="icon" href="/favicon.ico" sizes="32x32">
+  <link rel="icon" href="/favicon-16.png" sizes="16x16" type="image/png">
+  <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="/favicon-192.png" sizes="192x192" type="image/png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="The official step-by-step guide to every feature of DiagramMaker. Learn how to draw flowcharts, sequence, ER, Gantt, and pie diagrams using Mermaid syntax." />
+  <meta property="og:title" content="Diagram Maker: The Complete Guide — BrowserKit" />
+  <meta property="og:description" content="The official DiagramMaker guide to instantly drawing flowcharts, sequence, ER, Gantt, and pie diagrams using Mermaid syntax." />
+  <meta property="og:type" content="article" />
+  <title>Diagram Maker: The Complete Guide — BrowserKit</title>
+  <link rel="stylesheet" href="/css/style.css?v=20260724c" />
+  <link rel="stylesheet" href="/css/style-en.css?v=20260724a" />
+  <!-- Google AdSense — pending re-review. Uncomment once approved.
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506"
+     crossorigin="anonymous"></script>
+  -->
+  <style>
+    .post-warn { background:rgba(248,113,113,0.08); border-left:3px solid #F87171; border-radius:8px; padding:16px 20px; margin:24px 0; font-size:15px; color:var(--subtext); line-height:1.8; }
+    .feature-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:20px 0; }
+    .feature-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px; }
+    .feature-card:hover { border-color:var(--point); }
+    .feature-icon { font-size:24px; margin-bottom:10px; }
+    .feature-title { font-size:14px; font-weight:600; color:var(--text); margin-bottom:6px; }
+    .feature-desc { font-size:13px; color:var(--subtext); line-height:1.7; }
+    .step-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px 24px; margin:16px 0; display:flex; gap:16px; align-items:flex-start; }
+    .step-num { min-width:36px; height:36px; background:linear-gradient(135deg,var(--point),var(--point-hover)); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:700; color:white; flex-shrink:0; }
+    .step-content h3 { font-size:15px; font-weight:600; margin:0 0 6px; color:var(--text); }
+    .step-content p { font-size:14px; color:var(--subtext); line-height:1.7; margin:0; }
+
+    .preset-demo { display:flex; gap:6px; flex-wrap:wrap; margin:16px 0; }
+    .preset-chip { background:var(--card); border:1px solid var(--border); border-radius:10px; padding:8px 14px; font-size:12px; font-weight:600; color:var(--subtext); }
+    .preset-chip.active { background:rgba(123,108,255,0.15); border-color:var(--point); color:var(--point-hover); }
+
+    .code-block { background:#0a0a12; border:1px solid var(--border); border-radius:10px; padding:16px; font-family:'Fira Code',monospace; font-size:12px; line-height:1.7; color:#e2e8f0; margin:16px 0; overflow-x:auto; white-space:pre; }
+
+    .post-table { width:100%; border-collapse:collapse; margin:20px 0; font-size:15px; }
+    .post-table th { background:var(--card); padding:12px 16px; text-align:left; font-weight:600; border:1px solid var(--border); color:var(--text); }
+    .post-table td { padding:11px 16px; border:1px solid var(--border); color:var(--subtext); line-height:1.7; }
+    .post-table td code { background:var(--bg); border-radius:4px; padding:1px 6px; font-size:13px; color:var(--point-hover); font-family:'Fira Code',monospace; }
+    .post-table tr:hover td { background:rgba(123,108,255,0.04); }
+    .use-case-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:20px 0; }
+    .use-case-card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:18px; }
+    .use-case-icon { font-size:28px; margin-bottom:8px; }
+    .use-case-title { font-size:13px; font-weight:600; color:var(--text); margin-bottom:6px; }
+    .use-case-desc { font-size:12px; color:var(--subtext); line-height:1.7; }
+    .post-nav { display:flex; justify-content:space-between; margin-top: 12px; padding-top:24px; border-top:1px solid var(--border); gap:12px; }
+    .post-nav a { font-size:15px; color:var(--subtext); text-decoration:none; }
+    .post-nav a:hover { color:var(--text); }
+    .cta-box { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:28px; text-align:center; margin: 12px 0 0; }
+    .cta-box p { font-size:17px; color:var(--subtext); margin-bottom:16px; }
+    .cta-btn { display:inline-block; background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border-radius:10px; padding:12px 28px; font-size:14px; font-weight:600; text-decoration:none; }
+    .cta-btn:hover { transform:translateY(-2px); box-shadow:0 8px 24px var(--glow); color:white; }
+    .back-link:hover { color:var(--text); }
+    @media (max-width:640px) {
+      .feature-grid { grid-template-columns:1fr; }
+      .use-case-grid { grid-template-columns:1fr; }
+    }
+  </style>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<meta property="og:image" content="https://browserkit.online/img/og/diagram-maker.png" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Diagram Maker: The Complete Guide",
+    "description": "The official step-by-step guide to every feature of DiagramMaker. Learn how to draw flowcharts, sequence, ER, Gantt, and pie diagrams using Mermaid syntax.",
+    "datePublished": "2026-07-09T00:00:00+09:00",
+    "dateModified": "2026-07-22T00:00:00+09:00",
+    "author": { "@type": "Organization", "name": "BrowserKit", "url": "https://browserkit.online" },
+    "publisher": { "@type": "Organization", "name": "BrowserKit", "url": "https://browserkit.online", "logo": { "@type": "ImageObject", "url": "https://browserkit.online/img/og-browserkit.png" } },
+    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://browserkit.online/en/blog/52-diagrammaker-howto" },
+    "image": "https://browserkit.online/img/og/diagram-maker.png"
+  }
+  </script>  <link rel="canonical" href="https://browserkit.online/en/blog/52-diagrammaker-howto" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://browserkit.online/en/" },
+    { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://browserkit.online/en/blog/" },
+    { "@type": "ListItem", "position": 3, "name": "Diagram Maker: The Complete Guide", "item": "https://browserkit.online/en/blog/52-diagrammaker-howto" }
+  ]
+}
+  </script>
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://browserkit.online/img/og/diagram-maker.png" />
+  <style>
+    .post-table-wrap { overflow-x:auto; }
+    .post-table th, .post-table td { white-space:nowrap; }
+    .post-nav a { word-break:keep-all; }
+    .post-nav .nav-label { display:block; font-size:13px; color:var(--subtext); opacity:0.7; margin-bottom:4px; }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Is the Diagram Maker tool really free?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, it is completely free to use with no sign-up or installation required. There is no usage limit either."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is the file I upload sent to a server?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. All processing happens entirely in your browser, and uploaded files are never sent to or stored on an external server."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I save a diagram I created?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Download the finished flowchart or diagram as an image to use directly in a document."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I use this on mobile?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, it works the same way in a mobile browser without needing to install any app."
+      }
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <div class="lang-banner" id="langBanner">
+    <span>🌐 이 페이지는 <a href="/blog/52-diagrammaker-howto">한국어</a>로도 볼 수 있습니다.</span>
+    <button class="lang-banner-close" id="langBannerClose" type="button" aria-label="close">&times;</button>
+  </div>
+  <header class="header">
+    <div class="container">
+      <a href="/en/" class="header-brand"><div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Poppins,sans-serif;flex-shrink:0">B</div><span class="header-brand-text"><span style="color:var(--text)">Browser</span><span style="color:var(--point)">Kit</span></span></a>
+      <div class="header-right">
+        <div class="lang-switcher">
+          <button class="lang-switcher-btn" type="button" data-lang-btn>🌐 <span class="lang-label-full">English</span></button>
+          <div class="lang-switcher-menu" data-lang-menu>
+            <a href="#" class="active">English</a>
+            <a href="/blog/52-diagrammaker-howto">한국어</a>
+          </div>
+        </div>
+        <a href="/en/" class="header-back">&#x2190; <span class="header-back-label">Back to BrowserKit</span></a>
+      </div>
+    </div>
+  </header>
+
+  <article class="post-wrap">
+    <a href="/en/blog/" class="back-link">&#x2190; Blog</a>
+    <span class="post-tag">Guide</span>
+    <h1 class="post-title"><span style="color:var(--point-hover)">Diagram Maker</span>: The Complete Guide</h1>
+    <div class="post-date">July 9, 2026</div>
+    <!-- Google AdSense Display Ad — pending approval, reserving space -->
+    <div class="ad-slot" id="adExtra2">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
+
+    <div class="post-body">
+      <p>A hand-drawn sketch only goes so far when explaining a system's structure in a meeting, and diagramming tools that make you place every shape one by one are a hassle. DiagramMaker is a free online diagram generator that instantly draws flowcharts, sequence, ER, Gantt, and pie diagrams from Mermaid syntax you type in. With 5 presets, you can get started right away even without knowing the syntax, and the finished diagram can be saved as SVG or PNG. Since all rendering happens entirely in your browser, what you enter is never sent to an external server.</p>
+
+      <h2>Key Features</h2>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F3A8;</div>
+          <div class="feature-title">5 Presets</div>
+          <div class="feature-desc">Load ready-made example code for flowchart, sequence, ER, Gantt, and pie diagrams with a single click.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F441;&#xFE0F;</div>
+          <div class="feature-title">Live Preview</div>
+          <div class="feature-desc">Type Mermaid syntax and the diagram automatically re-renders 0.4 seconds later.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x26A0;&#xFE0F;</div>
+          <div class="feature-title">Syntax Error Messages</div>
+          <div class="feature-desc">If the syntax is wrong, an error message appears instead of the diagram so you know right away what to fix.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x2B07;</div>
+          <div class="feature-title">SVG/PNG Download</div>
+          <div class="feature-desc">Save the finished diagram as a vector (SVG) or image (PNG, 2x resolution) file.</div>
+        </div>
+      </div>
+
+      <!-- Google AdSense Display Ad — pending approval, reserving space -->
+    <div class="ad-slot" id="adTop">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
+
+      <h2>How to Use It</h2>
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <h3>Choose a Preset</h3>
+          <p>Pick the diagram type you want from the 5 preset buttons at the top. Clicking one fills the input box with ready-made example code for that type.</p>
+        </div>
+      </div>
+
+      <div class="preset-demo">
+        <span class="preset-chip active">&#x1F500; Flowchart</span>
+        <span class="preset-chip">&#x1F501; Sequence</span>
+        <span class="preset-chip">&#x1F5C3;&#xFE0F; ER Diagram</span>
+        <span class="preset-chip">&#x1F4C5; Gantt Chart</span>
+        <span class="preset-chip">&#x1F967; Pie Chart</span>
+      </div>
+
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <h3>Edit the Code</h3>
+          <p>Edit the Mermaid syntax in the input box on the left directly. Change node names, arrow directions, labels, and so on, and the preview on the right updates automatically.</p>
+        </div>
+      </div>
+
+      
+
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <h3>Try Other Presets</h3>
+          <p>Load the sequence, ER, Gantt, or pie diagram preset the same way to see their syntax structure and adapt them for your own use.</p>
+        </div>
+      </div>
+
+      
+
+      <div class="step-card">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <h3>Download or Copy the Code</h3>
+          <p>Save a vector file with <strong>&#x2B07; Download SVG</strong>, or an image file with <strong>&#x2B07; Download PNG</strong>. Copy the Mermaid code itself with the <strong>&#x1F4CB; Copy Code</strong> button to paste into Notion, GitHub, or anywhere else Mermaid is supported.</p>
+        </div>
+      </div>
+
+      
+
+      <h2>A Basic Mermaid Syntax Example</h2>
+      <p>A flowchart starts with the <code>flowchart</code> keyword and a direction (TD = top-to-bottom, LR = left-to-right), and connects nodes with arrows.</p>
+      <div class="code-block">flowchart TD
+    A[Start] --> B{Condition}
+    B -- Yes --> C[Result A]
+    B -- No --> D[Result B]</div>
+
+      <div class="post-warn">
+        <strong>&#x26A0;&#xFE0F; Note:</strong> DiagramMaker uses the open-source library <a href="https://mermaid.js.org/" target="_blank" rel="noopener">Mermaid.js</a> as-is. You can find more diagram syntax and options in the official Mermaid documentation.
+      </div>
+
+      <h2>What Each Diagram Type Is For</h2>
+      <div class="post-table-wrap"><table class="post-table">
+        <thead><tr><th>Type</th><th>Keyword</th><th>Main Use</th></tr></thead>
+        <tbody>
+          <tr><td>Flowchart</td><td><code>flowchart</code></td><td>Depicting workflows, decision branches, and algorithm logic</td></tr>
+          <tr><td>Sequence Diagram</td><td><code>sequenceDiagram</code></td><td>Showing message exchanges between systems and API call order</td></tr>
+          <tr><td>ER Diagram</td><td><code>erDiagram</code></td><td>Depicting database table structure and relationships</td></tr>
+          <tr><td>Gantt Chart</td><td><code>gantt</code></td><td>Depicting project schedules, task duration, and order</td></tr>
+          <tr><td>Pie Chart</td><td><code>pie</code></td><td>Visualizing proportions and share data</td></tr>
+        </tbody>
+      </table></div>
+
+      <h2>Use Cases</h2>
+      <div class="use-case-grid">
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F4DD;</div>
+          <div class="use-case-title">Diagrams for Planning Documents</div>
+          <div class="use-case-desc">Quickly draw a workflow diagram to attach as an image in a service planning document or meeting deck.</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F5C4;&#xFE0F;</div>
+          <div class="use-case-title">Reviewing a Database Design</div>
+          <div class="use-case-desc">Visualize table relationships with an ER diagram to review a database design with your team.</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F4C5;</div>
+          <div class="use-case-title">Sharing a Project Schedule</div>
+          <div class="use-case-desc">Organize a development schedule by phase with a Gantt chart to share with your team or embed in a presentation.</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F4D6;</div>
+          <div class="use-case-title">Reusing Code in Documentation</div>
+          <div class="use-case-desc">Copy the finished Mermaid code and paste it as-is into Notion, a GitHub README, or any other document that supports Mermaid.</div>
+        </div>
+      </div>
+
+      <div class="post-highlight">&#x1F512; DiagramMaker runs all rendering entirely in your browser. Since your diagram content is never sent to an external server, you can safely draw a structural diagram for a private project too.</div>
+    
+      <h2>Frequently Asked Questions</h2>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
+        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. Is the Diagram Maker tool really free?</p>
+        <p style="color:var(--subtext);margin:0;line-height:1.7">Yes, it is completely free to use with no sign-up or installation required. There is no usage limit either.</p>
+      </div>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
+        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. Is the file I upload sent to a server?</p>
+        <p style="color:var(--subtext);margin:0;line-height:1.7">No. All processing happens entirely in your browser, and uploaded files are never sent to or stored on an external server.</p>
+      </div>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
+        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. How do I save a diagram I created?</p>
+        <p style="color:var(--subtext);margin:0;line-height:1.7">Download the finished flowchart or diagram as an image to use directly in a document.</p>
+      </div>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
+        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. Can I use this on mobile?</p>
+        <p style="color:var(--subtext);margin:0;line-height:1.7">Yes, it works the same way in a mobile browser without needing to install any app.</p>
+      </div>
+    </div>
+
+    <!-- Google AdSense Display Ad — pending approval, reserving space -->
+    <div class="ad-slot" id="adMiddle">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
+
+    <div class="cta-box">
+      <p>Draw flowcharts, sequence, ER, Gantt, and pie diagrams using Mermaid syntax.<br />Save directly as SVG or PNG.</p>
+      <a href="/en/diagram-maker/" class="cta-btn" style="display:inline-flex;align-items:center;gap:8px">
+        <span style="display:inline-block;width:26px;height:26px;overflow:hidden;flex-shrink:0"><span style="display:block;transform:scale(0.565);transform-origin:top left"><div style="width:46px;height:46px;background:#ffd9a8;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="position:relative;width:30px;height:26px"><div style="position:absolute;left:0;top:0;width:11px;height:8px;background:#fffdf9;border:2px solid #2a2433;border-radius:2px;box-sizing:border-box"></div><div style="position:absolute;right:0;top:0;width:11px;height:8px;background:#fffdf9;border:2px solid #2a2433;border-radius:2px;box-sizing:border-box"></div><div style="position:absolute;left:9px;bottom:0;width:11px;height:8px;background:#fffdf9;border:2px solid #2a2433;border-radius:2px;box-sizing:border-box"></div><div style="position:absolute;left:5px;top:8px;width:2px;height:6px;background:#2a2433"></div><div style="position:absolute;right:5px;top:8px;width:2px;height:6px;background:#2a2433"></div></div></div></span></span>
+        Start Drawing Diagrams for Free
+      </a>
+    </div>
+    <!-- Google AdSense Multiplex Ad — pending approval, reserving space -->
+    <div class="ad-slot ad-slot-rect" id="adBottom">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
+
+<div class="post-nav">
+      <a href="/en/blog/38-chartmaker-howto"><span class="nav-label">&larr; Previous</span><span style="color:var(--point-hover)">Chart Maker</span>: The Complete Guide</a>
+      <a href="/en/blog/" style="text-align:right"><span class="nav-label">Next &rarr;</span><span style="color:var(--point-hover)">Palette Generator</span>: The Complete Guide</a>
+    </div>
+
+  </article>
+  <footer class="footer">
+    <div class="container">
+      <p class="footer-copy">&#xa9; 2026 BrowserKit. All processing happens in your browser.</p>
+      <nav class="footer-nav">
+        <a href="/en/privacy.html">Privacy Policy</a>
+        <a href="/en/terms.html">Terms of Service</a>
+        <a href="/en/about.html">About</a>
+        <a href="/en/blog/">Blog</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script>
+  document.querySelectorAll('[data-lang-btn]').forEach(function(btn){
+    btn.addEventListener('click', function(e){
+      e.stopPropagation();
+      var menu = btn.nextElementSibling;
+      menu.classList.toggle('show');
+    });
+  });
+  document.addEventListener('click', function(){
+    document.querySelectorAll('.lang-switcher-menu.show').forEach(function(m){ m.classList.remove('show'); });
+  });
+  </script>
+
+  <script>
+  (function(){
+    try {
+      if (document.cookie.indexOf('bk_lang_dismiss=1') !== -1) return;
+      var lang = (navigator.language || navigator.userLanguage || '').toLowerCase();
+      if (lang.indexOf('ko') !== 0) return;
+      var banner = document.getElementById('langBanner');
+      if (!banner) return;
+      banner.classList.add('show');
+      var closeBtn = document.getElementById('langBannerClose');
+      closeBtn.addEventListener('click', function(){
+        banner.classList.remove('show');
+        document.cookie = 'bk_lang_dismiss=1; max-age=' + (60*60*24*180) + '; path=/';
+      });
+    } catch(e) {}
+  })();
+  </script>
+</body>
+</html>
