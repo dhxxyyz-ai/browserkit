@@ -8,11 +8,11 @@
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="The official step-by-step guide to every feature of JWTDecoder. Learn how to instantly decode a JWT's header and payload and check its expiration time." />
-  <meta property="og:title" content="JWT Decoder: The Complete Guide — BrowserKit" />
-  <meta property="og:description" content="The official JWTDecoder guide to instantly decoding a JWT's header and payload." />
+  <meta name="description" content="The official step-by-step guide to every feature of CronHelper. Learn how to parse a cron expression or build one yourself with just a few clicks." />
+  <meta property="og:title" content="Cron Expression Helper: The Complete Guide — BrowserKit" />
+  <meta property="og:description" content="The official CronHelper guide to parsing or visually building a cron expression and previewing its next run times." />
   <meta property="og:type" content="article" />
-  <title>JWT Decoder: The Complete Guide — BrowserKit</title>
+  <title>Cron Expression Helper: The Complete Guide — BrowserKit</title>
   <link rel="stylesheet" href="/css/style.css?v=20260724c" />
   <link rel="stylesheet" href="/css/style-en.css?v=20260724a" />
   <!-- Google AdSense — pending re-review. Uncomment once approved.
@@ -57,21 +57,21 @@
   </style>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<meta property="og:image" content="https://browserkit.online/img/og/jwt-decoder.png" />
+<meta property="og:image" content="https://browserkit.online/img/og/cron-helper.png" />
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
-    "headline": "JWT Decoder: The Complete Guide",
-    "description": "The official step-by-step guide to every feature of JWTDecoder. Learn how to instantly decode a JWT's header and payload and check its expiration time.",
+    "headline": "Cron Expression Helper: The Complete Guide",
+    "description": "The official step-by-step guide to every feature of CronHelper. Learn how to parse a cron expression or build one yourself with just a few clicks.",
     "datePublished": "2026-07-10T00:00:00+09:00",
     "dateModified": "2026-07-22T00:00:00+09:00",
     "author": { "@type": "Organization", "name": "BrowserKit", "url": "https://browserkit.online" },
     "publisher": { "@type": "Organization", "name": "BrowserKit", "url": "https://browserkit.online", "logo": { "@type": "ImageObject", "url": "https://browserkit.online/img/og-browserkit.png" } },
-    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://browserkit.online/en/blog/61-jwtdecoder-howto" },
-    "image": "https://browserkit.online/img/og/jwt-decoder.png"
+    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://browserkit.online/en/blog/62-cronhelper-howto" },
+    "image": "https://browserkit.online/img/og/cron-helper.png"
   }
-  </script>  <link rel="canonical" href="https://browserkit.online/en/blog/61-jwtdecoder-howto" />
+  </script>  <link rel="canonical" href="https://browserkit.online/en/blog/62-cronhelper-howto" />
   <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -79,12 +79,12 @@
   "itemListElement": [
     { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://browserkit.online/en/" },
     { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://browserkit.online/en/blog/" },
-    { "@type": "ListItem", "position": 3, "name": "JWT Decoder: The Complete Guide", "item": "https://browserkit.online/en/blog/61-jwtdecoder-howto" }
+    { "@type": "ListItem", "position": 3, "name": "Cron Expression Helper: The Complete Guide", "item": "https://browserkit.online/en/blog/62-cronhelper-howto" }
   ]
 }
   </script>
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:image" content="https://browserkit.online/img/og/jwt-decoder.png" />
+  <meta name="twitter:image" content="https://browserkit.online/img/og/cron-helper.png" />
   <style>
     .post-table-wrap { overflow-x:auto; }
     .post-table th, .post-table td { white-space:nowrap; }
@@ -98,7 +98,7 @@
   "mainEntity": [
     {
       "@type": "Question",
-      "name": "Is the JWT Decoder tool really free?",
+      "name": "Is the Cron Expression Helper tool really free?",
       "acceptedAnswer": {
         "@type": "Answer",
         "text": "Yes, it is completely free to use with no sign-up or installation required. There is no usage limit either."
@@ -114,10 +114,10 @@
     },
     {
       "@type": "Question",
-      "name": "Can I check a token's expiration time too?",
+      "name": "Can I use it without knowing cron syntax?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Yes, claim data like exp in the payload is shown in a human-readable format."
+        "text": "Yes, choosing a schedule builds the expression for you, and pasting an existing expression explains what it means."
       }
     },
     {
@@ -134,7 +134,7 @@
 </head>
 <body>
   <div class="lang-banner" id="langBanner">
-    <span>🌐 이 페이지는 <a href="/blog/61-jwtdecoder-howto">한국어</a>로도 볼 수 있습니다.</span>
+    <span>🌐 이 페이지는 <a href="/blog/62-cronhelper-howto">한국어</a>로도 볼 수 있습니다.</span>
     <button class="lang-banner-close" id="langBannerClose" type="button" aria-label="close">&times;</button>
   </div>
   <header class="header">
@@ -145,7 +145,7 @@
           <button class="lang-switcher-btn" type="button" data-lang-btn>🌐 <span class="lang-label-full">English</span></button>
           <div class="lang-switcher-menu" data-lang-menu>
             <a href="#" class="active">English</a>
-            <a href="/blog/61-jwtdecoder-howto">한국어</a>
+            <a href="/blog/62-cronhelper-howto">한국어</a>
           </div>
         </div>
         <a href="/en/" class="header-back">&#x2190; <span class="header-back-label">Back to BrowserKit</span></a>
@@ -156,7 +156,7 @@
   <article class="post-wrap">
     <a href="/en/blog/" class="back-link">&#x2190; Blog</a>
     <span class="post-tag">Guide</span>
-    <h1 class="post-title"><span style="color:var(--point-hover)">JWT Decoder</span>: The Complete Guide</h1>
+    <h1 class="post-title"><span style="color:var(--point-hover)">Cron Expression Helper</span>: The Complete Guide</h1>
     <div class="post-date">July 10, 2026</div>
     <!-- Google AdSense Display Ad — pending approval, reserving space -->
     <div class="ad-slot" id="adExtra2">
@@ -165,29 +165,29 @@
     </div>
 
     <div class="post-body">
-      <p>When a login API returns a token that looks like an unreadable string starting with "eyJhbGc...", you might wonder what information is packed inside it. JWTDecoder is a free online tool that instantly decodes a JWT's header and payload the moment you paste it in. It unpacks the Base64Url-encoded parts into human-readable JSON, and converts time claims like <code>exp</code>, <code>iat</code>, and <code>nbf</code> into actual dates. It does not perform signature verification, and all decoding happens entirely in your browser.</p>
+      <p>When you see a cron expression like "0 3 * * 1-5" in a server config file, can you tell exactly when it runs? Misreading one can lead to a job firing at an unintended time. CronHelper is a free online tool that parses a cron expression into a human-readable sentence, or lets you build one by selecting minute, hour, day, month, and weekday values with just a few clicks. It calculates the next 5 run times in advance so you can verify the schedule before deploying it, and all parsing and calculation happens entirely in your browser.</p>
 
       <h2>Key Features</h2>
       <div class="feature-grid">
         <div class="feature-card">
           <div class="feature-icon">&#x1F50D;</div>
-          <div class="feature-title">Instant Header/Payload Decoding</div>
-          <div class="feature-desc">The moment you paste a token, its header and payload are shown as color-coded JSON.</div>
+          <div class="feature-title">Expression Parsing</div>
+          <div class="feature-desc">Paste a cron expression and it's instantly converted into a human-readable sentence.</div>
         </div>
         <div class="feature-card">
           <div class="feature-icon">&#x23F1;&#xFE0F;</div>
-          <div class="feature-title">Automatic Expiration Conversion</div>
-          <div class="feature-desc">Converts <code>exp</code>, <code>iat</code>, and <code>nbf</code> Unix timestamps into dates, and shows whether the token is expired with a badge.</div>
+          <div class="feature-title">Next 5 Run Times</div>
+          <div class="feature-desc">Calculates and shows the exact next 5 run times based on the current time.</div>
         </div>
         <div class="feature-card">
-          <div class="feature-icon">&#x1F3A8;</div>
-          <div class="feature-title">3-Part Color-Coded Preview</div>
-          <div class="feature-desc">Shows the header, payload, and signature color-coded the same way jwt.io does, so you can see the raw token at a glance.</div>
+          <div class="feature-icon">&#x1F528;</div>
+          <div class="feature-title">Visual Builder</div>
+          <div class="feature-desc">Choose Every/Every N/Specific value for each field, and the cron expression is assembled in real time.</div>
         </div>
         <div class="feature-card">
           <div class="feature-icon">&#x1F512;</div>
           <div class="feature-title">Fully Local Processing</div>
-          <div class="feature-desc">All decoding runs inside your browser. Your token is never sent to a server.</div>
+          <div class="feature-desc">All parsing and calculation runs inside your browser. Nothing is sent to a server.</div>
         </div>
       </div>
 
@@ -197,12 +197,12 @@
       <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
     </div>
 
-      <h2>How to Use It</h2>
+      <h2>How to Use It -- Parsing an Expression</h2>
       <div class="step-card">
         <div class="step-num">1</div>
         <div class="step-content">
-          <h3>Paste a JWT Token</h3>
-          <p>Paste a JWT in the <code>header.payload.signature</code> format into the input box. Use the <strong>&#x1F4CB; Fill Example Token</strong> button if you just want to try it out.</p>
+          <h3>Enter a Cron Expression</h3>
+          <p>In the <strong>&#x1F50D; Parse Expression</strong> tab, enter a 5-field cron expression in <code>minute hour day month weekday</code> order. Common patterns (every minute, weekdays at 9am, etc.) can be filled in instantly with the preset buttons below.</p>
         </div>
       </div>
 
@@ -211,65 +211,76 @@
       <div class="step-card">
         <div class="step-num">2</div>
         <div class="step-content">
-          <h3>Check the Decoded Result and Expiration</h3>
-          <p>Check the actual JSON content in the HEADER and PAYLOAD cards, and see at a glance whether <code>exp</code> is still valid or has expired via the badge in the <strong>Standard Time Claims</strong> card at the top.</p>
+          <h3>Check the Description and Next Run Times</h3>
+          <p>The <strong>human-readable description</strong> and <strong>next 5 run times</strong> update the moment you type. The sentence is an approximation, so verify the exact schedule against the next-run-times list.</p>
+        </div>
+      </div>
+
+      <h2>How to Use It -- Building One by Selection</h2>
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <h3>Choose a Value for Each Field</h3>
+          <p>In the <strong>&#x1F528; Build by Selection</strong> tab, choose <strong>Every</strong>, <strong>Every N</strong>, or <strong>Specific value</strong> for each of minute, hour, day, month, and weekday. For specific values, you can click to select multiple numbers (or weekdays).</p>
         </div>
       </div>
 
       
 
       <div class="step-card">
-        <div class="step-num">3</div>
+        <div class="step-num">4</div>
         <div class="step-content">
-          <h3>Copy the JSON if Needed</h3>
-          <p>Use the <strong>Copy</strong> button at the top of the HEADER and PAYLOAD cards to copy each JSON to your clipboard for pasting straight into another tool or your code.</p>
+          <h3>Copy the Result or Check Its Parsing</h3>
+          <p>Copy the expression assembled live in the card at the top with the <strong>&#x1F4CB; Copy</strong> button, or jump to the parsing tab with the <strong>&#x1F50D; Parse This Expression</strong> button to see its description and next run times right away.</p>
         </div>
       </div>
 
       <div class="post-warn">
-        <strong>&#x26A0;&#xFE0F; Note:</strong> JWTDecoder only <strong>decodes</strong> a token -- it does <strong>not verify</strong> whether the signature is valid. The Base64Url-encoded header and payload are not encrypted, so anyone can decode and read them -- never put sensitive information like passwords or credit card numbers directly in a JWT payload. If you need signature verification, use a server-side library that knows the issuer's secret or public key.
+        <strong>&#x26A0;&#xFE0F; Note:</strong> The sentence description is a mechanically generated <strong>approximation</strong> of the expression. It can sound a bit unnatural for complex combinations (like specifying both day and weekday), so always double-check that the actual schedule matches your intent using the <strong>next run times</strong> list. This tool also only supports standard 5-field cron, not 6-field extensions with a seconds field (like Quartz).
       </div>
 
-      <h2>Key Standard Claims</h2>
+      <h2>Common Cron Patterns</h2>
       <div class="post-table-wrap"><table class="post-table">
-        <thead><tr><th>Claim</th><th>Meaning</th><th>How This Tool Shows It</th></tr></thead>
+        <thead><tr><th>Expression</th><th>Meaning</th></tr></thead>
         <tbody>
-          <tr><td><code>iat</code></td><td>Issued At</td><td>Converts the Unix timestamp to a date/time</td></tr>
-          <tr><td><code>nbf</code></td><td>Not Before -- invalid before this time</td><td>Converts the Unix timestamp to a date/time</td></tr>
-          <tr><td><code>exp</code></td><td>Expiration</td><td>Converts to a date, plus a valid/expired badge compared to the current time</td></tr>
-          <tr><td><code>alg</code></td><td>Signature algorithm (in the header)</td><td>Shown as-is in the HEADER JSON card</td></tr>
+          <tr><td><code>* * * * *</code></td><td>Runs every minute</td></tr>
+          <tr><td><code>*/10 * * * *</code></td><td>Runs every 10 minutes</td></tr>
+          <tr><td><code>0 * * * *</code></td><td>Runs at the top of every hour</td></tr>
+          <tr><td><code>0 0 * * *</code></td><td>Runs at midnight every day</td></tr>
+          <tr><td><code>0 9 * * 1-5</code></td><td>Runs at 9am on weekdays (Mon-Fri)</td></tr>
+          <tr><td><code>0 0 1 * *</code></td><td>Runs at midnight on the 1st of every month</td></tr>
         </tbody>
       </table></div>
 
       <h2>Use Cases</h2>
       <div class="use-case-grid">
         <div class="use-case-card">
-          <div class="use-case-icon">&#x1F41B;</div>
-          <div class="use-case-title">Debugging API Authentication</div>
-          <div class="use-case-desc">Quickly check a token's expiration or claim values when you hit a 401/403 error.</div>
+          <div class="use-case-icon">&#x1F5A5;&#xFE0F;</div>
+          <div class="use-case-title">Scheduling Server Batch Jobs</div>
+          <div class="use-case-desc">Verify an expression before registering it in crontab or a CI/CD scheduler.</div>
         </div>
         <div class="use-case-card">
-          <div class="use-case-icon">&#x1F9EA;</div>
-          <div class="use-case-title">Inspecting Tokens During Development</div>
-          <div class="use-case-desc">Instantly check the contents of an access token or refresh token returned by a login API.</div>
+          <div class="use-case-icon">&#x2601;&#xFE0F;</div>
+          <div class="use-case-title">Configuring a Cloud Scheduler</div>
+          <div class="use-case-desc">Build and check a cron expression in advance before entering it into AWS EventBridge, GCP Cloud Scheduler, and similar services.</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F41B;</div>
+          <div class="use-case-title">Debugging an Existing Expression</div>
+          <div class="use-case-desc">Verify that a colleague's cron expression behaves as intended by checking its next run times.</div>
         </div>
         <div class="use-case-card">
           <div class="use-case-icon">&#x1F4DA;</div>
-          <div class="use-case-title">Learning JWT Structure</div>
-          <div class="use-case-desc">Learn the three-part header/payload/signature structure by seeing it visually in a real token.</div>
-        </div>
-        <div class="use-case-card">
-          <div class="use-case-icon">&#x1F510;</div>
-          <div class="use-case-title">Checking Expiration Policy</div>
-          <div class="use-case-desc">Verify that an issued token's <code>exp</code> value matches the intended expiration time.</div>
+          <div class="use-case-title">Learning Cron Syntax</div>
+          <div class="use-case-desc">Learn what each field means by hands-on experimenting with the visual builder.</div>
         </div>
       </div>
 
-      <div class="post-highlight">&#x1F512; JWTDecoder runs all decoding entirely in your browser. Your token is never sent to an external server.</div>
+      <div class="post-highlight">&#x1F512; CronHelper runs all parsing and calculation entirely in your browser. Your expression is never sent to an external server.</div>
     
       <h2>Frequently Asked Questions</h2>
       <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
-        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. Is the JWT Decoder tool really free?</p>
+        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. Is the Cron Expression Helper tool really free?</p>
         <p style="color:var(--subtext);margin:0;line-height:1.7">Yes, it is completely free to use with no sign-up or installation required. There is no usage limit either.</p>
       </div>
       <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
@@ -277,8 +288,8 @@
         <p style="color:var(--subtext);margin:0;line-height:1.7">No. All processing happens entirely in your browser, and what you enter is never sent to or stored on an external server.</p>
       </div>
       <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
-        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. Can I check a token's expiration time too?</p>
-        <p style="color:var(--subtext);margin:0;line-height:1.7">Yes, claim data like exp in the payload is shown in a human-readable format.</p>
+        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. Can I use it without knowing cron syntax?</p>
+        <p style="color:var(--subtext);margin:0;line-height:1.7">Yes, choosing a schedule builds the expression for you, and pasting an existing expression explains what it means.</p>
       </div>
       <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
         <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. Can I use this on mobile?</p>
@@ -293,10 +304,10 @@
     </div>
 
     <div class="cta-box">
-      <p>Paste in a JWT token and instantly view its header and payload.<br />Even the expiration time is easy to see at a glance.</p>
-      <a href="/en/jwt-decoder/" class="cta-btn" style="display:inline-flex;align-items:center;gap:8px">
-        <span style="display:inline-block;width:26px;height:26px;overflow:hidden;flex-shrink:0"><span style="display:block;transform:scale(0.565);transform-origin:top left"><div style="width:46px;height:46px;background:#e0c3ff;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="font:700 14px Poppins,sans-serif;color:#2a2433;line-height:1;letter-spacing:-.5px;white-space:nowrap">JWT</div></div></span></span>
-        Start Decoding JWTs for Free
+      <p>Parse a cron expression, or build one yourself with just a few clicks.<br />Check its next run times right away.</p>
+      <a href="/en/cron-helper/" class="cta-btn" style="display:inline-flex;align-items:center;gap:8px">
+        <span style="display:inline-block;width:26px;height:26px;overflow:hidden;flex-shrink:0"><span style="display:block;transform:scale(0.565);transform-origin:top left"><div style="width:46px;height:46px;background:#e0c3ff;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="font:700 13px Poppins,sans-serif;color:#2a2433;line-height:1;letter-spacing:-.5px;white-space:nowrap">CRON</div></div></span></span>
+        Start Building Cron Expressions for Free
       </a>
     </div>
     <!-- Google AdSense Multiplex Ad — pending approval, reserving space -->
@@ -306,8 +317,8 @@
     </div>
 
 <div class="post-nav">
-      <a href="/en/blog/60-uuidgen-howto"><span class="nav-label">&larr; Previous</span><span style="color:var(--point-hover)">UUID Generator</span>: The Complete Guide</a>
-      <a href="/en/blog/62-cronhelper-howto" style="text-align:right"><span class="nav-label">Next &rarr;</span><span style="color:var(--point-hover)">Cron Expression Helper</span>: The Complete Guide</a>
+      <a href="/en/blog/61-jwtdecoder-howto"><span class="nav-label">&larr; Previous</span><span style="color:var(--point-hover)">JWT Decoder</span>: The Complete Guide</a>
+      <a href="/en/blog/" style="text-align:right"><span class="nav-label">Next &rarr;</span><span style="color:var(--point-hover)">SQL Formatter</span>: The Complete Guide</a>
     </div>
 
   </article>
