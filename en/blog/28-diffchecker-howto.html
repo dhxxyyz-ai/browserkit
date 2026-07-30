@@ -1,0 +1,477 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="icon" href="/favicon.ico" sizes="32x32">
+  <link rel="icon" href="/favicon-16.png" sizes="16x16" type="image/png">
+  <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="/favicon-192.png" sizes="192x192" type="image/png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="The official step-by-step guide to every feature of DiffChecker. Learn how to compare two texts line by line and highlight the differences." />
+  <meta property="og:title" content="Diff Checker: The Complete Guide — BrowserKit" />
+  <meta property="og:description" content="The official DiffChecker guide to comparing two texts line by line." />
+  <meta property="og:type" content="article" />
+  <title>Diff Checker: The Complete Guide — BrowserKit</title>
+  <link rel="stylesheet" href="/css/style.css?v=20260724c" />
+  <link rel="stylesheet" href="/css/style-en.css?v=20260724a" />
+  <!-- Google AdSense — pending re-review. Uncomment once approved.
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506"
+     crossorigin="anonymous"></script>
+  -->
+  <style>
+    .feature-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:20px 0; }
+    .feature-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px; }
+    .feature-card:hover { border-color:var(--point); }
+    .feature-icon { font-size:24px; margin-bottom:10px; }
+    .feature-title { font-size:14px; font-weight:600; color:var(--text); margin-bottom:6px; }
+    .feature-desc { font-size:13px; color:var(--subtext); line-height:1.7; }
+    .step-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px 24px; margin:16px 0; display:flex; gap:16px; align-items:flex-start; }
+    .step-num { min-width:36px; height:36px; background:linear-gradient(135deg,var(--point),var(--point-hover)); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:700; color:white; flex-shrink:0; }
+    .step-content h3 { font-size:15px; font-weight:600; margin:0 0 6px; color:var(--text); }
+    .step-content p { font-size:14px; color:var(--subtext); line-height:1.7; margin:0; }
+
+    /* diff 데모 */
+    .diff-demo { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:20px 0; }
+    .diff-pane { background:#0a0a12; border:1px solid var(--border); border-radius:10px; overflow:hidden; }
+    .diff-pane-label { font-size:11px; font-weight:600; color:var(--subtext); padding:8px 14px; border-bottom:1px solid var(--border); background:var(--card); }
+    .diff-line { display:flex; font-family:'Fira Code','JetBrains Mono',monospace; font-size:12px; line-height:1.7; }
+    .diff-num { min-width:32px; padding:1px 8px; font-size:11px; color:var(--subtext); border-right:1px solid var(--border); text-align:right; background:#0d0d1a; flex-shrink:0; }
+    .diff-content { padding:1px 12px; flex:1; white-space:pre; color:var(--subtext); }
+    .diff-line.add { background:rgba(52,211,153,0.10); }
+    .diff-line.add .diff-num { background:rgba(52,211,153,0.18); color:#34D399; }
+    .diff-line.add .diff-content { color:#34D399; }
+    .diff-line.del { background:rgba(248,113,113,0.10); }
+    .diff-line.del .diff-num { background:rgba(248,113,113,0.18); color:#F87171; }
+    .diff-line.del .diff-content { color:#F87171; }
+    .diff-line.empty { opacity:0.3; }
+
+    /* 요약 배지 */
+    .summary-demo { display:flex; gap:10px; flex-wrap:wrap; margin:16px 0; }
+    .badge { display:inline-flex; align-items:center; gap:6px; font-size:13px; font-weight:600; padding:5px 14px; border-radius:999px; }
+    .badge-add { background:rgba(52,211,153,0.12); color:#34D399; border:1px solid rgba(52,211,153,0.3); }
+    .badge-del { background:rgba(248,113,113,0.12); color:#F87171; border:1px solid rgba(248,113,113,0.3); }
+    .badge-same { background:var(--card); color:var(--subtext); border:1px solid var(--border); }
+
+    .post-table { width:100%; border-collapse:collapse; margin:20px 0; font-size:15px; }
+    .post-table th { background:var(--card); padding:12px 16px; text-align:left; font-weight:600; border:1px solid var(--border); color:var(--text); }
+    .post-table td { padding:11px 16px; border:1px solid var(--border); color:var(--subtext); line-height:1.7; }
+    .post-table tr:hover td { background:rgba(123,108,255,0.04); }
+    .use-case-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:20px 0; }
+    .use-case-card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:18px; }
+    .use-case-icon { font-size:28px; margin-bottom:8px; }
+    .use-case-title { font-size:13px; font-weight:600; color:var(--text); margin-bottom:6px; }
+    .use-case-desc { font-size:12px; color:var(--subtext); line-height:1.7; }
+    .post-nav { display:flex; justify-content:space-between; margin-top: 12px; padding-top:24px; border-top:1px solid var(--border); gap:12px; }
+    .post-nav a { font-size:15px; color:var(--subtext); text-decoration:none; }
+    .post-nav a:hover { color:var(--text); }
+    .cta-box { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:28px; text-align:center; margin: 12px 0 0; }
+    .cta-box p { font-size:17px; color:var(--subtext); margin-bottom:16px; }
+    .cta-btn { display:inline-block; background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border-radius:10px; padding:12px 28px; font-size:14px; font-weight:600; text-decoration:none; }
+    .cta-btn:hover { transform:translateY(-2px); box-shadow:0 8px 24px var(--glow); color:white; }
+    .back-link:hover { color:var(--text); }
+    @media (max-width:640px) {
+      .feature-grid { grid-template-columns:1fr; }
+      .diff-demo { grid-template-columns:1fr; }
+      .use-case-grid { grid-template-columns:1fr; }
+    }
+  </style>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<meta property="og:image" content="https://browserkit.online/img/og/diff-checker.png" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Diff Checker: The Complete Guide",
+    "description": "The official step-by-step guide to every feature of DiffChecker. Learn how to compare two texts line by line and highlight the differences.",
+    "datePublished": "2026-06-21T00:00:00+09:00",
+    "dateModified": "2026-07-22T00:00:00+09:00",
+    "author": { "@type": "Organization", "name": "BrowserKit", "url": "https://browserkit.online" },
+    "publisher": { "@type": "Organization", "name": "BrowserKit", "url": "https://browserkit.online", "logo": { "@type": "ImageObject", "url": "https://browserkit.online/img/og-browserkit.png" } },
+    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://browserkit.online/en/blog/28-diffchecker-howto" },
+    "image": "https://browserkit.online/img/og/diff-checker.png"
+  }
+  </script>  <link rel="canonical" href="https://browserkit.online/en/blog/28-diffchecker-howto" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://browserkit.online/en/" },
+    { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://browserkit.online/en/blog/" },
+    { "@type": "ListItem", "position": 3, "name": "Diff Checker: The Complete Guide", "item": "https://browserkit.online/en/blog/28-diffchecker-howto" }
+  ]
+}
+  </script>
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://browserkit.online/img/og/diff-checker.png" />
+  <style>
+    .post-table-wrap { overflow-x:auto; }
+    .post-table th, .post-table td { white-space:nowrap; }
+    .post-nav a { word-break:keep-all; }
+    .post-nav .nav-label { display:block; font-size:13px; color:var(--subtext); opacity:0.7; margin-bottom:4px; }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Is the Diff Checker tool really free?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, it is completely free to use with no sign-up or installation required. There is no usage limit either."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is what I enter sent to a server?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. All processing happens entirely in your browser, and what you enter is never sent to or stored on an external server."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What unit are the two texts compared by?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "It compares line by line and highlights additions, deletions, and changes in color."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I use this on mobile?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, it works the same way in a mobile browser without needing to install any app."
+      }
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <div class="lang-banner" id="langBanner">
+    <span>🌐 이 페이지는 <a href="/blog/28-diffchecker-howto">한국어</a>로도 볼 수 있습니다.</span>
+    <button class="lang-banner-close" id="langBannerClose" type="button" aria-label="close">&times;</button>
+  </div>
+  <header class="header">
+    <div class="container">
+      <a href="/en/" class="header-brand"><div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Poppins,sans-serif;flex-shrink:0">B</div><span class="header-brand-text"><span style="color:var(--text)">Browser</span><span style="color:var(--point)">Kit</span></span></a>
+      <div class="header-right">
+        <div class="lang-switcher">
+          <button class="lang-switcher-btn" type="button" data-lang-btn>🌐 <span class="lang-label-full">English</span></button>
+          <div class="lang-switcher-menu" data-lang-menu>
+            <a href="#" class="active">English</a>
+            <a href="/blog/28-diffchecker-howto">한국어</a>
+          </div>
+        </div>
+        <a href="/en/" class="header-back">&#x2190; <span class="header-back-label">Back to BrowserKit</span></a>
+      </div>
+    </div>
+  </header>
+
+  <article class="post-wrap">
+    <a href="/en/blog/" class="back-link">&#x2190; Blog</a>
+    <span class="post-tag">Guide</span>
+    <h1 class="post-title"><span style="color:var(--point-hover)">Diff Checker</span>: The Complete Guide</h1>
+    <div class="post-date">June 20, 2026</div>
+    <!-- Google AdSense Display Ad — pending approval, reserving space -->
+    <div class="ad-slot" id="adExtra2">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
+
+    <div class="post-body">
+      <p>Ever put two versions of a contract side by side and tried to compare them line by line with your own eyes? A change of just a few characters is easy to miss no matter how carefully you look. DiffChecker is a free online tool that compares two texts line by line. Added lines show in green and deleted lines in red, so changes jump out at a glance. Use it right away for reviewing code changes, comparing document versions, or checking config file diffs.</p>
+
+      <h2>Key Features</h2>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F7E2;</div>
+          <div class="feature-title">Highlighting Added/Deleted Lines</div>
+          <div class="feature-desc">Added lines are shown with a green background and <code>+</code>, deleted lines with a red background and <code>-</code>.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F522;</div>
+          <div class="feature-title">Line Numbers</div>
+          <div class="feature-desc">Line numbers for both the original and revised text are shown, so you can immediately see which line changed.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F4CA;</div>
+          <div class="feature-title">Diff Summary</div>
+          <div class="feature-desc">Summarizes the number of added, deleted, and unchanged lines with badges.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x21C4;</div>
+          <div class="feature-title">Side-by-Side View</div>
+          <div class="feature-desc">Shows the original and revised text side by side. Scrolling moves both panes together.</div>
+        </div>
+      </div>
+
+      <!-- Google AdSense Display Ad — pending approval, reserving space -->
+    <div class="ad-slot" id="adTop">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
+      <h2>Basic Usage</h2>
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <h3>Enter Text</h3>
+          <p>Paste the <strong>original text</strong> into the left input box and the <strong>revised text</strong> into the right one.</p>
+        </div>
+      </div>
+      
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <h3>Compare</h3>
+          <p>Click the <strong>&#x1F504; Compare</strong> button. A split-view result appears below.</p>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <h3>Check the Result</h3>
+          <p>Green lines are content added in the revision, red lines are content removed from the original. Gray lines are unchanged, identical content.</p>
+        </div>
+      </div>
+      
+
+      <h2>Example Result</h2>
+      <p>Below is an example comparison result after editing a JavaScript function.</p>
+
+      <div class="diff-demo">
+        <!-- 왼쪽: 원본 -->
+        <div class="diff-pane">
+          <div class="diff-pane-label">Original</div>
+          <div class="diff-line">
+            <div class="diff-num">1</div>
+            <div class="diff-content">&nbsp;&nbsp;function greet(name) {</div>
+          </div>
+          <div class="diff-line del">
+            <div class="diff-num">2</div>
+            <div class="diff-content">-   console.log("Hello");</div>
+          </div>
+          <div class="diff-line empty">
+            <div class="diff-num">&nbsp;</div>
+            <div class="diff-content">&nbsp;</div>
+          </div>
+          <div class="diff-line">
+            <div class="diff-num">3</div>
+            <div class="diff-content">&nbsp;&nbsp;  return name;</div>
+          </div>
+          <div class="diff-line del">
+            <div class="diff-num">4</div>
+            <div class="diff-content">-   var user = "World";</div>
+          </div>
+          <div class="diff-line empty">
+            <div class="diff-num">&nbsp;</div>
+            <div class="diff-content">&nbsp;</div>
+          </div>
+          <div class="diff-line">
+            <div class="diff-num">5</div>
+            <div class="diff-content">&nbsp;&nbsp;}</div>
+          </div>
+        </div>
+        <!-- 오른쪽: 수정본 -->
+        <div class="diff-pane">
+          <div class="diff-pane-label">Revised</div>
+          <div class="diff-line">
+            <div class="diff-num">1</div>
+            <div class="diff-content">&nbsp;&nbsp;function greet(name) {</div>
+          </div>
+          <div class="diff-line empty">
+            <div class="diff-num">&nbsp;</div>
+            <div class="diff-content">&nbsp;</div>
+          </div>
+          <div class="diff-line add">
+            <div class="diff-num">2</div>
+            <div class="diff-content">+   console.log("Hi, " + name);</div>
+          </div>
+          <div class="diff-line">
+            <div class="diff-num">3</div>
+            <div class="diff-content">&nbsp;&nbsp;  return name;</div>
+          </div>
+          <div class="diff-line empty">
+            <div class="diff-num">&nbsp;</div>
+            <div class="diff-content">&nbsp;</div>
+          </div>
+          <div class="diff-line add">
+            <div class="diff-num">4</div>
+            <div class="diff-content">+   var user = "BrowserKit";</div>
+          </div>
+          <div class="diff-line">
+            <div class="diff-num">5</div>
+            <div class="diff-content">&nbsp;&nbsp;}</div>
+          </div>
+        </div>
+      </div>
+      <p style="font-size:13px;color:var(--subtext);margin-top:-4px;">* Deleted and added lines don't share the same line number -- the opposite pane is padded with a blank line to keep them aligned. That's why the original shows a deletion at line 2, while the revision leaves the next slot blank and shows an addition at line 2.</p>
+
+      <h3>Diff Summary Badges</h3>
+      <p>Summary badges like these appear at the top of the comparison result.</p>
+      <div class="summary-demo">
+        <span class="badge badge-add">+ 2 lines added</span>
+        <span class="badge badge-del">- 2 lines deleted</span>
+        <span class="badge badge-same">= 3 lines unchanged</span>
+      </div>
+
+      <h2>What the Colors Mean</h2>
+      <div class="post-table-wrap"><table class="post-table">
+        <thead><tr><th>Color</th><th>Symbol</th><th>Meaning</th></tr></thead>
+        <tbody>
+          <tr><td>&#x1F7E2; Green background</td><td><code>+</code></td><td>A line newly added in the revision</td></tr>
+          <tr><td>&#x1F534; Red background</td><td><code>-</code></td><td>A line removed from the original (absent in the revision)</td></tr>
+          <tr><td>&#x26AA; Gray (default)</td><td>&nbsp;&nbsp;</td><td>An unchanged, identical line</td></tr>
+        </tbody>
+      </table></div>
+
+      <h2>Loading a Sample</h2>
+      <p>Click the <strong>&#x1F4CB; Load Sample</strong> button and a JavaScript function-edit example fills in automatically, with the comparison result shown right away. Use it when you're trying the tool for the first time or want to quickly check how it works.</p>
+      
+
+      <h2>Use Cases</h2>
+      <div class="use-case-grid">
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F4BB;</div>
+          <div class="use-case-title">Code Review</div>
+          <div class="use-case-desc">Paste before-and-after code to quickly spot what changed. Handy for reviewing your own work before opening a PR.</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F4C4;</div>
+          <div class="use-case-title">Comparing Document Versions</div>
+          <div class="use-case-desc">Compare a previous and current version of a contract, report, or policy document to check what changed.</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x2699;&#xFE0F;</div>
+          <div class="use-case-title">Checking Config File Changes</div>
+          <div class="use-case-desc">Check changes to config files like <code>.env</code>, <code>nginx.conf</code>, or <code>package.json</code>.</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F4DD;</div>
+          <div class="use-case-title">Translation Review</div>
+          <div class="use-case-desc">Compare the source text against a translation side by side, or review changes between translation revisions.</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F50D;</div>
+          <div class="use-case-title">Comparing Log Files</div>
+          <div class="use-case-desc">Compare log files from two points in time to find newly added error messages or changed entries.</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F4E7;</div>
+          <div class="use-case-title">Comparing Email Drafts</div>
+          <div class="use-case-desc">Compare an email draft before and after edits to see what sentences were added or removed.</div>
+        </div>
+      </div>
+
+      <h2>How the Algorithm Works</h2>
+      <p>DiffChecker compares two texts using the LCS (Longest Common Subsequence) algorithm. It finds the longest sequence of lines common to both texts, then classifies any line not in that common sequence as an addition (revision-only) or a deletion (original-only).</p>
+      <p>It's implemented in pure JavaScript with no external library, and every comparison is processed entirely in your browser.</p>
+
+      <h2>Things to Know</h2>
+      <div class="post-table-wrap"><table class="post-table">
+        <thead><tr><th>Item</th><th>Details</th></tr></thead>
+        <tbody>
+          <tr><td>Comparison unit</td><td>Compares line by line. If only some words within a line change, the whole line shows as a deletion plus an addition.</td></tr>
+          <tr><td>Large text</td><td>For extremely long text with tens of thousands of lines or more, processing can take longer due to how the LCS algorithm works.</td></tr>
+          <tr><td>Whitespace differences</td><td>Different indentation or trailing whitespace is treated as a different line. Clean up whitespace with TextTools first if you want to normalize it before comparing.</td></tr>
+          <tr><td>Security</td><td>The text you compare is never sent to a server. You can safely compare source code or confidential documents too.</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="post-highlight">&#x1F512; DiffChecker processes everything entirely in your browser. Since what you enter is never sent to an external server, you can safely compare source code, config files, and confidential documents too.</div>
+    
+      <h2>Frequently Asked Questions</h2>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
+        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. Is the Diff Checker tool really free?</p>
+        <p style="color:var(--subtext);margin:0;line-height:1.7">Yes, it is completely free to use with no sign-up or installation required. There is no usage limit either.</p>
+      </div>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
+        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. Is what I enter sent to a server?</p>
+        <p style="color:var(--subtext);margin:0;line-height:1.7">No. All processing happens entirely in your browser, and what you enter is never sent to or stored on an external server.</p>
+      </div>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
+        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. What unit are the two texts compared by?</p>
+        <p style="color:var(--subtext);margin:0;line-height:1.7">It compares line by line and highlights additions, deletions, and changes in color.</p>
+      </div>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
+        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. Can I use this on mobile?</p>
+        <p style="color:var(--subtext);margin:0;line-height:1.7">Yes, it works the same way in a mobile browser without needing to install any app.</p>
+      </div>
+    </div>
+
+    <!-- Google AdSense Display Ad — pending approval, reserving space -->
+    <div class="ad-slot" id="adMiddle">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
+
+    <div class="cta-box">
+      <p>Compare two versions of a document or code and see what changed instantly.<br />Additions, deletions, and changes are color-coded so you can spot them at a glance.</p>
+      <a href="/en/diff-checker/" class="cta-btn" style="display:inline-flex;align-items:center;gap:8px">
+        <span style="display:inline-block;width:26px;height:26px;overflow:hidden;flex-shrink:0"><span style="display:block;transform:scale(0.565);transform-origin:top left"><div style="width:46px;height:46px;background:#a8e6cf;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="display:flex;gap:4px"><div style="width:15px;height:30px;background:#fffdf9;border:2.5px solid #2a2433;border-radius:3px;box-sizing:border-box;padding:4px 3px;display:flex;flex-direction:column;gap:3px"><div style="height:2.5px;background:rgba(42,36,51,.35);border-radius:2px"></div><div style="height:2.5px;background:#2a2433;border-radius:2px"></div><div style="height:2.5px;background:rgba(42,36,51,.35);border-radius:2px"></div></div><div style="width:15px;height:30px;background:#fffdf9;border:2.5px solid #2a2433;border-radius:3px;box-sizing:border-box;padding:4px 3px;display:flex;flex-direction:column;gap:3px"><div style="height:2.5px;background:rgba(42,36,51,.35);border-radius:2px"></div><div style="height:2.5px;background:#a8e6cf;border-radius:2px"></div><div style="height:2.5px;background:rgba(42,36,51,.35);border-radius:2px"></div></div></div></div></span></span>
+        Start Comparing Text for Free
+      </a>
+    </div>
+    <!-- Google AdSense Multiplex Ad — pending approval, reserving space -->
+    <div class="ad-slot ad-slot-rect" id="adBottom">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
+
+<div class="post-nav">
+      <a href="/en/blog/20-texttools-howto"><span class="nav-label">&larr; Previous</span><span style="color:var(--point-hover)">Text Tools</span>: The Complete Guide</a>
+      <a href="/en/blog/30-markdowneditor-howto" style="text-align:right"><span class="nav-label">Next &rarr;</span><span style="color:var(--point-hover)">Markdown Editor</span>: The Complete Guide</a>
+    </div>
+
+  </article>
+  <footer class="footer">
+    <div class="container">
+      <p class="footer-copy">&#xa9; 2026 BrowserKit. All processing happens in your browser.</p>
+      <nav class="footer-nav">
+        <a href="/en/privacy.html">Privacy Policy</a>
+        <a href="/en/terms.html">Terms of Service</a>
+        <a href="/en/about.html">About</a>
+        <a href="/en/blog/">Blog</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script>
+  document.querySelectorAll('[data-lang-btn]').forEach(function(btn){
+    btn.addEventListener('click', function(e){
+      e.stopPropagation();
+      var menu = btn.nextElementSibling;
+      menu.classList.toggle('show');
+    });
+  });
+  document.addEventListener('click', function(){
+    document.querySelectorAll('.lang-switcher-menu.show').forEach(function(m){ m.classList.remove('show'); });
+  });
+  </script>
+
+  <script>
+  (function(){
+    try {
+      if (document.cookie.indexOf('bk_lang_dismiss=1') !== -1) return;
+      var lang = (navigator.language || navigator.userLanguage || '').toLowerCase();
+      if (lang.indexOf('ko') !== 0) return;
+      var banner = document.getElementById('langBanner');
+      if (!banner) return;
+      banner.classList.add('show');
+      var closeBtn = document.getElementById('langBannerClose');
+      closeBtn.addEventListener('click', function(){
+        banner.classList.remove('show');
+        document.cookie = 'bk_lang_dismiss=1; max-age=' + (60*60*24*180) + '; path=/';
+      });
+    } catch(e) {}
+  })();
+  </script>
+</body>
+</html>
+
