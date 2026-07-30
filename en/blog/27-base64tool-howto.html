@@ -1,0 +1,457 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="icon" href="/favicon.ico" sizes="32x32">
+  <link rel="icon" href="/favicon-16.png" sizes="16x16" type="image/png">
+  <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="/favicon-192.png" sizes="192x192" type="image/png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="The official step-by-step guide to every feature of Base64Tool. Learn how to encode or decode text and images as Base64." />
+  <meta property="og:title" content="Base64 Converter: The Complete Guide — BrowserKit" />
+  <meta property="og:description" content="The official Base64Tool guide to encoding and decoding text and images as Base64." />
+  <meta property="og:type" content="article" />
+  <title>Base64 Converter: The Complete Guide — BrowserKit</title>
+  <link rel="stylesheet" href="/css/style.css?v=20260724c" />
+  <link rel="stylesheet" href="/css/style-en.css?v=20260724a" />
+  <!-- Google AdSense — pending re-review. Uncomment once approved.
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506"
+     crossorigin="anonymous"></script>
+  -->
+  <style>
+    .feature-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:20px 0; }
+    .feature-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px; }
+    .feature-card:hover { border-color:var(--point); }
+    .feature-icon { font-size:24px; margin-bottom:10px; }
+    .feature-title { font-size:14px; font-weight:600; color:var(--text); margin-bottom:6px; }
+    .feature-desc { font-size:13px; color:var(--subtext); line-height:1.7; }
+    .step-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px 24px; margin:16px 0; display:flex; gap:16px; align-items:flex-start; }
+    .step-num { min-width:36px; height:36px; background:linear-gradient(135deg,var(--point),var(--point-hover)); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:700; color:white; flex-shrink:0; }
+    .step-content h3 { font-size:15px; font-weight:600; margin:0 0 6px; color:var(--text); }
+    .step-content p { font-size:14px; color:var(--subtext); line-height:1.7; margin:0; }
+    .code-block { background:#0a0a12; border:1px solid var(--border); border-radius:10px; padding:16px 20px; margin:14px 0; font-family:'Fira Code','JetBrains Mono',monospace; font-size:13px; line-height:1.8; overflow-x:auto; }
+    .code-b64 { color:#68d391; word-break:break-all; white-space:pre-wrap; }
+    .code-label { font-size:11px; font-weight:600; color:var(--subtext); margin-bottom:8px; }
+    .post-table { width:100%; border-collapse:collapse; margin:20px 0; font-size:15px; }
+    .post-table th { background:var(--card); padding:12px 16px; text-align:left; font-weight:600; border:1px solid var(--border); color:var(--text); }
+    .post-table td { padding:11px 16px; border:1px solid var(--border); color:var(--subtext); line-height:1.7; }
+    .post-table td code { background:var(--bg); border-radius:4px; padding:1px 6px; font-size:13px; color:var(--point-hover); font-family:'Fira Code',monospace; }
+    .post-table tr:hover td { background:rgba(123,108,255,0.04); }
+    .tab-demo { display:flex; gap:8px; margin:16px 0; flex-wrap:wrap; }
+    .tab-demo-btn { background:var(--card); border:1px solid var(--border); border-radius:10px; padding:8px 20px; font-size:13px; font-weight:600; color:var(--subtext); }
+    .tab-demo-btn.active { background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border-color:transparent; }
+    .use-case-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:20px 0; }
+    .use-case-card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:18px; }
+    .use-case-icon { font-size:28px; margin-bottom:8px; }
+    .use-case-title { font-size:13px; font-weight:600; color:var(--text); margin-bottom:6px; }
+    .use-case-desc { font-size:12px; color:var(--subtext); line-height:1.7; }
+    .post-nav { display:flex; justify-content:space-between; margin-top: 12px; padding-top:24px; border-top:1px solid var(--border); gap:12px; }
+    .post-nav a { font-size:15px; color:var(--subtext); text-decoration:none; }
+    .post-nav a:hover { color:var(--text); }
+    .cta-box { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:28px; text-align:center; margin: 12px 0 0; }
+    .cta-box p { font-size:17px; color:var(--subtext); margin-bottom:16px; }
+    .cta-btn { display:inline-block; background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border-radius:10px; padding:12px 28px; font-size:14px; font-weight:600; text-decoration:none; }
+    .cta-btn:hover { transform:translateY(-2px); box-shadow:0 8px 24px var(--glow); color:white; }
+    .back-link:hover { color:var(--text); }
+    @media (max-width:640px) {
+      .feature-grid { grid-template-columns:1fr; }
+      .use-case-grid { grid-template-columns:1fr; }
+    }
+  </style>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<meta property="og:image" content="https://browserkit.online/img/og/base64-tool.png" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Base64 Converter: The Complete Guide",
+    "description": "The official step-by-step guide to every feature of Base64Tool. Learn how to encode or decode text and images as Base64.",
+    "datePublished": "2026-06-21T00:00:00+09:00",
+    "dateModified": "2026-07-22T00:00:00+09:00",
+    "author": { "@type": "Organization", "name": "BrowserKit", "url": "https://browserkit.online" },
+    "publisher": { "@type": "Organization", "name": "BrowserKit", "url": "https://browserkit.online", "logo": { "@type": "ImageObject", "url": "https://browserkit.online/img/og-browserkit.png" } },
+    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://browserkit.online/en/blog/27-base64tool-howto" },
+    "image": "https://browserkit.online/img/og/base64-tool.png"
+  }
+  </script>  <link rel="canonical" href="https://browserkit.online/en/blog/27-base64tool-howto" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://browserkit.online/en/" },
+    { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://browserkit.online/en/blog/" },
+    { "@type": "ListItem", "position": 3, "name": "Base64 Converter: The Complete Guide", "item": "https://browserkit.online/en/blog/27-base64tool-howto" }
+  ]
+}
+  </script>
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://browserkit.online/img/og/base64-tool.png" />
+  <style>
+    .post-table-wrap { overflow-x:auto; }
+    .post-table th, .post-table td { white-space:nowrap; }
+    .post-nav a { word-break:keep-all; }
+    .post-nav .nav-label { display:block; font-size:13px; color:var(--subtext); opacity:0.7; margin-bottom:4px; }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Is the Base64 Converter tool really free?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, it is completely free to use with no sign-up or installation required. There is no usage limit either."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is what I enter sent to a server?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. All processing happens entirely in your browser, and what you enter is never sent to or stored on an external server."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I convert images too, not just text?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, both text and image files can be converted to a Base64 string or restored back."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I use this on mobile?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, it works the same way in a mobile browser without needing to install any app."
+      }
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <div class="lang-banner" id="langBanner">
+    <span>🌐 이 페이지는 <a href="/blog/27-base64tool-howto">한국어</a>로도 볼 수 있습니다.</span>
+    <button class="lang-banner-close" id="langBannerClose" type="button" aria-label="close">&times;</button>
+  </div>
+  <header class="header">
+    <div class="container">
+      <a href="/en/" class="header-brand"><div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Poppins,sans-serif;flex-shrink:0">B</div><span class="header-brand-text"><span style="color:var(--text)">Browser</span><span style="color:var(--point)">Kit</span></span></a>
+      <div class="header-right">
+        <div class="lang-switcher">
+          <button class="lang-switcher-btn" type="button" data-lang-btn>🌐 <span class="lang-label-full">English</span></button>
+          <div class="lang-switcher-menu" data-lang-menu>
+            <a href="#" class="active">English</a>
+            <a href="/blog/27-base64tool-howto">한국어</a>
+          </div>
+        </div>
+        <a href="/en/" class="header-back">&#x2190; <span class="header-back-label">Back to BrowserKit</span></a>
+      </div>
+    </div>
+  </header>
+
+  <article class="post-wrap">
+    <a href="/en/blog/" class="back-link">&#x2190; Blog</a>
+    <span class="post-tag">Guide</span>
+    <h1 class="post-title"><span style="color:var(--point-hover)">Base64 Converter</span>: The Complete Guide</h1>
+    <div class="post-date">June 20, 2026</div>
+    <!-- Google AdSense Display Ad — pending approval, reserving space -->
+    <div class="ad-slot" id="adExtra2">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
+
+    <div class="post-body">
+      <p>When API docs just say "send it Base64-encoded," it can be unclear exactly what that means. Base64Tool is a free online tool for encoding text and images as Base64, or decoding a Base64 string back to its original value. It's commonly used for building API request bodies, inlining images in CSS, or analyzing a JWT token. Everything happens entirely in your browser, so your data is never sent to an external server.</p>
+
+      <h2>Key Features</h2>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F510;</div>
+          <div class="feature-title">Text Encoding</div>
+          <div class="feature-desc">Converts plain text into a Base64 string. Supports every Unicode character, including Korean.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F513;</div>
+          <div class="feature-title">Base64 Decoding</div>
+          <div class="feature-desc">Restores a Base64 string back to its original text. Shows an error message for invalid input.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F5BC;&#xFE0F;</div>
+          <div class="feature-title">Image &rarr; Base64</div>
+          <div class="feature-desc">Upload an image file and convert it into a Base64 string or data URI. A preview is included.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x21C4;</div>
+          <div class="feature-title">Swap Input/Output</div>
+          <div class="feature-desc">Swap the input and result box contents in one click. Handy for re-encoding a decoded result.</div>
+        </div>
+      </div>
+
+      <!-- Google AdSense Display Ad — pending approval, reserving space -->
+    <div class="ad-slot" id="adTop">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
+      <h2>What Is Base64?</h2>
+      <p>Base64 is an encoding scheme that converts binary data (bytes) into ASCII characters. It uses only 64 characters -- 52 upper/lowercase letters, 10 digits, and <code>+</code> and <code>/</code>. It's used to carry binary data through text-only environments, such as email attachments, inline images, and auth tokens.</p>
+
+      <div class="code-block">
+        <div class="code-label">Example -- Encoding "Hello" as Base64</div>
+        <span class="code-b64">7JWI64WV7ZWY7IS47JqU</span>
+      </div>
+
+      <h2>Using the Text Tab</h2>
+      <div class="tab-demo">
+        <span class="tab-demo-btn active">&#x1F4DD; Text Conversion</span>
+        <span class="tab-demo-btn">&#x1F5BC;&#xFE0F; Image Conversion</span>
+      </div>
+
+      <h3>Text &rarr; Base64 Encoding</h3>
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <h3>Enter Text</h3>
+          <p>Type the text you want to convert to Base64 into the input box on the left. Korean, English, numbers, and symbols are all supported.</p>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <h3>Click the Encode Button</h3>
+          <p>Click the <strong>&#x1F510; Encode (Text &rarr; Base64)</strong> button. The Base64 string appears in the result box on the right.</p>
+        </div>
+      </div>
+
+      
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <h3>Copy the Result</h3>
+          <p>Copy it to your clipboard with the <strong>&#x1F4CB; Copy Result</strong> button.</p>
+        </div>
+      </div>
+
+      <h3>Base64 &rarr; Text Decoding</h3>
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <h3>Enter a Base64 String</h3>
+          <p>Paste the Base64 string you want to decode into the input box on the left.</p>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <h3>Click the Decode Button</h3>
+          <p>Click the <strong>&#x1F513; Decode (Base64 &rarr; Text)</strong> button. An error message appears if the input isn't valid Base64.</p>
+        </div>
+      </div>
+
+      
+
+      <h3>The Swap Button</h3>
+      <p>Click <strong>&#x21C4; Swap Input/Output</strong> to swap the contents of the input and result boxes. Useful for verifying an encoded result by decoding it, or re-encoding a decoded result after editing it.</p>
+
+      <h2>Using the Image Tab</h2>
+      <div class="tab-demo">
+        <span class="tab-demo-btn">&#x1F4DD; Text Conversion</span>
+        <span class="tab-demo-btn active">&#x1F5BC;&#xFE0F; Image Conversion</span>
+      </div>
+
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <h3>Upload an Image</h3>
+          <p>Click the upload zone or drag an image onto it. JPG, PNG, WEBP, and GIF are supported.</p>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <h3>Check the Result</h3>
+          <p>The Base64 string appears automatically, along with the filename, format, original size, and converted size.</p>
+        </div>
+      </div>
+
+      
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <h3>Copy in the Format You Need</h3>
+          <p><strong>&#x1F4CB; Copy Base64</strong> copies just the raw Base64 string, while <strong>&#x1F517; Copy data URI</strong> copies the whole <code>data:image/png;base64,...</code> format.</p>
+        </div>
+      </div>
+
+      <h2>Base64 vs. data URI</h2>
+      <div class="post-table-wrap"><table class="post-table">
+        <thead><tr><th></th><th>Format</th><th>Commonly Used In</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>Base64 only</td>
+            <td><code>iVBORw0KGgo...</code></td>
+            <td>API request bodies, JWT, database storage</td>
+          </tr>
+          <tr>
+            <td>data URI</td>
+            <td><code>data:image/png;base64,iVBORw0KGgo...</code></td>
+            <td>HTML <code>&lt;img src&gt;</code>, CSS <code>background-image</code>, inline email images</td>
+          </tr>
+        </tbody>
+      </table></div>
+
+      <h2>Support for Non-ASCII Text</h2>
+      <p>JavaScript's built-in <code>btoa()</code> function can only handle ASCII characters, so entering Korean (or any non-ASCII text) directly throws an error. Base64Tool converts such text to UTF-8 bytes first via <code>encodeURIComponent()</code>, then encodes it as Base64, so it safely handles every Unicode character.</p>
+
+      <div class="code-block">
+        <div class="code-label">Example -- Encoding "BrowserKit" as Base64</div>
+        <span class="code-b64">QnJvd3NlcktpdA==</span>
+      </div>
+      <div class="code-block">
+        <div class="code-label">Example -- Encoding non-ASCII text as Base64</div>
+        <span class="code-b64">67iM65287Jqw7KCA7YK3</span>
+      </div>
+
+      <h2>Use Cases</h2>
+      <div class="use-case-grid">
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F510;</div>
+          <div class="use-case-title">HTTP Basic Auth</div>
+          <div class="use-case-desc">Base64-encode a <code>username:password</code> string for use in an Authorization header.</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F4E7;</div>
+          <div class="use-case-title">Inline Email Images</div>
+          <div class="use-case-desc">Convert an image into a data URI to embed it directly in an HTML email with no external link.</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F4BB;</div>
+          <div class="use-case-title">Inlining CSS Background Images</div>
+          <div class="use-case-desc">Convert a small icon or logo into a data URI to embed directly in CSS, cutting down HTTP requests.</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F511;</div>
+          <div class="use-case-title">Checking a JWT Payload</div>
+          <div class="use-case-desc">Base64-decode a JWT's second part (the payload) to see its content. If padding (<code>=</code>) is missing, add it before decoding.</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F4E6;</div>
+          <div class="use-case-title">Sending Images via API</div>
+          <div class="use-case-desc">Convert an image file to Base64 to include it in a JSON API request body.</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F4DC;</div>
+          <div class="use-case-title">Checking Encoded Config Values</div>
+          <div class="use-case-desc">Decode a Base64-stored value from an environment variable or config file to see the original.</div>
+        </div>
+      </div>
+
+      <h2>Things to Watch For</h2>
+      <div class="post-table-wrap"><table class="post-table">
+        <thead><tr><th>Item</th><th>Details</th></tr></thead>
+        <tbody>
+          <tr><td>Size increase</td><td>Base64 is about 33% larger than the original. Inlining large files can affect performance.</td></tr>
+          <tr><td>Not security</td><td>Base64 is not encryption. Anyone can decode it easily, so never use it to hide passwords or sensitive information.</td></tr>
+          <tr><td>JWT padding</td><td>JWT's Base64 encoding omits <code>=</code> padding. If decoding fails, try adding <code>=</code> to the end of the string.</td></tr>
+          <tr><td>Line breaks</td><td>Some systems include line breaks (<code>\n</code>) in Base64. Just remove them before decoding.</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="post-highlight">&#x1F512; Base64Tool processes everything entirely in your browser. Since your text and uploaded images are never sent to an external server, you can safely convert sensitive config values or internal system images too.</div>
+    
+      <h2>Frequently Asked Questions</h2>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
+        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. Is the Base64 Converter tool really free?</p>
+        <p style="color:var(--subtext);margin:0;line-height:1.7">Yes, it is completely free to use with no sign-up or installation required. There is no usage limit either.</p>
+      </div>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
+        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. Is what I enter sent to a server?</p>
+        <p style="color:var(--subtext);margin:0;line-height:1.7">No. All processing happens entirely in your browser, and what you enter is never sent to or stored on an external server.</p>
+      </div>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
+        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. Can I convert images too, not just text?</p>
+        <p style="color:var(--subtext);margin:0;line-height:1.7">Yes, both text and image files can be converted to a Base64 string or restored back.</p>
+      </div>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
+        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. Can I use this on mobile?</p>
+        <p style="color:var(--subtext);margin:0;line-height:1.7">Yes, it works the same way in a mobile browser without needing to install any app.</p>
+      </div>
+    </div>
+
+    <!-- Google AdSense Display Ad — pending approval, reserving space -->
+    <div class="ad-slot" id="adMiddle">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
+
+    <div class="cta-box">
+      <p>Encode or decode text and files as Base64.<br />Also convert images into Data URIs.</p>
+      <a href="/en/base64-tool/" class="cta-btn" style="display:inline-flex;align-items:center;gap:8px">
+        <span style="display:inline-block;width:26px;height:26px;overflow:hidden;flex-shrink:0"><span style="display:block;transform:scale(0.565);transform-origin:top left"><div style="width:46px;height:46px;background:#e0c3ff;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="font:700 16px Poppins,sans-serif;color:#2a2433;line-height:1;letter-spacing:-.5px;white-space:nowrap">64</div></div></span></span>
+        Start Converting Base64 for Free
+      </a>
+    </div>
+    <!-- Google AdSense Multiplex Ad — pending approval, reserving space -->
+    <div class="ad-slot ad-slot-rect" id="adBottom">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
+
+<div class="post-nav">
+      <a href="/en/blog/32-regextest-howto"><span class="nav-label">&larr; Previous</span><span style="color:var(--point-hover)">Regex Tester</span>: The Complete Guide</a>
+      <a href="/en/blog/36-hashgen-howto" style="text-align:right"><span class="nav-label">Next &rarr;</span><span style="color:var(--point-hover)">Hash Generator</span>: The Complete Guide</a>
+    </div>
+
+  </article>
+  <footer class="footer">
+    <div class="container">
+      <p class="footer-copy">&#xa9; 2026 BrowserKit. All processing happens in your browser.</p>
+      <nav class="footer-nav">
+        <a href="/en/privacy.html">Privacy Policy</a>
+        <a href="/en/terms.html">Terms of Service</a>
+        <a href="/en/about.html">About</a>
+        <a href="/en/blog/">Blog</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script>
+  document.querySelectorAll('[data-lang-btn]').forEach(function(btn){
+    btn.addEventListener('click', function(e){
+      e.stopPropagation();
+      var menu = btn.nextElementSibling;
+      menu.classList.toggle('show');
+    });
+  });
+  document.addEventListener('click', function(){
+    document.querySelectorAll('.lang-switcher-menu.show').forEach(function(m){ m.classList.remove('show'); });
+  });
+  </script>
+
+  <script>
+  (function(){
+    try {
+      if (document.cookie.indexOf('bk_lang_dismiss=1') !== -1) return;
+      var lang = (navigator.language || navigator.userLanguage || '').toLowerCase();
+      if (lang.indexOf('ko') !== 0) return;
+      var banner = document.getElementById('langBanner');
+      if (!banner) return;
+      banner.classList.add('show');
+      var closeBtn = document.getElementById('langBannerClose');
+      closeBtn.addEventListener('click', function(){
+        banner.classList.remove('show');
+        document.cookie = 'bk_lang_dismiss=1; max-age=' + (60*60*24*180) + '; path=/';
+      });
+    } catch(e) {}
+  })();
+  </script>
+</body>
+</html>
+
