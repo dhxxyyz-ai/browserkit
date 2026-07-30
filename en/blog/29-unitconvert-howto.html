@@ -1,0 +1,438 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="icon" href="/favicon.ico" sizes="32x32">
+  <link rel="icon" href="/favicon-16.png" sizes="16x16" type="image/png">
+  <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="/favicon-192.png" sizes="192x192" type="image/png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="The official step-by-step guide to every feature of UnitConvert. Learn how to convert length, weight, temperature, area, and speed in real time." />
+  <meta property="og:title" content="Unit Converter: The Complete Guide — BrowserKit" />
+  <meta property="og:description" content="The official UnitConvert guide to converting length, weight, temperature, area, and speed in real time." />
+  <meta property="og:type" content="article" />
+  <title>Unit Converter: The Complete Guide — BrowserKit</title>
+  <link rel="stylesheet" href="/css/style.css?v=20260724c" />
+  <link rel="stylesheet" href="/css/style-en.css?v=20260724a" />
+  <!-- Google AdSense — pending re-review. Uncomment once approved.
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506"
+     crossorigin="anonymous"></script>
+  -->
+  <style>
+    .feature-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:20px 0; }
+    .feature-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px; }
+    .feature-card:hover { border-color:var(--point); }
+    .feature-icon { font-size:24px; margin-bottom:10px; }
+    .feature-title { font-size:14px; font-weight:600; color:var(--text); margin-bottom:6px; }
+    .feature-desc { font-size:13px; color:var(--subtext); line-height:1.7; }
+    .step-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px 24px; margin:16px 0; display:flex; gap:16px; align-items:flex-start; }
+    .step-num { min-width:36px; height:36px; background:linear-gradient(135deg,var(--point),var(--point-hover)); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:700; color:white; flex-shrink:0; }
+    .step-content h3 { font-size:15px; font-weight:600; margin:0 0 6px; color:var(--text); }
+    .step-content p { font-size:14px; color:var(--subtext); line-height:1.7; margin:0; }
+    .tab-demo { display:flex; gap:8px; margin:16px 0; flex-wrap:wrap; }
+    .tab-demo-btn { background:var(--card); border:1px solid var(--border); border-radius:10px; padding:8px 16px; font-size:13px; font-weight:600; color:var(--subtext); }
+    .tab-demo-btn.active { background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border-color:transparent; }
+    /* 단위 데모 테이블 */
+    .unit-demo-table { width:100%; border-collapse:collapse; margin:16px 0; font-size:13px; }
+    .unit-demo-table th { background:var(--bg); padding:9px 14px; text-align:left; font-weight:600; border:1px solid var(--border); color:var(--subtext); font-size:12px; }
+    .unit-demo-table td { padding:9px 14px; border:1px solid var(--border); color:var(--subtext); }
+    .unit-demo-table td.sym { font-weight:600; color:var(--text); }
+    .unit-demo-table td.val { color:var(--point-hover); font-weight:600; }
+    .unit-demo-table tr.hl td { background:rgba(123,108,255,0.07); }
+    .post-table { width:100%; border-collapse:collapse; margin:20px 0; font-size:15px; }
+    .post-table th { background:var(--card); padding:12px 16px; text-align:left; font-weight:600; border:1px solid var(--border); color:var(--text); }
+    .post-table td { padding:11px 16px; border:1px solid var(--border); color:var(--subtext); line-height:1.7; }
+    .post-table td code { background:var(--bg); border-radius:4px; padding:1px 6px; font-size:13px; color:var(--point-hover); font-family:'Fira Code',monospace; }
+    .post-table tr:hover td { background:rgba(123,108,255,0.04); }
+    .use-case-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:20px 0; }
+    .use-case-card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:18px; }
+    .use-case-icon { font-size:28px; margin-bottom:8px; }
+    .use-case-title { font-size:13px; font-weight:600; color:var(--text); margin-bottom:6px; }
+    .use-case-desc { font-size:12px; color:var(--subtext); line-height:1.7; }
+    .post-nav { display:flex; justify-content:space-between; margin-top: 12px; padding-top:24px; border-top:1px solid var(--border); gap:12px; }
+    .post-nav a { font-size:15px; color:var(--subtext); text-decoration:none; }
+    .post-nav a:hover { color:var(--text); }
+    .cta-box { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:28px; text-align:center; margin: 12px 0 0; }
+    .cta-box p { font-size:17px; color:var(--subtext); margin-bottom:16px; }
+    .cta-btn { display:inline-block; background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border-radius:10px; padding:12px 28px; font-size:14px; font-weight:600; text-decoration:none; }
+    .cta-btn:hover { transform:translateY(-2px); box-shadow:0 8px 24px var(--glow); color:white; }
+    .back-link:hover { color:var(--text); }
+    @media (max-width:640px) {
+      .feature-grid { grid-template-columns:1fr; }
+      .use-case-grid { grid-template-columns:1fr; }
+    }
+  </style>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<meta property="og:image" content="https://browserkit.online/img/og/unit-convert.png" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Unit Converter: The Complete Guide",
+    "description": "The official step-by-step guide to every feature of UnitConvert. Learn how to convert length, weight, temperature, area, and speed in real time.",
+    "datePublished": "2026-06-22T00:00:00+09:00",
+    "dateModified": "2026-07-22T00:00:00+09:00",
+    "author": { "@type": "Organization", "name": "BrowserKit", "url": "https://browserkit.online" },
+    "publisher": { "@type": "Organization", "name": "BrowserKit", "url": "https://browserkit.online", "logo": { "@type": "ImageObject", "url": "https://browserkit.online/img/og-browserkit.png" } },
+    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://browserkit.online/en/blog/29-unitconvert-howto" },
+    "image": "https://browserkit.online/img/og/unit-convert.png"
+  }
+  </script>  <link rel="canonical" href="https://browserkit.online/en/blog/29-unitconvert-howto" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://browserkit.online/en/" },
+    { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://browserkit.online/en/blog/" },
+    { "@type": "ListItem", "position": 3, "name": "Unit Converter: The Complete Guide", "item": "https://browserkit.online/en/blog/29-unitconvert-howto" }
+  ]
+}
+  </script>
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://browserkit.online/img/og/unit-convert.png" />
+  <style>
+    .post-table-wrap { overflow-x:auto; }
+    .post-table th, .post-table td { white-space:nowrap; }
+    .post-nav a { word-break:keep-all; }
+    .post-nav .nav-label { display:block; font-size:13px; color:var(--subtext); opacity:0.7; margin-bottom:4px; }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Is the Unit Converter tool really free?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, it is completely free to use with no sign-up or installation required. There is no usage limit either."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is what I enter sent to a server?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. All processing happens entirely in your browser, and what you enter is never sent to or stored on an external server."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What units can I convert?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "You can convert between commonly used units for length, weight, temperature, area, speed, and more, in everyday life and work."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I use this on mobile?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, it works the same way in a mobile browser without needing to install any app."
+      }
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <div class="lang-banner" id="langBanner">
+    <span>🌐 이 페이지는 <a href="/blog/29-unitconvert-howto">한국어</a>로도 볼 수 있습니다.</span>
+    <button class="lang-banner-close" id="langBannerClose" type="button" aria-label="close">&times;</button>
+  </div>
+  <header class="header">
+    <div class="container">
+      <a href="/en/" class="header-brand"><div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Poppins,sans-serif;flex-shrink:0">B</div><span class="header-brand-text"><span style="color:var(--text)">Browser</span><span style="color:var(--point)">Kit</span></span></a>
+      <div class="header-right">
+        <div class="lang-switcher">
+          <button class="lang-switcher-btn" type="button" data-lang-btn>🌐 <span class="lang-label-full">English</span></button>
+          <div class="lang-switcher-menu" data-lang-menu>
+            <a href="#" class="active">English</a>
+            <a href="/blog/29-unitconvert-howto">한국어</a>
+          </div>
+        </div>
+        <a href="/en/" class="header-back">&#x2190; <span class="header-back-label">Back to BrowserKit</span></a>
+      </div>
+    </div>
+  </header>
+
+  <article class="post-wrap">
+    <a href="/en/blog/" class="back-link">&#x2190; Blog</a>
+    <span class="post-tag">Guide</span>
+    <h1 class="post-title"><span style="color:var(--point-hover)">Unit Converter</span>: The Complete Guide</h1>
+    <div class="post-date">June 20, 2026</div>
+    <!-- Google AdSense Display Ad — pending approval, reserving space -->
+    <div class="ad-slot" id="adExtra2">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
+
+    <div class="post-body">
+      <p>Do you keep typing questions into a search bar like "how many kg is 5 lbs" or "how many cm is a 60-inch fabric width"? UnitConvert is a free online unit converter for length, weight, temperature, area, and speed, all in real time. Enter a value and every supported unit's converted result shows at once, and you can copy any of them with a single click. Use it right in your browser with no install or sign-up.</p>
+
+      <h2>Key Features</h2>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <div class="feature-icon">&#x26A1;</div>
+          <div class="feature-title">Live Conversion</div>
+          <div class="feature-desc">Every supported unit's result appears in the table the instant you type a value. No separate convert button needed.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F4CA;</div>
+          <div class="feature-title">Full Unit Table</div>
+          <div class="feature-desc">See every unit in the selected category on one screen. The currently selected unit is highlighted in purple.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F4CB;</div>
+          <div class="feature-title">Copy Results</div>
+          <div class="feature-desc">Copy a value and its unit symbol straight to your clipboard with the copy button next to each result.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F5C2;&#xFE0F;</div>
+          <div class="feature-title">5 Categories</div>
+          <div class="feature-desc">Choose the Length, Weight, Temperature, Area, or Speed tab to convert by category. 32 units are supported in total.</div>
+        </div>
+      </div>
+
+      <!-- Google AdSense Display Ad — pending approval, reserving space -->
+    <div class="ad-slot" id="adTop">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
+      <h2>Basic Usage</h2>
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <h3>Choose a Category Tab</h3>
+          <p>Choose the category you want to convert from the tabs at the top -- Length, Weight, Temperature, Area, or Speed.</p>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <h3>Choose the Base Unit</h3>
+          <p>Choose the unit of your input value from the dropdown. For example, to convert 100km to other units, choose "Kilometer (km)" from the dropdown.</p>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <h3>Enter a Value</h3>
+          <p>Enter the number you want to convert into the input box. Every unit's result appears in the table below the instant you type.</p>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <h3>Copy a Result (Optional)</h3>
+          <p>Click the <strong>Copy</strong> button on the row for the unit you want, and the value plus its unit symbol are copied together to your clipboard.</p>
+        </div>
+      </div>
+      
+
+      <h2>Supported Units by Category</h2>
+
+      <h3>&#x1F4CF; Length (9 Units)</h3>
+      <div class="tab-demo"><span class="tab-demo-btn active">&#x1F4CF; Length</span></div>
+
+      <!-- 1km 기준 예시 -->
+      <table class="unit-demo-table">
+        <thead><tr><th>Unit</th><th>Symbol</th><th>Converted from 1 km</th></tr></thead>
+        <tbody>
+          <tr><td>Millimeter</td><td class="sym">mm</td><td class="val">1,000,000</td></tr>
+          <tr><td>Centimeter</td><td class="sym">cm</td><td class="val">100,000</td></tr>
+          <tr><td>Meter</td><td class="sym">m</td><td class="val">1,000</td></tr>
+          <tr class="hl"><td>Kilometer</td><td class="sym">km</td><td class="val">1 &larr; base</td></tr>
+          <tr><td>Inch</td><td class="sym">in</td><td class="val">39,370.08</td></tr>
+          <tr><td>Foot</td><td class="sym">ft</td><td class="val">3,280.84</td></tr>
+          <tr><td>Yard</td><td class="sym">yd</td><td class="val">1,093.61</td></tr>
+          <tr><td>Mile</td><td class="sym">mi</td><td class="val">0.621371</td></tr>
+          <tr><td>Nautical mile</td><td class="sym">nmi</td><td class="val">0.539957</td></tr>
+        </tbody>
+      </table>
+      
+
+      <h3>&#x2696;&#xFE0F; Weight (7 Units)</h3>
+      <div class="post-table-wrap"><table class="post-table">
+        <thead><tr><th>Unit</th><th>Symbol</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>Milligram</td><td><code>mg</code></td><td>Used for measuring medication doses</td></tr>
+          <tr><td>Gram</td><td><code>g</code></td><td>Ingredients, small objects</td></tr>
+          <tr><td>Kilogram</td><td><code>kg</code></td><td>Base unit</td></tr>
+          <tr><td>Tonne</td><td><code>t</code></td><td>Large cargo, vehicle weight</td></tr>
+          <tr><td>Ounce</td><td><code>oz</code></td><td>Food labeling (US/UK)</td></tr>
+          <tr><td>Pound</td><td><code>lb</code></td><td>Body weight (US/UK)</td></tr>
+          <tr><td>Stone</td><td><code>st</code></td><td>Body weight (UK)</td></tr>
+        </tbody>
+      </table></div>
+
+      <h3>&#x1F321;&#xFE0F; Temperature (3 Units)</h3>
+      <p>Temperature is converted precisely using formulas, not a simple ratio.</p>
+      <div class="post-table-wrap"><table class="post-table">
+        <thead><tr><th>Unit</th><th>Symbol</th><th>Formula (from Celsius)</th></tr></thead>
+        <tbody>
+          <tr><td>Celsius</td><td><code>&deg;C</code></td><td>Base unit</td></tr>
+          <tr><td>Fahrenheit</td><td><code>&deg;F</code></td><td>&deg;F = &deg;C &times; 9/5 + 32</td></tr>
+          <tr><td>Kelvin</td><td><code>K</code></td><td>K = &deg;C + 273.15</td></tr>
+        </tbody>
+      </table></div>
+      <div class="post-highlight">&#x1F321;&#xFE0F; Example: 100&deg;C = 212&deg;F = 373.15K. 0&deg;C is 32&deg;F and 273.15K. Absolute zero is -273.15&deg;C = 0K.</div>
+      
+
+      <h3>&#x1F4D0; Area (8 Units)</h3>
+      <div class="post-table-wrap"><table class="post-table">
+        <thead><tr><th>Unit</th><th>Symbol</th><th>Common Use</th></tr></thead>
+        <tbody>
+          <tr><td>Square millimeter</td><td><code>mm&sup2;</code></td><td>Precision parts, cross-sections</td></tr>
+          <tr><td>Square centimeter</td><td><code>cm&sup2;</code></td><td>Small areas</td></tr>
+          <tr><td>Square meter</td><td><code>m&sup2;</code></td><td>Room size, apartment floor area (base unit)</td></tr>
+          <tr><td>Square kilometer</td><td><code>km&sup2;</code></td><td>City, country area</td></tr>
+          <tr><td>Hectare</td><td><code>ha</code></td><td>Farmland, park area</td></tr>
+          <tr><td>Pyeong</td><td><code>pyeong</code></td><td>Korean real estate (1 pyeong &asymp; 3.306m&sup2;)</td></tr>
+          <tr><td>Square foot</td><td><code>ft&sup2;</code></td><td>US real estate</td></tr>
+          <tr><td>Acre</td><td><code>acre</code></td><td>US/UK farmland unit</td></tr>
+        </tbody>
+      </table></div>
+
+      <h3>&#x1F3CE;&#xFE0F; Speed (5 Units)</h3>
+      <div class="post-table-wrap"><table class="post-table">
+        <thead><tr><th>Unit</th><th>Symbol</th><th>Common Use</th></tr></thead>
+        <tbody>
+          <tr><td>Meters/second</td><td><code>m/s</code></td><td>Physics, scientific calculations (base unit)</td></tr>
+          <tr><td>Kilometers/hour</td><td><code>km/h</code></td><td>Car speedometers, wind speed</td></tr>
+          <tr><td>Miles/hour</td><td><code>mph</code></td><td>US/UK speed notation</td></tr>
+          <tr><td>Knot</td><td><code>kn</code></td><td>Ship and aircraft speed</td></tr>
+          <tr><td>Mach</td><td><code>Mach</code></td><td>Speed relative to sound (1 Mach &asymp; 340.29 m/s)</td></tr>
+        </tbody>
+      </table></div>
+
+      <h2>Use Cases</h2>
+      <div class="use-case-grid">
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x270D;&#xFE0F;</div>
+          <div class="use-case-title">Converting Recipe Units</div>
+          <div class="use-case-desc">Convert oz and lb from a recipe into grams for measuring.</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F3E0;</div>
+          <div class="use-case-title">Calculating Real Estate Area</div>
+          <div class="use-case-desc">Convert an apartment's floor area (m&sup2;) to pyeong, or pyeong back to m&sup2;.</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x2708;&#xFE0F;</div>
+          <div class="use-case-title">Converting Units While Traveling</div>
+          <div class="use-case-desc">Quickly convert miles to km, Fahrenheit to Celsius, and pounds to kg when traveling to the US or UK.</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F4BB;</div>
+          <div class="use-case-title">Development and Design Work</div>
+          <div class="use-case-desc">Instantly convert units needed for design or manufacturing work, like inches, pixels, and cm.</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x26F5;</div>
+          <div class="use-case-title">Navigation</div>
+          <div class="use-case-desc">Quickly convert a ship or aircraft's speed into knots, km/h, mph, m/s, and more.</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F4DA;</div>
+          <div class="use-case-title">Studying and Scientific Calculations</div>
+          <div class="use-case-desc">Quickly convert between SI and customary units in physics or chemistry class.</div>
+        </div>
+      </div>
+
+      <div class="post-highlight">&#x1F4D0; UnitConvert processes everything entirely in your browser. The value you enter is never sent to an external server, and it works without an internet connection too.</div>
+    
+      <h2>Frequently Asked Questions</h2>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
+        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. Is the Unit Converter tool really free?</p>
+        <p style="color:var(--subtext);margin:0;line-height:1.7">Yes, it is completely free to use with no sign-up or installation required. There is no usage limit either.</p>
+      </div>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
+        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. Is what I enter sent to a server?</p>
+        <p style="color:var(--subtext);margin:0;line-height:1.7">No. All processing happens entirely in your browser, and what you enter is never sent to or stored on an external server.</p>
+      </div>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
+        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. What units can I convert?</p>
+        <p style="color:var(--subtext);margin:0;line-height:1.7">You can convert between commonly used units for length, weight, temperature, area, speed, and more, in everyday life and work.</p>
+      </div>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
+        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. Can I use this on mobile?</p>
+        <p style="color:var(--subtext);margin:0;line-height:1.7">Yes, it works the same way in a mobile browser without needing to install any app.</p>
+      </div>
+    </div>
+
+    <!-- Google AdSense Display Ad — pending approval, reserving space -->
+    <div class="ad-slot" id="adMiddle">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
+
+    <div class="cta-box">
+      <p>Enter a length, weight, temperature, or speed value and it converts to every unit at once.<br />See the entire unit table at a glance, with no need to search again.</p>
+      <a href="/en/unit-convert/" class="cta-btn" style="display:inline-flex;align-items:center;gap:8px">
+        <span style="display:inline-block;width:26px;height:26px;overflow:hidden;flex-shrink:0"><span style="display:block;transform:scale(0.565);transform-origin:top left"><div style="width:46px;height:46px;background:#bcd4ff;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="font:700 16px Poppins,sans-serif;color:#2a2433;line-height:1;letter-spacing:-.5px;white-space:nowrap">↔</div></div></span></span>
+        Start Converting Units for Free
+      </a>
+    </div>
+    <!-- Google AdSense Multiplex Ad — pending approval, reserving space -->
+    <div class="ad-slot ad-slot-rect" id="adBottom">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
+
+<div class="post-nav">
+      <a href="/en/blog/26-passwordgen-howto"><span class="nav-label">&larr; Previous</span><span style="color:var(--point-hover)">Password Generator</span>: The Complete Guide</a>
+      <a href="/en/blog/" style="text-align:right"><span class="nav-label">Next &rarr;</span><span style="color:var(--point-hover)">Date Calculator</span>: The Complete Guide</a>
+    </div>
+
+  </article>
+  <footer class="footer">
+    <div class="container">
+      <p class="footer-copy">&#xa9; 2026 BrowserKit. All processing happens in your browser.</p>
+      <nav class="footer-nav">
+        <a href="/en/privacy.html">Privacy Policy</a>
+        <a href="/en/terms.html">Terms of Service</a>
+        <a href="/en/about.html">About</a>
+        <a href="/en/blog/">Blog</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script>
+  document.querySelectorAll('[data-lang-btn]').forEach(function(btn){
+    btn.addEventListener('click', function(e){
+      e.stopPropagation();
+      var menu = btn.nextElementSibling;
+      menu.classList.toggle('show');
+    });
+  });
+  document.addEventListener('click', function(){
+    document.querySelectorAll('.lang-switcher-menu.show').forEach(function(m){ m.classList.remove('show'); });
+  });
+  </script>
+
+  <script>
+  (function(){
+    try {
+      if (document.cookie.indexOf('bk_lang_dismiss=1') !== -1) return;
+      var lang = (navigator.language || navigator.userLanguage || '').toLowerCase();
+      if (lang.indexOf('ko') !== 0) return;
+      var banner = document.getElementById('langBanner');
+      if (!banner) return;
+      banner.classList.add('show');
+      var closeBtn = document.getElementById('langBannerClose');
+      closeBtn.addEventListener('click', function(){
+        banner.classList.remove('show');
+        document.cookie = 'bk_lang_dismiss=1; max-age=' + (60*60*24*180) + '; path=/';
+      });
+    } catch(e) {}
+  })();
+  </script>
+</body>
+</html>
+
