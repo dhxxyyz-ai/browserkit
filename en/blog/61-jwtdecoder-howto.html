@@ -8,11 +8,11 @@
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="The official step-by-step guide to every feature of UUIDGen. Learn how to instantly generate UUIDs (v4), create them in bulk, and copy or download them." />
-  <meta property="og:title" content="UUID Generator: The Complete Guide — BrowserKit" />
-  <meta property="og:description" content="The official UUIDGen guide to instantly generating UUIDs (v4), creating them in bulk, and copying or downloading them." />
+  <meta name="description" content="The official step-by-step guide to every feature of JWTDecoder. Learn how to instantly decode a JWT's header and payload and check its expiration time." />
+  <meta property="og:title" content="JWT Decoder: The Complete Guide — BrowserKit" />
+  <meta property="og:description" content="The official JWTDecoder guide to instantly decoding a JWT's header and payload." />
   <meta property="og:type" content="article" />
-  <title>UUID Generator: The Complete Guide — BrowserKit</title>
+  <title>JWT Decoder: The Complete Guide — BrowserKit</title>
   <link rel="stylesheet" href="/css/style.css?v=20260724c" />
   <link rel="stylesheet" href="/css/style-en.css?v=20260724a" />
   <!-- Google AdSense — pending re-review. Uncomment once approved.
@@ -57,21 +57,21 @@
   </style>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<meta property="og:image" content="https://browserkit.online/img/og/uuid-gen.png" />
+<meta property="og:image" content="https://browserkit.online/img/og/jwt-decoder.png" />
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
-    "headline": "UUID Generator: The Complete Guide",
-    "description": "The official step-by-step guide to every feature of UUIDGen. Learn how to instantly generate UUIDs (v4), create them in bulk, and copy or download them.",
+    "headline": "JWT Decoder: The Complete Guide",
+    "description": "The official step-by-step guide to every feature of JWTDecoder. Learn how to instantly decode a JWT's header and payload and check its expiration time.",
     "datePublished": "2026-07-10T00:00:00+09:00",
     "dateModified": "2026-07-22T00:00:00+09:00",
     "author": { "@type": "Organization", "name": "BrowserKit", "url": "https://browserkit.online" },
     "publisher": { "@type": "Organization", "name": "BrowserKit", "url": "https://browserkit.online", "logo": { "@type": "ImageObject", "url": "https://browserkit.online/img/og-browserkit.png" } },
-    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://browserkit.online/en/blog/60-uuidgen-howto" },
-    "image": "https://browserkit.online/img/og/uuid-gen.png"
+    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://browserkit.online/en/blog/61-jwtdecoder-howto" },
+    "image": "https://browserkit.online/img/og/jwt-decoder.png"
   }
-  </script>  <link rel="canonical" href="https://browserkit.online/en/blog/60-uuidgen-howto" />
+  </script>  <link rel="canonical" href="https://browserkit.online/en/blog/61-jwtdecoder-howto" />
   <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -79,12 +79,12 @@
   "itemListElement": [
     { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://browserkit.online/en/" },
     { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://browserkit.online/en/blog/" },
-    { "@type": "ListItem", "position": 3, "name": "UUID Generator: The Complete Guide", "item": "https://browserkit.online/en/blog/60-uuidgen-howto" }
+    { "@type": "ListItem", "position": 3, "name": "JWT Decoder: The Complete Guide", "item": "https://browserkit.online/en/blog/61-jwtdecoder-howto" }
   ]
 }
   </script>
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:image" content="https://browserkit.online/img/og/uuid-gen.png" />
+  <meta name="twitter:image" content="https://browserkit.online/img/og/jwt-decoder.png" />
   <style>
     .post-table-wrap { overflow-x:auto; }
     .post-table th, .post-table td { white-space:nowrap; }
@@ -98,7 +98,7 @@
   "mainEntity": [
     {
       "@type": "Question",
-      "name": "Is the UUID Generator tool really free?",
+      "name": "Is the JWT Decoder tool really free?",
       "acceptedAnswer": {
         "@type": "Answer",
         "text": "Yes, it is completely free to use with no sign-up or installation required. There is no usage limit either."
@@ -114,10 +114,10 @@
     },
     {
       "@type": "Question",
-      "name": "Can generated UUIDs collide?",
+      "name": "Can I check a token's expiration time too?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "They are generated from random values, so the chance of a collision is negligible for practical purposes."
+        "text": "Yes, claim data like exp in the payload is shown in a human-readable format."
       }
     },
     {
@@ -134,7 +134,7 @@
 </head>
 <body>
   <div class="lang-banner" id="langBanner">
-    <span>🌐 이 페이지는 <a href="/blog/60-uuidgen-howto">한국어</a>로도 볼 수 있습니다.</span>
+    <span>🌐 이 페이지는 <a href="/blog/61-jwtdecoder-howto">한국어</a>로도 볼 수 있습니다.</span>
     <button class="lang-banner-close" id="langBannerClose" type="button" aria-label="close">&times;</button>
   </div>
   <header class="header">
@@ -145,7 +145,7 @@
           <button class="lang-switcher-btn" type="button" data-lang-btn>🌐 <span class="lang-label-full">English</span></button>
           <div class="lang-switcher-menu" data-lang-menu>
             <a href="#" class="active">English</a>
-            <a href="/blog/60-uuidgen-howto">한국어</a>
+            <a href="/blog/61-jwtdecoder-howto">한국어</a>
           </div>
         </div>
         <a href="/en/" class="header-back">&#x2190; <span class="header-back-label">Back to BrowserKit</span></a>
@@ -156,7 +156,7 @@
   <article class="post-wrap">
     <a href="/en/blog/" class="back-link">&#x2190; Blog</a>
     <span class="post-tag">Guide</span>
-    <h1 class="post-title"><span style="color:var(--point-hover)">UUID Generator</span>: The Complete Guide</h1>
+    <h1 class="post-title"><span style="color:var(--point-hover)">JWT Decoder</span>: The Complete Guide</h1>
     <div class="post-date">July 10, 2026</div>
     <!-- Google AdSense Display Ad — pending approval, reserving space -->
     <div class="ad-slot" id="adExtra2">
@@ -165,29 +165,29 @@
     </div>
 
     <div class="post-body">
-      <p>Do you throw together a random string every time you need a unique ID for test data? Matching the real UUID format your production service uses from the start saves you from having to change it later. UUIDGen is a free online tool that instantly generates the UUIDs you need for development, right in your browser. Create one with a single click, or generate up to 1,000 at once in bulk, and freely combine formatting options like uppercase, removing hyphens, and wrapping in curly braces.</p>
+      <p>When a login API returns a token that looks like an unreadable string starting with "eyJhbGc...", you might wonder what information is packed inside it. JWTDecoder is a free online tool that instantly decodes a JWT's header and payload the moment you paste it in. It unpacks the Base64Url-encoded parts into human-readable JSON, and converts time claims like <code>exp</code>, <code>iat</code>, and <code>nbf</code> into actual dates. It does not perform signature verification, and all decoding happens entirely in your browser.</p>
 
       <h2>Key Features</h2>
       <div class="feature-grid">
         <div class="feature-card">
-          <div class="feature-icon">&#x1F3B2;</div>
-          <div class="feature-title">Instant Single UUID</div>
-          <div class="feature-desc">A UUID is displayed the moment you open the page, and you can generate a new one anytime with the refresh button.</div>
+          <div class="feature-icon">&#x1F50D;</div>
+          <div class="feature-title">Instant Header/Payload Decoding</div>
+          <div class="feature-desc">The moment you paste a token, its header and payload are shown as color-coded JSON.</div>
         </div>
         <div class="feature-card">
-          <div class="feature-icon">&#x1F4E6;</div>
-          <div class="feature-title">Bulk Generate Up to 1,000</div>
-          <div class="feature-desc">Specify a count and get as many UUIDs as you need generated at once as a list.</div>
+          <div class="feature-icon">&#x23F1;&#xFE0F;</div>
+          <div class="feature-title">Automatic Expiration Conversion</div>
+          <div class="feature-desc">Converts <code>exp</code>, <code>iat</code>, and <code>nbf</code> Unix timestamps into dates, and shows whether the token is expired with a badge.</div>
         </div>
         <div class="feature-card">
-          <div class="feature-icon">&#x1F520;</div>
-          <div class="feature-title">Format Options</div>
-          <div class="feature-desc">Freely combine uppercase, removing hyphens (-), and wrapping in curly braces {} to get the format you want.</div>
+          <div class="feature-icon">&#x1F3A8;</div>
+          <div class="feature-title">3-Part Color-Coded Preview</div>
+          <div class="feature-desc">Shows the header, payload, and signature color-coded the same way jwt.io does, so you can see the raw token at a glance.</div>
         </div>
         <div class="feature-card">
           <div class="feature-icon">&#x1F512;</div>
           <div class="feature-title">Fully Local Processing</div>
-          <div class="feature-desc">Generated entirely in your browser via <code>crypto.randomUUID()</code>. Nothing is sent to a server.</div>
+          <div class="feature-desc">All decoding runs inside your browser. Your token is never sent to a server.</div>
         </div>
       </div>
 
@@ -201,8 +201,8 @@
       <div class="step-card">
         <div class="step-num">1</div>
         <div class="step-content">
-          <h3>When You Just Need One UUID</h3>
-          <p>A UUID is automatically shown at the top of the page. Generate a new one with the <strong>&#x21BA;</strong> button, or copy it right away with the <strong>&#x1F4CB;</strong> button.</p>
+          <h3>Paste a JWT Token</h3>
+          <p>Paste a JWT in the <code>header.payload.signature</code> format into the input box. Use the <strong>&#x1F4CB; Fill Example Token</strong> button if you just want to try it out.</p>
         </div>
       </div>
 
@@ -211,65 +211,65 @@
       <div class="step-card">
         <div class="step-num">2</div>
         <div class="step-content">
-          <h3>When You Need Several -- Setting Bulk Options</h3>
-          <p>Enter the number you want (up to 1,000) in <strong>Count</strong>, and check the <strong>Uppercase</strong>, <strong>Remove Hyphens (-)</strong>, or <strong>Wrap in Curly Braces {}</strong> options as needed.</p>
-        </div>
-      </div>
-
-      <div class="step-card">
-        <div class="step-num">3</div>
-        <div class="step-content">
-          <h3>Generate &rarr; Copy or Download</h3>
-          <p>Click the <strong>&#x1F3B2; Generate</strong> button and the result list appears in the text area. Copy it all to your clipboard with <strong>&#x1F4CB; Copy All</strong>, or save it as a file with <strong>&#x2B07; Download TXT</strong>.</p>
+          <h3>Check the Decoded Result and Expiration</h3>
+          <p>Check the actual JSON content in the HEADER and PAYLOAD cards, and see at a glance whether <code>exp</code> is still valid or has expired via the badge in the <strong>Standard Time Claims</strong> card at the top.</p>
         </div>
       </div>
 
       
 
-      <div class="post-warn">
-        <strong>&#x26A0;&#xFE0F; Note:</strong> Every UUID UUIDGen generates is version 4 (v4, random-based). It may not be suitable if you need version 1 (timestamp-based, which preserves chronological order) or a sort-friendly ULID. For most database primary keys, session IDs, and dummy data, v4 is sufficient.
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <h3>Copy the JSON if Needed</h3>
+          <p>Use the <strong>Copy</strong> button at the top of the HEADER and PAYLOAD cards to copy each JSON to your clipboard for pasting straight into another tool or your code.</p>
+        </div>
       </div>
 
-      <h2>Format Option Examples</h2>
+      <div class="post-warn">
+        <strong>&#x26A0;&#xFE0F; Note:</strong> JWTDecoder only <strong>decodes</strong> a token -- it does <strong>not verify</strong> whether the signature is valid. The Base64Url-encoded header and payload are not encrypted, so anyone can decode and read them -- never put sensitive information like passwords or credit card numbers directly in a JWT payload. If you need signature verification, use a server-side library that knows the issuer's secret or public key.
+      </div>
+
+      <h2>Key Standard Claims</h2>
       <div class="post-table-wrap"><table class="post-table">
-        <thead><tr><th>Option</th><th>Example Result</th></tr></thead>
+        <thead><tr><th>Claim</th><th>Meaning</th><th>How This Tool Shows It</th></tr></thead>
         <tbody>
-          <tr><td>Default</td><td><code>1c770af9-925d-4232-8cab-b6ffea98a212</code></td></tr>
-          <tr><td>Uppercase</td><td><code>1C770AF9-925D-4232-8CAB-B6FFEA98A212</code></td></tr>
-          <tr><td>Hyphens removed</td><td><code>1c770af9925d42328cabb6ffea98a212</code></td></tr>
-          <tr><td>Wrapped in braces</td><td><code>{1c770af9-925d-4232-8cab-b6ffea98a212}</code></td></tr>
+          <tr><td><code>iat</code></td><td>Issued At</td><td>Converts the Unix timestamp to a date/time</td></tr>
+          <tr><td><code>nbf</code></td><td>Not Before -- invalid before this time</td><td>Converts the Unix timestamp to a date/time</td></tr>
+          <tr><td><code>exp</code></td><td>Expiration</td><td>Converts to a date, plus a valid/expired badge compared to the current time</td></tr>
+          <tr><td><code>alg</code></td><td>Signature algorithm (in the header)</td><td>Shown as-is in the HEADER JSON card</td></tr>
         </tbody>
       </table></div>
 
       <h2>Use Cases</h2>
       <div class="use-case-grid">
         <div class="use-case-card">
-          <div class="use-case-icon">&#x1F5C4;&#xFE0F;</div>
-          <div class="use-case-title">Database Primary Keys</div>
-          <div class="use-case-desc">Use a UUID as the primary key instead of an auto-incrementing integer when designing a table.</div>
+          <div class="use-case-icon">&#x1F41B;</div>
+          <div class="use-case-title">Debugging API Authentication</div>
+          <div class="use-case-desc">Quickly check a token's expiration or claim values when you hit a 401/403 error.</div>
         </div>
         <div class="use-case-card">
           <div class="use-case-icon">&#x1F9EA;</div>
-          <div class="use-case-title">Test and Dummy Data</div>
-          <div class="use-case-desc">Quickly prepare a batch of unique IDs needed for test fixtures or mock data.</div>
+          <div class="use-case-title">Inspecting Tokens During Development</div>
+          <div class="use-case-desc">Instantly check the contents of an access token or refresh token returned by a login API.</div>
         </div>
         <div class="use-case-card">
-          <div class="use-case-icon">&#x1F511;</div>
-          <div class="use-case-title">Session/Token IDs</div>
-          <div class="use-case-desc">Instantly create a unique value to use as a temporary session identifier or request trace ID.</div>
+          <div class="use-case-icon">&#x1F4DA;</div>
+          <div class="use-case-title">Learning JWT Structure</div>
+          <div class="use-case-desc">Learn the three-part header/payload/signature structure by seeing it visually in a real token.</div>
         </div>
         <div class="use-case-card">
-          <div class="use-case-icon">&#x1F4C1;</div>
-          <div class="use-case-title">File/Resource Names</div>
-          <div class="use-case-desc">Use it as a unique identifier to avoid filename collisions on uploads.</div>
+          <div class="use-case-icon">&#x1F510;</div>
+          <div class="use-case-title">Checking Expiration Policy</div>
+          <div class="use-case-desc">Verify that an issued token's <code>exp</code> value matches the intended expiration time.</div>
         </div>
       </div>
 
-      <div class="post-highlight">&#x1F512; UUIDGen generates every UUID locally using your browser's <code>crypto.randomUUID()</code>. Nothing is sent to a server.</div>
+      <div class="post-highlight">&#x1F512; JWTDecoder runs all decoding entirely in your browser. Your token is never sent to an external server.</div>
     
       <h2>Frequently Asked Questions</h2>
       <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
-        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. Is the UUID Generator tool really free?</p>
+        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. Is the JWT Decoder tool really free?</p>
         <p style="color:var(--subtext);margin:0;line-height:1.7">Yes, it is completely free to use with no sign-up or installation required. There is no usage limit either.</p>
       </div>
       <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
@@ -277,8 +277,8 @@
         <p style="color:var(--subtext);margin:0;line-height:1.7">No. All processing happens entirely in your browser, and what you enter is never sent to or stored on an external server.</p>
       </div>
       <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
-        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. Can generated UUIDs collide?</p>
-        <p style="color:var(--subtext);margin:0;line-height:1.7">They are generated from random values, so the chance of a collision is negligible for practical purposes.</p>
+        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. Can I check a token's expiration time too?</p>
+        <p style="color:var(--subtext);margin:0;line-height:1.7">Yes, claim data like exp in the payload is shown in a human-readable format.</p>
       </div>
       <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
         <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. Can I use this on mobile?</p>
@@ -293,10 +293,10 @@
     </div>
 
     <div class="cta-box">
-      <p>Instantly generate a UUID (v4), or create as many as you need in bulk.<br />Format options and TXT download are handled all in one place.</p>
-      <a href="/en/uuid-gen/" class="cta-btn" style="display:inline-flex;align-items:center;gap:8px">
-        <span style="display:inline-block;width:26px;height:26px;overflow:hidden;flex-shrink:0"><span style="display:block;transform:scale(0.565);transform-origin:top left"><div style="width:46px;height:46px;background:#e0c3ff;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="font:700 14px Poppins,sans-serif;color:#2a2433;line-height:1;letter-spacing:-.5px;white-space:nowrap">UUID</div></div></span></span>
-        Start Generating UUIDs for Free
+      <p>Paste in a JWT token and instantly view its header and payload.<br />Even the expiration time is easy to see at a glance.</p>
+      <a href="/en/jwt-decoder/" class="cta-btn" style="display:inline-flex;align-items:center;gap:8px">
+        <span style="display:inline-block;width:26px;height:26px;overflow:hidden;flex-shrink:0"><span style="display:block;transform:scale(0.565);transform-origin:top left"><div style="width:46px;height:46px;background:#e0c3ff;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="font:700 14px Poppins,sans-serif;color:#2a2433;line-height:1;letter-spacing:-.5px;white-space:nowrap">JWT</div></div></span></span>
+        Start Decoding JWTs for Free
       </a>
     </div>
     <!-- Google AdSense Multiplex Ad — pending approval, reserving space -->
@@ -306,8 +306,8 @@
     </div>
 
 <div class="post-nav">
-      <a href="/en/blog/51-cssunit-howto"><span class="nav-label">&larr; Previous</span><span style="color:var(--point-hover)">CSS Unit Converter</span>: The Complete Guide</a>
-      <a href="/en/blog/61-jwtdecoder-howto" style="text-align:right"><span class="nav-label">Next &rarr;</span><span style="color:var(--point-hover)">JWT Decoder</span>: The Complete Guide</a>
+      <a href="/en/blog/60-uuidgen-howto"><span class="nav-label">&larr; Previous</span><span style="color:var(--point-hover)">UUID Generator</span>: The Complete Guide</a>
+      <a href="/en/blog/" style="text-align:right"><span class="nav-label">Next &rarr;</span><span style="color:var(--point-hover)">Cron Expression Helper</span>: The Complete Guide</a>
     </div>
 
   </article>
