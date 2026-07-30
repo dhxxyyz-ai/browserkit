@@ -1,0 +1,1369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="icon" href="/favicon.ico" sizes="32x32">
+  <link rel="icon" href="/favicon-16.png" sizes="16x16" type="image/png">
+  <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="/favicon-192.png" sizes="192x192" type="image/png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="BrowserKit is a free tool collection you use right in your browser -- no install, no sign-up, no cost. Face blur, image editing, PDF processing, QR code generation, and more -- 66 tools delivered securely with almost nothing sent to a server." />
+  <title>About — BrowserKit</title>
+  <link rel="stylesheet" href="/css/style.css?v=20260724c" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    .doc-wrap { max-width:720px; margin:0 auto; padding:60px 24px 80px; }
+    .about-hero { text-align:center; padding:48px 0 56px; }
+    .about-hero h1 { font-size:36px; font-weight:700; margin-bottom:16px; background:linear-gradient(135deg,var(--point),var(--point-hover)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+    .about-hero p { color:var(--subtext); font-size:16px; line-height:1.8; max-width:520px; margin:0 auto; }
+    .features { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin:48px 0; }
+    .feature-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:24px 20px; text-align:center; }
+    .feature-card:hover { border-color:var(--point); box-shadow:0 0 16px var(--glow); }
+    .feature-icon { font-size:32px; margin-bottom:12px; }
+    .feature-title { font-size:15px; font-weight:600; margin-bottom:8px; color:var(--text); }
+    .feature-desc { font-size:13px; color:var(--subtext); line-height:1.7; }
+    .services-section { margin:56px 0; }
+    .services-section h2 { font-size:22px; font-weight:700; margin-bottom:24px; text-align:center; }
+    .service-cards { display:flex; flex-direction:column; gap:16px; }
+    .service-card { display:flex; align-items:flex-start; gap:20px; background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:24px; }
+    .service-card:hover { border-color:var(--point); }
+    .service-card { cursor: default; }
+    .service-card-icon { flex-shrink:0; }
+    .service-card-name { font-size:17px; font-weight:700; color:var(--text); margin-bottom:6px; display:flex; align-items:center; gap:10px; }
+    .service-badge { font-size:11px; font-weight:600; padding:2px 10px; border-radius:999px; }
+    .service-badge.live { background:rgba(52,211,153,0.15); color:var(--success); border:1px solid rgba(52,211,153,0.3); }
+    .service-card-desc { font-size:14px; color:var(--subtext); line-height:1.8; margin-bottom:10px; }
+    .service-card-tags { display:flex; gap:8px; flex-wrap:wrap; }
+    .service-tag { font-size:12px; color:var(--subtext); background:var(--bg); border:1px solid var(--border); border-radius:999px; padding:2px 10px; }
+    .how-section { margin:56px 0; }
+    .how-section h2 { font-size:22px; font-weight:700; margin-bottom:32px; text-align:center; }
+    .how-steps { display:flex; flex-direction:column; gap:16px; }
+    .how-step { display:flex; align-items:flex-start; gap:20px; background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px 24px; }
+    .how-step:hover { border-color:var(--point); }
+    .step-num { min-width:36px; height:36px; background:linear-gradient(135deg,var(--point),var(--point-hover)); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:700; color:white; flex-shrink:0; }
+    .step-content h3 { font-size:15px; font-weight:600; margin-bottom:4px; color:var(--text); }
+    .step-content p { font-size:14px; color:var(--subtext); line-height:1.7; }
+    .compare-section { margin:56px 0; }
+    .compare-section h2 { font-size:22px; font-weight:700; margin-bottom:24px; text-align:center; }
+    .compare-table { width:100%; border-collapse:collapse; font-size:14px; }
+    .compare-table th { background:var(--card); padding:14px 16px; text-align:center; font-weight:600; border:1px solid var(--border); color:var(--text); }
+    .compare-table th:first-child { text-align:left; }
+    .compare-table td { padding:12px 16px; border:1px solid var(--border); color:var(--subtext); text-align:center; }
+    .compare-table td:first-child { text-align:left; color:var(--text); }
+    .compare-table tr:hover td { background:rgba(123,108,255,0.04); }
+    .check { color:var(--success); font-size:16px; }
+    .cross { color:#EF4444; font-size:16px; }
+    .th-us { color:var(--point-hover) !important; }
+    .cta-section { text-align:center; margin:56px 0 0; padding:48px 32px; background:var(--card); border:1px solid var(--border); border-radius:var(--radius); }
+    .cta-section h2 { font-size:22px; font-weight:700; margin-bottom:12px; }
+    .cta-section p { color:var(--subtext); font-size:15px; margin-bottom:28px; }
+    .btn-cta { display:inline-flex; align-items:center; gap:10px; background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border-radius:12px; padding:14px 36px; font-size:15px; font-weight:600; text-decoration:none; border:none; cursor:pointer; }
+    .btn-cta:hover { transform:translateY(-2px); box-shadow:0 8px 24px var(--glow); color:white; }
+    @media (max-width:640px) {
+      .features { grid-template-columns:1fr; }
+      .about-hero h1 { font-size:26px; }
+      .service-card { flex-direction:column; gap:12px; }
+    }
+  </style>
+  <meta property="og:title" content="About — BrowserKit" />
+  <meta property="og:description" content="66 free tools you use right in your browser -- no install, no sign-up, no cost. Almost everything is processed securely with nothing sent to a server." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://browserkit.online/en/about.html" />
+  <meta property="og:image" content="https://browserkit.online/img/og-browserkit.png" />
+  <link rel="canonical" href="https://browserkit.online/en/about.html" />
+  <link rel="alternate" hreflang="ko" href="https://browserkit.online/about" />
+  <link rel="alternate" hreflang="en" href="https://browserkit.online/en/about.html" />
+  <link rel="alternate" hreflang="x-default" href="https://browserkit.online/en/about.html" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://browserkit.online/img/og-browserkit.png" />
+</head>
+<body>
+  <div class="lang-banner" id="langBanner">
+    <span>🌐 이 페이지는 <a href="/about">한국어</a>로도 볼 수 있습니다.</span>
+    <button class="lang-banner-close" id="langBannerClose" type="button" aria-label="close">&times;</button>
+  </div>
+
+  <header class="header">
+    <div class="container">
+      <a href="/en/" class="header-brand"><div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Poppins,sans-serif;flex-shrink:0">B</div><span class="header-brand-text"><span style="color:var(--text)">Browser</span><span style="color:var(--point)">Kit</span></span></a>
+      <div class="header-right">
+        <div class="lang-switcher">
+          <button class="lang-switcher-btn" type="button" data-lang-btn>🌐 <span class="lang-label-full">English</span></button>
+          <div class="lang-switcher-menu" data-lang-menu>
+            <a href="#" class="active">English</a>
+            <a href="/about">한국어</a>
+          </div>
+        </div>
+        <a href="/en/" class="header-back">← <span class="header-back-label">Back to BrowserKit</span></a>
+      </div>
+    </div>
+  </header>
+
+  <div class="doc-wrap">
+
+    <section class="about-hero">
+      <h1>A Free Tool Collection You Use Right in Your Browser</h1>
+      <p>BrowserKit is a browser-based tool collection with no install, no sign-up, and no server upload. From face blur to image editing to PDF processing, it's all on one platform.</p>
+    </section>
+
+    <section class="features">
+      <div class="feature-card">
+        <div class="feature-icon">🖥️</div>
+        <div class="feature-title">Fully Local Processing</div>
+        <div class="feature-desc">All file processing happens entirely within your browser. No data is ever sent to a server.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">⚡</div>
+        <div class="feature-title">Free to Use</div>
+        <div class="feature-desc">Use it instantly with no sign-up. Every tool is free, permanently.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📦</div>
+        <div class="feature-title">No Install Needed</div>
+        <div class="feature-desc">All you need is a browser. Use it right away on desktop or mobile.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔒</div>
+        <div class="feature-title">Privacy-Safe</div>
+        <div class="feature-desc">Your files never leave your device, so you can safely process even sensitive documents.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🛠️</div>
+        <div class="feature-title">A Wide Range of Tools</div>
+        <div class="feature-desc">Face blur, image editing, PDF processing, and many more tools, all in one place.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📱</div>
+        <div class="feature-title">Mobile Support</div>
+        <div class="feature-desc">Works the same way on smartphones and tablets.</div>
+      </div>
+    </section>
+
+    <section class="services-section">
+      <h2>Our Tools</h2>
+      <div class="service-cards">
+
+      <!-- ── 개인정보  F[0]=#ffd36e ── -->
+      <div style="display:flex;align-items:center;gap:10px;margin:36px 0 10px 4px"><div style="flex-shrink:0"><div style="position:relative;width:46px;height:36px"><div style="position:absolute;left:2px;top:0;width:20px;height:10px;background:#ffd36e;border:2.5px solid #2a2433;border-radius:6px 8px 0 0;box-sizing:border-box"></div><div style="position:absolute;left:0;bottom:0;width:46px;height:28px;background:#ffd36e;border:2.5px solid #2a2433;border-radius:4px 7px 6px 5px;box-sizing:border-box"></div><div style="position:absolute;left:5px;bottom:19px;width:22px;height:2.5px;background:rgba(255,255,255,.55);border-radius:3px"></div></div></div><span style="font-size:15px;font-weight:700;color:var(--text)">Privacy</span></div>
+
+        
+
+        
+
+        <div class="service-card">
+          <div class="service-card-icon"><div style="width:46px;height:46px;background:#ffd36e;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="position:relative;width:27px;height:27px;border-radius:50%;background:#fffdf9;border:2.5px solid #2a2433;box-sizing:border-box;overflow:hidden"><div style="position:absolute;left:6px;top:8px;width:3px;height:3px;border-radius:50%;background:#2a2433"></div><div style="position:absolute;right:6px;top:8px;width:3px;height:3px;border-radius:50%;background:#2a2433"></div><div style="position:absolute;left:7px;bottom:5px;width:11px;height:3px;border-radius:3px;background:rgba(42,36,51,.4)"></div><div style="position:absolute;left:-3px;bottom:4px;width:34px;height:3px;background:rgba(255,255,255,.85)"></div><div style="position:absolute;left:-3px;bottom:9px;width:34px;height:3px;background:rgba(255,255,255,.7)"></div></div></div></div>
+          <div class="service-card-body">
+            <div class="service-card-name">
+              <a href="/en/mask-face/" style="color:inherit;text-decoration:none;font-weight:700;">Face Blur (MaskFace)</a>
+              <span class="service-badge live">✓ Live</span>
+            </div>
+            <div class="service-card-desc">Automatically detects faces in an image and applies mosaic or a solid black box. You can also drag to mask additional areas manually.</div>
+            <div class="service-card-tags">
+              <span class="service-tag">Face Masking</span>
+              <span class="service-tag">Mosaic</span>
+              <span class="service-tag">Auto-Detect</span>
+            </div>
+          </div>
+        </div>
+
+        
+
+        <div class="service-card">
+          <div class="service-card-icon"><div style="width:46px;height:46px;background:#ffd36e;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="position:relative;width:26px;height:30px"><div style="width:20px;height:20px;border-radius:50% 50% 50% 0;background:#fffdf9;border:2.5px solid #2a2433;box-sizing:border-box;transform:rotate(-45deg);margin:0 auto"></div><div style="position:absolute;left:50%;top:6px;transform:translateX(-50%);width:6px;height:6px;border-radius:50%;background:#2a2433"></div></div></div></div>
+          <div class="service-card-body">
+            <div class="service-card-name">
+              <a href="/en/exif-remover/" style="color:inherit;text-decoration:none;font-weight:700;">Photo Metadata Remover (ExifRemover)</a>
+              <span class="service-badge live">✓ Live</span>
+            </div>
+            <div class="service-card-desc">Views GPS location, camera model, capture time, and other EXIF metadata in a photo, and removes it with one click. Prevents location exposure before posting on social media.</div>
+            <div class="service-card-tags">
+              <span class="service-tag">GPS Check</span>
+              <span class="service-tag">Metadata Removal</span>
+              <span class="service-tag">Capture Info</span>
+            </div>
+          </div>
+        </div>
+
+      <!-- ── 이미지 편집  F[1]=#ffb3c7 ── -->
+      <div style="display:flex;align-items:center;gap:10px;margin:36px 0 10px 4px"><div style="flex-shrink:0"><div style="position:relative;width:46px;height:36px"><div style="position:absolute;left:2px;top:0;width:20px;height:10px;background:#ffb3c7;border:2.5px solid #2a2433;border-radius:6px 8px 0 0;box-sizing:border-box"></div><div style="position:absolute;left:0;bottom:0;width:46px;height:28px;background:#ffb3c7;border:2.5px solid #2a2433;border-radius:4px 7px 6px 5px;box-sizing:border-box"></div><div style="position:absolute;left:5px;bottom:19px;width:22px;height:2.5px;background:rgba(255,255,255,.55);border-radius:3px"></div></div></div><span style="font-size:15px;font-weight:700;color:var(--text)">Image Editing</span></div>
+
+        <div class="service-card">
+          <div class="service-card-icon"><div style="width:46px;height:46px;background:#ffb3c7;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="position:relative;width:30px;height:30px;background:#fffdf9;border:2.5px solid #2a2433;border-radius:4px;box-sizing:border-box"><div style="position:absolute;left:4px;top:4px;width:9px;height:2.5px;background:#2a2433;border-radius:2px"></div><div style="position:absolute;left:4px;top:4px;width:2.5px;height:9px;background:#2a2433;border-radius:2px"></div><div style="position:absolute;right:4px;bottom:4px;width:9px;height:2.5px;background:#2a2433;border-radius:2px"></div><div style="position:absolute;right:4px;bottom:4px;width:2.5px;height:9px;background:#2a2433;border-radius:2px"></div></div></div></div>
+          <div class="service-card-body">
+            <div class="service-card-name">
+              <a href="/en/image-tools/" style="color:inherit;text-decoration:none;font-weight:700;">Image Resize/Convert (FitImage)</a>
+              <span class="service-badge live">✓ Live</span>
+            </div>
+            <div class="service-card-desc">Resizes images, converts formats (PNG&harr;JPG), and compresses file size right in your browser. Everything runs locally with no server upload.</div>
+            <div class="service-card-tags">
+              <span class="service-tag">Resize</span>
+              <span class="service-tag">Format Convert</span>
+              <span class="service-tag">Compress</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-card-icon"><div style="width:46px;height:46px;background:#ffb3c7;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="position:relative;width:30px;height:30px"><div style="position:absolute;left:4px;top:0;width:3px;height:26px;background:#2a2433;border-radius:2px"></div><div style="position:absolute;left:0;top:4px;width:26px;height:3px;background:#2a2433;border-radius:2px"></div><div style="position:absolute;right:4px;bottom:0;width:3px;height:26px;background:#2a2433;border-radius:2px"></div><div style="position:absolute;left:0;bottom:4px;width:26px;height:3px;background:#2a2433;border-radius:2px"></div></div></div></div>
+          <div class="service-card-body">
+            <div class="service-card-name">
+              <a href="/en/crop-image/" style="color:inherit;text-decoration:none;font-weight:700;">Image Crop (CropImage)</a>
+              <span class="service-badge live">✓ Live</span>
+            </div>
+            <div class="service-card-desc">Crop by dragging, rotate 90&deg;, and flip horizontally/vertically, all in your browser. Includes quick-ratio buttons for square, ID photo, 16:9, and more.</div>
+            <div class="service-card-tags">
+              <span class="service-tag">Crop</span>
+              <span class="service-tag">Rotate</span>
+              <span class="service-tag">Flip</span>
+              <span class="service-tag">Aspect Ratio</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-card-icon"><div style="width:46px;height:46px;background:#ffb3c7;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="position:relative;width:32px;height:28px;background:#fffdf9;border:2.5px solid #2a2433;border-radius:4px;box-sizing:border-box;overflow:hidden;display:flex;align-items:center;justify-content:center"><div style="position:absolute;left:4px;bottom:4px;width:9px;height:9px;border-radius:50%;background:#ffb3c7;border:2px solid #2a2433;box-sizing:border-box"></div><div style="font:700 14px Poppins,sans-serif;color:rgba(42,36,51,.55)">W</div></div></div></div>
+          <div class="service-card-body">
+            <div class="service-card-name">
+              <a href="/en/watermark-image/" style="color:inherit;text-decoration:none;font-weight:700;">Watermark Image (WatermarkImage)</a>
+              <span class="service-badge live">✓ Live</span>
+            </div>
+            <div class="service-card-desc">Composites a text or image watermark onto your original image. Freely adjust opacity, position, size, and tiled placement.</div>
+            <div class="service-card-tags">
+              <span class="service-tag">Text Watermark</span>
+              <span class="service-tag">Image Watermark</span>
+              <span class="service-tag">Opacity Control</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-card-icon"><div style="width:46px;height:46px;background:#ffb3c7;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="width:20px;height:20px;background:#fffdf9;border:2.5px solid #2a2433;box-sizing:border-box;border-radius:50% 50% 50% 0;transform:rotate(45deg)"><div style="width:7px;height:7px;border-radius:50%;background:#ffb3c7;margin:4px 0 0 4px;transform:rotate(-45deg)"></div></div></div></div>
+          <div class="service-card-body">
+            <div class="service-card-name">
+              <a href="/en/color-picker/" style="color:inherit;text-decoration:none;font-weight:700;">Color Picker (ColorPicker)</a>
+              <span class="service-badge live">✓ Live</span>
+            </div>
+            <div class="service-card-desc">Click anywhere on an image to extract its color. Copy HEX, RGB, or HSL codes straight to your clipboard, and save or export a palette.</div>
+            <div class="service-card-tags">
+              <span class="service-tag">Color Extraction</span>
+              <span class="service-tag">HEX/RGB/HSL</span>
+              <span class="service-tag">Save Palette</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-card-icon"><div style="width:46px;height:46px;background:#ffb3c7;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="position:relative;width:30px;height:30px;display:flex;align-items:center;justify-content:center"><div style="width:16px;height:16px;border-radius:50%;background:#fffdf9;border:2.5px solid #2a2433;box-sizing:border-box"></div><div style="position:absolute;top:0;left:50%;transform:translateX(-50%);width:2.5px;height:5px;background:#2a2433;border-radius:2px"></div><div style="position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:2.5px;height:5px;background:#2a2433;border-radius:2px"></div><div style="position:absolute;left:0;top:50%;transform:translateY(-50%);width:5px;height:2.5px;background:#2a2433;border-radius:2px"></div><div style="position:absolute;right:0;top:50%;transform:translateY(-50%);width:5px;height:2.5px;background:#2a2433;border-radius:2px"></div></div></div></div>
+          <div class="service-card-body">
+            <div class="service-card-name">
+              <a href="/en/image-bright/" style="color:inherit;text-decoration:none;font-weight:700;">Image Adjust (ImageBright)</a>
+              <span class="service-badge live">✓ Live</span>
+            </div>
+            <div class="service-card-desc">Adjust brightness, contrast, saturation, color temperature, and sharpness live with sliders. Six quick presets apply a full adjustment in one click.</div>
+            <div class="service-card-tags">
+              <span class="service-tag">Brightness/Contrast</span>
+              <span class="service-tag">Color Temp/Sharpness</span>
+              <span class="service-tag">Quick Presets</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-card-icon"><div style="width:46px;height:46px;background:#ffb3c7;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="font:700 16px Poppins,sans-serif;color:#2a2433;line-height:1;letter-spacing:-.5px;white-space:nowrap">BG</div></div></div>
+          <div class="service-card-body">
+            <div class="service-card-name">
+              <a href="/en/bg-remove/" style="color:inherit;text-decoration:none;font-weight:700;">AI Background Remover (BGRemove)</a>
+              <span class="service-badge live">✓ Live</span>
+            </div>
+            <div class="service-card-desc">AI automatically removes the background from an image. Save it as a transparent PNG. Processed directly in your browser, with no server upload.</div>
+            <div class="service-card-tags">
+              <span class="service-tag">AI-Powered</span>
+              <span class="service-tag">Transparent PNG</span>
+              <span class="service-tag">No Upload</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-card-icon"><div style="width:46px;height:46px;background:#ffb3c7;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="font:700 18px Poppins,sans-serif;color:#2a2433;line-height:1">T</div></div></div>
+          <div class="service-card-body">
+            <div class="service-card-name">
+              <a href="/en/image-text/" style="color:inherit;text-decoration:none;font-weight:700;">Image Text Overlay (ImageText)</a>
+              <span class="service-badge live">✓ Live</span>
+            </div>
+            <div class="service-card-desc">Freely place multiple text layers on an image. Drag directly on the canvas to position them, and set font, size, color, and opacity.</div>
+            <div class="service-card-tags">
+              <span class="service-tag">Multiple Text Layers</span>
+              <span class="service-tag">Drag to Position</span>
+              <span class="service-tag">Font/Color Settings</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-card-icon"><div style="width:46px;height:46px;background:#ffb3c7;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="font:700 18px Poppins,sans-serif;color:#2a2433;line-height:1">F</div></div></div>
+          <div class="service-card-body">
+            <div class="service-card-name">
+              <a href="/en/image-filter/" style="color:inherit;text-decoration:none;font-weight:700;">Image Filters (ImageFilter)</a>
+              <span class="service-badge live">✓ Live</span>
+            </div>
+            <div class="service-card-desc">Apply 12 filters -- black & white, sepia, vintage, and more -- with a single click. Fine-tune brightness, contrast, and sharpness further.</div>
+            <div class="service-card-tags">
+              <span class="service-tag">12 Filters</span>
+              <span class="service-tag">One-Click Apply</span>
+              <span class="service-tag">Fine Adjustment</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-card-icon"><div style="width:46px;height:46px;background:#ffb3c7;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="display:grid;grid-template-columns:12px 12px;grid-template-rows:12px 12px;gap:3px"><div style="background:#fffdf9;border-radius:2px"></div><div style="background:#fffdf9;border-radius:2px"></div><div style="background:#fffdf9;border-radius:2px"></div><div style="background:#fffdf9;border-radius:2px"></div></div></div></div>
+          <div class="service-card-body">
+            <div class="service-card-name">
+              <a href="/en/image-collage/" style="color:inherit;text-decoration:none;font-weight:700;">Image Collage (ImageCollage)</a>
+              <span class="service-badge live">✓ Live</span>
+            </div>
+            <div class="service-card-desc">Combine several images into a single collage using one of 8 grid layouts. Drag to reorder, and adjust spacing and fill mode.</div>
+            <div class="service-card-tags">
+              <span class="service-tag">8 Layouts</span>
+              <span class="service-tag">Drag to Reorder</span>
+              <span class="service-tag">Multi-Upload</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-card-icon"><div style="width:46px;height:46px;background:#ffb3c7;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="display:grid;grid-template-columns:repeat(3,6px);grid-template-rows:repeat(3,6px);gap:2px"><div style="background:#fffdf9;border-radius:1px"></div><div style="background:#2a2433;border-radius:1px"></div><div style="background:#fffdf9;border-radius:1px"></div><div style="background:#2a2433;border-radius:1px"></div><div style="background:#fffdf9;border-radius:1px"></div><div style="background:#2a2433;border-radius:1px"></div><div style="background:#fffdf9;border-radius:1px"></div><div style="background:#2a2433;border-radius:1px"></div><div style="background:#fffdf9;border-radius:1px"></div></div></div></div>
+          <div class="service-card-body">
+            <div class="service-card-name">
+              <a href="/en/pixel-art/" style="color:inherit;text-decoration:none;font-weight:700;">Pixel Art Converter (PixelArt)</a>
+              <span class="service-badge live">✓ Live</span>
+            </div>
+            <div class="service-card-desc">Averages an image in blocks to convert it into pixel-art style. Adjust block size and toggle a grid overlay.</div>
+            <div class="service-card-tags">
+              <span class="service-tag">Adjustable Block Size</span>
+              <span class="service-tag">Grid Overlay</span>
+              <span class="service-tag">4 Presets</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-card-icon"><div style="width:46px;height:46px;background:#ffb3c7;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="display:grid;grid-template-columns:repeat(3,6px);grid-template-rows:repeat(3,6px);gap:2px"><div style="background:#2a2433;border-radius:1px;opacity:.9"></div><div style="background:#2a2433;border-radius:1px;opacity:.5"></div><div style="background:#2a2433;border-radius:1px;opacity:.9"></div><div style="background:#2a2433;border-radius:1px;opacity:.5"></div><div style="background:#2a2433;border-radius:1px;opacity:.9"></div><div style="background:#2a2433;border-radius:1px;opacity:.5"></div><div style="background:#2a2433;border-radius:1px;opacity:.9"></div><div style="background:#2a2433;border-radius:1px;opacity:.5"></div><div style="background:#2a2433;border-radius:1px;opacity:.9"></div></div></div></div>
+          <div class="service-card-body">
+            <div class="service-card-name">
+              <a href="/en/mosaic-maker/" style="color:inherit;text-decoration:none;font-weight:700;">Mosaic Maker (MosaicMaker)</a>
+              <span class="service-badge live">✓ Live</span>
+            </div>
+            <div class="service-card-desc">Freely drag over any area of an image to cover it with a mosaic. Useful for more than privacy -- game spoilers, price tags, anything you want to hide.</div>
+            <div class="service-card-tags">
+              <span class="service-tag">Free-Form Drag</span>
+              <span class="service-tag">Multiple Areas</span>
+              <span class="service-tag">Undo (Ctrl+Z)</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-card-icon"><div style="width:46px;height:46px;background:#ffb3c7;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="width:24px;height:24px;border-radius:50%;background:#fffdf9;border:2.5px solid #2a2433;box-sizing:border-box;display:flex;align-items:center;justify-content:center;font:700 12px Poppins,sans-serif;color:#2a2433">B</div></div></div>
+          <div class="service-card-body">
+            <div class="service-card-name">
+              <a href="/en/favicon-gen/" style="color:inherit;text-decoration:none;font-weight:700;">Favicon Generator (FaviconGen)</a>
+              <span class="service-badge live">✓ Live</span>
+            </div>
+            <div class="service-card-desc">Upload one image to generate a full favicon set from 16-512px and a favicon.ico. Get the HTML code and a ZIP download in one step.</div>
+            <div class="service-card-tags">
+              <span class="service-tag">6 Sizes</span>
+              <span class="service-tag">favicon.ico</span>
+              <span class="service-tag">Copy HTML Code</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-card-icon"><div style="width:46px;height:46px;background:#ffb3c7;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="font:700 16px Poppins,sans-serif;color:#2a2433;line-height:1;letter-spacing:-.5px;white-space:nowrap">SVG</div></div></div>
+          <div class="service-card-body">
+            <div class="service-card-name">
+              <a href="/en/svg-to-png/" style="color:inherit;text-decoration:none;font-weight:700;">SVG to PNG Converter (SVGtoPNG)</a>
+              <span class="service-badge live">✓ Live</span>
+            </div>
+            <div class="service-card-desc">Paste in an SVG file or code and instantly convert it to a PNG image at the resolution you need. Choose a scale factor (1x-4x) and background color.</div>
+            <div class="service-card-tags">
+              <span class="service-tag">File/Code Input</span>
+              <span class="service-tag">Scale Factor</span>
+              <span class="service-tag">Background Color</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-card-icon"><div style="width:46px;height:46px;background:#ffb3c7;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="width:24px;height:24px;border-radius:6px;background:#fffdf9;border:2.5px solid #2a2433;box-sizing:border-box;position:relative;overflow:hidden"><div style="position:absolute;left:0;top:0;width:50%;height:100%;background:#2a2433"></div><div style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:3px;height:16px;background:#fffdf9;border-radius:2px"></div></div></div></div>
+          <div class="service-card-body">
+            <div class="service-card-name">
+              <a href="/en/image-compare/" style="color:inherit;text-decoration:none;font-weight:700;">Image Compare Slider (ImageCompare)</a>
+              <span class="service-badge live">✓ Live</span>
+            </div>
+            <div class="service-card-desc">Creates a drag-to-compare before/after slider for two images. Download a PNG snapshot or get an embeddable code for your website.</div>
+            <div class="service-card-tags">
+              <span class="service-tag">Drag Slider</span>
+              <span class="service-tag">PNG Snapshot</span>
+              <span class="service-tag">Embed Code</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-card-icon"><div style="width:46px;height:46px;background:#ffb3c7;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="width:26px;height:26px;background:#fffdf9;border:3.5px solid #2a2433;border-radius:3px;box-sizing:border-box"></div></div></div>
+          <div class="service-card-body">
+            <div class="service-card-name">
+              <a href="/en/image-frame/" style="color:inherit;text-decoration:none;font-weight:700;">Image Frame (ImageFrame)</a>
+              <span class="service-badge live">✓ Live</span>
+            </div>
+            <div class="service-card-desc">Adds a color border, polaroid frame, or rounded corners to an image. Freely adjust color, thickness, and corner radius.</div>
+            <div class="service-card-tags">
+              <span class="service-tag">Color Border</span>
+              <span class="service-tag">Polaroid</span>
+              <span class="service-tag">Rounded Corners</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-card-icon"><div style="width:46px;height:46px;background:#ffb3c7;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="width:18px;height:26px;background:#fffdf9;border:2.5px solid #2a2433;border-radius:4px;box-sizing:border-box"></div></div></div>
+          <div class="service-card-body">
+            <div class="service-card-name">
+              <a href="/en/mockup-frame/" style="color:inherit;text-decoration:none;font-weight:700;">Device Mockup Generator (MockupFrame)</a>
+              <span class="service-badge live">✓ Live</span>
+            </div>
+            <div class="service-card-desc">Composites a screenshot into a phone, tablet, laptop, or browser mockup frame. Adjust background color and padding too.</div>
+            <div class="service-card-tags">
+              <span class="service-tag">4 Device Types</span>
+              <span class="service-tag">Background Presets</span>
+              <span class="service-tag">PNG Download</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-card-icon"><div style="width:46px;height:46px;background:#ffb3c7;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="position:relative;width:26px;height:22px"><div style="position:absolute;left:0;top:6px;width:14px;height:14px;background:#fffdf9;border:2px solid #2a2433;border-radius:2px;box-sizing:border-box;opacity:.4"></div><div style="position:absolute;left:6px;top:3px;width:14px;height:14px;background:#fffdf9;border:2px solid #2a2433;border-radius:2px;box-sizing:border-box;opacity:.7"></div><div style="position:absolute;left:12px;top:0;width:14px;height:14px;background:#fffdf9;border:2px solid #2a2433;border-radius:2px;box-sizing:border-box"></div></div></div></div>
+          <div class="service-card-body">
+            <div class="service-card-name">
+              <a href="/en/gif-maker/" style="color:inherit;text-decoration:none;font-weight:700;">GIF Maker (GifMaker)</a>
+              <span class="service-badge live">✓ Live</span>
+            </div>
+            <div class="service-card-desc">Upload images in order and set a frame delay to combine them into an animated GIF. Choose whether it loops and the output size.</div>
+            <div class="service-card-tags">
+              <span class="service-tag">Reorder Frames</span>
+              <span class="service-tag">Adjustable Delay</span>
+              <span class="service-tag">GIF Download</span>
+            </div>
+          </div>
+        </div>
+
+      <!-- ── 문서·텍스트  F[2]=#a8e6cf ── -->
+      <div style="display:flex;align-items:center;gap:10px;margin:36px 0 10px 4px"><div style="flex-shrink:0"><div style="position:relative;width:46px;height:36px"><div style="position:absolute;left:2px;top:0;width:20px;height:10px;background:#a8e6cf;border:2.5px solid #2a2433;border-radius:6px 8px 0 0;box-sizing:border-box"></div><div style="position:absolute;left:0;bottom:0;width:46px;height:28px;background:#a8e6cf;border:2.5px solid #2a2433;border-radius:4px 7px 6px 5px;box-sizing:border-box"></div><div style="position:absolute;left:5px;bottom:19px;width:22px;height:2.5px;background:rgba(255,255,255,.55);border-radius:3px"></div></div></div><span style="font-size:15px;font-weight:700;color:var(--text)">Documents &amp; Text</span></div>
+
+        <div class="service-card">
+          <div class="service-card-icon"><div style="width:46px;height:46px;background:#a8e6cf;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="position:relative;width:34px;height:32px"><div style="position:absolute;left:0;top:3px;width:20px;height:26px;background:#fffdf9;border:2.5px solid #2a2433;border-radius:3px;box-sizing:border-box"></div><div style="position:absolute;right:0;top:0;width:20px;height:26px;background:#a8e6cf;border:2.5px solid #2a2433;border-radius:3px;box-sizing:border-box"></div><div style="position:absolute;right:8px;top:9px;width:4px;height:12px;background:#2a2433;border-radius:2px"></div><div style="position:absolute;right:4px;top:13px;width:12px;height:4px;background:#2a2433;border-radius:2px"></div></div></div></div>
+          <div class="service-card-body">
+            <div class="service-card-name">
+              <a href="/en/pdf-merge/" style="color:inherit;text-decoration:none;font-weight:700;">PDF Merge (PDFMerge)</a>
+              <span class="service-badge live">✓ Live</span>
+            </div>
+            <div class="service-card-desc">Merges multiple PDF files into one. Drag to reorder files before merging, all processed in your browser.</div>
+            <div class="service-card-tags">
+              <span class="service-tag">PDF Merge</span>
+              <span class="service-tag">Reorder</span>
+              <span class="service-tag">Extract Pages</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-card-icon"><div style="width:46px;height:46px;background:#a8e6cf;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="position:relative;width:34px;height:32px"><div style="position:absolute;left:0;top:0;width:16px;height:26px;background:#a8e6cf;border:2.5px solid #2a2433;border-radius:3px;box-sizing:border-box"></div><div style="position:absolute;right:0;top:3px;width:16px;height:26px;background:#a8e6cf;border:2.5px solid #2a2433;border-radius:3px;box-sizing:border-box"></div><div style="position:absolute;left:15px;top:8px;width:4px;height:16px;background:#fffdf9;border-left:2px dashed #2a2433;border-right:2px dashed #2a2433;box-sizing:border-box"></div></div></div></div>
+          <div class="service-card-body">
+            <div class="service-card-name">
+              <a href="/en/pdf-split/" style="color:inherit;text-decoration:none;font-weight:700;">PDF Split (PDFSplit)</a>
+              <span class="service-badge live">✓ Live</span>
+            </div>
+            <div class="service-card-desc">Splits a PDF into individual per-page files (ZIP), or extracts just the page range you need into a single PDF.</div>
+            <div class="service-card-tags">
+              <span class="service-tag">Split by Page</span>
+              <span class="service-tag">Range Extract</span>
+              <span class="service-tag">ZIP Download</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-card-icon"><div style="width:46px;height:46px;background:#a8e6cf;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="font:700 16px Poppins,sans-serif;color:#2a2433;line-height:1;letter-spacing:-.5px;white-space:nowrap">Aa</div></div></div>
+          <div class="service-card-body">
+            <div class="service-card-name">
+              <a href="/en/text-tools/" style="color:inherit;text-decoration:none;font-weight:700;">Text Tools (TextTools)</a>
+              <span class="service-badge live">✓ Live</span>
+            </div>
+            <div class="service-card-desc">Handles text conversion, sorting, duplicate removal, and line-break formatting, all in one place.</div>
+            <div class="service-card-tags">
+              <span class="service-tag">Text Conversion</span>
+              <span class="service-tag">Remove Duplicates</span>
+              <span class="service-tag">Case Convert</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-card-icon"><div style="width:46px;height:46px;background:#a8e6cf;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="display:flex;gap:4px"><div style="width:15px;height:30px;background:#fffdf9;border:2.5px solid #2a2433;border-radius:3px;box-sizing:border-box;padding:4px 3px;display:flex;flex-direction:column;gap:3px"><div style="height:2.5px;background:rgba(42,36,51,.35);border-radius:2px"></div><div style="height:2.5px;background:#2a2433;border-radius:2px"></div><div style="height:2.5px;background:rgba(42,36,51,.35);border-radius:2px"></div></div><div style="width:15px;height:30px;background:#fffdf9;border:2.5px solid #2a2433;border-radius:3px;box-sizing:border-box;padding:4px 3px;display:flex;flex-direction:column;gap:3px"><div style="height:2.5px;background:rgba(42,36,51,.35);border-radius:2px"></div><div style="height:2.5px;background:#a8e6cf;border-radius:2px"></div><div style="height:2.5px;background:rgba(42,36,51,.35);border-radius:2px"></div></div></div></div></div>
+          <div class="service-card-body">
+            <div class="service-card-name">
+              <a href="/en/diff-checker/" style="color:inherit;text-decoration:none;font-weight:700;">Diff Checker (DiffChecker)</a>
+              <span class="service-badge live">✓ Live</span>
+            </div>
+            <div class="service-card-desc">Compares two texts side by side, highlighting additions, deletions, and changes. Useful for comparing code or tracking document revisions.</div>
+            <div class="service-card-tags">
+              <span class="service-tag">Text Comparison</span>
+              <span class="service-tag">Highlighted Diffs</span>
+              <span class="service-tag">Code Comparison</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-card-icon"><div style="width:46px;height:46px;background:#a8e6cf;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="font:700 16px Poppins,sans-serif;color:#2a2433;line-height:1;letter-spacing:-.5px;white-space:nowrap">M↓</div></div></div>
+          <div class="service-card-body">
+            <div class="service-card-name">
+              <a href="/en/markdown-editor/" style="color:inherit;text-decoration:none;font-weight:700;">Markdown Editor (MarkdownEditor)</a>
+              <span class="service-badge live">✓ Live</span>
+            </div>
+            <div class="service-card-desc">A Markdown editor with live preview. Export to HTML/PDF, keyboard shortcuts, and GitHub-style rendering.</div>
+            <div class="service-card-tags">
+              <span class="service-tag">Markdown Editing</span>
+              <span class="service-tag">Live Preview</span>
+              <span class="service-tag">Export to HTML</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-card-icon"><div style="width:46px;height:46px;background:#a8e6cf;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="position:relative;width:30px;height:30px"><div style="position:absolute;left:2px;top:2px;width:18px;height:18px;border-radius:50%;background:#fffdf9;border:3px solid #2a2433;box-sizing:border-box"></div><div style="position:absolute;right:1px;bottom:1px;width:11px;height:4px;background:#2a2433;border-radius:3px;transform:rotate(45deg);transform-origin:right bottom"></div></div></div></div>
+          <div class="service-card-body">
+            <div class="service-card-name">
+              <a href="/en/find-replace/" style="color:inherit;text-decoration:none;font-weight:700;">Find & Replace (FindReplace)</a>
+              <span class="service-badge live">✓ Live</span>
+            </div>
+            <div class="service-card-desc">Finds a specific string in your text and replaces it in bulk or selectively. Supports regex mode and case-sensitive matching.</div>
+            <div class="service-card-tags">
+              <span class="service-tag">Find/Replace</span>
+              <span class="service-tag">Regex Mode</span>
+              <span class="service-tag">Bulk Processing</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-card-icon"><div style="width:46px;height:46px;background:#a8e6cf;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="width:30px;height:26px;display:flex;flex-direction:column;justify-content:space-between"><div style="display:flex;align-items:center;gap:3px"><div style="width:6px;height:6px;background:#2a2433;border-radius:1px"></div><div style="flex:1;height:3px;background:#2a2433;border-radius:2px"></div></div><div style="display:flex;align-items:center;gap:3px"><div style="width:6px;height:6px;background:#2a2433;border-radius:1px"></div><div style="flex:1;height:3px;background:#2a2433;border-radius:2px"></div></div><div style="display:flex;align-items:center;gap:3px"><div style="width:6px;height:6px;background:#2a2433;border-radius:1px"></div><div style="flex:1;height:3px;background:#2a2433;border-radius:2px"></div></div></div></div></div>
+          <div class="service-card-body">
+            <div class="service-card-name">
+              <a href="/en/line-number/" style="color:inherit;text-decoration:none;font-weight:700;">Line Numberer (LineNumber)</a>
+              <span class="service-badge live">✓ Live</span>
+            </div>
+            <div class="service-card-desc">Adds line numbers to text or code for copying. Set the start number, separator, and zero-padding for digit alignment.</div>
+            <div class="service-card-tags">
+              <span class="service-tag">Custom Start Number</span>
+              <span class="service-tag">Custom Separator</span>
+              <span class="service-tag">.txt Download</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-card-icon"><div style="width:46px;height:46px;background:#a8e6cf;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="font:700 12px Poppins,sans-serif;color:#2a2433;line-height:1;letter-spacing:-.5px;white-space:nowrap">Lorem</div></div></div>
+          <div class="service-card-body">
+            <div class="service-card-name">
+              <a href="/en/lorem-gen/" style="color:inherit;text-decoration:none;font-weight:700;">Lorem Ipsum Generator (LoremGen)</a>
+              <span class="service-badge live">✓ Live</span>
+            </div>
+            <div class="service-card-desc">Set the number of paragraphs, sentences, or words to instantly generate dummy text. Supports both classic Lorem Ipsum and plain filler text.</div>
+            <div class="service-card-tags">
+              <span class="service-tag">Classic/Plain Text</span>
+              <span class="service-tag">Paragraph/Sentence/Word</span>
+              <span class="service-tag">TXT Download</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-card-icon"><div style="width:46px;height:46px;background:#a8e6cf;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="font:700 16px Poppins,sans-serif;color:#2a2433;line-height:1;letter-spacing:-.5px;white-space:nowrap">CSV</div></div></div>
+          <div class="service-card-body">
+            <div class="service-card-name">
+              <a href="/en/csv-json-convert/" style="color:inherit;text-decoration:none;font-weight:700;">CSV ↔ JSON Converter (CSVJSONConvert)</a>
+              <span class="service-badge live">✓ Live</span>
+            </div>
+            <div class="service-card-desc">Paste or upload CSV to convert it into a JSON array, or convert JSON back to CSV. Includes a table preview.</div>
+            <div class="service-card-tags">
+              <span class="service-tag">CSV↔JSON</span>
+              <span class="service-tag">Table Preview</span>
+              <span class="service-tag">File Upload</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-card-icon"><div style="width:46px;height:46px;background:#a8e6cf;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="font:700 16px Poppins,sans-serif;color:#2a2433;line-height:1;letter-spacing:-.5px;white-space:nowrap">YAML</div></div></div>
+          <div class="service-card-body">
+            <div class="service-card-name">
+              <a href="/en/yaml-json-convert/" style="color:inherit;text-decoration:none;font-weight:700;">YAML ↔ JSON Converter (YAMLJSONConvert)</a>
+              <span class="service-badge live">✓ Live</span>
+            </div>
+            <div class="service-card-desc">Paste or upload a YAML config file to convert it to JSON, or convert JSON back to YAML. Includes a table preview.</div>
+            <div class="service-card-tags">
+              <span class="service-tag">YAML↔JSON</span>
+              <span class="service-tag">Table Preview</span>
+              <span class="service-tag">Config Files</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-card-icon"><div style="width:46px;height:46px;background:#a8e6cf;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="display:flex;align-items:flex-end;gap:3px;height:28px"><div style="width:6px;height:13px;background:#fffdf9;border:2px solid #2a2433;border-radius:2px 2px 0 0;box-sizing:border-box"></div><div style="width:6px;height:22px;background:#fffdf9;border:2px solid #2a2433;border-radius:2px 2px 0 0;box-sizing:border-box"></div><div style="width:6px;height:17px;background:#fffdf9;border:2px solid #2a2433;border-radius:2px 2px 0 0;box-sizing:border-box"></div></div></div></div>
+          <div class="service-card-body">
+            <div class="service-card-name">
+              <a href="/en/text-stats/" style="color:inherit;text-decoration:none;font-weight:700;">Text Stats Analyzer (TextStats)</a>
+              <span class="service-badge live">✓ Live</span>
+            </div>
+            <div class="service-card-desc">Enter text to calculate character count, word count, sentence/paragraph count, byte size, and estimated reading time live. Also shows the top 5 most frequent words.</div>
+            <div class="service-card-tags">
+              <span class="service-tag">Live Stats</span>
+              <span class="service-tag">Reading Time</span>
+              <span class="service-tag">Word Frequency</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-card-icon"><div style="width:46px;height:46px;background:#a8e6cf;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="display:grid;grid-template-columns:repeat(2,10px);grid-template-rows:repeat(2,10px);gap:2px"><div style="background:#fffdf9;border:1.5px solid #2a2433;box-sizing:border-box"></div><div style="background:#fffdf9;border:1.5px solid #2a2433;box-sizing:border-box"></div><div style="background:#fffdf9;border:1.5px solid #2a2433;box-sizing:border-box"></div><div style="background:#fffdf9;border:1.5px solid #2a2433;box-sizing:border-box"></div></div></div></div>
+          <div class="service-card-body">
+            <div class="service-card-name">
+              <a href="/en/markdown-table-convert/" style="color:inherit;text-decoration:none;font-weight:700;">Table Converter (MarkdownTableConvert)</a>
+              <span class="service-badge live">✓ Live</span>
+            </div>
+            <div class="service-card-desc">Instantly converts between Markdown tables, CSV, and HTML tables in any direction, with a table preview.</div>
+            <div class="service-card-tags">
+              <span class="service-tag">Markdown↔CSV↔HTML</span>
+              <span class="service-tag">Table Preview</span>
+              <span class="service-tag">File Upload</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-card-icon"><div style="width:46px;height:46px;background:#a8e6cf;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="position:relative;width:22px;height:26px"><div style="width:22px;height:16px;background:#fffdf9;border:2.5px solid #2a2433;border-radius:3px;box-sizing:border-box;position:absolute;bottom:0"></div><div style="width:11px;height:10px;border:2.5px solid #2a2433;border-bottom:none;border-radius:6px 6px 0 0;box-sizing:border-box;position:absolute;top:-1px;left:10px;transform:rotate(25deg);transform-origin:bottom left"></div></div></div></div>
+          <div class="service-card-body">
+            <div class="service-card-name">
+              <a href="/en/pdf-password-remove/" style="color:inherit;text-decoration:none;font-weight:700;">Remove PDF Password (PDFPasswordRemove)</a>
+              <span class="service-badge live">✓ Live</span>
+            </div>
+            <div class="service-card-desc">Enter the password for a locked PDF to remove it and save a password-free file. Unlocked PDFs can also be previewed and downloaded directly.</div>
+            <div class="service-card-tags">
+              <span class="service-tag">Remove Lock</span>
+              <span class="service-tag">Error Guidance</span>
+              <span class="service-tag">PDF Download</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-card-icon"><div style="width:46px;height:46px;background:#a8e6cf;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="position:relative;width:22px;height:26px"><div style="width:22px;height:16px;background:#fffdf9;border:2.5px solid #2a2433;border-radius:3px;box-sizing:border-box;position:absolute;bottom:0;display:flex;align-items:center;justify-content:center"><div style="width:4px;height:4px;border-radius:50%;background:#2a2433"></div></div><div style="width:12px;height:11px;border:2.5px solid #2a2433;border-bottom:none;border-radius:6px 6px 0 0;box-sizing:border-box;position:absolute;top:0;left:5px"></div></div></div></div>
+          <div class="service-card-body">
+            <div class="service-card-name">
+              <a href="/en/pdf-password-set/" style="color:inherit;text-decoration:none;font-weight:700;">Set PDF Password (PDFPasswordSet)</a>
+              <span class="service-badge live">✓ Live</span>
+            </div>
+            <div class="service-card-desc">Sets an open password on a PDF and controls print, edit, copy, and form-fill permissions. Choose between AES-128 or RC4-40 encryption.</div>
+            <div class="service-card-tags">
+              <span class="service-tag">Set Password</span>
+              <span class="service-tag">Permission Control</span>
+              <span class="service-tag">AES/RC4 Encryption</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-card-icon"><div style="width:46px;height:46px;background:#a8e6cf;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="font:700 13px Poppins,sans-serif;color:#2a2433;line-height:1;letter-spacing:-.5px;white-space:nowrap">XLS</div></div></div>
+          <div class="service-card-body">
+            <div class="service-card-name">
+              <a href="/en/xlsx-csv-convert/" style="color:inherit;text-decoration:none;font-weight:700;">Excel ↔ CSV Converter (XlsxCsvConvert)</a>
+              <span class="service-badge live">✓ Live</span>
+            </div>
+            <div class="service-card-desc">Upload an Excel file to get CSV, or paste CSV to get an Excel file. Supports selecting a sheet from multi-sheet workbooks.</div>
+            <div class="service-card-tags">
+              <span class="service-tag">Excel → CSV</span>
+              <span class="service-tag">CSV → Excel</span>
+              <span class="service-tag">Multi-Sheet</span>
+            </div>
+          </div>
+        </div>
+
+      <!-- ── 유틸리티  F[3]=#bcd4ff ── -->
+      <div style="display:flex;align-items:center;gap:10px;margin:36px 0 10px 4px"><div style="flex-shrink:0"><div style="position:relative;width:46px;height:36px"><div style="position:absolute;left:2px;top:0;width:20px;height:10px;background:#bcd4ff;border:2.5px solid #2a2433;border-radius:6px 8px 0 0;box-sizing:border-box"></div><div style="position:absolute;left:0;bottom:0;width:46px;height:28px;background:#bcd4ff;border:2.5px solid #2a2433;border-radius:4px 7px 6px 5px;box-sizing:border-box"></div><div style="position:absolute;left:5px;bottom:19px;width:22px;height:2.5px;background:rgba(255,255,255,.55);border-radius:3px"></div></div></div><span style="font-size:15px;font-weight:700;color:var(--text)">Utilities</span></div>
+
+        <div class="service-card">
+          <div class="service-card-icon"><div style="width:46px;height:46px;background:#bcd4ff;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="display:grid;grid-template-columns:repeat(3,7px);grid-template-rows:repeat(3,7px);gap:2px"><div style="background:#2a2433;border-radius:1px"></div><div style="background:transparent"></div><div style="background:#2a2433;border-radius:1px"></div><div style="background:transparent"></div><div style="background:#2a2433;border-radius:1px"></div><div style="background:transparent"></div><div style="background:#2a2433;border-radius:1px"></div><div style="background:#2a2433;border-radius:1px"></div><div style="background:#2a2433;border-radius:1px"></div></div></div></div>
+          <div class="service-card-body">
+            <div class="service-card-name">
+              <a href="/en/qr-code/" style="color:inherit;text-decoration:none;font-weight:700;">QR Code Generator (QRCode)</a>
+              <span class="service-badge live">✓ Live</span>
+            </div>
+            <div class="service-card-desc">Generates a QR code from a URL, text, or contact info. Set the size and color, and download as PNG.</div>
+            <div class="service-card-tags">
+              <span class="service-tag">URL/Text Input</span>
+              <span class="service-tag">Contact (vCard)</span>
+              <span class="service-tag">PNG Download</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-card-icon"><div style="width:46px;height:46px;background:#bcd4ff;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="position:relative;width:30px;height:18px;display:flex;align-items:center"><div style="width:15px;height:15px;border-radius:50%;background:transparent;border:3px solid #2a2433;box-sizing:border-box"></div><div style="position:absolute;left:13px;top:50%;transform:translateY(-50%);width:15px;height:3px;background:#2a2433;border-radius:2px"></div><div style="position:absolute;right:1px;top:50%;width:3px;height:7px;background:#2a2433;border-radius:2px"></div><div style="position:absolute;right:6px;top:50%;width:3px;height:7px;background:#2a2433;border-radius:2px"></div></div></div></div>
+          <div class="service-card-body">
+            <div class="service-card-name">
+              <a href="/en/password-gen/" style="color:inherit;text-decoration:none;font-weight:700;">Password Generator (PasswordGen)</a>
+              <span class="service-badge live">✓ Live</span>
+            </div>
+            <div class="service-card-desc">Generates a password using secure randomness. Freely set length and the mix of upper/lowercase, numbers, and symbols.</div>
+            <div class="service-card-tags">
+              <span class="service-tag">Character Mix</span>
+              <span class="service-tag">Bulk Generate</span>
+              <span class="service-tag">Strength Meter</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-card-icon"><div style="width:46px;height:46px;background:#bcd4ff;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="font:700 16px Poppins,sans-serif;color:#2a2433;line-height:1;letter-spacing:-.5px;white-space:nowrap">↔</div></div></div>
+          <div class="service-card-body">
+            <div class="service-card-name">
+              <a href="/en/unit-convert/" style="color:inherit;text-decoration:none;font-weight:700;">Unit Converter (UnitConvert)</a>
+              <span class="service-badge live">✓ Live</span>
+            </div>
+            <div class="service-card-desc">Converts length, weight, temperature, area, and speed in real time. Enter a value and every unit updates at once.</div>
+            <div class="service-card-tags">
+              <span class="service-tag">Length/Weight/Temp</span>
+              <span class="service-tag">Area/Speed</span>
+              <span class="service-tag">Real-Time Convert</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-card-icon"><div style="width:46px;height:46px;background:#bcd4ff;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="position:relative;width:30px;height:30px;background:#fffdf9;border:2.5px solid #2a2433;border-radius:4px;box-sizing:border-box;overflow:hidden"><div style="position:absolute;top:0;left:0;width:100%;height:8px;background:#bcd4ff;border-bottom:2.5px solid #2a2433"></div><div style="position:absolute;top:13px;left:4px;width:4px;height:4px;background:#2a2433;border-radius:1px"></div><div style="position:absolute;top:13px;left:13px;width:4px;height:4px;background:rgba(42,36,51,.3);border-radius:1px"></div><div style="position:absolute;top:13px;left:22px;width:4px;height:4px;background:rgba(42,36,51,.3);border-radius:1px"></div><div style="position:absolute;top:21px;left:4px;width:4px;height:4px;background:rgba(42,36,51,.3);border-radius:1px"></div><div style="position:absolute;top:21px;left:13px;width:4px;height:4px;background:#2a2433;border-radius:1px"></div></div></div></div>
+          <div class="service-card-body">
+            <div class="service-card-name">
+              <a href="/en/date-calc/" style="color:inherit;text-decoration:none;font-weight:700;">Date Calculator (DateCalc)</a>
+              <span class="service-badge live">✓ Live</span>
+            </div>
+            <div class="service-card-desc">Calculates D-day, the difference between dates, and international/local age all in one place. Auto-fills today's date and shows the day of the week.</div>
+            <div class="service-card-tags">
+              <span class="service-tag">D-day Calculation</span>
+              <span class="service-tag">Date Difference</span>
+              <span class="service-tag">Age Calculation</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-card-icon"><div style="width:46px;height:46px;background:#bcd4ff;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="position:relative;width:28px;height:28px;border-radius:50%;background:#fffdf9;border:2.5px solid #2a2433;box-sizing:border-box"><div style="position:absolute;left:50%;top:50%;width:2.5px;height:9px;background:#2a2433;border-radius:2px;transform-origin:bottom center;transform:translate(-50%,-100%)"></div><div style="position:absolute;left:50%;top:50%;width:2.5px;height:7px;background:#2a2433;border-radius:2px;transform-origin:bottom center;transform:translate(-50%,-100%) rotate(90deg)"></div></div></div></div>
+          <div class="service-card-body">
+            <div class="service-card-name">
+              <a href="/en/world-clock/" style="color:inherit;text-decoration:none;font-weight:700;">World Clock (WorldClock)</a>
+              <span class="service-badge live">✓ Live</span>
+            </div>
+            <div class="service-card-desc">Shows live times for cities around the world and converts between time zones. Auto-detects your location and supports 100+ cities.</div>
+            <div class="service-card-tags">
+              <span class="service-tag">Live World Clock</span>
+              <span class="service-tag">Time Zone Convert</span>
+              <span class="service-tag">Auto DST</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-card-icon"><div style="width:46px;height:46px;background:#bcd4ff;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="position:relative;width:28px;height:28px;border-radius:50%;background:#fffdf9;border:2.5px solid #2a2433;box-sizing:border-box;overflow:hidden"><div style="position:absolute;left:0;top:0;width:14px;height:14px;background:#ff8a5e"></div><div style="position:absolute;right:0;top:0;width:14px;height:14px;background:#5dffb0"></div><div style="position:absolute;left:0;bottom:0;width:14px;height:14px;background:#6aa8ff"></div><div style="position:absolute;right:0;bottom:0;width:14px;height:14px;background:#ffe14d"></div></div></div></div>
+          <div class="service-card-body">
+            <div class="service-card-name">
+              <a href="/en/random-picker/" style="color:inherit;text-decoration:none;font-weight:700;">Random Picker (RandomPicker)</a>
+              <span class="service-badge live">✓ Live</span>
+            </div>
+            <div class="service-card-desc">Enter a list of names to spin a roulette wheel and pick a winner, or randomly split people into teams. Keeps a history of past draws and lets you copy results.</div>
+            <div class="service-card-tags">
+              <span class="service-tag">Roulette Draw</span>
+              <span class="service-tag">Team Split</span>
+              <span class="service-tag">Draw History</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-card-icon"><div style="width:46px;height:46px;background:#bcd4ff;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="position:relative;width:26px;height:26px;border-radius:50%;background:#ff8a5e;border:2.5px solid #2a2433;box-sizing:border-box"><div style="position:absolute;left:50%;top:50%;width:2px;height:8px;background:#2a2433;border-radius:2px;transform-origin:bottom center;transform:translate(-50%,-100%)"></div><div style="position:absolute;left:50%;top:50%;width:2px;height:6px;background:#2a2433;border-radius:2px;transform-origin:bottom center;transform:translate(-50%,-100%) rotate(115deg)"></div></div></div></div>
+          <div class="service-card-body">
+            <div class="service-card-name">
+              <a href="/en/pomodoro-timer/" style="color:inherit;text-decoration:none;font-weight:700;">Focus &amp; Break Timer (PomodoroTimer)</a>
+              <span class="service-badge live">✓ Live</span>
+            </div>
+            <div class="service-card-desc">Manages your time with the Pomodoro technique -- 25 minutes of focus, 5 minutes of rest. Freely customize the intervals and track completed sessions for the day.</div>
+            <div class="service-card-tags">
+              <span class="service-tag">Custom Intervals</span>
+              <span class="service-tag">Session Log</span>
+              <span class="service-tag">Sound Alerts</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-card-icon"><div style="width:46px;height:46px;background:#bcd4ff;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="position:relative;width:26px;height:26px"><div style="position:relative;width:22px;height:22px;border-radius:50%;background:#fffdf9;border:3px solid #2a2433;box-sizing:border-box"></div><div style="position:absolute;right:-4px;bottom:-2px;width:9px;height:3px;background:#2a2433;border-radius:2px;transform:rotate(45deg);transform-origin:left center"></div></div></div></div>
+          <div class="service-card-body">
+            <div class="service-card-name">
+              <a href="/en/qr-scanner/" style="color:inherit;text-decoration:none;font-weight:700;">QR Code Scanner (QRScanner)</a>
+              <span class="service-badge live">✓ Live</span>
+            </div>
+            <div class="service-card-desc">Reads a QR code from an uploaded image or your webcam, then instantly copies the result or opens it as a link. Also shows a scan history for the current session.</div>
+            <div class="service-card-tags">
+              <span class="service-tag">Webcam Scan</span>
+              <span class="service-tag">Image Upload</span>
+              <span class="service-tag">Scan History</span>
+            </div>
+          </div>
+        </div>
+
+        
+
+        <div class="service-card">
+          <div class="service-card-icon"><div style="width:46px;height:46px;background:#bcd4ff;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="display:flex;align-items:center;gap:1.5px;height:24px"><div style="width:2px;height:100%;background:#2a2433"></div><div style="width:1px;height:100%;background:#2a2433"></div><div style="width:3px;height:100%;background:#2a2433"></div><div style="width:1px;height:100%;background:#2a2433"></div><div style="width:2px;height:100%;background:#2a2433"></div><div style="width:1px;height:100%;background:#2a2433"></div><div style="width:2px;height:100%;background:#2a2433"></div></div></div></div>
+          <div class="service-card-body">
+            <div class="service-card-name">
+              <a href="/en/barcode-gen/" style="color:inherit;text-decoration:none;font-weight:700;">Barcode Generator (BarcodeGen)</a>
+              <span class="service-badge live">✓ Live</span>
+            </div>
+            <div class="service-card-desc">Enter text or numbers to instantly generate a CODE128, EAN13, EAN8, UPC, or CODE39 barcode and download it as a PNG.</div>
+            <div class="service-card-tags">
+              <span class="service-tag">5 Formats</span>
+              <span class="service-tag">PNG Download</span>
+              <span class="service-tag">Instant Generate</span>
+            </div>
+          </div>
+        </div>
+
+      <!-- ── 계산기  F[6]=#a0e8e0 ── -->
+      <div style="display:flex;align-items:center;gap:10px;margin:36px 0 10px 4px"><div style="flex-shrink:0"><div style="position:relative;width:46px;height:36px"><div style="position:absolute;left:2px;top:0;width:20px;height:10px;background:#a0e8e0;border:2.5px solid #2a2433;border-radius:6px 8px 0 0;box-sizing:border-box"></div><div style="position:absolute;left:0;bottom:0;width:46px;height:28px;background:#a0e8e0;border:2.5px solid #2a2433;border-radius:4px 7px 6px 5px;box-sizing:border-box"></div><div style="position:absolute;left:5px;bottom:19px;width:22px;height:2.5px;background:rgba(255,255,255,.55);border-radius:3px"></div></div></div><span style="font-size:15px;font-weight:700;color:var(--text)">Calculators</span></div>
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        <div class="service-card">
+          <div class="service-card-icon"><div style="width:46px;height:46px;background:#a0e8e0;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="position:relative;width:26px;height:26px;border-radius:50%;background:#fffdf9;border:2.5px solid #2a2433;box-sizing:border-box;display:flex;align-items:center;justify-content:center;font:700 9px Fira Code,monospace;color:#2a2433">BMI</div></div></div>
+          <div class="service-card-body">
+            <div class="service-card-name">
+              <a href="/en/bmi-calc/" style="color:inherit;text-decoration:none;font-weight:700;">BMI/Calorie Calculator (BmiCalc)</a>
+              <span class="service-badge live">✓ Live</span>
+            </div>
+            <div class="service-card-desc">Enter height and weight to calculate BMI and weight category. Add age, sex, and activity level to also calculate your BMR and TDEE (daily calorie needs).</div>
+            <div class="service-card-tags">
+              <span class="service-tag">BMI</span>
+              <span class="service-tag">BMR</span>
+              <span class="service-tag">TDEE</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-card-icon"><div style="width:46px;height:46px;background:#a0e8e0;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="font:700 13px Poppins,sans-serif;color:#2a2433;line-height:1;letter-spacing:-.5px;white-space:nowrap">1/N</div></div></div>
+          <div class="service-card-body">
+            <div class="service-card-name">
+              <a href="/en/split-bill-calc/" style="color:inherit;text-decoration:none;font-weight:700;">Split Bill Calculator (SplitBillCalc)</a>
+              <span class="service-badge live">✓ Live</span>
+            </div>
+            <div class="service-card-desc">Splits a total evenly across a group, or, when everyone paid different amounts, calculates who owes whom with the minimum number of transfers.</div>
+            <div class="service-card-tags">
+              <span class="service-tag">Even Split</span>
+              <span class="service-tag">Settlement Calc</span>
+              <span class="service-tag">Minimal Transfers</span>
+            </div>
+          </div>
+        </div>
+
+        
+
+        
+
+        <div class="service-card">
+          <div class="service-card-icon"><div style="width:46px;height:46px;background:#a0e8e0;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="position:relative;width:22px;height:22px;background:#fffdf9;border:2.5px solid #2a2433;border-radius:4px 11px 4px 4px;box-sizing:border-box;transform:rotate(-45deg)"><div style="position:absolute;left:3px;top:3px;width:5px;height:5px;border-radius:50%;background:#2a2433"></div></div></div></div>
+          <div class="service-card-body">
+            <div class="service-card-name">
+              <a href="/en/unit-price-calc/" style="color:inherit;text-decoration:none;font-weight:700;">Unit Price Calculator (UnitPriceCalc)</a>
+              <span class="service-badge live">✓ Live</span>
+            </div>
+            <div class="service-card-desc">Enter the price, size, and unit for each product to convert to price per gram, per ml, or per item, so you can instantly see which is cheaper.</div>
+            <div class="service-card-tags">
+              <span class="service-tag">Best-Price Compare</span>
+              <span class="service-tag">Unit Conversion</span>
+              <span class="service-tag">Grocery Shopping</span>
+            </div>
+          </div>
+        </div>
+
+      <!-- ── 생활·재미  F[7]=#ffc2d6 ── -->
+      <div style="display:flex;align-items:center;gap:10px;margin:36px 0 10px 4px"><div style="flex-shrink:0"><div style="position:relative;width:46px;height:36px"><div style="position:absolute;left:2px;top:0;width:20px;height:10px;background:#ffc2d6;border:2.5px solid #2a2433;border-radius:6px 8px 0 0;box-sizing:border-box"></div><div style="position:absolute;left:0;bottom:0;width:46px;height:28px;background:#ffc2d6;border:2.5px solid #2a2433;border-radius:4px 7px 6px 5px;box-sizing:border-box"></div><div style="position:absolute;left:5px;bottom:19px;width:22px;height:2.5px;background:rgba(255,255,255,.55);border-radius:3px"></div></div></div><span style="font-size:15px;font-weight:700;color:var(--text)">Lifestyle &amp; Fun</span></div>
+
+        
+
+        <div class="service-card">
+          <div class="service-card-icon"><div style="width:46px;height:46px;background:#ffc2d6;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="position:relative;width:30px;height:24px"><div style="position:absolute;left:-2px;top:3px;width:9px;height:13px;background:#fffdf9;border:2.5px solid #2a2433;border-radius:50% 50% 45% 45%/60% 60% 40% 40%;transform:rotate(-18deg);box-sizing:border-box"></div><div style="position:absolute;right:-2px;top:3px;width:9px;height:13px;background:#fffdf9;border:2.5px solid #2a2433;border-radius:50% 50% 45% 45%/60% 60% 40% 40%;transform:rotate(18deg);box-sizing:border-box"></div><div style="position:absolute;left:4px;top:5px;width:22px;height:19px;border-radius:50%;background:#fffdf9;border:2.5px solid #2a2433;box-sizing:border-box"></div><div style="position:absolute;left:10px;top:13px;width:3px;height:3px;border-radius:50%;background:#2a2433"></div><div style="position:absolute;right:10px;top:13px;width:3px;height:3px;border-radius:50%;background:#2a2433"></div><div style="position:absolute;left:50%;top:16px;width:5px;height:4px;border-radius:50%;background:#2a2433;transform:translateX(-50%)"></div></div></div></div>
+          <div class="service-card-body">
+            <div class="service-card-name">
+              <a href="/en/pet-age-calc/" style="color:inherit;text-decoration:none;font-weight:700;">Pet Age Calculator (PetAgeCalc)</a>
+              <span class="service-badge live">✓ Live</span>
+            </div>
+            <div class="service-card-desc">Enter your dog or cat's age to convert it to human years. Dogs use a different conversion chart based on size (small/medium/large/giant).</div>
+            <div class="service-card-tags">
+              <span class="service-tag">Dogs/Cats</span>
+              <span class="service-tag">Size-Based Chart</span>
+              <span class="service-tag">Instant Calculation</span>
+            </div>
+          </div>
+        </div>
+
+        
+
+      <!-- ── 개발자  F[4]=#e0c3ff ── -->
+      <div style="display:flex;align-items:center;gap:10px;margin:36px 0 10px 4px"><div style="flex-shrink:0"><div style="position:relative;width:46px;height:36px"><div style="position:absolute;left:2px;top:0;width:20px;height:10px;background:#e0c3ff;border:2.5px solid #2a2433;border-radius:6px 8px 0 0;box-sizing:border-box"></div><div style="position:absolute;left:0;bottom:0;width:46px;height:28px;background:#e0c3ff;border:2.5px solid #2a2433;border-radius:4px 7px 6px 5px;box-sizing:border-box"></div><div style="position:absolute;left:5px;bottom:19px;width:22px;height:2.5px;background:rgba(255,255,255,.55);border-radius:3px"></div></div></div><span style="font-size:15px;font-weight:700;color:var(--text)">Developer</span></div>
+
+        <div class="service-card">
+          <div class="service-card-icon"><div style="width:46px;height:46px;background:#e0c3ff;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="font:700 16px Poppins,sans-serif;color:#2a2433;line-height:1;letter-spacing:-.5px;white-space:nowrap">{ }</div></div></div>
+          <div class="service-card-body">
+            <div class="service-card-name">
+              <a href="/en/json-format/" style="color:inherit;text-decoration:none;font-weight:700;">JSON Formatter (JSONFormat)</a>
+              <span class="service-badge live">✓ Live</span>
+            </div>
+            <div class="service-card-desc">Neatly formats JSON data with indentation. Also provides validation, minification, and path exploration.</div>
+            <div class="service-card-tags">
+              <span class="service-tag">JSON Formatting</span>
+              <span class="service-tag">Validation</span>
+              <span class="service-tag">Minify/Sort</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-card-icon"><div style="width:46px;height:46px;background:#e0c3ff;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="font:700 16px Poppins,sans-serif;color:#2a2433;line-height:1;letter-spacing:-.5px;white-space:nowrap">.*</div></div></div>
+          <div class="service-card-body">
+            <div class="service-card-name">
+              <a href="/en/regex-test/" style="color:inherit;text-decoration:none;font-weight:700;">Regex Tester (RegexTest)</a>
+              <span class="service-badge live">✓ Live</span>
+            </div>
+            <div class="service-card-desc">Tests a regular expression live against your text. Highlights matches and gives an intuitive view of capture groups and flags.</div>
+            <div class="service-card-tags">
+              <span class="service-tag">Regex Testing</span>
+              <span class="service-tag">Match Highlighting</span>
+              <span class="service-tag">Capture Groups</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-card-icon"><div style="width:46px;height:46px;background:#e0c3ff;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="font:700 16px Poppins,sans-serif;color:#2a2433;line-height:1;letter-spacing:-.5px;white-space:nowrap">64</div></div></div>
+          <div class="service-card-body">
+            <div class="service-card-name">
+              <a href="/en/base64-tool/" style="color:inherit;text-decoration:none;font-weight:700;">Base64 Converter (Base64Tool)</a>
+              <span class="service-badge live">✓ Live</span>
+            </div>
+            <div class="service-card-desc">Encodes or decodes text or files as Base64. Also supports URL-safe encoding and converting images to a data URI.</div>
+            <div class="service-card-tags">
+              <span class="service-tag">Base64 Encode</span>
+              <span class="service-tag">Base64 Decode</span>
+              <span class="service-tag">File Conversion</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-card-icon"><div style="width:46px;height:46px;background:#e0c3ff;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="font:700 16px Poppins,sans-serif;color:#2a2433;line-height:1;letter-spacing:-.5px;white-space:nowrap">#</div></div></div>
+          <div class="service-card-body">
+            <div class="service-card-name">
+              <a href="/en/hash-gen/" style="color:inherit;text-decoration:none;font-weight:700;">Hash Generator (HashGen)</a>
+              <span class="service-badge live">✓ Live</span>
+            </div>
+            <div class="service-card-desc">Generates MD5, SHA-1, SHA-256, and SHA-512 hashes for text or files. Useful for verifying file integrity.</div>
+            <div class="service-card-tags">
+              <span class="service-tag">MD5/SHA-256</span>
+              <span class="service-tag">File Hashing</span>
+              <span class="service-tag">Integrity Check</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-card-icon"><div style="width:46px;height:46px;background:#e0c3ff;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="font:700 16px Poppins,sans-serif;color:#2a2433;line-height:1;letter-spacing:-.5px;white-space:nowrap">&lt;&gt;</div></div></div>
+          <div class="service-card-body">
+            <div class="service-card-name">
+              <a href="/en/minifier/" style="color:inherit;text-decoration:none;font-weight:700;">Code Minifier (Minifier)</a>
+              <span class="service-badge live">✓ Live</span>
+            </div>
+            <div class="service-card-desc">Strips comments and unnecessary whitespace from HTML, CSS, and JS code to shrink file size. See the size and reduction before and after instantly.</div>
+            <div class="service-card-tags">
+              <span class="service-tag">HTML/CSS/JS</span>
+              <span class="service-tag">Remove Comments</span>
+              <span class="service-tag">Shows Reduction %</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-card-icon"><div style="width:46px;height:46px;background:#e0c3ff;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="font:700 15px Poppins,sans-serif;color:#2a2433;line-height:1;letter-spacing:-.5px;white-space:nowrap">%20</div></div></div>
+          <div class="service-card-body">
+            <div class="service-card-name">
+              <a href="/en/url-encode/" style="color:inherit;text-decoration:none;font-weight:700;">URL Encoder (URLEncode)</a>
+              <span class="service-badge live">✓ Live</span>
+            </div>
+            <div class="service-card-desc">Encodes or decodes text as a URL. Paste a URL or query string to parse parameters into a table, or build a query URL from key-value pairs.</div>
+            <div class="service-card-tags">
+              <span class="service-tag">Encode/Decode</span>
+              <span class="service-tag">Query Parsing</span>
+              <span class="service-tag">Query Builder</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-card-icon"><div style="width:46px;height:46px;background:#e0c3ff;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="font:700 14px Poppins,sans-serif;color:#2a2433;line-height:1;letter-spacing:-.5px;white-space:nowrap">rem</div></div></div>
+          <div class="service-card-body">
+            <div class="service-card-name">
+              <a href="/en/css-unit/" style="color:inherit;text-decoration:none;font-weight:700;">CSS Unit Converter (CSSUnit)</a>
+              <span class="service-badge live">✓ Live</span>
+            </div>
+            <div class="service-card-desc">Converts px, rem, em, vw, vh, and % units against your base font size and viewport size in real time. Enter a value and every unit updates at once.</div>
+            <div class="service-card-tags">
+              <span class="service-tag">px/rem/em</span>
+              <span class="service-tag">vw/vh/%</span>
+              <span class="service-tag">Custom Base Values</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-card-icon"><div style="width:46px;height:46px;background:#e0c3ff;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="font:700 14px Poppins,sans-serif;color:#2a2433;line-height:1;letter-spacing:-.5px;white-space:nowrap">UUID</div></div></div>
+          <div class="service-card-body">
+            <div class="service-card-name">
+              <a href="/en/uuid-gen/" style="color:inherit;text-decoration:none;font-weight:700;">UUID Generator (UUIDGen)</a>
+              <span class="service-badge live">✓ Live</span>
+            </div>
+            <div class="service-card-desc">Instantly generates a UUID (v4), or creates up to 1,000 at once in bulk. Choose formatting options -- uppercase, remove hyphens, curly braces -- then copy or download as TXT.</div>
+            <div class="service-card-tags">
+              <span class="service-tag">v4 UUID</span>
+              <span class="service-tag">Bulk Generate</span>
+              <span class="service-tag">Format Options</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-card-icon"><div style="width:46px;height:46px;background:#e0c3ff;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="font:700 14px Poppins,sans-serif;color:#2a2433;line-height:1;letter-spacing:-.5px;white-space:nowrap">JWT</div></div></div>
+          <div class="service-card-body">
+            <div class="service-card-name">
+              <a href="/en/jwt-decoder/" style="color:inherit;text-decoration:none;font-weight:700;">JWT Decoder (JWTDecoder)</a>
+              <span class="service-badge live">✓ Live</span>
+            </div>
+            <div class="service-card-desc">Paste in a JWT token to instantly decode its header and payload. Automatically converts the expiration time (exp) into a readable date; does not perform signature verification.</div>
+            <div class="service-card-tags">
+              <span class="service-tag">Header/Payload Parsing</span>
+              <span class="service-tag">Expiration Display</span>
+              <span class="service-tag">JSON Highlighting</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-card-icon"><div style="width:46px;height:46px;background:#e0c3ff;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="font:700 13px Poppins,sans-serif;color:#2a2433;line-height:1;letter-spacing:-.5px;white-space:nowrap">CRON</div></div></div>
+          <div class="service-card-body">
+            <div class="service-card-name">
+              <a href="/en/cron-helper/" style="color:inherit;text-decoration:none;font-weight:700;">Cron Expression Helper (CronHelper)</a>
+              <span class="service-badge live">✓ Live</span>
+            </div>
+            <div class="service-card-desc">Parses a cron expression into a human-readable sentence, or build one yourself by choosing minute, hour, day, month, and weekday. Previews the next 5 run times.</div>
+            <div class="service-card-tags">
+              <span class="service-tag">Expression Parsing</span>
+              <span class="service-tag">Visual Builder</span>
+              <span class="service-tag">Next Run Times</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-card-icon"><div style="width:46px;height:46px;background:#e0c3ff;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="font:700 15px Poppins,sans-serif;color:#2a2433;line-height:1;letter-spacing:-.5px;white-space:nowrap">SQL</div></div></div>
+          <div class="service-card-body">
+            <div class="service-card-name">
+              <a href="/en/sql-formatter/" style="color:inherit;text-decoration:none;font-weight:700;">SQL Formatter (SQLFormatter)</a>
+              <span class="service-badge live">✓ Live</span>
+            </div>
+            <div class="service-card-desc">Indents and organizes a SQL query for readability. Supports uppercasing keywords and choosing your indent size.</div>
+            <div class="service-card-tags">
+              <span class="service-tag">Auto-Indent</span>
+              <span class="service-tag">Uppercase Keywords</span>
+              <span class="service-tag">SQL Download</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-card-icon"><div style="width:46px;height:46px;background:#e0c3ff;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="position:relative;width:28px;height:22px"><div style="position:absolute;left:0;top:0;width:18px;height:18px;border-radius:50%;background:#ff8a5e;border:2px solid #2a2433;box-sizing:border-box"></div><div style="position:absolute;right:0;top:0;width:18px;height:18px;border-radius:50%;background:#6aa8ff;border:2px solid #2a2433;box-sizing:border-box;opacity:.85"></div></div></div></div>
+          <div class="service-card-body">
+            <div class="service-card-name">
+              <a href="/en/color-converter/" style="color:inherit;text-decoration:none;font-weight:700;">Color Code Converter (ColorConverter)</a>
+              <span class="service-badge live">✓ Live</span>
+            </div>
+            <div class="service-card-desc">Pick a color or enter a value to convert HEX, RGB, and HSL codes to each other in real time. A CSS rgba() value is provided too.</div>
+            <div class="service-card-tags">
+              <span class="service-tag">HEX·RGB·HSL</span>
+              <span class="service-tag">Real-Time Convert</span>
+              <span class="service-tag">Color Picker</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-card-icon"><div style="width:46px;height:46px;background:#e0c3ff;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="font:700 15px Fira Code,monospace;color:#2a2433;line-height:1;letter-spacing:-.5px;white-space:nowrap">&lt;/&gt;</div></div></div>
+          <div class="service-card-body">
+            <div class="service-card-name">
+              <a href="/en/code-snapshot/" style="color:inherit;text-decoration:none;font-weight:700;">Code Snapshot Generator (CodeSnapshot)</a>
+              <span class="service-badge live">✓ Live</span>
+            </div>
+            <div class="service-card-desc">Paste in code and apply a theme and window style to turn it into a shareable image. Supports PNG download and clipboard copy.</div>
+            <div class="service-card-tags">
+              <span class="service-tag">5 Themes</span>
+              <span class="service-tag">Basic Syntax Highlighting</span>
+              <span class="service-tag">PNG Download</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-card-icon"><div style="width:46px;height:46px;background:#e0c3ff;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="font:700 15px Fira Code,monospace;color:#2a2433;line-height:1;letter-spacing:-.5px;white-space:nowrap">404</div></div></div>
+          <div class="service-card-body">
+            <div class="service-card-name">
+              <a href="/en/http-status-ref/" style="color:inherit;text-decoration:none;font-weight:700;">HTTP Status Code Reference (HttpStatusRef)</a>
+              <span class="service-badge live">✓ Live</span>
+            </div>
+            <div class="service-card-desc">Search by code or name to instantly look up what an HTTP status code means. Includes 1xx-5xx category filters and one-click code copy.</div>
+            <div class="service-card-tags">
+              <span class="service-tag">Live Search</span>
+              <span class="service-tag">Category Filter</span>
+              <span class="service-tag">Copy Code</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-card-icon"><div style="width:46px;height:46px;background:#e0c3ff;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="font:700 16px Poppins,sans-serif;color:#2a2433;line-height:1;letter-spacing:-.5px;white-space:nowrap">AA</div></div></div>
+          <div class="service-card-body">
+            <div class="service-card-name">
+              <a href="/en/color-contrast-checker/" style="color:inherit;text-decoration:none;font-weight:700;">Color Contrast Checker (ColorContrastChecker)</a>
+              <span class="service-badge live">✓ Live</span>
+            </div>
+            <div class="service-card-desc">Enter a text and background color to calculate the WCAG 2.1 contrast ratio and instantly see whether it passes AA/AAA.</div>
+            <div class="service-card-tags">
+              <span class="service-tag">WCAG 2.1</span>
+              <span class="service-tag">AA/AAA Grading</span>
+              <span class="service-tag">Live Preview</span>
+            </div>
+          </div>
+        </div>
+
+      <!-- ── 데이터·시각화  F[5]=#ffd9a8 ── -->
+      <div style="display:flex;align-items:center;gap:10px;margin:36px 0 10px 4px"><div style="flex-shrink:0"><div style="position:relative;width:46px;height:36px"><div style="position:absolute;left:2px;top:0;width:20px;height:10px;background:#ffd9a8;border:2.5px solid #2a2433;border-radius:6px 8px 0 0;box-sizing:border-box"></div><div style="position:absolute;left:0;bottom:0;width:46px;height:28px;background:#ffd9a8;border:2.5px solid #2a2433;border-radius:4px 7px 6px 5px;box-sizing:border-box"></div><div style="position:absolute;left:5px;bottom:19px;width:22px;height:2.5px;background:rgba(255,255,255,.55);border-radius:3px"></div></div></div><span style="font-size:15px;font-weight:700;color:var(--text)">Data &amp; Visualization</span></div>
+
+        <div class="service-card">
+          <div class="service-card-icon"><div style="width:46px;height:46px;background:#ffd9a8;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="display:flex;align-items:flex-end;gap:3px;height:28px"><div style="width:6px;height:13px;background:#fffdf9;border:2px solid #2a2433;border-radius:2px 2px 0 0;box-sizing:border-box"></div><div style="width:6px;height:22px;background:#fffdf9;border:2px solid #2a2433;border-radius:2px 2px 0 0;box-sizing:border-box"></div><div style="width:6px;height:17px;background:#fffdf9;border:2px solid #2a2433;border-radius:2px 2px 0 0;box-sizing:border-box"></div></div></div></div>
+          <div class="service-card-body">
+            <div class="service-card-name">
+              <a href="/en/chart-maker/" style="color:inherit;text-decoration:none;font-weight:700;">Chart Maker (ChartMaker)</a>
+              <span class="service-badge live">✓ Live</span>
+            </div>
+            <div class="service-card-desc">Instantly creates bar, line, pie, donut, radar, or polar charts. Supports CSV upload and saving as PNG/SVG.</div>
+            <div class="service-card-tags">
+              <span class="service-tag">6 Chart Types</span>
+              <span class="service-tag">CSV Upload</span>
+              <span class="service-tag">PNG/SVG Save</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-card-icon"><div style="width:46px;height:46px;background:#ffd9a8;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="position:relative;width:30px;height:26px"><div style="position:absolute;left:0;top:0;width:11px;height:8px;background:#fffdf9;border:2px solid #2a2433;border-radius:2px;box-sizing:border-box"></div><div style="position:absolute;right:0;top:0;width:11px;height:8px;background:#fffdf9;border:2px solid #2a2433;border-radius:2px;box-sizing:border-box"></div><div style="position:absolute;left:9px;bottom:0;width:11px;height:8px;background:#fffdf9;border:2px solid #2a2433;border-radius:2px;box-sizing:border-box"></div><div style="position:absolute;left:5px;top:8px;width:2px;height:6px;background:#2a2433"></div><div style="position:absolute;right:5px;top:8px;width:2px;height:6px;background:#2a2433"></div></div></div></div>
+          <div class="service-card-body">
+            <div class="service-card-name">
+              <a href="/en/diagram-maker/" style="color:inherit;text-decoration:none;font-weight:700;">Diagram Maker (DiagramMaker)</a>
+              <span class="service-badge live">✓ Live</span>
+            </div>
+            <div class="service-card-desc">Instantly draws flowcharts, sequence, ER, Gantt, and pie diagrams using Mermaid syntax. Save as SVG or PNG.</div>
+            <div class="service-card-tags">
+              <span class="service-tag">Mermaid Syntax</span>
+              <span class="service-tag">5 Presets</span>
+              <span class="service-tag">SVG/PNG Save</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-card-icon"><div style="width:46px;height:46px;background:#ffd9a8;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="display:flex;gap:3px"><div style="width:11px;height:11px;border-radius:50%;background:#ff8a5e;border:2px solid #2a2433;box-sizing:border-box"></div><div style="width:11px;height:11px;border-radius:50%;background:#5dffb0;border:2px solid #2a2433;box-sizing:border-box;margin-top:8px"></div><div style="width:11px;height:11px;border-radius:50%;background:#6aa8ff;border:2px solid #2a2433;box-sizing:border-box"></div></div></div></div>
+          <div class="service-card-body">
+            <div class="service-card-name">
+              <a href="/en/palette-gen/" style="color:inherit;text-decoration:none;font-weight:700;">Palette Generator (PaletteGen)</a>
+              <span class="service-badge live">✓ Live</span>
+            </div>
+            <div class="service-card-desc">Enter one color to automatically generate a complementary, analogous, triadic, split-complementary, or monochromatic palette. Export directly as CSS variables.</div>
+            <div class="service-card-tags">
+              <span class="service-tag">5 Harmony Types</span>
+              <span class="service-tag">HEX/RGB/HSL</span>
+              <span class="service-tag">Export CSS Variables</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-card-icon"><div style="width:46px;height:46px;background:#ffd9a8;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="display:flex;flex-direction:column;align-items:center;gap:2px"><div style="font:700 13px Poppins,sans-serif;color:#2a2433;line-height:1">Aa</div><div style="font:700 8px Poppins,sans-serif;color:rgba(42,36,51,.55);line-height:1">가나다</div><div style="font:700 10px Poppins,sans-serif;color:rgba(42,36,51,.75);line-height:1">Word</div></div></div></div>
+          <div class="service-card-body">
+            <div class="service-card-name">
+              <a href="/en/word-cloud/" style="color:inherit;text-decoration:none;font-weight:700;">Word Cloud Generator (WordCloudGen)</a>
+              <span class="service-badge live">✓ Live</span>
+            </div>
+            <div class="service-card-desc">Paste in text to analyze word frequency and generate a word cloud image. Supports stop-word removal, color/monochrome themes, and PNG download.</div>
+            <div class="service-card-tags">
+              <span class="service-tag">Word Frequency Analysis</span>
+              <span class="service-tag">Automatic Layout</span>
+              <span class="service-tag">PNG Save</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="how-section">
+      <h2>How It Works</h2>
+      <div class="how-steps">
+        <div class="how-step">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <h3>Choose a Tool</h3>
+            <p>Pick the tool you need from the BrowserKit hub. No install or sign-up required -- just open it.</p>
+          </div>
+        </div>
+        <div class="how-step">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <h3>Upload a File</h3>
+            <p>Drag or click to upload the file you want to process. It only loads into your browser's memory and is never sent to a server.</p>
+          </div>
+        </div>
+        <div class="how-step">
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <h3>Processed in Your Browser</h3>
+            <p>All processing happens entirely within your browser. OCR, image conversion, compression, and every other operation runs locally.</p>
+          </div>
+        </div>
+        <div class="how-step">
+          <div class="step-num">4</div>
+          <div class="step-content">
+            <h3>Download the Result</h3>
+            <p>Download the finished file instantly. The original file is automatically cleared from memory when your session ends.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="compare-section">
+      <h2>How We Compare</h2>
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th class="th-us">BrowserKit</th>
+            <th>Free Online Tools</th>
+            <th>Paid Software</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Completely free</td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="cross">✗</span></td></tr>
+          <tr><td>No server upload</td><td><span class="check">✓</span></td><td><span class="cross">✗</span></td><td><span class="check">✓</span></td></tr>
+          <tr><td>No Install Needed</td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="cross">✗</span></td></tr>
+          <tr><td>No sign-up needed</td><td><span class="check">✓</span></td><td><span class="cross">✗</span></td><td><span class="cross">✗</span></td></tr>
+          <tr><td>Mobile Support</td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="cross">✗</span></td></tr>
+          <tr><td>Automatic privacy detection</td><td><span class="check">✓</span></td><td><span class="cross">✗</span></td><td><span class="check">✓</span></td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="cta-section">
+      <h2>Get Started Right Now</h2>
+      <p>No install, no sign-up, no cost.<br />All you need is a browser to get started.</p>
+      <a href="/en/" class="btn-cta"><div style="width:24px;height:24px;border-radius:50%;background:#7b6cff;border:2px solid rgba(255,255,255,.7);display:flex;align-items:center;justify-content:center;color:#fff;font:700 14px Poppins,sans-serif;flex-shrink:0">B</div>Start Using BrowserKit</a>
+    </section>
+
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+      <p class="footer-copy">&#xa9; 2026 BrowserKit. All processing happens in your browser.</p>
+      <nav class="footer-nav">
+        <a href="/en/privacy.html">Privacy Policy</a>
+        <a href="/en/terms.html">Terms of Service</a>
+        <a href="/en/about.html">About</a>
+        <a href="/en/blog/">Blog</a>
+      </nav>
+    </div>
+  </footer>
+
+
+  <script>
+  document.querySelectorAll('[data-lang-btn]').forEach(function(btn){
+    btn.addEventListener('click', function(e){
+      e.stopPropagation();
+      var menu = btn.nextElementSibling;
+      menu.classList.toggle('show');
+    });
+  });
+  document.addEventListener('click', function(){
+    document.querySelectorAll('.lang-switcher-menu.show').forEach(function(m){ m.classList.remove('show'); });
+  });
+  </script>
+
+  <script>
+  (function(){
+    try {
+      if (document.cookie.indexOf('bk_lang_dismiss=1') !== -1) return;
+      var lang = (navigator.language || navigator.userLanguage || '').toLowerCase();
+      if (lang.indexOf('ko') !== 0) return;
+      var banner = document.getElementById('langBanner');
+      if (!banner) return;
+      banner.classList.add('show');
+      var closeBtn = document.getElementById('langBannerClose');
+      closeBtn.addEventListener('click', function(){
+        banner.classList.remove('show');
+        document.cookie = 'bk_lang_dismiss=1; max-age=' + (60*60*24*180) + '; path=/';
+      });
+    } catch(e) {}
+  })();
+  </script>
+</body>
+</html>
