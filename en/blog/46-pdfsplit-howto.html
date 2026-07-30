@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <link rel="icon" href="/favicon.ico" sizes="32x32">
@@ -8,23 +8,18 @@
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="The official step-by-step guide to every feature of PDFMerge. Easily follow along with merging multiple PDFs, extracting a page range, and reordering files." />
-  <meta property="og:title" content="Merge PDF: The Complete Guide — BrowserKit" />
-  <meta property="og:description" content="The official step-by-step guide to every feature of PDFMerge." />
+  <meta name="description" content="The official step-by-step guide to every feature of PDFSplit. Learn how to split a PDF page by page or extract just the range you need." />
+  <meta property="og:title" content="Split PDF: The Complete Guide — BrowserKit" />
+  <meta property="og:description" content="The official PDFSplit guide to splitting a PDF page by page or extracting just the range you need. Processed right in your browser, with no server upload." />
   <meta property="og:type" content="article" />
-  <title>Merge PDF: The Complete Guide — BrowserKit</title>
+  <title>Split PDF: The Complete Guide — BrowserKit</title>
   <link rel="stylesheet" href="/css/style.css?v=20260724c" />
   <link rel="stylesheet" href="/css/style-en.css?v=20260724a" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <!-- Google AdSense — pending re-review. Uncomment once approved.
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506"
      crossorigin="anonymous"></script>
   -->
   <style>
-    .post-warn { background:rgba(248,113,113,0.08); border-left:3px solid #F87171; border-radius:8px; padding:16px 20px; margin:24px 0; font-size:15px; color:var(--subtext); line-height:1.8; }
-    .post-warn strong { color:#F87171; }
     .feature-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:20px 0; }
     .feature-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px; }
     .feature-card:hover { border-color:var(--point); }
@@ -35,12 +30,20 @@
     .step-num { min-width:36px; height:36px; background:linear-gradient(135deg,var(--point),var(--point-hover)); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:700; color:white; flex-shrink:0; }
     .step-content h3 { font-size:15px; font-weight:600; margin:0 0 6px; color:var(--text); }
     .step-content p { font-size:14px; color:var(--subtext); line-height:1.7; margin:0; }
+    .tab-demo { display:flex; gap:8px; margin:16px 0; flex-wrap:wrap; }
+    .tab-demo-btn { background:var(--card); border:1px solid var(--border); border-radius:10px; padding:8px 20px; font-size:13px; font-weight:600; color:var(--subtext); }
+    .tab-demo-btn.active { background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border-color:transparent; }
     .post-table { width:100%; border-collapse:collapse; margin:20px 0; font-size:15px; }
     .post-table th { background:var(--card); padding:12px 16px; text-align:left; font-weight:600; border:1px solid var(--border); color:var(--text); }
     .post-table td { padding:11px 16px; border:1px solid var(--border); color:var(--subtext); line-height:1.7; }
     .post-table tr:hover td { background:rgba(123,108,255,0.04); }
+    .use-case-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:20px 0; }
+    .use-case-card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:18px; }
+    .use-case-icon { font-size:28px; margin-bottom:8px; }
+    .use-case-title { font-size:13px; font-weight:600; color:var(--text); margin-bottom:6px; }
+    .use-case-desc { font-size:12px; color:var(--subtext); line-height:1.7; }
     .post-nav { display:flex; justify-content:space-between; margin-top: 12px; padding-top:24px; border-top:1px solid var(--border); gap:12px; }
-    .post-nav a { font-size:15px; color:var(--subtext); }
+    .post-nav a { font-size:15px; color:var(--subtext); text-decoration:none; }
     .post-nav a:hover { color:var(--text); }
     .cta-box { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:28px; text-align:center; margin: 12px 0 0; }
     .cta-box p { font-size:17px; color:var(--subtext); margin-bottom:16px; }
@@ -49,23 +52,26 @@
     .back-link:hover { color:var(--text); }
     @media (max-width:640px) {
       .feature-grid { grid-template-columns:1fr; }
+      .use-case-grid { grid-template-columns:1fr; }
     }
   </style>
-<meta property="og:image" content="https://browserkit.online/img/og/pdf-merge.png" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<meta property="og:image" content="https://browserkit.online/img/og/pdf-split.png" />
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
-    "headline": "Merge PDF: The Complete Guide",
-    "description": "The official step-by-step guide to every feature of PDFMerge. Easily follow along with merging multiple PDFs, extracting a page range, and reordering files.",
-    "datePublished": "2026-06-16T00:00:00+09:00",
+    "headline": "Split PDF: The Complete Guide",
+    "description": "The official step-by-step guide to every feature of PDFSplit. Learn how to split a PDF page by page or extract just the range you need.",
+    "datePublished": "2026-07-09T00:00:00+09:00",
     "dateModified": "2026-07-22T00:00:00+09:00",
     "author": { "@type": "Organization", "name": "BrowserKit", "url": "https://browserkit.online" },
     "publisher": { "@type": "Organization", "name": "BrowserKit", "url": "https://browserkit.online", "logo": { "@type": "ImageObject", "url": "https://browserkit.online/img/og-browserkit.png" } },
-    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://browserkit.online/en/blog/18-pdfmerge-howto" },
-    "image": "https://browserkit.online/img/og/pdf-merge.png"
+    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://browserkit.online/en/blog/46-pdfsplit-howto" },
+    "image": "https://browserkit.online/img/og/pdf-split.png"
   }
-  </script>  <link rel="canonical" href="https://browserkit.online/en/blog/18-pdfmerge-howto" />
+  </script>  <link rel="canonical" href="https://browserkit.online/en/blog/46-pdfsplit-howto" />
   <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -73,12 +79,12 @@
   "itemListElement": [
     { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://browserkit.online/en/" },
     { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://browserkit.online/en/blog/" },
-    { "@type": "ListItem", "position": 3, "name": "Merge PDF: The Complete Guide", "item": "https://browserkit.online/en/blog/18-pdfmerge-howto" }
+    { "@type": "ListItem", "position": 3, "name": "Split PDF: The Complete Guide", "item": "https://browserkit.online/en/blog/46-pdfsplit-howto" }
   ]
 }
   </script>
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:image" content="https://browserkit.online/img/og/pdf-merge.png" />
+  <meta name="twitter:image" content="https://browserkit.online/img/og/pdf-split.png" />
   <style>
     .post-table-wrap { overflow-x:auto; }
     .post-table th, .post-table td { white-space:nowrap; }
@@ -92,7 +98,7 @@
   "mainEntity": [
     {
       "@type": "Question",
-      "name": "Is the Merge PDF tool really free?",
+      "name": "Is the Split PDF tool really free?",
       "acceptedAnswer": {
         "@type": "Answer",
         "text": "Yes, it is completely free to use with no sign-up or installation required. There is no usage limit either."
@@ -108,10 +114,10 @@
     },
     {
       "@type": "Question",
-      "name": "Is there a limit on how many PDFs I can merge?",
+      "name": "Can I extract just specific pages?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "There is no fixed limit. However, if files are very large or numerous, processing time may increase depending on your device's performance."
+        "text": "Yes, you can set a page range and save just the part you need as a separate PDF."
       }
     },
     {
@@ -128,7 +134,7 @@
 </head>
 <body>
   <div class="lang-banner" id="langBanner">
-    <span>🌐 이 페이지는 <a href="/blog/18-pdfmerge-howto">한국어</a>로도 볼 수 있습니다.</span>
+    <span>🌐 이 페이지는 <a href="/blog/46-pdfsplit-howto">한국어</a>로도 볼 수 있습니다.</span>
     <button class="lang-banner-close" id="langBannerClose" type="button" aria-label="close">&times;</button>
   </div>
   <header class="header">
@@ -139,19 +145,19 @@
           <button class="lang-switcher-btn" type="button" data-lang-btn>🌐 <span class="lang-label-full">English</span></button>
           <div class="lang-switcher-menu" data-lang-menu>
             <a href="#" class="active">English</a>
-            <a href="/blog/18-pdfmerge-howto">한국어</a>
+            <a href="/blog/46-pdfsplit-howto">한국어</a>
           </div>
         </div>
-        <a href="/en/" class="header-back">← <span class="header-back-label">Back to BrowserKit</span></a>
+        <a href="/en/" class="header-back">&#x2190; <span class="header-back-label">Back to BrowserKit</span></a>
       </div>
     </div>
   </header>
 
   <article class="post-wrap">
-    <a href="/en/blog/" class="back-link">← Blog</a>
+    <a href="/en/blog/" class="back-link">&#x2190; Blog</a>
     <span class="post-tag">Guide</span>
-    <h1 class="post-title"><span style="color:var(--point-hover)">Merge PDF</span>: The Complete Guide</h1>
-    <div class="post-date">June 16, 2026</div>
+    <h1 class="post-title"><span style="color:var(--point-hover)">Split PDF</span>: The Complete Guide</h1>
+    <div class="post-date">July 9, 2026</div>
     <!-- Google AdSense Display Ad — pending approval, reserving space -->
     <div class="ad-slot" id="adExtra2">
       <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
@@ -159,39 +165,29 @@
     </div>
 
     <div class="post-body">
-      <p>When a scanned document is scattered across 3-4 separate files, attaching them one by one in the right order every time you submit them gets tedious. PDFMerge is a free online tool for combining multiple PDFs into one, or extracting just the pages you need. It works instantly with no install, and everything happens entirely in your browser, so your PDF files are never sent to an external server.</p>
+      <p>You need to send just the signature page from a scanned contract PDF, but sending the whole file feels excessive. PDFSplit is a free online tool for splitting one PDF page by page, or extracting just the range you choose. When splitting into multiple individual files, you can download them all at once as a ZIP, and everything happens entirely in your browser, so your uploaded PDF is never sent to an external server.</p>
 
       <h2>Key Features</h2>
       <div class="feature-grid">
         <div class="feature-card">
           <div class="feature-icon">&#x1F4C4;</div>
-          <div class="feature-title">Multi-PDF Upload</div>
-          <div class="feature-desc">Upload multiple PDF files at once. Both drag-and-drop and file selection are supported.</div>
+          <div class="feature-title">Split by Page</div>
+          <div class="feature-desc">Turns every page into its own PDF file, bundled into a single ZIP download. You can also select just the pages you want to split out.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x2702;&#xFE0F;</div>
+          <div class="feature-title">Split by Range</div>
+          <div class="feature-desc">Enter a range like "1-3, 5" and those pages alone are extracted into a single PDF.</div>
         </div>
         <div class="feature-card">
           <div class="feature-icon">&#x1F5BC;&#xFE0F;</div>
-          <div class="feature-title">Thumbnail Preview</div>
-          <div class="feature-desc">Renders the first page of each file as a thumbnail so you can identify files visually.</div>
+          <div class="feature-title">Page Preview</div>
+          <div class="feature-desc">Once uploaded, every page shows as a thumbnail in a grid, so you can see and select pages by number visually.</div>
         </div>
         <div class="feature-card">
-          <div class="feature-icon">&#x2195;&#xFE0F;</div>
-          <div class="feature-title">Reorder by Dragging</div>
-          <div class="feature-desc">Drag file cards to freely adjust the order they'll be merged in.</div>
-        </div>
-        <div class="feature-card">
-          <div class="feature-icon">&#x1F4D1;</div>
-          <div class="feature-title">Page Range Selection</div>
-          <div class="feature-desc">Specify which pages to include per file (e.g., 1-3, 5). Leave it blank to include every page.</div>
-        </div>
-        <div class="feature-card">
-          <div class="feature-icon">&#x2795;</div>
-          <div class="feature-title">Add / Remove Files</div>
-          <div class="feature-desc">Add more files or remove individual ones even after uploading.</div>
-        </div>
-        <div class="feature-card">
-          <div class="feature-icon">&#x1F4E5;</div>
-          <div class="feature-title">Download the PDF</div>
-          <div class="feature-desc">Instantly download the finished file as pdfmerge_result.pdf.</div>
+          <div class="feature-icon">&#x1F512;</div>
+          <div class="feature-title">Fully Local Processing</div>
+          <div class="feature-desc">Everything from PDF rendering to splitting and zipping happens in your browser, so your file is never sent to a server.</div>
         </div>
       </div>
 
@@ -200,80 +196,106 @@
       <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
       <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
     </div>
-      <h2>Basic Usage</h2>
+      <h2>How to Use It</h2>
+
       <div class="step-card">
         <div class="step-num">1</div>
         <div class="step-content">
-          <h3>Upload PDF Files</h3>
-          <p>Drag PDF files onto the upload area, or click it to select files. You can select multiple files at once.</p>
+          <h3>Upload a PDF</h3>
+          <p>Click the upload zone or drag a PDF file onto it. Only one file can be uploaded at a time. Once uploaded, a thumbnail is generated automatically for every page.</p>
         </div>
       </div>
-      
       <div class="step-card">
         <div class="step-num">2</div>
         <div class="step-content">
-          <h3>Check the File List</h3>
-          <p>Uploaded files are shown as cards. Each card shows the filename, page count, file size, and a thumbnail of the first page. Use the <strong>+ Add File</strong> button to add more.</p>
+          <h3>Choose a Split Mode</h3>
+          <p>Pick the mode you want from the tabs at the top.</p>
         </div>
       </div>
+
+      <div class="tab-demo">
+        <span class="tab-demo-btn active">&#x1F4C4; Split by Page</span>
+        <span class="tab-demo-btn">&#x2702;&#xFE0F; Split by Range</span>
+      </div>
+
+      <h3>Split by Page</h3>
       <div class="step-card">
         <div class="step-num">3</div>
         <div class="step-content">
-          <h3>Reorder Files and Enter Page Ranges</h3>
-          <p>Drag a card to adjust the merge order. To include only specific pages, enter a range in the page range field (e.g., <strong>1-3, 5</strong> &rarr; includes only pages 1, 2, 3, and 5).</p>
+          <h3>Select Pages to Split</h3>
+          <p>All pages are selected by default. Click a thumbnail to select or deselect it, or use the <strong>Select All</strong> / <strong>Deselect All</strong> buttons to adjust everything at once. Each selected page becomes its own PDF file.</p>
         </div>
       </div>
+
       
+
+      <h3>Split by Range</h3>
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <h3>Enter a Page Range</h3>
+          <p>Enter the page range you want in the input field (e.g., <code>1-3, 5</code>). Leave it blank to extract every page into a single PDF.</p>
+        </div>
+      </div>
+
+      
+
       <div class="step-card">
         <div class="step-num">4</div>
         <div class="step-content">
-          <h3>Merge and Download the PDF</h3>
-          <p>Click the <strong>Merge & Download PDF</strong> button. Processing time varies with page count, and progress is shown with a progress bar. Once finished, <code>pdfmerge_result.pdf</code> downloads automatically.</p>
+          <h3>Split and Download</h3>
+          <p>Click the <strong>&#x2B07; Split &amp; Download</strong> button. In Split by Page mode, <code>pdfsplit_pages.zip</code> downloads; in Split by Range mode, <code>pdfsplit_range.pdf</code> downloads.</p>
         </div>
       </div>
+
       
-      <div class="step-card">
-        <div class="step-num">5</div>
-        <div class="step-content">
-          <h3>Start Over</h3>
-          <p>Use the <strong>Start Over</strong> button to reset and begin a new task.</p>
+
+      <h2>Split by Page vs. Split by Range -- When to Use Which?</h2>
+      <div class="post-table-wrap"><table class="post-table">
+        <thead><tr><th>Mode</th><th>Output</th><th>Best For</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><strong>Split by Page</strong></td>
+            <td>One PDF per selected page (bundled in a single ZIP)</td>
+            <td>When you want each page as a fully independent file to share or store separately</td>
+          </tr>
+          <tr>
+            <td><strong>Split by Range</strong></td>
+            <td>A single PDF containing just the pages you set</td>
+            <td>When you want to excerpt just the part you need from a larger document into one file</td>
+          </tr>
+        </tbody>
+      </table></div>
+
+      <h2>Use Cases</h2>
+      <div class="use-case-grid">
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F4D1;</div>
+          <div class="use-case-title">Separating Contract Clauses</div>
+          <div class="use-case-desc">Pull out just the pages containing a specific clause from a long contract and share them as a separate PDF.</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F4DA;</div>
+          <div class="use-case-title">Splitting a Batch-Scanned Document</div>
+          <div class="use-case-desc">Split a PDF made from scanning several documents at once back into individual documents, page by page.</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F4CA;</div>
+          <div class="use-case-title">Extracting a Report Summary</div>
+          <div class="use-case-desc">Extract just the summary and conclusion pages from a full report to share a shorter version.</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">&#x1F4E4;</div>
+          <div class="use-case-title">Getting Around Attachment Size Limits</div>
+          <div class="use-case-desc">When an attachment size limit is in your way, extract just the pages you need to shrink the file before sending.</div>
         </div>
       </div>
 
-      <h2>How to Enter Page Ranges</h2>
-      <p>Leave the page range field blank to include every page of that file. You can enter ranges in several ways, as shown below.</p>
-      <div class="post-table-wrap"><table class="post-table">
-        <thead><tr><th>Example Input</th><th>Result</th></tr></thead>
-        <tbody>
-          <tr><td>Blank</td><td>Includes every page</td></tr>
-          <tr><td>1-3</td><td>Pages 1, 2, 3</td></tr>
-          <tr><td>1, 3, 5</td><td>Pages 1, 3, 5</td></tr>
-          <tr><td>1-3, 5</td><td>Pages 1, 2, 3, 5</td></tr>
-          <tr><td>2-4, 7-9</td><td>Pages 2, 3, 4, 7, 8, 9</td></tr>
-        </tbody>
-      </table></div>
-
-      <h2>Comparison with Other PDF Tools</h2>
-      <div class="post-table-wrap"><table class="post-table">
-        <thead><tr><th></th><th>PDFMerge</th><th>MaskPDF</th></tr></thead>
-        <tbody>
-          <tr><td>Main function</td><td>Merge multiple PDFs / extract pages</td><td>Mask personal info inside a PDF</td></tr>
-          <tr><td>Files uploaded</td><td>Multiple at once</td><td>1</td></tr>
-          <tr><td>Output</td><td>A merged PDF</td><td>A masked PDF</td></tr>
-          <tr><td>Processing time</td><td>Depends on file and page count</td><td>Depends on page count</td></tr>
-          <tr><td>Server upload</td><td>None (fully local)</td><td>None (fully local)</td></tr>
-        </tbody>
-      </table></div>
-
-      <div class="post-warn">
-        <strong>&#x26A0;&#xFE0F; Text is not selectable:</strong> PDFMerge works by re-rendering each page as an image before merging. As a result, the original PDF's text is converted into <strong>an image, not selectable, searchable, or copyable text</strong>. This may not suit documents that need to keep their text intact (searching contract text, materials you need to copy text from, etc.). It's best suited for merging scans or image-heavy PDFs.
-      </div>
-
-      <div class="post-highlight">&#x1F4A1; Very large PDFs or a large number of files can run into browser memory limits. We recommend 5 files or fewer and a total of 50 pages or fewer. Having many other tabs open during processing can slow things down.</div>
+      <div class="post-highlight">&#x1F512; PDFSplit processes everything entirely in your browser. Since uploaded PDFs are never sent to an external server, you can safely split sensitive documents like contracts and reports too.</div>
     
       <h2>Frequently Asked Questions</h2>
       <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
-        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. Is the Merge PDF tool really free?</p>
+        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. Is the Split PDF tool really free?</p>
         <p style="color:var(--subtext);margin:0;line-height:1.7">Yes, it is completely free to use with no sign-up or installation required. There is no usage limit either.</p>
       </div>
       <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
@@ -281,8 +303,8 @@
         <p style="color:var(--subtext);margin:0;line-height:1.7">No. All processing happens entirely in your browser, and uploaded files are never sent to or stored on an external server.</p>
       </div>
       <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
-        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. Is there a limit on how many PDFs I can merge?</p>
-        <p style="color:var(--subtext);margin:0;line-height:1.7">There is no fixed limit. However, if files are very large or numerous, processing time may increase depending on your device's performance.</p>
+        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. Can I extract just specific pages?</p>
+        <p style="color:var(--subtext);margin:0;line-height:1.7">Yes, you can set a page range and save just the part you need as a separate PDF.</p>
       </div>
       <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
         <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. Can I use this on mobile?</p>
@@ -297,10 +319,10 @@
     </div>
 
     <div class="cta-box">
-      <p>Use PDFMerge whenever you need to combine scattered PDF files into one.<br />Reorder them by dragging, and extract just the pages you need.</p>
-      <a href="/en/pdf-merge/" class="cta-btn" style="display:inline-flex;align-items:center;gap:8px">
-        <span style="display:inline-block;width:26px;height:26px;overflow:hidden;flex-shrink:0"><span style="display:block;transform:scale(0.565);transform-origin:top left"><div style="width:46px;height:46px;background:#a8e6cf;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="position:relative;width:34px;height:32px"><div style="position:absolute;left:0;top:3px;width:20px;height:26px;background:#fffdf9;border:2.5px solid #2a2433;border-radius:3px;box-sizing:border-box"></div><div style="position:absolute;right:0;top:0;width:20px;height:26px;background:#a8e6cf;border:2.5px solid #2a2433;border-radius:3px;box-sizing:border-box"></div><div style="position:absolute;right:8px;top:9px;width:4px;height:12px;background:#2a2433;border-radius:2px"></div><div style="position:absolute;right:4px;top:13px;width:12px;height:4px;background:#2a2433;border-radius:2px"></div></div></div></span></span>
-        Start Merging PDFs for Free
+      <p>Split a PDF page by page, or extract just the range you need.<br />Download it right away as a ZIP or PDF file.</p>
+      <a href="/en/pdf-split/" class="cta-btn" style="display:inline-flex;align-items:center;gap:8px">
+        <span style="display:inline-block;width:26px;height:26px;overflow:hidden;flex-shrink:0"><span style="display:block;transform:scale(0.565);transform-origin:top left"><div style="width:46px;height:46px;background:#a8e6cf;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="position:relative;width:34px;height:32px"><div style="position:absolute;left:0;top:0;width:16px;height:26px;background:#a8e6cf;border:2.5px solid #2a2433;border-radius:3px;box-sizing:border-box"></div><div style="position:absolute;right:0;top:3px;width:16px;height:26px;background:#a8e6cf;border:2.5px solid #2a2433;border-radius:3px;box-sizing:border-box"></div><div style="position:absolute;left:15px;top:8px;width:4px;height:16px;background:#fffdf9;border-left:2px dashed #2a2433;border-right:2px dashed #2a2433;box-sizing:border-box"></div></div></div></span></span>
+        Split a PDF for Free
       </a>
     </div>
     <!-- Google AdSense Multiplex Ad — pending approval, reserving space -->
@@ -310,8 +332,8 @@
     </div>
 
 <div class="post-nav">
-      <a href="/en/blog/81-gifmaker-howto"><span class="nav-label">&larr; Previous</span><span style="color:var(--point-hover)">GIF Animation Maker</span>: The Complete Guide</a>
-      <a href="/en/blog/46-pdfsplit-howto" style="text-align:right"><span class="nav-label">Next &rarr;</span><span style="color:var(--point-hover)">Split PDF</span>: The Complete Guide</a>
+      <a href="/en/blog/18-pdfmerge-howto"><span class="nav-label">&larr; Previous</span><span style="color:var(--point-hover)">Merge PDF</span>: The Complete Guide</a>
+      <a href="/en/blog/20-texttools-howto" style="text-align:right"><span class="nav-label">Next &rarr;</span><span style="color:var(--point-hover)">Text Tools</span>: The Complete Guide</a>
     </div>
 
   </article>
@@ -359,4 +381,3 @@
   </script>
 </body>
 </html>
-
