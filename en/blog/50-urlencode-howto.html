@@ -8,11 +8,11 @@
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="The official step-by-step guide to every feature of Minifier. Learn how to strip comments and whitespace from HTML, CSS, and JS code to shrink its size." />
-  <meta property="og:title" content="Code Minifier: The Complete Guide — BrowserKit" />
-  <meta property="og:description" content="The official Minifier guide to stripping comments and whitespace from HTML, CSS, and JS code to shrink its size." />
+  <meta name="description" content="The official step-by-step guide to every feature of URLEncode. Learn how to encode/decode URLs, parse query parameters, and use the query builder." />
+  <meta property="og:title" content="URL Encoder: The Complete Guide — BrowserKit" />
+  <meta property="og:description" content="The official URLEncode guide to encoding/decoding text as a URL and parsing or building query parameters." />
   <meta property="og:type" content="article" />
-  <title>Code Minifier: The Complete Guide — BrowserKit</title>
+  <title>URL Encoder: The Complete Guide — BrowserKit</title>
   <link rel="stylesheet" href="/css/style.css?v=20260724c" />
   <link rel="stylesheet" href="/css/style-en.css?v=20260724a" />
   <!-- Google AdSense — pending re-review. Uncomment once approved.
@@ -33,17 +33,13 @@
     .step-content p { font-size:14px; color:var(--subtext); line-height:1.7; margin:0; }
 
     .tab-demo { display:flex; gap:4px; background:var(--card); border:1px solid var(--border); border-radius:12px; padding:4px; margin:16px 0; }
-    .tab-demo-btn { flex:1; padding:8px; font-size:13px; font-weight:600; border-radius:9px; text-align:center; color:var(--subtext); }
+    .tab-demo-btn { flex:1; padding:8px; font-size:12px; font-weight:600; border-radius:9px; text-align:center; color:var(--subtext); }
     .tab-demo-btn.on { background:linear-gradient(135deg,var(--point),var(--point-hover)); color:#fff; }
 
     .code-compare { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:16px 0; }
     .code-compare-box { background:var(--card); border:1px solid var(--border); border-radius:12px; overflow:hidden; }
     .code-compare-label { font-size:12px; font-weight:700; color:var(--subtext); padding:10px 14px; border-bottom:1px solid var(--border); }
     .code-compare-body { font-size:12px; font-family:'Fira Code',monospace; color:var(--text); padding:14px; line-height:1.7; white-space:pre-wrap; word-break:break-all; }
-
-    .stats-demo { display:flex; align-items:center; justify-content:center; gap:14px; background:rgba(123,108,255,0.08); border:1px solid var(--border); border-radius:12px; padding:14px 20px; margin:16px 0; font-size:14px; font-family:'Fira Code',monospace; color:var(--text); flex-wrap:wrap; }
-    .stats-demo .arrow { color:var(--subtext); }
-    .stats-demo .reduce { color:var(--success); font-weight:700; }
 
     .post-table { width:100%; border-collapse:collapse; margin:20px 0; font-size:15px; }
     .post-table th { background:var(--card); padding:12px 16px; text-align:left; font-weight:600; border:1px solid var(--border); color:var(--text); }
@@ -71,21 +67,21 @@
   </style>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<meta property="og:image" content="https://browserkit.online/img/og/minifier.png" />
+<meta property="og:image" content="https://browserkit.online/img/og/url-encode.png" />
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
-    "headline": "Code Minifier: The Complete Guide",
-    "description": "The official step-by-step guide to every feature of Minifier. Learn how to strip comments and whitespace from HTML, CSS, and JS code to shrink its size.",
+    "headline": "URL Encoder: The Complete Guide",
+    "description": "The official step-by-step guide to every feature of URLEncode. Learn how to encode/decode URLs, parse query parameters, and use the query builder.",
     "datePublished": "2026-07-09T00:00:00+09:00",
     "dateModified": "2026-07-22T00:00:00+09:00",
     "author": { "@type": "Organization", "name": "BrowserKit", "url": "https://browserkit.online" },
     "publisher": { "@type": "Organization", "name": "BrowserKit", "url": "https://browserkit.online", "logo": { "@type": "ImageObject", "url": "https://browserkit.online/img/og-browserkit.png" } },
-    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://browserkit.online/en/blog/49-minifier-howto" },
-    "image": "https://browserkit.online/img/og/minifier.png"
+    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://browserkit.online/en/blog/50-urlencode-howto" },
+    "image": "https://browserkit.online/img/og/url-encode.png"
   }
-  </script>  <link rel="canonical" href="https://browserkit.online/en/blog/49-minifier-howto" />
+  </script>  <link rel="canonical" href="https://browserkit.online/en/blog/50-urlencode-howto" />
   <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -93,12 +89,12 @@
   "itemListElement": [
     { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://browserkit.online/en/" },
     { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://browserkit.online/en/blog/" },
-    { "@type": "ListItem", "position": 3, "name": "Code Minifier: The Complete Guide", "item": "https://browserkit.online/en/blog/49-minifier-howto" }
+    { "@type": "ListItem", "position": 3, "name": "URL Encoder: The Complete Guide", "item": "https://browserkit.online/en/blog/50-urlencode-howto" }
   ]
 }
   </script>
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:image" content="https://browserkit.online/img/og/minifier.png" />
+  <meta name="twitter:image" content="https://browserkit.online/img/og/url-encode.png" />
   <style>
     .post-table-wrap { overflow-x:auto; }
     .post-table th, .post-table td { white-space:nowrap; }
@@ -112,7 +108,7 @@
   "mainEntity": [
     {
       "@type": "Question",
-      "name": "Is the Code Minifier tool really free?",
+      "name": "Is the URL Encoder tool really free?",
       "acceptedAnswer": {
         "@type": "Answer",
         "text": "Yes, it is completely free to use with no sign-up or installation required. There is no usage limit either."
@@ -128,10 +124,10 @@
     },
     {
       "@type": "Question",
-      "name": "What kinds of code can I minify?",
+      "name": "Does it handle URLs containing non-ASCII characters?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "It removes whitespace and comments from HTML, CSS, and JavaScript code to reduce file size."
+        "text": "Yes, it converts non-ASCII characters into UTF-8-based percent-encoding and can restore them back."
       }
     },
     {
@@ -148,7 +144,7 @@
 </head>
 <body>
   <div class="lang-banner" id="langBanner">
-    <span>🌐 이 페이지는 <a href="/blog/49-minifier-howto">한국어</a>로도 볼 수 있습니다.</span>
+    <span>🌐 이 페이지는 <a href="/blog/50-urlencode-howto">한국어</a>로도 볼 수 있습니다.</span>
     <button class="lang-banner-close" id="langBannerClose" type="button" aria-label="close">&times;</button>
   </div>
   <header class="header">
@@ -159,7 +155,7 @@
           <button class="lang-switcher-btn" type="button" data-lang-btn>🌐 <span class="lang-label-full">English</span></button>
           <div class="lang-switcher-menu" data-lang-menu>
             <a href="#" class="active">English</a>
-            <a href="/blog/49-minifier-howto">한국어</a>
+            <a href="/blog/50-urlencode-howto">한국어</a>
           </div>
         </div>
         <a href="/en/" class="header-back">&#x2190; <span class="header-back-label">Back to BrowserKit</span></a>
@@ -170,7 +166,7 @@
   <article class="post-wrap">
     <a href="/en/blog/" class="back-link">&#x2190; Blog</a>
     <span class="post-tag">Guide</span>
-    <h1 class="post-title"><span style="color:var(--point-hover)">Code Minifier</span>: The Complete Guide</h1>
+    <h1 class="post-title"><span style="color:var(--point-hover)">URL Encoder</span>: The Complete Guide</h1>
     <div class="post-date">July 9, 2026</div>
     <!-- Google AdSense Display Ad — pending approval, reserving space -->
     <div class="ad-slot" id="adExtra2">
@@ -179,29 +175,29 @@
     </div>
 
     <div class="post-body">
-      <p>Sometimes you just want to shave a little off your page load time, but the project is too small to justify setting up a build tool. Minifier is a free online code minifier that strips comments and unnecessary whitespace from HTML, CSS, and JS code. Paste your code and instantly see the minified result and the size reduction -- all processing happens entirely in your browser, so your code is never sent to an external server.</p>
+      <p>Ever wondered what a string like "%EC%95%88%EB%85%95" in the address bar actually means? That's what happens when non-ASCII text ends up in a URL. URLEncode is a free online tool for encoding and decoding text as a URL, parsing a complex query string into a table, or assembling a query URL from key-value pairs. All processing happens entirely in your browser, so your text is never sent to an external server.</p>
 
       <h2>Key Features</h2>
       <div class="feature-grid">
         <div class="feature-card">
-          <div class="feature-icon">&#x1F4C4;</div>
-          <div class="feature-title">Supports HTML, CSS, and JS</div>
-          <div class="feature-desc">Switch tabs to minify each of the three languages. Language-specific rules are applied to each.</div>
+          <div class="feature-icon">&#x1F510;</div>
+          <div class="feature-title">URL Encode/Decode</div>
+          <div class="feature-desc">Choose between <code>encodeURIComponent</code> and <code>encodeURI</code> to encode or decode text.</div>
         </div>
         <div class="feature-card">
-          <div class="feature-icon">&#x1F9F9;</div>
-          <div class="feature-title">Comment Removal</div>
-          <div class="feature-desc">Removes HTML comments, CSS block comments, and JS line/block comments. Similar-looking patterns inside strings are left untouched.</div>
+          <div class="feature-icon">&#x1F50D;</div>
+          <div class="feature-title">Query Parameter Parsing</div>
+          <div class="feature-desc">Paste a full URL or query string, and each parameter is laid out in a key-value table.</div>
         </div>
         <div class="feature-card">
-          <div class="feature-icon">&#x2696;&#xFE0F;</div>
-          <div class="feature-title">Size Reduction Display</div>
-          <div class="feature-desc">Compares the byte size of the original and the result and shows the reduction as a percentage immediately.</div>
+          <div class="feature-icon">&#x1F527;</div>
+          <div class="feature-title">Query Builder</div>
+          <div class="feature-desc">Enter a base URL and key-value pairs, and get a finished URL with encoding handled automatically.</div>
         </div>
         <div class="feature-card">
           <div class="feature-icon">&#x1F512;</div>
           <div class="feature-title">Fully Local Processing</div>
-          <div class="feature-desc">All minification runs inside your browser. Since your code is never sent to a server, you can safely use it with private code too.</div>
+          <div class="feature-desc">All conversion runs inside your browser. Since your text is never sent to a server, you can safely use it with private data too.</div>
         </div>
       </div>
 
@@ -213,25 +209,25 @@
 
       <h2>Tab Layout</h2>
       <div class="tab-demo">
-        <div class="tab-demo-btn on">HTML</div>
-        <div class="tab-demo-btn">CSS</div>
-        <div class="tab-demo-btn">JS</div>
+        <div class="tab-demo-btn on">&#x1F510; Encode/Decode</div>
+        <div class="tab-demo-btn">&#x1F50D; Query Parsing</div>
+        <div class="tab-demo-btn">&#x1F527; Query Builder</div>
       </div>
-      <p>Pick the language of the code you want to minify from the tabs at the top. Switching tabs updates the placeholder text in the input box and applies the rules for that language.</p>
+      <p>The Encode/Decode tab converts a piece of text, the Query Parsing tab analyzes a finished URL, and the Query Builder tab assembles a new URL.</p>
 
-      <h2>How to Use It</h2>
+      <h2>Using Encode/Decode</h2>
       <div class="step-card">
         <div class="step-num">1</div>
         <div class="step-content">
-          <h3>Choose a Language Tab</h3>
-          <p>Select whether your code is HTML, CSS, or JS from the tabs at the top.</p>
+          <h3>Choose an Encoding Method</h3>
+          <p>Choose either <code>encodeURIComponent</code> or <code>encodeURI</code>. See the <strong>Comparing the Two Methods</strong> table below to pick the right one for your situation.</p>
         </div>
       </div>
       <div class="step-card">
         <div class="step-num">2</div>
         <div class="step-content">
-          <h3>Enter Your Code</h3>
-          <p>Paste the code you want to minify into the input box on the left. The minified code appears in the result box on the right as soon as you type.</p>
+          <h3>Enter Text</h3>
+          <p>Type the text you want to encode, or the URL-encoded string you want to decode, into the input box on the left.</p>
         </div>
       </div>
 
@@ -240,123 +236,147 @@
       <div class="step-card">
         <div class="step-num">3</div>
         <div class="step-content">
-          <h3>Adjust the Options</h3>
-          <p>The <strong>Remove Comments</strong> and <strong>Clean Whitespace</strong> checkboxes can each be toggled independently. Both are on by default.</p>
+          <h3>Check and Copy the Result</h3>
+          <p>Copy it to your clipboard with the <strong>&#x1F4CB; Copy Result</strong> button, or move the result back into the input with the <strong>&#x21C4; Swap Input/Output</strong> button to convert it the other way.</p>
+        </div>
+      </div>
+
+      <h3>Comparing the Two Methods</h3>
+      <div class="post-table-wrap"><table class="post-table">
+        <thead><tr><th>Method</th><th>What It Encodes</th><th>When to Use</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><code>encodeURIComponent</code></td>
+            <td>Encodes everything, including URL delimiters like <code>& = ? / : # ; , +</code></td>
+            <td>When encoding a single piece of a URL, like a query parameter value or form data</td>
+          </tr>
+          <tr>
+            <td><code>encodeURI</code></td>
+            <td>Preserves delimiters needed for URL structure, like <code>: / ? # &amp; =</code></td>
+            <td>When encoding an entire URL (path + query) all at once</td>
+          </tr>
+        </tbody>
+      </table></div>
+
+      <h3>Encoding Example</h3>
+      <div class="code-compare">
+        <div class="code-compare-box">
+          <div class="code-compare-label">Input</div>
+          <div class="code-compare-body">https://example.com/search?q=hello world</div>
+        </div>
+        <div class="code-compare-box">
+          <div class="code-compare-label">encodeURIComponent</div>
+          <div class="code-compare-body">https%3A%2F%2Fexample.com%2Fsearch%3Fq%3Dhello%20world</div>
+        </div>
+      </div>
+      <div class="code-compare">
+        <div class="code-compare-box">
+          <div class="code-compare-label">Input</div>
+          <div class="code-compare-body">https://example.com/search?q=hello world</div>
+        </div>
+        <div class="code-compare-box">
+          <div class="code-compare-label">encodeURI</div>
+          <div class="code-compare-body">https://example.com/search?q=hello%20world</div>
+        </div>
+      </div>
+      <p style="font-size:14px;color:var(--subtext)"><code>encodeURI</code> leaves URL structure characters like <code>:</code>, <code>/</code>, <code>?</code>, and <code>=</code> untouched, and only encodes characters -- like spaces or non-ASCII text -- that can't appear as-is in a URL.</p>
+
+      <h2>Using Query Parsing</h2>
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <h3>Paste a URL or Query String</h3>
+          <p>Paste a full URL (<code>https://...?a=1&b=2</code>) or just a query string (<code>a=1&b=2</code>). The domain and path before the <code>?</code> are automatically excluded from parsing.</p>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <h3>Check the Parameter Table</h3>
+          <p>Each parameter appears in a key-value table. A <code>+</code> is automatically decoded as a space, and parameters with no value are shown as empty.</p>
         </div>
       </div>
 
       
 
       <div class="step-card">
-        <div class="step-num">4</div>
+        <div class="step-num">3</div>
         <div class="step-content">
-          <h3>Check and Save the Result</h3>
-          <p>Check how much smaller the result is than the original in the reduction bar in the middle. Copy it to your clipboard with the <strong>&#x1F4CB; Copy Result</strong> button, or save it as a file with the <strong>&#x2B07; Download File</strong> button.</p>
+          <h3>Copy a Value or Export as JSON</h3>
+          <p>Copy an individual value with the <strong>Copy</strong> button on its row, or copy every parameter at once as a JSON object with the <strong>&#x1F4CB; Copy as JSON</strong> button.</p>
+        </div>
+      </div>
+
+      <h2>Using the Query Builder</h2>
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <h3>Enter a Base URL (Optional)</h3>
+          <p>Enter just the domain and path. If left blank, only the query string (<code>?key=value&...</code>) is assembled.</p>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <h3>Enter Key-Value Pairs</h3>
+          <p>Add rows with the <strong>+ Add Parameter</strong> button and enter a key and value in each. Values are automatically URL-encoded when assembled.</p>
         </div>
       </div>
 
       
 
-      <h2>Minification Examples</h2>
-      <h3>HTML</h3>
-      <div class="code-compare">
-        <div class="code-compare-box">
-          <div class="code-compare-label">Original</div>
-          <div class="code-compare-body">&lt;!-- comment --&gt;
-&lt;div class="box"&gt;
-  &lt;p&gt;  Hello  &lt;/p&gt;
-&lt;/div&gt;</div>
-        </div>
-        <div class="code-compare-box">
-          <div class="code-compare-label">Minified</div>
-          <div class="code-compare-body">&lt;div class="box"&gt;&lt;p&gt;  Hello  &lt;/p&gt;&lt;/div&gt;</div>
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <h3>Copy the URL</h3>
+          <p>The assembled URL is shown live at the bottom. Use it right away with the <strong>&#x1F4CB; Copy URL</strong> button.</p>
         </div>
       </div>
-      <div class="stats-demo">
-        <span>66 bytes</span><span class="arrow">&rarr;</span><span>47 bytes</span><span class="reduce">(28.8% smaller)</span>
-      </div>
-      <p style="font-size:14px;color:var(--subtext)">Content inside <code>&lt;pre&gt;</code>, <code>&lt;textarea&gt;</code>, <code>&lt;script&gt;</code>, and <code>&lt;style&gt;</code> tags is excluded from minification and preserved as-is, since whitespace there affects the result.</p>
-
-      <h3>CSS</h3>
-      <div class="code-compare">
-        <div class="code-compare-box">
-          <div class="code-compare-label">Original</div>
-          <div class="code-compare-body">/* comment */
-.box {
-  color: #333;
-  padding: 10px ;
-}</div>
-        </div>
-        <div class="code-compare-box">
-          <div class="code-compare-label">Minified</div>
-          <div class="code-compare-body">.box{color:#333;padding:10px}</div>
-        </div>
-      </div>
-
-      <h3>JS</h3>
-      <div class="code-compare">
-        <div class="code-compare-box">
-          <div class="code-compare-label">Original</div>
-          <div class="code-compare-body">// comment
-function hello() {
-  var x = 1;
-  return x;
-}</div>
-        </div>
-        <div class="code-compare-box">
-          <div class="code-compare-label">Minified</div>
-          <div class="code-compare-body">function hello() {
-var x = 1;
-return x;
-}</div>
-        </div>
-      </div>
-      <p style="font-size:14px;color:var(--subtext)">For JS, line breaks are preserved and only the leading/trailing whitespace and comments on each line are removed. Forcibly merging lines could change a script's meaning due to Automatic Semicolon Insertion (ASI) rules, so Minifier keeps the line structure intact for safety.</p>
 
       <div class="post-warn">
-        <strong>&#x26A0;&#xFE0F; Note:</strong> Minifier is a lightweight, regex-based minifier, not a full code parser. It may behave unexpectedly with complex strings or unusual syntax, so always check the minified result before using it. For production deployments, dedicated build tools like Terser (JS), cssnano (CSS), or html-minifier (HTML) are recommended.
+        <strong>&#x26A0;&#xFE0F; Note:</strong> The Query Builder uses <code>URLSearchParams</code> to encode values automatically. If you enter an already-encoded value, it may get double-encoded, so enter the original (decoded) value as-is.
       </div>
-
-      <h2>How It Works</h2>
-      <div class="post-table-wrap"><table class="post-table">
-        <thead><tr><th>Language</th><th>Method</th><th>Notes</th></tr></thead>
-        <tbody>
-          <tr><td>HTML</td><td>Plain JS regex</td><td>Preserves content inside <code>&lt;pre&gt;</code>/<code>&lt;script&gt;</code>/<code>&lt;style&gt;</code>/<code>&lt;textarea&gt;</code>, then trims whitespace between tags</td></tr>
-          <tr><td>CSS</td><td>Plain JS regex</td><td>Removes block comments and trims whitespace around selector/property delimiters</td></tr>
-          <tr><td>JS</td><td>String-aware character-by-character scanner</td><td>Does not mistake <code>//</code> or <code>/* */</code>-like patterns inside strings (<code>'</code>/<code>"</code>/<code>`</code>) for comments</td></tr>
-        </tbody>
-      </table></div>
-      <p>It runs on plain JavaScript with no external libraries or CDN, and all minification happens right in your browser.</p>
 
       <h2>Use Cases</h2>
       <div class="use-case-grid">
         <div class="use-case-card">
-          <div class="use-case-icon">&#x1F4E6;</div>
-          <div class="use-case-title">Quick Pre-Deploy Minification</div>
-          <div class="use-case-desc">Quickly shrink a small static page or snippet before deploying it, when setting up a build tool feels like overkill.</div>
+          <div class="use-case-icon">&#x1F517;</div>
+          <div class="use-case-title">Checking a Shared Link's Parameters</div>
+          <div class="use-case-desc">Quickly check what tracking parameters or options are packed into a long URL a friend sent you, using query parsing.</div>
         </div>
         <div class="use-case-card">
-          <div class="use-case-icon">&#x1F4CB;</div>
-          <div class="use-case-title">Cleaning Up Code to Share</div>
-          <div class="use-case-desc">Strip comments and unnecessary whitespace before sharing code by email or chat, keeping it concise.</div>
+          <div class="use-case-icon">&#x1F4E1;</div>
+          <div class="use-case-title">Assembling a Test API URL</div>
+          <div class="use-case-desc">Use the Query Builder to assemble an API request URL with several parameters without mistakes, then test it right away in Postman or a browser.</div>
         </div>
         <div class="use-case-card">
-          <div class="use-case-icon">&#x1F4CA;</div>
-          <div class="use-case-title">Comparing Size</div>
-          <div class="use-case-desc">Check the size before and after and the reduction percentage to see how heavy your code is and how effective minification was.</div>
+          <div class="use-case-icon">&#x1F1F0;&#xFE0F;</div>
+          <div class="use-case-title">Encoding Non-Latin URLs</div>
+          <div class="use-case-desc">Encode a path or search term containing Korean, Japanese, or other non-Latin text so it can be safely placed in a URL.</div>
         </div>
         <div class="use-case-card">
-          <div class="use-case-icon">&#x1F393;</div>
-          <div class="use-case-title">Tidying Code for Study</div>
-          <div class="use-case-desc">Paste in sample code or a CodePen snippet to strip it down to pure logic for your study notes.</div>
+          <div class="use-case-icon">&#x1F41B;</div>
+          <div class="use-case-title">Debugging a Broken URL</div>
+          <div class="use-case-desc">Decode a double-encoded or broken URL to trace back what the original value was.</div>
         </div>
       </div>
 
-      <div class="post-highlight">&#x1F512; Minifier runs all minification entirely in your browser. Since your code is never sent to an external server, you can safely use it with private project code too.</div>
+      <h2>How It Works</h2>
+      <div class="post-table-wrap"><table class="post-table">
+        <thead><tr><th>Feature</th><th>API Used</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>Encode/Decode</td><td><code>encodeURIComponent</code> / <code>encodeURI</code> / <code>decodeURIComponent</code> / <code>decodeURI</code></td><td>Built-in browser functions, no extra library needed</td></tr>
+          <tr><td>Query Parsing</td><td><code>URLSearchParams</code></td><td>Handles duplicate keys, empty values, and <code>+</code>-to-space conversion automatically per spec</td></tr>
+          <tr><td>Query Builder</td><td><code>URLSearchParams.append</code> + <code>toString()</code></td><td>Encodes entered values automatically when assembling</td></tr>
+        </tbody>
+      </table></div>
+      <p>It runs on built-in browser APIs with no external library or CDN, and all conversion happens right in your browser.</p>
+
+      <div class="post-highlight">&#x1F512; URLEncode runs all conversion entirely in your browser. Since your text and URLs are never sent to an external server, you can safely use it with private links or internal API addresses too.</div>
     
       <h2>Frequently Asked Questions</h2>
       <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
-        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. Is the Code Minifier tool really free?</p>
+        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. Is the URL Encoder tool really free?</p>
         <p style="color:var(--subtext);margin:0;line-height:1.7">Yes, it is completely free to use with no sign-up or installation required. There is no usage limit either.</p>
       </div>
       <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
@@ -364,8 +384,8 @@ return x;
         <p style="color:var(--subtext);margin:0;line-height:1.7">No. All processing happens entirely in your browser, and what you enter is never sent to or stored on an external server.</p>
       </div>
       <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
-        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. What kinds of code can I minify?</p>
-        <p style="color:var(--subtext);margin:0;line-height:1.7">It removes whitespace and comments from HTML, CSS, and JavaScript code to reduce file size.</p>
+        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. Does it handle URLs containing non-ASCII characters?</p>
+        <p style="color:var(--subtext);margin:0;line-height:1.7">Yes, it converts non-ASCII characters into UTF-8-based percent-encoding and can restore them back.</p>
       </div>
       <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
         <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. Can I use this on mobile?</p>
@@ -380,10 +400,10 @@ return x;
     </div>
 
     <div class="cta-box">
-      <p>Strip comments and whitespace from your HTML, CSS, and JS code to shrink its size.<br />Check the size and reduction before and after instantly.</p>
-      <a href="/en/minifier/" class="cta-btn" style="display:inline-flex;align-items:center;gap:8px">
-        <span style="display:inline-block;width:26px;height:26px;overflow:hidden;flex-shrink:0"><span style="display:block;transform:scale(0.565);transform-origin:top left"><div style="width:46px;height:46px;background:#e0c3ff;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="font:700 16px Poppins,sans-serif;color:#2a2433;line-height:1;letter-spacing:-.5px;white-space:nowrap">&lt;&gt;</div></div></span></span>
-        Start Minifying Code for Free
+      <p>Encode or decode text as a URL, and parse or build query parameters.<br />Even a complex URL becomes easy to read at a glance in a table.</p>
+      <a href="/en/url-encode/" class="cta-btn" style="display:inline-flex;align-items:center;gap:8px">
+        <span style="display:inline-block;width:26px;height:26px;overflow:hidden;flex-shrink:0"><span style="display:block;transform:scale(0.565);transform-origin:top left"><div style="width:46px;height:46px;background:#e0c3ff;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="font:700 15px Poppins,sans-serif;color:#2a2433;line-height:1;letter-spacing:-.5px;white-space:nowrap">%20</div></div></span></span>
+        Start Encoding URLs for Free
       </a>
     </div>
     <!-- Google AdSense Multiplex Ad — pending approval, reserving space -->
@@ -393,8 +413,8 @@ return x;
     </div>
 
 <div class="post-nav">
-      <a href="/en/blog/36-hashgen-howto"><span class="nav-label">&larr; Previous</span><span style="color:var(--point-hover)">Hash Generator</span>: The Complete Guide</a>
-      <a href="/en/blog/50-urlencode-howto" style="text-align:right"><span class="nav-label">Next &rarr;</span><span style="color:var(--point-hover)">URL Encoder</span>: The Complete Guide</a>
+      <a href="/en/blog/49-minifier-howto"><span class="nav-label">&larr; Previous</span><span style="color:var(--point-hover)">Code Minifier</span>: The Complete Guide</a>
+      <a href="/en/blog/" style="text-align:right"><span class="nav-label">Next &rarr;</span><span style="color:var(--point-hover)">CSS Unit Converter</span>: The Complete Guide</a>
     </div>
 
   </article>
