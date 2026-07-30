@@ -1,0 +1,295 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="icon" href="/favicon.ico" sizes="32x32">
+  <link rel="icon" href="/favicon-16.png" sizes="16x16" type="image/png">
+  <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="/favicon-192.png" sizes="192x192" type="image/png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<meta name="description" content="The official step-by-step guide to every feature of ChartMaker. Learn how to create bar/line/pie/donut/radar/polar charts, upload a CSV, and save as PNG."/>
+<meta property="og:title" content="Chart Maker: The Complete Guide — BrowserKit"/>
+<meta property="og:description" content="A step-by-step guide to ChartMaker, which creates bar, line, and pie charts from just your data and saves them as images."/>
+<meta property="og:type" content="article"/>
+<title>Chart Maker: The Complete Guide — BrowserKit</title>
+<link rel="stylesheet" href="/css/style.css?v=20260724c"/>
+<!-- Google AdSense — pending re-review. Uncomment once approved.
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506"
+     crossorigin="anonymous"></script>
+-->
+<style>
+.header{padding:24px 0 16px;border-bottom:1px solid var(--border)}.header .container{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}.header-brand{display:flex;align-items:center;gap:10px;text-decoration:none}.header-brand-icon{font-size:24px}.header-brand-text{font-size:20px;font-weight:700;font-family:'Gowun Dodum',sans-serif;background:linear-gradient(135deg,var(--point),var(--point-hover));-webkit-background-clip:text;-webkit-text-fill-color:transparent}.header-back{font-size:13px;color:var(--subtext);text-decoration:none}.header-back:hover{color:var(--text)}.post-wrap{max-width:720px;margin:0 auto;padding:48px 24px 0}.post-tag{display:inline-block;font-size:12px;color:var(--point-hover);background:rgba(123,108,255,0.15);padding:3px 12px;border-radius:999px;margin-bottom:16px}.post-title{font-size:28px;font-weight:700;line-height:1.4;margin-bottom:12px}.post-date{color:var(--subtext);font-size:13px;margin-bottom:40px;padding-bottom:24px;border-bottom:1px solid var(--border)}.post-body h2{font-size:20px;font-weight:700;margin:40px 0 16px;color:var(--text)}.post-body h3{font-size:16px;font-weight:600;margin:28px 0 12px;color:var(--point-hover)}.post-body p{font-size:15px;color:var(--subtext);line-height:1.9;margin-bottom:16px}.post-highlight{background:var(--card);border-left:3px solid var(--point);border-radius:8px;padding:16px 20px;margin:24px 0;font-size:15px;color:var(--text);line-height:1.8}.feature-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:20px 0}.feature-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:20px}.feature-card:hover{border-color:var(--point)}.feature-icon{font-size:24px;margin-bottom:10px}.feature-title{font-size:14px;font-weight:600;color:var(--text);margin-bottom:6px}.feature-desc{font-size:13px;color:var(--subtext);line-height:1.7}.step-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:20px 24px;margin:16px 0;display:flex;gap:16px;align-items:flex-start}.step-num{min-width:36px;height:36px;background:linear-gradient(135deg,var(--point),var(--point-hover));border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:white;flex-shrink:0;font-family:'Gowun Dodum',sans-serif}.step-content h3{font-size:15px;font-weight:600;margin:0 0 6px;color:var(--text)}.step-content p{font-size:14px;color:var(--subtext);line-height:1.7;margin:0}.chart-type-demo{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0}.type-chip{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:10px 16px;font-size:13px;font-weight:600;color:var(--subtext)}.type-chip.active{background:rgba(123,108,255,0.15);border-color:var(--point);color:var(--point-hover)}.post-table{width:100%;border-collapse:collapse;margin:20px 0;font-size:15px}.post-table th{background:var(--card);padding:12px 16px;text-align:left;font-weight:600;border:1px solid var(--border);color:var(--text)}.post-table td{padding:11px 16px;border:1px solid var(--border);color:var(--subtext);line-height:1.7}.post-table tr:hover td{background:rgba(123,108,255,0.04)}.layout-demo{background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin:16px 0}.layout-top{background:rgba(123,108,255,0.08);border-bottom:1px solid var(--border);padding:12px 16px;font-size:12px;font-weight:600;color:var(--point-hover)}.layout-cols{display:grid;grid-template-columns:180px 1fr}.layout-left{border-right:1px solid var(--border);padding:14px 16px;font-size:12px}.layout-right{padding:14px 16px;font-size:12px}.layout-item{padding:3px 0;color:var(--subtext)}.layout-item-title{font-weight:600;color:var(--text);margin-bottom:4px;font-size:11px}.option-demo{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px 20px;margin:16px 0}.option-row-demo{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px}.option-row-demo:last-child{border-bottom:none}.option-label-demo{color:var(--subtext)}.toggle-on{background:var(--point);border-radius:999px;width:36px;height:20px;display:inline-block}.toggle-off{background:var(--border);border-radius:999px;width:36px;height:20px;display:inline-block}.csv-demo{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:14px 18px;font-size:12px;font-family:'Fira Code',monospace;color:var(--text);margin:12px 0;line-height:1.8}.use-case-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:20px 0}.use-case-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:18px}.use-case-icon{font-size:28px;margin-bottom:8px}.use-case-title{font-size:13px;font-weight:600;color:var(--text);margin-bottom:6px}.use-case-desc{font-size:12px;color:var(--subtext);line-height:1.7}.btn-demo-row{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}.btn-demo{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:9px 18px;font-size:13px;color:var(--subtext)}.btn-demo.primary{background:linear-gradient(135deg,var(--point),var(--point-hover));color:#fff;border:none}.post-nav{display:flex;justify-content:space-between;margin-top: 12px;padding-top:24px;border-top:1px solid var(--border);gap:12px}.post-nav a{font-size:15px;color:var(--subtext);text-decoration:none}.post-nav a:hover{color:var(--text)}.cta-box{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:28px;text-align:center;margin:12px 0 0}.cta-box p{font-size:17px;color:var(--subtext);margin-bottom:16px}.cta-btn{display:inline-block;background:linear-gradient(135deg,var(--point),var(--point-hover));color:white;border-radius:10px;padding:12px 28px;font-size:14px;font-weight:600;text-decoration:none}.cta-btn:hover{transform:translateY(-2px);box-shadow:0 8px 24px var(--glow);color:white}.adfit-wrap{text-align:center;margin:24px 0}.adfit-pc{display:block}.adfit-mo{display:none}.back-link:hover{color:var(--text)}.coupang-banner{margin:0 auto 48px;text-align:center;overflow:hidden}.coupang-notice{font-size:11px;color:var(--subtext);margin-bottom:10px;line-height:1.6}.coupang-banner-mo{display:none}@media(max-width:640px){.feature-grid{grid-template-columns:1fr}.use-case-grid{grid-template-columns:1fr}.layout-cols{grid-template-columns:1fr}.adfit-pc{display:none}.adfit-mo{display:block}.coupang-banner-pc{display:none}.coupang-banner-mo{display:block}}
+</style>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<meta property="og:image" content="https://browserkit.online/img/og/chart-maker.png" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Chart Maker: The Complete Guide",
+    "description": "The official step-by-step guide to every feature of ChartMaker. Learn how to create bar/line/pie/donut/radar/polar charts, upload a CSV, and save as PNG.",
+    "datePublished": "2026-06-25T00:00:00+09:00",
+    "dateModified": "2026-07-22T00:00:00+09:00",
+    "author": { "@type": "Organization", "name": "BrowserKit", "url": "https://browserkit.online" },
+    "publisher": { "@type": "Organization", "name": "BrowserKit", "url": "https://browserkit.online", "logo": { "@type": "ImageObject", "url": "https://browserkit.online/img/og-browserkit.png" } },
+    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://browserkit.online/en/blog/38-chartmaker-howto" },
+    "image": "https://browserkit.online/img/og/chart-maker.png"
+  }
+  </script>  <link rel="canonical" href="https://browserkit.online/en/blog/38-chartmaker-howto" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://browserkit.online/en/" },
+    { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://browserkit.online/en/blog/" },
+    { "@type": "ListItem", "position": 3, "name": "Chart Maker: The Complete Guide", "item": "https://browserkit.online/en/blog/38-chartmaker-howto" }
+  ]
+}
+  </script>
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://browserkit.online/img/og/chart-maker.png" />
+  <style>
+    .post-table-wrap { overflow-x:auto; }
+    .post-table th, .post-table td { white-space:nowrap; }
+    .post-nav a { word-break:keep-all; }
+    .post-nav .nav-label { display:block; font-size:13px; color:var(--subtext); opacity:0.7; margin-bottom:4px; }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Is the Chart Maker tool really free?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, it is completely free to use with no sign-up or installation required. There is no usage limit either."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is the file I upload sent to a server?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. All processing happens entirely in your browser, and uploaded files are never sent to or stored on an external server."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I save a chart I created?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Download the finished chart as an image file to use directly in a document or presentation."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I use this on mobile?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, it works the same way in a mobile browser without needing to install any app."
+      }
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <div class="lang-banner" id="langBanner">
+    <span>🌐 이 페이지는 <a href="/blog/38-chartmaker-howto">한국어</a>로도 볼 수 있습니다.</span>
+    <button class="lang-banner-close" id="langBannerClose" type="button" aria-label="close">&times;</button>
+  </div>
+<header class="header"><div class="container"><a href="/en/" class="header-brand"><div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Poppins,sans-serif;flex-shrink:0">B</div><span class="header-brand-text"><span style="color:var(--text)">Browser</span><span style="color:var(--point)">Kit</span></span></a><div class="header-right">
+        <div class="lang-switcher">
+          <button class="lang-switcher-btn" type="button" data-lang-btn>🌐 <span class="lang-label-full">English</span></button>
+          <div class="lang-switcher-menu" data-lang-menu>
+            <a href="#" class="active">English</a>
+            <a href="/blog/38-chartmaker-howto">한국어</a>
+          </div>
+        </div>
+        <a href="/en/" class="header-back">&#x2190; <span class="header-back-label">Back to BrowserKit</span></a>
+      </div></div></header>
+<article class="post-wrap">
+<a href="/en/blog/" class="back-link">&#x2190; Blog</a>
+<span class="post-tag">Guide</span>
+<h1 class="post-title"><span style="color:var(--point-hover)">Chart Maker</span>: The Complete Guide</h1>
+<div class="post-date">June 24, 2026</div>
+    <!-- Google AdSense Display Ad — pending approval, reserving space -->
+    <div class="ad-slot" id="adExtra2">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
+<div class="post-body">
+<p>Opening a spreadsheet app, matching a style, and exporting an image just to make one chart for a presentation is more of a hassle than it should be. ChartMaker is a free online tool that instantly creates bar, line, pie, donut, radar, or polar charts from data you type in or a CSV file you upload. The finished chart can be saved directly as a PNG or SVG, and since everything runs entirely in your browser, your data is never sent to an external server.</p>
+<h2>Key Features</h2>
+<div class="feature-grid">
+<div class="feature-card"><div class="feature-icon">&#x1F4CA;</div><div class="feature-title">6 Chart Types</div><div class="feature-desc">Instantly switch between bar, line, pie, donut, radar, and polar charts using the buttons at the top.</div></div>
+<div class="feature-card"><div class="feature-icon">&#x1F4C2;</div><div class="feature-title">CSV File Upload</div><div class="feature-desc">Drag and drop a CSV exported from a spreadsheet to automatically load the data and generate a chart.</div></div>
+<div class="feature-card"><div class="feature-icon">&#x1F5BC;&#xFE0F;</div><div class="feature-title">Save as PNG / SVG</div><div class="feature-desc">Save the finished chart as a PNG (with background) or an SVG file. Choose white, transparent, or dark for the background.</div></div>
+<div class="feature-card"><div class="feature-icon">&#x2699;&#xFE0F;</div><div class="feature-title">Flexible Options</div><div class="feature-desc">Freely toggle the legend, data labels, grid lines, background color, and stacked chart options.</div></div>
+</div>
+
+      <!-- Google AdSense Display Ad — pending approval, reserving space -->
+    <div class="ad-slot" id="adTop">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
+      <h2>Layout</h2>
+<p>Choose a chart type from the buttons at the top, enter your data and options in the settings panel on the left, and view the chart on the right.</p>
+
+
+<div class="layout-demo">
+<div class="layout-top">&#x1F4CA; Chart type bar -- Bar &middot; Line &middot; Pie &middot; Donut &middot; Radar &middot; Polar</div>
+<div class="layout-cols">
+<div class="layout-left"><div class="layout-item-title">&#x2699; Settings panel (left)</div><div class="layout-item">&#x1F4DD; Chart title</div><div class="layout-item">&#x1F4C5; Data input table</div><div class="layout-item">&nbsp;&nbsp;(color &middot; label &middot; value)</div><div class="layout-item">&#x1F4C2; CSV file upload</div><div class="layout-item">&#x1F4CF; X-axis &middot; Y-axis labels</div><div class="layout-item">&#x1F518; Option toggles</div><div class="layout-item">&#x1F4CA; Generate Chart button</div><div class="layout-item">&#x1F5BC;&#xFE0F; Save as PNG / SVG</div></div>
+<div class="layout-right"><div class="layout-item-title">&#x1F4CA; Chart panel (right)</div><div class="layout-item">Shows the rendered chart after generating</div><div class="layout-item" style="margin-top:8px;color:var(--point-hover);">&#x2728; Updates instantly when you switch chart type and regenerate</div></div>
+</div>
+</div>
+<h2>Basic Usage</h2>
+<div class="step-card"><div class="step-num">1</div><div class="step-content"><h3>Choose a Chart Type</h3><p>Select the chart type you want from the buttons at the top. The default is a bar chart, and your data is kept even if you switch types.</p></div></div>
+<div class="chart-type-demo">
+<div class="type-chip active">&#x1F4CA; Bar</div><div class="type-chip">&#x1F4C8; Line</div><div class="type-chip">&#x2B55; Pie</div><div class="type-chip">&#x1F369; Donut</div><div class="type-chip">&#x1F578;&#xFE0F; Radar</div><div class="type-chip">&#x1F3AF; Polar</div>
+</div>
+<div class="step-card"><div class="step-num">2</div><div class="step-content"><h3>Enter Your Data</h3><p>In the data input table, set each item's color with the color picker, and enter its label and value. 6 sample rows are pre-filled, and you can add more with the <strong>+ Add Row</strong> button.</p></div></div>
+
+
+<div class="step-card"><div class="step-num">3</div><div class="step-content"><h3>Enter a Chart Title (Optional)</h3><p>Type a title into the chart title box. It appears at the top of the chart and is also used as the filename when saving a PNG.</p></div></div>
+<div class="step-card"><div class="step-num">4</div><div class="step-content"><h3>Set Options (Optional)</h3><p>Configure the legend, data labels, grid lines, background color, and more. Bar and line charts also offer X/Y axis labels, and bar charts additionally offer a stacked chart option.</p></div></div>
+<div class="step-card"><div class="step-num">5</div><div class="step-content"><h3>Generate the Chart</h3><p>Click the <strong>&#x1F4CA; Generate Chart</strong> button and it renders in the panel on the right.</p></div></div>
+
+
+<div class="step-card"><div class="step-num">6</div><div class="step-content"><h3>Save</h3><p>Download it as an image with <strong>Save PNG</strong>, or save a vector file with <strong>Save SVG</strong>.</p></div></div>
+<div class="btn-demo-row"><div class="btn-demo primary">&#x1F4CA; Generate Chart</div><div class="btn-demo">&#x1F5BC;&#xFE0F; Save PNG</div><div class="btn-demo">&#x1F4C4; Save SVG</div><div class="btn-demo">&#x21BA; Reset</div></div>
+<h2>Uploading a CSV File</h2>
+<p>Export your data from Excel or Google Sheets as CSV and upload it, and a chart is generated automatically. The first column is treated as the label, and the second as the value.</p>
+<h3>Example CSV Format</h3>
+<div class="csv-demo">Category,Sales<br>Jan,120<br>Feb,190<br>Mar,170<br>Apr,250<br>May,310<br>Jun,280</div>
+<p>If the first row is a header (non-numeric text), it's skipped automatically. Upload a file by drag-and-drop or clicking, and the data loads instantly with the chart generated automatically.</p>
+
+
+<h2>Chart Type Details</h2>
+<div class="post-table-wrap"><table class="post-table"><thead><tr><th>Type</th><th>Icon</th><th>Good For</th><th>Notes</th></tr></thead><tbody>
+<tr><td><strong>Bar</strong></td><td>&#x1F4CA;</td><td>Comparing values across items</td><td>Supports the stacked chart option. The most versatile chart type.</td></tr>
+<tr><td><strong>Line</strong></td><td>&#x1F4C8;</td><td>Trends over time</td><td>Good for showing trends like monthly sales or stock price movement.</td></tr>
+<tr><td><strong>Pie</strong></td><td>&#x2B55;</td><td>Proportion of a whole</td><td>Intuitively shows the composition ratio of each item.</td></tr>
+<tr><td><strong>Donut</strong></td><td>&#x1F369;</td><td>Proportion of a whole</td><td>Same as pie, but with a hollow center for a cleaner look.</td></tr>
+<tr><td><strong>Radar</strong></td><td>&#x1F578;&#xFE0F;</td><td>Comparing multiple stats</td><td>Good for visualizing skills, competencies, and evaluation criteria.</td></tr>
+<tr><td><strong>Polar</strong></td><td>&#x1F3AF;</td><td>Comparing values by direction</td><td>Similar to radar, but represents size through slice area.</td></tr>
+</tbody></table></div>
+<h2>Chart Options Explained</h2>
+<div class="option-demo">
+<div class="option-row-demo"><span class="option-label-demo">&#x1F4D6; Show Legend</span><span class="toggle-on"></span></div>
+<div class="option-row-demo"><span class="option-label-demo">&#x1F3F7;&#xFE0F; Data Labels</span><span class="toggle-off"></span></div>
+<div class="option-row-demo"><span class="option-label-demo">&#x25A6; Grid Lines</span><span class="toggle-on"></span></div>
+<div class="option-row-demo"><span class="option-label-demo">&#x1F3A8; Background Color</span><span style="font-size:12px;color:var(--subtext);background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:4px 12px;">White</span></div>
+<div class="option-row-demo"><span class="option-label-demo">&#x1F4CA; Stacked Chart (bar only)</span><span class="toggle-off"></span></div>
+</div>
+<div class="post-table-wrap"><table class="post-table"><thead><tr><th>Option</th><th>Description</th></tr></thead><tbody>
+<tr><td><strong>Show Legend</strong></td><td>Shows item names and their color legend below the chart.</td></tr>
+<tr><td><strong>Data Labels</strong></td><td>Shows the value directly on each data point. Pie/donut charts show it inside the slice, bar/line charts above it.</td></tr>
+<tr><td><strong>Grid Lines</strong></td><td>Turns the background grid lines on bar/line charts on or off.</td></tr>
+<tr><td><strong>Background Color</strong></td><td>Choose transparent (no background when saved as PNG), white, or dark.</td></tr>
+<tr><td><strong>Stacked Chart</strong></td><td>Bar charts only. Each item's value is shown stacked cumulatively from left to right. E.g. Jan=120, Feb=310, Mar=480...</td></tr>
+</tbody></table></div>
+<h2>Use Cases</h2>
+<div class="use-case-grid">
+<div class="use-case-card"><div class="use-case-icon">&#x1F4B0;</div><div class="use-case-title">Monthly Sales Reports</div><div class="use-case-desc">Visualize monthly sales data as a bar or line chart to embed in a report or presentation.</div></div>
+<div class="use-case-card"><div class="use-case-icon">&#x1F967;</div><div class="use-case-title">Budget Breakdown</div><div class="use-case-desc">Represent budget allocation as a pie or donut chart to see proportions at a glance.</div></div>
+<div class="use-case-card"><div class="use-case-icon">&#x1F9D1;&#x200D;&#x1F4BC;</div><div class="use-case-title">Skill Assessment Visualization</div><div class="use-case-desc">Visualize employee skill assessment criteria on a radar chart to intuitively show strengths and weaknesses.</div></div>
+<div class="use-case-card"><div class="use-case-icon">&#x1F4C8;</div><div class="use-case-title">Weekly Visitor Trends</div><div class="use-case-desc">Visualize weekly website visitor counts as a line chart to analyze traffic patterns.</div></div>
+<div class="use-case-card"><div class="use-case-icon">&#x1F393;</div><div class="use-case-title">Charts for Presentations</div><div class="use-case-desc">Save a chart as PNG to use directly in a PowerPoint or Keynote slide.</div></div>
+<div class="use-case-card"><div class="use-case-icon">&#x1F4DD;</div><div class="use-case-title">Survey Result Visualization</div><div class="use-case-desc">Export survey response data as CSV, upload it, and instantly visualize it as a pie chart.</div></div>
+</div>
+<h2>PNG vs. SVG: Which to Save</h2>
+<div class="post-table-wrap"><table class="post-table"><thead><tr><th>Format</th><th>Notes</th><th>Recommended For</th></tr></thead><tbody>
+<tr><td><strong>PNG</strong></td><td>An image file with a background. Your chosen background color (transparent/white/dark) is applied.</td><td>Presentations, reports, social sharing, document embedding</td></tr>
+<tr><td><strong>SVG</strong></td><td>A vector-based file. Stays sharp at any zoom level.</td><td>Website embedding, high-resolution print output</td></tr>
+</tbody></table></div>
+<div class="post-highlight">&#x1F512; ChartMaker runs all data processing entirely in your browser. Since your data and CSV files are never sent to an external server, you can safely use it with sensitive business data like sales figures or HR records.</div>
+
+      <h2>Frequently Asked Questions</h2>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
+        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. Is the Chart Maker tool really free?</p>
+        <p style="color:var(--subtext);margin:0;line-height:1.7">Yes, it is completely free to use with no sign-up or installation required. There is no usage limit either.</p>
+      </div>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
+        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. Is the file I upload sent to a server?</p>
+        <p style="color:var(--subtext);margin:0;line-height:1.7">No. All processing happens entirely in your browser, and uploaded files are never sent to or stored on an external server.</p>
+      </div>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
+        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. How do I save a chart I created?</p>
+        <p style="color:var(--subtext);margin:0;line-height:1.7">Download the finished chart as an image file to use directly in a document or presentation.</p>
+      </div>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
+        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. Can I use this on mobile?</p>
+        <p style="color:var(--subtext);margin:0;line-height:1.7">Yes, it works the same way in a mobile browser without needing to install any app.</p>
+      </div>
+    </div>
+<!-- Google AdSense Display Ad — pending approval, reserving space -->
+    <div class="ad-slot" id="adMiddle">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
+
+    <div class="cta-box"><p>Enter your data or upload a CSV to instantly generate a chart.<br />Choose from 6 chart types -- bar, line, pie, donut, radar, and polar -- and save as PNG.</p><a href="/en/chart-maker/" class="cta-btn" style="display:inline-flex;align-items:center;gap:8px">
+        <span style="display:inline-block;width:26px;height:26px;overflow:hidden;flex-shrink:0"><span style="display:block;transform:scale(0.565);transform-origin:top left"><div style="width:46px;height:46px;background:#ffd9a8;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="display:flex;align-items:flex-end;gap:3px;height:28px"><div style="width:6px;height:13px;background:#fffdf9;border:2px solid #2a2433;border-radius:2px 2px 0 0;box-sizing:border-box"></div><div style="width:6px;height:22px;background:#fffdf9;border:2px solid #2a2433;border-radius:2px 2px 0 0;box-sizing:border-box"></div><div style="width:6px;height:17px;background:#fffdf9;border:2px solid #2a2433;border-radius:2px 2px 0 0;box-sizing:border-box"></div></div></div></span></span>
+        Start Making Charts for Free
+      </a></div>
+    <!-- Google AdSense Multiplex Ad — pending approval, reserving space -->
+    <div class="ad-slot ad-slot-rect" id="adBottom">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
+<div class="post-nav">
+      <a href="/en/blog/96-colorcontrastchecker-howto"><span class="nav-label">&larr; Previous</span><span style="color:var(--point-hover)">Color Contrast Checker</span>: The Complete Guide</a>
+      <a href="/en/blog/" style="text-align:right"><span class="nav-label">Next &rarr;</span><span style="color:var(--point-hover)">Diagram Maker</span>: The Complete Guide</a>
+    </div>
+    </article>
+    <footer class="footer">
+      <div class="container">
+        <p class="footer-copy">&#xa9; 2026 BrowserKit. All processing happens in your browser.</p>
+        <nav class="footer-nav">
+          <a href="/en/privacy.html">Privacy Policy</a>
+          <a href="/en/terms.html">Terms of Service</a>
+          <a href="/en/about.html">About</a>
+          <a href="/en/blog/">Blog</a>
+        </nav>
+      </div>
+    </footer>
+
+  <script>
+  document.querySelectorAll('[data-lang-btn]').forEach(function(btn){
+    btn.addEventListener('click', function(e){
+      e.stopPropagation();
+      var menu = btn.nextElementSibling;
+      menu.classList.toggle('show');
+    });
+  });
+  document.addEventListener('click', function(){
+    document.querySelectorAll('.lang-switcher-menu.show').forEach(function(m){ m.classList.remove('show'); });
+  });
+  </script>
+
+  <script>
+  (function(){
+    try {
+      if (document.cookie.indexOf('bk_lang_dismiss=1') !== -1) return;
+      var lang = (navigator.language || navigator.userLanguage || '').toLowerCase();
+      if (lang.indexOf('ko') !== 0) return;
+      var banner = document.getElementById('langBanner');
+      if (!banner) return;
+      banner.classList.add('show');
+      var closeBtn = document.getElementById('langBannerClose');
+      closeBtn.addEventListener('click', function(){
+        banner.classList.remove('show');
+        document.cookie = 'bk_lang_dismiss=1; max-age=' + (60*60*24*180) + '; path=/';
+      });
+    } catch(e) {}
+  })();
+  </script>
+</body>
+</html>
