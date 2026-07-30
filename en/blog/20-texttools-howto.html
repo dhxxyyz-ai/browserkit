@@ -1,0 +1,365 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="icon" href="/favicon.ico" sizes="32x32">
+  <link rel="icon" href="/favicon-16.png" sizes="16x16" type="image/png">
+  <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="/favicon-192.png" sizes="192x192" type="image/png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="The official step-by-step guide to every feature of TextTools. Easily follow along with counting characters, cleaning up whitespace, converting case, and removing duplicates." />
+  <meta property="og:title" content="Text Tools: The Complete Guide — BrowserKit" />
+  <meta property="og:description" content="The official step-by-step guide to every feature of TextTools." />
+  <meta property="og:type" content="article" />
+  <title>Text Tools: The Complete Guide — BrowserKit</title>
+  <link rel="stylesheet" href="/css/style.css?v=20260724c" />
+  <link rel="stylesheet" href="/css/style-en.css?v=20260724a" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Google AdSense — pending re-review. Uncomment once approved.
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2077977787979506"
+     crossorigin="anonymous"></script>
+  -->
+  <style>
+    .feature-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:20px 0; }
+    .feature-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px; }
+    .feature-card:hover { border-color:var(--point); }
+    .feature-icon { font-size:24px; margin-bottom:10px; }
+    .feature-title { font-size:14px; font-weight:600; color:var(--text); margin-bottom:6px; }
+    .feature-desc { font-size:13px; color:var(--subtext); line-height:1.7; }
+    .step-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px 24px; margin:16px 0; display:flex; gap:16px; align-items:flex-start; }
+    .step-num { min-width:36px; height:36px; background:linear-gradient(135deg,var(--point),var(--point-hover)); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:700; color:white; flex-shrink:0; }
+    .step-content h3 { font-size:15px; font-weight:600; margin:0 0 6px; color:var(--text); }
+    .step-content p { font-size:14px; color:var(--subtext); line-height:1.7; margin:0; }
+    .post-table { width:100%; border-collapse:collapse; margin:20px 0; font-size:15px; }
+    .post-table th { background:var(--card); padding:12px 16px; text-align:left; font-weight:600; border:1px solid var(--border); color:var(--text); }
+    .post-table td { padding:11px 16px; border:1px solid var(--border); color:var(--subtext); line-height:1.7; }
+    .post-table td code { background:var(--bg); border-radius:4px; padding:1px 6px; font-size:13px; color:var(--point-hover); }
+    .post-table tr:hover td { background:rgba(123,108,255,0.04); }
+    .post-nav { display:flex; justify-content:space-between; margin-top: 12px; padding-top:24px; border-top:1px solid var(--border); gap:12px; }
+    .post-nav a { font-size:15px; color:var(--subtext); }
+    .post-nav a:hover { color:var(--text); }
+    .cta-box { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:28px; text-align:center; margin: 12px 0 0; }
+    .cta-box p { font-size:17px; color:var(--subtext); margin-bottom:16px; }
+    .cta-btn { display:inline-block; background:linear-gradient(135deg,var(--point),var(--point-hover)); color:white; border-radius:10px; padding:12px 28px; font-size:14px; font-weight:600; text-decoration:none; }
+    .cta-btn:hover { transform:translateY(-2px); box-shadow:0 8px 24px var(--glow); color:white; }
+    .back-link:hover { color:var(--text); }
+    @media (max-width:640px) {
+      .feature-grid { grid-template-columns:1fr; }
+    }
+  </style>
+<meta property="og:image" content="https://browserkit.online/img/og/text-tools.png" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Text Tools: The Complete Guide",
+    "description": "The official step-by-step guide to every feature of TextTools. Easily follow along with counting characters, cleaning up whitespace, converting case, and removing duplicates.",
+    "datePublished": "2026-06-17T00:00:00+09:00",
+    "dateModified": "2026-07-22T00:00:00+09:00",
+    "author": { "@type": "Organization", "name": "BrowserKit", "url": "https://browserkit.online" },
+    "publisher": { "@type": "Organization", "name": "BrowserKit", "url": "https://browserkit.online", "logo": { "@type": "ImageObject", "url": "https://browserkit.online/img/og-browserkit.png" } },
+    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://browserkit.online/en/blog/20-texttools-howto" },
+    "image": "https://browserkit.online/img/og/text-tools.png"
+  }
+  </script>  <link rel="canonical" href="https://browserkit.online/en/blog/20-texttools-howto" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://browserkit.online/en/" },
+    { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://browserkit.online/en/blog/" },
+    { "@type": "ListItem", "position": 3, "name": "Text Tools: The Complete Guide", "item": "https://browserkit.online/en/blog/20-texttools-howto" }
+  ]
+}
+  </script>
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://browserkit.online/img/og/text-tools.png" />
+  <style>
+    .post-table-wrap { overflow-x:auto; }
+    .post-table th, .post-table td { white-space:nowrap; }
+    .post-nav a { word-break:keep-all; }
+    .post-nav .nav-label { display:block; font-size:13px; color:var(--subtext); opacity:0.7; margin-bottom:4px; }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Is the Text Tools tool really free?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, it is completely free to use with no sign-up or installation required. There is no usage limit either."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is what I enter sent to a server?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. All processing happens entirely in your browser, and what you enter is never sent to or stored on an external server."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can it handle long text without issue?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, since it processes instantly in your browser, a typical document's length converts without any trouble."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I use this on mobile?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, it works the same way in a mobile browser without needing to install any app."
+      }
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <div class="lang-banner" id="langBanner">
+    <span>🌐 이 페이지는 <a href="/blog/20-texttools-howto">한국어</a>로도 볼 수 있습니다.</span>
+    <button class="lang-banner-close" id="langBannerClose" type="button" aria-label="close">&times;</button>
+  </div>
+  <header class="header">
+    <div class="container">
+      <a href="/en/" class="header-brand"><div style="width:28px;height:28px;border-radius:50%;background:#7b6cff;border:2.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 18px Poppins,sans-serif;flex-shrink:0">B</div><span class="header-brand-text"><span style="color:var(--text)">Browser</span><span style="color:var(--point)">Kit</span></span></a>
+      <div class="header-right">
+        <div class="lang-switcher">
+          <button class="lang-switcher-btn" type="button" data-lang-btn>🌐 <span class="lang-label-full">English</span></button>
+          <div class="lang-switcher-menu" data-lang-menu>
+            <a href="#" class="active">English</a>
+            <a href="/blog/20-texttools-howto">한국어</a>
+          </div>
+        </div>
+        <a href="/en/" class="header-back">← <span class="header-back-label">Back to BrowserKit</span></a>
+      </div>
+    </div>
+  </header>
+
+  <article class="post-wrap">
+    <a href="/en/blog/" class="back-link">← Blog</a>
+    <span class="post-tag">Guide</span>
+    <h1 class="post-title"><span style="color:var(--point-hover)">Text Tools</span>: The Complete Guide</h1>
+    <div class="post-date">June 18, 2026</div>
+    <!-- Google AdSense Display Ad — pending approval, reserving space -->
+    <div class="ad-slot" id="adExtra2">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
+
+    <div class="post-body">
+      <p>Writing a cover letter often means opening a separate word counter to hit a "500 character limit," and a list copied from a spreadsheet with duplicate entries mixed in means eyeballing each one to filter them out. TextTools is a free tool that handles counting characters, cleaning whitespace, converting case, and removing duplicates all in one place in your browser. Whatever text you enter is never sent outside your browser -- it's processed entirely inside it.</p>
+
+      <h2>Key Features (4 Tabs)</h2>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F4CA;</div>
+          <div class="feature-title">Character Count</div>
+          <div class="feature-desc">Shows total characters, characters excluding whitespace, word count, line count, UTF-8 bytes, and sentence count in real time.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F9F9;</div>
+          <div class="feature-title">Clean Whitespace / Line Breaks</div>
+          <div class="feature-desc">Supports 6 modes: collapsing repeated spaces/line breaks, trimming, trimming each line, and removing all of either entirely.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F524;</div>
+          <div class="feature-title">Case Conversion</div>
+          <div class="feature-desc">Converts to 7 formats: UPPER, lower, Capitalize, camelCase, snake_case, kebab-case, and PascalCase.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x274C;</div>
+          <div class="feature-title">Remove Duplicates</div>
+          <div class="feature-desc">Removes duplicate lines, empty lines, or both. Also shows how many lines were removed.</div>
+        </div>
+      </div>
+
+      <!-- Google AdSense Display Ad — pending approval, reserving space -->
+    <div class="ad-slot" id="adTop">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
+      <h2>Basic Usage</h2>
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <h3>Choose a Tab</h3>
+          <p>Pick the feature you want from the tab buttons at the top. Four are available: Character Count, Clean Whitespace/Line Breaks, Case Conversion, and Remove Duplicates.</p>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <h3>Type or Paste Text</h3>
+          <p>Type or paste text directly into the input area on the left. In the Character Count tab, results update live the instant you type.</p>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <h3>Choose a Mode and Copy the Result</h3>
+          <p>In the clean/convert/remove tabs, click the mode button you want and the result appears on the right. Use the <strong>&#x1F4CB; Copy Result</strong> button to copy it to your clipboard, or <strong>&#x21C4; Result&rarr;Input</strong> to bring the result back into the input area.</p>
+        </div>
+      </div>
+
+      <h2>Detailed Guide by Tab</h2>
+
+      <h3>&#x1F4CA; Character Count</h3>
+      <p>Enter text and 6 metrics are analyzed in real time. Useful for checking character limits when writing a blog post, a YouTube description, or a social media post.</p>
+      
+      <div class="post-table-wrap"><table class="post-table">
+        <thead><tr><th>Metric</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td>Total characters</td><td>Total character count, including whitespace</td></tr>
+          <tr><td>Excluding whitespace</td><td>Character count excluding spaces, tabs, and line breaks</td></tr>
+          <tr><td>Word count</td><td>Number of words separated by whitespace</td></tr>
+          <tr><td>Line count</td><td>Number of lines, based on line breaks</td></tr>
+          <tr><td>Bytes (UTF-8)</td><td>Size based on 3 bytes per Korean character, 1 byte per English character</td></tr>
+          <tr><td>Sentence count</td><td>Number of sentences, based on <code>.</code> <code>!</code> <code>?</code> <code>&#x3002;</code></td></tr>
+        </tbody>
+      </table></div>
+
+      <h3>&#x1F9F9; Clean Whitespace / Line Breaks</h3>
+      <p>Clean up copied text in one pass when it has a lot of unnecessary spaces or empty lines.</p>
+      
+      <div class="post-table-wrap"><table class="post-table">
+        <thead><tr><th>Button</th><th>Action</th></tr></thead>
+        <tbody>
+          <tr><td>Repeated spaces &rarr; single</td><td>Collapses multiple spaces into one</td></tr>
+          <tr><td>Repeated line breaks &rarr; single</td><td>Collapses multiple empty lines into one</td></tr>
+          <tr><td>Trim leading/trailing whitespace</td><td>Removes whitespace from the start and end of the whole text</td></tr>
+          <tr><td>Trim each line</td><td>Removes leading/trailing whitespace from each line individually</td></tr>
+          <tr><td>Remove all spaces</td><td>Deletes every space</td></tr>
+          <tr><td>Remove all line breaks</td><td>Deletes every line break, merging everything into one line</td></tr>
+        </tbody>
+      </table></div>
+
+      <h3>&#x1F524; Case Conversion</h3>
+      <p>Useful for changing a variable naming format during development, or bulk-changing the case of English text.</p>
+      
+      <div class="post-table-wrap"><table class="post-table">
+        <thead><tr><th>Mode</th><th>Example Input</th><th>Result</th></tr></thead>
+        <tbody>
+          <tr><td>UPPER</td><td>hello world</td><td>HELLO WORLD</td></tr>
+          <tr><td>lower</td><td>Hello World</td><td>hello world</td></tr>
+          <tr><td>Capitalize</td><td>hello world</td><td>Hello World</td></tr>
+          <tr><td>camelCase</td><td>hello world</td><td>helloWorld</td></tr>
+          <tr><td>snake_case</td><td>hello world</td><td>hello_world</td></tr>
+          <tr><td>kebab-case</td><td>hello world</td><td>hello-world</td></tr>
+          <tr><td>PascalCase</td><td>hello world</td><td>HelloWorld</td></tr>
+        </tbody>
+      </table></div>
+
+      <h3>&#x274C; Remove Duplicates</h3>
+      <p>Quickly remove duplicate entries from a keyword list, address list, and similar text.</p>
+      
+      <div class="post-table-wrap"><table class="post-table">
+        <thead><tr><th>Button</th><th>Action</th></tr></thead>
+        <tbody>
+          <tr><td>Remove duplicate lines</td><td>Keeps only one instance of identical lines (order preserved)</td></tr>
+          <tr><td>Remove empty lines</td><td>Deletes every line with no content</td></tr>
+          <tr><td>Remove duplicates + empty lines</td><td>Applies both at once</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="post-highlight">&#x1F4A1; TextTools processes everything entirely in your browser. Since what you enter is never sent to an external server, you can safely process personal information or confidential documents. No install or sign-up needed -- use it right away.</div>
+    
+      <h2>Frequently Asked Questions</h2>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
+        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. Is the Text Tools tool really free?</p>
+        <p style="color:var(--subtext);margin:0;line-height:1.7">Yes, it is completely free to use with no sign-up or installation required. There is no usage limit either.</p>
+      </div>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
+        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. Is what I enter sent to a server?</p>
+        <p style="color:var(--subtext);margin:0;line-height:1.7">No. All processing happens entirely in your browser, and what you enter is never sent to or stored on an external server.</p>
+      </div>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
+        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. Can it handle long text without issue?</p>
+        <p style="color:var(--subtext);margin:0;line-height:1.7">Yes, since it processes instantly in your browser, a typical document's length converts without any trouble.</p>
+      </div>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:12px 0">
+        <p style="font-weight:700;color:var(--text);margin:0 0 6px">Q. Can I use this on mobile?</p>
+        <p style="color:var(--subtext);margin:0;line-height:1.7">Yes, it works the same way in a mobile browser without needing to install any app.</p>
+      </div>
+    </div>
+
+    <!-- Google AdSense Display Ad — pending approval, reserving space -->
+    <div class="ad-slot" id="adMiddle">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
+
+    <div class="cta-box">
+      <p>Use TextTools whenever you need to convert case, remove duplicates, or clean up whitespace.<br />Handle complex text-processing tasks with a single click.</p>
+      <a href="/en/text-tools/" class="cta-btn" style="display:inline-flex;align-items:center;gap:8px">
+        <span style="display:inline-block;width:26px;height:26px;overflow:hidden;flex-shrink:0"><span style="display:block;transform:scale(0.565);transform-origin:top left"><div style="width:46px;height:46px;background:#a8e6cf;border:2.5px solid #2a2433;border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden"><div style="font:700 16px Poppins,sans-serif;color:#2a2433;line-height:1;letter-spacing:-.5px;white-space:nowrap">Aa</div></div></span></span>
+        Start Using Text Tools for Free
+      </a>
+    </div>
+    <!-- Google AdSense Multiplex Ad — pending approval, reserving space -->
+    <div class="ad-slot ad-slot-rect" id="adBottom">
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2077977787979506" data-ad-slot="TBD"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    </div>
+
+<div class="post-nav">
+      <a href="/en/blog/46-pdfsplit-howto"><span class="nav-label">&larr; Previous</span><span style="color:var(--point-hover)">Split PDF</span>: The Complete Guide</a>
+      <a href="/en/blog/28-diffchecker-howto" style="text-align:right"><span class="nav-label">Next &rarr;</span><span style="color:var(--point-hover)">Diff Checker</span>: The Complete Guide</a>
+    </div>
+
+  </article>
+  <footer class="footer">
+    <div class="container">
+      <p class="footer-copy">&#xa9; 2026 BrowserKit. All processing happens in your browser.</p>
+      <nav class="footer-nav">
+        <a href="/en/privacy.html">Privacy Policy</a>
+        <a href="/en/terms.html">Terms of Service</a>
+        <a href="/en/about.html">About</a>
+        <a href="/en/blog/">Blog</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script>
+  document.querySelectorAll('[data-lang-btn]').forEach(function(btn){
+    btn.addEventListener('click', function(e){
+      e.stopPropagation();
+      var menu = btn.nextElementSibling;
+      menu.classList.toggle('show');
+    });
+  });
+  document.addEventListener('click', function(){
+    document.querySelectorAll('.lang-switcher-menu.show').forEach(function(m){ m.classList.remove('show'); });
+  });
+  </script>
+
+  <script>
+  (function(){
+    try {
+      if (document.cookie.indexOf('bk_lang_dismiss=1') !== -1) return;
+      var lang = (navigator.language || navigator.userLanguage || '').toLowerCase();
+      if (lang.indexOf('ko') !== 0) return;
+      var banner = document.getElementById('langBanner');
+      if (!banner) return;
+      banner.classList.add('show');
+      var closeBtn = document.getElementById('langBannerClose');
+      closeBtn.addEventListener('click', function(){
+        banner.classList.remove('show');
+        document.cookie = 'bk_lang_dismiss=1; max-age=' + (60*60*24*180) + '; path=/';
+      });
+    } catch(e) {}
+  })();
+  </script>
+</body>
+</html>
+
