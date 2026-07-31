@@ -21,10 +21,10 @@
   <title>BrowserKit — Free Browser-Based Tools</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Gowun Dodum:wght@300;400;700&family=Nanum+Pen+Script&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=Nanum+Pen+Script&display=swap" rel="stylesheet">
   <!-- Google AdSense Display Ad — pending approval, reserving space -->
   <style>
-    html, body { margin: 0; padding: 0; height: 100%; overflow: hidden; font-family: 'Gowun Dodum', system-ui, sans-serif; }
+    html, body { margin: 0; padding: 0; height: 100%; overflow: hidden; font-family: 'Inter', system-ui, sans-serif; }
     * { box-sizing: border-box; }
     a { text-decoration: none; }
     ::-webkit-scrollbar { width: 14px; }
@@ -44,12 +44,12 @@
     .bk-cta:hover { transform: translateY(2px) !important; box-shadow: 0 2px 0 currentColor !important; }
     #root { transform: scale(0.05); opacity: 0; border-radius: 30px; transform-origin: center center; }
     /* Language switcher (ported from site-wide css/style.css .lang-switcher component) */
-    .lang-switcher { position: relative; font-family: 'Gowun Dodum', sans-serif; }
-    .lang-switcher-btn { background: rgba(255,255,255,.7); border: 2px solid #2a2433; border-radius: 999px; padding: 4px 12px; font-size: 14px; color: #2a2433; cursor: pointer; font-family: 'Gowun Dodum',sans-serif; display: flex; align-items: center; gap: 6px; }
+    .lang-switcher { position: relative; font-family: 'Poppins', sans-serif; }
+    .lang-switcher-btn { background: rgba(255,255,255,.7); border: 2px solid #2a2433; border-radius: 999px; padding: 4px 12px; font-size: 14px; color: #2a2433; cursor: pointer; font-family: 'Poppins',sans-serif; display: flex; align-items: center; gap: 6px; }
     .lang-switcher-btn:hover { background: rgba(255,255,255,.95); }
     .lang-switcher-menu { position: absolute; right: 0; top: calc(100% + 6px); background: #fbf6ff; border: 2px solid #2a2433; border-radius: 12px; padding: 6px; min-width: 130px; box-shadow: 0 8px 24px rgba(40,30,55,.22); display: none; flex-direction: column; gap: 2px; z-index: 9800; }
     .lang-switcher-menu.show { display: flex; }
-    .lang-switcher-menu a { padding: 8px 10px; border-radius: 8px; font-size: 14px; color: #4a4256; text-decoration: none; font-family: 'Gowun Dodum',sans-serif; }
+    .lang-switcher-menu a { padding: 8px 10px; border-radius: 8px; font-size: 14px; color: #4a4256; text-decoration: none; font-family: 'Poppins',sans-serif; }
     .lang-switcher-menu a:hover { background: rgba(123,108,255,.1); color: #2a2433; }
     .lang-switcher-menu a.active { color: #7b6cff; font-weight: 700; }
   </style>
@@ -80,13 +80,13 @@
 <body>
 <h1 style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0">BrowserKit — Free Online Tools You Use Right in Your Browser</h1>
 
-<div id="bk-loading" style="position:fixed;inset:0;z-index:99999;background:radial-gradient(125% 90% at 16% 90%,#b6f0c6 0%,transparent 46%),radial-gradient(120% 90% at 86% 14%,#c7d6ff 0%,transparent 50%),radial-gradient(105% 80% at 82% 84%,#ffc9de 0%,transparent 48%),radial-gradient(90% 70% at 6% 10%,#fff0bf 0%,transparent 44%),linear-gradient(135deg,#e2cdff,#bfe7ff);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;font-family:'Gowun Dodum',sans-serif;user-select:none">
-  <div style="width:88px;height:88px;border-radius:50% 48% 52% 50%;background:#7b6cff;border:3.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 52px 'Gowun Dodum',sans-serif;transform:rotate(-6deg);box-shadow:0 6px 0 rgba(42,36,51,.18)">B</div>
-  <div style="font:700 40px 'Gowun Dodum',sans-serif;letter-spacing:-.5px;line-height:1"><span style="color:#2a2433">Browser</span><span style="color:#7b6cff">Kit</span></div>
+<div id="bk-loading" style="position:fixed;inset:0;z-index:99999;background:radial-gradient(125% 90% at 16% 90%,#b6f0c6 0%,transparent 46%),radial-gradient(120% 90% at 86% 14%,#c7d6ff 0%,transparent 50%),radial-gradient(105% 80% at 82% 84%,#ffc9de 0%,transparent 48%),radial-gradient(90% 70% at 6% 10%,#fff0bf 0%,transparent 44%),linear-gradient(135deg,#e2cdff,#bfe7ff);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;font-family:'Poppins',sans-serif;user-select:none">
+  <div style="width:88px;height:88px;border-radius:50% 48% 52% 50%;background:#7b6cff;border:3.5px solid #2a2433;display:flex;align-items:center;justify-content:center;color:#fff;font:700 52px 'Poppins',sans-serif;transform:rotate(-6deg);box-shadow:0 6px 0 rgba(42,36,51,.18)">B</div>
+  <div style="font:700 40px 'Poppins',sans-serif;letter-spacing:-.5px;line-height:1"><span style="color:#2a2433">Browser</span><span style="color:#7b6cff">Kit</span></div>
   <div style="width:220px;height:2.5px;background:rgba(42,36,51,.18);border-radius:2px;margin:4px 0"></div>
-  <div style="font:400 19px 'Gowun Dodum',sans-serif;color:rgba(42,36,51,.72);text-align:center">Free tools you use right in your browser</div>
-  <div style="font:400 15px 'Gowun Dodum',sans-serif;color:rgba(42,36,51,.45)">No server uploads &nbsp;·&nbsp; No install &nbsp;·&nbsp; Completely free</div>
-  <div style="margin-top:24px;font:400 22px 'Gowun Dodum',sans-serif;color:rgba(42,36,51,.55);letter-spacing:3px">loading <span id="bk-dots"></span></div>
+  <div style="font:400 19px 'Poppins',sans-serif;color:rgba(42,36,51,.72);text-align:center">Free tools you use right in your browser</div>
+  <div style="font:400 15px 'Poppins',sans-serif;color:rgba(42,36,51,.45)">No server uploads &nbsp;·&nbsp; No install &nbsp;·&nbsp; Completely free</div>
+  <div style="margin-top:24px;font:400 22px 'Poppins',sans-serif;color:rgba(42,36,51,.55);letter-spacing:3px">loading <span id="bk-dots"></span></div>
 </div>
 <div id="root" style="height:100vh"></div>
 <script>
@@ -273,7 +273,7 @@ function icon(type, fill, ink, glyph, token) {
     else if (gl === 'sun') inner = `<div style="position:relative;width:30px;height:30px;display:flex;align-items:center;justify-content:center"><div style="width:16px;height:16px;border-radius:50%;background:#fffdf9;border:2.5px solid ${k};box-sizing:border-box"></div><div style="position:absolute;top:0;left:50%;transform:translateX(-50%);width:2.5px;height:5px;background:${k};border-radius:2px"></div><div style="position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:2.5px;height:5px;background:${k};border-radius:2px"></div><div style="position:absolute;left:0;top:50%;transform:translateY(-50%);width:5px;height:2.5px;background:${k};border-radius:2px"></div><div style="position:absolute;right:0;top:50%;transform:translateY(-50%);width:5px;height:2.5px;background:${k};border-radius:2px"></div></div>`;
     else if (gl === 'resize') inner = `<div style="position:relative;width:30px;height:30px;background:#fffdf9;border:2.5px solid ${k};border-radius:4px;box-sizing:border-box"><div style="position:absolute;left:4px;top:4px;width:9px;height:2.5px;background:${k};border-radius:2px"></div><div style="position:absolute;left:4px;top:4px;width:2.5px;height:9px;background:${k};border-radius:2px"></div><div style="position:absolute;right:4px;bottom:4px;width:9px;height:2.5px;background:${k};border-radius:2px"></div><div style="position:absolute;right:4px;bottom:4px;width:2.5px;height:9px;background:${k};border-radius:2px"></div></div>`;
     else if (gl === 'crop') inner = `<div style="position:relative;width:30px;height:30px"><div style="position:absolute;left:4px;top:0;width:3px;height:26px;background:${k};border-radius:2px"></div><div style="position:absolute;left:0;top:4px;width:26px;height:3px;background:${k};border-radius:2px"></div><div style="position:absolute;right:4px;bottom:0;width:3px;height:26px;background:${k};border-radius:2px"></div><div style="position:absolute;left:0;bottom:4px;width:26px;height:3px;background:${k};border-radius:2px"></div></div>`;
-    else if (gl === 'watermark') inner = `<div style="position:relative;width:32px;height:28px;background:#fffdf9;border:2.5px solid ${k};border-radius:4px;box-sizing:border-box;overflow:hidden;display:flex;align-items:center;justify-content:center"><div style="position:absolute;left:4px;bottom:4px;width:9px;height:9px;border-radius:50%;background:${f};border:2px solid ${k};box-sizing:border-box"></div><div style="font:700 14px Gowun Dodum,sans-serif;color:rgba(42,36,51,.55)">W</div></div>`;
+    else if (gl === 'watermark') inner = `<div style="position:relative;width:32px;height:28px;background:#fffdf9;border:2.5px solid ${k};border-radius:4px;box-sizing:border-box;overflow:hidden;display:flex;align-items:center;justify-content:center"><div style="position:absolute;left:4px;bottom:4px;width:9px;height:9px;border-radius:50%;background:${f};border:2px solid ${k};box-sizing:border-box"></div><div style="font:700 14px Poppins,sans-serif;color:rgba(42,36,51,.55)">W</div></div>`;
     else if (gl === 'droplet') inner = `<div style="width:20px;height:20px;background:#fffdf9;border:2.5px solid ${k};box-sizing:border-box;border-radius:50% 50% 50% 0;transform:rotate(45deg)"><div style="width:7px;height:7px;border-radius:50%;background:${f};margin:4px 0 0 4px;transform:rotate(-45deg)"></div></div>`;
     else if (gl === 'qr') inner = `<div style="display:grid;grid-template-columns:repeat(3,7px);grid-template-rows:repeat(3,7px);gap:2px"><div style="background:${k};border-radius:1px"></div><div style="background:transparent"></div><div style="background:${k};border-radius:1px"></div><div style="background:transparent"></div><div style="background:${k};border-radius:1px"></div><div style="background:transparent"></div><div style="background:${k};border-radius:1px"></div><div style="background:${k};border-radius:1px"></div><div style="background:${k};border-radius:1px"></div></div>`;
     else if (gl === 'qrscan') inner = `<div style="position:relative;width:26px;height:26px"><div style="position:relative;width:22px;height:22px;border-radius:50%;background:#fffdf9;border:3px solid ${k};box-sizing:border-box"></div><div style="position:absolute;right:-4px;bottom:-2px;width:9px;height:3px;background:${k};border-radius:2px;transform:rotate(45deg);transform-origin:left center"></div></div>`;
@@ -285,8 +285,8 @@ function icon(type, fill, ink, glyph, token) {
     else if (gl === 'palette') inner = `<div style="display:flex;gap:3px"><div style="width:11px;height:11px;border-radius:50%;background:#ff8a5e;border:2px solid ${k};box-sizing:border-box"></div><div style="width:11px;height:11px;border-radius:50%;background:#5dffb0;border:2px solid ${k};box-sizing:border-box;margin-top:8px"></div><div style="width:11px;height:11px;border-radius:50%;background:#6aa8ff;border:2px solid ${k};box-sizing:border-box"></div></div>`;
     else if (gl === 'exif') inner = `<div style="position:relative;width:26px;height:30px"><div style="width:20px;height:20px;border-radius:50% 50% 50% 0;background:#fffdf9;border:2.5px solid ${k};box-sizing:border-box;transform:rotate(-45deg);margin:0 auto"></div><div style="position:absolute;left:50%;top:6px;transform:translateX(-50%);width:6px;height:6px;border-radius:50%;background:${k}"></div></div>`;
     else if (gl === 'roulette') inner = `<div style="position:relative;width:28px;height:28px;border-radius:50%;background:#fffdf9;border:2.5px solid ${k};box-sizing:border-box;overflow:hidden"><div style="position:absolute;left:0;top:0;width:14px;height:14px;background:#ff8a5e"></div><div style="position:absolute;right:0;top:0;width:14px;height:14px;background:#5dffb0"></div><div style="position:absolute;left:0;bottom:0;width:14px;height:14px;background:#6aa8ff"></div><div style="position:absolute;right:0;bottom:0;width:14px;height:14px;background:#ffe14d"></div></div>`;
-    else if (gl === 'wordcloud') inner = `<div style="display:flex;flex-direction:column;align-items:center;gap:2px"><div style="font:700 13px Gowun Dodum,sans-serif;color:${k};line-height:1">Aa</div><div style="font:700 8px Gowun Dodum,sans-serif;color:rgba(42,36,51,.55);line-height:1">Café</div><div style="font:700 10px Gowun Dodum,sans-serif;color:rgba(42,36,51,.75);line-height:1">Word</div></div>`;
-    else if (gl === 'favicon') inner = `<div style="width:24px;height:24px;border-radius:50%;background:#fffdf9;border:2.5px solid ${k};box-sizing:border-box;display:flex;align-items:center;justify-content:center;font:700 12px Gowun Dodum,sans-serif;color:${k}">B</div>`;
+    else if (gl === 'wordcloud') inner = `<div style="display:flex;flex-direction:column;align-items:center;gap:2px"><div style="font:700 13px Poppins,sans-serif;color:${k};line-height:1">Aa</div><div style="font:700 8px Poppins,sans-serif;color:rgba(42,36,51,.55);line-height:1">Café</div><div style="font:700 10px Poppins,sans-serif;color:rgba(42,36,51,.75);line-height:1">Word</div></div>`;
+    else if (gl === 'favicon') inner = `<div style="width:24px;height:24px;border-radius:50%;background:#fffdf9;border:2.5px solid ${k};box-sizing:border-box;display:flex;align-items:center;justify-content:center;font:700 12px Poppins,sans-serif;color:${k}">B</div>`;
     else if (gl === 'calendar') inner = `<div style="position:relative;width:30px;height:30px;background:#fffdf9;border:2.5px solid ${k};border-radius:4px;box-sizing:border-box;overflow:hidden"><div style="position:absolute;top:0;left:0;width:100%;height:8px;background:${f};border-bottom:2.5px solid ${k}"></div><div style="position:absolute;top:13px;left:4px;width:4px;height:4px;background:${k};border-radius:1px"></div><div style="position:absolute;top:13px;left:13px;width:4px;height:4px;background:rgba(42,36,51,.3);border-radius:1px"></div><div style="position:absolute;top:13px;left:22px;width:4px;height:4px;background:rgba(42,36,51,.3);border-radius:1px"></div><div style="position:absolute;top:21px;left:4px;width:4px;height:4px;background:rgba(42,36,51,.3);border-radius:1px"></div><div style="position:absolute;top:21px;left:13px;width:4px;height:4px;background:${k};border-radius:1px"></div></div>`;
     else if (gl === 'clock') inner = `<div style="position:relative;width:28px;height:28px;border-radius:50%;background:#fffdf9;border:2.5px solid ${k};box-sizing:border-box"><div style="position:absolute;left:50%;top:50%;width:2.5px;height:9px;background:${k};border-radius:2px;transform-origin:bottom center;transform:translate(-50%,-100%)"></div><div style="position:absolute;left:50%;top:50%;width:2.5px;height:7px;background:${k};border-radius:2px;transform-origin:bottom center;transform:translate(-50%,-100%) rotate(90deg)"></div></div>`;
     else if (gl === 'chart') inner = `<div style="display:flex;align-items:flex-end;gap:3px;height:28px"><div style="width:6px;height:13px;background:#fffdf9;border:2px solid ${k};border-radius:2px 2px 0 0;box-sizing:border-box"></div><div style="width:6px;height:22px;background:#fffdf9;border:2px solid ${k};border-radius:2px 2px 0 0;box-sizing:border-box"></div><div style="width:6px;height:17px;background:#fffdf9;border:2px solid ${k};border-radius:2px 2px 0 0;box-sizing:border-box"></div></div>`;
@@ -304,15 +304,15 @@ function icon(type, fill, ink, glyph, token) {
     else if (gl === 'gifstack') inner = `<div style="position:relative;width:26px;height:22px"><div style="position:absolute;left:0;top:6px;width:14px;height:14px;background:#fffdf9;border:2px solid ${k};border-radius:2px;box-sizing:border-box;opacity:.4"></div><div style="position:absolute;left:6px;top:3px;width:14px;height:14px;background:#fffdf9;border:2px solid ${k};border-radius:2px;box-sizing:border-box;opacity:.7"></div><div style="position:absolute;left:12px;top:0;width:14px;height:14px;background:#fffdf9;border:2px solid ${k};border-radius:2px;box-sizing:border-box"></div></div>`;
     else if (gl === 'bmiscale') inner = `<div style="position:relative;width:26px;height:26px;border-radius:50%;background:#fffdf9;border:2.5px solid ${k};box-sizing:border-box;display:flex;align-items:center;justify-content:center;font:700 9px Fira Code,monospace;color:${k}">BMI</div>`;
     else if (gl === 'statuscode') inner = `<div style="font:700 15px Fira Code,monospace;color:${k};line-height:1;letter-spacing:-.5px;white-space:nowrap">404</div>`;
-    else if (gl === 'xlstoken') inner = `<div style="font:700 13px Gowun Dodum,sans-serif;color:${k};line-height:1;letter-spacing:-.5px;white-space:nowrap">XLS</div>`;
+    else if (gl === 'xlstoken') inner = `<div style="font:700 13px Poppins,sans-serif;color:${k};line-height:1;letter-spacing:-.5px;white-space:nowrap">XLS</div>`;
     else if (gl === 'petface') inner = `<div style="position:relative;width:30px;height:24px"><div style="position:absolute;left:-2px;top:3px;width:9px;height:13px;background:#fffdf9;border:2.5px solid ${k};border-radius:50% 50% 45% 45%/60% 60% 40% 40%;transform:rotate(-18deg);box-sizing:border-box"></div><div style="position:absolute;right:-2px;top:3px;width:9px;height:13px;background:#fffdf9;border:2.5px solid ${k};border-radius:50% 50% 45% 45%/60% 60% 40% 40%;transform:rotate(18deg);box-sizing:border-box"></div><div style="position:absolute;left:4px;top:5px;width:22px;height:19px;border-radius:50%;background:#fffdf9;border:2.5px solid ${k};box-sizing:border-box"></div><div style="position:absolute;left:10px;top:13px;width:3px;height:3px;border-radius:50%;background:${k}"></div><div style="position:absolute;right:10px;top:13px;width:3px;height:3px;border-radius:50%;background:${k}"></div><div style="position:absolute;left:50%;top:16px;width:5px;height:4px;border-radius:50%;background:${k};transform:translateX(-50%)"></div></div>`;
     else if (gl === 'pricetag') inner = `<div style="position:relative;width:22px;height:22px;background:#fffdf9;border:2.5px solid ${k};border-radius:4px 11px 4px 4px;box-sizing:border-box;transform:rotate(-45deg)"><div style="position:absolute;left:3px;top:3px;width:5px;height:5px;border-radius:50%;background:${k}"></div></div>`;
     else if (gl === 'barcode') inner = `<div style="display:flex;align-items:center;gap:1.5px;height:24px"><div style="width:2px;height:100%;background:${k}"></div><div style="width:1px;height:100%;background:${k}"></div><div style="width:3px;height:100%;background:${k}"></div><div style="width:1px;height:100%;background:${k}"></div><div style="width:2px;height:100%;background:${k}"></div><div style="width:1px;height:100%;background:${k}"></div><div style="width:2px;height:100%;background:${k}"></div></div>`;
-    else inner = `<div style="font:700 16px Gowun Dodum,sans-serif;color:${k};line-height:1;letter-spacing:-.5px;white-space:nowrap">${tk}</div>`;
+    else inner = `<div style="font:700 16px Poppins,sans-serif;color:${k};line-height:1;letter-spacing:-.5px;white-space:nowrap">${tk}</div>`;
     return `<div style="width:46px;height:46px;background:${f};border:2.5px solid ${k};border-radius:14px 11px 13px 10px;box-sizing:border-box;position:relative;box-shadow:inset 0 -7px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden">${inner}</div>`;
   }
   if (type === 'article') return `<div style="width:40px;height:50px;background:#fffdf6;border:2.5px solid ${k};border-radius:5px 5px 6px 6px;box-sizing:border-box;position:relative;overflow:hidden"><div style="height:14px;background:${f};border-bottom:2.5px solid ${k}"></div><div style="margin:8px 7px 0;height:3px;background:#cfc7be;border-radius:3px"></div><div style="margin:6px 7px 0;height:3px;background:#cfc7be;border-radius:3px"></div><div style="margin:6px 7px 0;width:55%;height:3px;background:#cfc7be;border-radius:3px"></div></div>`;
-  if (type === 'info') return `<div style="width:40px;height:50px;background:#fffdf6;border:2.5px solid ${k};border-radius:5px 5px 6px 6px;box-sizing:border-box;position:relative;display:flex;align-items:center;justify-content:center"><div style="width:24px;height:24px;border-radius:50%;background:${f};border:2.5px solid ${k};display:flex;align-items:center;justify-content:center;font:700 16px Gowun Dodum,sans-serif;color:#fff;line-height:1">i</div></div>`;
+  if (type === 'info') return `<div style="width:40px;height:50px;background:#fffdf6;border:2.5px solid ${k};border-radius:5px 5px 6px 6px;box-sizing:border-box;position:relative;display:flex;align-items:center;justify-content:center"><div style="width:24px;height:24px;border-radius:50%;background:${f};border:2.5px solid ${k};display:flex;align-items:center;justify-content:center;font:700 16px Poppins,sans-serif;color:#fff;line-height:1">i</div></div>`;
   if (type === 'recycle') return `<div style="position:relative;width:44px;height:48px"><div style="position:absolute;top:0;left:5px;width:34px;height:7px;background:${f};border:2.5px solid ${k};border-radius:5px;box-sizing:border-box"></div><div style="position:absolute;top:-3px;left:16px;width:12px;height:5px;background:${f};border:2.5px solid ${k};border-radius:4px 4px 0 0;box-sizing:border-box"></div><div style="position:absolute;top:9px;left:7px;width:30px;height:38px;background:${f};border:2.5px solid ${k};border-radius:3px 3px 7px 7px;box-sizing:border-box;clip-path:polygon(0 0,100% 0,86% 100%,14% 100%)"></div><div style="position:absolute;top:16px;left:16px;width:3px;height:22px;background:rgba(255,255,255,.6);border-radius:3px"></div><div style="position:absolute;top:16px;left:25px;width:3px;height:22px;background:rgba(255,255,255,.6);border-radius:3px"></div></div>`;
   if (type === 'computer') return `<div style="position:relative;width:52px;height:48px"><div style="position:absolute;top:0;left:0;width:52px;height:37px;background:${f};border:2.5px solid ${k};border-radius:8px;box-sizing:border-box"></div><div style="position:absolute;top:5px;left:5px;width:42px;height:23px;background:rgba(255,255,255,.55);border-radius:4px"></div><div style="position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:24px;height:9px;background:${f};border:2.5px solid ${k};border-radius:0 0 5px 5px;box-sizing:border-box"></div></div>`;
   if (type === 'disk') return `<div style="width:46px;height:46px;background:${f};border:2.5px solid ${k};border-radius:8px;box-sizing:border-box;position:relative"><div style="position:absolute;top:5px;right:6px;width:14px;height:9px;background:rgba(255,255,255,.55);border:2px solid ${k};border-radius:2px;box-sizing:border-box"></div><div style="position:absolute;bottom:5px;left:7px;right:7px;height:15px;background:#fffdf6;border:2px solid ${k};border-radius:2px;box-sizing:border-box"></div></div>`;
@@ -564,16 +564,16 @@ function fileBodyHtml(win,pal) {
     <div style="display:flex;gap:15px;align-items:center">
       <div style="flex:0 0 auto;transform:scale(1.15)">${iconWrap(fi,ff,ink,file.glyph||'',file.token||'')}</div>
       <div style="min-width:0">
-        <div style="font:700 26px Gowun Dodum,sans-serif;color:${ink};line-height:1.1">${esc(win.title)}</div>
+        <div style="font:700 26px Poppins,sans-serif;color:${ink};line-height:1.1">${esc(win.title)}</div>
         <div style="display:flex;align-items:center;gap:8px;margin-top:5px">
           ${fc?`<span style="font:400 13px ui-monospace,monospace;color:#fff;background:${btnColor};border:2px solid ${ink};padding:1px 8px;border-radius:7px">${esc(fc)}</span>`:''}
-          <span style="font:400 15px Gowun Dodum,sans-serif;color:rgba(42,36,51,.62)">${esc(fm)}</span>
+          <span style="font:400 15px Poppins,sans-serif;color:rgba(42,36,51,.62)">${esc(fm)}</span>
         </div>
       </div>
     </div>
-    ${fn?`<div style="background:rgba(255,255,255,.6);border:2.5px solid ${ink};border-radius:13px 11px 12px 10px;padding:14px 16px;display:flex;gap:10px;align-items:flex-start"><span style="width:22px;height:22px;flex:0 0 auto;border-radius:50%;background:${accent};border:2px solid ${ink};color:#fff;font:700 14px Gowun Dodum,sans-serif;display:flex;align-items:center;justify-content:center">!</span><span style="font:400 17px Gowun Dodum,sans-serif;color:${ink};line-height:1.45">${esc(fn)}</span></div>`:''}
-    ${fp.map(p=>`<div style="font:400 18px Gowun Dodum,sans-serif;color:${ink};line-height:1.55">${esc(p)}</div>`).join('')}
-    ${fct?`<a href="${esc(fu)}" class="bk-cta" style="align-self:flex-start;background:${btnColor};border:2.5px solid ${ink};color:#fff;font:700 19px Gowun Dodum,sans-serif;padding:8px 22px;border-radius:13px 11px 12px 10px;box-shadow:0 4px 0 ${ink};display:inline-block">${esc(fct)} →</a>`:''}
+    ${fn?`<div style="background:rgba(255,255,255,.6);border:2.5px solid ${ink};border-radius:13px 11px 12px 10px;padding:14px 16px;display:flex;gap:10px;align-items:flex-start"><span style="width:22px;height:22px;flex:0 0 auto;border-radius:50%;background:${accent};border:2px solid ${ink};color:#fff;font:700 14px Poppins,sans-serif;display:flex;align-items:center;justify-content:center">!</span><span style="font:400 17px Poppins,sans-serif;color:${ink};line-height:1.45">${esc(fn)}</span></div>`:''}
+    ${fp.map(p=>`<div style="font:400 18px 'Inter',sans-serif;color:${ink};line-height:1.55">${esc(p)}</div>`).join('')}
+    ${fct?`<a href="${esc(fu)}" class="bk-cta" style="align-self:flex-start;background:${btnColor};border:2.5px solid ${ink};color:#fff;font:700 19px Poppins,sans-serif;padding:8px 22px;border-radius:13px 11px 12px 10px;box-shadow:0 4px 0 ${ink};display:inline-block">${esc(fct)} →</a>`:''}
     ${SHOW_ADSENSE ? `<!-- Google AdSense Display Ad -- pending approval, reserving space; ins/adsbygoogle markup restored once approved -->
     <div class="ad-slot" style="min-height:100px;overflow:hidden;display:flex;align-items:center;justify-content:center"></div>` : ''}
   </div>`;
@@ -593,12 +593,12 @@ function render() {
     const titleBar=`<div class="bk-title" data-wid="${win.id}" style="display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px 12px;background:linear-gradient(180deg,${pal.titleFrom},${pal.titleTo});border-bottom:3px solid ${ink};border-radius:${TR};cursor:grab;user-select:none">
       <div style="display:flex;align-items:center;gap:8px;min-width:0">
         <div style="width:14px;height:14px;border-radius:4px;background:rgba(255,255,255,.7);border:2px solid ${ink};flex:0 0 auto"></div>
-        <div style="font:700 18px Gowun Dodum,sans-serif;color:${ink};white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(win.title)}</div>
+        <div style="font:700 18px Poppins,sans-serif;color:${ink};white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(win.title)}</div>
       </div>
       <div style="display:flex;align-items:center;gap:6px;flex:0 0 auto">
         <div style="width:20px;height:20px;border-radius:6px;background:#ffe08a;border:2px solid ${ink};display:flex;align-items:flex-end;justify-content:center;padding-bottom:3px"><span style="width:9px;height:2.5px;background:#2a2433;border-radius:2px;display:block"></span></div>
         <div style="width:20px;height:20px;border-radius:6px;background:#a7e6b8;border:2px solid ${ink};display:flex;align-items:center;justify-content:center"><span style="width:9px;height:9px;border:2px solid #2a2433;border-radius:2px;display:block"></span></div>
-        <div class="bk-close" data-wid="${win.id}" style="width:20px;height:20px;border-radius:6px;background:#ff9aa8;border:2px solid ${ink};display:flex;align-items:center;justify-content:center;cursor:pointer;font:700 14px Gowun Dodum,sans-serif;color:#2a2433;line-height:1">\xd7</div>
+        <div class="bk-close" data-wid="${win.id}" style="width:20px;height:20px;border-radius:6px;background:#ff9aa8;border:2px solid ${ink};display:flex;align-items:center;justify-content:center;cursor:pointer;font:700 14px Poppins,sans-serif;color:#2a2433;line-height:1">\xd7</div>
       </div>
     </div>`;
 
@@ -608,18 +608,18 @@ function render() {
       const crumb=win.kind==='computer'?'My Computer':(win.path||[]).join(' › ');
       const itemCount=items.filter(it=>it.act!=='header').length;
       const gridItems=items.map(it=>{
-        if(it.act==='header') return `<div style="grid-column:1/-1;margin:${it===items[0]?'0':'10px'} 0 2px"><span style="font:700 14px Gowun Dodum,sans-serif;color:${ink};background:rgba(255,255,255,.6);border:2px solid ${ink};border-radius:999px;padding:3px 14px;display:inline-block">${esc(it.name)}</span></div>`;
+        if(it.act==='header') return `<div style="grid-column:1/-1;margin:${it===items[0]?'0':'10px'} 0 2px"><span style="font:700 14px Poppins,sans-serif;color:${ink};background:rgba(255,255,255,.6);border:2px solid ${ink};border-radius:999px;padding:3px 14px;display:inline-block">${esc(it.name)}</span></div>`;
         const da=it.act==='folder'?`data-act="folder" data-path="${esc(JSON.stringify(it.path))}" data-title="${esc(it.title)}"`:it.act==='file'?`data-act="file" data-file="${esc(JSON.stringify(it.file))}"`:''
-        return `<div class="bk-folder-item" ${da} style="display:flex;flex-direction:column;align-items:center;gap:4px;padding:10px 6px;cursor:${it.act==='noop'?'default':'pointer'}">${iconWrap(it.iconType,it.fill,ink,it.glyph,it.token)}<div style="font:400 15px Gowun Dodum,sans-serif;text-align:center;color:${ink};line-height:1.2">${guideLabelHtml(it.name)}</div>${it.sub?`<div style="font:400 12px ui-monospace,monospace;color:rgba(42,36,51,.5)">${esc(it.sub)}</div>`:''}</div>`;
+        return `<div class="bk-folder-item" ${da} style="display:flex;flex-direction:column;align-items:center;gap:4px;padding:10px 6px;cursor:${it.act==='noop'?'default':'pointer'}">${iconWrap(it.iconType,it.fill,ink,it.glyph,it.token)}<div style="font:400 15px Poppins,sans-serif;text-align:center;color:${ink};line-height:1.2">${guideLabelHtml(it.name)}</div>${it.sub?`<div style="font:400 12px ui-monospace,monospace;color:rgba(42,36,51,.5)">${esc(it.sub)}</div>`:''}</div>`;
       }).join('');
-      body=`<div style="padding:10px 16px 6px;border-bottom:2px dashed rgba(42,36,51,.22);display:flex;align-items:center;gap:8px"><span style="font:400 15px Gowun Dodum,sans-serif;color:rgba(42,36,51,.6)">${esc(crumb)}</span><span style="margin-left:auto;font:400 15px Gowun Dodum,sans-serif;color:rgba(42,36,51,.6)">${itemCount} item${itemCount===1?'':'s'}</span></div>
+      body=`<div style="padding:10px 16px 6px;border-bottom:2px dashed rgba(42,36,51,.22);display:flex;align-items:center;gap:8px"><span style="font:400 15px Poppins,sans-serif;color:rgba(42,36,51,.6)">${esc(crumb)}</span><span style="margin-left:auto;font:400 15px Poppins,sans-serif;color:rgba(42,36,51,.6)">${itemCount} item${itemCount===1?'':'s'}</span></div>
         <div style="padding:16px;max-height:54vh;overflow:auto;display:grid;grid-template-columns:repeat(auto-fill,minmax(104px,1fr));gap:8px">${gridItems}</div>
         ${SHOW_ADSENSE ? `<div style="padding:0 16px 16px;display:flex;justify-content:center"><!-- Google AdSense Display Ad — pending approval --><div class="ad-slot" style="min-height:50px;width:320px"></div></div>` : ''}
         `;
     } else if(win.kind==='file'){
       body=fileBodyHtml(win,pal);
     } else {
-      body=`<div style="padding:46px 30px;display:flex;flex-direction:column;align-items:center;gap:12px"><div style="transform:scale(1.4);opacity:.55">${iconWrap('recycle',F[2],ink)}</div><div style="font:700 22px Gowun Dodum,sans-serif;color:${ink}">The Recycle Bin is empty</div><div style="font:400 16px Gowun Dodum,sans-serif;color:rgba(42,36,51,.6)">Deleted items would show up here.</div></div>`;
+      body=`<div style="padding:46px 30px;display:flex;flex-direction:column;align-items:center;gap:12px"><div style="transform:scale(1.4);opacity:.55">${iconWrap('recycle',F[2],ink)}</div><div style="font:700 22px Poppins,sans-serif;color:${ink}">The Recycle Bin is empty</div><div style="font:400 16px 'Inter',sans-serif;color:rgba(42,36,51,.6)">Deleted items would show up here.</div></div>`;
     }
 
     return `<div class="bk-win" data-wid="${win.id}" style="position:absolute;left:${win.x}px;top:${win.y}px;width:${ww}px;z-index:${win.z};background:#fffdf9;border:3px solid ${ink};border-radius:${WR};box-shadow:${shadow};overflow:hidden;transform:rotate(-0.35deg);font-family:Gaegu,sans-serif">${titleBar}${body}</div>`;
@@ -627,7 +627,7 @@ function render() {
 
   // Start menu
   const startHtml=S.startOpen?`<div style="position:absolute;left:12px;bottom:62px;width:264px;z-index:9500;background:${barBg};border:3px solid ${ink};border-radius:16px 14px 15px 13px;box-shadow:0 14px 34px rgba(40,30,55,.32);overflow:hidden;animation:bkpop .16s ease-out">
-    <div style="background:${accent};padding:14px 16px;border-bottom:3px solid ${ink}"><div style="font:700 21px Gowun Dodum,sans-serif;color:#fff;line-height:1">BrowserKit</div><div style="font:400 14px Gowun Dodum,sans-serif;color:rgba(255,255,255,.85)">Free browser-based tools</div></div>
+    <div style="background:${accent};padding:14px 16px;border-bottom:3px solid ${ink}"><div style="font:700 21px Poppins,sans-serif;color:#fff;line-height:1">BrowserKit</div><div style="font:400 14px Poppins,sans-serif;color:rgba(255,255,255,.85)">Free browser-based tools</div></div>
     <div style="padding:8px">${[
       {name:'Tools',it:'folder',fill:F[0],act:'folder',path:['Tools'],title:'Tools'},
       {name:'Blog',it:'blog',fill:F[1],act:'folder',path:['Blog'],title:'Blog'},
@@ -635,7 +635,7 @@ function render() {
       null,
       {name:'My Computer',it:'computer',fill:F[3],act:'computer'},
       {name:'Recycle Bin',it:'recycle',fill:F[2],act:'recycle'}
-    ].map(si=>!si?`<div style="height:2px;background:rgba(42,36,51,.16);margin:6px 8px"></div>`:`<div class="bk-start-item" data-act="${si.act}"${si.path?` data-path="${esc(JSON.stringify(si.path))}" data-title="${esc(si.title)}"`:''} style="display:flex;align-items:center;gap:11px;padding:9px 10px;border-radius:10px;cursor:pointer"><div style="transform:scale(.75);width:47px;height:41px;display:flex;align-items:center;justify-content:center">${icon(si.it,si.fill,ink)}</div><span style="font:400 18px Gowun Dodum,sans-serif;color:${ink}">${esc(si.name)}</span></div>`).join('')}</div>
+    ].map(si=>!si?`<div style="height:2px;background:rgba(42,36,51,.16);margin:6px 8px"></div>`:`<div class="bk-start-item" data-act="${si.act}"${si.path?` data-path="${esc(JSON.stringify(si.path))}" data-title="${esc(si.title)}"`:''} style="display:flex;align-items:center;gap:11px;padding:9px 10px;border-radius:10px;cursor:pointer"><div style="transform:scale(.75);width:47px;height:41px;display:flex;align-items:center;justify-content:center">${icon(si.it,si.fill,ink)}</div><span style="font:400 18px Poppins,sans-serif;color:${ink}">${esc(si.name)}</span></div>`).join('')}</div>
   </div>`:'';
 
   // Taskbar
@@ -643,14 +643,14 @@ function render() {
   const taskHtml=[...S.windows].sort((a,b)=>a.id-b.id).map(win=>{
     const active=win.z===topZ&&S.windows.length>0;
     const dc=win.kind==='recycle'?F[2]:win.kind==='file'?accent:F[0];
-    return `<div class="bk-task-btn" data-act="focus" data-wid="${win.id}" style="display:flex;align-items:center;gap:7px;max-width:170px;flex:0 1 auto;background:${active?'rgba(255,255,255,.92)':'rgba(255,255,255,.42)'};border:2px solid ${ink};border-radius:10px;padding:4px 12px;cursor:pointer;box-shadow:${active?'inset 0 2px 0 '+ink:'none'}"><div style="width:11px;height:11px;border-radius:3px;background:${dc};border:1.5px solid ${ink};flex:0 0 auto"></div><span style="font:400 16px Gowun Dodum,sans-serif;color:${ink};white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(win.title)}</span></div>`;
+    return `<div class="bk-task-btn" data-act="focus" data-wid="${win.id}" style="display:flex;align-items:center;gap:7px;max-width:170px;flex:0 1 auto;background:${active?'rgba(255,255,255,.92)':'rgba(255,255,255,.42)'};border:2px solid ${ink};border-radius:10px;padding:4px 12px;cursor:pointer;box-shadow:${active?'inset 0 2px 0 '+ink:'none'}"><div style="width:11px;height:11px;border-radius:3px;background:${dc};border:1.5px solid ${ink};flex:0 0 auto"></div><span style="font:400 16px Poppins,sans-serif;color:${ink};white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(win.title)}</span></div>`;
   }).join('');
 
   const quickHtml=[
     {name:'Tools',it:'folder',fill:F[0],path:['Tools'],title:'Tools'},
     {name:'Blog',it:'blog',fill:F[1],path:['Blog'],title:'Blog'},
     {name:'Info',it:'folder',fill:F[4],path:['Info'],title:'Info'}
-  ].map(qf=>`<div class="bk-quick-folder" data-act="folder" data-path="${esc(JSON.stringify(qf.path))}" data-title="${esc(qf.title)}" style="display:flex;align-items:center;gap:7px;background:rgba(255,255,255,.5);border:2px solid ${ink};border-radius:10px;padding:4px 12px 4px 8px;cursor:pointer"><div style="transform:scale(.42);width:26px;height:23px;display:flex;align-items:center;justify-content:center">${icon(qf.it,qf.fill,ink)}</div><span style="font:400 16px Gowun Dodum,sans-serif;color:${ink}">${esc(qf.name)}</span></div>`).join('');
+  ].map(qf=>`<div class="bk-quick-folder" data-act="folder" data-path="${esc(JSON.stringify(qf.path))}" data-title="${esc(qf.title)}" style="display:flex;align-items:center;gap:7px;background:rgba(255,255,255,.5);border:2px solid ${ink};border-radius:10px;padding:4px 12px 4px 8px;cursor:pointer"><div style="transform:scale(.42);width:26px;height:23px;display:flex;align-items:center;justify-content:center">${icon(qf.it,qf.fill,ink)}</div><span style="font:400 16px Poppins,sans-serif;color:${ink}">${esc(qf.name)}</span></div>`).join('');
 
   // Toolbox widget
   const _adT = SHOW_ADSENSE ? 96 : 0;
@@ -658,16 +658,16 @@ function render() {
   const toolboxHtml=`
     ${SHOW_ADSENSE?`<!-- Google AdSense Display Ad — pending approval, reserving space --><div class="ad-slot" style="position:absolute;left:20px;top:20px;right:160px;height:90px;overflow:hidden;display:flex;align-items:center;justify-content:center"></div>`:''}
     <fieldset style="position:absolute;left:20px;top:${20+_adT}px;right:160px;bottom:${_adB}px;min-width:0;border:3px solid ${ink};border-radius:20px 18px 19px 17px;background:rgba(255,255,255,.42);margin:0;padding:6px 12px 10px;box-sizing:border-box;display:flex;flex-direction:column;overflow:hidden">
-      <legend style="font:700 22px Gowun Dodum,sans-serif;color:${ink};padding:3px 14px;background:rgba(255,255,255,.78);border:2.5px solid ${ink};border-radius:11px 9px 10px 8px;margin-left:12px">Toolbox</legend>
+      <legend style="font:700 22px Poppins,sans-serif;color:${ink};padding:3px 14px;background:rgba(255,255,255,.78);border:2.5px solid ${ink};border-radius:11px 9px 10px 8px;margin-left:12px">Toolbox</legend>
       <div style="display:flex;flex-direction:column;gap:5px;overflow-y:auto;padding-right:2px;margin-top:6px">
         ${TOOLBOX_CATS.map((cat,ci)=>{
           const items=cat.keys.map(key=>{
             const gi=glyphInfo(key);
             const nm=TOOL_LABEL[key]||key;
             const fd=JSON.stringify({title:nm,code:key,kind:'tool',glyph:gi.glyph,token:gi.token});
-            return `<div class="bk-folder-item" data-act="file" data-file="${esc(fd)}" style="display:flex;flex-direction:column;align-items:center;gap:4px;padding:6px 7px;cursor:pointer;min-width:92px;flex:0 0 auto">${iconWrap('tool',F[ci%F.length],ink,gi.glyph,gi.token)}<div style="font:400 15px Gowun Dodum,sans-serif;text-align:center;color:${ink};line-height:1.2;white-space:nowrap">${esc(nm)}</div></div>`;
+            return `<div class="bk-folder-item" data-act="file" data-file="${esc(fd)}" style="display:flex;flex-direction:column;align-items:center;gap:4px;padding:6px 7px;cursor:pointer;min-width:92px;flex:0 0 auto">${iconWrap('tool',F[ci%F.length],ink,gi.glyph,gi.token)}<div style="font:400 15px Poppins,sans-serif;text-align:center;color:${ink};line-height:1.2;white-space:nowrap">${esc(nm)}</div></div>`;
           }).join('');
-          return `<fieldset style="border:2px dashed rgba(42,36,51,.28);border-radius:13px 11px 12px 10px;margin:0;padding:0px 8px 4px;flex:0 0 auto"><legend style="font:700 14px Gowun Dodum,sans-serif;color:${ink};padding:0px 8px;background:rgba(255,255,255,.68);border:1.5px solid ${ink};border-radius:8px 6px 7px 5px">${esc(cat.label)}</legend><div style="display:flex;flex-wrap:wrap;gap:0;padding:1px 0">${items}</div></fieldset>`;
+          return `<fieldset style="border:2px dashed rgba(42,36,51,.28);border-radius:13px 11px 12px 10px;margin:0;padding:0px 8px 4px;flex:0 0 auto"><legend style="font:700 14px Poppins,sans-serif;color:${ink};padding:0px 8px;background:rgba(255,255,255,.68);border:1.5px solid ${ink};border-radius:8px 6px 7px 5px">${esc(cat.label)}</legend><div style="display:flex;flex-wrap:wrap;gap:0;padding:1px 0">${items}</div></fieldset>`;
         }).join('')}
       </div>
     </fieldset>
@@ -681,7 +681,7 @@ function render() {
     {name:'Info',it:'folder',fill:F[4],act:'folder',path:['Info'],title:'Info'}
   ].map(ic=>{
     const extra=ic.act==='folder'?` data-path="${esc(JSON.stringify(ic.path))}" data-title="${esc(ic.title)}"`:'';
-    return `<div class="bk-desk-icon" data-act="${ic.act}"${extra} style="display:flex;flex-direction:column;align-items:center;gap:5px;width:96px;cursor:pointer;padding:9px 6px">${iconWrap(ic.it,ic.fill,ink)}<div style="font:400 16px Gowun Dodum,sans-serif;text-align:center;color:${ink};background:rgba(255,255,255,.6);padding:1px 8px;border-radius:7px;line-height:1.25">${esc(ic.name)}</div></div>`;
+    return `<div class="bk-desk-icon" data-act="${ic.act}"${extra} style="display:flex;flex-direction:column;align-items:center;gap:5px;width:96px;cursor:pointer;padding:9px 6px">${iconWrap(ic.it,ic.fill,ink)}<div style="font:400 16px Poppins,sans-serif;text-align:center;color:${ink};background:rgba(255,255,255,.6);padding:1px 8px;border-radius:7px;line-height:1.25">${esc(ic.name)}</div></div>`;
   }).join('');
 
   const infoFile={title:'About',code:'',kind:'info'};
@@ -698,17 +698,17 @@ function render() {
   <div id="bk-shell" style="width:100%;height:100vh;display:flex;flex-direction:column;background:${pal.wallpaper};overflow:hidden;user-select:none">
     <div style="flex:0 0 auto;height:48px;display:flex;align-items:center;gap:20px;padding:0 16px;background:${barBg};border-bottom:3px solid ${ink};position:relative;z-index:9000">
       <div style="display:flex;align-items:center;gap:8px">
-        <div style="width:26px;height:26px;border-radius:50% 48% 52% 50%;background:${accent};border:2.5px solid ${ink};display:flex;align-items:center;justify-content:center;color:#fff;font:700 16px Gowun Dodum,sans-serif;transform:rotate(-6deg)">B</div>
-        <div style="font:700 25px Gowun Dodum,sans-serif;letter-spacing:-.5px;line-height:1"><span style="color:${ink}">Browser</span><span style="color:${accent}">Kit</span></div>
+        <div style="width:26px;height:26px;border-radius:50% 48% 52% 50%;background:${accent};border:2.5px solid ${ink};display:flex;align-items:center;justify-content:center;color:#fff;font:700 16px Poppins,sans-serif;transform:rotate(-6deg)">B</div>
+        <div style="font:700 25px Poppins,sans-serif;letter-spacing:-.5px;line-height:1"><span style="color:${ink}">Browser</span><span style="color:${accent}">Kit</span></div>
       </div>
       <div style="display:flex;align-items:center;gap:4px">
-        <div class="bk-nav-item" data-act="file" data-file="${esc(JSON.stringify(infoFile))}" style="font:400 18px Gowun Dodum,sans-serif;color:${ink};padding:4px 12px;border-radius:9px;cursor:pointer">About</div>
-        <div class="bk-nav-item" data-act="folder" data-path="${esc(JSON.stringify(['Tools']))}" data-title="Tools" style="font:400 18px Gowun Dodum,sans-serif;color:${ink};padding:4px 12px;border-radius:9px;cursor:pointer">Tools</div>
-        <div class="bk-nav-item" data-act="folder" data-path="${esc(JSON.stringify(['Blog']))}" data-title="Blog" style="font:400 18px Gowun Dodum,sans-serif;color:${ink};padding:4px 12px;border-radius:9px;cursor:pointer">Blog</div>
+        <div class="bk-nav-item" data-act="file" data-file="${esc(JSON.stringify(infoFile))}" style="font:400 18px Poppins,sans-serif;color:${ink};padding:4px 12px;border-radius:9px;cursor:pointer">About</div>
+        <div class="bk-nav-item" data-act="folder" data-path="${esc(JSON.stringify(['Tools']))}" data-title="Tools" style="font:400 18px Poppins,sans-serif;color:${ink};padding:4px 12px;border-radius:9px;cursor:pointer">Tools</div>
+        <div class="bk-nav-item" data-act="folder" data-path="${esc(JSON.stringify(['Blog']))}" data-title="Blog" style="font:400 18px Poppins,sans-serif;color:${ink};padding:4px 12px;border-radius:9px;cursor:pointer">Blog</div>
       </div>
       <div style="margin-left:auto;display:flex;align-items:center;gap:14px">
-        <div style="display:flex;align-items:center;gap:6px;font:400 15px Gowun Dodum,sans-serif;color:${ink};border:2px solid ${ink};padding:2px 11px;border-radius:20px;background:rgba(255,255,255,.5)"><span style="width:9px;height:9px;border-radius:50%;background:${accent};display:inline-block"></span>100% Free \xb7 No Server Uploads</div>
-        <div style="font:400 17px Gowun Dodum,sans-serif;color:${ink}">${esc(S.dateStr)}</div>
+        <div style="display:flex;align-items:center;gap:6px;font:400 15px Poppins,sans-serif;color:${ink};border:2px solid ${ink};padding:2px 11px;border-radius:20px;background:rgba(255,255,255,.5)"><span style="width:9px;height:9px;border-radius:50%;background:${accent};display:inline-block"></span>100% Free \xb7 No Server Uploads</div>
+        <div style="font:400 17px Poppins,sans-serif;color:${ink}">${esc(S.dateStr)}</div>
         ${langMenuHtml}
       </div>
     </div>
@@ -720,14 +720,14 @@ function render() {
     ${startHtml}
     <div style="flex:0 0 auto;height:56px;display:flex;align-items:center;gap:9px;padding:0 12px;background:${barBg};border-top:3px solid ${ink};position:relative;z-index:9600">
       <div class="bk-start-btn" data-act="start" style="display:flex;align-items:center;gap:8px;background:${startBg};border:2.5px solid ${ink};border-radius:12px 10px 11px 9px;padding:6px 16px 6px 12px;cursor:pointer;box-shadow:0 3px 0 ${ink}">
-        <div style="width:22px;height:22px;border-radius:50% 47% 53% 50%;background:#fff;border:2px solid ${ink};display:flex;align-items:center;justify-content:center;font:700 13px Gowun Dodum,sans-serif;color:${ink};transform:rotate(-7deg)">B</div>
-        <span style="font:700 19px Gowun Dodum,sans-serif;color:${startInk}">Start</span>
+        <div style="width:22px;height:22px;border-radius:50% 47% 53% 50%;background:#fff;border:2px solid ${ink};display:flex;align-items:center;justify-content:center;font:700 13px Poppins,sans-serif;color:${ink};transform:rotate(-7deg)">B</div>
+        <span style="font:700 19px Poppins,sans-serif;color:${startInk}">Start</span>
       </div>
       <div style="width:3px;height:30px;background:rgba(42,36,51,.18);border-radius:3px"></div>
       <div id="bk-search-wrap" style="position:relative;flex:0 0 auto">
         <div style="display:flex;align-items:center;gap:6px;background:rgba(255,255,255,.7);border:2px solid ${ink};border-radius:10px;padding:3px 10px;width:230px">
           <svg width="13" height="13" viewBox="0 0 13 13" fill="none" style="flex:0 0 auto;opacity:.45"><circle cx="5" cy="5" r="3.5" stroke="${ink}" stroke-width="1.7"/><line x1="7.8" y1="7.8" x2="11.5" y2="11.5" stroke="${ink}" stroke-width="1.7" stroke-linecap="round"/></svg>
-          <input id="bk-search-input" placeholder="Search tools" autocomplete="off" style="border:none;background:transparent;font:400 15px Gowun Dodum,sans-serif;color:${ink};outline:none;width:100%;min-width:0;user-select:auto">
+          <input id="bk-search-input" placeholder="Search tools" autocomplete="off" style="border:none;background:transparent;font:400 15px Poppins,sans-serif;color:${ink};outline:none;width:100%;min-width:0;user-select:auto">
         </div>
         <div id="bk-search-drop" style="display:none;position:absolute;bottom:calc(100% + 8px);left:0;min-width:100%;width:max-content;max-width:320px;background:${barBg};border:2.5px solid ${ink};border-radius:12px 12px 10px 10px;box-shadow:0 -8px 24px rgba(40,30,55,.22);overflow-y:auto;max-height:240px;z-index:9700"></div>
       </div>
@@ -735,7 +735,7 @@ function render() {
       <div style="display:flex;align-items:center;gap:7px">${quickHtml}</div>
       <div style="width:3px;height:30px;background:rgba(42,36,51,.18);border-radius:3px"></div>
       <div style="flex:1 1 auto;display:flex;align-items:center;gap:7px;overflow:hidden">${taskHtml}</div>
-      <div style="flex:0 0 auto;font:600 14px Gowun Dodum,sans-serif;color:${ink};white-space:nowrap">${esc(S.dateShort)} ${esc(S.time)}</div>
+      <div style="flex:0 0 auto;font:600 14px Poppins,sans-serif;color:${ink};white-space:nowrap">${esc(S.dateShort)} ${esc(S.time)}</div>
     </div>
   </div>`;
   document.getElementById('root').innerHTML = _html;
@@ -822,7 +822,7 @@ function wireEvents() {
         ? SEARCH_TOOLS.filter(t => t.name.toLowerCase().includes(q.toLowerCase()) || t.code.toLowerCase().includes(q.toLowerCase()))
         : SEARCH_TOOLS;
       if (!list.length) {
-        searchDrop.innerHTML = `<div style="padding:14px;font:400 15px Gowun Dodum,sans-serif;color:rgba(42,36,51,.5);text-align:center">No results</div>`;
+        searchDrop.innerHTML = `<div style="padding:14px;font:400 15px Poppins,sans-serif;color:rgba(42,36,51,.5);text-align:center">No results</div>`;
       } else {
         searchDrop.innerHTML = list.map(t => {
           const gi = glyphInfo(t.code);
@@ -830,7 +830,7 @@ function wireEvents() {
           return `<div class="bk-search-item" data-code="${t.code}" data-name="${esc(t.name)}"
             style="display:flex;align-items:center;gap:8px;padding:5px 12px;cursor:pointer;border-bottom:1.5px solid rgba(42,36,51,.08);min-height:54px">
             <div style="flex:0 0 auto;width:24px;height:24px;overflow:hidden;display:flex;align-items:center;justify-content:center"><div style="transform:scale(0.52);transform-origin:center;width:46px;height:46px;flex:0 0 46px">${icon('tool',fc,k,gi.glyph,gi.token)}</div></div>
-            <span style="font:400 16px Gowun Dodum,sans-serif;color:${k};white-space:nowrap">${esc(t.name)}</span>
+            <span style="font:400 16px Poppins,sans-serif;color:${k};white-space:nowrap">${esc(t.name)}</span>
           </div>`;
         }).join('');
       }
