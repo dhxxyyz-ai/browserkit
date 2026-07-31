@@ -15,8 +15,16 @@ except Exception:
     pass
 
 
-def transform(ko_html: str, slug: str) -> str:
+def transform(ko_html: str, slug: str, trailing_slash: bool = True) -> str:
+    """
+    trailing_slash: True for the standard tool-page URL convention (/{slug}/,
+    directory-style). Set False for clean, non-directory KO URLs such as
+    /about, /privacy, /terms — otherwise the lang-banner/lang-switcher KO
+    links and the canonical/og:url swap below are generated with a spurious
+    trailing slash (e.g. "/about/" instead of "/about").
+    """
     c = ko_html
+    ko_path = f'/{slug}/' if trailing_slash else f'/{slug}'
 
     # html lang
     c = c.replace('<html lang="ko">', '<html lang="en">', 1)
@@ -52,15 +60,12 @@ def transform(ko_html: str, slug: str) -> str:
     c = c.replace("Gowun Dodum,sans-serif", "Poppins,sans-serif")
 
     # canonical + hreflang: KO canonical -> becomes EN canonical, ko alt keeps ko url
-    ko_canon_pat = re.compile(r'<link rel="canonical" href="https://browserkit\.online/' + re.escape(slug) + r'/" />')
+    ko_canon_pat = re.compile(r'<link rel="canonical" href="https://browserkit\.online' + re.escape(ko_path) + r'" />')
     m = ko_canon_pat.search(c)
+    ko_url = f'https://browserkit.online{ko_path}'
+    en_url = f'https://browserkit.online/en/{slug}/' if trailing_slash else f'https://browserkit.online/en/{slug}.html'
     if m:
-        ko_url = f'https://browserkit.online/{slug}/'
-        en_url = f'https://browserkit.online/en/{slug}/'
         c = ko_canon_pat.sub(f'<link rel="canonical" href="{en_url}" />', c, count=1)
-    else:
-        ko_url = f'https://browserkit.online/{slug}/'
-        en_url = f'https://browserkit.online/en/{slug}/'
 
     # og:url
     c = c.replace(f'<meta property="og:url" content="{ko_url}" />', f'<meta property="og:url" content="{en_url}" />')
@@ -79,7 +84,7 @@ def transform(ko_html: str, slug: str) -> str:
     # lang banner (top of body): KO page banner offers EN; EN page banner offers KO, and condition flips
     c = c.replace(
         '<span>🌐 This page is also available in <a href="/en/">English</a>.</span>',
-        f'<span>🌐 이 페이지는 <a href="/{slug}/">한국어</a>로도 볼 수 있습니다.</span>'
+        f'<span>🌐 이 페이지는 <a href="{ko_path}">한국어</a>로도 볼 수 있습니다.</span>'
     )
     c = c.replace(
         "if (lang.indexOf('ko') === 0) return;",
@@ -100,7 +105,7 @@ def transform(ko_html: str, slug: str) -> str:
     )
     c = c.replace(
         '<a href="/en/">English</a>\n            <a href="#" class="active">한국어</a>',
-        f'<a href="#" class="active">English</a>\n            <a href="/{slug}/">한국어</a>'
+        f'<a href="#" class="active">English</a>\n            <a href="{ko_path}">한국어</a>'
     )
 
     # ── Known exact ad-block markups (site-wide constants) -> placeholders ──
